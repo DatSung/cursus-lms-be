@@ -1,5 +1,4 @@
 using Cursus.LMS.DataAccess.Context;
-using Cursus.LMS.Model.Domain;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
