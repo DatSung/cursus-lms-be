@@ -2,6 +2,14 @@
 Microsoft Visual Studio Solution File, Format Version 12.00
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cursus.LMS.API", "Cursus.LMS.API\Cursus.LMS.API.csproj", "{BA87DACF-F298-45B8-8D2E-A464DD8AE492}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cursus.LMS.DataAccess", "Cursus.LMS.DataAccess\Cursus.LMS.DataAccess.csproj", "{A91F22F2-1175-45D2-ADE5-D1B606AA6E1B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cursus.LMS.Service", "Cursus.LMS.Service\Cursus.LMS.Service.csproj", "{5143EF27-F420-4C1D-AC5D-ABBFE41E74CC}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cursus.LMS.Model", "Cursus.LMS.Model\Cursus.LMS.Model.csproj", "{FAF8500C-EC4A-4B0F-A960-19793A294F8D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cursus.LMS.Utility", "Cursus.LMS.Utility\Cursus.LMS.Utility.csproj", "{1753BA06-257E-4DE0-A656-93C10F676031}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -12,5 +20,21 @@ Global
 		{BA87DACF-F298-45B8-8D2E-A464DD8AE492}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{BA87DACF-F298-45B8-8D2E-A464DD8AE492}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{BA87DACF-F298-45B8-8D2E-A464DD8AE492}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A91F22F2-1175-45D2-ADE5-D1B606AA6E1B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A91F22F2-1175-45D2-ADE5-D1B606AA6E1B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A91F22F2-1175-45D2-ADE5-D1B606AA6E1B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A91F22F2-1175-45D2-ADE5-D1B606AA6E1B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5143EF27-F420-4C1D-AC5D-ABBFE41E74CC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5143EF27-F420-4C1D-AC5D-ABBFE41E74CC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5143EF27-F420-4C1D-AC5D-ABBFE41E74CC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5143EF27-F420-4C1D-AC5D-ABBFE41E74CC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FAF8500C-EC4A-4B0F-A960-19793A294F8D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FAF8500C-EC4A-4B0F-A960-19793A294F8D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FAF8500C-EC4A-4B0F-A960-19793A294F8D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FAF8500C-EC4A-4B0F-A960-19793A294F8D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1753BA06-257E-4DE0-A656-93C10F676031}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1753BA06-257E-4DE0-A656-93C10F676031}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1753BA06-257E-4DE0-A656-93C10F676031}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1753BA06-257E-4DE0-A656-93C10F676031}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
