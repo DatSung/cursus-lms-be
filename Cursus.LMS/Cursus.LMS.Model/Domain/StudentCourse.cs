@@ -10,9 +10,11 @@ public class StudentCourse
     public Guid Id { get; set; }
 
     public Guid? StudentId { get; set; }
+    [ForeignKey("StudentId")]
     public virtual Student Student { get; set; }
-
+    
     public Guid? CourseId { get; set; }
+    [ForeignKey("CourseId")]
     public virtual Course Course { get; set; }
 
     public DateTime LearningTime { get; set; }
