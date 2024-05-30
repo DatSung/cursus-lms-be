@@ -10,6 +10,11 @@ public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
     {
     }
 
+    protected override void OnModelCreating(ModelBuilder modelBuilder)
+    {
+        base.OnModelCreating(modelBuilder);
+    }
+
     public DbSet<ApplicationUser> ApplicationUsers { get; set; }
     public DbSet<CartDetails> CartDetails { get; set; }
     public DbSet<CartHeader> CartHeaders { get; set; }
@@ -25,5 +30,4 @@ public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
     public DbSet<SectionDetails> SectionDetails { get; set; }
     public DbSet<Student> Students { get; set; }
     public DbSet<StudentCourse> StudentCourses { get; set; }
-    
 }

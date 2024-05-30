@@ -16,6 +16,8 @@ public class Course
     public Guid LevelId { get; set; }
     [ForeignKey("LevelId")] public virtual Level Level { get; set; }
 
+    private string Code { get; set; }
+    
     public DateTime CreateAt { get; set; } = DateTime.Now;
     
     public int StudentSlot { get; set; }

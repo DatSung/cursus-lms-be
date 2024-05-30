@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("Cursus.LMS.API")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+953a69e17b41ee9558302a04f16be9aeb6f4eef8")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+71f664b9f32bc0fadd2b139998bd6ac3c4f9af41")]
 [assembly: System.Reflection.AssemblyProductAttribute("Cursus.LMS.API")]
 [assembly: System.Reflection.AssemblyTitleAttribute("Cursus.LMS.API")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
