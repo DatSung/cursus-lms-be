@@ -61,19 +61,10 @@
         /// <returns>ResponseDTO</returns>
         [HttpPost]
         [Route("sign-up-instructor")]
-        public async Task<ActionResult<ResponseDTO>> SignUpInStructor()
+        public async Task<ActionResult<ResponseDTO>> SignUpInStructor([FromBody] InstructorDTO instructorDto)
         {
-            
-            try
-            {
-            }
-            catch (Exception e)
-            {
-                responseDto.IsSuccess = false;
-                responseDto.Message = e.Message;
-            }
-
-            return Ok(responseDto);
+            var result = await _authService.SignUpInstructor(instructorDto);
+            return StatusCode(result.StatusCode, result);
         }
 
 

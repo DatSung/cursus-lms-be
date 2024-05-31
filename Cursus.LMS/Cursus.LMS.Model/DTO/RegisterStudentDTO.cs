@@ -30,6 +30,15 @@ public class RegisterStudentDTO
     [Required(ErrorMessage = "Address is required")]
     public string Address { get; set; }
 
+    [Required(ErrorMessage = "Country is required")]
+    public string Country { get; set; }
+
+    [Required(ErrorMessage = "Address is required")]
+    public string Gender { get; set; }
+
+    [Required(ErrorMessage = "University is required")]
+    public string University { get; set; }
+
     [Required(ErrorMessage = "Birth date is required.")]
     [DataType(DataType.Date, ErrorMessage = "Invalid date format.")]
     public DateTime BirthDate { get; set; }

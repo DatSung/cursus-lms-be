@@ -32,20 +32,21 @@ public class AuthService : IAuthService
     public async Task<ResponseDTO> SignUpStudent(RegisterStudentDTO registerStudentDTO)
     {
         var isEmailExit = await _userManager.FindByEmailAsync(registerStudentDTO.Email);
-        
 
-        if (isEmailExit == null)
+
+        if (isEmailExit is not null)
         {
             return new ResponseDTO()
             {
+                Message = "Email is using by another user",
+                Result = registerStudentDTO,
                 IsSuccess = false,
-                StatusCode = 409,
-                Message = "Email or Phone already exists"
+                StatusCode = 500
             };
         }
 
 
-        
+
         return new ResponseDTO()
         {
             IsSuccess = true,
@@ -54,9 +55,78 @@ public class AuthService : IAuthService
         };
     }
 
-    public Task<ResponseDTO> SignUpInstructor()
+    public async Task<ResponseDTO> SignUpInstructor(InstructorDTO instructorDto)
     {
-        throw new NotImplementedException();
+        try
+        {
+            var user = await _userManager.FindByEmailAsync(instructorDto.Email);
+
+            if (user is not null)
+            {
+                return new ResponseDTO()
+                {
+                    Message = "Email is using by another user",
+                    Result = instructorDto,
+                    IsSuccess = false,
+                    StatusCode = 500
+                };
+            }
+
+            ApplicationUser newUser = new ApplicationUser()
+            {
+                Address = instructorDto.Address,
+                Email = instructorDto.Email,
+                UserName = instructorDto.Email,
+                FullName = instructorDto.FullName,
+                Gender = instructorDto.Gender,
+                Country = instructorDto.Country,
+                PhoneNumber = instructorDto.PhoneNumber,
+                AvartarUrl = ""
+            };
+
+            var createUserResult = await _userManager.CreateAsync(newUser, instructorDto.Password);
+
+            if (!createUserResult.Succeeded)
+            {
+                return new ResponseDTO()
+                {
+                    Message = createUserResult.Errors.ToString(),
+                    IsSuccess = false,
+                    StatusCode = 500,
+                    Result = instructorDto
+                };
+            }
+
+            user = await _userManager.FindByEmailAsync(instructorDto.Email);
+            Instructor instructor = new Instructor()
+            {
+                UserId = user.Id,
+                Degree = instructorDto.Degree,
+                Industry = instructorDto.Industry,
+                Introduction = instructorDto.Introduction
+            };
+
+            await _dbContext.Instructors.AddAsync(instructor);
+            await _dbContext.SaveChangesAsync();
+
+            return new ResponseDTO()
+            {
+                Message = "Create new user successfully",
+                IsSuccess = true,
+                StatusCode = 200,
+                Result = instructorDto
+            };
+        }
+        catch (Exception e)
+        {
+            return new ResponseDTO()
+            {
+                Message = e.Message,
+                Result = instructorDto,
+                IsSuccess = false,
+                StatusCode = 500
+            };
+        }
     }
 
     public Task<ResponseDTO> SignIn()
