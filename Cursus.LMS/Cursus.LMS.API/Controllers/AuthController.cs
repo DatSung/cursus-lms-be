@@ -19,6 +19,10 @@ namespace Cursus.LMS.API.Controllers
             _authService = authService;
         }
 
+        /// <summary>
+        /// This API for feature Sign Up For Student.
+        /// </summary>
+        /// <returns>ResponseDTO</returns>
         [HttpPost]
         [Route("sign-up-student")]
         public async Task<ActionResult<ResponseDTO>> SignUpStudent()
@@ -29,6 +33,108 @@ namespace Cursus.LMS.API.Controllers
             catch (Exception e)
             {
                 responseDto.IsSuccess = false;
+                responseDto.Message = e.Message;
+            }
+
+            return Ok(responseDto);
+        }
+
+        /// <summary>
+        /// This API for feature Sign Up For Instructor.
+        /// </summary>
+        /// <returns>ResponseDTO</returns>
+        [HttpPost]
+        [Route("sign-up-instructor")]
+        public async Task<ActionResult<ResponseDTO>> SignUpInStructor()
+        {
+            try
+            {
+            }
+            catch (Exception e)
+            {
+                responseDto.IsSuccess = false;
+                responseDto.Message = e.Message;
+            }
+
+            return Ok(responseDto);
+        }
+
+
+        /// <summary>
+        /// This API for case forgot password.
+        /// </summary>
+        /// <returns>ResponseDTO</returns>
+        [HttpPost]
+        [Route("forgot-password")]
+        public async Task<ActionResult<ResponseDTO>> ForgotPassword()
+        {
+            try
+            {
+            }
+            catch (Exception e)
+            {
+                responseDto.IsSuccess = false;
+                responseDto.Message = e.Message;
+            }
+
+            return Ok(responseDto);
+        }
+
+        /// <summary>
+        /// This API for case verify email.
+        /// </summary>
+        /// <returns>ResponseDTO</returns>
+        [HttpPost]
+        [Route("verify-email")]
+        public async Task<ActionResult<ResponseDTO>> VerifyEmail()
+        {
+            try
+            {
+            }
+            catch (Exception e)
+            {
+                responseDto.IsSuccess = false;
+                responseDto.Message = e.Message;
+            }
+
+            return Ok(responseDto);
+        }
+
+        /// <summary>
+        /// This API for case change password.
+        /// </summary>
+        /// <returns>ResponseDTO</returns>
+        [HttpPost]
+        [Route("change-password")]
+        public async Task<ActionResult<ResponseDTO>> ChangePassword()
+        {
+            try
+            {
+            }
+            catch (Exception e)
+            {
+                responseDto.IsSuccess = false;
+                responseDto.Message = e.Message;
+            }
+
+            return Ok(responseDto);
+        }
+
+        /// <summary>
+        /// This API for case sign in.
+        /// </summary>
+        /// <returns>ResponseDTO</returns>
+        [HttpPost]
+        [Route("sign-in")]
+        public async Task<ActionResult<ResponseDTO>> SignIn()
+        {
+            try
+            {
+            }
+            catch (Exception e)
+            {
+                responseDto.IsSuccess = false;
+                responseDto.Message = e.Message;
             }
 
             return Ok(responseDto);

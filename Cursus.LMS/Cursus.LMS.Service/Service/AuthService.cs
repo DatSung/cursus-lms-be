@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Cursus.LMS.DataAccess.Context;
 using Cursus.LMS.Model.Domain;
 using Cursus.LMS.Model.DTO;
 using Cursus.LMS.Service.IService;
@@ -9,20 +10,22 @@ namespace Cursus.LMS.Service.Service;
 
 public class AuthService : IAuthService
 {
+    private readonly ApplicationDbContext _dbContext;
     private readonly UserManager<ApplicationUser> _userManager;
     private readonly RoleManager<IdentityRole> _roleManager;
     private readonly IConfiguration _configuration;
     private readonly IMapper _mapper;
     private readonly IEmailService _emailService;
 
-    public AuthService(UserManager<ApplicationUser?> userManager, RoleManager<IdentityRole> roleManager,
-        IConfiguration configuration, IMapper mapper, IEmailService emailService)
+    public AuthService(UserManager<ApplicationUser> userManager, RoleManager<IdentityRole> roleManager,
+        IConfiguration configuration, IMapper mapper, IEmailService emailService, ApplicationDbContext dbContext)
     {
         _userManager = userManager;
         _roleManager = roleManager;
         _configuration = configuration;
         _mapper = mapper;
         _emailService = emailService;
+        _dbContext = dbContext;
     }
 
 
