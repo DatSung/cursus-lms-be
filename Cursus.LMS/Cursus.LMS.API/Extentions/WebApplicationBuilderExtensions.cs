@@ -7,29 +7,29 @@ namespace Cursus.LMS.API.Extentions;
 
 public static class WebApplicationBuilderExtensions
 {
-    // public static WebApplicationBuilder AddAppAuthentication(this WebApplicationBuilder builder)
-    // {
-    //     builder.Services.AddAuthentication(options =>
-    //     {
-    //         options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
-    //         options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
-    //     }).AddJwtBearer(options =>
-    //     {
-    //         options.TokenValidationParameters = new TokenValidationParameters()
-    //         {
-    //             ValidateIssuerSigningKey = true,
-    //             IssuerSigningKey =
-    //                 new SymmetricSecurityKey(Encoding.ASCII.GetBytes(builder.Configuration["ApiSettings:Secret"])),
-    //             ValidateIssuer = true,
-    //             ValidateAudience = true,
-    //             ValidIssuer = builder.Configuration["ApiSettings:Issuer"],
-    //             ValidAudience = builder.Configuration["ApiSettings:Audience"]
-    //         };
-    //     });
-    //
-    //     return builder;
-    // }
-    
+    public static WebApplicationBuilder AddAppAuthentication(this WebApplicationBuilder builder)
+    {
+        builder.Services.AddAuthentication(options =>
+        {
+            options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+            options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+        }).AddJwtBearer(options =>
+        {
+            options.TokenValidationParameters = new TokenValidationParameters()
+            {
+                ValidateIssuerSigningKey = true,
+                IssuerSigningKey =
+                    new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["JWT:Secret"])),
+                ValidateIssuer = true,
+                ValidateAudience = true,
+                ValidIssuer = builder.Configuration["JWT:Issuer"],
+                ValidAudience = builder.Configuration["JWT:Audience"]
+            };
+        });
+
+        return builder;
+    }
+
     public static WebApplicationBuilder AddSwaggerGen(this WebApplicationBuilder builder)
     {
         builder.Services.AddSwaggerGen(options =>
@@ -57,7 +57,7 @@ public static class WebApplicationBuilderExtensions
                 }
             });
         });
-        
+
         return builder;
     }
 }
