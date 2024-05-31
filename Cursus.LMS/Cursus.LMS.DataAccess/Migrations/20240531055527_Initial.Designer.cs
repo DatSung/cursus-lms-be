@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Cursus.LMS.DataAccess.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20240529050241_Initial")]
+    [Migration("20240531055527_Initial")]
     partial class Initial
     {
         /// <inheritdoc />

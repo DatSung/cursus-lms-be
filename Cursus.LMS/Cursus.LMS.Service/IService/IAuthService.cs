@@ -6,7 +6,7 @@ public interface IAuthService
 {
     Task<ResponseDTO> SignUpStudent();
     Task<ResponseDTO> SignUpInstructor();
-    Task<ResponseDTO> SignIn();
+    Task<SignResponseDTO> SignIn(SignDTO signDTO);
     Task<ResponseDTO> ForgotPassword();
     Task<ResponseDTO> ChangePassword();
     Task<ResponseDTO> VerifyEmail();
