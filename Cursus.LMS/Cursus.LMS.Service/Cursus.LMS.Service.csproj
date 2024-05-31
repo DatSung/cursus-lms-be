@@ -12,8 +12,8 @@
     </ItemGroup>
 
     <ItemGroup>
-      <Folder Include="IService\" />
-      <Folder Include="Service\" />
+      <PackageReference Include="AutoMapper" Version="13.0.1" />
+      <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
     </ItemGroup>
 
 </Project>
