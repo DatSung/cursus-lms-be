@@ -10,4 +10,8 @@
       <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="8.0.6" />
     </ItemGroup>
 
+    <ItemGroup>
+      <ProjectReference Include="..\Cursus.LMS.Utility\Cursus.LMS.Utility.csproj" />
+    </ItemGroup>
+
 </Project>

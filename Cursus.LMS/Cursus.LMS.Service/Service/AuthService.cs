@@ -11,6 +11,7 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Runtime.InteropServices;
 using System.Security.Claims;
 using System.Text;
+using Cursus.LMS.Utility.Constants;
 
 namespace Cursus.LMS.Service.Service;
 
@@ -40,12 +41,19 @@ public class AuthService : IAuthService
         throw new NotImplementedException();
     }
 
+    /// <summary>
+    /// Registers a new instructor in the system.
+    /// </summary>
+    /// <param name="instructorDto">The data transfer object containing instructor details.</param>
+    /// <returns><see cref="ResponseDTO"/> object containing the result of the registration process.</returns>
     public async Task<ResponseDTO> SignUpInstructor(InstructorDTO instructorDto)
     {
         try
         {
+            // Find exist user with the email from instructorDto
             var user = await _userManager.FindByEmailAsync(instructorDto.Email);
 
+            // Check if user exist
             if (user is not null)
             {
                 return new ResponseDTO()
@@ -57,6 +65,7 @@ public class AuthService : IAuthService
                 };
             }
 
+            // Create new instance of ApplicationUser
             ApplicationUser newUser = new ApplicationUser()
             {
                 Address = instructorDto.Address,
@@ -69,10 +78,13 @@ public class AuthService : IAuthService
                 AvartarUrl = ""
             };
 
+            // Create new user to database
             var createUserResult = await _userManager.CreateAsync(newUser, instructorDto.Password);
 
+            // Check if error occur
             if (!createUserResult.Succeeded)
             {
+                // Return result internal service error
                 return new ResponseDTO()
                 {
                     Message = createUserResult.Errors.ToString(),
@@ -82,7 +94,10 @@ public class AuthService : IAuthService
                 };
             }
 
+            // Get the user again 
             user = await _userManager.FindByEmailAsync(instructorDto.Email);
+
+            // Create instance of instructor
             Instructor instructor = new Instructor()
             {
                 UserId = user.Id,
@@ -91,9 +106,25 @@ public class AuthService : IAuthService
                 Introduction = instructorDto.Introduction
             };
 
+            // Get role instructor in database
+            var isRoleExist = await _roleManager.RoleExistsAsync(StaticUserRoles.Instructor);
+
+            // Check if role !exist to create new role 
+            if (isRoleExist is false)
+            {
+                await _roleManager.CreateAsync(new IdentityRole(StaticUserRoles.Instructor));
+            }
+
+            // Add role for the user
+            await _userManager.AddToRoleAsync(user, StaticUserRoles.Instructor);
+
+            // Create new Instructor relate with ApplicationUser
             await _dbContext.Instructors.AddAsync(instructor);
+
+            // Save change to database
             await _dbContext.SaveChangesAsync();
 
+            // Return result success
             return new ResponseDTO()
             {
                 Message = "Create new user successfully",
@@ -104,6 +135,7 @@ public class AuthService : IAuthService
         }
         catch (Exception e)
         {
+            // Return result exception
             return new ResponseDTO()
             {
                 Message = e.Message,
@@ -113,6 +145,7 @@ public class AuthService : IAuthService
             };
         }
     }
+
     //Sign In bằng email và password trả về role tương ứng
     public async Task<SignResponseDTO> SignIn(SignDTO signDTO)
     {
@@ -121,12 +154,14 @@ public class AuthService : IAuthService
         {
             return null;
         }
+
         var isPasswordCorrect = await _userManager.CheckPasswordAsync(user, signDTO.Password);
 
         if (!isPasswordCorrect)
         {
             return null;
         }
+
         var accessToken = await GenerateJwtTokenAsync(user);
         var userInfo = _mapper.Map<UserInfo>(user);
         var roles = await _userManager.GetRolesAsync(user);
@@ -157,6 +192,7 @@ public class AuthService : IAuthService
         {
             authClaims.Add(new Claim(ClaimTypes.Role, role));
         }
+
         //tạo các đối tượng mã hóa
         var authSecret = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["JWT:Secret"]));
         var signingCredentials = new SigningCredentials(authSecret, SecurityAlgorithms.HmacSha256);
@@ -165,8 +201,8 @@ public class AuthService : IAuthService
             issuer: _configuration["JWT:ValidIssuer"],
             audience: _configuration["JWT:ValidAudience"],
             notBefore: DateTime.Now,
-            expires: DateTime.Now.AddMinutes(15),//thời gian hết hạn là 15p
-            claims: authClaims,//danh sách thông tin của người dùng
+            expires: DateTime.Now.AddMinutes(15), //thời gian hết hạn là 15p
+            claims: authClaims, //danh sách thông tin của người dùng
             signingCredentials: signingCredentials
         );
         // tạo thành công mã thông báo
@@ -189,5 +225,4 @@ public class AuthService : IAuthService
     {
         throw new NotImplementedException();
     }
-
 }
