@@ -4,7 +4,7 @@ namespace Cursus.LMS.Service.IService;
 
 public interface IAuthService
 {
-    Task<ResponseDTO> SignUpStudent();
+    Task<ResponseDTO> SignUpStudent(RegisterStudentDTO registerStudentDTO);
     Task<ResponseDTO> SignUpInstructor();
     Task<ResponseDTO> SignIn();
     Task<ResponseDTO> ForgotPassword();

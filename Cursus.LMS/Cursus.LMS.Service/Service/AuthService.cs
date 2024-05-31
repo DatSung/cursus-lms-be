@@ -29,9 +29,29 @@ public class AuthService : IAuthService
     }
 
 
-    public Task<ResponseDTO> SignUpStudent()
+    public async Task<ResponseDTO> SignUpStudent(RegisterStudentDTO registerStudentDTO)
     {
-        throw new NotImplementedException();
+        var isEmailExit = await _userManager.FindByEmailAsync(registerStudentDTO.Email);
+        
+
+        if (isEmailExit == null)
+        {
+            return new ResponseDTO()
+            {
+                IsSuccess = false,
+                StatusCode = 409,
+                Message = "Email or Phone already exists"
+            };
+        }
+
+
+        
+        return new ResponseDTO()
+        {
+            IsSuccess = true,
+            StatusCode = 201,
+            Message = "User created successfully"
+        };
     }
 
     public Task<ResponseDTO> SignUpInstructor()
