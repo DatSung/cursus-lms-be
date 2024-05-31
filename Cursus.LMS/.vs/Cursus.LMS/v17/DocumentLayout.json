@@ -3,40 +3,56 @@
   "WorkspaceRootPath": "D:\\ThucTap\\Team_6_Curscus_Dev\\cursus-lms\\Cursus.LMS\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{BA87DACF-F298-45B8-8D2E-A464DD8AE492}|Cursus.LMS.API\\Cursus.LMS.API.csproj|d:\\thuctap\\team_6_curscus_dev\\cursus-lms\\cursus.lms\\cursus.lms.api\\controllers\\authcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{BA87DACF-F298-45B8-8D2E-A464DD8AE492}|Cursus.LMS.API\\Cursus.LMS.API.csproj|solutionrelative:cursus.lms.api\\controllers\\authcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{BA87DACF-F298-45B8-8D2E-A464DD8AE492}|Cursus.LMS.API\\Cursus.LMS.API.csproj|d:\\thuctap\\team_6_curscus_dev\\cursus-lms\\cursus.lms\\cursus.lms.api\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{BA87DACF-F298-45B8-8D2E-A464DD8AE492}|Cursus.LMS.API\\Cursus.LMS.API.csproj|solutionrelative:cursus.lms.api\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{5143EF27-F420-4C1D-AC5D-ABBFE41E74CC}|Cursus.LMS.Service\\Cursus.LMS.Service.csproj|d:\\thuctap\\team_6_curscus_dev\\cursus-lms\\cursus.lms\\cursus.lms.service\\service\\authservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{5143EF27-F420-4C1D-AC5D-ABBFE41E74CC}|Cursus.LMS.Service\\Cursus.LMS.Service.csproj|solutionrelative:cursus.lms.service\\service\\authservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{5143EF27-F420-4C1D-AC5D-ABBFE41E74CC}|Cursus.LMS.Service\\Cursus.LMS.Service.csproj|d:\\thuctap\\team_6_curscus_dev\\cursus-lms\\cursus.lms\\cursus.lms.service\\iservice\\iauthservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{5143EF27-F420-4C1D-AC5D-ABBFE41E74CC}|Cursus.LMS.Service\\Cursus.LMS.Service.csproj|solutionrelative:cursus.lms.service\\iservice\\iauthservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{BA87DACF-F298-45B8-8D2E-A464DD8AE492}|Cursus.LMS.API\\Cursus.LMS.API.csproj|d:\\thuctap\\team_6_curscus_dev\\cursus-lms\\cursus.lms\\cursus.lms.api\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
-      "RelativeMoniker": "D:0:0:{BA87DACF-F298-45B8-8D2E-A464DD8AE492}|Cursus.LMS.API\\Cursus.LMS.API.csproj|solutionrelative:cursus.lms.api\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{FAF8500C-EC4A-4B0F-A960-19793A294F8D}|Cursus.LMS.Model\\Cursus.LMS.Model.csproj|d:\\thuctap\\team_6_curscus_dev\\cursus-lms\\cursus.lms\\cursus.lms.model\\dto\\signresponsedto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{FAF8500C-EC4A-4B0F-A960-19793A294F8D}|Cursus.LMS.Model\\Cursus.LMS.Model.csproj|solutionrelative:cursus.lms.model\\dto\\signresponsedto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{5143EF27-F420-4C1D-AC5D-ABBFE41E74CC}|Cursus.LMS.Service\\Cursus.LMS.Service.csproj|d:\\thuctap\\team_6_curscus_dev\\cursus-lms\\cursus.lms\\cursus.lms.service\\mappings\\automapperprofile.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{5143EF27-F420-4C1D-AC5D-ABBFE41E74CC}|Cursus.LMS.Service\\Cursus.LMS.Service.csproj|solutionrelative:cursus.lms.service\\mappings\\automapperprofile.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{FAF8500C-EC4A-4B0F-A960-19793A294F8D}|Cursus.LMS.Model\\Cursus.LMS.Model.csproj|d:\\thuctap\\team_6_curscus_dev\\cursus-lms\\cursus.lms\\cursus.lms.model\\dto\\userinfo.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{FAF8500C-EC4A-4B0F-A960-19793A294F8D}|Cursus.LMS.Model\\Cursus.LMS.Model.csproj|solutionrelative:cursus.lms.model\\dto\\userinfo.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
+      "AbsoluteMoniker": "D:0:0:{5143EF27-F420-4C1D-AC5D-ABBFE41E74CC}|Cursus.LMS.Service\\Cursus.LMS.Service.csproj|d:\\thuctap\\team_6_curscus_dev\\cursus-lms\\cursus.lms\\cursus.lms.service\\service\\authservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{5143EF27-F420-4C1D-AC5D-ABBFE41E74CC}|Cursus.LMS.Service\\Cursus.LMS.Service.csproj|solutionrelative:cursus.lms.service\\service\\authservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{BA87DACF-F298-45B8-8D2E-A464DD8AE492}|Cursus.LMS.API\\Cursus.LMS.API.csproj|d:\\thuctap\\team_6_curscus_dev\\cursus-lms\\cursus.lms\\cursus.lms.api\\controllers\\authcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{BA87DACF-F298-45B8-8D2E-A464DD8AE492}|Cursus.LMS.API\\Cursus.LMS.API.csproj|solutionrelative:cursus.lms.api\\controllers\\authcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{FAF8500C-EC4A-4B0F-A960-19793A294F8D}|Cursus.LMS.Model\\Cursus.LMS.Model.csproj|d:\\thuctap\\team_6_curscus_dev\\cursus-lms\\cursus.lms\\cursus.lms.model\\domain\\applicationuser.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{FAF8500C-EC4A-4B0F-A960-19793A294F8D}|Cursus.LMS.Model\\Cursus.LMS.Model.csproj|solutionrelative:cursus.lms.model\\domain\\applicationuser.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
+      "AbsoluteMoniker": "D:0:0:{BA87DACF-F298-45B8-8D2E-A464DD8AE492}|Cursus.LMS.API\\Cursus.LMS.API.csproj|d:\\thuctap\\team_6_curscus_dev\\cursus-lms\\cursus.lms\\cursus.lms.api\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{BA87DACF-F298-45B8-8D2E-A464DD8AE492}|Cursus.LMS.API\\Cursus.LMS.API.csproj|solutionrelative:cursus.lms.api\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{BA87DACF-F298-45B8-8D2E-A464DD8AE492}|Cursus.LMS.API\\Cursus.LMS.API.csproj|d:\\thuctap\\team_6_curscus_dev\\cursus-lms\\cursus.lms\\cursus.lms.api\\properties\\launchsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
+      "RelativeMoniker": "D:0:0:{BA87DACF-F298-45B8-8D2E-A464DD8AE492}|Cursus.LMS.API\\Cursus.LMS.API.csproj|solutionrelative:cursus.lms.api\\properties\\launchsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{BA87DACF-F298-45B8-8D2E-A464DD8AE492}|Cursus.LMS.API\\Cursus.LMS.API.csproj|d:\\thuctap\\team_6_curscus_dev\\cursus-lms\\cursus.lms\\cursus.lms.api\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
+      "RelativeMoniker": "D:0:0:{BA87DACF-F298-45B8-8D2E-A464DD8AE492}|Cursus.LMS.API\\Cursus.LMS.API.csproj|solutionrelative:cursus.lms.api\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{FAF8500C-EC4A-4B0F-A960-19793A294F8D}|Cursus.LMS.Model\\Cursus.LMS.Model.csproj|d:\\thuctap\\team_6_curscus_dev\\cursus-lms\\cursus.lms\\cursus.lms.model\\dto\\instructordto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{FAF8500C-EC4A-4B0F-A960-19793A294F8D}|Cursus.LMS.Model\\Cursus.LMS.Model.csproj|solutionrelative:cursus.lms.model\\dto\\instructordto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{FAF8500C-EC4A-4B0F-A960-19793A294F8D}|Cursus.LMS.Model\\Cursus.LMS.Model.csproj|d:\\thuctap\\team_6_curscus_dev\\cursus-lms\\cursus.lms\\cursus.lms.model\\dto\\responsedto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{FAF8500C-EC4A-4B0F-A960-19793A294F8D}|Cursus.LMS.Model\\Cursus.LMS.Model.csproj|solutionrelative:cursus.lms.model\\dto\\responsedto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{5143EF27-F420-4C1D-AC5D-ABBFE41E74CC}|Cursus.LMS.Service\\Cursus.LMS.Service.csproj|d:\\thuctap\\team_6_curscus_dev\\cursus-lms\\cursus.lms\\cursus.lms.service\\service\\emailservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{5143EF27-F420-4C1D-AC5D-ABBFE41E74CC}|Cursus.LMS.Service\\Cursus.LMS.Service.csproj|solutionrelative:cursus.lms.service\\service\\emailservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{5143EF27-F420-4C1D-AC5D-ABBFE41E74CC}|Cursus.LMS.Service\\Cursus.LMS.Service.csproj|d:\\thuctap\\team_6_curscus_dev\\cursus-lms\\cursus.lms\\cursus.lms.service\\iservice\\iauthservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{5143EF27-F420-4C1D-AC5D-ABBFE41E74CC}|Cursus.LMS.Service\\Cursus.LMS.Service.csproj|solutionrelative:cursus.lms.service\\iservice\\iauthservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{FAF8500C-EC4A-4B0F-A960-19793A294F8D}|Cursus.LMS.Model\\Cursus.LMS.Model.csproj|d:\\thuctap\\team_6_curscus_dev\\cursus-lms\\cursus.lms\\cursus.lms.model\\dto\\signresponsedto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{FAF8500C-EC4A-4B0F-A960-19793A294F8D}|Cursus.LMS.Model\\Cursus.LMS.Model.csproj|solutionrelative:cursus.lms.model\\dto\\signresponsedto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{FAF8500C-EC4A-4B0F-A960-19793A294F8D}|Cursus.LMS.Model\\Cursus.LMS.Model.csproj|d:\\thuctap\\team_6_curscus_dev\\cursus-lms\\cursus.lms\\cursus.lms.model\\dto\\signdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -54,7 +70,7 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 12,
+          "SelectedChildIndex": 10,
           "Children": [
             {
               "$type": "Bookmark",
@@ -78,19 +94,20 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 5,
-              "Title": "SignResponseDTO.cs",
-              "DocumentMoniker": "D:\\ThucTap\\Team_6_Curscus_Dev\\cursus-lms\\Cursus.LMS\\Cursus.LMS.Model\\DTO\\SignResponseDTO.cs",
-              "RelativeDocumentMoniker": "Cursus.LMS.Model\\DTO\\SignResponseDTO.cs",
-              "ToolTip": "D:\\ThucTap\\Team_6_Curscus_Dev\\cursus-lms\\Cursus.LMS\\Cursus.LMS.Model\\DTO\\SignResponseDTO.cs",
-              "RelativeToolTip": "Cursus.LMS.Model\\DTO\\SignResponseDTO.cs",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAsAAAAuAAAA",
+              "DocumentIndex": 1,
+              "Title": "UserInfo.cs",
+              "DocumentMoniker": "D:\\ThucTap\\Team_6_Curscus_Dev\\cursus-lms\\Cursus.LMS\\Cursus.LMS.Model\\DTO\\UserInfo.cs",
+              "RelativeDocumentMoniker": "Cursus.LMS.Model\\DTO\\UserInfo.cs",
+              "ToolTip": "D:\\ThucTap\\Team_6_Curscus_Dev\\cursus-lms\\Cursus.LMS\\Cursus.LMS.Model\\DTO\\UserInfo.cs",
+              "RelativeToolTip": "Cursus.LMS.Model\\DTO\\UserInfo.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAABcAAAAAAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-05-31T07:20:34.764Z"
+              "WhenOpened": "2024-05-31T09:18:07.039Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 8,
+              "DocumentIndex": 9,
               "Title": "ResponseDTO.cs",
               "DocumentMoniker": "D:\\ThucTap\\Team_6_Curscus_Dev\\cursus-lms\\Cursus.LMS\\Cursus.LMS.Model\\DTO\\ResponseDTO.cs",
               "RelativeDocumentMoniker": "Cursus.LMS.Model\\DTO\\ResponseDTO.cs",
@@ -98,23 +115,12 @@
               "RelativeToolTip": "Cursus.LMS.Model\\DTO\\ResponseDTO.cs",
               "ViewState": "AQIAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-05-31T06:58:22.548Z"
+              "WhenOpened": "2024-05-31T06:58:22.548Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 6,
-              "Title": "UserInfo.cs",
-              "DocumentMoniker": "D:\\ThucTap\\Team_6_Curscus_Dev\\cursus-lms\\Cursus.LMS\\Cursus.LMS.Model\\DTO\\UserInfo.cs",
-              "RelativeDocumentMoniker": "Cursus.LMS.Model\\DTO\\UserInfo.cs",
-              "ToolTip": "D:\\ThucTap\\Team_6_Curscus_Dev\\cursus-lms\\Cursus.LMS\\Cursus.LMS.Model\\DTO\\UserInfo.cs",
-              "RelativeToolTip": "Cursus.LMS.Model\\DTO\\UserInfo.cs",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAABYAAAAAAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-05-31T06:55:52.81Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 9,
+              "DocumentIndex": 13,
               "Title": "SignDTO.cs",
               "DocumentMoniker": "D:\\ThucTap\\Team_6_Curscus_Dev\\cursus-lms\\Cursus.LMS\\Cursus.LMS.Model\\DTO\\SignDTO.cs",
               "RelativeDocumentMoniker": "Cursus.LMS.Model\\DTO\\SignDTO.cs",
@@ -126,19 +132,46 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 7,
+              "DocumentIndex": 4,
               "Title": "ApplicationUser.cs",
               "DocumentMoniker": "D:\\ThucTap\\Team_6_Curscus_Dev\\cursus-lms\\Cursus.LMS\\Cursus.LMS.Model\\Domain\\ApplicationUser.cs",
               "RelativeDocumentMoniker": "Cursus.LMS.Model\\Domain\\ApplicationUser.cs",
               "ToolTip": "D:\\ThucTap\\Team_6_Curscus_Dev\\cursus-lms\\Cursus.LMS\\Cursus.LMS.Model\\Domain\\ApplicationUser.cs",
               "RelativeToolTip": "Cursus.LMS.Model\\Domain\\ApplicationUser.cs",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAgAAAAQAAAA",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAkAAAAEAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-05-31T06:40:11.351Z"
+              "WhenOpened": "2024-05-31T06:40:11.351Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 3,
+              "Title": "AuthController.cs",
+              "DocumentMoniker": "D:\\ThucTap\\Team_6_Curscus_Dev\\cursus-lms\\Cursus.LMS\\Cursus.LMS.API\\Controllers\\AuthController.cs",
+              "RelativeDocumentMoniker": "Cursus.LMS.API\\Controllers\\AuthController.cs",
+              "ToolTip": "D:\\ThucTap\\Team_6_Curscus_Dev\\cursus-lms\\Cursus.LMS\\Cursus.LMS.API\\Controllers\\AuthController.cs",
+              "RelativeToolTip": "Cursus.LMS.API\\Controllers\\AuthController.cs",
+              "ViewState": "AQIAAGkAAAAAAAAAAAAmwCIAAAAuAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-05-31T05:56:50.18Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "AutoMapperProfile.cs",
+              "DocumentMoniker": "D:\\ThucTap\\Team_6_Curscus_Dev\\cursus-lms\\Cursus.LMS\\Cursus.LMS.Service\\Mappings\\AutoMapperProfile.cs",
+              "RelativeDocumentMoniker": "Cursus.LMS.Service\\Mappings\\AutoMapperProfile.cs",
+              "ToolTip": "D:\\ThucTap\\Team_6_Curscus_Dev\\cursus-lms\\Cursus.LMS\\Cursus.LMS.Service\\Mappings\\AutoMapperProfile.cs",
+              "RelativeToolTip": "Cursus.LMS.Service\\Mappings\\AutoMapperProfile.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAwAAAABAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-05-31T09:05:39.477Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 11,
               "Title": "IAuthService.cs",
               "DocumentMoniker": "D:\\ThucTap\\Team_6_Curscus_Dev\\cursus-lms\\Cursus.LMS\\Cursus.LMS.Service\\IService\\IAuthService.cs",
               "RelativeDocumentMoniker": "Cursus.LMS.Service\\IService\\IAuthService.cs",
@@ -156,50 +189,91 @@
               "RelativeDocumentMoniker": "Cursus.LMS.Service\\Service\\AuthService.cs",
               "ToolTip": "D:\\ThucTap\\Team_6_Curscus_Dev\\cursus-lms\\Cursus.LMS\\Cursus.LMS.Service\\Service\\AuthService.cs",
               "RelativeToolTip": "Cursus.LMS.Service\\Service\\AuthService.cs",
-              "ViewState": "AQIAACoAAAAAAAAAAAAowDoAAAAYAAAA",
+              "ViewState": "AQIAAG0AAAAAAAAAAAAYwIIAAAAxAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-05-31T06:12:07.819Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 0,
-              "Title": "AuthController.cs",
-              "DocumentMoniker": "D:\\ThucTap\\Team_6_Curscus_Dev\\cursus-lms\\Cursus.LMS\\Cursus.LMS.API\\Controllers\\AuthController.cs",
-              "RelativeDocumentMoniker": "Cursus.LMS.API\\Controllers\\AuthController.cs",
-              "ToolTip": "D:\\ThucTap\\Team_6_Curscus_Dev\\cursus-lms\\Cursus.LMS\\Cursus.LMS.API\\Controllers\\AuthController.cs",
-              "RelativeToolTip": "Cursus.LMS.API\\Controllers\\AuthController.cs",
-              "ViewState": "AQIAAEoAAAAAAAAAAAAIwIYAAAANAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-05-31T05:56:50.18Z",
+              "WhenOpened": "2024-05-31T06:12:07.819Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 5,
               "Title": "Program.cs",
               "DocumentMoniker": "D:\\ThucTap\\Team_6_Curscus_Dev\\cursus-lms\\Cursus.LMS\\Cursus.LMS.API\\Program.cs",
               "RelativeDocumentMoniker": "Cursus.LMS.API\\Program.cs",
               "ToolTip": "D:\\ThucTap\\Team_6_Curscus_Dev\\cursus-lms\\Cursus.LMS\\Cursus.LMS.API\\Program.cs",
               "RelativeToolTip": "Cursus.LMS.API\\Program.cs",
-              "ViewState": "AQIAACcAAAAAAAAAAAAAACgAAAAkAAAA",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAB8AAAA6AAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-05-31T07:59:01.044Z"
+              "WhenOpened": "2024-05-31T07:59:01.044Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 4,
+              "DocumentIndex": 6,
+              "Title": "launchSettings.json",
+              "DocumentMoniker": "D:\\ThucTap\\Team_6_Curscus_Dev\\cursus-lms\\Cursus.LMS\\Cursus.LMS.API\\Properties\\launchSettings.json",
+              "RelativeDocumentMoniker": "Cursus.LMS.API\\Properties\\launchSettings.json",
+              "ToolTip": "D:\\ThucTap\\Team_6_Curscus_Dev\\cursus-lms\\Cursus.LMS\\Cursus.LMS.API\\Properties\\launchSettings.json",
+              "RelativeToolTip": "Cursus.LMS.API\\Properties\\launchSettings.json",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
+              "WhenOpened": "2024-05-31T09:10:09.169Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 10,
+              "Title": "EmailService.cs",
+              "DocumentMoniker": "D:\\ThucTap\\Team_6_Curscus_Dev\\cursus-lms\\Cursus.LMS\\Cursus.LMS.Service\\Service\\EmailService.cs",
+              "RelativeDocumentMoniker": "Cursus.LMS.Service\\Service\\EmailService.cs",
+              "ToolTip": "D:\\ThucTap\\Team_6_Curscus_Dev\\cursus-lms\\Cursus.LMS\\Cursus.LMS.Service\\Service\\EmailService.cs",
+              "RelativeToolTip": "Cursus.LMS.Service\\Service\\EmailService.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-05-31T09:05:48.613Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 7,
               "Title": "appsettings.json",
               "DocumentMoniker": "D:\\ThucTap\\Team_6_Curscus_Dev\\cursus-lms\\Cursus.LMS\\Cursus.LMS.API\\appsettings.json",
               "RelativeDocumentMoniker": "Cursus.LMS.API\\appsettings.json",
               "ToolTip": "D:\\ThucTap\\Team_6_Curscus_Dev\\cursus-lms\\Cursus.LMS\\Cursus.LMS.API\\appsettings.json",
               "RelativeToolTip": "Cursus.LMS.API\\appsettings.json",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAABAAAAADAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
-              "WhenOpened": "2024-05-31T07:44:44.547Z"
+              "WhenOpened": "2024-05-31T07:44:44.547Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 10,
+              "DocumentIndex": 8,
+              "Title": "InstructorDTO.cs",
+              "DocumentMoniker": "D:\\ThucTap\\Team_6_Curscus_Dev\\cursus-lms\\Cursus.LMS\\Cursus.LMS.Model\\DTO\\InstructorDTO.cs",
+              "RelativeDocumentMoniker": "Cursus.LMS.Model\\DTO\\InstructorDTO.cs",
+              "ToolTip": "D:\\ThucTap\\Team_6_Curscus_Dev\\cursus-lms\\Cursus.LMS\\Cursus.LMS.Model\\DTO\\InstructorDTO.cs",
+              "RelativeToolTip": "Cursus.LMS.Model\\DTO\\InstructorDTO.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-05-31T09:05:52.588Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 12,
+              "Title": "SignResponseDTO.cs",
+              "DocumentMoniker": "D:\\ThucTap\\Team_6_Curscus_Dev\\cursus-lms\\Cursus.LMS\\Cursus.LMS.Model\\DTO\\SignResponseDTO.cs",
+              "RelativeDocumentMoniker": "Cursus.LMS.Model\\DTO\\SignResponseDTO.cs",
+              "ToolTip": "D:\\ThucTap\\Team_6_Curscus_Dev\\cursus-lms\\Cursus.LMS\\Cursus.LMS.Model\\DTO\\SignResponseDTO.cs",
+              "RelativeToolTip": "Cursus.LMS.Model\\DTO\\SignResponseDTO.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAsAAAAuAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-05-31T07:20:34.764Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 14,
               "Title": "ApplicationDbContext.cs",
               "DocumentMoniker": "D:\\ThucTap\\Team_6_Curscus_Dev\\cursus-lms\\Cursus.LMS\\Cursus.LMS.DataAccess\\Context\\ApplicationDbContext.cs",
               "RelativeDocumentMoniker": "Cursus.LMS.DataAccess\\Context\\ApplicationDbContext.cs",

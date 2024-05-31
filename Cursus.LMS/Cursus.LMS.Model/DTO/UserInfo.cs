@@ -17,6 +17,7 @@ namespace Cursus.LMS.Model.DTO
         public string Country { get; set; }
         public string PhoneNumber { get; set; }
         public string Address { get; set; }
+        public string? AvartarUrl { get; set; }
         public IEnumerable<string> Roles { get; set; }
     }
 }
