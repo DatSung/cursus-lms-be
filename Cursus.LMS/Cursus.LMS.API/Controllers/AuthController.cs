@@ -52,6 +52,43 @@ namespace Cursus.LMS.API.Controllers
             return StatusCode(result.StatusCode, result);
         }
 
+        /// <summary>
+        /// This API for feature upload instructor degree
+        /// </summary>
+        /// <param name="file"></param>
+        /// <returns></returns>
+        [HttpPost]
+        [Route("upload-instructor-degree")]
+        [Authorize]
+        public async Task<ActionResult<ResponseDTO>> UploadInstructorDegree(IFormFile? file)
+        {
+            var response = await _authService.UploadInstructorDegree(file, User);
+            return StatusCode(response.StatusCode, response);
+        }
+
+        /// <summary>
+        /// This API for feature get instructor degree image
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet]
+        [Route("get-instructor-degree")]
+        [Authorize]
+        public async Task<IActionResult> GetInstructorDegree()
+        {
+            var stream = await _authService.GetInstructorDegree(User);
+            if (stream is null)
+            {
+                return NotFound("User avatar does not exist!");
+            }
+
+            return File(stream, "image/png");
+        }
+
+        /// <summary>
+        /// This API for feature upload user avatar
+        /// </summary>
+        /// <param name="file"></param>
+        /// <returns></returns>
         [HttpPost]
         [Route("upload-user-avatar")]
         [Authorize]
@@ -61,6 +98,10 @@ namespace Cursus.LMS.API.Controllers
             return StatusCode(response.StatusCode, response);
         }
 
+        /// <summary>
+        /// This API for feature get user avatar
+        /// </summary>
+        /// <returns></returns>
         [HttpGet]
         [Route("get-user-avatar")]
         [Authorize]
