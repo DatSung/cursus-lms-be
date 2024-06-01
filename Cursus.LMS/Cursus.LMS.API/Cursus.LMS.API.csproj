@@ -22,8 +22,4 @@
       <ProjectReference Include="..\Cursus.LMS.Service\Cursus.LMS.Service.csproj" />
     </ItemGroup>
 
-    <ItemGroup>
-      <Folder Include="Controllers\" />
-    </ItemGroup>
-
 </Project>
