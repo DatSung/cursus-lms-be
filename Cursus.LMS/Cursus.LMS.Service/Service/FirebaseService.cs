@@ -18,45 +18,13 @@ public class FirebaseService : IFirebaseService
         _storageClient = storageClient;
     }
 
-    // public async Task<ResponseDTO> UploadImage(IFormFile file)
-    // {
-    //     if (file is null || file.Length == 0)
-    //     {
-    //         return new ResponseDTO()
-    //         {
-    //             IsSuccess = false,
-    //             StatusCode = 400,
-    //             Message = "File is empty!"
-    //         };
-    //     }
-    //
-    //     var fileName = $"{Guid.NewGuid()}_{file.FileName}";
-    //     var filePath = Path.Combine(Path.GetTempPath(), fileName);
-    //
-    //     using (var stream = new FileStream(filePath, FileMode.Create))
-    //     {
-    //         await file.CopyToAsync(stream);
-    //     }
-    //
-    //     using (var fileStream = new FileStream(filePath, FileMode.Open))
-    //     {
-    //         await _storageClient.UploadObjectAsync(_bucketName, fileName, null, fileStream);
-    //     }
-    //
-    //     System.IO.File.Delete(filePath);
-    //
-    //     var url = $"https://storage.googleapis.com/{_bucketName}/{fileName}";
-    //
-    //     return new ResponseDTO()
-    //     {
-    //         IsSuccess = true,
-    //         StatusCode = 200,
-    //         Result = url,
-    //         Message = "Upload image successfully!"
-    //     };
-    // }
-
-    public async Task<ResponseDTO> UploadUserAvatar(IFormFile file)
+    /// <summary>
+    /// This method for upload image to firebase storage bucket
+    /// </summary>
+    /// <param name="file"></param>
+    /// <param name="folder"></param>
+    /// <returns></returns>
+    public async Task<ResponseDTO> UploadImage(IFormFile file, string folder)
     {
         if (file is null || file.Length == 0)
         {
@@ -70,7 +38,7 @@ public class FirebaseService : IFirebaseService
 
         var fileName = $"{Guid.NewGuid()}_{file.FileName}";
 
-        var filePath = $"UserAvatars/{fileName}";
+        var filePath = $"{folder}/{fileName}";
 
         string url;
 
@@ -88,14 +56,26 @@ public class FirebaseService : IFirebaseService
         };
     }
 
+    /// <summary>
+    /// This method for get an image from firebase storage bucket
+    /// </summary>
+    /// <param name="filePath">The path of the file</param>
+    /// <returns></returns>
     public async Task<MemoryStream> GetImage(string filePath)
     {
-        MemoryStream memoryStream = new MemoryStream();
+        try
+        {
+            MemoryStream memoryStream = new MemoryStream();
 
-        await _storageClient.DownloadObjectAsync(_bucketName, filePath, memoryStream);
+            await _storageClient.DownloadObjectAsync(_bucketName, filePath, memoryStream);
 
-        memoryStream.Seek(0, SeekOrigin.Begin);
+            memoryStream.Seek(0, SeekOrigin.Begin);
 
-        return memoryStream;
+            return memoryStream;
+        }
+        catch (Exception e)
+        {
+            return null;
+        }
     }
 }
