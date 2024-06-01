@@ -1,5 +1,4 @@
 ﻿using AutoMapper;
-using Azure.Core;
 using Cursus.LMS.DataAccess.Context;
 using Cursus.LMS.Model.Domain;
 using Cursus.LMS.Model.DTO;
@@ -8,10 +7,10 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
-using System.Runtime.InteropServices;
 using System.Security.Claims;
 using System.Text;
 using Cursus.LMS.Utility.Constants;
+using Microsoft.AspNetCore.Http;
 
 namespace Cursus.LMS.Service.Service;
 
@@ -23,9 +22,11 @@ public class AuthService : IAuthService
     private readonly IConfiguration _configuration;
     private readonly IMapper _mapper;
     private readonly IEmailService _emailService;
+    private readonly IFirebaseService _firebaseService;
 
     public AuthService(UserManager<ApplicationUser> userManager, RoleManager<IdentityRole> roleManager,
-        IConfiguration configuration, IMapper mapper, IEmailService emailService, ApplicationDbContext dbContext)
+        IConfiguration configuration, IMapper mapper, IEmailService emailService, ApplicationDbContext dbContext,
+        IFirebaseService firebaseService)
     {
         _userManager = userManager;
         _roleManager = roleManager;
@@ -33,6 +34,7 @@ public class AuthService : IAuthService
         _mapper = mapper;
         _emailService = emailService;
         _dbContext = dbContext;
+        _firebaseService = firebaseService;
     }
 
 
@@ -70,6 +72,7 @@ public class AuthService : IAuthService
             {
                 Address = instructorDto.Address,
                 Email = instructorDto.Email,
+                BirthDate = instructorDto.BirthDate,
                 UserName = instructorDto.Email,
                 FullName = instructorDto.FullName,
                 Gender = instructorDto.Gender,
@@ -145,6 +148,85 @@ public class AuthService : IAuthService
             };
         }
     }
+
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="file"></param>
+    /// <param name="user"></param>
+    /// <returns></returns>
+    public async Task<ResponseDTO> UploadUserAvatar(IFormFile file, ClaimsPrincipal User)
+    {
+        try
+        {
+            var responseDto = await _firebaseService.UploadUserAvatar(file);
+
+            if (!responseDto.IsSuccess)
+            {
+                throw new Exception("Image upload fail!");
+            }
+
+            var userId = User.Claims.FirstOrDefault(x => x.Type == ClaimTypes.NameIdentifier)?.Value;
+
+            if (userId is null)
+            {
+                throw new Exception("Not authentication!");
+            }
+
+            var user = await _userManager.FindByIdAsync(userId);
+
+            if (user is null)
+            {
+                throw new Exception("User does not exist");
+            }
+
+            user.AvartarUrl = responseDto.Result?.ToString();
+
+            var updateResult = await _userManager.UpdateAsync(user);
+
+            if (!updateResult.Succeeded)
+            {
+                throw new Exception("Update user avatar fail!");
+            }
+
+            return new ResponseDTO()
+            {
+                Message = "Upload user avatar successfully!",
+                Result = null,
+                IsSuccess = true,
+                StatusCode = 200
+            };
+        }
+        catch (Exception e)
+        {
+            return new ResponseDTO()
+            {
+                Message = e.Message,
+                Result = null,
+                IsSuccess = false,
+                StatusCode = 500
+            };
+        }
+    }
+
+    public async Task<MemoryStream> GetUserAvatar(ClaimsPrincipal User)
+    {
+        try
+        {
+            var userId = User.Claims.FirstOrDefault(x => x.Type == ClaimTypes.NameIdentifier)?.Value;
+
+            var user = await _userManager.FindByIdAsync(userId);
+
+            var stream = await _firebaseService.GetImage(user.AvartarUrl);
+
+            return stream;
+        }
+        catch (Exception e)
+        {
+            return null;
+        }
+    }
+
 
     //Sign In bằng email và password trả về role tương ứng
     public async Task<SignResponseDTO> SignIn(SignDTO signDTO)

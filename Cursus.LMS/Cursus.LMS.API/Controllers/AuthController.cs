@@ -1,5 +1,6 @@
 using Cursus.LMS.Model.DTO;
 using Cursus.LMS.Service.IService;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -45,12 +46,34 @@ namespace Cursus.LMS.API.Controllers
         /// <returns>ResponseDTO</returns>
         [HttpPost]
         [Route("sign-up-instructor")]
-        public async Task<ActionResult<ResponseDTO>> SignUpInStructor([FromBody] InstructorDTO instructorDto)
+        public async Task<ActionResult<ResponseDTO>> SignUpInstructor([FromBody] InstructorDTO instructorDto)
         {
             var result = await _authService.SignUpInstructor(instructorDto);
             return StatusCode(result.StatusCode, result);
         }
 
+        [HttpPost]
+        [Route("upload-user-avatar")]
+        [Authorize]
+        public async Task<ActionResult<ResponseDTO>> UploadUserAvatar(IFormFile? file)
+        {
+            var response = await _authService.UploadUserAvatar(file, User);
+            return StatusCode(response.StatusCode, response);
+        }
+
+        [HttpGet]
+        [Route("get-user-avatar")]
+        [Authorize]
+        public async Task<IActionResult> GetUserAvatar()
+        {
+            var stream = await _authService.GetUserAvatar(User);
+            if (stream is null)
+            {
+                return NotFound("User avatar does not exist!");
+            }
+
+            return File(stream, "image/png");
+        }
 
         /// <summary>
         /// This API for case forgot password.
@@ -125,6 +148,7 @@ namespace Cursus.LMS.API.Controllers
             {
                 return BadRequest("Your Email or Password is incorrect ");
             }
+
             return Ok(SignResult);
         }
     }
