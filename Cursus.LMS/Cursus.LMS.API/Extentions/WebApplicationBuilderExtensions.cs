@@ -11,19 +11,20 @@ public static class WebApplicationBuilderExtensions
     {
         builder.Services.AddAuthentication(options =>
         {
+            options.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
             options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
             options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
         }).AddJwtBearer(options =>
         {
+            options.SaveToken = true;
+            options.RequireHttpsMetadata = false;
             options.TokenValidationParameters = new TokenValidationParameters()
             {
-                ValidateIssuerSigningKey = true,
-                IssuerSigningKey =
-                    new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["JWT:Secret"])),
                 ValidateIssuer = true,
                 ValidateAudience = true,
-                ValidIssuer = builder.Configuration["JWT:Issuer"],
-                ValidAudience = builder.Configuration["JWT:Audience"]
+                ValidIssuer = builder.Configuration["JWT:ValidIssuer"],
+                ValidAudience = builder.Configuration["JWT:ValidAudience"],
+                IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["JWT:Secret"]))
             };
         });
 
@@ -37,23 +38,26 @@ public static class WebApplicationBuilderExtensions
             options.AddSecurityDefinition(name: "Bearer", securityScheme: new OpenApiSecurityScheme()
             {
                 Name = "Authorization",
-                Description = "Bearer_[your-token]",
-                In = ParameterLocation.Header,
-                Type = SecuritySchemeType.ApiKey,
-                Scheme = "Bearer"
+                In = Microsoft.OpenApi.Models.ParameterLocation.Header,
+                Description = "Please enter your token with this format: \"Bearer YOUR_TOKEN\"",
+                Type = Microsoft.OpenApi.Models.SecuritySchemeType.ApiKey,
+                BearerFormat = "JWT",
+                Scheme = "bearer"
             });
             options.AddSecurityRequirement(new OpenApiSecurityRequirement()
             {
                 {
                     new OpenApiSecurityScheme()
                     {
+                        Name = "Bearer",
+                        In = ParameterLocation.Header,
                         Reference = new OpenApiReference()
                         {
-                            Type = ReferenceType.SecurityScheme,
-                            Id = JwtBearerDefaults.AuthenticationScheme
+                            Id = "Bearer",
+                            Type = ReferenceType.SecurityScheme
                         }
                     },
-                    new string[] { }
+                    new List<string>()
                 }
             });
         });

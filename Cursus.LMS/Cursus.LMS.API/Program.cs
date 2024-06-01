@@ -27,6 +27,10 @@ builder.Services.AddAutoMapper(typeof(AutoMapperProfile));
 // Base on Extensions.ServiceCollectionExtensions
 builder.Services.RegisterServices();
 
+// Register firebase services life cycle
+// Base on Extensions.FirebaseServiceExtensions
+builder.Services.AddFirebaseServices();
+
 builder.Services.AddEndpointsApiExplorer();
 
 // Register Authentication
@@ -47,6 +51,14 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
+
+app.UseCors(options =>
+{
+    options
+        .AllowAnyHeader()
+        .AllowAnyMethod()
+        .AllowAnyOrigin();
+});
 
 app.UseHttpsRedirection();
 
