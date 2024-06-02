@@ -11,6 +11,7 @@ using System.Security.Claims;
 using System.Text;
 using Cursus.LMS.Utility.Constants;
 using Microsoft.AspNetCore.Http;
+using Microsoft.EntityFrameworkCore;
 
 namespace Cursus.LMS.Service.Service;
 
@@ -78,7 +79,7 @@ public class AuthService : IAuthService
                 Gender = instructorDto.Gender,
                 Country = instructorDto.Country,
                 PhoneNumber = instructorDto.PhoneNumber,
-                AvartarUrl = ""
+                AvatarUrl = ""
             };
 
             // Create new user to database
@@ -150,22 +151,142 @@ public class AuthService : IAuthService
     }
 
     /// <summary>
-    /// 
+    /// This method for instructor to upload their degree
     /// </summary>
-    /// <param name="file"></param>
-    /// <param name="user"></param>
+    /// <param name="file">Image of a degree</param>
+    /// <param name="User">User who sent request</param>
     /// <returns></returns>
-    public async Task<ResponseDTO> UploadUserAvatar(IFormFile file, ClaimsPrincipal User)
+    public async Task<ResponseDTO> UploadInstructorDegree(IFormFile file, ClaimsPrincipal User)
     {
         try
         {
-            var responseDto = await _firebaseService.UploadUserAvatar(file);
+            var userId = User.Claims.FirstOrDefault(x => x.Type == ClaimTypes.NameIdentifier)?.Value;
+
+            if (userId is null)
+            {
+                throw new Exception("Not authentication!");
+            }
+
+            var instructor = await _dbContext.Instructors.FirstOrDefaultAsync(x => x.UserId == userId);
+
+            if (instructor is null)
+            {
+                throw new Exception("Instructor does not exist");
+            }
+
+            var responseDto = await _firebaseService.UploadImage(file, StaticFirebaseFolders.InstructorDegrees);
 
             if (!responseDto.IsSuccess)
             {
                 throw new Exception("Image upload fail!");
             }
 
+            instructor.DegreeImageUrl = responseDto.Result.ToString();
+
+            await _dbContext.SaveChangesAsync();
+
+            return new ResponseDTO()
+            {
+                IsSuccess = true,
+                StatusCode = 200,
+                Result = responseDto.Result,
+                Message = "Upload instructor degree successfully"
+            };
+        }
+        catch (Exception e)
+        {
+            return new ResponseDTO()
+            {
+                IsSuccess = false,
+                StatusCode = 500,
+                Result = null,
+                Message = e.Message
+            };
+        }
+    }
+
+    /// <summary>
+    /// This method to get instructor degree image
+    /// </summary>
+    /// <param name="User"></param>
+    /// <returns></returns>
+    public async Task<DegreeResponseDTO> GetInstructorDegree(ClaimsPrincipal User)
+    {
+        try
+        {
+            var userId = User.Claims.FirstOrDefault(x => x.Type == ClaimTypes.NameIdentifier)?.Value;
+
+            if (userId is null)
+            {
+                throw new Exception("User Unauthenticated!");
+            }
+
+            var instructor = await _dbContext.Instructors.FirstOrDefaultAsync(x => x.UserId == userId);
+
+            if (instructor is null)
+            {
+                throw new Exception("Instructor does not exist!");
+            }
+
+            var degreePath = instructor?.DegreeImageUrl;
+            if (degreePath.IsNullOrEmpty())
+            {
+                throw new Exception("Instructors did not upload degree!");
+            }
+
+            var stream = await _firebaseService.GetImage(instructor.DegreeImageUrl);
+
+            if (stream is null)
+            {
+                throw new Exception("Instructor did not upload degree");
+            }
+
+            var contentType = "Unsupported extensions!";
+            
+            if (degreePath.EndsWith(".pdf"))
+            {
+                contentType = StaticFileExtensions.Pdf;
+            }
+
+            if (degreePath.EndsWith(".png"))
+            {
+                contentType = StaticFileExtensions.Png;
+            }
+
+            if (degreePath.EndsWith(".jpg") || degreePath.EndsWith(",jpeg"))
+            {
+                contentType = StaticFileExtensions.Jpeg;
+            }
+
+            return new DegreeResponseDTO()
+            {
+                Message = "Get file successfully",
+                Stream = stream,
+                ContentType = contentType,
+                FileName = Path.GetFileName(degreePath)
+            };
+        }
+        catch (Exception e)
+        {
+            return new DegreeResponseDTO()
+            {
+                ContentType = null,
+                Message = e.Message,
+                Stream = null
+            };
+        }
+    }
+
+    /// <summary>
+    /// This method for users to upload their avatar
+    /// </summary>
+    /// <param name="file">An user avatar image</param>
+    /// <param name="user">An user who sent request</param>
+    /// <returns></returns>
+    public async Task<ResponseDTO> UploadUserAvatar(IFormFile file, ClaimsPrincipal User)
+    {
+        try
+        {
             var userId = User.Claims.FirstOrDefault(x => x.Type == ClaimTypes.NameIdentifier)?.Value;
 
             if (userId is null)
@@ -180,7 +301,14 @@ public class AuthService : IAuthService
                 throw new Exception("User does not exist");
             }
 
-            user.AvartarUrl = responseDto.Result?.ToString();
+            var responseDto = await _firebaseService.UploadImage(file, StaticFirebaseFolders.UserAvatars);
+
+            if (!responseDto.IsSuccess)
+            {
+                throw new Exception("Image upload fail!");
+            }
+
+            user.AvatarUrl = responseDto.Result?.ToString();
 
             var updateResult = await _userManager.UpdateAsync(user);
 
@@ -209,6 +337,11 @@ public class AuthService : IAuthService
         }
     }
 
+    /// <summary>
+    /// This method for user to get their avatar
+    /// </summary>
+    /// <param name="User">An user who sent request</param>
+    /// <returns></returns>
     public async Task<MemoryStream> GetUserAvatar(ClaimsPrincipal User)
     {
         try
@@ -217,7 +350,7 @@ public class AuthService : IAuthService
 
             var user = await _userManager.FindByIdAsync(userId);
 
-            var stream = await _firebaseService.GetImage(user.AvartarUrl);
+            var stream = await _firebaseService.GetImage(user.AvatarUrl);
 
             return stream;
         }

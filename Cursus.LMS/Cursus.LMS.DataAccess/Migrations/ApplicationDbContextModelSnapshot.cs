@@ -34,8 +34,7 @@ namespace Cursus.LMS.DataAccess.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("AvartarUrl")
-                        .IsRequired()
+                    b.Property<string>("AvatarUrl")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime>("BirthDate")
@@ -322,6 +321,9 @@ namespace Cursus.LMS.DataAccess.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("DegreeImageUrl")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("Industry")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -333,6 +335,9 @@ namespace Cursus.LMS.DataAccess.Migrations
                     b.Property<string>("UserId")
                         .IsRequired()
                         .HasColumnType("nvarchar(450)");
+
+                    b.Property<bool>("isAccepted")
+                        .HasColumnType("bit");
 
                     b.HasKey("InstructorId");
 

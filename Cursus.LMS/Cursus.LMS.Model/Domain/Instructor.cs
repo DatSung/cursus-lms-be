@@ -9,8 +9,11 @@ public class Instructor
     public string UserId { get; set; }
     [ForeignKey("UserId")] public virtual ApplicationUser ApplicationUser { get; set; }
     public string Degree { get; set; }
+    public string? DegreeImageUrl { get; set; }
     public string Industry { get; set; }
     public string Introduction { get; set; }
+
+    public bool isAccepted { get; set; } = false;
 
     [NotMapped] public virtual IEnumerable<Course> Courses { get; set; }
 }

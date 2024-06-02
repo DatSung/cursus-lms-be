@@ -1,5 +1,6 @@
 using Cursus.LMS.Model.DTO;
 using Cursus.LMS.Service.IService;
+using Cursus.LMS.Utility.ValidationAttribute;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -52,15 +53,61 @@ namespace Cursus.LMS.API.Controllers
             return StatusCode(result.StatusCode, result);
         }
 
+        /// <summary>
+        /// This API for feature upload instructor degree
+        /// </summary>
+        /// <param name="file"></param>
+        /// <returns></returns>
         [HttpPost]
-        [Route("upload-user-avatar")]
+        [Route("upload-instructor-degree")]
         [Authorize]
-        public async Task<ActionResult<ResponseDTO>> UploadUserAvatar(IFormFile? file)
+        public async Task<ActionResult<ResponseDTO>> UploadInstructorDegree(DegreeUploadDTO degreeUploadDto)
         {
-            var response = await _authService.UploadUserAvatar(file, User);
+            var response = await _authService.UploadInstructorDegree(degreeUploadDto.File, User);
             return StatusCode(response.StatusCode, response);
         }
 
+        /// <summary>
+        /// This API for feature get instructor degree image
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet]
+        [Route("get-instructor-degree")]
+        [Authorize]
+        public async Task<IActionResult> GetInstructorDegree([FromQuery] bool Download = false)
+        {
+            var degreeResponseDto = await _authService.GetInstructorDegree(User);
+            if (degreeResponseDto.Stream is null)
+            {
+                return NotFound("User avatar does not exist!");
+            }
+
+            if (Download)
+            {
+                return File(degreeResponseDto.Stream, degreeResponseDto.ContentType, degreeResponseDto.FileName);
+            }
+
+            return File(degreeResponseDto.Stream, degreeResponseDto.ContentType);
+        }
+
+        /// <summary>
+        /// This API for feature upload user avatar
+        /// </summary>
+        /// <param name="file"></param>
+        /// <returns></returns>
+        [HttpPost]
+        [Route("upload-user-avatar")]
+        [Authorize]
+        public async Task<ActionResult<ResponseDTO>> UploadUserAvatar(AvatarUploadDTO avatarUploadDto)
+        {
+            var response = await _authService.UploadUserAvatar(avatarUploadDto.File, User);
+            return StatusCode(response.StatusCode, response);
+        }
+
+        /// <summary>
+        /// This API for feature get user avatar
+        /// </summary>
+        /// <returns></returns>
         [HttpGet]
         [Route("get-user-avatar")]
         [Authorize]
