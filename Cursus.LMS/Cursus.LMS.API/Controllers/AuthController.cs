@@ -1,5 +1,6 @@
 using Cursus.LMS.Model.DTO;
 using Cursus.LMS.Service.IService;
+using Cursus.LMS.Utility.ValidationAttribute;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -60,9 +61,9 @@ namespace Cursus.LMS.API.Controllers
         [HttpPost]
         [Route("upload-instructor-degree")]
         [Authorize]
-        public async Task<ActionResult<ResponseDTO>> UploadInstructorDegree(IFormFile? file)
+        public async Task<ActionResult<ResponseDTO>> UploadInstructorDegree(DegreeUploadDTO degreeUploadDto)
         {
-            var response = await _authService.UploadInstructorDegree(file, User);
+            var response = await _authService.UploadInstructorDegree(degreeUploadDto.File, User);
             return StatusCode(response.StatusCode, response);
         }
 
@@ -73,15 +74,20 @@ namespace Cursus.LMS.API.Controllers
         [HttpGet]
         [Route("get-instructor-degree")]
         [Authorize]
-        public async Task<IActionResult> GetInstructorDegree()
+        public async Task<IActionResult> GetInstructorDegree([FromQuery] bool Download = false)
         {
-            var stream = await _authService.GetInstructorDegree(User);
-            if (stream is null)
+            var degreeResponseDto = await _authService.GetInstructorDegree(User);
+            if (degreeResponseDto.Stream is null)
             {
                 return NotFound("User avatar does not exist!");
             }
 
-            return File(stream, "image/png");
+            if (Download)
+            {
+                return File(degreeResponseDto.Stream, degreeResponseDto.ContentType, degreeResponseDto.FileName);
+            }
+
+            return File(degreeResponseDto.Stream, degreeResponseDto.ContentType);
         }
 
         /// <summary>
@@ -92,9 +98,9 @@ namespace Cursus.LMS.API.Controllers
         [HttpPost]
         [Route("upload-user-avatar")]
         [Authorize]
-        public async Task<ActionResult<ResponseDTO>> UploadUserAvatar(IFormFile? file)
+        public async Task<ActionResult<ResponseDTO>> UploadUserAvatar(AvatarUploadDTO avatarUploadDto)
         {
-            var response = await _authService.UploadUserAvatar(file, User);
+            var response = await _authService.UploadUserAvatar(avatarUploadDto.File, User);
             return StatusCode(response.StatusCode, response);
         }
 

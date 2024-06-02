@@ -210,21 +210,70 @@ public class AuthService : IAuthService
     /// </summary>
     /// <param name="User"></param>
     /// <returns></returns>
-    public async Task<MemoryStream> GetInstructorDegree(ClaimsPrincipal User)
+    public async Task<DegreeResponseDTO> GetInstructorDegree(ClaimsPrincipal User)
     {
         try
         {
             var userId = User.Claims.FirstOrDefault(x => x.Type == ClaimTypes.NameIdentifier)?.Value;
 
+            if (userId is null)
+            {
+                throw new Exception("User Unauthenticated!");
+            }
+
             var instructor = await _dbContext.Instructors.FirstOrDefaultAsync(x => x.UserId == userId);
+
+            if (instructor is null)
+            {
+                throw new Exception("Instructor does not exist!");
+            }
+
+            var degreePath = instructor?.DegreeImageUrl;
+            if (degreePath.IsNullOrEmpty())
+            {
+                throw new Exception("Instructors did not upload degree!");
+            }
 
             var stream = await _firebaseService.GetImage(instructor.DegreeImageUrl);
 
-            return stream;
+            if (stream is null)
+            {
+                throw new Exception("Instructor did not upload degree");
+            }
+
+            var contentType = "Unsupported extensions!";
+            
+            if (degreePath.EndsWith(".pdf"))
+            {
+                contentType = StaticFileExtensions.Pdf;
+            }
+
+            if (degreePath.EndsWith(".png"))
+            {
+                contentType = StaticFileExtensions.Png;
+            }
+
+            if (degreePath.EndsWith(".jpg") || degreePath.EndsWith(",jpeg"))
+            {
+                contentType = StaticFileExtensions.Jpeg;
+            }
+
+            return new DegreeResponseDTO()
+            {
+                Message = "Get file successfully",
+                Stream = stream,
+                ContentType = contentType,
+                FileName = Path.GetFileName(degreePath)
+            };
         }
         catch (Exception e)
         {
-            return null;
+            return new DegreeResponseDTO()
+            {
+                ContentType = null,
+                Message = e.Message,
+                Stream = null
+            };
         }
     }
 
