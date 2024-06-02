@@ -10,7 +10,7 @@ public interface IAuthService
     Task<ResponseDTO> SignUpInstructor(InstructorDTO instructorDto);
     Task<ResponseDTO> UploadInstructorDegree(IFormFile file, ClaimsPrincipal user);
     Task<ResponseDTO> UploadUserAvatar(IFormFile file, ClaimsPrincipal user);
-    Task<MemoryStream> GetInstructorDegree(ClaimsPrincipal user);
+    Task<DegreeResponseDTO> GetInstructorDegree(ClaimsPrincipal user);
     Task<MemoryStream> GetUserAvatar(ClaimsPrincipal user);
     Task<SignResponseDTO> SignIn(SignDTO signDTO);
     Task<ResponseDTO> ForgotPassword();
