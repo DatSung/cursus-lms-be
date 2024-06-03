@@ -13,7 +13,8 @@ public interface IAuthService
     Task<DegreeResponseDTO> GetInstructorDegree(ClaimsPrincipal user);
     Task<MemoryStream> GetUserAvatar(ClaimsPrincipal user);
     Task<SignResponseDTO> SignIn(SignDTO signDTO);
-    Task<ResponseDTO> ForgotPassword();
-    Task<ResponseDTO> ChangePassword();
+    Task<ResponseDTO> ForgotPassword(ForgotPasswordDTO forgotPasswordDto);
+    Task<ResponseDTO> ResetPassword(string resetPasswordDto, string token, string password);
+    Task<ResponseDTO> ChangePassword(string userId, string oldPassword, string newPassword, string confirmNewPassword);
     Task<ResponseDTO> VerifyEmail();
 }

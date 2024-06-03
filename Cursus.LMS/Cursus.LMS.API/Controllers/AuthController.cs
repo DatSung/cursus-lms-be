@@ -1,9 +1,14 @@
+using System.Security.Claims;
+using System.Text;
+using Cursus.LMS.Model.Domain;
 using Cursus.LMS.Model.DTO;
 using Cursus.LMS.Service.IService;
 using Cursus.LMS.Utility.ValidationAttribute;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace Cursus.LMS.API.Controllers
 {
@@ -14,11 +19,13 @@ namespace Cursus.LMS.API.Controllers
         private readonly IEmailService _emailService;
         private readonly IAuthService _authService;
         private ResponseDTO responseDto = new ResponseDTO();
+        private readonly UserManager<ApplicationUser> _userManager;
 
-        public AuthController(IEmailService emailService, IAuthService authService)
+        public AuthController(IEmailService emailService, IAuthService authService,UserManager<ApplicationUser> userManager)
         {
             _emailService = emailService;
             _authService = authService;
+            _userManager = userManager;
         }
 
         /// <summary>
@@ -128,18 +135,21 @@ namespace Cursus.LMS.API.Controllers
         /// <returns>ResponseDTO</returns>
         [HttpPost]
         [Route("forgot-password")]
-        public async Task<ActionResult<ResponseDTO>> ForgotPassword()
+        public async Task<ActionResult<ResponseDTO>> ForgotPassword([FromBody] ForgotPasswordDTO forgotPasswordDto)
         {
-            try
-            {
-            }
-            catch (Exception e)
-            {
-                responseDto.IsSuccess = false;
-                responseDto.Message = e.Message;
-            }
-
-            return Ok(responseDto);
+            var result = await _authService.ForgotPassword(forgotPasswordDto);
+            return StatusCode(result.StatusCode, result);
+        }
+        
+        /// <summary>
+        /// This API for case reset password.
+        /// </summary>
+        /// <returns>ResponseDTO</returns>
+        [HttpPost("reset-password")]
+        public async Task<ActionResult<ResponseDTO>> ResetPassword([FromBody] ResetPasswordDTO resetPasswordDto)
+        {
+            var result = await _authService.ResetPassword(resetPasswordDto.Email, resetPasswordDto.Token,resetPasswordDto.Password);
+            return StatusCode(result.StatusCode, result);
         }
 
         /// <summary>
@@ -168,19 +178,23 @@ namespace Cursus.LMS.API.Controllers
         /// <returns>ResponseDTO</returns>
         [HttpPost]
         [Route("change-password")]
-        public async Task<ActionResult<ResponseDTO>> ChangePassword()
+        public async Task<ActionResult<ResponseDTO>> ChangePassword(ChangePasswordDTO changePasswordDto)
         {
-            try
-            {
-            }
-            catch (Exception e)
-            {
-                responseDto.IsSuccess = false;
-                responseDto.Message = e.Message;
-            }
+            // Lấy Id người dùng hiện tại.
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
 
-            return Ok(responseDto);
+            var response = await _authService.ChangePassword(userId, changePasswordDto.OldPassword, changePasswordDto.NewPassword, changePasswordDto.ConfirmNewPassword);
+
+            if (response.IsSuccess)
+            {
+                return Ok(response.Message);
+            }
+            else
+            {
+                return BadRequest(response.Message);
+            }
         }
+
 
         /// <summary>
         /// This API for case sign in.
