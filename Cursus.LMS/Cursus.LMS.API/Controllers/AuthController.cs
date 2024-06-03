@@ -4,6 +4,10 @@ using Cursus.LMS.Utility.ValidationAttribute;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using SendEmailWithGoogleSMTP;
+using System;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace Cursus.LMS.API.Controllers
 {
@@ -13,12 +17,14 @@ namespace Cursus.LMS.API.Controllers
     {
         private readonly IEmailService _emailService;
         private readonly IAuthService _authService;
+        private readonly EmailSender _emailSender;
         private ResponseDTO responseDto = new ResponseDTO();
 
-        public AuthController(IEmailService emailService, IAuthService authService)
+        public AuthController(IEmailService emailService, IAuthService authService, EmailSender emailSender)
         {
             _emailService = emailService;
             _authService = authService;
+            _emailSender = emailSender;
         }
 
         /// <summary>
@@ -145,18 +151,37 @@ namespace Cursus.LMS.API.Controllers
         /// <summary>
         /// This API for case verify email.
         /// </summary>
+        /// <param name="emailRequest"></param>
         /// <returns>ResponseDTO</returns>
         [HttpPost]
         [Route("verify-email")]
-        public async Task<ActionResult<ResponseDTO>> VerifyEmail()
+        public async Task<ActionResult<ResponseDTO>> VerifyEmail([FromBody] EmailRequest emailRequest)
         {
             try
             {
+                if (!emailRequest.Role.Any() || emailRequest.Role.Contains("student"))
+                {
+                    _emailSender.SendEmail(emailRequest.ToMail);
+                }
+                else if (emailRequest.Role.Contains("admin"))
+                {
+                    _emailSender.SendEmailForInstructor(emailRequest.ToMail);
+                }
+                else
+                {
+                    responseDto.IsSuccess = false;
+                    responseDto.Message = "Invalid role specified. Email not sent.";
+                    return BadRequest(responseDto);
+                }
+
+                responseDto.IsSuccess = true;
+                responseDto.Message = "Email sent successfully.";
             }
             catch (Exception e)
             {
                 responseDto.IsSuccess = false;
                 responseDto.Message = e.Message;
+                return StatusCode(StatusCodes.Status500InternalServerError, responseDto);
             }
 
             return Ok(responseDto);
@@ -198,5 +223,11 @@ namespace Cursus.LMS.API.Controllers
 
             return Ok(SignResult);
         }
+    }
+
+    public class EmailRequest
+    {
+        public string ToMail { get; set; }
+        public IEnumerable<string> Role { get; set; }
     }
 }

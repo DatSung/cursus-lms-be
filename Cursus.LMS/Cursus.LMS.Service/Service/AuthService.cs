@@ -440,4 +440,25 @@ public class AuthService : IAuthService
     {
         throw new NotImplementedException();
     }
+
+    public async Task<UserInfo> GetUserByEmail(string email)
+    {
+        // Implement logic to retrieve user information from the database based on the email
+        // This could involve querying your database or any other data source
+        // For example:
+        // var user = await _userRepository.GetUserByEmail(email);
+        // return user;
+
+        // Placeholder return for demonstration
+        return new UserInfo
+        {
+            Id = "123",
+            UserName = "exampleUser",
+            FullName = "John Doe",
+            Email = email,
+            // Other properties...
+        };
+    }
+
+
 }

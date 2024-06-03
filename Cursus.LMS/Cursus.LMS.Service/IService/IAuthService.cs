@@ -16,4 +16,5 @@ public interface IAuthService
     Task<ResponseDTO> ForgotPassword();
     Task<ResponseDTO> ChangePassword();
     Task<ResponseDTO> VerifyEmail();
+    Task<UserInfo> GetUserByEmail(string email);
 }
