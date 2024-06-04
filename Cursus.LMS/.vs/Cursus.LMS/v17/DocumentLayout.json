@@ -59,10 +59,6 @@
       "RelativeMoniker": "D:0:0:{BA87DACF-F298-45B8-8D2E-A464DD8AE492}|Cursus.LMS.API\\Cursus.LMS.API.csproj|solutionrelative:cursus.lms.api\\extentions\\webapplicationbuilderextensions.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{A91F22F2-1175-45D2-ADE5-D1B606AA6E1B}|Cursus.LMS.DataAccess\\Cursus.LMS.DataAccess.csproj|d:\\hehe2\\cursus.lms\\cursus.lms.dataaccess\\migrations\\20240529050241_initial.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{A91F22F2-1175-45D2-ADE5-D1B606AA6E1B}|Cursus.LMS.DataAccess\\Cursus.LMS.DataAccess.csproj|solutionrelative:cursus.lms.dataaccess\\migrations\\20240529050241_initial.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{FAF8500C-EC4A-4B0F-A960-19793A294F8D}|Cursus.LMS.Model\\Cursus.LMS.Model.csproj|d:\\hehe2\\cursus.lms\\cursus.lms.model\\domain\\category.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{FAF8500C-EC4A-4B0F-A960-19793A294F8D}|Cursus.LMS.Model\\Cursus.LMS.Model.csproj|solutionrelative:cursus.lms.model\\domain\\category.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
@@ -73,6 +69,10 @@
     {
       "AbsoluteMoniker": "D:0:0:{BA87DACF-F298-45B8-8D2E-A464DD8AE492}|Cursus.LMS.API\\Cursus.LMS.API.csproj|d:\\hehe2\\cursus.lms\\cursus.lms.api\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
       "RelativeMoniker": "D:0:0:{BA87DACF-F298-45B8-8D2E-A464DD8AE492}|Cursus.LMS.API\\Cursus.LMS.API.csproj|solutionrelative:cursus.lms.api\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|D:\\hehe2\\Cursus.LMS\\Cursus.LMS.DataAccess\\Migrations\\20240529050241_Initial.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:Cursus.LMS.DataAccess\\Migrations\\20240529050241_Initial.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -148,7 +148,7 @@
               "RelativeDocumentMoniker": "Cursus.LMS.Service\\Service\\AuthService.cs",
               "ToolTip": "D:\\hehe2\\Cursus.LMS\\Cursus.LMS.Service\\Service\\AuthService.cs",
               "RelativeToolTip": "Cursus.LMS.Service\\Service\\AuthService.cs",
-              "ViewState": "AQIAAIEAAAAAAAAAAAAAAGwAAAAoAAAA",
+              "ViewState": "AQIAAKIAAAAAAAAAAAAAAGwAAAAjAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-05-31T04:14:18.875Z",
               "EditorCaption": ""
@@ -263,7 +263,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 15,
+              "DocumentIndex": 14,
               "Title": "Category.cs",
               "DocumentMoniker": "D:\\hehe2\\Cursus.LMS\\Cursus.LMS.Model\\Domain\\Category.cs",
               "RelativeDocumentMoniker": "Cursus.LMS.Model\\Domain\\Category.cs",
@@ -275,7 +275,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 17,
+              "DocumentIndex": 16,
               "Title": "appsettings.json",
               "DocumentMoniker": "D:\\hehe2\\Cursus.LMS\\Cursus.LMS.API\\appsettings.json",
               "RelativeDocumentMoniker": "Cursus.LMS.API\\appsettings.json",
@@ -287,7 +287,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 16,
+              "DocumentIndex": 15,
               "Title": "ApplicationDbContextModelSnapshot.cs",
               "DocumentMoniker": "D:\\hehe2\\Cursus.LMS\\Cursus.LMS.DataAccess\\Migrations\\ApplicationDbContextModelSnapshot.cs",
               "RelativeDocumentMoniker": "Cursus.LMS.DataAccess\\Migrations\\ApplicationDbContextModelSnapshot.cs",
@@ -299,7 +299,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 14,
+              "DocumentIndex": 17,
               "Title": "20240529050241_Initial.cs",
               "DocumentMoniker": "D:\\hehe2\\Cursus.LMS\\Cursus.LMS.DataAccess\\Migrations\\20240529050241_Initial.cs",
               "RelativeDocumentMoniker": "Cursus.LMS.DataAccess\\Migrations\\20240529050241_Initial.cs",

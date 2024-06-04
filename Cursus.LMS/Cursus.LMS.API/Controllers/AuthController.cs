@@ -1,7 +1,16 @@
+<<<<<<< HEAD
     using Cursus.LMS.Model.DTO;
     using Cursus.LMS.Service.IService;
     using Microsoft.AspNetCore.Http;
     using Microsoft.AspNetCore.Mvc;
+=======
+using Cursus.LMS.Model.DTO;
+using Cursus.LMS.Service.IService;
+using Cursus.LMS.Utility.ValidationAttribute;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
+>>>>>>> main
 
     namespace Cursus.LMS.API.Controllers
     {
@@ -61,12 +70,80 @@
         /// <returns>ResponseDTO</returns>
         [HttpPost]
         [Route("sign-up-instructor")]
-        public async Task<ActionResult<ResponseDTO>> SignUpInStructor([FromBody] InstructorDTO instructorDto)
+        public async Task<ActionResult<ResponseDTO>> SignUpInstructor([FromBody] InstructorDTO instructorDto)
         {
             var result = await _authService.SignUpInstructor(instructorDto);
             return StatusCode(result.StatusCode, result);
         }
 
+        /// <summary>
+        /// This API for feature upload instructor degree
+        /// </summary>
+        /// <param name="file"></param>
+        /// <returns></returns>
+        [HttpPost]
+        [Route("upload-instructor-degree")]
+        [Authorize]
+        public async Task<ActionResult<ResponseDTO>> UploadInstructorDegree(DegreeUploadDTO degreeUploadDto)
+        {
+            var response = await _authService.UploadInstructorDegree(degreeUploadDto.File, User);
+            return StatusCode(response.StatusCode, response);
+        }
+
+        /// <summary>
+        /// This API for feature get instructor degree image
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet]
+        [Route("get-instructor-degree")]
+        [Authorize]
+        public async Task<IActionResult> GetInstructorDegree([FromQuery] bool Download = false)
+        {
+            var degreeResponseDto = await _authService.GetInstructorDegree(User);
+            if (degreeResponseDto.Stream is null)
+            {
+                return NotFound("User avatar does not exist!");
+            }
+
+            if (Download)
+            {
+                return File(degreeResponseDto.Stream, degreeResponseDto.ContentType, degreeResponseDto.FileName);
+            }
+
+            return File(degreeResponseDto.Stream, degreeResponseDto.ContentType);
+        }
+
+        /// <summary>
+        /// This API for feature upload user avatar
+        /// </summary>
+        /// <param name="file"></param>
+        /// <returns></returns>
+        [HttpPost]
+        [Route("upload-user-avatar")]
+        [Authorize]
+        public async Task<ActionResult<ResponseDTO>> UploadUserAvatar(AvatarUploadDTO avatarUploadDto)
+        {
+            var response = await _authService.UploadUserAvatar(avatarUploadDto.File, User);
+            return StatusCode(response.StatusCode, response);
+        }
+
+        /// <summary>
+        /// This API for feature get user avatar
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet]
+        [Route("get-user-avatar")]
+        [Authorize]
+        public async Task<IActionResult> GetUserAvatar()
+        {
+            var stream = await _authService.GetUserAvatar(User);
+            if (stream is null)
+            {
+                return NotFound("User avatar does not exist!");
+            }
+
+            return File(stream, "image/png");
+        }
 
         /// <summary>
         /// This API for case forgot password.
@@ -134,18 +211,15 @@
         /// <returns>ResponseDTO</returns>
         [HttpPost]
         [Route("sign-in")]
-        public async Task<ActionResult<ResponseDTO>> SignIn()
+        public async Task<ActionResult<SignResponseDTO>> SignIn([FromBody] SignDTO signDto)
         {
-            try
+            var SignResult = await _authService.SignIn(signDto);
+            if (SignResult == null)
             {
-            }
-            catch (Exception e)
-            {
-                responseDto.IsSuccess = false;
-                responseDto.Message = e.Message;
+                return BadRequest("Your Email or Password is incorrect ");
             }
 
-            return Ok(responseDto);
+            return Ok(SignResult);
         }
     }
 }
