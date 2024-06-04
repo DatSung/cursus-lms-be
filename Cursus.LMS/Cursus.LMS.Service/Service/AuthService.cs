@@ -420,20 +420,155 @@ public class AuthService : IAuthService
             claims: authClaims, //danh sách thông tin của người dùng
             signingCredentials: signingCredentials
         );
-        // tạo thành công mã thông báo
+        // tạo thành công mã thông báo          
         var accessToken = new JwtSecurityTokenHandler().WriteToken(tokenObject);
 
         return accessToken;
     }
 
-    public Task<ResponseDTO> ForgotPassword()
+    public async Task<ResponseDTO> ForgotPassword(ForgotPasswordDTO forgotPasswordDto)
     {
-        throw new NotImplementedException();
+        try
+        {
+            // Tìm người dùng theo Email/Số điện thoại
+            var user = await _userManager.FindByEmailAsync(forgotPasswordDto.EmailOrPhone);
+            if (user == null)
+            {
+                user = await _userManager.Users.FirstOrDefaultAsync(u => u.PhoneNumber == forgotPasswordDto.EmailOrPhone);
+            }
+
+            if (user == null || !user.EmailConfirmed)
+            {
+                return new ResponseDTO
+                {
+                    IsSuccess = false,
+                    Message = "No user found or account not activated.",
+                    StatusCode = 400
+                };
+            }
+
+            // Tạo mã token
+            var token = await _userManager.GeneratePasswordResetTokenAsync(user);
+
+            // Gửi email chứa đường link đặt lại mật khẩu. //reset-password
+            var resetLink = $"https://nostran.w3spaces.com?token={token}&email={user.Email}";
+            await _emailService.SendEmailAsync(user.Email, "Reset Password", $"Please click on the following link to reset your password: {resetLink}");
+
+            return new ResponseDTO
+            {
+                IsSuccess = true,
+                Message = "The password reset link has been sent to your email.",
+                StatusCode = 200
+            };
+        }
+        catch (Exception e)
+        {
+            return new ResponseDTO
+            {
+                IsSuccess = false,
+                Message = e.Message,
+                StatusCode = 500
+            };
+        }
+    }
+    
+    // Reset password
+    public async Task<ResponseDTO> ResetPassword(string email, string token, string password)
+    {
+        try
+        {
+            // Tìm người dùng theo email
+            var user = await _userManager.FindByEmailAsync(email);
+            if (user == null)
+            {
+                return new ResponseDTO
+                {
+                    IsSuccess = false,
+                    Message = "User not found.",
+                    StatusCode = 400
+                };
+            }
+
+            // Xác thực token và reset mật khẩu
+            var result = await _userManager.ResetPasswordAsync(user, token, password);
+            if (result.Succeeded)
+            {
+                return new ResponseDTO
+                {
+                    IsSuccess = true,
+                    Message = "Reset password successfully.",
+                    StatusCode = 200
+                };
+            }
+            else
+            {
+                // Xử lý lỗi nếu token không hợp lệ hoặc có lỗi khác
+                StringBuilder errors = new StringBuilder();
+                foreach (var error in result.Errors)
+                {
+                    errors.AppendLine(error.Description);
+                }
+
+                return new ResponseDTO
+                {
+                    IsSuccess = false,
+                    Message = errors.ToString(),
+                    StatusCode = 400
+                };
+            }
+        }
+        catch (Exception e)
+        {
+            return new ResponseDTO
+            {
+                IsSuccess = false,
+                Message = e.Message,
+                StatusCode = 500
+            };
+        }
     }
 
-    public Task<ResponseDTO> ChangePassword()
+    // Thay đổi mật khẩu người dùng
+    public async Task<ResponseDTO> ChangePassword(string userId, string oldPassword, string newPassword, string confirmNewPassword)
     {
-        throw new NotImplementedException();
+        try
+        {
+            // Lấy id của người dùng
+            var user = await _userManager.FindByIdAsync(userId);
+            if (user == null)
+            {
+                return new ResponseDTO { IsSuccess = false, Message = "User not found." };
+            }
+
+            // Thực hiện xác thực mật khẩu và thay đổi mật khẩu
+            
+            // Kiểm tra sự trùng khớp của mật khẩu mới và xác nhận mật khẩu mới 
+            if (newPassword != confirmNewPassword)
+            {
+                return new ResponseDTO { IsSuccess = false, Message = "New password and confirm new password not match." };
+            }
+
+            // Không cho phép thay đổi mật khẩu cũ
+            if (newPassword == oldPassword)
+            {
+                return new ResponseDTO { IsSuccess = false, Message = "New password cannot be the same as the old password." };
+            }
+
+            // Thực hiện thay đổi mật khẩu
+            var result = await _userManager.ChangePasswordAsync(user, oldPassword, newPassword);
+            if (result.Succeeded)
+            {
+                return new ResponseDTO { IsSuccess = true, Message = "Password changed successfully." };
+            }
+            else
+            {
+                return new ResponseDTO { IsSuccess = false, Message = "Password change failed. Please ensure the old password is correct." };
+            }
+        }
+        catch (Exception e)
+        {
+            return new ResponseDTO { IsSuccess = false, Message = e.Message };
+        }
     }
 
     public Task<ResponseDTO> VerifyEmail()
