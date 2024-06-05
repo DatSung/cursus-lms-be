@@ -15,32 +15,22 @@ namespace Cursus.LMS.Service.Service
             _emailService = emailService;
         }
 
+        /// <summary>
+        /// This method for sending verify email with template
+        /// </summary>
+        /// <param name="toMail">Email of user to be send</param>
+        /// <param name="confirmationLink">Link url to the controller to confirm email action</param>
+        /// <returns></returns>
         public async Task<bool> SendVerifyEmail(string toMail, string confirmationLink)
         {
-            string subject = "[Curcus Verify Email for Student]";
+            string subject = "[Curcus Verify Email for User]";
             string body = $@"
             <html>
             <body>
                 <h1>CURSUS VERIFY EMAIL</h1>
-                <h2>-Student Account Verified!</h2>
+                <h2>-User Account Verified!</h2>
                 <p>Thank you for registering your Cursus account. Click here to go back the page</p>
                 <p><a href='{confirmationLink}' style='padding: 10px 20px; color: white; background-color: #007BFF; text-decoration: none;'>Verify</a></p>
-            </body>
-            </html>";
-
-            return await _emailService.SendEmailAsync(toMail, subject, body);
-        }
-
-        public async Task<bool> SendEmailForInstructor(string toMail, string token)
-        {
-            string subject = "[Curcus Verify Email For Instructor]";
-            string body = $@"
-            <html>
-            <body>
-                <h1>CURSUS VERIFY EMAIL FOR Instructor</h1>
-                <h2>-Instructor Account Verified</h2>
-                <p>Thank you for registering your Cursus account. Your result will be show after 24h. Click here to go back the page</p>
-                <p><a href='http://bloodmoonrpg.carrd.co?token={token}' style='padding: 10px 20px; color: white; background-color: #007BFF; text-decoration: none;'>Verify</a></p>
             </body>
             </html>";
 
@@ -62,47 +52,5 @@ namespace Cursus.LMS.Service.Service
 
             return await _emailService.SendEmailAsync(toMail, subject, body);
         }
-
-        // private bool SendEmailInternal(string toMail, string subject, string body, string fromMail, string fromPassword)
-        // {
-        //     try
-        //     {
-        //         using (MailMessage mail = new MailMessage())
-        //         {
-        //             mail.From = new MailAddress(fromMail);
-        //             mail.To.Add(toMail);
-        //             mail.Subject = subject;
-        //             mail.Body = body;
-        //             mail.IsBodyHtml = true;
-        //
-        //             using (SmtpClient smtp = new SmtpClient("smtp.gmail.com", 587))
-        //             {
-        //                 smtp.Credentials = new NetworkCredential(fromMail, fromPassword);
-        //                 smtp.EnableSsl = true;
-        //                 smtp.Send(mail);
-        //             }
-        //         }
-        //
-        //         return true;
-        //     }
-        //     catch (Exception ex)
-        //     {
-        //         Console.WriteLine($"Error sending email: {ex.Message}");
-        //         return false;
-        //     }
-        // }
-
-        // private string GenerateRandomToken()
-        // {
-        //     var token = new StringBuilder();
-        //     var random = new Random();
-        //     const string chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
-        //     for (int i = 0; i < 20; i++)
-        //     {
-        //         token.Append(chars[random.Next(chars.Length)]);
-        //     }
-        //
-        //     return token.ToString();
-        // }
     }
 }

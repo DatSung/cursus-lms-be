@@ -220,15 +220,11 @@ namespace Cursus.LMS.API.Controllers
         /// <returns>ResponseDTO</returns>
         [HttpPost]
         [Route("sign-in")]
-        public async Task<ActionResult<SignResponseDTO>> SignIn([FromBody] SignDTO signDto)
+        public async Task<ActionResult<ResponseDTO>> SignIn([FromBody] SignDTO signDto)
         {
-            var SignResult = await _authService.SignIn(signDto);
-            if (SignResult == null)
-            {
-                return BadRequest("Your Email or Password is incorrect ");
-            }
+            var responseDto = await _authService.SignIn(signDto);
 
-            return Ok(SignResult);
+            return StatusCode(this.responseDto.StatusCode, responseDto);
         }
     }
 }

@@ -12,7 +12,7 @@ public interface IAuthService
     Task<ResponseDTO> UploadUserAvatar(IFormFile file, ClaimsPrincipal user);
     Task<DegreeResponseDTO> GetInstructorDegree(ClaimsPrincipal user);
     Task<MemoryStream> GetUserAvatar(ClaimsPrincipal user);
-    Task<SignResponseDTO> SignIn(SignDTO signDTO);
+    Task<ResponseDTO> SignIn(SignDTO signDTO);
     Task<ResponseDTO> ForgotPassword(ForgotPasswordDTO forgotPasswordDto);
     Task<ResponseDTO> ResetPassword(string resetPasswordDto, string token, string password);
     Task<ResponseDTO> ChangePassword(string userId, string oldPassword, string newPassword, string confirmNewPassword);
