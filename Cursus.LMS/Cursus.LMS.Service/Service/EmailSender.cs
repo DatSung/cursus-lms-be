@@ -5,13 +5,16 @@ using System.Text;
 
 namespace SendEmailWithGoogleSMTP
 {
+
+    //EMAIL: cursusnet9@gmail.com  
+    //Password: net9_test
     public class EmailSender
     {
         public bool SendEmail(string toMail)
         {
-            string fromMail = "dinhgiahuycm@gmail.com";
-            string fromPassword = "xtyizzchdkosivds";
-            string subject = "[Circus Verify Email]";
+            string fromMail = "cursusnet9@gmail.com";
+            string fromPassword = "iqwaieblkxidwlsc";
+            string subject = "[Circus Verify Email for Student]";
             string token = GenerateRandomToken();
             string body = $@"
             <html>
@@ -28,8 +31,8 @@ namespace SendEmailWithGoogleSMTP
 
         public bool SendEmailForInstructor(string toMail)
         {
-            string fromMail = "dinhgiahuycm@gmail.com";
-            string fromPassword = "xtyizzchdkosivds";
+            string fromMail = "cursusnet9@gmail.com";
+            string fromPassword = "iqwaieblkxidwlsc";
             string subject = "[Circus Verify Email For Instructor]";
             string token = GenerateRandomToken();
             string body = $@"
@@ -47,8 +50,8 @@ namespace SendEmailWithGoogleSMTP
 
         public bool SendEmailForInstructorApproval(string toMail)
         {
-            string fromMail = "dinhgiahuycm@gmail.com";
-            string fromPassword = "xtyizzchdkosivds";
+            string fromMail = "cursusnet9@gmail.com";
+            string fromPassword = "iqwaieblkxidwlsc";
             string subject = "[Circus Verify Email For Instructor Approval]";
             string token = GenerateRandomToken();
             string body = $@"

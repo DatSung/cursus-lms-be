@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using SendEmailWithGoogleSMTP;
+using Cursus.LMS.Model.DTO;
 using Cursus.LMS.Service.IService;
 using System;
 using System.Threading.Tasks;
@@ -24,22 +25,29 @@ namespace Cursus.LMS.API.Controllers
         [HttpPost]
         public IActionResult SendEmail([FromBody] EmailRequest emailRequest)
         {
+            ResponseDTO response = new ResponseDTO();
+
             try
             {
-                if (emailRequest.Role.Contains("Instructor") || emailRequest.Role.Contains("1"))
+                if (emailRequest.Role.Contains("INSTRUCTOR"))
                 {
                     _emailSender.SendEmailForInstructor(emailRequest.ToMail);
-                    return Ok("Instructor notified, waiting for email from Admin!");
+                    response.Message = "Instructor notified, waiting for email from Admin!";
                 }
                 else
                 {
                     _emailSender.SendEmail(emailRequest.ToMail);
-                    return Ok("Email sent successfully.");
+                    response.Message = "Email sent successfully for student.";
                 }
+
+                response.IsSuccess = true;
+                return Ok(response);
             }
             catch (Exception ex)
             {
-                return StatusCode(StatusCodes.Status500InternalServerError, $"Failed to send email: {ex.Message}");
+                response.IsSuccess = false;
+                response.Message = $"Failed to send email: {ex.Message}";
+                return StatusCode(StatusCodes.Status500InternalServerError, response);
             }
         }
 
@@ -48,24 +56,32 @@ namespace Cursus.LMS.API.Controllers
         [Route("approve-email")]
         public async Task<IActionResult> ApproveEmail(string email)
         {
+            ResponseDTO response = new ResponseDTO();
+
             try
             {
                 // Check if the user exists and has the role of instructor
                 var user = await _authService.GetUserByEmail(email);
-                if (user != null && user.Roles.Contains("Instructor"))
+                if (user != null && user.Roles.Contains("INSTRUCTOR"))
                 {
                     // Send email for instructor approval
                     _emailSender.SendEmailForInstructorApproval(email);
-                    return Ok($"Email for {email} has been sent for approval.");
+                    response.Message = $"Email for {email} has been sent for approval.";
+                    response.IsSuccess = true;
+                    return Ok(response);
                 }
                 else
                 {
-                    return BadRequest($"User with email {email} either does not exist or is not an instructor.");
+                    response.IsSuccess = false;
+                    response.Message = $"User with email {email} either does not exist or is not an instructor.";
+                    return BadRequest(response);
                 }
             }
             catch (Exception ex)
             {
-                return StatusCode(StatusCodes.Status500InternalServerError, $"Failed to approve email: {ex.Message}");
+                response.IsSuccess = false;
+                response.Message = $"Failed to approve email: {ex.Message}";
+                return StatusCode(StatusCodes.Status500InternalServerError, response);
             }
         }
     }
