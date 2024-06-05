@@ -8,10 +8,11 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using SendEmailWithGoogleSMTP;
 using System;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
+using Cursus.LMS.Service.Service;
 using Microsoft.EntityFrameworkCore;
 
 namespace Cursus.LMS.API.Controllers
@@ -26,7 +27,8 @@ namespace Cursus.LMS.API.Controllers
         private ResponseDTO responseDto = new ResponseDTO();
         private readonly UserManager<ApplicationUser> _userManager;
 
-        public AuthController(IEmailService emailService, IAuthService authService,UserManager<ApplicationUser> userManager, EmailSender emailSender)
+        public AuthController(IEmailService emailService, IAuthService authService,
+            UserManager<ApplicationUser> userManager, EmailSender emailSender)
         {
             _emailService = emailService;
             _authService = authService;
@@ -146,7 +148,7 @@ namespace Cursus.LMS.API.Controllers
             var result = await _authService.ForgotPassword(forgotPasswordDto);
             return StatusCode(result.StatusCode, result);
         }
-        
+
         /// <summary>
         /// This API for case reset password.
         /// </summary>
@@ -154,7 +156,8 @@ namespace Cursus.LMS.API.Controllers
         [HttpPost("reset-password")]
         public async Task<ActionResult<ResponseDTO>> ResetPassword([FromBody] ResetPasswordDTO resetPasswordDto)
         {
-            var result = await _authService.ResetPassword(resetPasswordDto.Email, resetPasswordDto.Token,resetPasswordDto.Password);
+            var result = await _authService.ResetPassword(resetPasswordDto.Email, resetPasswordDto.Token,
+                resetPasswordDto.Password);
             return StatusCode(result.StatusCode, result);
         }
 
@@ -164,37 +167,26 @@ namespace Cursus.LMS.API.Controllers
         /// <param name="emailRequest"></param>
         /// <returns>ResponseDTO</returns>
         [HttpPost]
-        [Route("verify-email")]
-        public async Task<ActionResult<ResponseDTO>> VerifyEmail([FromBody] EmailRequest emailRequest)
+        [Route("send-verify-email")]
+        public async Task<ActionResult<ResponseDTO>> SendVerifyEmail([FromBody] [EmailAddress] string email)
         {
-            try
-            {
-                if (!emailRequest.Role.Any() || emailRequest.Role.Contains("student"))
-                {
-                    _emailSender.SendEmail(emailRequest.ToMail);
-                }
-                else if (emailRequest.Role.Contains("admin"))
-                {
-                    _emailSender.SendEmailForInstructor(emailRequest.ToMail);
-                }
-                else
-                {
-                    responseDto.IsSuccess = false;
-                    responseDto.Message = "Invalid role specified. Email not sent.";
-                    return BadRequest(responseDto);
-                }
+            var user = await _userManager.FindByEmailAsync(email);
+            var token = await _userManager.GenerateEmailConfirmationTokenAsync(user);
+            var confirmationLink = Url.Action("verify-email", "Auth", new { userId = user.Id, token = token },
+                Request.Scheme);
+            var responseDto = await _authService.SendVerifyEmail(user.Email, confirmationLink);
+            return StatusCode(responseDto.StatusCode, responseDto);
+        }
 
-                responseDto.IsSuccess = true;
-                responseDto.Message = "Email sent successfully.";
-            }
-            catch (Exception e)
-            {
-                responseDto.IsSuccess = false;
-                responseDto.Message = e.Message;
-                return StatusCode(StatusCodes.Status500InternalServerError, responseDto);
-            }
-
-            return Ok(responseDto);
+        [HttpGet]
+        [Route("verify-email")]
+        [ActionName("verify-email")]
+        public async Task<ActionResult<ResponseDTO>> VerifyEmail(
+            [FromQuery] string userId,
+            [FromQuery] string token)
+        {
+            var responseDto = await _authService.VerifyEmail(userId, token);
+            return StatusCode(responseDto.StatusCode, responseDto);
         }
 
         /// <summary>
@@ -208,7 +200,8 @@ namespace Cursus.LMS.API.Controllers
             // Lấy Id người dùng hiện tại.
             var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
 
-            var response = await _authService.ChangePassword(userId, changePasswordDto.OldPassword, changePasswordDto.NewPassword, changePasswordDto.ConfirmNewPassword);
+            var response = await _authService.ChangePassword(userId, changePasswordDto.OldPassword,
+                changePasswordDto.NewPassword, changePasswordDto.ConfirmNewPassword);
 
             if (response.IsSuccess)
             {
@@ -237,11 +230,5 @@ namespace Cursus.LMS.API.Controllers
 
             return Ok(SignResult);
         }
-    }
-
-    public class EmailRequest
-    {
-        public string ToMail { get; set; }
-        public IEnumerable<string> Role { get; set; }
     }
 }

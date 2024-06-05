@@ -16,12 +16,13 @@ public static class ServiceCollectionExtensions
         services.AddScoped<IAuthService, AuthService>();
         // Registering IEmailService with its implementation EmailService
         services.AddScoped<IEmailService, EmailService>();
+        services.AddScoped<IEmailSender, EmailSender>();
 
         // Register the Identity services with default configuration
         services.AddIdentity<ApplicationUser, IdentityRole>()
             .AddEntityFrameworkStores<ApplicationDbContext>()
             .AddDefaultTokenProviders();
-        
+
         return services;
     }
 }

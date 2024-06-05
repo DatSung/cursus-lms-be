@@ -12,8 +12,7 @@ using System.Text;
 using Cursus.LMS.Utility.Constants;
 using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
-using System.Net;
-using RestSharp;
+using Azure.Core;
 
 namespace Cursus.LMS.Service.Service;
 
@@ -25,12 +24,13 @@ public class AuthService : IAuthService
     private readonly IConfiguration _configuration;
     private readonly IMapper _mapper;
     private readonly IEmailService _emailService;
+    private readonly IEmailSender _emailSender;
     private readonly IFirebaseService _firebaseService;
-    private readonly IHttpContextAccessor _httpContextAccessor; 
+    private readonly IHttpContextAccessor _httpContextAccessor;
 
     public AuthService(UserManager<ApplicationUser> userManager, RoleManager<IdentityRole> roleManager,
         IConfiguration configuration, IMapper mapper, IEmailService emailService, ApplicationDbContext dbContext,
-        IFirebaseService firebaseService, IHttpContextAccessor httpContextAccessor)
+        IFirebaseService firebaseService, IHttpContextAccessor httpContextAccessor, IEmailSender emailSender)
     {
         _userManager = userManager;
         _roleManager = roleManager;
@@ -39,7 +39,8 @@ public class AuthService : IAuthService
         _emailService = emailService;
         _dbContext = dbContext;
         _firebaseService = firebaseService;
-        _httpContextAccessor = httpContextAccessor; 
+        _httpContextAccessor = httpContextAccessor;
+        _emailSender = emailSender;
     }
 
 
@@ -246,7 +247,7 @@ public class AuthService : IAuthService
             }
 
             var contentType = "Unsupported extensions!";
-            
+
             if (degreePath.EndsWith(".pdf"))
             {
                 contentType = StaticFileExtensions.Pdf;
@@ -432,13 +433,14 @@ public class AuthService : IAuthService
 
     public async Task<ResponseDTO> ForgotPassword(ForgotPasswordDTO forgotPasswordDto)
     {
-                try
+        try
         {
             // Tìm người dùng theo Email/Số điện thoại
             var user = await _userManager.FindByEmailAsync(forgotPasswordDto.EmailOrPhone);
             if (user == null)
             {
-                user = await _userManager.Users.FirstOrDefaultAsync(u => u.PhoneNumber == forgotPasswordDto.EmailOrPhone);
+                user = await _userManager.Users.FirstOrDefaultAsync(
+                    u => u.PhoneNumber == forgotPasswordDto.EmailOrPhone);
             }
 
             if (user == null || !user.EmailConfirmed)
@@ -456,31 +458,31 @@ public class AuthService : IAuthService
 
             // Gửi email chứa đường link đặt lại mật khẩu. //reset-password
 
-           var resetLink = $"https://nostran.w3spaces.com?token={token}&email={user.Email}";
-           
-           // Lấy ngày hiện tại
-           var currentDate = DateTime.Now.ToString("MMMM d, yyyy");
-           
-           var userAgent = _httpContextAccessor.HttpContext?.Request.Headers["User-Agent"];
-           
-           // Lấy tên hệ điều hành
-           var operatingSystem = GetUserAgentOperatingSystem(userAgent);
+            var resetLink = $"https://nostran.w3spaces.com?token={token}&email={user.Email}";
 
-           // Lấy tên trình duyệt
-           var browser = GetUserAgentBrowser(userAgent);
-           
-           // Lấy địa chỉ IP của client
-           /*var clientIp = _httpContextAccessor.HttpContext?.Connection.RemoteIpAddress?.ToString() ?? "Unknown";
-           var client = new RestClient("https://ipapi.co/" + clientIp + "/json/");
-           var request = new RestRequest(Method.Get);
-           IRestSponse response = client.Execute(request);
+            // Lấy ngày hiện tại
+            var currentDate = DateTime.Now.ToString("MMMM d, yyyy");
 
-           if (response.IsSuccessful) {
-               // Phân tích JSON response để lấy thông tin vị trí
-           }*/
+            var userAgent = _httpContextAccessor.HttpContext?.Request.Headers["User-Agent"];
 
-           // Gửi email chứa đường link đặt lại mật khẩu
-           var emailBody = $@"
+            // Lấy tên hệ điều hành
+            var operatingSystem = GetUserAgentOperatingSystem(userAgent);
+
+            // Lấy tên trình duyệt
+            var browser = GetUserAgentBrowser(userAgent);
+
+            // Lấy địa chỉ IP của client
+            /*var clientIp = _httpContextAccessor.HttpContext?.Connection.RemoteIpAddress?.ToString() ?? "Unknown";
+            var client = new RestClient("https://ipapi.co/" + clientIp + "/json/");
+            var request = new RestRequest(Method.Get);
+            IRestSponse response = client.Execute(request);
+
+            if (response.IsSuccessful) {
+                // Phân tích JSON response để lấy thông tin vị trí
+            }*/
+
+            // Gửi email chứa đường link đặt lại mật khẩu
+            var emailBody = $@"
 <table style=""width: 720px; margin: 0 auto;"">
     <tr>
         <td align=""left""><img src=""https://demo.stripocdn.email/content/guids/videoImgGuid/images/group_48_CGo.png"" alt=""Cursus Logo"" style=""display: block"" height=""37"" title=""Logo"" /></td>
@@ -560,29 +562,29 @@ public class AuthService : IAuthService
     </div>  
 </div>";
 
-           await _emailService.SendEmailAsync(user.Email, "Reset password for your Cursus account", emailBody);
-           
-           // Helper functions (you might need to refine these based on your User-Agent parsing logic)
-           string GetUserAgentOperatingSystem(string userAgent) 
-           {
-               // ... Logic to extract the operating system from the user-agent string
-               // Example:
-               if (userAgent.Contains("Windows")) return "Windows";
-               else if (userAgent.Contains("Mac")) return "macOS";
-               else if (userAgent.Contains("Linux")) return "Linux";
-               else return "Unknown";
-           }
+            await _emailService.SendEmailAsync(user.Email, "Reset password for your Cursus account", emailBody);
 
-           string GetUserAgentBrowser(string userAgent)
-           {
-               // ... Logic to extract the browser from the user-agent string
-               // Example:
-               if (userAgent.Contains("Chrome")) return "Chrome";
-               else if (userAgent.Contains("Firefox")) return "Firefox";
-               else if (userAgent.Contains("Safari")) return "Safari";
-               else return "Unknown";
-           }
-           
+            // Helper functions (you might need to refine these based on your User-Agent parsing logic)
+            string GetUserAgentOperatingSystem(string userAgent)
+            {
+                // ... Logic to extract the operating system from the user-agent string
+                // Example:
+                if (userAgent.Contains("Windows")) return "Windows";
+                else if (userAgent.Contains("Mac")) return "macOS";
+                else if (userAgent.Contains("Linux")) return "Linux";
+                else return "Unknown";
+            }
+
+            string GetUserAgentBrowser(string userAgent)
+            {
+                // ... Logic to extract the browser from the user-agent string
+                // Example:
+                if (userAgent.Contains("Chrome")) return "Chrome";
+                else if (userAgent.Contains("Firefox")) return "Firefox";
+                else if (userAgent.Contains("Safari")) return "Safari";
+                else return "Unknown";
+            }
+
             return new ResponseDTO
             {
                 IsSuccess = true,
@@ -600,129 +602,164 @@ public class AuthService : IAuthService
             };
         }
     }
-    
-    // Reset password
-public async Task<ResponseDTO> ResetPassword(string email, string token, string password)
-{
-    try
-    {
-        // Tìm người dùng theo email
-        var user = await _userManager.FindByEmailAsync(email);
-        if (user == null)
-        {
-            return new ResponseDTO
-            {
-                IsSuccess = false,
-                Message = "User not found.",
-                StatusCode = 400
-            };
-        }
 
-        // Xác thực token và reset mật khẩu
-        var result = await _userManager.ResetPasswordAsync(user, token, password);
-        if (result.Succeeded)
+    // Reset password
+    public async Task<ResponseDTO> ResetPassword(string email, string token, string password)
+    {
+        try
         {
-            return new ResponseDTO
+            // Tìm người dùng theo email
+            var user = await _userManager.FindByEmailAsync(email);
+            if (user == null)
             {
-                IsSuccess = true,
-                Message = "Reset password successfully.",
-                StatusCode = 200
-            };
-        }
-        else
-        {
-            // Xử lý lỗi nếu token không hợp lệ hoặc có lỗi khác
-            StringBuilder errors = new StringBuilder();
-            foreach (var error in result.Errors)
-            {
-                errors.AppendLine(error.Description);
+                return new ResponseDTO
+                {
+                    IsSuccess = false,
+                    Message = "User not found.",
+                    StatusCode = 400
+                };
             }
 
+            // Xác thực token và reset mật khẩu
+            var result = await _userManager.ResetPasswordAsync(user, token, password);
+            if (result.Succeeded)
+            {
+                return new ResponseDTO
+                {
+                    IsSuccess = true,
+                    Message = "Reset password successfully.",
+                    StatusCode = 200
+                };
+            }
+            else
+            {
+                // Xử lý lỗi nếu token không hợp lệ hoặc có lỗi khác
+                StringBuilder errors = new StringBuilder();
+                foreach (var error in result.Errors)
+                {
+                    errors.AppendLine(error.Description);
+                }
+
+                return new ResponseDTO
+                {
+                    IsSuccess = false,
+                    Message = errors.ToString(),
+                    StatusCode = 400
+                };
+            }
+        }
+        catch (Exception e)
+        {
             return new ResponseDTO
             {
                 IsSuccess = false,
-                Message = errors.ToString(),
-                StatusCode = 400
+                Message = e.Message,
+                StatusCode = 500
             };
         }
     }
-    catch (Exception e)
-    {
-        return new ResponseDTO
-        {
-            IsSuccess = false,
-            Message = e.Message,
-            StatusCode = 500
-        };
-    }
-}
 
 // Thay đổi mật khẩu người dùng
-public async Task<ResponseDTO> ChangePassword(string userId, string oldPassword, string newPassword, string confirmNewPassword)
-{
-    try
+    public async Task<ResponseDTO> ChangePassword(string userId, string oldPassword, string newPassword,
+        string confirmNewPassword)
     {
-        // Lấy id của người dùng
+        try
+        {
+            // Lấy id của người dùng
+            var user = await _userManager.FindByIdAsync(userId);
+            if (user == null)
+            {
+                return new ResponseDTO { IsSuccess = false, Message = "User not found." };
+            }
+
+            // Thực hiện xác thực mật khẩu và thay đổi mật khẩu
+
+            // Kiểm tra sự trùng khớp của mật khẩu mới và xác nhận mật khẩu mới 
+            if (newPassword != confirmNewPassword)
+            {
+                return new ResponseDTO
+                    { IsSuccess = false, Message = "New password and confirm new password not match." };
+            }
+
+            // Không cho phép thay đổi mật khẩu cũ
+            if (newPassword == oldPassword)
+            {
+                return new ResponseDTO
+                    { IsSuccess = false, Message = "New password cannot be the same as the old password." };
+            }
+
+            // Thực hiện thay đổi mật khẩu
+            var result = await _userManager.ChangePasswordAsync(user, oldPassword, newPassword);
+            if (result.Succeeded)
+            {
+                return new ResponseDTO { IsSuccess = true, Message = "Password changed successfully." };
+            }
+            else
+            {
+                return new ResponseDTO
+                {
+                    IsSuccess = false, Message = "Password change failed. Please ensure the old password is correct."
+                };
+            }
+        }
+        catch (Exception e)
+        {
+            return new ResponseDTO { IsSuccess = false, Message = e.Message };
+        }
+    }
+
+    /// <summary>
+    /// This method for send a token to confirm email
+    /// </summary>
+    /// <param name="email">Email of user that need to confirm email</param>
+    /// <returns></returns>
+    public async Task<ResponseDTO> SendVerifyEmail(string email, string confirmationLink)
+    {
+        try
+        {
+            await _emailSender.SendVerifyEmail(email, confirmationLink);
+            return new()
+            {
+                Message = "Send verify email successfully",
+                IsSuccess = true,
+                StatusCode = 200,
+                Result = null
+            };
+        }
+        catch (Exception e)
+        {
+            return new()
+            {
+                Message = e.Message,
+                IsSuccess = false,
+                StatusCode = 500,
+                Result = null
+            };
+        }
+    }
+
+    public async Task<ResponseDTO> VerifyEmail(string userId, string token)
+    {
         var user = await _userManager.FindByIdAsync(userId);
-        if (user == null)
+        var confirmResult = await _userManager.ConfirmEmailAsync(user, token);
+
+        if (!confirmResult.Succeeded)
         {
-            return new ResponseDTO { IsSuccess = false, Message = "User not found." };
+            return new()
+            {
+                Message = confirmResult.Errors.ToString(),
+                StatusCode = 400,
+                IsSuccess = false,
+                Result = null
+            };
         }
 
-        // Thực hiện xác thực mật khẩu và thay đổi mật khẩu
-        
-        // Kiểm tra sự trùng khớp của mật khẩu mới và xác nhận mật khẩu mới 
-        if (newPassword != confirmNewPassword)
+        return new()
         {
-            return new ResponseDTO { IsSuccess = false, Message = "New password and confirm new password not match." };
-        }
-
-        // Không cho phép thay đổi mật khẩu cũ
-        if (newPassword == oldPassword)
-        {
-            return new ResponseDTO { IsSuccess = false, Message = "New password cannot be the same as the old password." };
-        }
-
-        // Thực hiện thay đổi mật khẩu
-        var result = await _userManager.ChangePasswordAsync(user, oldPassword, newPassword);
-        if (result.Succeeded)
-        {
-            return new ResponseDTO { IsSuccess = true, Message = "Password changed successfully." };
-        }
-        else
-        {
-            return new ResponseDTO { IsSuccess = false, Message = "Password change failed. Please ensure the old password is correct." };
-        }
-    }
-    catch (Exception e)
-    {
-        return new ResponseDTO { IsSuccess = false, Message = e.Message };
-    }
-}
-
-    public Task<ResponseDTO> VerifyEmail()
-    {
-        throw new NotImplementedException();
-    }
-
-    public async Task<UserInfo> GetUserByEmail(string email)
-    {
-        // Implement logic to retrieve user information from the database based on the email
-        // This could involve querying your database or any other data source
-        // For example:
-        // var user = await _userRepository.GetUserByEmail(email);
-        // return user;
-
-        // Placeholder return for demonstration
-        return new UserInfo
-        {
-            Id = "123",
-            UserName = "exampleUser",
-            FullName = "John Doe",
-            Email = email,
-            // Other properties...
+            Message = "Confirm Email Successfully",
+            IsSuccess = true,
+            StatusCode = 200,
+            Result = null
         };
     }
-
-
 }

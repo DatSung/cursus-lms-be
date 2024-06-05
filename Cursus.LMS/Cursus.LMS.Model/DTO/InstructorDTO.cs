@@ -33,6 +33,5 @@ public class InstructorDTO
     [Required] public string Degree { get; set; }
     [Required] public string Industry { get; set; }
     [Required] public string Introduction { get; set; }
-
-    public string? AvatarUrl { get; set; }
+    
 }

@@ -1,8 +1,8 @@
 using Cursus.LMS.API.Extentions;
 using Cursus.LMS.DataAccess.Context;
 using Cursus.LMS.Service.Mappings;
+using Cursus.LMS.Service.Service;
 using Microsoft.EntityFrameworkCore;
-using SendEmailWithGoogleSMTP;
 
 var builder = WebApplication.CreateBuilder(args);
 
