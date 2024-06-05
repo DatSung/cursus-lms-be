@@ -1,6 +1,7 @@
 using Cursus.LMS.API.Extentions;
 using Cursus.LMS.DataAccess.Context;
 using Cursus.LMS.Service.Mappings;
+using Cursus.LMS.Service.Service;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -19,7 +20,6 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("Trong"));
 });
 
-
 // Register AutoMapper
 builder.Services.AddAutoMapper(typeof(AutoMapperProfile));
 
@@ -30,6 +30,9 @@ builder.Services.RegisterServices();
 // Register firebase services life cycle
 // Base on Extensions.FirebaseServiceExtensions
 builder.Services.AddFirebaseServices();
+
+// Register EmailSender
+builder.Services.AddTransient<EmailSender>();
 
 builder.Services.AddEndpointsApiExplorer();
 

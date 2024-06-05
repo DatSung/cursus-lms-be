@@ -1,63 +1,86 @@
 
+using System.Security.Claims;
+using System.Text;
+using Cursus.LMS.Model.Domain;
 using Cursus.LMS.Model.DTO;
 using Cursus.LMS.Service.IService;
 using Cursus.LMS.Utility.ValidationAttribute;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using System;
+using System.ComponentModel.DataAnnotations;
+using System.Linq;
+using System.Threading.Tasks;
+using Cursus.LMS.Service.Service;
+using Microsoft.EntityFrameworkCore;
 
 
-    namespace Cursus.LMS.API.Controllers
+namespace Cursus.LMS.API.Controllers
+{
+
+    [Route("api/[controller]")]
+    [ApiController]
+    public class AuthController : ControllerBase
     {
-        [Route("api/[controller]")]
-        [ApiController]
-        public class AuthController : ControllerBase
+
+        private readonly IEmailService _emailService;
+        private readonly IAuthService _authService;
+        private readonly EmailSender _emailSender;
+        private ResponseDTO responseDto = new ResponseDTO();
+        private readonly UserManager<ApplicationUser> _userManager;
+
+        public AuthController(IEmailService emailService, IAuthService authService,
+            UserManager<ApplicationUser> userManager, EmailSender emailSender)
         {
-            private readonly IEmailService _emailService;
-            private readonly IAuthService _authService;
-            private ResponseDTO responseDto = new ResponseDTO();
+            _emailService = emailService;
+            _authService = authService;
+            _userManager = userManager;
+            _emailSender = emailSender;
+        }
 
-            public AuthController(IEmailService emailService, IAuthService authService)
+        public AuthController(IEmailService emailService, IAuthService authService)
+        {
+            _emailService = emailService;
+            _authService = authService;
+        }
+
+        /// <summary>
+        /// This API for feature Sign Up For Student.
+        /// </summary>
+        /// <returns>ResponseDTO</returns>
+        [HttpPost]
+        [Route("sign-up-student")]
+        public async Task<ActionResult<ResponseDTO>> SignUpStudent([FromBody] RegisterStudentDTO registerStudentDTO)
+        {
+
+            if (!ModelState.IsValid)
             {
-                _emailService = emailService;
-                _authService = authService;
+                responseDto.IsSuccess = false;
+                responseDto.Message = "Invalid input data.";
+                responseDto.Result = ModelState.Values.SelectMany(v => v.Errors.Select(e => e.ErrorMessage));
+                return BadRequest(responseDto);
             }
-
-            /// <summary>
-            /// This API for feature Sign Up For Student.
-            /// </summary>
-            /// <returns>ResponseDTO</returns>
-            [HttpPost]
-            [Route("sign-up-student")]
-            public async Task<ActionResult<ResponseDTO>> SignUpStudent([FromBody] RegisterStudentDTO registerStudentDTO)
+            try
             {
-
-                if (!ModelState.IsValid)
+                var result = await _authService.SignUpStudent(registerStudentDTO);
+                if (result.IsSuccess)
                 {
-                    responseDto.IsSuccess = false;
-                    responseDto.Message = "Invalid input data.";
-                    responseDto.Result = ModelState.Values.SelectMany(v => v.Errors.Select(e => e.ErrorMessage));
-                    return BadRequest(responseDto);
+                    return Ok(result);
                 }
-                try
+                else
                 {
-                    var result = await _authService.SignUpStudent(registerStudentDTO);
-                    if (result.IsSuccess)
-                    {
-                        return Ok(result);
-                    }
-                    else
-                    {
-                        return BadRequest(result);
-                    }
+                    return BadRequest(result);
                 }
-                catch (Exception e)
-                {
-                    responseDto.IsSuccess = false;
-                    responseDto.Message = e.Message;
-                    return StatusCode(StatusCodes.Status500InternalServerError, responseDto);
-                }
-               }
+            }
+            catch (Exception e)
+            {
+                responseDto.IsSuccess = false;
+                responseDto.Message = e.Message;
+                return StatusCode(StatusCodes.Status500InternalServerError, responseDto);
+            }
+        }
 
         /// <summary>
         /// This API for feature Sign Up For Instructor.
@@ -146,38 +169,64 @@ using Microsoft.AspNetCore.Mvc;
         /// <returns>ResponseDTO</returns>
         [HttpPost]
         [Route("forgot-password")]
-        public async Task<ActionResult<ResponseDTO>> ForgotPassword()
+        public async Task<ActionResult<ResponseDTO>> ForgotPassword([FromBody] ForgotPasswordDTO forgotPasswordDto)
         {
-            try
-            {
-            }
-            catch (Exception e)
-            {
-                responseDto.IsSuccess = false;
-                responseDto.Message = e.Message;
-            }
+            var result = await _authService.ForgotPassword(forgotPasswordDto);
+            return StatusCode(result.StatusCode, result);
+        }
 
-            return Ok(responseDto);
+        /// <summary>
+        /// This API for case reset password.
+        /// </summary>
+        /// <returns>ResponseDTO</returns>
+        [HttpPost("reset-password")]
+        public async Task<ActionResult<ResponseDTO>> ResetPassword([FromBody] ResetPasswordDTO resetPasswordDto)
+        {
+            var result = await _authService.ResetPassword(resetPasswordDto.Email, resetPasswordDto.Token,
+                resetPasswordDto.Password);
+            return StatusCode(result.StatusCode, result);
         }
 
         /// <summary>
         /// This API for case verify email.
         /// </summary>
+        /// <param name="emailRequest"></param>
         /// <returns>ResponseDTO</returns>
         [HttpPost]
-        [Route("verify-email")]
-        public async Task<ActionResult<ResponseDTO>> VerifyEmail()
+        [Route("send-verify-email")]
+        public async Task<ActionResult<ResponseDTO>> SendVerifyEmail([FromBody][EmailAddress] string email)
         {
-            try
+            var user = await _userManager.FindByEmailAsync(email);
+            if (user.EmailConfirmed)
             {
-            }
-            catch (Exception e)
-            {
-                responseDto.IsSuccess = false;
-                responseDto.Message = e.Message;
+                return new ResponseDTO()
+                {
+                    IsSuccess = true,
+                    Message = "Your email has been confirmed",
+                    StatusCode = 200,
+                    Result = email
+                };
             }
 
-            return Ok(responseDto);
+            var token = await _userManager.GenerateEmailConfirmationTokenAsync(user);
+
+            var confirmationLink = Url.Action("verify-email", "Auth", new { userId = user.Id, token = token },
+                Request.Scheme);
+
+            var responseDto = await _authService.SendVerifyEmail(user.Email, confirmationLink);
+
+            return StatusCode(responseDto.StatusCode, responseDto);
+        }
+
+        [HttpGet]
+        [Route("verify-email")]
+        [ActionName("verify-email")]
+        public async Task<ActionResult<ResponseDTO>> VerifyEmail(
+            [FromQuery] string userId,
+            [FromQuery] string token)
+        {
+            var responseDto = await _authService.VerifyEmail(userId, token);
+            return StatusCode(responseDto.StatusCode, responseDto);
         }
 
         /// <summary>
@@ -186,19 +235,24 @@ using Microsoft.AspNetCore.Mvc;
         /// <returns>ResponseDTO</returns>
         [HttpPost]
         [Route("change-password")]
-        public async Task<ActionResult<ResponseDTO>> ChangePassword()
+        public async Task<ActionResult<ResponseDTO>> ChangePassword(ChangePasswordDTO changePasswordDto)
         {
-            try
-            {
-            }
-            catch (Exception e)
-            {
-                responseDto.IsSuccess = false;
-                responseDto.Message = e.Message;
-            }
+            // Lấy Id người dùng hiện tại.
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
 
-            return Ok(responseDto);
+            var response = await _authService.ChangePassword(userId, changePasswordDto.OldPassword,
+                changePasswordDto.NewPassword, changePasswordDto.ConfirmNewPassword);
+
+            if (response.IsSuccess)
+            {
+                return Ok(response.Message);
+            }
+            else
+            {
+                return BadRequest(response.Message);
+            }
         }
+
 
         /// <summary>
         /// This API for case sign in.
@@ -206,15 +260,11 @@ using Microsoft.AspNetCore.Mvc;
         /// <returns>ResponseDTO</returns>
         [HttpPost]
         [Route("sign-in")]
-        public async Task<ActionResult<SignResponseDTO>> SignIn([FromBody] SignDTO signDto)
+        public async Task<ActionResult<ResponseDTO>> SignIn([FromBody] SignDTO signDto)
         {
-            var SignResult = await _authService.SignIn(signDto);
-            if (SignResult == null)
-            {
-                return BadRequest("Your Email or Password is incorrect ");
-            }
+            var responseDto = await _authService.SignIn(signDto);
 
-            return Ok(SignResult);
+            return StatusCode(this.responseDto.StatusCode, responseDto);
         }
     }
 }
