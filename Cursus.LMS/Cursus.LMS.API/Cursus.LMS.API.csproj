@@ -22,4 +22,9 @@
       <ProjectReference Include="..\Cursus.LMS.Service\Cursus.LMS.Service.csproj" />
     </ItemGroup>
 
+    <ItemGroup>
+      <_ContentIncludedByDefault Remove="Pages\ResetPassword.cshtml" />
+      <_ContentIncludedByDefault Remove="Pages\ResetPasswordConfirmation.cshtml" />
+    </ItemGroup>
+
 </Project>
