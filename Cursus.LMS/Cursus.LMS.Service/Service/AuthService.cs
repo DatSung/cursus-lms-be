@@ -61,6 +61,20 @@ public class AuthService : IAuthService
                 };
             }
 
+            var isPhonenumerExit = await _userManager.Users.AnyAsync(u=>u.PhoneNumber == registerStudentDTO.PhoneNumber);
+            if(isPhonenumerExit)
+            {
+                return new ResponseDTO()
+                {
+                    Message = "Phone number is using by another user",
+                    Result = registerStudentDTO,
+                    IsSuccess = false,
+                    StatusCode = 500
+                };
+
+            }
+
+
             // Create new instance of ApplicationUser
             ApplicationUser newUser = new ApplicationUser()
             {
@@ -150,12 +164,6 @@ public class AuthService : IAuthService
                 StatusCode = 500
             };
         }
-
-
-
-
-
-
     }
 
     /// <summary>
@@ -180,6 +188,19 @@ public class AuthService : IAuthService
                     IsSuccess = false,
                     StatusCode = 500
                 };
+            }
+
+            var isPhonenumerExit = await _userManager.Users.AnyAsync(u => u.PhoneNumber == instructorDto.PhoneNumber);
+            if (isPhonenumerExit)
+            {
+                return new ResponseDTO()
+                {
+                    Message = "Phone number is using by another user",
+                    Result = instructorDto,
+                    IsSuccess = false,
+                    StatusCode = 500
+                };
+
             }
 
             // Create new instance of ApplicationUser
