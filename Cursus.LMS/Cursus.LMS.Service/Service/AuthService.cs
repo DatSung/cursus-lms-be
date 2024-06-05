@@ -84,7 +84,7 @@ public class AuthService : IAuthService
                 Gender = instructorDto.Gender,
                 Country = instructorDto.Country,
                 PhoneNumber = instructorDto.PhoneNumber,
-                TaxNumber = instructorDto.TaxNumber,
+                // TaxNumber = instructorDto.TaxNumber,
             };
 
             // Create new user to database
@@ -140,7 +140,7 @@ public class AuthService : IAuthService
             await _dbContext.Instructors.AddAsync(instructor);
 
             // Create card for instructor
-            await _dbContext.PaymentCards.AddAsync(paymentCard);
+            // await _dbContext.PaymentCards.AddAsync(paymentCard);
 
             // Save change to database
             await _dbContext.SaveChangesAsync();

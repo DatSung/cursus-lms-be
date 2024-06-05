@@ -11,5 +11,5 @@ public class ApplicationUser : IdentityUser
     public string Country { get; set; }
     public string Address { get; set; }
 
-    public long TaxNumber { get; set; }
+    public string TaxNumber { get; set; }
 }

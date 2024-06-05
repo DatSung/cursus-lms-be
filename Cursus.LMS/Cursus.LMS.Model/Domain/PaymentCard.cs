@@ -5,7 +5,7 @@ namespace Cursus.LMS.Model.Domain;
 
 public class PaymentCard
 {
-    [Key] public long CardNumber { get; set; }
+    [Key] public string CardNumber { get; set; }
     public string CardName { get; set; }
     public string CardProvider { get; set; }
     public string UserId { get; set; }
