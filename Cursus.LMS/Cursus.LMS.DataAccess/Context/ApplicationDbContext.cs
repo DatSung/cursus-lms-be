@@ -15,7 +15,7 @@ public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
         base.OnModelCreating(modelBuilder);
     }
 
-    public DbSet<ApplicationUser> ApplicationUsers { get; set; }
+    public DbSet<ApplicationUser> ApplicationUsers { get; set; }    
     public DbSet<CartDetails> CartDetails { get; set; }
     public DbSet<CartHeader> CartHeaders { get; set; }
     public DbSet<Category> Categories { get; set; }
@@ -30,4 +30,5 @@ public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
     public DbSet<SectionDetails> SectionDetails { get; set; }
     public DbSet<Student> Students { get; set; }
     public DbSet<StudentCourse> StudentCourses { get; set; }
+    public DbSet<PaymentCard> PaymentCards { get; set; }
 }
