@@ -796,6 +796,18 @@ public class AuthService : IAuthService
     public async Task<ResponseDTO> VerifyEmail(string userId, string token)
     {
         var user = await _userManager.FindByIdAsync(userId);
+
+        if (user.EmailConfirmed)
+        {
+            return new ResponseDTO()
+            {
+                Message = "Your email has been confirmed!",
+                IsSuccess = true,
+                StatusCode = 200,
+                Result = null
+            };
+        }
+
         var confirmResult = await _userManager.ConfirmEmailAsync(user, token);
 
         if (!confirmResult.Succeeded)
