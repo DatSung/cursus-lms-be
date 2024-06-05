@@ -84,7 +84,7 @@ public class AuthService : IAuthService
                 Gender = instructorDto.Gender,
                 Country = instructorDto.Country,
                 PhoneNumber = instructorDto.PhoneNumber,
-                AvatarUrl = ""
+                TaxNumber = instructorDto.TaxNumber,
             };
 
             // Create new user to database
@@ -115,6 +115,15 @@ public class AuthService : IAuthService
                 Introduction = instructorDto.Introduction
             };
 
+            // Create instance of payment card
+            PaymentCard paymentCard = new PaymentCard()
+            {
+                CardName = instructorDto.CardName,
+                CardNumber = instructorDto.CardNumber,
+                CardProvider = instructorDto.CardProvider,
+                UserId = user.Id
+            };
+
             // Get role instructor in database
             var isRoleExist = await _roleManager.RoleExistsAsync(StaticUserRoles.Instructor);
 
@@ -129,6 +138,9 @@ public class AuthService : IAuthService
 
             // Create new Instructor relate with ApplicationUser
             await _dbContext.Instructors.AddAsync(instructor);
+
+            // Create card for instructor
+            await _dbContext.PaymentCards.AddAsync(paymentCard);
 
             // Save change to database
             await _dbContext.SaveChangesAsync();
