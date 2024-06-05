@@ -29,7 +29,7 @@ using Microsoft.AspNetCore.Mvc;
             /// <returns>ResponseDTO</returns>
             [HttpPost]
             [Route("sign-up-student")]
-            public async Task<ActionResult<ResponseDTO>> SignUpStudent([FromForm] RegisterStudentDTO registerStudentDTO)
+            public async Task<ActionResult<ResponseDTO>> SignUpStudent([FromBody] RegisterStudentDTO registerStudentDTO)
             {
 
                 if (!ModelState.IsValid)
