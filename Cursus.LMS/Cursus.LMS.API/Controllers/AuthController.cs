@@ -1,16 +1,11 @@
-<<<<<<< HEAD
-    using Cursus.LMS.Model.DTO;
-    using Cursus.LMS.Service.IService;
-    using Microsoft.AspNetCore.Http;
-    using Microsoft.AspNetCore.Mvc;
-=======
+
 using Cursus.LMS.Model.DTO;
 using Cursus.LMS.Service.IService;
 using Cursus.LMS.Utility.ValidationAttribute;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
->>>>>>> main
+
 
     namespace Cursus.LMS.API.Controllers
     {

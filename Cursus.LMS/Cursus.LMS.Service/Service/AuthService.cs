@@ -41,14 +41,89 @@ public class AuthService : IAuthService
 
     public async Task<ResponseDTO> SignUpStudent(RegisterStudentDTO registerStudentDTO)
     {
-        var isEmailExit = await _userManager.FindByEmailAsync(registerStudentDTO.Email);
-
-
-        if (isEmailExit is not null)
+        try
         {
+            var isEmailExit = await _userManager.FindByEmailAsync(registerStudentDTO.Email);
+
+            if (isEmailExit is not null)
+            {
+                return new ResponseDTO()
+                {
+                    Message = "Email is using by another user",
+                    Result = registerStudentDTO,
+                    IsSuccess = false,
+                    StatusCode = 500
+                };
+            }
+
+            // Create new instance of ApplicationUser
+            ApplicationUser newUser = new ApplicationUser()
+            {
+                Address = registerStudentDTO.Address,
+                Email = registerStudentDTO.Email,
+                BirthDate = registerStudentDTO.BirthDate,
+                UserName = registerStudentDTO.Email,
+                FullName = registerStudentDTO.FullName,
+                Gender = registerStudentDTO.Gender,
+                Country = registerStudentDTO.Country,
+                PhoneNumber = registerStudentDTO.PhoneNumber,
+                AvatarUrl = ""
+            };
+
+            // Create new user to database
+            var createUserResult = await _userManager.CreateAsync(newUser, registerStudentDTO.Password);
+
+            // Check if error occur
+            if (!createUserResult.Succeeded)
+            {
+                // Return result internal service error
+                return new ResponseDTO()
+                {
+                    Message = createUserResult.Errors.ToString(),
+                    IsSuccess = false,
+                    StatusCode = 500,
+                    Result = registerStudentDTO
+                };
+            }
+            var user = await _userManager.FindByEmailAsync(registerStudentDTO.Email);
+            Student student = new Student()
+            {
+                UserId = user.Id,
+                University = registerStudentDTO.University
+            };
+
+            var isRoleExist = await _roleManager.RoleExistsAsync(StaticUserRoles.Student);
+
+            // Check if role !exist to create new role 
+            if (isRoleExist is false)
+            {
+                await _roleManager.CreateAsync(new IdentityRole(StaticUserRoles.Student));
+            }
+
+            // Add role for the user
+            await _userManager.AddToRoleAsync(user, StaticUserRoles.Student);
+
+            // Create new Student relate with ApplicationUser
+            await _dbContext.Students.AddAsync(student);
+
+            // Save change to database
+            await _dbContext.SaveChangesAsync();
+
+            // Return result success
             return new ResponseDTO()
             {
-                Message = "Email is using by another user",
+                Message = "Create new user successfully",
+                IsSuccess = true,
+                StatusCode = 200,
+                Result = registerStudentDTO
+            };
+        }
+        catch (Exception e)
+        {
+            // Return result exception
+            return new ResponseDTO()
+            {
+                Message = e.Message,
                 Result = registerStudentDTO,
                 IsSuccess = false,
                 StatusCode = 500
@@ -57,12 +132,9 @@ public class AuthService : IAuthService
 
 
 
-        return new ResponseDTO()
-        {
-            IsSuccess = true,
-            StatusCode = 201,
-            Message = "User created successfully"
-        };
+
+
+
     }
 
     /// <summary>
@@ -105,7 +177,9 @@ public class AuthService : IAuthService
 
             // Create new user to database
             var createUserResult = await _userManager.CreateAsync(newUser, instructorDto.Password);
-
+            
+                
+            
             // Check if error occur
             if (!createUserResult.Succeeded)
             {
@@ -121,6 +195,7 @@ public class AuthService : IAuthService
 
             // Get the user again 
             user = await _userManager.FindByEmailAsync(instructorDto.Email);
+           
 
             // Create instance of instructor
             Instructor instructor = new Instructor()
