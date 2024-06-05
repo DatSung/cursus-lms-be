@@ -40,12 +40,6 @@ namespace Cursus.LMS.API.Controllers
             _emailSender = emailSender;
         }
 
-        public AuthController(IEmailService emailService, IAuthService authService)
-        {
-            _emailService = emailService;
-            _authService = authService;
-        }
-
         /// <summary>
         /// This API for feature Sign Up For Student.
         /// </summary>

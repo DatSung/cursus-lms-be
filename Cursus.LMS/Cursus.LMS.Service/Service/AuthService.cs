@@ -72,7 +72,8 @@ public class AuthService : IAuthService
                 Gender = registerStudentDTO.Gender,
                 Country = registerStudentDTO.Country,
                 PhoneNumber = registerStudentDTO.PhoneNumber,
-                AvatarUrl = ""
+                AvatarUrl = "",
+                TaxNumber = ""
             };
 
             // Create new user to database
@@ -91,11 +92,21 @@ public class AuthService : IAuthService
                 };
             }
             var user = await _userManager.FindByEmailAsync(registerStudentDTO.Email);
+            
             Student student = new Student()
             {
                 UserId = user.Id,
                 University = registerStudentDTO.University
             };
+
+            PaymentCard paymentCard = new PaymentCard()
+            {
+                CardName = registerStudentDTO.CardName,
+                CardNumber = registerStudentDTO.CardNumber,
+                CardProvider = registerStudentDTO.CardProvider,
+                UserId = user.Id
+            };
+
 
             var isRoleExist = await _roleManager.RoleExistsAsync(StaticUserRoles.Student);
 
@@ -105,11 +116,16 @@ public class AuthService : IAuthService
                 await _roleManager.CreateAsync(new IdentityRole(StaticUserRoles.Student));
             }
 
+
+
             // Add role for the user
             await _userManager.AddToRoleAsync(user, StaticUserRoles.Student);
 
             // Create new Student relate with ApplicationUser
             await _dbContext.Students.AddAsync(student);
+
+            // Create new Payment relate with ApplicationUser
+            await _dbContext.PaymentCards.AddAsync(paymentCard);
 
             // Save change to database
             await _dbContext.SaveChangesAsync();

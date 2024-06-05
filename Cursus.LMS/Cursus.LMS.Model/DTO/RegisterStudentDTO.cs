@@ -45,4 +45,11 @@ public class RegisterStudentDTO
     [Phone(ErrorMessage = "Provided phone number is not valid.")]
     [DataType(DataType.PhoneNumber, ErrorMessage = "Provided phone number not valid.")]
     public string PhoneNumber { get; set; }
+
+    [Required(ErrorMessage = "CardNumber number is required.")] 
+    public string CardNumber { get; set; }
+    [Required(ErrorMessage = "CardName number is required.")] 
+    public string CardName { get; set; }
+    [Required(ErrorMessage = "CardProvider number is required.")] 
+    public string CardProvider { get; set; }
 }
