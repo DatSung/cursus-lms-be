@@ -17,4 +17,5 @@ public interface IAuthService
     Task<ResponseDTO> ResetPassword(string resetPasswordDto, string token, string password);
     Task<ResponseDTO> ChangePassword(string userId, string oldPassword, string newPassword, string confirmNewPassword);
     Task<ResponseDTO> VerifyEmail();
+    Task<UserInfo> GetUserByEmail(string email);
 }
