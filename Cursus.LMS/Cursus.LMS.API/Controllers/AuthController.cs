@@ -171,10 +171,24 @@ namespace Cursus.LMS.API.Controllers
         public async Task<ActionResult<ResponseDTO>> SendVerifyEmail([FromBody] [EmailAddress] string email)
         {
             var user = await _userManager.FindByEmailAsync(email);
+            if (user.EmailConfirmed)
+            {
+                return new ResponseDTO()
+                {
+                    IsSuccess = true,
+                    Message = "Your email has been confirmed",
+                    StatusCode = 200,
+                    Result = email
+                };
+            }
+            
             var token = await _userManager.GenerateEmailConfirmationTokenAsync(user);
+            
             var confirmationLink = Url.Action("verify-email", "Auth", new { userId = user.Id, token = token },
                 Request.Scheme);
+            
             var responseDto = await _authService.SendVerifyEmail(user.Email, confirmationLink);
+            
             return StatusCode(responseDto.StatusCode, responseDto);
         }
 
