@@ -60,6 +60,10 @@ public class TokenService : ITokenService
         return accessToken;
     }
 
+    /// <summary>
+    /// This method for create refresh token
+    /// </summary>
+    /// <returns></returns>
     public Task<string> GenerateJwtRefreshTokenAsync()
     {
         var randomNumber = new byte[32];
@@ -70,6 +74,12 @@ public class TokenService : ITokenService
         }
     }
 
+    /// <summary>
+    /// This method for store refresh token on redis cloud
+    /// </summary>
+    /// <param name="userId"></param>
+    /// <param name="refreshToken"></param>
+    /// <returns></returns>
     public async Task<bool> StoreRefreshToken(string userId, string refreshToken)
     {
         string redisKey = $"userId:{userId}:refreshToken";
@@ -77,6 +87,11 @@ public class TokenService : ITokenService
         return result;
     }
 
+    /// <summary>
+    /// This method for get refresh token from redis cloud
+    /// </summary>
+    /// <param name="userId"></param>
+    /// <returns></returns>
     public async Task<string> RetrieveRefreshToken(string userId)
     {
         string redisKey = $"userId:{userId}:refreshToken";
@@ -84,6 +99,11 @@ public class TokenService : ITokenService
         return result;
     }
 
+    /// <summary>
+    /// This method for delete refresh token on redis cloud
+    /// </summary>
+    /// <param name="userId"></param>
+    /// <returns></returns>
     public async Task<bool> DeleteRefreshToken(string userId)
     {
         string redisKey = $"userId:{userId}:refreshToken";

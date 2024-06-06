@@ -12,6 +12,12 @@ public class RedisService : IRedisService
         _redis = redis;
     }
 
+    /// <summary>
+    /// This method for upload data to redis cloud
+    /// </summary>
+    /// <param name="key"></param>
+    /// <param name="value"></param>
+    /// <returns></returns>
     public async Task<bool> Store(string key, string value)
     {
         var cache = _redis.GetDatabase();
@@ -19,6 +25,11 @@ public class RedisService : IRedisService
         return result;
     }
 
+    /// <summary>
+    /// This method for get data from redis cloud
+    /// </summary>
+    /// <param name="key"></param>
+    /// <returns></returns>
     public async Task<string> Retrieve(string key)
     {
         var cache = _redis.GetDatabase();
@@ -26,6 +37,11 @@ public class RedisService : IRedisService
         return result;
     }
 
+    /// <summary>
+    /// This method for delete data from redis cloud
+    /// </summary>
+    /// <param name="key"></param>
+    /// <returns></returns>
     public async Task<bool> Delete(string key)
     {
         var cache = _redis.GetDatabase();
