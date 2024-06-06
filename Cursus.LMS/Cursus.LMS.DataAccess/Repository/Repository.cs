@@ -1,4 +1,5 @@
-﻿using System.Linq.Expressions;
+﻿using System.Collections;
+using System.Linq.Expressions;
 using Cursus.LMS.DataAccess.Context;
 using Cursus.LMS.DataAccess.IRepository;
 using Microsoft.EntityFrameworkCore;
@@ -21,7 +22,7 @@ public class Repository<T> : IRepository<T> where T : class
         await dbSet.AddAsync(entity);
     }
 
-    public async Task AddRangeAsync(List<T> entities)
+    public async Task AddRangeAsync(IEnumerable<T> entities)
     {
         await dbSet.AddRangeAsync(entities);
     }
@@ -83,7 +84,7 @@ public class Repository<T> : IRepository<T> where T : class
         dbSet.Remove(entity);
     }
 
-    public void RemoveRange(List<T> entities)
+    public void RemoveRange(IEnumerable<T> entities)
     {
         dbSet.RemoveRange(entities);
     }
