@@ -1,5 +1,6 @@
 ﻿using Cursus.LMS.Model.DTO;
 using Cursus.LMS.Service.IService;
+using Cursus.LMS.Service.Service;
 using Cursus.LMS.Utility.Constants;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -38,12 +39,32 @@ namespace Cursus.LMS.API.Controllers
             var stream = await _firebaseService.GetImage(filePath);
             return File(stream, "image/png");
         }
-        
+
         [HttpGet]
-        [Route("test-refresh-token")]
+        [Route("store-refresh-token")]
         public async Task<IActionResult> TestRefreshToken()
         {
-            return Ok(_tokenService.GenerateJwtRefreshTokenAsync());
+            var refreshToken = await _tokenService.GenerateJwtRefreshTokenAsync();
+            var result = await _tokenService.StoreRefreshToken("USER123", refreshToken);
+            return Ok(result);
+        }
+
+        [HttpGet]
+        [Route("delete-refresh-token")]
+        public async Task<IActionResult> DeteleRefreshToken()
+        {
+            var refreshToken = await _tokenService.GenerateJwtRefreshTokenAsync();
+            var result = await _tokenService.DeleteRefreshToken("USER123");
+            return Ok(result);
+        }
+
+        [HttpGet]
+        [Route("get-refresh-token")]
+        public async Task<IActionResult> RestrieveRefreshToken()
+        {
+            var refreshToken = await _tokenService.GenerateJwtRefreshTokenAsync();
+            var result = await _tokenService.RetrieveRefreshToken("USER123");
+            return Ok(result);
         }
     }
 }

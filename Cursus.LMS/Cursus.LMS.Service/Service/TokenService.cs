@@ -14,11 +14,14 @@ public class TokenService : ITokenService
 {
     private readonly UserManager<ApplicationUser> _userManager;
     private readonly IConfiguration _configuration;
+    private readonly IRedisService _redisService;
 
-    public TokenService(UserManager<ApplicationUser> userManager, IConfiguration configuration)
+    public TokenService(UserManager<ApplicationUser> userManager, IConfiguration configuration,
+        IRedisService redisService)
     {
         _userManager = userManager;
         _configuration = configuration;
+        _redisService = redisService;
     }
 
     public async Task<string> GenerateJwtAccessTokenAsync(ApplicationUser user)
@@ -57,13 +60,34 @@ public class TokenService : ITokenService
         return accessToken;
     }
 
-    public async Task<string> GenerateJwtRefreshTokenAsync()
+    public Task<string> GenerateJwtRefreshTokenAsync()
     {
         var randomNumber = new byte[32];
         using (var rng = RandomNumberGenerator.Create())
         {
             rng.GetBytes(randomNumber);
-            return Convert.ToBase64String(randomNumber);
+            return Task.FromResult(Convert.ToBase64String(randomNumber));
         }
+    }
+
+    public async Task<bool> StoreRefreshToken(string userId, string refreshToken)
+    {
+        string redisKey = $"userId:{userId}:refreshToken";
+        var result = await _redisService.Store(redisKey, refreshToken);
+        return result;
+    }
+
+    public async Task<string> RetrieveRefreshToken(string userId)
+    {
+        string redisKey = $"userId:{userId}:refreshToken";
+        var result = await _redisService.Retrieve(redisKey);
+        return result;
+    }
+
+    public async Task<bool> DeleteRefreshToken(string userId)
+    {
+        string redisKey = $"userId:{userId}:refreshToken";
+        var result = await _redisService.Delete(redisKey);
+        return result;
     }
 }

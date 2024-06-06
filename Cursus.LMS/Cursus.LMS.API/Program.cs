@@ -32,8 +32,9 @@ builder.Services.RegisterServices();
 // Base on Extensions.FirebaseServiceExtensions
 builder.Services.AddFirebaseServices();
 
-// Register EmailSender
-builder.Services.AddTransient<EmailSender>();
+// Register redis services life cycle
+// Base on Extensions.RedisServiceExtensions
+builder.AddRedisCache();
 
 builder.Services.AddEndpointsApiExplorer();
 
