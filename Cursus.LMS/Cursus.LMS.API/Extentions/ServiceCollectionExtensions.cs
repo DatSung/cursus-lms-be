@@ -16,7 +16,10 @@ public static class ServiceCollectionExtensions
         services.AddScoped<IAuthService, AuthService>();
         // Registering IEmailService with its implementation EmailService
         services.AddScoped<IEmailService, EmailService>();
+        // Registering IEmailSender with its implementation EmailSender
         services.AddScoped<IEmailSender, EmailSender>();
+        // Registering ITokenService with its implementation TokenService
+        services.AddScoped<ITokenService, TokenService>();
 
         // Register the Identity services with default configuration
         services.AddIdentity<ApplicationUser, IdentityRole>()
