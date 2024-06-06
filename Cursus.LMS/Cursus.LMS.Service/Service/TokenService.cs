@@ -1,5 +1,6 @@
 ﻿using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
+using System.Security.Cryptography;
 using System.Text;
 using Cursus.LMS.Model.Domain;
 using Cursus.LMS.Service.IService;
@@ -56,8 +57,13 @@ public class TokenService : ITokenService
         return accessToken;
     }
 
-    public async Task<string> GenerateJwtRefreshTokenAsync(ApplicationUser user)
+    public async Task<string> GenerateJwtRefreshTokenAsync()
     {
-        throw new NotImplementedException();
+        var randomNumber = new byte[32];
+        using (var rng = RandomNumberGenerator.Create())
+        {
+            rng.GetBytes(randomNumber);
+            return Convert.ToBase64String(randomNumber);
+        }
     }
 }
