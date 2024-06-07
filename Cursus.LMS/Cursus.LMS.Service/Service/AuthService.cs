@@ -633,6 +633,8 @@ public class AuthService : IAuthService
             var accessToken = await _tokenService.GenerateJwtAccessTokenAsync(applicationUser);
             var refreshToken = await _tokenService.GenerateJwtRefreshTokenAsync(applicationUser);
 
+            await _tokenService.StoreRefreshToken(applicationUser.Id, refreshToken);
+            
             return new ResponseDTO()
             {
                 Result = new JwtTokenDTO()
