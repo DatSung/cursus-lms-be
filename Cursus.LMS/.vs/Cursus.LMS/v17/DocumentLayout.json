@@ -3,12 +3,16 @@
   "WorkspaceRootPath": "D:\\hehe2\\Cursus.LMS\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{BA87DACF-F298-45B8-8D2E-A464DD8AE492}|Cursus.LMS.API\\Cursus.LMS.API.csproj|d:\\hehe2\\cursus.lms\\cursus.lms.api\\controllers\\authcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{BA87DACF-F298-45B8-8D2E-A464DD8AE492}|Cursus.LMS.API\\Cursus.LMS.API.csproj|solutionrelative:cursus.lms.api\\controllers\\authcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{5143EF27-F420-4C1D-AC5D-ABBFE41E74CC}|Cursus.LMS.Service\\Cursus.LMS.Service.csproj|d:\\hehe2\\cursus.lms\\cursus.lms.service\\service\\authservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{5143EF27-F420-4C1D-AC5D-ABBFE41E74CC}|Cursus.LMS.Service\\Cursus.LMS.Service.csproj|solutionrelative:cursus.lms.service\\service\\authservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{5143EF27-F420-4C1D-AC5D-ABBFE41E74CC}|Cursus.LMS.Service\\Cursus.LMS.Service.csproj|d:\\hehe2\\cursus.lms\\cursus.lms.service\\iservice\\iauthservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{5143EF27-F420-4C1D-AC5D-ABBFE41E74CC}|Cursus.LMS.Service\\Cursus.LMS.Service.csproj|solutionrelative:cursus.lms.service\\iservice\\iauthservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{BA87DACF-F298-45B8-8D2E-A464DD8AE492}|Cursus.LMS.API\\Cursus.LMS.API.csproj|d:\\hehe2\\cursus.lms\\cursus.lms.api\\controllers\\authcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{BA87DACF-F298-45B8-8D2E-A464DD8AE492}|Cursus.LMS.API\\Cursus.LMS.API.csproj|solutionrelative:cursus.lms.api\\controllers\\authcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{FAF8500C-EC4A-4B0F-A960-19793A294F8D}|Cursus.LMS.Model\\Cursus.LMS.Model.csproj|d:\\hehe2\\cursus.lms\\cursus.lms.model\\dto\\registerstudentdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -21,10 +25,6 @@
     {
       "AbsoluteMoniker": "D:0:0:{5143EF27-F420-4C1D-AC5D-ABBFE41E74CC}|Cursus.LMS.Service\\Cursus.LMS.Service.csproj|d:\\hehe2\\cursus.lms\\cursus.lms.service\\service\\firebaseservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{5143EF27-F420-4C1D-AC5D-ABBFE41E74CC}|Cursus.LMS.Service\\Cursus.LMS.Service.csproj|solutionrelative:cursus.lms.service\\service\\firebaseservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{5143EF27-F420-4C1D-AC5D-ABBFE41E74CC}|Cursus.LMS.Service\\Cursus.LMS.Service.csproj|d:\\hehe2\\cursus.lms\\cursus.lms.service\\iservice\\iauthservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{5143EF27-F420-4C1D-AC5D-ABBFE41E74CC}|Cursus.LMS.Service\\Cursus.LMS.Service.csproj|solutionrelative:cursus.lms.service\\iservice\\iauthservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{FAF8500C-EC4A-4B0F-A960-19793A294F8D}|Cursus.LMS.Model\\Cursus.LMS.Model.csproj|d:\\hehe2\\cursus.lms\\cursus.lms.model\\dto\\instructordto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -122,17 +122,17 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 0,
+          "SelectedChildIndex": 4,
           "Children": [
             {
               "$type": "Document",
-              "DocumentIndex": 0,
+              "DocumentIndex": 2,
               "Title": "AuthController.cs",
               "DocumentMoniker": "D:\\hehe2\\Cursus.LMS\\Cursus.LMS.API\\Controllers\\AuthController.cs",
               "RelativeDocumentMoniker": "Cursus.LMS.API\\Controllers\\AuthController.cs",
               "ToolTip": "D:\\hehe2\\Cursus.LMS\\Cursus.LMS.API\\Controllers\\AuthController.cs",
               "RelativeToolTip": "Cursus.LMS.API\\Controllers\\AuthController.cs",
-              "ViewState": "AQIAAC8AAAAAAAAAAIAwwDwAAAAQAAAA",
+              "ViewState": "AQIAAJUAAAAAAAAAAIAwwKcAAAA6AAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-05-31T04:11:34.382Z",
               "IsPinned": true,
@@ -148,26 +148,26 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 5,
+              "DocumentIndex": 1,
               "Title": "IAuthService.cs",
               "DocumentMoniker": "D:\\hehe2\\Cursus.LMS\\Cursus.LMS.Service\\IService\\IAuthService.cs",
               "RelativeDocumentMoniker": "Cursus.LMS.Service\\IService\\IAuthService.cs",
               "ToolTip": "D:\\hehe2\\Cursus.LMS\\Cursus.LMS.Service\\IService\\IAuthService.cs",
               "RelativeToolTip": "Cursus.LMS.Service\\IService\\IAuthService.cs",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAwAAAAmAAAA",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAYwBAAAAAkAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-05-31T04:14:08.528Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 0,
               "Title": "AuthService.cs",
               "DocumentMoniker": "D:\\hehe2\\Cursus.LMS\\Cursus.LMS.Service\\Service\\AuthService.cs",
               "RelativeDocumentMoniker": "Cursus.LMS.Service\\Service\\AuthService.cs",
               "ToolTip": "D:\\hehe2\\Cursus.LMS\\Cursus.LMS.Service\\Service\\AuthService.cs",
               "RelativeToolTip": "Cursus.LMS.Service\\Service\\AuthService.cs",
-              "ViewState": "AQIAADAAAAAAAAAAAAAAAMoAAAAAAAAA",
+              "ViewState": "AQIAAAsDAAAAAAAAAAAYwHACAABKAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-05-31T04:14:18.875Z",
               "EditorCaption": ""
@@ -182,8 +182,7 @@
               "RelativeToolTip": "Cursus.LMS.API\\appsettings.json",
               "ViewState": "AQIAAAMAAAAAAAAAAAAkwBgAAAATAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
-              "WhenOpened": "2024-05-31T04:00:25.72Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-05-31T04:00:25.72Z"
             },
             {
               "$type": "Document",
@@ -195,12 +194,11 @@
               "RelativeToolTip": "Cursus.LMS.Model\\DTO\\InstructorDTO.cs",
               "ViewState": "AQIAAA8AAAAAAAAAAAAAACQAAAA1AAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-05-31T07:49:30.391Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-05-31T07:49:30.391Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 4,
+              "DocumentIndex": 5,
               "Title": "FirebaseService.cs",
               "DocumentMoniker": "D:\\hehe2\\Cursus.LMS\\Cursus.LMS.Service\\Service\\FirebaseService.cs",
               "RelativeDocumentMoniker": "Cursus.LMS.Service\\Service\\FirebaseService.cs",
@@ -208,12 +206,11 @@
               "RelativeToolTip": "Cursus.LMS.Service\\Service\\FirebaseService.cs",
               "ViewState": "AQIAAB4AAAAAAAAAAAAAABMAAAAAAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-06-05T01:28:30.511Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-06-05T01:28:30.511Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 3,
               "Title": "RegisterStudentDTO.cs",
               "DocumentMoniker": "D:\\hehe2\\Cursus.LMS\\Cursus.LMS.Model\\DTO\\RegisterStudentDTO.cs",
               "RelativeDocumentMoniker": "Cursus.LMS.Model\\DTO\\RegisterStudentDTO.cs",
@@ -221,12 +218,11 @@
               "RelativeToolTip": "Cursus.LMS.Model\\DTO\\RegisterStudentDTO.cs",
               "ViewState": "AQIAABgAAAAAAAAAAAAUwC4AAAArAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-06-05T07:35:35.06Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-06-05T07:35:35.06Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 3,
+              "DocumentIndex": 4,
               "Title": "ApplicationUser.cs",
               "DocumentMoniker": "D:\\hehe2\\Cursus.LMS\\Cursus.LMS.Model\\Domain\\ApplicationUser.cs",
               "RelativeDocumentMoniker": "Cursus.LMS.Model\\Domain\\ApplicationUser.cs",
@@ -234,8 +230,7 @@
               "RelativeToolTip": "Cursus.LMS.Model\\Domain\\ApplicationUser.cs",
               "ViewState": "AQIAAAAAAAAAAAAAAAAAAA4AAAABAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-05-31T04:10:51.539Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-05-31T04:10:51.539Z"
             },
             {
               "$type": "Document",
@@ -247,8 +242,7 @@
               "RelativeToolTip": "Cursus.LMS.API\\Program.cs",
               "ViewState": "AQIAAAAAAAAAAAAAAAAAAAYAAAAAAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-05-31T04:18:58.163Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-05-31T04:18:58.163Z"
             },
             {
               "$type": "Document",
