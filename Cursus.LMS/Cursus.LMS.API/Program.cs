@@ -3,6 +3,7 @@ using Cursus.LMS.DataAccess.Context;
 using Cursus.LMS.Service.Mappings;
 using Cursus.LMS.Service.Service;
 using Cursus.LMS.Utility.Constants;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -20,6 +21,10 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
 {
     options.UseSqlServer(builder.Configuration.GetConnectionString(StaticConnectionString.SQLDB_DefaultConnection));
 });
+
+// Set time token
+builder.Services.Configure<DataProtectionTokenProviderOptions>(options =>
+    options.TokenLifespan = TimeSpan.FromMinutes(15));
 
 // Register AutoMapper
 builder.Services.AddAutoMapper(typeof(AutoMapperProfile));
