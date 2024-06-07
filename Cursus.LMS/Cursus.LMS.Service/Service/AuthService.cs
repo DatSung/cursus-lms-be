@@ -1,4 +1,5 @@
-﻿using AutoMapper;
+﻿using System.Collections.Concurrent;
+using AutoMapper;
 using Cursus.LMS.DataAccess.Context;
 using Cursus.LMS.Model.Domain;
 using Cursus.LMS.Model.DTO;
@@ -12,7 +13,8 @@ using System.Text;
 using Cursus.LMS.Utility.Constants;
 using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
-using Azure.Core;
+using FirebaseAdmin.Auth;
+using Newtonsoft.Json.Linq;
 
 namespace Cursus.LMS.Service.Service;
 
@@ -28,6 +30,7 @@ public class AuthService : IAuthService
     private readonly IEmailSender _emailSender;
     private readonly IFirebaseService _firebaseService;
     private readonly IHttpContextAccessor _httpContextAccessor;
+    private static readonly ConcurrentDictionary<string, (int Count, DateTime LastRequest)> ResetPasswordAttempts = new();
 
     public AuthService(UserManager<ApplicationUser> userManager, RoleManager<IdentityRole> roleManager,
         IConfiguration configuration, IMapper mapper, IEmailService emailService, ApplicationDbContext dbContext,
@@ -75,6 +78,7 @@ public class AuthService : IAuthService
                     IsSuccess = false,
                     StatusCode = 500
                 };
+
             }
 
 
@@ -108,9 +112,8 @@ public class AuthService : IAuthService
                     Result = registerStudentDTO
                 };
             }
-
             var user = await _userManager.FindByEmailAsync(registerStudentDTO.Email);
-
+            
             Student student = new Student()
             {
                 UserId = user.Id,
@@ -133,6 +136,7 @@ public class AuthService : IAuthService
             {
                 await _roleManager.CreateAsync(new IdentityRole(StaticUserRoles.Student));
             }
+
 
 
             // Add role for the user
@@ -203,6 +207,7 @@ public class AuthService : IAuthService
                     IsSuccess = false,
                     StatusCode = 500
                 };
+
             }
 
             // Create new instance of ApplicationUser
@@ -221,8 +226,9 @@ public class AuthService : IAuthService
 
             // Create new user to database
             var createUserResult = await _userManager.CreateAsync(newUser, instructorDto.Password);
-
-
+            
+                
+            
             // Check if error occur
             if (!createUserResult.Succeeded)
             {
@@ -238,7 +244,7 @@ public class AuthService : IAuthService
 
             // Get the user again 
             user = await _userManager.FindByEmailAsync(instructorDto.Email);
-
+           
 
             // Create instance of instructor
             Instructor instructor = new Instructor()
@@ -695,8 +701,164 @@ public class AuthService : IAuthService
 
         return accessToken;
     }
+    //Student-SignInbyGoogle
+    public async Task<SignResponseDTO> StudentSignByGoogle(StudentSignInByGoogleDTO studentSignInByGoogleDTO)
+    {
+        try
+        {
+            //lấy thông tin từ google
+            FirebaseToken googleTokenS = await FirebaseAuth.DefaultInstance.VerifyIdTokenAsync(studentSignInByGoogleDTO.GoogleToken);
+            string userId = googleTokenS.Uid;
+            string email = googleTokenS.Claims["email"].ToString();
+            string name = googleTokenS.Claims["name"].ToString();
+            string avatarurl = googleTokenS.Claims["picture"].ToString();
+            //tìm kiển người dùng trong database
+            var user = await _userManager.FindByIdAsync(userId);
 
-    public async Task<ResponseDTO> ForgotPassword(ForgotPasswordDTO forgotPasswordDto)
+            if (user == null)
+            {
+                //tạo một user mới khi chưa có trong database
+                user = new ApplicationUser
+                {
+                    Id = userId,
+                    Email = email,
+                    FullName = name,
+                    UserName = email,
+                    AvatarUrl = avatarurl,
+                    Gender = studentSignInByGoogleDTO.Gender,
+                    Country = studentSignInByGoogleDTO.Country,
+                    Address = studentSignInByGoogleDTO.Address,
+                    PhoneNumber = studentSignInByGoogleDTO.PhoneNumber,
+                    BirthDate = studentSignInByGoogleDTO.BirthDate,
+                    LockoutEnabled = true,
+                    TaxNumber = ""
+                };
+
+                PaymentCard paymentCard = new()
+                {
+                    UserId = userId,
+                    CardNumber = studentSignInByGoogleDTO.CardNumber,
+                };
+
+                await _userManager.CreateAsync(user);
+
+                var isRoleExist = await _roleManager.RoleExistsAsync(StaticUserRoles.Student);
+                if (isRoleExist is false)
+                {
+                    await _roleManager.CreateAsync(new IdentityRole(StaticUserRoles.Student));
+                }
+
+                await _userManager.AddToRoleAsync(user, StaticUserRoles.Student);
+            }
+            else
+            {
+                return new SignResponseDTO()
+                {
+                    AccessToken = null,
+                    UserInfo = null,
+                    Message = "Existing accounts"
+                };
+            }
+
+            var accessToken = await GenerateJwtTokenAsync(user);
+
+            var userInfo = _mapper.Map<UserInfo>(user);
+            userInfo.Roles = await _userManager.GetRolesAsync(user);
+            return new SignResponseDTO()
+            {
+                AccessToken = accessToken,
+                UserInfo = userInfo
+            };
+        }
+        catch (FirebaseAuthException e)
+        {
+            return null;
+        }
+    }
+
+    //Instructor-SignInbyGoogle
+    public async Task<SignResponseDTO> InstructorSignByGoogle(InstructorSignInByGoogleDTO instructorSignInByGoogleDTO)
+    {
+        try
+        {
+            //lấy thông tin từ google
+            FirebaseToken googleTokenI = await FirebaseAuth.DefaultInstance.VerifyIdTokenAsync(instructorSignInByGoogleDTO.GoogleToken);
+            string userId = googleTokenI.Uid;
+            string email = googleTokenI.Claims["email"].ToString();
+            string name = googleTokenI.Claims["name"].ToString();
+            string avatarurl = googleTokenI.Claims["picture"].ToString();
+            //tìm kiển người dùng trong database
+            var user = await _userManager.FindByIdAsync(userId);
+
+            if (user == null)
+            {
+                user = new ApplicationUser
+                {
+                    Id = userId,
+                    Email = email,
+                    FullName = name,
+                    UserName = email,
+                    AvatarUrl = avatarurl,
+                    Gender = instructorSignInByGoogleDTO.Gender,
+                    Country = instructorSignInByGoogleDTO.Country,
+                    PhoneNumber = instructorSignInByGoogleDTO.PhoneNumber,
+                    Address = instructorSignInByGoogleDTO.Address,
+                    TaxNumber = instructorSignInByGoogleDTO.TaxNumber,
+                    BirthDate = instructorSignInByGoogleDTO.BirthDate,
+                    LockoutEnabled = true
+                };
+
+                PaymentCard paymentCard = new()
+                {
+                    UserId = userId,
+                    CardNumber = instructorSignInByGoogleDTO.CardNumber,
+                };
+
+                await _userManager.CreateAsync(user);
+
+                var isRoleExist = await _roleManager.RoleExistsAsync(StaticUserRoles.Instructor);
+                if (isRoleExist is false)
+                {
+                    await _roleManager.CreateAsync(new IdentityRole(StaticUserRoles.Instructor));
+                }
+
+                await _userManager.AddToRoleAsync(user, StaticUserRoles.Instructor);
+            }
+            else
+            {
+                return new SignResponseDTO()
+                {
+                    AccessToken = null,
+                    UserInfo = null,
+                    Message = "Existing accounts"
+                };
+            }
+
+            var accessToken = await GenerateJwtTokenAsync(user);
+
+            var userInfo = _mapper.Map<UserInfo>(user);
+            userInfo.Roles = await _userManager.GetRolesAsync(user);
+            return new SignResponseDTO()
+            {
+                AccessToken = accessToken,
+                UserInfo = userInfo
+            };
+        }
+        catch (FirebaseAuthException e)
+        {
+            return null;
+        }
+    }
+
+
+
+    //Forgot password
+    private string ip;
+    private string city;
+    private string region;
+    private string country;
+    private const int MaxAttemptsPerDay = 3;
+    public async Task<ResponseDTO> ForgotPassword(ForgotPasswordDTO forgotPasswordDto, string ipClient)
     {
         try
         {
@@ -718,6 +880,46 @@ public class AuthService : IAuthService
                 };
             }
 
+            // Kiểm tra giới hạn gửi yêu cầu đặt lại mật khẩu
+            var email = user.Email;
+            var now = DateTime.Now;
+
+            if (ResetPasswordAttempts.TryGetValue(email, out var attempts))
+            {
+                // Kiểm tra xem đã quá 1 ngày kể từ lần thử cuối cùng chưa
+                if (now - attempts.LastRequest >= TimeSpan.FromSeconds(1)) 
+                {
+                    // Reset số lần thử về 0 và cập nhật thời gian thử cuối cùng
+                    ResetPasswordAttempts[email] = (1, now);
+                }
+                else if (attempts.Count >= MaxAttemptsPerDay)
+                {
+                    // Quá số lần reset cho phép trong vòng 1 ngày, gửi thông báo 
+                    await _emailService.SendEmailAsync(user.Email,
+                        "Password Reset Request Limit Exceeded",
+                        $"You have exceeded the daily limit for password reset requests. Please try again after 24 hours."
+                    );
+
+                    // Vẫn trong thời gian chặn, trả về lỗi
+                    return new ResponseDTO
+                    {
+                        IsSuccess = false,
+                        Message = "You have exceeded the daily limit for password reset requests. Please try again after 24 hours.",
+                        StatusCode = 429 
+                    };
+                } 
+                else 
+                {
+                    // Chưa vượt quá số lần thử và thời gian chờ, tăng số lần thử và cập nhật thời gian
+                    ResetPasswordAttempts[email] = (attempts.Count + 1, now);
+                }
+            }
+            else
+            {
+                // Email chưa có trong danh sách, thêm mới với số lần thử là 1 và thời gian hiện tại
+                ResetPasswordAttempts.AddOrUpdate(email, (1, now), (key, old) => (old.Count + 1, now));
+            }
+            
             // Tạo mã token
             var token = await _userManager.GeneratePasswordResetTokenAsync(user);
 
@@ -737,14 +939,33 @@ public class AuthService : IAuthService
             var browser = GetUserAgentBrowser(userAgent);
 
             // Lấy địa chỉ IP của client
-            /*var clientIp = _httpContextAccessor.HttpContext?.Connection.RemoteIpAddress?.ToString() ?? "Unknown";
-            var client = new RestClient("https://ipapi.co/" + clientIp + "/json/");
-            var request = new RestRequest(Method.Get);
-            IRestSponse response = client.Execute(request);
+            var clientIp = ipClient;
+    
+            // Lấy location
+            var url = "https://ipinfo.io/14.169.10.115/json?token=823e5c403c980f";
+            using (HttpClient client = new HttpClient())
+            {
+                HttpResponseMessage response = await client.GetAsync(url);
+                if (response.IsSuccessStatusCode)
+                {
+                    string jsonContent = await response.Content.ReadAsStringAsync();
+                    JObject data = JObject.Parse(jsonContent);
 
-            if (response.IsSuccessful) {
-                // Phân tích JSON response để lấy thông tin vị trí
-            }*/
+                    this.ip = data["ip"].ToString();
+                    this.city = data["city"].ToString();
+                    this.region = data["region"].ToString();
+                    this.country = data["country"].ToString();
+                }
+                else
+                {
+                    return new ResponseDTO
+                    {
+                        IsSuccess = false,
+                        Message = "Error: Unable to retrieve data.",
+                        StatusCode = 400
+                    };
+                }
+            }
 
             // Gửi email chứa đường link đặt lại mật khẩu
             var emailBody = $@"
@@ -777,7 +998,7 @@ public class AuthService : IAuthService
         </div>
     </div>
     <div>
-        <p style=""font-size: 16px; line-height: 120%;"">For security, this request was received from a <strong>{operatingSystem}</strong> device using <strong>{browser}</strong> have IP address is {{clientIp}}. If you did not request a password reset, please ignore this email or contact support if you have questions.<br><br></p><p style=""font-size: 16px; line-height: 120%;"">Thanks,</p><p style=""font-size: 16px; line-height: 120%;"">The Cursus Team</p></td>
+        <p style=""font-size: 16px; line-height: 120%;"">For security, this request was received from a <span style=""color: blue; font-weight: bold;"">{operatingSystem}</span> device using <span style=""color: blue; font-weight: bold;"">{browser}</span> have IP address is <span style=""color: blue; font-weight: bold;"">{clientIp}</span> at location <span style=""color: blue; font-weight: bold;"">{region}</span>, <span style=""color: blue; font-weight: bold;"">{city}</span>, <span style=""color: blue; font-weight: bold;"">{country}</span>. If you did not request a password reset, please ignore this email or contact support if you have questions.<br><br></p><p style=""font-size: 16px; line-height: 120%;"">Thanks,</p><p style=""font-size: 16px; line-height: 120%;"">The Cursus Team</p></td>
     </div>
     <div style=""background-color: #f6f6f6;"">
         <div style=""padding-top: 10px; "">
@@ -884,6 +1105,17 @@ public class AuthService : IAuthService
                     StatusCode = 400
                 };
             }
+            
+            // Kiểm tra xem mật khẩu mới có trùng với mật khẩu cũ hay không
+            if (await _userManager.CheckPasswordAsync(user, password))
+            {
+                return new ResponseDTO
+                {
+                    IsSuccess = false,
+                    Message = "New password cannot be the same as the old password.",
+                    StatusCode = 400
+                };
+            }
 
             // Xác thực token và reset mật khẩu
             var result = await _userManager.ResetPasswordAsync(user, token, password);
@@ -924,7 +1156,7 @@ public class AuthService : IAuthService
         }
     }
 
-// Thay đổi mật khẩu người dùng
+    // Thay đổi mật khẩu người dùng
     public async Task<ResponseDTO> ChangePassword(string userId, string oldPassword, string newPassword,
         string confirmNewPassword)
     {
@@ -943,14 +1175,14 @@ public class AuthService : IAuthService
             if (newPassword != confirmNewPassword)
             {
                 return new ResponseDTO
-                    { IsSuccess = false, Message = "New password and confirm new password not match." };
+                { IsSuccess = false, Message = "New password and confirm new password not match." };
             }
 
             // Không cho phép thay đổi mật khẩu cũ
             if (newPassword == oldPassword)
             {
                 return new ResponseDTO
-                    { IsSuccess = false, Message = "New password cannot be the same as the old password." };
+                { IsSuccess = false, Message = "New password cannot be the same as the old password." };
             }
 
             // Thực hiện thay đổi mật khẩu
@@ -963,7 +1195,8 @@ public class AuthService : IAuthService
             {
                 return new ResponseDTO
                 {
-                    IsSuccess = false, Message = "Password change failed. Please ensure the old password is correct."
+                    IsSuccess = false,
+                    Message = "Password change failed. Please ensure the old password is correct."
                 };
             }
         }

@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Cursus.LMS.DataAccess.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20240605055153_RemoveTaxNumberAndPaymentCardTable")]
-    partial class RemoveTaxNumberAndPaymentCardTable
+    [Migration("20240607062936_Initial")]
+    partial class Initial
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -90,6 +90,10 @@ namespace Cursus.LMS.DataAccess.Migrations
                         .HasColumnType("bit");
 
                     b.Property<string>("SecurityStamp")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("TaxNumber")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<bool>("TwoFactorEnabled")
@@ -412,6 +416,30 @@ namespace Cursus.LMS.DataAccess.Migrations
                     b.HasIndex("StudentId");
 
                     b.ToTable("OrderHeaders");
+                });
+
+            modelBuilder.Entity("Cursus.LMS.Model.Domain.PaymentCard", b =>
+                {
+                    b.Property<string>("CardNumber")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("CardName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("CardProvider")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("UserId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("CardNumber");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("PaymentCards");
                 });
 
             modelBuilder.Entity("Cursus.LMS.Model.Domain.SectionDetails", b =>
@@ -745,6 +773,17 @@ namespace Cursus.LMS.DataAccess.Migrations
                         .IsRequired();
 
                     b.Navigation("Student");
+                });
+
+            modelBuilder.Entity("Cursus.LMS.Model.Domain.PaymentCard", b =>
+                {
+                    b.HasOne("Cursus.LMS.Model.Domain.ApplicationUser", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("Cursus.LMS.Model.Domain.SectionDetails", b =>
