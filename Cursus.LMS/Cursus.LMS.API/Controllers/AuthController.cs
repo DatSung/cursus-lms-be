@@ -166,26 +166,8 @@ namespace Cursus.LMS.API.Controllers
         [Route("forgot-password")]
         public async Task<ActionResult<ResponseDTO>> ForgotPassword([FromBody] ForgotPasswordDTO forgotPasswordDto)
         {
-            var ip = GetIPV4(HttpContext);
-            var result = await _authService.ForgotPassword(forgotPasswordDto, ip);
+            var result = await _authService.ForgotPassword(forgotPasswordDto);
             return StatusCode(result.StatusCode, result);
-        }
-        
-        [HttpGet]
-        [Route("ip")]
-        public string GetIPV4(HttpContext context)
-        {
-            IPAddress? remoteIpAddress = context.Connection.RemoteIpAddress;
-            string ipv4 = "";
-            if (remoteIpAddress != null)
-            {
-                if (remoteIpAddress.AddressFamily == System.Net.Sockets.AddressFamily.InterNetworkV6)
-                {
-                    remoteIpAddress = Dns.GetHostEntry(remoteIpAddress).AddressList.First(x => x.AddressFamily == System.Net.Sockets.AddressFamily.InterNetwork);
-                }
-                ipv4 = remoteIpAddress.ToString();
-            }
-            return ipv4;
         }
 
         /// <summary>

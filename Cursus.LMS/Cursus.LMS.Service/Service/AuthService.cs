@@ -858,7 +858,7 @@ public class AuthService : IAuthService
     private string region;
     private string country;
     private const int MaxAttemptsPerDay = 3;
-    public async Task<ResponseDTO> ForgotPassword(ForgotPasswordDTO forgotPasswordDto, string ipClient)
+    public async Task<ResponseDTO> ForgotPassword(ForgotPasswordDTO forgotPasswordDto)
     {
         try
         {
@@ -937,9 +937,6 @@ public class AuthService : IAuthService
 
             // Lấy tên trình duyệt
             var browser = GetUserAgentBrowser(userAgent);
-
-            // Lấy địa chỉ IP của client
-            var clientIp = ipClient;
     
             // Lấy location
             var url = "https://ipinfo.io/14.169.10.115/json?token=823e5c403c980f";
@@ -998,7 +995,7 @@ public class AuthService : IAuthService
         </div>
     </div>
     <div>
-        <p style=""font-size: 16px; line-height: 120%;"">For security, this request was received from a <span style=""color: blue; font-weight: bold;"">{operatingSystem}</span> device using <span style=""color: blue; font-weight: bold;"">{browser}</span> have IP address is <span style=""color: blue; font-weight: bold;"">{clientIp}</span> at location <span style=""color: blue; font-weight: bold;"">{region}</span>, <span style=""color: blue; font-weight: bold;"">{city}</span>, <span style=""color: blue; font-weight: bold;"">{country}</span>. If you did not request a password reset, please ignore this email or contact support if you have questions.<br><br></p><p style=""font-size: 16px; line-height: 120%;"">Thanks,</p><p style=""font-size: 16px; line-height: 120%;"">The Cursus Team</p></td>
+        <p style=""font-size: 16px; line-height: 120%;"">For security, this request was received from a <span style=""color: blue; font-weight: bold;"">{operatingSystem}</span> device using <span style=""color: blue; font-weight: bold;"">{browser}</span> have IP address is <span style=""color: blue; font-weight: bold;"">{ip}</span> at location <span style=""color: blue; font-weight: bold;"">{region}</span>, <span style=""color: blue; font-weight: bold;"">{city}</span>, <span style=""color: blue; font-weight: bold;"">{country}</span>. If you did not request a password reset, please ignore this email or contact support if you have questions.<br><br></p><p style=""font-size: 16px; line-height: 120%;"">Thanks,</p><p style=""font-size: 16px; line-height: 120%;"">The Cursus Team</p></td>
     </div>
     <div style=""background-color: #f6f6f6;"">
         <div style=""padding-top: 10px; "">
