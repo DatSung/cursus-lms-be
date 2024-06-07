@@ -16,10 +16,10 @@ public interface IAuthService
     Task<ResponseDTO> SignIn(SignDTO signDTO);
     Task<SignResponseDTO> StudentSignByGoogle(StudentSignInByGoogleDTO studentSignInByGoogleDTO);
     Task<SignResponseDTO> InstructorSignByGoogle(InstructorSignInByGoogleDTO instructorSignInByGoogleDTO);
-    Task<ResponseDTO> ForgotPassword(ForgotPasswordDTO forgotPasswordDto);
+    Task<ResponseDTO> ForgotPassword(ForgotPasswordDTO forgotPasswordDto, string ip);
+    Task<ResponseDTO> Refresh(string token);
     Task<ResponseDTO> ResetPassword(string resetPasswordDto, string token, string password);
     Task<ResponseDTO> ChangePassword(string userId, string oldPassword, string newPassword, string confirmNewPassword);
     Task<ResponseDTO> SendVerifyEmail(string email, string confirmationLink);
     Task<ResponseDTO> VerifyEmail(string userId, string token);
-
 }

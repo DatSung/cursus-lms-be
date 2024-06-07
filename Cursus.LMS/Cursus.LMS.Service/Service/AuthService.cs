@@ -1,4 +1,5 @@
-﻿using AutoMapper;
+﻿using System.Collections.Concurrent;
+using AutoMapper;
 using Cursus.LMS.DataAccess.Context;
 using Cursus.LMS.Model.Domain;
 using Cursus.LMS.Model.DTO;
@@ -12,8 +13,8 @@ using System.Text;
 using Cursus.LMS.Utility.Constants;
 using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
-using Azure.Core;
 using FirebaseAdmin.Auth;
+using Newtonsoft.Json.Linq;
 
 namespace Cursus.LMS.Service.Service;
 
@@ -23,15 +24,18 @@ public class AuthService : IAuthService
     private readonly UserManager<ApplicationUser> _userManager;
     private readonly RoleManager<IdentityRole> _roleManager;
     private readonly IConfiguration _configuration;
+    private readonly ITokenService _tokenService;
     private readonly IMapper _mapper;
     private readonly IEmailService _emailService;
     private readonly IEmailSender _emailSender;
     private readonly IFirebaseService _firebaseService;
     private readonly IHttpContextAccessor _httpContextAccessor;
+    private static readonly ConcurrentDictionary<string, (int Count, DateTime LastRequest)> ResetPasswordAttempts = new();
 
     public AuthService(UserManager<ApplicationUser> userManager, RoleManager<IdentityRole> roleManager,
         IConfiguration configuration, IMapper mapper, IEmailService emailService, ApplicationDbContext dbContext,
-        IFirebaseService firebaseService, IHttpContextAccessor httpContextAccessor, IEmailSender emailSender)
+        IFirebaseService firebaseService, IHttpContextAccessor httpContextAccessor, IEmailSender emailSender,
+        ITokenService tokenService)
     {
         _userManager = userManager;
         _roleManager = roleManager;
@@ -42,6 +46,7 @@ public class AuthService : IAuthService
         _firebaseService = firebaseService;
         _httpContextAccessor = httpContextAccessor;
         _emailSender = emailSender;
+        _tokenService = tokenService;
     }
 
 
@@ -62,7 +67,8 @@ public class AuthService : IAuthService
                 };
             }
 
-            var isPhonenumerExit = await _userManager.Users.AnyAsync(u => u.PhoneNumber == registerStudentDTO.PhoneNumber);
+            var isPhonenumerExit =
+                await _userManager.Users.AnyAsync(u => u.PhoneNumber == registerStudentDTO.PhoneNumber);
             if (isPhonenumerExit)
             {
                 return new ResponseDTO()
@@ -107,7 +113,7 @@ public class AuthService : IAuthService
                 };
             }
             var user = await _userManager.FindByEmailAsync(registerStudentDTO.Email);
-
+            
             Student student = new Student()
             {
                 UserId = user.Id,
@@ -220,9 +226,9 @@ public class AuthService : IAuthService
 
             // Create new user to database
             var createUserResult = await _userManager.CreateAsync(newUser, instructorDto.Password);
-
-
-
+            
+                
+            
             // Check if error occur
             if (!createUserResult.Succeeded)
             {
@@ -238,7 +244,7 @@ public class AuthService : IAuthService
 
             // Get the user again 
             user = await _userManager.FindByEmailAsync(instructorDto.Email);
-
+           
 
             // Create instance of instructor
             Instructor instructor = new Instructor()
@@ -553,7 +559,10 @@ public class AuthService : IAuthService
                 };
             }
 
-            var accessToken = await GenerateJwtTokenAsync(user);
+            var accessToken = await _tokenService.GenerateJwtAccessTokenAsync(user);
+            var refreshToken = await _tokenService.GenerateJwtRefreshTokenAsync(user);
+            await _tokenService.StoreRefreshToken(user.Id, refreshToken);
+
             var userInfo = _mapper.Map<UserInfo>(user);
             var roles = await _userManager.GetRolesAsync(user);
             userInfo.Roles = roles;
@@ -563,6 +572,7 @@ public class AuthService : IAuthService
                 Result = new SignResponseDTO()
                 {
                     AccessToken = accessToken,
+                    RefreshToken = refreshToken,
                     UserInfo = userInfo
                 },
                 Message = "Sign in successfully",
@@ -574,6 +584,84 @@ public class AuthService : IAuthService
         {
             Console.WriteLine(e);
             throw;
+        }
+    }
+
+
+    /// <summary>
+    /// This method for refresh token
+    /// </summary>
+    /// <param name="token"></param>
+    /// <returns></returns>
+    public async Task<ResponseDTO> Refresh(string token)
+    {
+        try
+        {
+            ClaimsPrincipal user = await _tokenService.GetPrincipalFromToken(token);
+
+            var userId = user.Claims.FirstOrDefault(x => x.Type == ClaimTypes.NameIdentifier)?.Value;
+            if (userId is null)
+            {
+                return new ResponseDTO()
+                {
+                    Message = "Token is not valid",
+                    IsSuccess = false,
+                    StatusCode = 404,
+                    Result = null
+                };
+            }
+
+            var applicationUser = await _userManager.FindByIdAsync(userId);
+            if (applicationUser is null)
+            {
+                return new ResponseDTO()
+                {
+                    Message = "User does not exist",
+                    IsSuccess = false,
+                    StatusCode = 404,
+                    Result = null
+                };
+            }
+
+
+            var tokenOnRedis = await _tokenService.RetrieveRefreshToken(applicationUser.Id);
+            if (tokenOnRedis != token)
+            {
+                return new ResponseDTO()
+                {
+                    Message = "Token is not valid",
+                    IsSuccess = false,
+                    StatusCode = 400,
+                    Result = null
+                };
+            }
+
+            var accessToken = await _tokenService.GenerateJwtAccessTokenAsync(applicationUser);
+            var refreshToken = await _tokenService.GenerateJwtRefreshTokenAsync(applicationUser);
+
+            await _tokenService.StoreRefreshToken(applicationUser.Id, refreshToken);
+            
+            return new ResponseDTO()
+            {
+                Result = new JwtTokenDTO()
+                {
+                    AccessToken = accessToken,
+                    RefreshToken = refreshToken
+                },
+                IsSuccess = true,
+                StatusCode = 200,
+                Message = "Refresh Token Successfully!"
+            };
+        }
+        catch (Exception e)
+        {
+            return new ResponseDTO()
+            {
+                Message = e.Message,
+                IsSuccess = false,
+                StatusCode = 500,
+                Result = null
+            };
         }
     }
 
@@ -765,7 +853,12 @@ public class AuthService : IAuthService
 
 
     //Forgot password
-    public async Task<ResponseDTO> ForgotPassword(ForgotPasswordDTO forgotPasswordDto)
+    private string ip;
+    private string city;
+    private string region;
+    private string country;
+    private const int MaxAttemptsPerDay = 3;
+    public async Task<ResponseDTO> ForgotPassword(ForgotPasswordDTO forgotPasswordDto, string ipClient)
     {
         try
         {
@@ -787,6 +880,46 @@ public class AuthService : IAuthService
                 };
             }
 
+            // Kiểm tra giới hạn gửi yêu cầu đặt lại mật khẩu
+            var email = user.Email;
+            var now = DateTime.Now;
+
+            if (ResetPasswordAttempts.TryGetValue(email, out var attempts))
+            {
+                // Kiểm tra xem đã quá 1 ngày kể từ lần thử cuối cùng chưa
+                if (now - attempts.LastRequest >= TimeSpan.FromSeconds(1)) 
+                {
+                    // Reset số lần thử về 0 và cập nhật thời gian thử cuối cùng
+                    ResetPasswordAttempts[email] = (1, now);
+                }
+                else if (attempts.Count >= MaxAttemptsPerDay)
+                {
+                    // Quá số lần reset cho phép trong vòng 1 ngày, gửi thông báo 
+                    await _emailService.SendEmailAsync(user.Email,
+                        "Password Reset Request Limit Exceeded",
+                        $"You have exceeded the daily limit for password reset requests. Please try again after 24 hours."
+                    );
+
+                    // Vẫn trong thời gian chặn, trả về lỗi
+                    return new ResponseDTO
+                    {
+                        IsSuccess = false,
+                        Message = "You have exceeded the daily limit for password reset requests. Please try again after 24 hours.",
+                        StatusCode = 429 
+                    };
+                } 
+                else 
+                {
+                    // Chưa vượt quá số lần thử và thời gian chờ, tăng số lần thử và cập nhật thời gian
+                    ResetPasswordAttempts[email] = (attempts.Count + 1, now);
+                }
+            }
+            else
+            {
+                // Email chưa có trong danh sách, thêm mới với số lần thử là 1 và thời gian hiện tại
+                ResetPasswordAttempts.AddOrUpdate(email, (1, now), (key, old) => (old.Count + 1, now));
+            }
+            
             // Tạo mã token
             var token = await _userManager.GeneratePasswordResetTokenAsync(user);
 
@@ -806,14 +939,33 @@ public class AuthService : IAuthService
             var browser = GetUserAgentBrowser(userAgent);
 
             // Lấy địa chỉ IP của client
-            /*var clientIp = _httpContextAccessor.HttpContext?.Connection.RemoteIpAddress?.ToString() ?? "Unknown";
-            var client = new RestClient("https://ipapi.co/" + clientIp + "/json/");
-            var request = new RestRequest(Method.Get);
-            IRestSponse response = client.Execute(request);
+            var clientIp = ipClient;
+    
+            // Lấy location
+            var url = "https://ipinfo.io/14.169.10.115/json?token=823e5c403c980f";
+            using (HttpClient client = new HttpClient())
+            {
+                HttpResponseMessage response = await client.GetAsync(url);
+                if (response.IsSuccessStatusCode)
+                {
+                    string jsonContent = await response.Content.ReadAsStringAsync();
+                    JObject data = JObject.Parse(jsonContent);
 
-            if (response.IsSuccessful) {
-                // Phân tích JSON response để lấy thông tin vị trí
-            }*/
+                    this.ip = data["ip"].ToString();
+                    this.city = data["city"].ToString();
+                    this.region = data["region"].ToString();
+                    this.country = data["country"].ToString();
+                }
+                else
+                {
+                    return new ResponseDTO
+                    {
+                        IsSuccess = false,
+                        Message = "Error: Unable to retrieve data.",
+                        StatusCode = 400
+                    };
+                }
+            }
 
             // Gửi email chứa đường link đặt lại mật khẩu
             var emailBody = $@"
@@ -846,7 +998,7 @@ public class AuthService : IAuthService
         </div>
     </div>
     <div>
-        <p style=""font-size: 16px; line-height: 120%;"">For security, this request was received from a <strong>{operatingSystem}</strong> device using <strong>{browser}</strong> have IP address is {{clientIp}}. If you did not request a password reset, please ignore this email or contact support if you have questions.<br><br></p><p style=""font-size: 16px; line-height: 120%;"">Thanks,</p><p style=""font-size: 16px; line-height: 120%;"">The Cursus Team</p></td>
+        <p style=""font-size: 16px; line-height: 120%;"">For security, this request was received from a <span style=""color: blue; font-weight: bold;"">{operatingSystem}</span> device using <span style=""color: blue; font-weight: bold;"">{browser}</span> have IP address is <span style=""color: blue; font-weight: bold;"">{clientIp}</span> at location <span style=""color: blue; font-weight: bold;"">{region}</span>, <span style=""color: blue; font-weight: bold;"">{city}</span>, <span style=""color: blue; font-weight: bold;"">{country}</span>. If you did not request a password reset, please ignore this email or contact support if you have questions.<br><br></p><p style=""font-size: 16px; line-height: 120%;"">Thanks,</p><p style=""font-size: 16px; line-height: 120%;"">The Cursus Team</p></td>
     </div>
     <div style=""background-color: #f6f6f6;"">
         <div style=""padding-top: 10px; "">
@@ -950,6 +1102,17 @@ public class AuthService : IAuthService
                 {
                     IsSuccess = false,
                     Message = "User not found.",
+                    StatusCode = 400
+                };
+            }
+            
+            // Kiểm tra xem mật khẩu mới có trùng với mật khẩu cũ hay không
+            if (await _userManager.CheckPasswordAsync(user, password))
+            {
+                return new ResponseDTO
+                {
+                    IsSuccess = false,
+                    Message = "New password cannot be the same as the old password.",
                     StatusCode = 400
                 };
             }
