@@ -10,5 +10,6 @@ namespace Cursus.LMS.Model.DTO
     {
         public string AccessToken { get; set; }
         public UserInfo UserInfo { get; set; }
+        public string Message { get; set; }
     }
 }

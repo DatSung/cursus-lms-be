@@ -13,6 +13,7 @@ using Cursus.LMS.Utility.Constants;
 using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using Azure.Core;
+using FirebaseAdmin.Auth;
 
 namespace Cursus.LMS.Service.Service;
 
@@ -61,8 +62,8 @@ public class AuthService : IAuthService
                 };
             }
 
-            var isPhonenumerExit = await _userManager.Users.AnyAsync(u=>u.PhoneNumber == registerStudentDTO.PhoneNumber);
-            if(isPhonenumerExit)
+            var isPhonenumerExit = await _userManager.Users.AnyAsync(u => u.PhoneNumber == registerStudentDTO.PhoneNumber);
+            if (isPhonenumerExit)
             {
                 return new ResponseDTO()
                 {
@@ -106,7 +107,7 @@ public class AuthService : IAuthService
                 };
             }
             var user = await _userManager.FindByEmailAsync(registerStudentDTO.Email);
-            
+
             Student student = new Student()
             {
                 UserId = user.Id,
@@ -219,9 +220,9 @@ public class AuthService : IAuthService
 
             // Create new user to database
             var createUserResult = await _userManager.CreateAsync(newUser, instructorDto.Password);
-            
-                
-            
+
+
+
             // Check if error occur
             if (!createUserResult.Succeeded)
             {
@@ -237,7 +238,7 @@ public class AuthService : IAuthService
 
             // Get the user again 
             user = await _userManager.FindByEmailAsync(instructorDto.Email);
-           
+
 
             // Create instance of instructor
             Instructor instructor = new Instructor()
@@ -612,7 +613,158 @@ public class AuthService : IAuthService
 
         return accessToken;
     }
+    //Student-SignInbyGoogle
+    public async Task<SignResponseDTO> StudentSignByGoogle(StudentSignInByGoogleDTO studentSignInByGoogleDTO)
+    {
+        try
+        {
+            //lấy thông tin từ google
+            FirebaseToken googleTokenS = await FirebaseAuth.DefaultInstance.VerifyIdTokenAsync(studentSignInByGoogleDTO.GoogleToken);
+            string userId = googleTokenS.Uid;
+            string email = googleTokenS.Claims["email"].ToString();
+            string name = googleTokenS.Claims["name"].ToString();
+            string avatarurl = googleTokenS.Claims["picture"].ToString();
+            //tìm kiển người dùng trong database
+            var user = await _userManager.FindByIdAsync(userId);
 
+            if (user == null)
+            {
+                //tạo một user mới khi chưa có trong database
+                user = new ApplicationUser
+                {
+                    Id = userId,
+                    Email = email,
+                    FullName = name,
+                    UserName = email,
+                    AvatarUrl = avatarurl,
+                    Gender = studentSignInByGoogleDTO.Gender,
+                    Country = studentSignInByGoogleDTO.Country,
+                    Address = studentSignInByGoogleDTO.Address,
+                    PhoneNumber = studentSignInByGoogleDTO.PhoneNumber,
+                    BirthDate = studentSignInByGoogleDTO.BirthDate,
+                    LockoutEnabled = true,
+                    TaxNumber = ""
+                };
+
+                PaymentCard paymentCard = new()
+                {
+                    UserId = userId,
+                    CardNumber = studentSignInByGoogleDTO.CardNumber,
+                };
+
+                await _userManager.CreateAsync(user);
+
+                var isRoleExist = await _roleManager.RoleExistsAsync(StaticUserRoles.Student);
+                if (isRoleExist is false)
+                {
+                    await _roleManager.CreateAsync(new IdentityRole(StaticUserRoles.Student));
+                }
+
+                await _userManager.AddToRoleAsync(user, StaticUserRoles.Student);
+            }
+            else
+            {
+                return new SignResponseDTO()
+                {
+                    AccessToken = null,
+                    UserInfo = null,
+                    Message = "Existing accounts"
+                };
+            }
+
+            var accessToken = await GenerateJwtTokenAsync(user);
+
+            var userInfo = _mapper.Map<UserInfo>(user);
+            userInfo.Roles = await _userManager.GetRolesAsync(user);
+            return new SignResponseDTO()
+            {
+                AccessToken = accessToken,
+                UserInfo = userInfo
+            };
+        }
+        catch (FirebaseAuthException e)
+        {
+            return null;
+        }
+    }
+
+    //Instructor-SignInbyGoogle
+    public async Task<SignResponseDTO> InstructorSignByGoogle(InstructorSignInByGoogleDTO instructorSignInByGoogleDTO)
+    {
+        try
+        {
+            //lấy thông tin từ google
+            FirebaseToken googleTokenI = await FirebaseAuth.DefaultInstance.VerifyIdTokenAsync(instructorSignInByGoogleDTO.GoogleToken);
+            string userId = googleTokenI.Uid;
+            string email = googleTokenI.Claims["email"].ToString();
+            string name = googleTokenI.Claims["name"].ToString();
+            string avatarurl = googleTokenI.Claims["picture"].ToString();
+            //tìm kiển người dùng trong database
+            var user = await _userManager.FindByIdAsync(userId);
+
+            if (user == null)
+            {
+                user = new ApplicationUser
+                {
+                    Id = userId,
+                    Email = email,
+                    FullName = name,
+                    UserName = email,
+                    AvatarUrl = avatarurl,
+                    Gender = instructorSignInByGoogleDTO.Gender,
+                    Country = instructorSignInByGoogleDTO.Country,
+                    PhoneNumber = instructorSignInByGoogleDTO.PhoneNumber,
+                    Address = instructorSignInByGoogleDTO.Address,
+                    TaxNumber = instructorSignInByGoogleDTO.TaxNumber,
+                    BirthDate = instructorSignInByGoogleDTO.BirthDate,
+                    LockoutEnabled = true
+                };
+
+                PaymentCard paymentCard = new()
+                {
+                    UserId = userId,
+                    CardNumber = instructorSignInByGoogleDTO.CardNumber,
+                };
+
+                await _userManager.CreateAsync(user);
+
+                var isRoleExist = await _roleManager.RoleExistsAsync(StaticUserRoles.Instructor);
+                if (isRoleExist is false)
+                {
+                    await _roleManager.CreateAsync(new IdentityRole(StaticUserRoles.Instructor));
+                }
+
+                await _userManager.AddToRoleAsync(user, StaticUserRoles.Instructor);
+            }
+            else
+            {
+                return new SignResponseDTO()
+                {
+                    AccessToken = null,
+                    UserInfo = null,
+                    Message = "Existing accounts"
+                };
+            }
+
+            var accessToken = await GenerateJwtTokenAsync(user);
+
+            var userInfo = _mapper.Map<UserInfo>(user);
+            userInfo.Roles = await _userManager.GetRolesAsync(user);
+            return new SignResponseDTO()
+            {
+                AccessToken = accessToken,
+                UserInfo = userInfo
+            };
+        }
+        catch (FirebaseAuthException e)
+        {
+            return null;
+        }
+    }
+
+
+
+    //Forgot password
     public async Task<ResponseDTO> ForgotPassword(ForgotPasswordDTO forgotPasswordDto)
     {
         try
@@ -841,7 +993,7 @@ public class AuthService : IAuthService
         }
     }
 
-// Thay đổi mật khẩu người dùng
+    // Thay đổi mật khẩu người dùng
     public async Task<ResponseDTO> ChangePassword(string userId, string oldPassword, string newPassword,
         string confirmNewPassword)
     {
@@ -860,14 +1012,14 @@ public class AuthService : IAuthService
             if (newPassword != confirmNewPassword)
             {
                 return new ResponseDTO
-                    { IsSuccess = false, Message = "New password and confirm new password not match." };
+                { IsSuccess = false, Message = "New password and confirm new password not match." };
             }
 
             // Không cho phép thay đổi mật khẩu cũ
             if (newPassword == oldPassword)
             {
                 return new ResponseDTO
-                    { IsSuccess = false, Message = "New password cannot be the same as the old password." };
+                { IsSuccess = false, Message = "New password cannot be the same as the old password." };
             }
 
             // Thực hiện thay đổi mật khẩu
@@ -880,7 +1032,8 @@ public class AuthService : IAuthService
             {
                 return new ResponseDTO
                 {
-                    IsSuccess = false, Message = "Password change failed. Please ensure the old password is correct."
+                    IsSuccess = false,
+                    Message = "Password change failed. Please ensure the old password is correct."
                 };
             }
         }
