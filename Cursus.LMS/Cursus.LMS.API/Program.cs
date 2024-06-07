@@ -49,6 +49,7 @@ builder.AddAppAuthentication();
 
 builder.Services.AddAuthorization();
 
+
 // Register SwaggerGen and config for Authorize
 // Base on Extensions.WebApplicationBuilderExtensions
 builder.AddSwaggerGen();

@@ -13,7 +13,7 @@ using System.Text;
 using Cursus.LMS.Utility.Constants;
 using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
-using Azure.Core;
+using FirebaseAdmin.Auth;
 using Newtonsoft.Json.Linq;
 
 namespace Cursus.LMS.Service.Service;
@@ -32,10 +32,10 @@ public class AuthService : IAuthService
     private readonly IHttpContextAccessor _httpContextAccessor;
     private static readonly ConcurrentDictionary<string, (int Count, DateTime LastRequest)> ResetPasswordAttempts = new();
 
+
     public AuthService(UserManager<ApplicationUser> userManager, RoleManager<IdentityRole> roleManager,
         IConfiguration configuration, IMapper mapper, IEmailService emailService, ApplicationDbContext dbContext,
-        IFirebaseService firebaseService, IHttpContextAccessor httpContextAccessor, IEmailSender emailSender,
-        ITokenService tokenService)
+        IFirebaseService firebaseService, IHttpContextAccessor httpContextAccessor, IEmailSender emailSender, ITokenService tokenService)
     {
         _userManager = userManager;
         _roleManager = roleManager;
@@ -67,8 +67,7 @@ public class AuthService : IAuthService
                 };
             }
 
-            var isPhonenumerExit =
-                await _userManager.Users.AnyAsync(u => u.PhoneNumber == registerStudentDTO.PhoneNumber);
+            var isPhonenumerExit = await _userManager.Users.AnyAsync(u => u.PhoneNumber == registerStudentDTO.PhoneNumber);
             if (isPhonenumerExit)
             {
                 return new ResponseDTO()
@@ -78,6 +77,7 @@ public class AuthService : IAuthService
                     IsSuccess = false,
                     StatusCode = 500
                 };
+
             }
 
 
@@ -224,6 +224,9 @@ public class AuthService : IAuthService
 
             // Create new user to database
             var createUserResult = await _userManager.CreateAsync(newUser, instructorDto.Password);
+
+
+
 
 
             // Check if error occur
@@ -698,12 +701,163 @@ public class AuthService : IAuthService
 
         return accessToken;
     }
+    //Student-SignInbyGoogle
+    public async Task<SignResponseDTO> StudentSignByGoogle(StudentSignInByGoogleDTO studentSignInByGoogleDTO)
+    {
+        try
+        {
+            //lấy thông tin từ google
+            FirebaseToken googleTokenS = await FirebaseAuth.DefaultInstance.VerifyIdTokenAsync(studentSignInByGoogleDTO.GoogleToken);
+            string userId = googleTokenS.Uid;
+            string email = googleTokenS.Claims["email"].ToString();
+            string name = googleTokenS.Claims["name"].ToString();
+            string avatarurl = googleTokenS.Claims["picture"].ToString();
+            //tìm kiển người dùng trong database
+            var user = await _userManager.FindByIdAsync(userId);
 
+            if (user == null)
+            {
+                //tạo một user mới khi chưa có trong database
+                user = new ApplicationUser
+                {
+                    Id = userId,
+                    Email = email,
+                    FullName = name,
+                    UserName = email,
+                    AvatarUrl = avatarurl,
+                    Gender = studentSignInByGoogleDTO.Gender,
+                    Country = studentSignInByGoogleDTO.Country,
+                    Address = studentSignInByGoogleDTO.Address,
+                    PhoneNumber = studentSignInByGoogleDTO.PhoneNumber,
+                    BirthDate = studentSignInByGoogleDTO.BirthDate,
+                    LockoutEnabled = true,
+                    TaxNumber = ""
+                };
+                
+                PaymentCard paymentCard = new()
+                {
+                    UserId = userId,
+                    CardNumber = studentSignInByGoogleDTO.CardNumber,
+                };
+
+                await _userManager.CreateAsync(user);
+
+                var isRoleExist = await _roleManager.RoleExistsAsync(StaticUserRoles.Student);
+                if (isRoleExist is false)
+                {
+                    await _roleManager.CreateAsync(new IdentityRole(StaticUserRoles.Student));
+                }
+
+                await _userManager.AddToRoleAsync(user, StaticUserRoles.Student);
+            }
+            else
+            {
+                return new SignResponseDTO()
+                {
+                    AccessToken = null,
+                    UserInfo = null,
+                    Message = "Existing accounts"
+                };
+            }
+
+            var accessToken = await GenerateJwtTokenAsync(user);
+
+            var userInfo = _mapper.Map<UserInfo>(user);
+            userInfo.Roles = await _userManager.GetRolesAsync(user);
+            return new SignResponseDTO()
+            {
+                AccessToken = accessToken,
+                UserInfo = userInfo
+            };
+        }
+        catch (FirebaseAuthException e)
+        {
+            return null;
+        }
+    }
+
+    //Instructor-SignInbyGoogle
+    public async Task<SignResponseDTO> InstructorSignByGoogle(InstructorSignInByGoogleDTO instructorSignInByGoogleDTO)
+    {
+        try
+        {
+            //lấy thông tin từ google
+            FirebaseToken googleTokenI = await FirebaseAuth.DefaultInstance.VerifyIdTokenAsync(instructorSignInByGoogleDTO.GoogleToken);
+            string userId = googleTokenI.Uid;
+            string email = googleTokenI.Claims["email"].ToString();
+            string name = googleTokenI.Claims["name"].ToString();
+            string avatarurl = googleTokenI.Claims["picture"].ToString();
+            //tìm kiển người dùng trong database
+            var user = await _userManager.FindByIdAsync(userId);
+
+            if (user == null)
+            {
+                user = new ApplicationUser
+                {
+                    Id = userId,
+                    Email = email,
+                    FullName = name,
+                    UserName = email,
+                    AvatarUrl = avatarurl,
+                    Gender = instructorSignInByGoogleDTO.Gender,
+                    Country = instructorSignInByGoogleDTO.Country,
+                    PhoneNumber = instructorSignInByGoogleDTO.PhoneNumber,
+                    Address = instructorSignInByGoogleDTO.Address,
+                    TaxNumber = instructorSignInByGoogleDTO.TaxNumber,
+                    BirthDate = instructorSignInByGoogleDTO.BirthDate,
+                    LockoutEnabled = true
+                };
+
+                PaymentCard paymentCard = new()
+                {
+                    UserId = userId,
+                    CardNumber = instructorSignInByGoogleDTO.CardNumber,
+                };
+
+                await _userManager.CreateAsync(user);
+
+                var isRoleExist = await _roleManager.RoleExistsAsync(StaticUserRoles.Instructor);
+                if (isRoleExist is false)
+                {
+                    await _roleManager.CreateAsync(new IdentityRole(StaticUserRoles.Instructor));
+                }
+
+                await _userManager.AddToRoleAsync(user, StaticUserRoles.Instructor);
+            }
+            else
+            {
+                return new SignResponseDTO()
+                {
+                    AccessToken = null,
+                    UserInfo = null,
+                    Message = "Existing accounts"
+                };
+            }
+
+            var accessToken = await GenerateJwtTokenAsync(user);
+
+            var userInfo = _mapper.Map<UserInfo>(user);
+            userInfo.Roles = await _userManager.GetRolesAsync(user);
+            return new SignResponseDTO()
+            {
+                AccessToken = accessToken,
+                UserInfo = userInfo
+            };
+        }
+        catch (FirebaseAuthException e)
+        {
+            return null;
+        }
+    }
+
+
+    // Forgot Password properties
     private string ip;
     private string city;
     private string region;
     private string country;
     private const int MaxAttemptsPerDay = 3;
+    //Forgot password
     public async Task<ResponseDTO> ForgotPassword(ForgotPasswordDTO forgotPasswordDto, string ipClient)
     {
         try
@@ -844,7 +998,7 @@ public class AuthService : IAuthService
         </div>
     </div>
     <div>
-        <p style=""font-size: 16px; line-height: 120%;"">For security, this request was received from a <span style=""color: blue; font-weight: bold;"">{operatingSystem}</span> device using <span style=""color: blue; font-weight: bold;"">{browser}</span> have IP address is <span style=""color: blue; font-weight: bold;"">{clientIp}</span> at location <span style=""color: blue; font-weight: bold;"">{region}</span>, <span style=""color: blue; font-weight: bold;"">{city}</span>, <span style=""color: blue; font-weight: bold;"">{country}</span>. If you did not request a password reset, please ignore this email or contact support if you have questions.<br><br></p><p style=""font-size: 16px; line-height: 120%;"">Thanks,</p><p style=""font-size: 16px; line-height: 120%;"">The Cursus Team</p></td>
+        <p style=""font-size: 16px; line-height: 120%;"">For security, this request was received from a <strong>{operatingSystem}</strong> device using <strong>{browser}</strong> have IP address is {{clientIp}}. If you did not request a password reset, please ignore this email or contact support if you have questions.<br><br></p><p style=""font-size: 16px; line-height: 120%;"">Thanks,</p><p style=""font-size: 16px; line-height: 120%;"">The Cursus Team</p></td>
     </div>
     <div style=""background-color: #f6f6f6;"">
         <div style=""padding-top: 10px; "">
@@ -948,17 +1102,6 @@ public class AuthService : IAuthService
                 {
                     IsSuccess = false,
                     Message = "User not found.",
-                    StatusCode = 400
-                };
-            }
-            
-            // Kiểm tra xem mật khẩu mới có trùng với mật khẩu cũ hay không
-            if (await _userManager.CheckPasswordAsync(user, password))
-            {
-                return new ResponseDTO
-                {
-                    IsSuccess = false,
-                    Message = "New password cannot be the same as the old password.",
                     StatusCode = 400
                 };
             }
