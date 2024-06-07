@@ -41,9 +41,9 @@ public class RegisterStudentDTO
     [DataType(DataType.Date, ErrorMessage = "Invalid date format.")]
     public DateTime BirthDate { get; set; }
 
-    [Required(ErrorMessage = "Phone number is required.")]
-    [Phone(ErrorMessage = "Provided phone number is not valid.")]
-    [DataType(DataType.PhoneNumber, ErrorMessage = "Provided phone number not valid.")]
+    [Required]
+    [DataType(DataType.PhoneNumber)]
+    [Phone]
     public string PhoneNumber { get; set; }
 
     [Required(ErrorMessage = "CardNumber number is required.")] 

@@ -1,5 +1,7 @@
 using Cursus.LMS.API.Extentions;
 using Cursus.LMS.DataAccess.Context;
+using Cursus.LMS.DataAccess.IProvider;
+using Cursus.LMS.DataAccess.Provider;
 using Cursus.LMS.Service.Mappings;
 using Cursus.LMS.Service.Service;
 using Cursus.LMS.Utility.Constants;
@@ -23,6 +25,11 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
 
 // Register AutoMapper
 builder.Services.AddAutoMapper(typeof(AutoMapperProfile));
+
+//RegisterProvider  
+builder.Services.AddScoped<IRequestUserProvider, RequestUserProvider>();
+
+
 
 // Register services life cycle
 // Base on Extensions.ServiceCollectionExtensions

@@ -19,6 +19,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Cursus.LMS.API\Cursus.LMS.API.csproj" />
+    <ProjectReference Include="..\Cursus.LMS.DataAccess\Cursus.LMS.DataAccess.csproj" />
     <ProjectReference Include="..\Cursus.LMS.Service\Cursus.LMS.Service.csproj" />
   </ItemGroup>
 

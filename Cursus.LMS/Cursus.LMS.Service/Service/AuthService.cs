@@ -13,14 +13,18 @@ using Cursus.LMS.Utility.Constants;
 using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using Azure.Core;
+using Cursus.LMS.DataAccess.IRepository;
+using Cursus.LMS.DataAccess.IProvider;
 
 namespace Cursus.LMS.Service.Service;
 
 public class AuthService : IAuthService
 {
-    private readonly ApplicationDbContext _dbContext;
-    private readonly UserManager<ApplicationUser> _userManager;
+    //private readonly ApplicationDbContext _dbContext;
+    //private readonly UserManager<ApplicationUser> _userManager;
     private readonly RoleManager<IdentityRole> _roleManager;
+    private readonly IRequestUserProvider _requestUserProvider;
+    private readonly IUnitOfWork _unitOfWork;
     private readonly IConfiguration _configuration;
     private readonly ITokenService _tokenService;
     private readonly IMapper _mapper;
@@ -29,21 +33,23 @@ public class AuthService : IAuthService
     private readonly IFirebaseService _firebaseService;
     private readonly IHttpContextAccessor _httpContextAccessor;
 
-    public AuthService(UserManager<ApplicationUser> userManager, RoleManager<IdentityRole> roleManager,
-        IConfiguration configuration, IMapper mapper, IEmailService emailService, ApplicationDbContext dbContext,
+    public AuthService(/*UserManager<ApplicationUser> userManager,*/ RoleManager<IdentityRole> roleManager,
+        IConfiguration configuration, IMapper mapper, IEmailService emailService, /*ApplicationDbContext dbContext,*/
         IFirebaseService firebaseService, IHttpContextAccessor httpContextAccessor, IEmailSender emailSender,
-        ITokenService tokenService)
+        ITokenService tokenService, IUnitOfWork unitOfWork, IRequestUserProvider requestUserProvider)
     {
-        _userManager = userManager;
+        //_userManager = userManager;
         _roleManager = roleManager;
         _configuration = configuration;
         _mapper = mapper;
         _emailService = emailService;
-        _dbContext = dbContext;
+        //_dbContext = dbContext;
         _firebaseService = firebaseService;
         _httpContextAccessor = httpContextAccessor;
         _emailSender = emailSender;
         _tokenService = tokenService;
+        _unitOfWork = unitOfWork;
+        _requestUserProvider = requestUserProvider;
     }
 
 
@@ -51,7 +57,7 @@ public class AuthService : IAuthService
     {
         try
         {
-            var isEmailExit = await _userManager.FindByEmailAsync(registerStudentDTO.Email);
+            var isEmailExit = await _requestUserProvider.FindByEmailAsync(registerStudentDTO.Email);
 
             if (isEmailExit is not null)
             {
@@ -65,7 +71,7 @@ public class AuthService : IAuthService
             }
 
             var isPhonenumerExit =
-                await _userManager.Users.AnyAsync(u => u.PhoneNumber == registerStudentDTO.PhoneNumber);
+                await _requestUserProvider.IsPhoneNumberExistsAsync(registerStudentDTO.PhoneNumber);
             if (isPhonenumerExit)
             {
                 return new ResponseDTO()
@@ -94,7 +100,7 @@ public class AuthService : IAuthService
             };
 
             // Create new user to database
-            var createUserResult = await _userManager.CreateAsync(newUser, registerStudentDTO.Password);
+            var createUserResult = await _requestUserProvider.CreateUserAsync(newUser, registerStudentDTO.Password);
 
             // Check if error occur
             if (!createUserResult.Succeeded)
@@ -109,7 +115,7 @@ public class AuthService : IAuthService
                 };
             }
 
-            var user = await _userManager.FindByEmailAsync(registerStudentDTO.Email);
+            var user = await _requestUserProvider.FindByEmailAsync(registerStudentDTO.Email);
 
             Student student = new Student()
             {
@@ -124,7 +130,7 @@ public class AuthService : IAuthService
                 CardProvider = registerStudentDTO.CardProvider,
                 UserId = user.Id
             };
-
+            
 
             var isRoleExist = await _roleManager.RoleExistsAsync(StaticUserRoles.Student);
 
@@ -136,16 +142,16 @@ public class AuthService : IAuthService
 
 
             // Add role for the user
-            await _userManager.AddToRoleAsync(user, StaticUserRoles.Student);
+            await _requestUserProvider.AddToRoleAsync(user, StaticUserRoles.Student);
 
             // Create new Student relate with ApplicationUser
-            await _dbContext.Students.AddAsync(student);
+            await _unitOfWork.StudentRepository.AddAsync(student);
 
             // Create new Payment relate with ApplicationUser
-            await _dbContext.PaymentCards.AddAsync(paymentCard);
+            await _unitOfWork.PaymentCardRepository.AddAsync(paymentCard);
 
             // Save change to database
-            await _dbContext.SaveChangesAsync();
+            await _unitOfWork.SaveAsync();
 
             // Return result success
             return new ResponseDTO()
@@ -179,7 +185,7 @@ public class AuthService : IAuthService
         try
         {
             // Find exist user with the email from instructorDto
-            var user = await _userManager.FindByEmailAsync(instructorDto.Email);
+            var user = await _requestUserProvider.FindByEmailAsync(instructorDto.Email);
 
             // Check if user exist
             if (user is not null)
@@ -193,7 +199,7 @@ public class AuthService : IAuthService
                 };
             }
 
-            var isPhonenumerExit = await _userManager.Users.AnyAsync(u => u.PhoneNumber == instructorDto.PhoneNumber);
+            var isPhonenumerExit = await _requestUserProvider.IsPhoneNumberExistsAsync(instructorDto.PhoneNumber);
             if (isPhonenumerExit)
             {
                 return new ResponseDTO()
@@ -220,7 +226,7 @@ public class AuthService : IAuthService
             };
 
             // Create new user to database
-            var createUserResult = await _userManager.CreateAsync(newUser, instructorDto.Password);
+            var createUserResult = await _requestUserProvider.CreateUserAsync(newUser, instructorDto.Password);
 
 
             // Check if error occur
@@ -237,7 +243,7 @@ public class AuthService : IAuthService
             }
 
             // Get the user again 
-            user = await _userManager.FindByEmailAsync(instructorDto.Email);
+            user = await _requestUserProvider.FindByEmailAsync(instructorDto.Email);
 
 
             // Create instance of instructor
@@ -268,16 +274,16 @@ public class AuthService : IAuthService
             }
 
             // Add role for the user
-            await _userManager.AddToRoleAsync(user, StaticUserRoles.Instructor);
+            await _requestUserProvider.AddToRoleAsync(user, StaticUserRoles.Instructor);
 
             // Create new Instructor relate with ApplicationUser
-            await _dbContext.Instructors.AddAsync(instructor);
+            await _unitOfWork.InstructorRepository.AddAsync(instructor);
 
             // Create card for instructor
-            await _dbContext.PaymentCards.AddAsync(paymentCard);
+            await _unitOfWork.PaymentCardRepository.AddAsync(paymentCard);
 
             // Save change to database
-            await _dbContext.SaveChangesAsync();
+            await _unitOfWork.SaveAsync();
 
             // Return result success
             return new ResponseDTO()
@@ -318,7 +324,7 @@ public class AuthService : IAuthService
                 throw new Exception("Not authentication!");
             }
 
-            var instructor = await _dbContext.Instructors.FirstOrDefaultAsync(x => x.UserId == userId);
+            var instructor = await _unitOfWork.InstructorRepository.GetAsync(x => x.UserId == userId);
 
             if (instructor is null)
             {
@@ -334,7 +340,7 @@ public class AuthService : IAuthService
 
             instructor.DegreeImageUrl = responseDto.Result.ToString();
 
-            await _dbContext.SaveChangesAsync();
+            await _unitOfWork.SaveAsync();
 
             return new ResponseDTO()
             {
@@ -372,7 +378,7 @@ public class AuthService : IAuthService
                 throw new Exception("User Unauthenticated!");
             }
 
-            var instructor = await _dbContext.Instructors.FirstOrDefaultAsync(x => x.UserId == userId);
+            var instructor = await _unitOfWork.InstructorRepository.GetAsync(x => x.UserId == userId);
 
             if (instructor is null)
             {
@@ -445,7 +451,7 @@ public class AuthService : IAuthService
                 throw new Exception("Not authentication!");
             }
 
-            var user = await _userManager.FindByIdAsync(userId);
+            var user = await _requestUserProvider.FindByIdAsync(userId);
 
             if (user is null)
             {
@@ -461,7 +467,7 @@ public class AuthService : IAuthService
 
             user.AvatarUrl = responseDto.Result?.ToString();
 
-            var updateResult = await _userManager.UpdateAsync(user);
+            var updateResult = await _requestUserProvider.UpdateAsync(user);
 
             if (!updateResult.Succeeded)
             {
@@ -499,7 +505,7 @@ public class AuthService : IAuthService
         {
             var userId = User.Claims.FirstOrDefault(x => x.Type == ClaimTypes.NameIdentifier)?.Value;
 
-            var user = await _userManager.FindByIdAsync(userId);
+            var user = await _requestUserProvider.FindByIdAsync(userId);
 
             var stream = await _firebaseService.GetImage(user.AvatarUrl);
 
@@ -517,7 +523,7 @@ public class AuthService : IAuthService
     {
         try
         {
-            var user = await _userManager.FindByEmailAsync(signDTO.Email);
+            var user = await _requestUserProvider.FindByEmailAsync(signDTO.Email);
             if (user == null)
             {
                 new ResponseDTO()
@@ -529,7 +535,7 @@ public class AuthService : IAuthService
                 };
             }
 
-            var isPasswordCorrect = await _userManager.CheckPasswordAsync(user, signDTO.Password);
+            var isPasswordCorrect = await _requestUserProvider.CheckPasswordAsync(user, signDTO.Password);
 
             if (!isPasswordCorrect)
             {
@@ -558,7 +564,7 @@ public class AuthService : IAuthService
             await _tokenService.StoreRefreshToken(user.Id, refreshToken);
 
             var userInfo = _mapper.Map<UserInfo>(user);
-            var roles = await _userManager.GetRolesAsync(user);
+            var roles = await _requestUserProvider.GetRolesAsync(user);
             userInfo.Roles = roles;
 
             return new ResponseDTO()
@@ -605,7 +611,7 @@ public class AuthService : IAuthService
                 };
             }
 
-            var applicationUser = await _userManager.FindByIdAsync(userId);
+            var applicationUser = await _requestUserProvider.FindByIdAsync(userId);
             if (applicationUser is null)
             {
                 return new ResponseDTO()
@@ -660,7 +666,7 @@ public class AuthService : IAuthService
     //Kiểm tra thông tin để lấy đúng role của người dùng 
     public async Task<string> GenerateJwtTokenAsync(ApplicationUser? user)
     {
-        var userRoles = await _userManager.GetRolesAsync(user);
+        var userRoles = await _requestUserProvider.GetRolesAsync(user);
 
         var authClaims = new List<Claim>()
         {
@@ -699,11 +705,10 @@ public class AuthService : IAuthService
         try
         {
             // Tìm người dùng theo Email/Số điện thoại
-            var user = await _userManager.FindByEmailAsync(forgotPasswordDto.EmailOrPhone);
+            var user = await _requestUserProvider.FindByEmailAsync(forgotPasswordDto.EmailOrPhone);
             if (user == null)
             {
-                user = await _userManager.Users.FirstOrDefaultAsync(
-                    u => u.PhoneNumber == forgotPasswordDto.EmailOrPhone);
+                user = await _requestUserProvider.FindUserByPhoneNumberOrEmailAsync(forgotPasswordDto.EmailOrPhone);
             }
 
             if (user == null || !user.EmailConfirmed)
@@ -717,7 +722,7 @@ public class AuthService : IAuthService
             }
 
             // Tạo mã token
-            var token = await _userManager.GeneratePasswordResetTokenAsync(user);
+            var token = await _requestUserProvider.GeneratePasswordResetTokenAsync(user);
 
             // Gửi email chứa đường link đặt lại mật khẩu. //reset-password
 
@@ -872,7 +877,7 @@ public class AuthService : IAuthService
         try
         {
             // Tìm người dùng theo email
-            var user = await _userManager.FindByEmailAsync(email);
+            var user = await _requestUserProvider.FindByEmailAsync(email);
             if (user == null)
             {
                 return new ResponseDTO
@@ -884,7 +889,7 @@ public class AuthService : IAuthService
             }
 
             // Xác thực token và reset mật khẩu
-            var result = await _userManager.ResetPasswordAsync(user, token, password);
+            var result = await _requestUserProvider.ResetPasswordAsync(user, token, password);
             if (result.Succeeded)
             {
                 return new ResponseDTO
@@ -929,7 +934,7 @@ public class AuthService : IAuthService
         try
         {
             // Lấy id của người dùng
-            var user = await _userManager.FindByIdAsync(userId);
+            var user = await _requestUserProvider.FindByIdAsync(userId);
             if (user == null)
             {
                 return new ResponseDTO { IsSuccess = false, Message = "User not found." };
@@ -952,7 +957,7 @@ public class AuthService : IAuthService
             }
 
             // Thực hiện thay đổi mật khẩu
-            var result = await _userManager.ChangePasswordAsync(user, oldPassword, newPassword);
+            var result = await _requestUserProvider.ChangePasswordAsync(user, oldPassword, newPassword);
             if (result.Succeeded)
             {
                 return new ResponseDTO { IsSuccess = true, Message = "Password changed successfully." };
@@ -1009,7 +1014,7 @@ public class AuthService : IAuthService
     /// <returns></returns>
     public async Task<ResponseDTO> VerifyEmail(string userId, string token)
     {
-        var user = await _userManager.FindByIdAsync(userId);
+        var user = await _requestUserProvider.FindByIdAsync(userId);
 
         if (user.EmailConfirmed)
         {
@@ -1022,7 +1027,7 @@ public class AuthService : IAuthService
             };
         }
 
-        var confirmResult = await _userManager.ConfirmEmailAsync(user, token);
+        var confirmResult = await _requestUserProvider.ConfirmEmailAsync(user, token);
 
         if (!confirmResult.Succeeded)
         {

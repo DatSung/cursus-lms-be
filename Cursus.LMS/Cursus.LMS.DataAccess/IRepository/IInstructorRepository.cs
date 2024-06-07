@@ -6,4 +6,5 @@ public interface IInstructorRepository : IRepository<Instructor>
 {
     void Update(Instructor instructor);
     void UpdateRange(IEnumerable<Instructor> instructors);
+    Task<Instructor> GetInstructorByUserIdAsync(string userId);
 }

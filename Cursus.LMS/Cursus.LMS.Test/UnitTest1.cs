@@ -5,7 +5,7 @@ namespace Cursus.LMS.Test
         [Fact]
         public void Test1()
         {
-            void NguaDai
+            
         }
     }
 }
