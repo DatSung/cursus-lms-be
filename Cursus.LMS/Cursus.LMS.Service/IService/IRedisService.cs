@@ -2,7 +2,7 @@
 
 public interface IRedisService
 {
-    Task<bool> Store(string key, string value);
-    Task<string> Retrieve(string key);
-    Task<bool> Delete(string key);
+    Task<bool> StoreString(string key, string value);
+    Task<string> RetrieveString(string key);
+    Task<bool> DeleteString(string key);
 }

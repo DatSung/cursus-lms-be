@@ -24,6 +24,7 @@ public class AuthService : IAuthService
     private readonly UserManager<ApplicationUser> _userManager;
     private readonly RoleManager<IdentityRole> _roleManager;
     private readonly IConfiguration _configuration;
+    private readonly ITokenService _tokenService;
     private readonly IMapper _mapper;
     private readonly IEmailService _emailService;
     private readonly IEmailSender _emailSender;
@@ -33,7 +34,8 @@ public class AuthService : IAuthService
 
     public AuthService(UserManager<ApplicationUser> userManager, RoleManager<IdentityRole> roleManager,
         IConfiguration configuration, IMapper mapper, IEmailService emailService, ApplicationDbContext dbContext,
-        IFirebaseService firebaseService, IHttpContextAccessor httpContextAccessor, IEmailSender emailSender)
+        IFirebaseService firebaseService, IHttpContextAccessor httpContextAccessor, IEmailSender emailSender,
+        ITokenService tokenService)
     {
         _userManager = userManager;
         _roleManager = roleManager;
@@ -44,6 +46,7 @@ public class AuthService : IAuthService
         _firebaseService = firebaseService;
         _httpContextAccessor = httpContextAccessor;
         _emailSender = emailSender;
+        _tokenService = tokenService;
     }
 
 
@@ -64,8 +67,9 @@ public class AuthService : IAuthService
                 };
             }
 
-            var isPhonenumerExit = await _userManager.Users.AnyAsync(u=>u.PhoneNumber == registerStudentDTO.PhoneNumber);
-            if(isPhonenumerExit)
+            var isPhonenumerExit =
+                await _userManager.Users.AnyAsync(u => u.PhoneNumber == registerStudentDTO.PhoneNumber);
+            if (isPhonenumerExit)
             {
                 return new ResponseDTO()
                 {
@@ -74,7 +78,6 @@ public class AuthService : IAuthService
                     IsSuccess = false,
                     StatusCode = 500
                 };
-
             }
 
 
@@ -108,8 +111,9 @@ public class AuthService : IAuthService
                     Result = registerStudentDTO
                 };
             }
+
             var user = await _userManager.FindByEmailAsync(registerStudentDTO.Email);
-            
+
             Student student = new Student()
             {
                 UserId = user.Id,
@@ -132,7 +136,6 @@ public class AuthService : IAuthService
             {
                 await _roleManager.CreateAsync(new IdentityRole(StaticUserRoles.Student));
             }
-
 
 
             // Add role for the user
@@ -203,7 +206,6 @@ public class AuthService : IAuthService
                     IsSuccess = false,
                     StatusCode = 500
                 };
-
             }
 
             // Create new instance of ApplicationUser
@@ -222,9 +224,8 @@ public class AuthService : IAuthService
 
             // Create new user to database
             var createUserResult = await _userManager.CreateAsync(newUser, instructorDto.Password);
-            
-                
-            
+
+
             // Check if error occur
             if (!createUserResult.Succeeded)
             {
@@ -240,7 +241,7 @@ public class AuthService : IAuthService
 
             // Get the user again 
             user = await _userManager.FindByEmailAsync(instructorDto.Email);
-           
+
 
             // Create instance of instructor
             Instructor instructor = new Instructor()
@@ -555,7 +556,10 @@ public class AuthService : IAuthService
                 };
             }
 
-            var accessToken = await GenerateJwtTokenAsync(user);
+            var accessToken = await _tokenService.GenerateJwtAccessTokenAsync(user);
+            var refreshToken = await _tokenService.GenerateJwtRefreshTokenAsync(user);
+            await _tokenService.StoreRefreshToken(user.Id, refreshToken);
+
             var userInfo = _mapper.Map<UserInfo>(user);
             var roles = await _userManager.GetRolesAsync(user);
             userInfo.Roles = roles;
@@ -565,6 +569,7 @@ public class AuthService : IAuthService
                 Result = new SignResponseDTO()
                 {
                     AccessToken = accessToken,
+                    RefreshToken = refreshToken,
                     UserInfo = userInfo
                 },
                 Message = "Sign in successfully",
@@ -576,6 +581,84 @@ public class AuthService : IAuthService
         {
             Console.WriteLine(e);
             throw;
+        }
+    }
+
+
+    /// <summary>
+    /// This method for refresh token
+    /// </summary>
+    /// <param name="token"></param>
+    /// <returns></returns>
+    public async Task<ResponseDTO> Refresh(string token)
+    {
+        try
+        {
+            ClaimsPrincipal user = await _tokenService.GetPrincipalFromToken(token);
+
+            var userId = user.Claims.FirstOrDefault(x => x.Type == ClaimTypes.NameIdentifier)?.Value;
+            if (userId is null)
+            {
+                return new ResponseDTO()
+                {
+                    Message = "Token is not valid",
+                    IsSuccess = false,
+                    StatusCode = 404,
+                    Result = null
+                };
+            }
+
+            var applicationUser = await _userManager.FindByIdAsync(userId);
+            if (applicationUser is null)
+            {
+                return new ResponseDTO()
+                {
+                    Message = "User does not exist",
+                    IsSuccess = false,
+                    StatusCode = 404,
+                    Result = null
+                };
+            }
+
+
+            var tokenOnRedis = await _tokenService.RetrieveRefreshToken(applicationUser.Id);
+            if (tokenOnRedis != token)
+            {
+                return new ResponseDTO()
+                {
+                    Message = "Token is not valid",
+                    IsSuccess = false,
+                    StatusCode = 400,
+                    Result = null
+                };
+            }
+
+            var accessToken = await _tokenService.GenerateJwtAccessTokenAsync(applicationUser);
+            var refreshToken = await _tokenService.GenerateJwtRefreshTokenAsync(applicationUser);
+
+            await _tokenService.StoreRefreshToken(applicationUser.Id, refreshToken);
+            
+            return new ResponseDTO()
+            {
+                Result = new JwtTokenDTO()
+                {
+                    AccessToken = accessToken,
+                    RefreshToken = refreshToken
+                },
+                IsSuccess = true,
+                StatusCode = 200,
+                Message = "Refresh Token Successfully!"
+            };
+        }
+        catch (Exception e)
+        {
+            return new ResponseDTO()
+            {
+                Message = e.Message,
+                IsSuccess = false,
+                StatusCode = 500,
+                Result = null
+            };
         }
     }
 
