@@ -27,12 +27,12 @@ namespace Cursus.LMS.API.Controllers
 
         private readonly IEmailService _emailService;
         private readonly IAuthService _authService;
-        private readonly EmailSender _emailSender;
+        private readonly IEmailSender _emailSender;
         private ResponseDTO responseDto = new ResponseDTO();
         private readonly UserManager<ApplicationUser> _userManager;
 
         public AuthController(IEmailService emailService, IAuthService authService,
-            UserManager<ApplicationUser> userManager, EmailSender emailSender)
+            UserManager<ApplicationUser> userManager, IEmailSender emailSender)
         {
             _emailService = emailService;
             _authService = authService;

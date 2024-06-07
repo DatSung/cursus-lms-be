@@ -32,9 +32,6 @@ public class TokenService : ITokenService
         {
             new Claim(ClaimTypes.Name, user.UserName),
             new Claim(ClaimTypes.NameIdentifier, user.Id),
-            new Claim("FullName", user.FullName),
-            new Claim("PhoneNumber", user.PhoneNumber),
-            new Claim("Email", user.Email),
         };
 
         foreach (var role in userRoles)
@@ -64,13 +61,54 @@ public class TokenService : ITokenService
     /// This method for create refresh token
     /// </summary>
     /// <returns></returns>
-    public Task<string> GenerateJwtRefreshTokenAsync()
+    public async Task<string> GenerateJwtRefreshTokenAsync(ApplicationUser user)
     {
-        var randomNumber = new byte[32];
-        using (var rng = RandomNumberGenerator.Create())
+        var authClaims = new List<Claim>()
         {
-            rng.GetBytes(randomNumber);
-            return Task.FromResult(Convert.ToBase64String(randomNumber));
+            new Claim(ClaimTypes.NameIdentifier, user.Id),
+        };
+
+        //tạo các đối tượng mã hóa
+        var authSecret = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["JWT:Secret"]));
+        var signingCredentials = new SigningCredentials(authSecret, SecurityAlgorithms.HmacSha256);
+
+        var tokenObject = new JwtSecurityToken(
+            issuer: _configuration["JWT:ValidIssuer"],
+            audience: _configuration["JWT:ValidAudience"],
+            notBefore: DateTime.Now,
+            expires: DateTime.Now.AddDays(3), //thời gian hết hạn là 15p
+            claims: authClaims, //danh sách thông tin của người dùng
+            signingCredentials: signingCredentials
+        );
+        // tạo thành công mã thông báo          
+        var refreshToken = new JwtSecurityTokenHandler().WriteToken(tokenObject);
+
+        return refreshToken;
+    }
+
+    public async Task<ClaimsPrincipal> GetPrincipalFromToken(string token)
+    {
+        var tokenHandler = new JwtSecurityTokenHandler();
+        var key = Encoding.UTF8.GetBytes(_configuration["JWT:Secret"]);
+
+        try
+        {
+            var principal = tokenHandler.ValidateToken(token, new TokenValidationParameters
+            {
+                ValidateIssuer = true,
+                ValidateAudience = true,
+                ValidateLifetime = true,
+                ValidateIssuerSigningKey = true,
+                ValidIssuer = _configuration["JWT:ValidIssuer"],
+                ValidAudience = _configuration["JWT:ValidAudience"],
+                IssuerSigningKey = new SymmetricSecurityKey(key)
+            }, out SecurityToken validatedToken);
+            return principal;
+        }
+        catch
+        {
+            // Token validation failed
+            return null;
         }
     }
 
@@ -83,7 +121,7 @@ public class TokenService : ITokenService
     public async Task<bool> StoreRefreshToken(string userId, string refreshToken)
     {
         string redisKey = $"userId:{userId}:refreshToken";
-        var result = await _redisService.Store(redisKey, refreshToken);
+        var result = await _redisService.StoreString(redisKey, refreshToken);
         return result;
     }
 
@@ -95,7 +133,7 @@ public class TokenService : ITokenService
     public async Task<string> RetrieveRefreshToken(string userId)
     {
         string redisKey = $"userId:{userId}:refreshToken";
-        var result = await _redisService.Retrieve(redisKey);
+        var result = await _redisService.RetrieveString(redisKey);
         return result;
     }
 
@@ -107,7 +145,7 @@ public class TokenService : ITokenService
     public async Task<bool> DeleteRefreshToken(string userId)
     {
         string redisKey = $"userId:{userId}:refreshToken";
-        var result = await _redisService.Delete(redisKey);
+        var result = await _redisService.DeleteString(redisKey);
         return result;
     }
 }
