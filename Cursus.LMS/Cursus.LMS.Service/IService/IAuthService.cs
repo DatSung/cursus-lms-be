@@ -6,7 +6,6 @@ namespace Cursus.LMS.Service.IService;
 
 public interface IAuthService
 {
-
     Task<ResponseDTO> SignUpStudent(RegisterStudentDTO registerStudentDTO);
     Task<ResponseDTO> SignUpInstructor(InstructorDTO instructorDto);
     Task<ResponseDTO> UploadInstructorDegree(IFormFile file, ClaimsPrincipal user);
@@ -14,6 +13,7 @@ public interface IAuthService
     Task<DegreeResponseDTO> GetInstructorDegree(ClaimsPrincipal user);
     Task<MemoryStream> GetUserAvatar(ClaimsPrincipal user);
     Task<ResponseDTO> SignIn(SignDTO signDTO);
+    Task<ResponseDTO> Refresh(string token);
     Task<ResponseDTO> ForgotPassword(ForgotPasswordDTO forgotPasswordDto);
     Task<ResponseDTO> ResetPassword(string resetPasswordDto, string token, string password);
     Task<ResponseDTO> ChangePassword(string userId, string oldPassword, string newPassword, string confirmNewPassword);

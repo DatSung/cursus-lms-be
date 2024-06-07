@@ -18,7 +18,7 @@ public class RedisService : IRedisService
     /// <param name="key"></param>
     /// <param name="value"></param>
     /// <returns></returns>
-    public async Task<bool> Store(string key, string value)
+    public async Task<bool> StoreString(string key, string value)
     {
         var cache = _redis.GetDatabase();
         var result = await cache.StringSetAsync(key, value);
@@ -30,7 +30,7 @@ public class RedisService : IRedisService
     /// </summary>
     /// <param name="key"></param>
     /// <returns></returns>
-    public async Task<string> Retrieve(string key)
+    public async Task<string> RetrieveString(string key)
     {
         var cache = _redis.GetDatabase();
         var result = await cache.StringGetAsync(key);
@@ -42,7 +42,7 @@ public class RedisService : IRedisService
     /// </summary>
     /// <param name="key"></param>
     /// <returns></returns>
-    public async Task<bool> Delete(string key)
+    public async Task<bool> DeleteString(string key)
     {
         var cache = _redis.GetDatabase();
         var result = await cache.KeyDeleteAsync(key);
