@@ -23,6 +23,6 @@ public interface IAuthService
     Task<ResponseDTO> VerifyEmail(string userId, string token);
     Task<ResponseDTO> CheckEmailExist(string email);
     Task<ResponseDTO> CheckPhoneNumberExist(string phoneNumber);
-    Task<ResponseDTO> UpdateStudentProfile();
-    Task<ResponseDTO> UpdateInstructorProfile();
+    Task<ResponseDTO> UpdateStudentProfile(ClaimsPrincipal User, UpdateStudentProfileDTO studentProfileDto);
+    Task<ResponseDTO> UpdateInstructorProfile(ClaimsPrincipal User, UpdateInstructorProfileDTO instructorProfileDto);
 }

@@ -4,24 +4,18 @@ namespace Cursus.LMS.Model.DTO;
 
 public class UpdateStudentProfileDTO
 {
-    [Required(ErrorMessage = "Country is required")]
-    public string Country { get; set; }
+    [Required] public string Country { get; set; }
 
-    [Required(ErrorMessage = "Phone number is required.")]
-    [Phone(ErrorMessage = "Provided phone number is not valid.")]
-    [DataType(DataType.PhoneNumber, ErrorMessage = "Provided phone number not valid.")]
+    [Required]
+    [Phone]
+    [DataType(DataType.PhoneNumber)]
     public string PhoneNumber { get; set; }
 
-    [Required(ErrorMessage = "Address is required")]
-    public string Address { get; set; }
-
-    [Required(ErrorMessage = "Birth date is required.")]
-    [DataType(DataType.Date, ErrorMessage = "Invalid date format.")]
-    public DateTime BirthDate { get; set; }
-
-    [Required(ErrorMessage = "Address is required")]
-    public string Gender { get; set; }
-
-    [Required(ErrorMessage = "CardNumber is required.")]
-    public string CardNumber { get; set; }
+    [Required] public string Address { get; set; }
+    [Required] [DataType(DataType.Date)] public DateTime BirthDate { get; set; }
+    [Required] public string Gender { get; set; }
+    [Required] public string University { get; set; }
+    [Required] public string CardNumber { get; set; }
+    [Required] public string CardProvider { get; set; }
+    [Required] public string CardName { get; set; }
 }

@@ -1261,13 +1261,242 @@ public class AuthService : IAuthService
         }
     }
 
-    public Task<ResponseDTO> UpdateStudentProfile()
+    /// <summary>
+    /// This method for update student profile
+    /// </summary>
+    /// <param name="User"></param>
+    /// <param name="studentProfileDto"></param>
+    /// <returns></returns>
+    /// <exception cref="NotImplementedException"></exception>
+    public async Task<ResponseDTO> UpdateStudentProfile(
+        ClaimsPrincipal User,
+        UpdateStudentProfileDTO studentProfileDto)
     {
-        throw new NotImplementedException();
+        try
+        {
+            // Find user in database
+            var userId = User.Claims.FirstOrDefault(x => x.Type == ClaimTypes.NameIdentifier)?.Value;
+            var user = await _userManager.FindByIdAsync(userId);
+
+            // user is null mean user does not exist to update
+            if (user is null)
+            {
+                return new ResponseDTO()
+                {
+                    Message = "User does not exist!",
+                    IsSuccess = false,
+                    StatusCode = 404,
+                    Result = studentProfileDto,
+                };
+            }
+
+            // Check if phone number is user by another user but not the user to update
+            var isPhonenumerExit =
+                await _userManager.Users.AnyAsync(
+                    u => u.PhoneNumber == studentProfileDto.PhoneNumber && u.Id != user.Id);
+            if (isPhonenumerExit)
+            {
+                return new ResponseDTO()
+                {
+                    Message = "Phone number is using by another user",
+                    Result = studentProfileDto,
+                    IsSuccess = false,
+                    StatusCode = 500
+                };
+            }
+
+            // Check if card number is exist in payment card mean that user can not user that card number
+            var isCardExist =
+                await _unitOfWork.PaymentCardRepository.GetAsync(x =>
+                    x.CardNumber == studentProfileDto.CardNumber && x.UserId != user.Id);
+            if (isCardExist is not null)
+            {
+                return new ResponseDTO()
+                {
+                    Message = "Card number is using by another user",
+                    StatusCode = 400,
+                    Result = studentProfileDto,
+                    IsSuccess = false
+                };
+            }
+
+            user.BirthDate = studentProfileDto.BirthDate;
+            user.PhoneNumber = studentProfileDto.PhoneNumber;
+            user.Address = studentProfileDto.Address;
+            user.Country = studentProfileDto.Country;
+            user.Gender = studentProfileDto.Gender;
+
+            var student = await _unitOfWork.StudentRepository.GetAsync(x => x.UserId == userId);
+            if (student is null)
+            {
+                student = new Student()
+                {
+                    UserId = user.Id,
+                    University = studentProfileDto.University
+                };
+                await _unitOfWork.StudentRepository.AddAsync(student);
+            }
+            else
+            {
+                student.University = studentProfileDto.University;
+            }
+
+            var paymentCard =
+                await _unitOfWork.PaymentCardRepository.GetAsync(x =>
+                    x.CardNumber == studentProfileDto.CardNumber && x.UserId == user.Id);
+            if (paymentCard is null)
+            {
+                paymentCard = new PaymentCard()
+                {
+                    CardName = studentProfileDto.CardName,
+                    CardNumber = studentProfileDto.CardNumber,
+                    CardProvider = studentProfileDto.CardProvider,
+                    UserId = user.Id
+                };
+                await _unitOfWork.PaymentCardRepository.AddAsync(paymentCard);
+            }
+
+            await _unitOfWork.SaveAsync();
+
+            return new ResponseDTO()
+            {
+                Message = "Update student profile successfully",
+                IsSuccess = true,
+                StatusCode = 200,
+                Result = studentProfileDto
+            };
+        }
+        catch (Exception e)
+        {
+            return new ResponseDTO()
+            {
+                Message = e.Message,
+                IsSuccess = false,
+                StatusCode = 500,
+                Result = null
+            };
+        }
     }
 
-    public Task<ResponseDTO> UpdateInstructorProfile()
+    /// <summary>
+    /// This method for update instructor profile
+    /// </summary>
+    /// <param name="User"></param>
+    /// <param name="instructorProfileDto"></param>
+    /// <returns></returns>
+    /// <exception cref="NotImplementedException"></exception>
+    public async Task<ResponseDTO> UpdateInstructorProfile(
+        ClaimsPrincipal User,
+        UpdateInstructorProfileDTO instructorProfileDto)
     {
-        throw new NotImplementedException();
+        try
+        {
+            // Find user in database
+            var userId = User.Claims.FirstOrDefault(x => x.Type == ClaimTypes.NameIdentifier)?.Value;
+            var user = await _userManager.FindByIdAsync(userId);
+
+            // user is null mean user does not exist to update
+            if (user is null)
+            {
+                return new ResponseDTO()
+                {
+                    Message = "User does not exist!",
+                    IsSuccess = false,
+                    StatusCode = 404,
+                    Result = instructorProfileDto,
+                };
+            }
+
+            // Check if phone number is user by another user but not the user to update
+            var isPhonenumerExit =
+                await _userManager.Users.AnyAsync(
+                    u => u.PhoneNumber == instructorProfileDto.PhoneNumber && u.Id != user.Id);
+            if (isPhonenumerExit)
+            {
+                return new ResponseDTO()
+                {
+                    Message = "Phone number is using by another user",
+                    Result = instructorProfileDto,
+                    IsSuccess = false,
+                    StatusCode = 500
+                };
+            }
+
+            // Check if card number is exist in payment card mean that user can not user that card number
+            var isCardExist =
+                await _unitOfWork.PaymentCardRepository.GetAsync(x =>
+                    x.CardNumber == instructorProfileDto.CardNumber && x.UserId != user.Id);
+            if (isCardExist is not null)
+            {
+                return new ResponseDTO()
+                {
+                    Message = "Card number is using by another user",
+                    StatusCode = 400,
+                    Result = instructorProfileDto,
+                    IsSuccess = false
+                };
+            }
+
+            user.BirthDate = instructorProfileDto.BirthDate;
+            user.PhoneNumber = instructorProfileDto.PhoneNumber;
+            user.Address = instructorProfileDto.Address;
+            user.Country = instructorProfileDto.Country;
+            user.Gender = instructorProfileDto.Gender;
+            user.TaxNumber = instructorProfileDto.TaxNumber;
+            user.UpdateTime = DateTime.Now;
+
+            // Find the instructor profile to add or update
+            var instructor = await _unitOfWork.InstructorRepository.GetAsync(x => x.UserId == userId);
+            if (instructor is null)
+            {
+                instructor = new Instructor()
+                {
+                    UserId = user.Id,
+                    Introduction = instructorProfileDto.Introduction,
+                    Industry = instructorProfileDto.Industry
+                };
+                await _unitOfWork.InstructorRepository.AddAsync(instructor);
+            }
+            else
+            {
+                instructor.Introduction = instructorProfileDto.Introduction;
+                instructor.Industry = instructorProfileDto.Industry;
+            }
+
+            var paymentCard =
+                await _unitOfWork.PaymentCardRepository.GetAsync(x =>
+                    x.CardNumber == instructorProfileDto.CardNumber && x.UserId == user.Id);
+            if (paymentCard is null)
+            {
+                paymentCard = new PaymentCard()
+                {
+                    CardName = instructorProfileDto.CardName,
+                    CardNumber = instructorProfileDto.CardNumber,
+                    CardProvider = instructorProfileDto.CardProvider,
+                    UserId = user.Id
+                };
+                await _unitOfWork.PaymentCardRepository.AddAsync(paymentCard);
+            }
+
+            await _unitOfWork.SaveAsync();
+
+            return new ResponseDTO()
+            {
+                Message = "Update student profile successfully",
+                IsSuccess = true,
+                StatusCode = 200,
+                Result = instructorProfileDto
+            };
+        }
+        catch (Exception e)
+        {
+            return new ResponseDTO()
+            {
+                Message = e.Message,
+                IsSuccess = false,
+                StatusCode = 500,
+                Result = null
+            };
+        }
     }
 }
