@@ -110,6 +110,7 @@ public class AuthService : IAuthService
                 Gender = registerStudentDTO.Gender,
                 Country = registerStudentDTO.Country,
                 PhoneNumber = registerStudentDTO.PhoneNumber,
+                UpdateTime = DateTime.Now,
                 AvatarUrl = "",
                 TaxNumber = ""
             };
@@ -250,6 +251,7 @@ public class AuthService : IAuthService
                 Country = instructorDto.Country,
                 PhoneNumber = instructorDto.PhoneNumber,
                 TaxNumber = instructorDto.TaxNumber,
+                UpdateTime = DateTime.Now
             };
 
             // Create new user to database
@@ -729,14 +731,12 @@ public class AuthService : IAuthService
                 //tạo một user mới khi chưa có trong database
                 user = new ApplicationUser
                 {
-                    Id = userId,
                     Email = email,
                     FullName = name,
                     UserName = email,
                     AvatarUrl = avatarUrl,
                     EmailConfirmed = true,
                 };
-
 
                 await _userManager.CreateAsync(user);
 
@@ -748,7 +748,7 @@ public class AuthService : IAuthService
 
                 await _userManager.AddToRoleAsync(user, StaticUserRoles.Student);
                 await _userManager.AddLoginAsync(user,
-                    new UserLoginInfo(StaticLoginProvider.Google, studentSignInByGoogleDTO.GoogleToken, ""));
+                    new UserLoginInfo(StaticLoginProvider.Google, userId, "GOOGLE"));
             }
 
             var accessToken = await _tokenService.GenerateJwtAccessTokenAsync(user);
