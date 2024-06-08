@@ -1260,4 +1260,14 @@ public class AuthService : IAuthService
             };
         }
     }
+
+    public Task<ResponseDTO> UpdateStudentProfile()
+    {
+        throw new NotImplementedException();
+    }
+
+    public Task<ResponseDTO> UpdateInstructorProfile()
+    {
+        throw new NotImplementedException();
+    }
 }
