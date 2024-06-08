@@ -779,27 +779,43 @@ public class AuthService : IAuthService
         try
         {
             //lấy thông tin từ google
-            FirebaseToken googleTokenI =
+            FirebaseToken googleTokenS =
                 await FirebaseAuth.DefaultInstance.VerifyIdTokenAsync(instructorSignInByGoogleDto.GoogleToken);
-            string userId = googleTokenI.Uid;
-            string email = googleTokenI.Claims["email"].ToString();
-            string name = googleTokenI.Claims["name"].ToString();
-            string avatarurl = googleTokenI.Claims["picture"].ToString();
+            string userId = googleTokenS.Uid;
+            string email = googleTokenS.Claims["email"].ToString();
+            string name = googleTokenS.Claims["name"].ToString();
+            string avatarUrl = googleTokenS.Claims["picture"].ToString();
 
             //tìm kiem người dùng trong database
             var user = await _userManager.FindByEmailAsync(email);
-
-            if (user == null)
+            UserLoginInfo? userLoginInfo = null;
+            if (user is not null)
             {
+                userLoginInfo = _userManager.GetLoginsAsync(user).GetAwaiter().GetResult()
+                    .FirstOrDefault(x => x.LoginProvider == StaticLoginProvider.Google);
+            }
+
+            if (user is not null && userLoginInfo is null)
+            {
+                return new SignResponseDTO()
+                {
+                    Message = "The email is using by another user",
+                    RefreshToken = null,
+                    AccessToken = null,
+                    UserInfo = null,
+                };
+            }
+
+            if (userLoginInfo is null && user is null)
+            {
+                //tạo một user mới khi chưa có trong database
                 user = new ApplicationUser
                 {
-                    Id = userId,
                     Email = email,
                     FullName = name,
                     UserName = email,
-                    AvatarUrl = avatarurl,
+                    AvatarUrl = avatarUrl,
                     EmailConfirmed = true,
-                    LockoutEnabled = true
                 };
 
                 await _userManager.CreateAsync(user);
@@ -811,24 +827,13 @@ public class AuthService : IAuthService
                 }
 
                 await _userManager.AddToRoleAsync(user, StaticUserRoles.Instructor);
-
                 await _userManager.AddLoginAsync(user,
-                    new UserLoginInfo(StaticLoginProvider.Google, instructorSignInByGoogleDto.GoogleToken, ""));
-            }
-            else
-            {
-                return new SignResponseDTO()
-                {
-                    AccessToken = null,
-                    RefreshToken = null,
-                    UserInfo = null,
-                    Message = "Existing accounts"
-                };
+                    new UserLoginInfo(StaticLoginProvider.Google, userId, "GOOGLE"));
             }
 
             var accessToken = await _tokenService.GenerateJwtAccessTokenAsync(user);
             var refreshToken = await _tokenService.GenerateJwtRefreshTokenAsync(user);
-            await _tokenService.StoreRefreshToken(userId, refreshToken);
+            await _tokenService.StoreRefreshToken(user.Id, refreshToken);
 
             var userInfo = _mapper.Map<UserInfo>(user);
             userInfo.Roles = await _userManager.GetRolesAsync(user);
@@ -841,7 +846,10 @@ public class AuthService : IAuthService
         }
         catch (FirebaseAuthException e)
         {
-            return null;
+            return new SignResponseDTO()
+            {
+                Message = e.Message
+            };
         }
     }
 
