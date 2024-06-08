@@ -13,8 +13,8 @@ public interface IAuthService
     Task<DegreeResponseDTO> GetInstructorDegree(ClaimsPrincipal user);
     Task<MemoryStream> GetUserAvatar(ClaimsPrincipal user);
     Task<ResponseDTO> SignIn(SignDTO signDTO);
-    Task<SignResponseDTO> StudentSignByGoogle(StudentSignByGoogleDTO studentSignByGoogleDto);
-    Task<SignResponseDTO> InstructorSignByGoogle(InstructorSignByGoogleDTO instructorSignByGoogleDto);
+    Task<SignResponseDTO> StudentSignInByGoogle(StudentSignInByGoogleDTO studentSignInByGoogleDto);
+    Task<SignResponseDTO> InstructorSignInByGoogle(InstructorSignInByGoogleDTO instructorSignInByGoogleDto);
     Task<ResponseDTO> ForgotPassword(ForgotPasswordDTO forgotPasswordDto);
     Task<ResponseDTO> Refresh(string token);
     Task<ResponseDTO> ResetPassword(string resetPasswordDto, string token, string password);

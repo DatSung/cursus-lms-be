@@ -692,24 +692,39 @@ public class AuthService : IAuthService
     }
 
     //Student-SignInbyGoogle
-    public async Task<SignResponseDTO> StudentSignByGoogle(StudentSignByGoogleDTO studentSignByGoogleDTO)
+    public async Task<SignResponseDTO> StudentSignInByGoogle(StudentSignInByGoogleDTO studentSignInByGoogleDTO)
     {
         try
-        {   
+        {
             //lấy thông tin từ google
-          
             FirebaseToken googleTokenS =
-                await FirebaseAuth.DefaultInstance.VerifyIdTokenAsync(studentSignByGoogleDTO.GoogleToken);
+                await FirebaseAuth.DefaultInstance.VerifyIdTokenAsync(studentSignInByGoogleDTO.GoogleToken);
             string userId = googleTokenS.Uid;
             string email = googleTokenS.Claims["email"].ToString();
             string name = googleTokenS.Claims["name"].ToString();
-            string avatarurl = googleTokenS.Claims["picture"].ToString();
-            //tìm kiem người dùng trong database
-            var user = await _userManager.FindByIdAsync(userId);
-            var loginProvider = _userManager.GetLoginsAsync(user).GetAwaiter().GetResult()
-                .FirstOrDefault(x => x.LoginProvider == StaticLoginProvider.Google);
+            string avatarUrl = googleTokenS.Claims["picture"].ToString();
 
-            if (loginProvider is null)
+            //tìm kiem người dùng trong database
+            var user = await _userManager.FindByEmailAsync(email);
+            UserLoginInfo? userLoginInfo = null;
+            if (user is not null)
+            {
+                userLoginInfo = _userManager.GetLoginsAsync(user).GetAwaiter().GetResult()
+                    .FirstOrDefault(x => x.LoginProvider == StaticLoginProvider.Google);
+            }
+
+            if (user is not null && userLoginInfo is null)
+            {
+                return new SignResponseDTO()
+                {
+                    Message = "The email is using by another user",
+                    RefreshToken = null,
+                    AccessToken = null,
+                    UserInfo = null,
+                };
+            }
+
+            if (userLoginInfo is null && user is null)
             {
                 //tạo một user mới khi chưa có trong database
                 user = new ApplicationUser
@@ -718,22 +733,10 @@ public class AuthService : IAuthService
                     Email = email,
                     FullName = name,
                     UserName = email,
-                    AvatarUrl = avatarurl,
-                    Gender = studentSignByGoogleDTO.Gender,
-                    Country = studentSignByGoogleDTO.Country,
-                    Address = studentSignByGoogleDTO.Address,
-                    PhoneNumber = studentSignByGoogleDTO.PhoneNumber,
-                    BirthDate = studentSignByGoogleDTO.BirthDate,
-                    LockoutEnabled = true,
+                    AvatarUrl = avatarUrl,
                     EmailConfirmed = true,
-                    TaxNumber = ""
                 };
 
-                PaymentCard paymentCard = new()
-                {
-                    UserId = userId,
-                    CardNumber = studentSignByGoogleDTO.CardNumber,
-                };
 
                 await _userManager.CreateAsync(user);
 
@@ -745,7 +748,7 @@ public class AuthService : IAuthService
 
                 await _userManager.AddToRoleAsync(user, StaticUserRoles.Student);
                 await _userManager.AddLoginAsync(user,
-                    new UserLoginInfo(StaticLoginProvider.Google, studentSignByGoogleDTO.GoogleToken, ""));
+                    new UserLoginInfo(StaticLoginProvider.Google, studentSignInByGoogleDTO.GoogleToken, ""));
             }
 
             var accessToken = await _tokenService.GenerateJwtAccessTokenAsync(user);
@@ -763,18 +766,21 @@ public class AuthService : IAuthService
         }
         catch (FirebaseAuthException e)
         {
-            return null;
+            return new SignResponseDTO()
+            {
+                Message = e.Message
+            };
         }
     }
 
     //Instructor-SignInbyGoogle
-    public async Task<SignResponseDTO> InstructorSignByGoogle(InstructorSignByGoogleDTO instructorSignByGoogleDto)
+    public async Task<SignResponseDTO> InstructorSignInByGoogle(InstructorSignInByGoogleDTO instructorSignInByGoogleDto)
     {
         try
         {
             //lấy thông tin từ google
             FirebaseToken googleTokenI =
-                await FirebaseAuth.DefaultInstance.VerifyIdTokenAsync(instructorSignByGoogleDto.GoogleToken);
+                await FirebaseAuth.DefaultInstance.VerifyIdTokenAsync(instructorSignInByGoogleDto.GoogleToken);
             string userId = googleTokenI.Uid;
             string email = googleTokenI.Claims["email"].ToString();
             string name = googleTokenI.Claims["name"].ToString();
@@ -792,20 +798,8 @@ public class AuthService : IAuthService
                     FullName = name,
                     UserName = email,
                     AvatarUrl = avatarurl,
-                    Gender = instructorSignByGoogleDto.Gender,
-                    Country = instructorSignByGoogleDto.Country,
-                    PhoneNumber = instructorSignByGoogleDto.PhoneNumber,
-                    Address = instructorSignByGoogleDto.Address,
                     EmailConfirmed = true,
-                    TaxNumber = instructorSignByGoogleDto.TaxNumber,
-                    BirthDate = instructorSignByGoogleDto.BirthDate,
                     LockoutEnabled = true
-                };
-
-                PaymentCard paymentCard = new()
-                {
-                    UserId = userId,
-                    CardNumber = instructorSignByGoogleDto.CardNumber,
                 };
 
                 await _userManager.CreateAsync(user);
@@ -819,7 +813,17 @@ public class AuthService : IAuthService
                 await _userManager.AddToRoleAsync(user, StaticUserRoles.Instructor);
 
                 await _userManager.AddLoginAsync(user,
-                    new UserLoginInfo(StaticLoginProvider.Google, instructorSignByGoogleDto.GoogleToken, ""));
+                    new UserLoginInfo(StaticLoginProvider.Google, instructorSignInByGoogleDto.GoogleToken, ""));
+            }
+            else
+            {
+                return new SignResponseDTO()
+                {
+                    AccessToken = null,
+                    RefreshToken = null,
+                    UserInfo = null,
+                    Message = "Existing accounts"
+                };
             }
 
             var accessToken = await _tokenService.GenerateJwtAccessTokenAsync(user);
