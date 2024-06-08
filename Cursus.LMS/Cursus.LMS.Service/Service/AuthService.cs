@@ -83,6 +83,18 @@ public class AuthService : IAuthService
                 };
             }
 
+            var isCardnumberExit = await _unitOfWork.PaymentCardRepository.GetAsync(u => u.CardNumber == registerStudentDTO.CardNumber);
+            if (isPhonenumerExit)
+            {
+                return new ResponseDTO()
+                {
+                    Message = "Card number is using by another user",
+                    Result = registerStudentDTO,
+                    IsSuccess = false,
+                    StatusCode = 500
+                };
+            }
+
 
             // Create new instance of ApplicationUser
             ApplicationUser newUser = new ApplicationUser()
@@ -205,6 +217,18 @@ public class AuthService : IAuthService
                 return new ResponseDTO()
                 {
                     Message = "Phone number is using by another user",
+                    Result = instructorDto,
+                    IsSuccess = false,
+                    StatusCode = 500
+                };
+            }
+
+            var isCardnumberExit = await _unitOfWork.PaymentCardRepository.GetAsync(u => u.CardNumber == instructorDto.CardNumber);
+            if (isPhonenumerExit)
+            {
+                return new ResponseDTO()
+                {
+                    Message = "Card number is using by another user",
                     Result = instructorDto,
                     IsSuccess = false,
                     StatusCode = 500

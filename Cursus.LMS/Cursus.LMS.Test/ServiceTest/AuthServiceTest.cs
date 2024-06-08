@@ -62,5 +62,41 @@ namespace Cursus.LMS.Test.ServiceTest
                 _unitOfWorkMock.Object,
                 _requestUserProviderMock.Object);
         }
+
+        [Fact]
+        public async Task SignUpStudent_ShouldReturnError_WhenEmailIsAlreadyUsed()
+        {
+            // Đầu vào: RegisterStudentDTO có email đã tồn tại trong hệ thống (FindByEmailAsync sẽ trả về ApplicationUser nếu Email = "test@example.com")
+            var registerStudentDTO = new RegisterStudentDTO { Email = "test@example.com" };
+            _requestUserProviderMock.Setup(x => x.FindByEmailAsync(registerStudentDTO.Email))
+                .ReturnsAsync(new ApplicationUser());
+
+            // Act
+            var result = await _authService.SignUpStudent(registerStudentDTO);
+
+            // Kết quả mong muốn: Trả về ResponseDTO với IsSuccess là false và thông báo "Email is using by another user"
+            Assert.False(result.IsSuccess);
+            Assert.Equal("Email is using by another user", result.Message);
+        }
+
+        [Fact]
+        public async Task SignUpStudent_ShouldReturnError_WhenPhoneNumberIsAlreadyUsed()
+        {
+            // Đầu vào: RegisterStudentDTO có số điện thoại đã tồn tại trong hệ thống
+            var registerStudentDTO = new RegisterStudentDTO { Email = "test@example.com", PhoneNumber = "1234567890" };
+            _requestUserProviderMock.Setup(x => x.FindByEmailAsync(registerStudentDTO.Email))
+                .ReturnsAsync((ApplicationUser?)null);
+            _requestUserProviderMock.Setup(x => x.IsPhoneNumberExistsAsync(registerStudentDTO.PhoneNumber))
+                .ReturnsAsync(true);
+
+            // Act
+            var result = await _authService.SignUpStudent(registerStudentDTO);
+
+            // Kết quả mong muốn: Trả về ResponseDTO với IsSuccess là false và thông báo "Phone number is using by another user"
+            Assert.False(result.IsSuccess);
+            Assert.Equal("Phone number is using by another user", result.Message);
+        }
+
+
     }
 }

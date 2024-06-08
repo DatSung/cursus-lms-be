@@ -23,6 +23,7 @@ namespace Cursus.LMS.DataAccess.IProvider
         Task<IdentityResult> ResetPasswordAsync(ApplicationUser user, string token, string newPassword);
         Task<IdentityResult> ChangePasswordAsync(ApplicationUser user, string oldPassword, string newPassword);
         Task<IdentityResult> ConfirmEmailAsync(ApplicationUser user, string token);
+        Task<bool> IsCardNumberExistsAsync(string cardNumber);
 
     }
 }

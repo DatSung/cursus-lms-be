@@ -107,6 +107,10 @@ namespace Cursus.LMS.DataAccess.Provider
             var result = await _userManager.ConfirmEmailAsync(user, token);
             return result;
         }
-
+        public  Task<bool> IsCardNumberExistsAsync(string cardNumber)
+        {
+            return null;
+           //return await _userManager.Paymen.AnyAsync(u => u.Cad == phoneNumber);
+        }
     }
 }
