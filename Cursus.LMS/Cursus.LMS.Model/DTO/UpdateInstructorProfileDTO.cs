@@ -21,8 +21,6 @@ public class UpdateInstructorProfileDTO
     [Required] public string CardNumber { get; set; }
     [Required] public string CardProvider { get; set; }
     [Required] public string CardName { get; set; }
-    [Required] public string Degree { get; set; }
-    [Required] public string DegreeImageUrl { get; set; }
     [Required] public string Industry { get; set; }
     [Required] public string Introduction { get; set; }
 }
