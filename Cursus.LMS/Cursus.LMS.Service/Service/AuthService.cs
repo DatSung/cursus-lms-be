@@ -9,6 +9,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
 using System.Security.Claims;
 using System.Text;
+using Cursus.LMS.DataAccess.IRepository;
 using Cursus.LMS.Utility.Constants;
 using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
@@ -19,7 +20,7 @@ namespace Cursus.LMS.Service.Service;
 
 public class AuthService : IAuthService
 {
-    private readonly ApplicationDbContext _dbContext;
+    private readonly IUnitOfWork _unitOfWork;
     private readonly UserManager<ApplicationUser> _userManager;
     private readonly RoleManager<IdentityRole> _roleManager;
     private readonly IConfiguration _configuration;
@@ -39,22 +40,21 @@ public class AuthService : IAuthService
         IConfiguration configuration,
         IMapper mapper,
         IEmailService emailService,
-        ApplicationDbContext dbContext,
         IFirebaseService firebaseService,
         IHttpContextAccessor httpContextAccessor,
         IEmailSender emailSender,
-        ITokenService tokenService)
+        ITokenService tokenService, IUnitOfWork unitOfWork)
     {
         _userManager = userManager;
         _roleManager = roleManager;
         _configuration = configuration;
         _mapper = mapper;
         _emailService = emailService;
-        _dbContext = dbContext;
         _firebaseService = firebaseService;
         _httpContextAccessor = httpContextAccessor;
         _emailSender = emailSender;
         _tokenService = tokenService;
+        _unitOfWork = unitOfWork;
     }
 
 
@@ -150,13 +150,13 @@ public class AuthService : IAuthService
             await _userManager.AddToRoleAsync(user, StaticUserRoles.Student);
 
             // Create new Student relate with ApplicationUser
-            await _dbContext.Students.AddAsync(student);
+            await _unitOfWork.StudentRepository.AddAsync(student);
 
             // Create new Payment relate with ApplicationUser
-            await _dbContext.PaymentCards.AddAsync(paymentCard);
+            await _unitOfWork.PaymentCardRepository.AddAsync(paymentCard);
 
             // Save change to database
-            await _dbContext.SaveChangesAsync();
+            await _unitOfWork.SaveAsync();
 
             // Return result success
             return new ResponseDTO()
@@ -282,13 +282,13 @@ public class AuthService : IAuthService
             await _userManager.AddToRoleAsync(user, StaticUserRoles.Instructor);
 
             // Create new Instructor relate with ApplicationUser
-            await _dbContext.Instructors.AddAsync(instructor);
+            await _unitOfWork.InstructorRepository.AddAsync(instructor);
 
             // Create card for instructor
-            await _dbContext.PaymentCards.AddAsync(paymentCard);
+            await _unitOfWork.PaymentCardRepository.AddAsync(paymentCard);
 
             // Save change to database
-            await _dbContext.SaveChangesAsync();
+            await _unitOfWork.SaveAsync();
 
             // Return result success
             return new ResponseDTO()
@@ -329,7 +329,7 @@ public class AuthService : IAuthService
                 throw new Exception("Not authentication!");
             }
 
-            var instructor = await _dbContext.Instructors.FirstOrDefaultAsync(x => x.UserId == userId);
+            var instructor = await _unitOfWork.InstructorRepository.GetAsync(x => x.UserId == userId);
 
             if (instructor is null)
             {
@@ -345,7 +345,7 @@ public class AuthService : IAuthService
 
             instructor.DegreeImageUrl = responseDto.Result.ToString();
 
-            await _dbContext.SaveChangesAsync();
+            await _unitOfWork.SaveAsync();
 
             return new ResponseDTO()
             {
@@ -383,7 +383,7 @@ public class AuthService : IAuthService
                 throw new Exception("User Unauthenticated!");
             }
 
-            var instructor = await _dbContext.Instructors.FirstOrDefaultAsync(x => x.UserId == userId);
+            var instructor = await _unitOfWork.InstructorRepository.GetAsync(x => x.UserId == userId);
 
             if (instructor is null)
             {
