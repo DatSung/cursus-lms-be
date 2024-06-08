@@ -1,21 +1,12 @@
 using System.Security.Claims;
-using System.Text;
 using Cursus.LMS.Model.Domain;
 using Cursus.LMS.Model.DTO;
 using Cursus.LMS.Service.IService;
-using Cursus.LMS.Utility.ValidationAttribute;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using System;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Net;
-using System.Threading.Tasks;
-using Cursus.LMS.Service.Service;
 using Cursus.LMS.Utility.Constants;
-using Microsoft.EntityFrameworkCore;
 
 
 namespace Cursus.LMS.API.Controllers
