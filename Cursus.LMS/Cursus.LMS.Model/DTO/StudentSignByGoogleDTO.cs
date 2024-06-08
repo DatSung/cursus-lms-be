@@ -6,7 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 namespace Cursus.LMS.Model.DTO
 {
-    public class StudentSignInByGoogleDTO
+    public class StudentSignByGoogleDTO
     {
         public string GoogleToken { get; set; }
 

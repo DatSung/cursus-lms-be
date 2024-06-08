@@ -22,11 +22,6 @@ namespace Cursus.LMS.API.Controllers
             _authService = authService;
             _tokenService = tokenService;
         }
-
-        [HttpGet]
-        public async Task<ResponseDTO> GetClaimFromToken(string token)
-        {
-            return await _authService.Refresh(token);
-        }
+        
     }
 }

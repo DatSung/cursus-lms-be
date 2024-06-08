@@ -263,19 +263,19 @@ namespace Cursus.LMS.API.Controllers
         /// </summary>
         /// <returns></returns>
         [HttpPost]
-        [Route("student-sign-up-by-google")]
-        public async Task<ActionResult<SignResponseDTO>> StudentSignUpByGoogle(
-            [FromBody] StudentSignInByGoogleDTO studentSignInByGoogleDTO)
+        [Route("student-sign-by-google")]
+        public async Task<ActionResult<SignResponseDTO>> StudentSignByGoogle(
+            [FromBody] StudentSignByGoogleDTO studentSignByGoogleDto)
         {
-            return await _authService.StudentSignUpByGoogle(studentSignInByGoogleDTO);
+            return await _authService.StudentSignByGoogle(studentSignByGoogleDto);
         }
 
         [HttpPost]
-        [Route("instructor-sign-up-by-google")]
-        public async Task<ActionResult<SignResponseDTO>> InstructorSignUpByGoogle(
-            [FromBody] InstructorSignInByGoogleDTO instructorSignInByGoogleDTO)
+        [Route("instructor-sign-by-google")]
+        public async Task<ActionResult<SignResponseDTO>> InstructorSignByGoogle(
+            [FromBody] InstructorSignByGoogleDTO instructorSignByGoogleDto)
         {
-            return await _authService.InstructorSignUpByGoogle(instructorSignInByGoogleDTO);
+            return await _authService.InstructorSignByGoogle(instructorSignByGoogleDto);
         }
 
         [HttpGet]
