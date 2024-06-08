@@ -7,7 +7,6 @@ using Cursus.LMS.Service.IService;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
-using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
 using Cursus.LMS.Utility.Constants;
@@ -30,11 +29,20 @@ public class AuthService : IAuthService
     private readonly IEmailSender _emailSender;
     private readonly IFirebaseService _firebaseService;
     private readonly IHttpContextAccessor _httpContextAccessor;
-    private static readonly ConcurrentDictionary<string, (int Count, DateTime LastRequest)> ResetPasswordAttempts = new();
 
-    public AuthService(UserManager<ApplicationUser> userManager, RoleManager<IdentityRole> roleManager,
-        IConfiguration configuration, IMapper mapper, IEmailService emailService, ApplicationDbContext dbContext,
-        IFirebaseService firebaseService, IHttpContextAccessor httpContextAccessor, IEmailSender emailSender,
+    private static readonly ConcurrentDictionary<string, (int Count, DateTime LastRequest)> ResetPasswordAttempts =
+        new();
+
+    public AuthService(
+        UserManager<ApplicationUser> userManager,
+        RoleManager<IdentityRole> roleManager,
+        IConfiguration configuration,
+        IMapper mapper,
+        IEmailService emailService,
+        ApplicationDbContext dbContext,
+        IFirebaseService firebaseService,
+        IHttpContextAccessor httpContextAccessor,
+        IEmailSender emailSender,
         ITokenService tokenService)
     {
         _userManager = userManager;
@@ -78,7 +86,6 @@ public class AuthService : IAuthService
                     IsSuccess = false,
                     StatusCode = 500
                 };
-
             }
 
 
@@ -112,8 +119,9 @@ public class AuthService : IAuthService
                     Result = registerStudentDTO
                 };
             }
+
             var user = await _userManager.FindByEmailAsync(registerStudentDTO.Email);
-            
+
             Student student = new Student()
             {
                 UserId = user.Id,
@@ -136,7 +144,6 @@ public class AuthService : IAuthService
             {
                 await _roleManager.CreateAsync(new IdentityRole(StaticUserRoles.Student));
             }
-
 
 
             // Add role for the user
@@ -207,7 +214,6 @@ public class AuthService : IAuthService
                     IsSuccess = false,
                     StatusCode = 500
                 };
-
             }
 
             // Create new instance of ApplicationUser
@@ -226,9 +232,8 @@ public class AuthService : IAuthService
 
             // Create new user to database
             var createUserResult = await _userManager.CreateAsync(newUser, instructorDto.Password);
-            
-                
-            
+
+
             // Check if error occur
             if (!createUserResult.Succeeded)
             {
@@ -244,7 +249,7 @@ public class AuthService : IAuthService
 
             // Get the user again 
             user = await _userManager.FindByEmailAsync(instructorDto.Email);
-           
+
 
             // Create instance of instructor
             Instructor instructor = new Instructor()
@@ -587,6 +592,11 @@ public class AuthService : IAuthService
         }
     }
 
+    public Task<ResponseDTO> SignInByGoogle(string email)
+    {
+        throw new NotImplementedException();
+    }
+
 
     /// <summary>
     /// This method for refresh token
@@ -606,7 +616,7 @@ public class AuthService : IAuthService
                 {
                     Message = "Token is not valid",
                     IsSuccess = false,
-                    StatusCode = 404,
+                    StatusCode = 400,
                     Result = null
                 };
             }
@@ -640,7 +650,7 @@ public class AuthService : IAuthService
             var refreshToken = await _tokenService.GenerateJwtRefreshTokenAsync(applicationUser);
 
             await _tokenService.StoreRefreshToken(applicationUser.Id, refreshToken);
-            
+
             return new ResponseDTO()
             {
                 Result = new JwtTokenDTO()
@@ -665,49 +675,14 @@ public class AuthService : IAuthService
         }
     }
 
-    //Kiểm tra thông tin để lấy đúng role của người dùng 
-    public async Task<string> GenerateJwtTokenAsync(ApplicationUser? user)
-    {
-        var userRoles = await _userManager.GetRolesAsync(user);
-
-        var authClaims = new List<Claim>()
-        {
-            new Claim(ClaimTypes.Name, user.UserName),
-            new Claim(ClaimTypes.NameIdentifier, user.Id),
-            new Claim("FullName", user.FullName),
-            new Claim("PhoneNumber", user.PhoneNumber),
-            new Claim("Email", user.Email),
-        };
-
-        foreach (var role in userRoles)
-        {
-            authClaims.Add(new Claim(ClaimTypes.Role, role));
-        }
-
-        //tạo các đối tượng mã hóa
-        var authSecret = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["JWT:Secret"]));
-        var signingCredentials = new SigningCredentials(authSecret, SecurityAlgorithms.HmacSha256);
-
-        var tokenObject = new JwtSecurityToken(
-            issuer: _configuration["JWT:ValidIssuer"],
-            audience: _configuration["JWT:ValidAudience"],
-            notBefore: DateTime.Now,
-            expires: DateTime.Now.AddMinutes(15), //thời gian hết hạn là 15p
-            claims: authClaims, //danh sách thông tin của người dùng
-            signingCredentials: signingCredentials
-        );
-        // tạo thành công mã thông báo          
-        var accessToken = new JwtSecurityTokenHandler().WriteToken(tokenObject);
-
-        return accessToken;
-    }
     //Student-SignInbyGoogle
-    public async Task<SignResponseDTO> StudentSignByGoogle(StudentSignInByGoogleDTO studentSignInByGoogleDTO)
+    public async Task<SignResponseDTO> StudentSignUpByGoogle(StudentSignInByGoogleDTO studentSignInByGoogleDTO)
     {
         try
         {
             //lấy thông tin từ google
-            FirebaseToken googleTokenS = await FirebaseAuth.DefaultInstance.VerifyIdTokenAsync(studentSignInByGoogleDTO.GoogleToken);
+            FirebaseToken googleTokenS =
+                await FirebaseAuth.DefaultInstance.VerifyIdTokenAsync(studentSignInByGoogleDTO.GoogleToken);
             string userId = googleTokenS.Uid;
             string email = googleTokenS.Claims["email"].ToString();
             string name = googleTokenS.Claims["name"].ToString();
@@ -760,13 +735,16 @@ public class AuthService : IAuthService
                 };
             }
 
-            var accessToken = await GenerateJwtTokenAsync(user);
+            var accessToken = await _tokenService.GenerateJwtAccessTokenAsync(user);
+            var refreshToken = await _tokenService.GenerateJwtRefreshTokenAsync(user);
+            await _tokenService.StoreRefreshToken(user.Id, refreshToken);
 
             var userInfo = _mapper.Map<UserInfo>(user);
             userInfo.Roles = await _userManager.GetRolesAsync(user);
             return new SignResponseDTO()
             {
                 AccessToken = accessToken,
+                RefreshToken = refreshToken,
                 UserInfo = userInfo
             };
         }
@@ -777,12 +755,13 @@ public class AuthService : IAuthService
     }
 
     //Instructor-SignInbyGoogle
-    public async Task<SignResponseDTO> InstructorSignByGoogle(InstructorSignInByGoogleDTO instructorSignInByGoogleDTO)
+    public async Task<SignResponseDTO> InstructorSignUpByGoogle(InstructorSignInByGoogleDTO instructorSignInByGoogleDTO)
     {
         try
         {
             //lấy thông tin từ google
-            FirebaseToken googleTokenI = await FirebaseAuth.DefaultInstance.VerifyIdTokenAsync(instructorSignInByGoogleDTO.GoogleToken);
+            FirebaseToken googleTokenI =
+                await FirebaseAuth.DefaultInstance.VerifyIdTokenAsync(instructorSignInByGoogleDTO.GoogleToken);
             string userId = googleTokenI.Uid;
             string email = googleTokenI.Claims["email"].ToString();
             string name = googleTokenI.Claims["name"].ToString();
@@ -834,13 +813,16 @@ public class AuthService : IAuthService
                 };
             }
 
-            var accessToken = await GenerateJwtTokenAsync(user);
+            var accessToken = await _tokenService.GenerateJwtAccessTokenAsync(user);
+            var refreshToken = await _tokenService.GenerateJwtRefreshTokenAsync(user);
+            await _tokenService.StoreRefreshToken(userId, refreshToken);
 
             var userInfo = _mapper.Map<UserInfo>(user);
             userInfo.Roles = await _userManager.GetRolesAsync(user);
             return new SignResponseDTO()
             {
                 AccessToken = accessToken,
+                RefreshToken = refreshToken,
                 UserInfo = userInfo
             };
         }
@@ -851,13 +833,13 @@ public class AuthService : IAuthService
     }
 
 
-
     //Forgot password
     private string ip;
     private string city;
     private string region;
     private string country;
     private const int MaxAttemptsPerDay = 3;
+
     public async Task<ResponseDTO> ForgotPassword(ForgotPasswordDTO forgotPasswordDto)
     {
         try
@@ -887,7 +869,7 @@ public class AuthService : IAuthService
             if (ResetPasswordAttempts.TryGetValue(email, out var attempts))
             {
                 // Kiểm tra xem đã quá 1 ngày kể từ lần thử cuối cùng chưa
-                if (now - attempts.LastRequest >= TimeSpan.FromSeconds(1)) 
+                if (now - attempts.LastRequest >= TimeSpan.FromSeconds(1))
                 {
                     // Reset số lần thử về 0 và cập nhật thời gian thử cuối cùng
                     ResetPasswordAttempts[email] = (1, now);
@@ -904,11 +886,12 @@ public class AuthService : IAuthService
                     return new ResponseDTO
                     {
                         IsSuccess = false,
-                        Message = "You have exceeded the daily limit for password reset requests. Please try again after 24 hours.",
-                        StatusCode = 429 
+                        Message =
+                            "You have exceeded the daily limit for password reset requests. Please try again after 24 hours.",
+                        StatusCode = 429
                     };
-                } 
-                else 
+                }
+                else
                 {
                     // Chưa vượt quá số lần thử và thời gian chờ, tăng số lần thử và cập nhật thời gian
                     ResetPasswordAttempts[email] = (attempts.Count + 1, now);
@@ -919,7 +902,7 @@ public class AuthService : IAuthService
                 // Email chưa có trong danh sách, thêm mới với số lần thử là 1 và thời gian hiện tại
                 ResetPasswordAttempts.AddOrUpdate(email, (1, now), (key, old) => (old.Count + 1, now));
             }
-            
+
             // Tạo mã token
             var token = await _userManager.GeneratePasswordResetTokenAsync(user);
 
@@ -937,7 +920,7 @@ public class AuthService : IAuthService
 
             // Lấy tên trình duyệt
             var browser = GetUserAgentBrowser(userAgent);
-    
+
             // Lấy location
             var url = "https://ipinfo.io/14.169.10.115/json?token=823e5c403c980f";
             using (HttpClient client = new HttpClient())
@@ -965,7 +948,8 @@ public class AuthService : IAuthService
             }
 
             // Gửi email chứa đường link đặt lại mật khẩu
-            await _emailService.SendEmailResetAsync(user.Email, "Reset password for your Cursus account", user, currentDate, resetLink, operatingSystem, browser, ip, region, city, country);
+            await _emailService.SendEmailResetAsync(user.Email, "Reset password for your Cursus account", user,
+                currentDate, resetLink, operatingSystem, browser, ip, region, city, country);
 
             // Helper functions (you might need to refine these based on your User-Agent parsing logic)
             string GetUserAgentOperatingSystem(string userAgent)
@@ -1022,7 +1006,7 @@ public class AuthService : IAuthService
                     StatusCode = 400
                 };
             }
-            
+
             // Kiểm tra xem mật khẩu mới có trùng với mật khẩu cũ hay không
             if (await _userManager.CheckPasswordAsync(user, password))
             {
@@ -1092,14 +1076,14 @@ public class AuthService : IAuthService
             if (newPassword != confirmNewPassword)
             {
                 return new ResponseDTO
-                { IsSuccess = false, Message = "New password and confirm new password not match." };
+                    { IsSuccess = false, Message = "New password and confirm new password not match." };
             }
 
             // Không cho phép thay đổi mật khẩu cũ
             if (newPassword == oldPassword)
             {
                 return new ResponseDTO
-                { IsSuccess = false, Message = "New password cannot be the same as the old password." };
+                    { IsSuccess = false, Message = "New password cannot be the same as the old password." };
             }
 
             // Thực hiện thay đổi mật khẩu
@@ -1194,5 +1178,65 @@ public class AuthService : IAuthService
             StatusCode = 200,
             Result = null
         };
+    }
+
+    /// <summary>
+    /// This method for check email exist or not
+    /// </summary>
+    /// <param name="email"></param>
+    /// <returns></returns>
+    public async Task<ResponseDTO> CheckEmailExist(string email)
+    {
+        try
+        {
+            var user = await _userManager.FindByEmailAsync(email);
+            return new()
+            {
+                Result = user is not null,
+                Message = user is null ? "Email does not exist" : "Email is existed",
+                IsSuccess = true,
+                StatusCode = 200
+            };
+        }
+        catch (Exception e)
+        {
+            return new()
+            {
+                Message = e.Message,
+                IsSuccess = false,
+                StatusCode = 500,
+                Result = null
+            };
+        }
+    }
+
+    /// <summary>
+    /// This method for check phoneNumber exist or not
+    /// </summary>
+    /// <param name="phoneNumber"></param>
+    /// <returns></returns>
+    public async Task<ResponseDTO> CheckPhoneNumberExist(string phoneNumber)
+    {
+        try
+        {
+            var user = await _userManager.Users.FirstOrDefaultAsync(x => x.PhoneNumber == phoneNumber);
+            return new()
+            {
+                Result = user is not null,
+                Message = user is null ? "Phone number does not exist!" : "Phone number was existed",
+                IsSuccess = true,
+                StatusCode = 200
+            };
+        }
+        catch (Exception e)
+        {
+            return new()
+            {
+                Message = e.Message,
+                Result = null,
+                IsSuccess = false,
+                StatusCode = 500
+            };
+        }
     }
 }

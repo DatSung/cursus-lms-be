@@ -1,4 +1,3 @@
-
 using System.Security.Claims;
 using System.Text;
 using Cursus.LMS.Model.Domain;
@@ -20,12 +19,10 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Cursus.LMS.API.Controllers
 {
-
     [Route("api/[controller]")]
     [ApiController]
     public class AuthController : ControllerBase
     {
-
         private readonly IEmailService _emailService;
         private readonly IAuthService _authService;
         private readonly IEmailSender _emailSender;
@@ -49,7 +46,6 @@ namespace Cursus.LMS.API.Controllers
         [Route("sign-up-student")]
         public async Task<ActionResult<ResponseDTO>> SignUpStudent([FromBody] RegisterStudentDTO registerStudentDTO)
         {
-
             if (!ModelState.IsValid)
             {
                 responseDto.IsSuccess = false;
@@ -57,6 +53,7 @@ namespace Cursus.LMS.API.Controllers
                 responseDto.Result = ModelState.Values.SelectMany(v => v.Errors.Select(e => e.ErrorMessage));
                 return BadRequest(responseDto);
             }
+
             try
             {
                 var result = await _authService.SignUpStudent(registerStudentDTO);
@@ -189,7 +186,7 @@ namespace Cursus.LMS.API.Controllers
         /// <returns>ResponseDTO</returns>
         [HttpPost]
         [Route("send-verify-email")]
-        public async Task<ActionResult<ResponseDTO>> SendVerifyEmail([FromBody][EmailAddress] string email)
+        public async Task<ActionResult<ResponseDTO>> SendVerifyEmail([FromBody] [EmailAddress] string email)
         {
             var user = await _userManager.FindByEmailAsync(email);
             if (user.EmailConfirmed)
@@ -258,7 +255,6 @@ namespace Cursus.LMS.API.Controllers
         public async Task<ActionResult<ResponseDTO>> SignIn([FromBody] SignDTO signDto)
         {
             var responseDto = await _authService.SignIn(signDto);
-
             return StatusCode(this.responseDto.StatusCode, responseDto);
         }
 
@@ -267,18 +263,43 @@ namespace Cursus.LMS.API.Controllers
         /// </summary>
         /// <returns></returns>
         [HttpPost]
-        [Route("student-signin-bygoogle")]
-        public async Task<ActionResult<SignResponseDTO>> StudentSignInByGoogle([FromBody] StudentSignInByGoogleDTO studentSignInByGoogleDTO)
+        [Route("student-sign-up-by-google")]
+        public async Task<ActionResult<SignResponseDTO>> StudentSignUpByGoogle(
+            [FromBody] StudentSignInByGoogleDTO studentSignInByGoogleDTO)
         {
-            return await _authService.StudentSignByGoogle(studentSignInByGoogleDTO);
+            return await _authService.StudentSignUpByGoogle(studentSignInByGoogleDTO);
         }
 
         [HttpPost]
-        [Route("instructor-signin-bygoogle")]
-        public async Task<ActionResult<SignResponseDTO>> InstructorSignByGoogle([FromBody] InstructorSignInByGoogleDTO instructorSignInByGoogleDTO)
+        [Route("instructor-sign-up-by-google")]
+        public async Task<ActionResult<SignResponseDTO>> InstructorSignUpByGoogle(
+            [FromBody] InstructorSignInByGoogleDTO instructorSignInByGoogleDTO)
         {
-            return await _authService.InstructorSignByGoogle(instructorSignInByGoogleDTO);
+            return await _authService.InstructorSignUpByGoogle(instructorSignInByGoogleDTO);
         }
 
+        [HttpGet]
+        [Route("refresh")]
+        public async Task<ActionResult<ResponseDTO>> Refresh(string token)
+        {
+            var responseDto = await _authService.Refresh(token);
+            return StatusCode(responseDto.StatusCode, responseDto);
+        }
+
+        [HttpGet]
+        [Route("check-email-exist")]
+        public async Task<ActionResult<ResponseDTO>> CheckEmailExist(string email)
+        {
+            var responseDto = await _authService.CheckEmailExist(email);
+            return StatusCode(this.responseDto.StatusCode, responseDto);
+        }
+
+        [HttpGet]
+        [Route("check-phone-number-exist")]
+        public async Task<ActionResult<ResponseDTO>> CheckPhoneNumberExist(string phoneNumber)
+        {
+            var responseDto = await _authService.CheckPhoneNumberExist(phoneNumber);
+            return StatusCode(this.responseDto.StatusCode, responseDto);
+        }
     }
 }
