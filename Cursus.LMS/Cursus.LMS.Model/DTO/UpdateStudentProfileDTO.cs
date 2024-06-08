@@ -22,6 +22,6 @@ public class UpdateStudentProfileDTO
     [Required(ErrorMessage = "Address is required")]
     public string Gender { get; set; }
 
-    [Required(ErrorMessage = "CardNumber number is required.")]
+    [Required(ErrorMessage = "CardNumber is required.")]
     public string CardNumber { get; set; }
 }
