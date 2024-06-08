@@ -202,7 +202,7 @@ namespace Cursus.LMS.API.Controllers
             return StatusCode(responseDto.StatusCode, responseDto);
         }
 
-        [HttpGet]
+        [HttpPost]
         [Route("verify-email")]
         [ActionName("verify-email")]
         public async Task<ActionResult<ResponseDTO>> VerifyEmail(
@@ -271,15 +271,15 @@ namespace Cursus.LMS.API.Controllers
             return await _authService.InstructorSignInByGoogle(instructorSignInByGoogleDto);
         }
 
-        [HttpGet]
+        [HttpPost]
         [Route("refresh")]
-        public async Task<ActionResult<ResponseDTO>> Refresh(string token)
+        public async Task<ActionResult<ResponseDTO>> Refresh([FromBody] string token)
         {
             var responseDto = await _authService.Refresh(token);
             return StatusCode(responseDto.StatusCode, responseDto);
         }
 
-        [HttpGet]
+        [HttpPost]
         [Route("check-email-exist")]
         public async Task<ActionResult<ResponseDTO>> CheckEmailExist([FromBody] string email)
         {
@@ -287,7 +287,7 @@ namespace Cursus.LMS.API.Controllers
             return StatusCode(this.responseDto.StatusCode, responseDto);
         }
 
-        [HttpGet]
+        [HttpPost]
         [Route("check-phone-number-exist")]
         public async Task<ActionResult<ResponseDTO>> CheckPhoneNumberExist([FromBody] string phoneNumber)
         {
