@@ -1,15 +1,14 @@
 ﻿using System.Collections.Concurrent;
 using AutoMapper;
-using Cursus.LMS.DataAccess.Context;
 using Cursus.LMS.Model.Domain;
 using Cursus.LMS.Model.DTO;
 using Cursus.LMS.Service.IService;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
-using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
+using Cursus.LMS.DataAccess.IRepository;
 using Cursus.LMS.Utility.Constants;
 using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
@@ -20,7 +19,7 @@ namespace Cursus.LMS.Service.Service;
 
 public class AuthService : IAuthService
 {
-    private readonly ApplicationDbContext _dbContext;
+    private readonly IUnitOfWork _unitOfWork;
     private readonly UserManager<ApplicationUser> _userManager;
     private readonly RoleManager<IdentityRole> _roleManager;
     private readonly IConfiguration _configuration;
@@ -30,23 +29,31 @@ public class AuthService : IAuthService
     private readonly IEmailSender _emailSender;
     private readonly IFirebaseService _firebaseService;
     private readonly IHttpContextAccessor _httpContextAccessor;
-    private static readonly ConcurrentDictionary<string, (int Count, DateTime LastRequest)> ResetPasswordAttempts = new();
 
-    public AuthService(UserManager<ApplicationUser> userManager, RoleManager<IdentityRole> roleManager,
-        IConfiguration configuration, IMapper mapper, IEmailService emailService, ApplicationDbContext dbContext,
-        IFirebaseService firebaseService, IHttpContextAccessor httpContextAccessor, IEmailSender emailSender,
-        ITokenService tokenService)
+    private static readonly ConcurrentDictionary<string, (int Count, DateTime LastRequest)> ResetPasswordAttempts =
+        new();
+
+    public AuthService(
+        UserManager<ApplicationUser> userManager,
+        RoleManager<IdentityRole> roleManager,
+        IConfiguration configuration,
+        IMapper mapper,
+        IEmailService emailService,
+        IFirebaseService firebaseService,
+        IHttpContextAccessor httpContextAccessor,
+        IEmailSender emailSender,
+        ITokenService tokenService, IUnitOfWork unitOfWork)
     {
         _userManager = userManager;
         _roleManager = roleManager;
         _configuration = configuration;
         _mapper = mapper;
         _emailService = emailService;
-        _dbContext = dbContext;
         _firebaseService = firebaseService;
         _httpContextAccessor = httpContextAccessor;
         _emailSender = emailSender;
         _tokenService = tokenService;
+        _unitOfWork = unitOfWork;
     }
 
 
@@ -55,7 +62,6 @@ public class AuthService : IAuthService
         try
         {
             var isEmailExit = await _userManager.FindByEmailAsync(registerStudentDTO.Email);
-
             if (isEmailExit is not null)
             {
                 return new ResponseDTO()
@@ -78,9 +84,20 @@ public class AuthService : IAuthService
                     IsSuccess = false,
                     StatusCode = 500
                 };
-
             }
 
+            var isCardExist =
+                await _unitOfWork.PaymentCardRepository.GetAsync(x => x.CardNumber == registerStudentDTO.CardNumber);
+            if (isCardExist is not null)
+            {
+                return new ResponseDTO()
+                {
+                    Message = "Card number is using by another user",
+                    StatusCode = 400,
+                    Result = registerStudentDTO,
+                    IsSuccess = false
+                };
+            }
 
             // Create new instance of ApplicationUser
             ApplicationUser newUser = new ApplicationUser()
@@ -93,6 +110,7 @@ public class AuthService : IAuthService
                 Gender = registerStudentDTO.Gender,
                 Country = registerStudentDTO.Country,
                 PhoneNumber = registerStudentDTO.PhoneNumber,
+                UpdateTime = DateTime.Now,
                 AvatarUrl = "",
                 TaxNumber = ""
             };
@@ -112,8 +130,9 @@ public class AuthService : IAuthService
                     Result = registerStudentDTO
                 };
             }
+
             var user = await _userManager.FindByEmailAsync(registerStudentDTO.Email);
-            
+
             Student student = new Student()
             {
                 UserId = user.Id,
@@ -137,19 +156,17 @@ public class AuthService : IAuthService
                 await _roleManager.CreateAsync(new IdentityRole(StaticUserRoles.Student));
             }
 
-
-
             // Add role for the user
             await _userManager.AddToRoleAsync(user, StaticUserRoles.Student);
 
             // Create new Student relate with ApplicationUser
-            await _dbContext.Students.AddAsync(student);
+            await _unitOfWork.StudentRepository.AddAsync(student);
 
             // Create new Payment relate with ApplicationUser
-            await _dbContext.PaymentCards.AddAsync(paymentCard);
+            await _unitOfWork.PaymentCardRepository.AddAsync(paymentCard);
 
             // Save change to database
-            await _dbContext.SaveChangesAsync();
+            await _unitOfWork.SaveAsync();
 
             // Return result success
             return new ResponseDTO()
@@ -207,7 +224,19 @@ public class AuthService : IAuthService
                     IsSuccess = false,
                     StatusCode = 500
                 };
+            }
 
+            var isCardExist =
+                await _unitOfWork.PaymentCardRepository.GetAsync(x => x.CardNumber == instructorDto.CardNumber);
+            if (isCardExist is not null)
+            {
+                return new ResponseDTO
+                {
+                    IsSuccess = false,
+                    StatusCode = 400,
+                    Message = "Card number is using by another user",
+                    Result = null
+                };
             }
 
             // Create new instance of ApplicationUser
@@ -222,13 +251,13 @@ public class AuthService : IAuthService
                 Country = instructorDto.Country,
                 PhoneNumber = instructorDto.PhoneNumber,
                 TaxNumber = instructorDto.TaxNumber,
+                UpdateTime = DateTime.Now
             };
 
             // Create new user to database
             var createUserResult = await _userManager.CreateAsync(newUser, instructorDto.Password);
-            
-                
-            
+
+
             // Check if error occur
             if (!createUserResult.Succeeded)
             {
@@ -244,7 +273,7 @@ public class AuthService : IAuthService
 
             // Get the user again 
             user = await _userManager.FindByEmailAsync(instructorDto.Email);
-           
+
 
             // Create instance of instructor
             Instructor instructor = new Instructor()
@@ -277,13 +306,13 @@ public class AuthService : IAuthService
             await _userManager.AddToRoleAsync(user, StaticUserRoles.Instructor);
 
             // Create new Instructor relate with ApplicationUser
-            await _dbContext.Instructors.AddAsync(instructor);
+            await _unitOfWork.InstructorRepository.AddAsync(instructor);
 
             // Create card for instructor
-            await _dbContext.PaymentCards.AddAsync(paymentCard);
+            await _unitOfWork.PaymentCardRepository.AddAsync(paymentCard);
 
             // Save change to database
-            await _dbContext.SaveChangesAsync();
+            await _unitOfWork.SaveAsync();
 
             // Return result success
             return new ResponseDTO()
@@ -324,7 +353,7 @@ public class AuthService : IAuthService
                 throw new Exception("Not authentication!");
             }
 
-            var instructor = await _dbContext.Instructors.FirstOrDefaultAsync(x => x.UserId == userId);
+            var instructor = await _unitOfWork.InstructorRepository.GetAsync(x => x.UserId == userId);
 
             if (instructor is null)
             {
@@ -340,7 +369,7 @@ public class AuthService : IAuthService
 
             instructor.DegreeImageUrl = responseDto.Result.ToString();
 
-            await _dbContext.SaveChangesAsync();
+            await _unitOfWork.SaveAsync();
 
             return new ResponseDTO()
             {
@@ -378,7 +407,7 @@ public class AuthService : IAuthService
                 throw new Exception("User Unauthenticated!");
             }
 
-            var instructor = await _dbContext.Instructors.FirstOrDefaultAsync(x => x.UserId == userId);
+            var instructor = await _unitOfWork.InstructorRepository.GetAsync(x => x.UserId == userId);
 
             if (instructor is null)
             {
@@ -587,7 +616,6 @@ public class AuthService : IAuthService
         }
     }
 
-
     /// <summary>
     /// This method for refresh token
     /// </summary>
@@ -606,7 +634,7 @@ public class AuthService : IAuthService
                 {
                     Message = "Token is not valid",
                     IsSuccess = false,
-                    StatusCode = 404,
+                    StatusCode = 400,
                     Result = null
                 };
             }
@@ -640,7 +668,7 @@ public class AuthService : IAuthService
             var refreshToken = await _tokenService.GenerateJwtRefreshTokenAsync(applicationUser);
 
             await _tokenService.StoreRefreshToken(applicationUser.Id, refreshToken);
-            
+
             return new ResponseDTO()
             {
                 Result = new JwtTokenDTO()
@@ -665,79 +693,49 @@ public class AuthService : IAuthService
         }
     }
 
-    //Kiểm tra thông tin để lấy đúng role của người dùng 
-    public async Task<string> GenerateJwtTokenAsync(ApplicationUser? user)
-    {
-        var userRoles = await _userManager.GetRolesAsync(user);
-
-        var authClaims = new List<Claim>()
-        {
-            new Claim(ClaimTypes.Name, user.UserName),
-            new Claim(ClaimTypes.NameIdentifier, user.Id),
-            new Claim("FullName", user.FullName),
-            new Claim("PhoneNumber", user.PhoneNumber),
-            new Claim("Email", user.Email),
-        };
-
-        foreach (var role in userRoles)
-        {
-            authClaims.Add(new Claim(ClaimTypes.Role, role));
-        }
-
-        //tạo các đối tượng mã hóa
-        var authSecret = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["JWT:Secret"]));
-        var signingCredentials = new SigningCredentials(authSecret, SecurityAlgorithms.HmacSha256);
-
-        var tokenObject = new JwtSecurityToken(
-            issuer: _configuration["JWT:ValidIssuer"],
-            audience: _configuration["JWT:ValidAudience"],
-            notBefore: DateTime.Now,
-            expires: DateTime.Now.AddMinutes(15), //thời gian hết hạn là 15p
-            claims: authClaims, //danh sách thông tin của người dùng
-            signingCredentials: signingCredentials
-        );
-        // tạo thành công mã thông báo          
-        var accessToken = new JwtSecurityTokenHandler().WriteToken(tokenObject);
-
-        return accessToken;
-    }
     //Student-SignInbyGoogle
-    public async Task<SignResponseDTO> StudentSignByGoogle(StudentSignInByGoogleDTO studentSignInByGoogleDTO)
+    public async Task<SignResponseDTO> StudentSignInByGoogle(StudentSignInByGoogleDTO studentSignInByGoogleDTO)
     {
         try
         {
             //lấy thông tin từ google
-            FirebaseToken googleTokenS = await FirebaseAuth.DefaultInstance.VerifyIdTokenAsync(studentSignInByGoogleDTO.GoogleToken);
+            FirebaseToken googleTokenS =
+                await FirebaseAuth.DefaultInstance.VerifyIdTokenAsync(studentSignInByGoogleDTO.GoogleToken);
             string userId = googleTokenS.Uid;
             string email = googleTokenS.Claims["email"].ToString();
             string name = googleTokenS.Claims["name"].ToString();
-            string avatarurl = googleTokenS.Claims["picture"].ToString();
-            //tìm kiển người dùng trong database
-            var user = await _userManager.FindByIdAsync(userId);
+            string avatarUrl = googleTokenS.Claims["picture"].ToString();
 
-            if (user == null)
+            //tìm kiem người dùng trong database
+            var user = await _userManager.FindByEmailAsync(email);
+            UserLoginInfo? userLoginInfo = null;
+            if (user is not null)
+            {
+                userLoginInfo = _userManager.GetLoginsAsync(user).GetAwaiter().GetResult()
+                    .FirstOrDefault(x => x.LoginProvider == StaticLoginProvider.Google);
+            }
+
+            if (user is not null && userLoginInfo is null)
+            {
+                return new SignResponseDTO()
+                {
+                    Message = "The email is using by another user",
+                    RefreshToken = null,
+                    AccessToken = null,
+                    UserInfo = null,
+                };
+            }
+
+            if (userLoginInfo is null && user is null)
             {
                 //tạo một user mới khi chưa có trong database
                 user = new ApplicationUser
                 {
-                    Id = userId,
                     Email = email,
                     FullName = name,
                     UserName = email,
-                    AvatarUrl = avatarurl,
-                    Gender = studentSignInByGoogleDTO.Gender,
-                    Country = studentSignInByGoogleDTO.Country,
-                    Address = studentSignInByGoogleDTO.Address,
-                    PhoneNumber = studentSignInByGoogleDTO.PhoneNumber,
-                    BirthDate = studentSignInByGoogleDTO.BirthDate,
-                    LockoutEnabled = true,
-                    TaxNumber = ""
-                };
-
-                PaymentCard paymentCard = new()
-                {
-                    UserId = userId,
-                    CardNumber = studentSignInByGoogleDTO.CardNumber,
+                    AvatarUrl = avatarUrl,
+                    EmailConfirmed = true,
                 };
 
                 await _userManager.CreateAsync(user);
@@ -749,69 +747,75 @@ public class AuthService : IAuthService
                 }
 
                 await _userManager.AddToRoleAsync(user, StaticUserRoles.Student);
-            }
-            else
-            {
-                return new SignResponseDTO()
-                {
-                    AccessToken = null,
-                    UserInfo = null,
-                    Message = "Existing accounts"
-                };
+                await _userManager.AddLoginAsync(user,
+                    new UserLoginInfo(StaticLoginProvider.Google, userId, "GOOGLE"));
             }
 
-            var accessToken = await GenerateJwtTokenAsync(user);
+            var accessToken = await _tokenService.GenerateJwtAccessTokenAsync(user);
+            var refreshToken = await _tokenService.GenerateJwtRefreshTokenAsync(user);
+            await _tokenService.StoreRefreshToken(user.Id, refreshToken);
 
             var userInfo = _mapper.Map<UserInfo>(user);
             userInfo.Roles = await _userManager.GetRolesAsync(user);
             return new SignResponseDTO()
             {
                 AccessToken = accessToken,
+                RefreshToken = refreshToken,
                 UserInfo = userInfo
             };
         }
         catch (FirebaseAuthException e)
         {
-            return null;
+            return new SignResponseDTO()
+            {
+                Message = e.Message
+            };
         }
     }
 
     //Instructor-SignInbyGoogle
-    public async Task<SignResponseDTO> InstructorSignByGoogle(InstructorSignInByGoogleDTO instructorSignInByGoogleDTO)
+    public async Task<SignResponseDTO> InstructorSignInByGoogle(InstructorSignInByGoogleDTO instructorSignInByGoogleDto)
     {
         try
         {
             //lấy thông tin từ google
-            FirebaseToken googleTokenI = await FirebaseAuth.DefaultInstance.VerifyIdTokenAsync(instructorSignInByGoogleDTO.GoogleToken);
-            string userId = googleTokenI.Uid;
-            string email = googleTokenI.Claims["email"].ToString();
-            string name = googleTokenI.Claims["name"].ToString();
-            string avatarurl = googleTokenI.Claims["picture"].ToString();
-            //tìm kiển người dùng trong database
-            var user = await _userManager.FindByIdAsync(userId);
+            FirebaseToken googleTokenS =
+                await FirebaseAuth.DefaultInstance.VerifyIdTokenAsync(instructorSignInByGoogleDto.GoogleToken);
+            string userId = googleTokenS.Uid;
+            string email = googleTokenS.Claims["email"].ToString();
+            string name = googleTokenS.Claims["name"].ToString();
+            string avatarUrl = googleTokenS.Claims["picture"].ToString();
 
-            if (user == null)
+            //tìm kiem người dùng trong database
+            var user = await _userManager.FindByEmailAsync(email);
+            UserLoginInfo? userLoginInfo = null;
+            if (user is not null)
             {
+                userLoginInfo = _userManager.GetLoginsAsync(user).GetAwaiter().GetResult()
+                    .FirstOrDefault(x => x.LoginProvider == StaticLoginProvider.Google);
+            }
+
+            if (user is not null && userLoginInfo is null)
+            {
+                return new SignResponseDTO()
+                {
+                    Message = "The email is using by another user",
+                    RefreshToken = null,
+                    AccessToken = null,
+                    UserInfo = null,
+                };
+            }
+
+            if (userLoginInfo is null && user is null)
+            {
+                //tạo một user mới khi chưa có trong database
                 user = new ApplicationUser
                 {
-                    Id = userId,
                     Email = email,
                     FullName = name,
                     UserName = email,
-                    AvatarUrl = avatarurl,
-                    Gender = instructorSignInByGoogleDTO.Gender,
-                    Country = instructorSignInByGoogleDTO.Country,
-                    PhoneNumber = instructorSignInByGoogleDTO.PhoneNumber,
-                    Address = instructorSignInByGoogleDTO.Address,
-                    TaxNumber = instructorSignInByGoogleDTO.TaxNumber,
-                    BirthDate = instructorSignInByGoogleDTO.BirthDate,
-                    LockoutEnabled = true
-                };
-
-                PaymentCard paymentCard = new()
-                {
-                    UserId = userId,
-                    CardNumber = instructorSignInByGoogleDTO.CardNumber,
+                    AvatarUrl = avatarUrl,
+                    EmailConfirmed = true,
                 };
 
                 await _userManager.CreateAsync(user);
@@ -823,33 +827,31 @@ public class AuthService : IAuthService
                 }
 
                 await _userManager.AddToRoleAsync(user, StaticUserRoles.Instructor);
-            }
-            else
-            {
-                return new SignResponseDTO()
-                {
-                    AccessToken = null,
-                    UserInfo = null,
-                    Message = "Existing accounts"
-                };
+                await _userManager.AddLoginAsync(user,
+                    new UserLoginInfo(StaticLoginProvider.Google, userId, "GOOGLE"));
             }
 
-            var accessToken = await GenerateJwtTokenAsync(user);
+            var accessToken = await _tokenService.GenerateJwtAccessTokenAsync(user);
+            var refreshToken = await _tokenService.GenerateJwtRefreshTokenAsync(user);
+            await _tokenService.StoreRefreshToken(user.Id, refreshToken);
 
             var userInfo = _mapper.Map<UserInfo>(user);
             userInfo.Roles = await _userManager.GetRolesAsync(user);
             return new SignResponseDTO()
             {
                 AccessToken = accessToken,
+                RefreshToken = refreshToken,
                 UserInfo = userInfo
             };
         }
         catch (FirebaseAuthException e)
         {
-            return null;
+            return new SignResponseDTO()
+            {
+                Message = e.Message
+            };
         }
     }
-
 
 
     //Forgot password
@@ -858,6 +860,7 @@ public class AuthService : IAuthService
     private string region;
     private string country;
     private const int MaxAttemptsPerDay = 3;
+
     public async Task<ResponseDTO> ForgotPassword(ForgotPasswordDTO forgotPasswordDto)
     {
         try
@@ -887,7 +890,7 @@ public class AuthService : IAuthService
             if (ResetPasswordAttempts.TryGetValue(email, out var attempts))
             {
                 // Kiểm tra xem đã quá 1 ngày kể từ lần thử cuối cùng chưa
-                if (now - attempts.LastRequest >= TimeSpan.FromSeconds(1)) 
+                if (now - attempts.LastRequest >= TimeSpan.FromSeconds(1))
                 {
                     // Reset số lần thử về 0 và cập nhật thời gian thử cuối cùng
                     ResetPasswordAttempts[email] = (1, now);
@@ -904,11 +907,12 @@ public class AuthService : IAuthService
                     return new ResponseDTO
                     {
                         IsSuccess = false,
-                        Message = "You have exceeded the daily limit for password reset requests. Please try again after 24 hours.",
-                        StatusCode = 429 
+                        Message =
+                            "You have exceeded the daily limit for password reset requests. Please try again after 24 hours.",
+                        StatusCode = 429
                     };
-                } 
-                else 
+                }
+                else
                 {
                     // Chưa vượt quá số lần thử và thời gian chờ, tăng số lần thử và cập nhật thời gian
                     ResetPasswordAttempts[email] = (attempts.Count + 1, now);
@@ -919,7 +923,7 @@ public class AuthService : IAuthService
                 // Email chưa có trong danh sách, thêm mới với số lần thử là 1 và thời gian hiện tại
                 ResetPasswordAttempts.AddOrUpdate(email, (1, now), (key, old) => (old.Count + 1, now));
             }
-            
+
             // Tạo mã token
             var token = await _userManager.GeneratePasswordResetTokenAsync(user);
 
@@ -937,7 +941,7 @@ public class AuthService : IAuthService
 
             // Lấy tên trình duyệt
             var browser = GetUserAgentBrowser(userAgent);
-    
+
             // Lấy location
             var url = "https://ipinfo.io/14.169.10.115/json?token=823e5c403c980f";
             using (HttpClient client = new HttpClient())
@@ -965,7 +969,8 @@ public class AuthService : IAuthService
             }
 
             // Gửi email chứa đường link đặt lại mật khẩu
-            await _emailService.SendEmailResetAsync(user.Email, "Reset password for your Cursus account", user, currentDate, resetLink, operatingSystem, browser, ip, region, city, country);
+            await _emailService.SendEmailResetAsync(user.Email, "Reset password for your Cursus account", user,
+                currentDate, resetLink, operatingSystem, browser, ip, region, city, country);
 
             // Helper functions (you might need to refine these based on your User-Agent parsing logic)
             string GetUserAgentOperatingSystem(string userAgent)
@@ -1022,7 +1027,7 @@ public class AuthService : IAuthService
                     StatusCode = 400
                 };
             }
-            
+
             // Kiểm tra xem mật khẩu mới có trùng với mật khẩu cũ hay không
             if (await _userManager.CheckPasswordAsync(user, password))
             {
@@ -1092,14 +1097,14 @@ public class AuthService : IAuthService
             if (newPassword != confirmNewPassword)
             {
                 return new ResponseDTO
-                { IsSuccess = false, Message = "New password and confirm new password not match." };
+                    { IsSuccess = false, Message = "New password and confirm new password not match." };
             }
 
             // Không cho phép thay đổi mật khẩu cũ
             if (newPassword == oldPassword)
             {
                 return new ResponseDTO
-                { IsSuccess = false, Message = "New password cannot be the same as the old password." };
+                    { IsSuccess = false, Message = "New password cannot be the same as the old password." };
             }
 
             // Thực hiện thay đổi mật khẩu
@@ -1194,5 +1199,75 @@ public class AuthService : IAuthService
             StatusCode = 200,
             Result = null
         };
+    }
+
+    /// <summary>
+    /// This method for check email exist or not
+    /// </summary>
+    /// <param name="email"></param>
+    /// <returns></returns>
+    public async Task<ResponseDTO> CheckEmailExist(string email)
+    {
+        try
+        {
+            var user = await _userManager.FindByEmailAsync(email);
+            return new()
+            {
+                Result = user is not null,
+                Message = user is null ? "Email does not exist" : "Email is existed",
+                IsSuccess = true,
+                StatusCode = 200
+            };
+        }
+        catch (Exception e)
+        {
+            return new()
+            {
+                Message = e.Message,
+                IsSuccess = false,
+                StatusCode = 500,
+                Result = null
+            };
+        }
+    }
+
+    /// <summary>
+    /// This method for check phoneNumber exist or not
+    /// </summary>
+    /// <param name="phoneNumber"></param>
+    /// <returns></returns>
+    public async Task<ResponseDTO> CheckPhoneNumberExist(string phoneNumber)
+    {
+        try
+        {
+            var user = await _userManager.Users.FirstOrDefaultAsync(x => x.PhoneNumber == phoneNumber);
+            return new()
+            {
+                Result = user is not null,
+                Message = user is null ? "Phone number does not exist!" : "Phone number was existed",
+                IsSuccess = true,
+                StatusCode = 200
+            };
+        }
+        catch (Exception e)
+        {
+            return new()
+            {
+                Message = e.Message,
+                Result = null,
+                IsSuccess = false,
+                StatusCode = 500
+            };
+        }
+    }
+
+    public Task<ResponseDTO> UpdateStudentProfile()
+    {
+        throw new NotImplementedException();
+    }
+
+    public Task<ResponseDTO> UpdateInstructorProfile()
+    {
+        throw new NotImplementedException();
     }
 }

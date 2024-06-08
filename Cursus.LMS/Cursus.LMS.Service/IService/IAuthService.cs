@@ -6,7 +6,6 @@ namespace Cursus.LMS.Service.IService;
 
 public interface IAuthService
 {
-
     Task<ResponseDTO> SignUpStudent(RegisterStudentDTO registerStudentDTO);
     Task<ResponseDTO> SignUpInstructor(InstructorDTO instructorDto);
     Task<ResponseDTO> UploadInstructorDegree(IFormFile file, ClaimsPrincipal user);
@@ -14,12 +13,16 @@ public interface IAuthService
     Task<DegreeResponseDTO> GetInstructorDegree(ClaimsPrincipal user);
     Task<MemoryStream> GetUserAvatar(ClaimsPrincipal user);
     Task<ResponseDTO> SignIn(SignDTO signDTO);
-    Task<SignResponseDTO> StudentSignByGoogle(StudentSignInByGoogleDTO studentSignInByGoogleDTO);
-    Task<SignResponseDTO> InstructorSignByGoogle(InstructorSignInByGoogleDTO instructorSignInByGoogleDTO);
+    Task<SignResponseDTO> StudentSignInByGoogle(StudentSignInByGoogleDTO studentSignInByGoogleDto);
+    Task<SignResponseDTO> InstructorSignInByGoogle(InstructorSignInByGoogleDTO instructorSignInByGoogleDto);
     Task<ResponseDTO> ForgotPassword(ForgotPasswordDTO forgotPasswordDto);
     Task<ResponseDTO> Refresh(string token);
     Task<ResponseDTO> ResetPassword(string resetPasswordDto, string token, string password);
     Task<ResponseDTO> ChangePassword(string userId, string oldPassword, string newPassword, string confirmNewPassword);
     Task<ResponseDTO> SendVerifyEmail(string email, string confirmationLink);
     Task<ResponseDTO> VerifyEmail(string userId, string token);
+    Task<ResponseDTO> CheckEmailExist(string email);
+    Task<ResponseDTO> CheckPhoneNumberExist(string phoneNumber);
+    Task<ResponseDTO> UpdateStudentProfile();
+    Task<ResponseDTO> UpdateInstructorProfile();
 }
