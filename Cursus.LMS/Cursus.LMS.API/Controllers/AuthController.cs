@@ -14,6 +14,7 @@ using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
 using Cursus.LMS.Service.Service;
+using Cursus.LMS.Utility.Constants;
 using Microsoft.EntityFrameworkCore;
 
 
@@ -93,7 +94,7 @@ namespace Cursus.LMS.API.Controllers
         /// <returns></returns>
         [HttpPost]
         [Route("upload-instructor-degree")]
-        [Authorize]
+        [Authorize(Roles = StaticUserRoles.Instructor)]
         public async Task<ActionResult<ResponseDTO>> UploadInstructorDegree(DegreeUploadDTO degreeUploadDto)
         {
             var response = await _authService.UploadInstructorDegree(degreeUploadDto.File, User);
@@ -106,7 +107,7 @@ namespace Cursus.LMS.API.Controllers
         /// <returns></returns>
         [HttpGet]
         [Route("get-instructor-degree")]
-        [Authorize]
+        [Authorize(Roles = StaticUserRoles.Instructor)]
         public async Task<IActionResult> GetInstructorDegree([FromQuery] bool Download = false)
         {
             var degreeResponseDto = await _authService.GetInstructorDegree(User);
@@ -227,6 +228,7 @@ namespace Cursus.LMS.API.Controllers
         /// <returns>ResponseDTO</returns>
         [HttpPost]
         [Route("change-password")]
+        [Authorize]
         public async Task<ActionResult<ResponseDTO>> ChangePassword(ChangePasswordDTO changePasswordDto)
         {
             // Lấy Id người dùng hiện tại.
@@ -288,7 +290,7 @@ namespace Cursus.LMS.API.Controllers
 
         [HttpGet]
         [Route("check-email-exist")]
-        public async Task<ActionResult<ResponseDTO>> CheckEmailExist(string email)
+        public async Task<ActionResult<ResponseDTO>> CheckEmailExist([FromBody] string email)
         {
             var responseDto = await _authService.CheckEmailExist(email);
             return StatusCode(this.responseDto.StatusCode, responseDto);
@@ -296,9 +298,30 @@ namespace Cursus.LMS.API.Controllers
 
         [HttpGet]
         [Route("check-phone-number-exist")]
-        public async Task<ActionResult<ResponseDTO>> CheckPhoneNumberExist(string phoneNumber)
+        public async Task<ActionResult<ResponseDTO>> CheckPhoneNumberExist([FromBody] string phoneNumber)
         {
             var responseDto = await _authService.CheckPhoneNumberExist(phoneNumber);
+            return StatusCode(this.responseDto.StatusCode, responseDto);
+        }
+
+
+        [HttpPost]
+        [Route("update-student-profile")]
+        [Authorize(Roles = StaticUserRoles.Student)]
+        public async Task<ActionResult<ResponseDTO>> UpdateStudentProfile(
+            UpdateStudentProfileDTO updateStudentProfileDto)
+        {
+            var responseDto = await _authService.UpdateStudentProfile(User, updateStudentProfileDto);
+            return StatusCode(this.responseDto.StatusCode, responseDto);
+        }
+
+        [HttpPost]
+        [Route("update-instructor-profile")]
+        [Authorize(Roles = StaticUserRoles.Instructor)]
+        public async Task<ActionResult<ResponseDTO>> UpdateInstructorProfile(
+            UpdateInstructorProfileDTO updateInstructorProfileDto)
+        {
+            var responseDto = await _authService.UpdateInstructorProfile(User, updateInstructorProfileDto);
             return StatusCode(this.responseDto.StatusCode, responseDto);
         }
     }
