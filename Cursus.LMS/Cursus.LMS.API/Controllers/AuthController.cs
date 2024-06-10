@@ -178,9 +178,9 @@ namespace Cursus.LMS.API.Controllers
         /// <returns>ResponseDTO</returns>
         [HttpPost]
         [Route("send-verify-email")]
-        public async Task<ActionResult<ResponseDTO>> SendVerifyEmail([FromBody] [EmailAddress] string email)
+        public async Task<ActionResult<ResponseDTO>> SendVerifyEmail([FromBody] SendVerifyEmailDTO email)
         {
-            var user = await _userManager.FindByEmailAsync(email);
+            var user = await _userManager.FindByEmailAsync(email.Email);
             if (user.EmailConfirmed)
             {
                 return new ResponseDTO()
@@ -202,7 +202,7 @@ namespace Cursus.LMS.API.Controllers
             return StatusCode(responseDto.StatusCode, responseDto);
         }
 
-        [HttpPost]
+        [HttpGet]
         [Route("verify-email")]
         [ActionName("verify-email")]
         public async Task<ActionResult<ResponseDTO>> VerifyEmail(
