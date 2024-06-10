@@ -193,16 +193,15 @@ namespace Cursus.LMS.API.Controllers
             }
 
             var token = await _userManager.GenerateEmailConfirmationTokenAsync(user);
-
-            var confirmationLink = Url.Action("verify-email", "Auth", new { userId = user.Id, token = token },
-                Request.Scheme);
+            
+            var confirmationLink = $"http://localhost:30475/signin/verify-email?userId={user.Id}&token={Uri.EscapeDataString(token)}";
 
             var responseDto = await _authService.SendVerifyEmail(user.Email, confirmationLink);
 
             return StatusCode(responseDto.StatusCode, responseDto);
         }
 
-        [HttpGet]
+        [HttpPost]
         [Route("verify-email")]
         [ActionName("verify-email")]
         public async Task<ActionResult<ResponseDTO>> VerifyEmail(
