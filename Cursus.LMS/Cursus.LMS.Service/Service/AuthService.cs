@@ -568,7 +568,7 @@ public class AuthService : IAuthService
 
             if (!isPasswordCorrect)
             {
-                new ResponseDTO()
+                return new ResponseDTO()
                 {
                     Message = "Incorrect email or password",
                     Result = null,
@@ -579,7 +579,7 @@ public class AuthService : IAuthService
 
             if (!user.EmailConfirmed)
             {
-                new ResponseDTO()
+                return new ResponseDTO()
                 {
                     Message = "You need to confirm email!",
                     Result = null,
