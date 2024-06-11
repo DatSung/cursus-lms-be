@@ -595,14 +595,14 @@ public class AuthService : IAuthService
             var userInfo = _mapper.Map<UserInfo>(user);
             var roles = await _userManager.GetRolesAsync(user);
             userInfo.Roles = roles;
-            
+
             if (roles.Contains(StaticUserRoles.Instructor))
             {
                 var instructor = await _unitOfWork.InstructorRepository.GetAsync(x => x.UserId == user.Id);
                 userInfo.DegreeImageUrl = instructor.DegreeImageUrl;
                 userInfo.isAccepted = instructor.isAccepted;
             }
-            
+
 
             return new ResponseDTO()
             {
@@ -1506,5 +1506,115 @@ public class AuthService : IAuthService
                 Result = null
             };
         }
+    }
+
+    /// <summary>
+    /// This method for sign in by google
+    /// </summary>
+    /// <param name="signInByGoogleDto"></param>
+    /// <returns></returns>
+    public async Task<ResponseDTO> SignInByGoogle(SignInByGoogleDTO signInByGoogleDto)
+    {
+        try
+        {
+            //lấy thông tin từ google
+            FirebaseToken googleTokenS =
+                await FirebaseAuth.DefaultInstance.VerifyIdTokenAsync(signInByGoogleDto.Token);
+            string userId = googleTokenS.Uid;
+            string email = googleTokenS.Claims["email"].ToString();
+            string name = googleTokenS.Claims["name"].ToString();
+            string avatarUrl = googleTokenS.Claims["picture"].ToString();
+
+            //tìm kiem người dùng trong database
+            var user = await _userManager.FindByEmailAsync(email);
+            UserLoginInfo? userLoginInfo = null;
+            if (user is not null)
+            {
+                userLoginInfo = _userManager.GetLoginsAsync(user).GetAwaiter().GetResult()
+                    .FirstOrDefault(x => x.LoginProvider == StaticLoginProvider.Google);
+            }
+
+            if (user is not null && userLoginInfo is null)
+            {
+
+                return new ResponseDTO()
+                {
+                    Result = new SignResponseDTO()
+                    {
+                        RefreshToken = null,
+                        AccessToken = null,
+                        UserInfo = null,
+                    },
+                    Message = "The email is using by another user",
+                    IsSuccess = false,
+                    StatusCode = 400
+                };
+            }
+
+            if (userLoginInfo is null && user is null)
+            {
+                //tạo một user mới khi chưa có trong database
+                user = new ApplicationUser
+                {
+                    Email = email,
+                    FullName = name,
+                    UserName = email,
+                    AvatarUrl = avatarUrl,
+                    EmailConfirmed = true,
+                    UpdateTime = null
+                };
+
+                await _userManager.CreateAsync(user);
+                await _userManager.AddLoginAsync(user,
+                    new UserLoginInfo(StaticLoginProvider.Google, userId, "GOOGLE"));
+            }
+
+            var accessToken = await _tokenService.GenerateJwtAccessTokenAsync(user);
+            var refreshToken = await _tokenService.GenerateJwtRefreshTokenAsync(user);
+            await _tokenService.StoreRefreshToken(user.Id, refreshToken);
+
+            var userInfo = _mapper.Map<UserInfo>(user);
+            var roles = await _userManager.GetRolesAsync(user);
+            userInfo.Roles = roles;
+            
+            return new ResponseDTO()
+            {
+                Result = new SignResponseDTO()
+                {
+                    AccessToken = accessToken,
+                    RefreshToken = refreshToken,
+                    UserInfo = userInfo
+                },
+                Message = "Sign in successfully",
+                IsSuccess = true,
+                StatusCode = 200
+            };
+        }
+        catch (FirebaseAuthException e)
+        {
+            return new ResponseDTO()
+            {
+                Result = new SignResponseDTO()
+                {
+                    AccessToken = null,
+                    RefreshToken = null,
+                    UserInfo = null
+                },
+                Message = "Something went wrong",
+                IsSuccess = false,
+                StatusCode = 500
+            };
+        }
+    }
+
+    public Task<ResponseDTO> CompleteStudentProfile(ClaimsPrincipal User, UpdateStudentProfileDTO studentProfileDto)
+    {
+        throw new NotImplementedException();
+    }
+
+    public Task<ResponseDTO> CompleteInstructorProfile(ClaimsPrincipal User,
+        UpdateInstructorProfileDTO instructorProfileDto)
+    {
+        throw new NotImplementedException();
     }
 }

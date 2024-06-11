@@ -25,4 +25,7 @@ public interface IAuthService
     Task<ResponseDTO> CheckPhoneNumberExist(string phoneNumber);
     Task<ResponseDTO> UpdateStudentProfile(ClaimsPrincipal User, UpdateStudentProfileDTO studentProfileDto);
     Task<ResponseDTO> UpdateInstructorProfile(ClaimsPrincipal User, UpdateInstructorProfileDTO instructorProfileDto);
+    Task<ResponseDTO> SignInByGoogle(SignInByGoogleDTO signInByGoogleDto);
+    Task<ResponseDTO> CompleteStudentProfile(ClaimsPrincipal User, UpdateStudentProfileDTO studentProfileDto);
+    Task<ResponseDTO> CompleteInstructorProfile(ClaimsPrincipal User, UpdateInstructorProfileDTO instructorProfileDto);
 }

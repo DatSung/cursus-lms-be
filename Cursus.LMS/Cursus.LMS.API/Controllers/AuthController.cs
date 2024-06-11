@@ -250,25 +250,25 @@ namespace Cursus.LMS.API.Controllers
             return StatusCode(this.responseDto.StatusCode, responseDto);
         }
 
-        // <summary>
-        /// This API for case student sign in by google.
-        /// </summary>
-        /// <returns></returns>
-        [HttpPost]
-        [Route("student-signin-by-google")]
-        public async Task<ActionResult<SignResponseDTO>> StudentSignInByGoogle(
-            [FromBody] StudentSignInByGoogleDTO studentSignInByGoogleDto)
-        {
-            return await _authService.StudentSignInByGoogle(studentSignInByGoogleDto);
-        }
-
-        [HttpPost]
-        [Route("instructor-signin-by-google")]
-        public async Task<ActionResult<SignResponseDTO>> InstructorSignInByGoogle(
-            [FromBody] InstructorSignInByGoogleDTO instructorSignInByGoogleDto)
-        {
-            return await _authService.InstructorSignInByGoogle(instructorSignInByGoogleDto);
-        }
+        // // <summary>
+        // /// This API for case student sign in by google.
+        // /// </summary>
+        // /// <returns></returns>
+        // [HttpPost]
+        // [Route("student-signin-by-google")]
+        // public async Task<ActionResult<SignResponseDTO>> StudentSignInByGoogle(
+        //     [FromBody] StudentSignInByGoogleDTO studentSignInByGoogleDto)
+        // {
+        //     return await _authService.StudentSignInByGoogle(studentSignInByGoogleDto);
+        // }
+        //
+        // [HttpPost]
+        // [Route("instructor-signin-by-google")]
+        // public async Task<ActionResult<SignResponseDTO>> InstructorSignInByGoogle(
+        //     [FromBody] InstructorSignInByGoogleDTO instructorSignInByGoogleDto)
+        // {
+        //     return await _authService.InstructorSignInByGoogle(instructorSignInByGoogleDto);
+        // }
 
         [HttpPost]
         [Route("refresh")]
@@ -295,24 +295,32 @@ namespace Cursus.LMS.API.Controllers
         }
 
 
-        [HttpPost]
-        [Route("update-student-profile")]
-        [Authorize(Roles = StaticUserRoles.Student)]
-        public async Task<ActionResult<ResponseDTO>> UpdateStudentProfile(
-            UpdateStudentProfileDTO updateStudentProfileDto)
-        {
-            var responseDto = await _authService.UpdateStudentProfile(User, updateStudentProfileDto);
-            return StatusCode(this.responseDto.StatusCode, responseDto);
-        }
+        // [HttpPost]
+        // [Route("update-student-profile")]
+        // [Authorize(Roles = StaticUserRoles.Student)]
+        // public async Task<ActionResult<ResponseDTO>> UpdateStudentProfile(
+        //     UpdateStudentProfileDTO updateStudentProfileDto)
+        // {
+        //     var responseDto = await _authService.UpdateStudentProfile(User, updateStudentProfileDto);
+        //     return StatusCode(this.responseDto.StatusCode, responseDto);
+        // }
+        //
+        // [HttpPost]
+        // [Route("update-instructor-profile")]
+        // [Authorize(Roles = StaticUserRoles.Instructor)]
+        // public async Task<ActionResult<ResponseDTO>> UpdateInstructorProfile(
+        //     UpdateInstructorProfileDTO updateInstructorProfileDto)
+        // {
+        //     var responseDto = await _authService.UpdateInstructorProfile(User, updateInstructorProfileDto);
+        //     return StatusCode(responseDto.StatusCode, responseDto);
+        // }
 
         [HttpPost]
-        [Route("update-instructor-profile")]
-        [Authorize(Roles = StaticUserRoles.Instructor)]
-        public async Task<ActionResult<ResponseDTO>> UpdateInstructorProfile(
-            UpdateInstructorProfileDTO updateInstructorProfileDto)
+        [Route("sign-in-by-google")]
+        public async Task<ActionResult<ResponseDTO>> SignInByGoogle(SignInByGoogleDTO signInByGoogleDto)
         {
-            var responseDto = await _authService.UpdateInstructorProfile(User, updateInstructorProfileDto);
-            return StatusCode(this.responseDto.StatusCode, responseDto);
+            var response = await _authService.SignInByGoogle(signInByGoogleDto);
+            return StatusCode(response.StatusCode, response);
         }
     }
 }
