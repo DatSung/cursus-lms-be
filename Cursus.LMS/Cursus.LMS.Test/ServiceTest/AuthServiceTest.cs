@@ -70,7 +70,7 @@ namespace Cursus.LMS.Test.ServiceTest
             var registerStudentDTO = new RegisterStudentDTO { Email = "test@example.com" };
             _requestUserProviderMock.Setup(x => x.FindByEmailAsync(registerStudentDTO.Email))
                 .ReturnsAsync(new ApplicationUser());
-
+        
             // Act
             var result = await _authService.SignUpStudent(registerStudentDTO);
 
@@ -88,7 +88,7 @@ namespace Cursus.LMS.Test.ServiceTest
                 .ReturnsAsync((ApplicationUser?)null);
             _requestUserProviderMock.Setup(x => x.IsPhoneNumberExistsAsync(registerStudentDTO.PhoneNumber))
                 .ReturnsAsync(true);
-
+                
             // Act
             var result = await _authService.SignUpStudent(registerStudentDTO);
 
@@ -96,6 +96,7 @@ namespace Cursus.LMS.Test.ServiceTest
             Assert.False(result.IsSuccess);
             Assert.Equal("Phone number is using by another user", result.Message);
         }
+       
 
 
     }
