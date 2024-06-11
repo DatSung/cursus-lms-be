@@ -85,7 +85,7 @@ namespace Cursus.LMS.API.Controllers
         /// <returns></returns>
         [HttpPost]
         [Route("upload-instructor-degree")]
-        [Authorize(Roles = StaticUserRoles.Instructor)]
+        [Authorize]
         public async Task<ActionResult<ResponseDTO>> UploadInstructorDegree(DegreeUploadDTO degreeUploadDto)
         {
             var response = await _authService.UploadInstructorDegree(degreeUploadDto.File, User);
@@ -98,7 +98,7 @@ namespace Cursus.LMS.API.Controllers
         /// <returns></returns>
         [HttpGet]
         [Route("get-instructor-degree")]
-        [Authorize(Roles = StaticUserRoles.Instructor)]
+        [Authorize]
         public async Task<IActionResult> GetInstructorDegree([FromQuery] bool Download = false)
         {
             var degreeResponseDto = await _authService.GetInstructorDegree(User);
@@ -295,25 +295,25 @@ namespace Cursus.LMS.API.Controllers
         }
 
 
-        // [HttpPost]
-        // [Route("update-student-profile")]
-        // [Authorize(Roles = StaticUserRoles.Student)]
-        // public async Task<ActionResult<ResponseDTO>> UpdateStudentProfile(
-        //     UpdateStudentProfileDTO updateStudentProfileDto)
-        // {
-        //     var responseDto = await _authService.UpdateStudentProfile(User, updateStudentProfileDto);
-        //     return StatusCode(this.responseDto.StatusCode, responseDto);
-        // }
-        //
-        // [HttpPost]
-        // [Route("update-instructor-profile")]
-        // [Authorize(Roles = StaticUserRoles.Instructor)]
-        // public async Task<ActionResult<ResponseDTO>> UpdateInstructorProfile(
-        //     UpdateInstructorProfileDTO updateInstructorProfileDto)
-        // {
-        //     var responseDto = await _authService.UpdateInstructorProfile(User, updateInstructorProfileDto);
-        //     return StatusCode(responseDto.StatusCode, responseDto);
-        // }
+        [HttpPost]
+        [Route("complete-student-profile")]
+        [Authorize]
+        public async Task<ActionResult<ResponseDTO>> CompleteStudentProfile(
+            UpdateStudentProfileDTO updateStudentProfileDto)
+        {
+            var responseDto = await _authService.CompleteStudentProfile(User, updateStudentProfileDto);
+            return StatusCode(this.responseDto.StatusCode, responseDto);
+        }
+        
+        [HttpPost]
+        [Route("complete-instructor-profile")]
+        [Authorize]
+        public async Task<ActionResult<ResponseDTO>> CompleteInstructorProfile(
+            UpdateInstructorProfileDTO updateInstructorProfileDto)
+        {
+            var responseDto = await _authService.CompleteInstructorProfile(User, updateInstructorProfileDto);
+            return StatusCode(responseDto.StatusCode, responseDto);
+        }
 
         [HttpPost]
         [Route("sign-in-by-google")]

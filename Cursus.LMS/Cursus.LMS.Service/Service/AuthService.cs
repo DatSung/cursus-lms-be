@@ -1276,7 +1276,7 @@ public class AuthService : IAuthService
     /// <param name="studentProfileDto"></param>
     /// <returns></returns>
     /// <exception cref="NotImplementedException"></exception>
-    public async Task<ResponseDTO> UpdateStudentProfile(
+    public async Task<ResponseDTO> CompleteStudentProfile(
         ClaimsPrincipal User,
         UpdateStudentProfileDTO studentProfileDto)
     {
@@ -1364,6 +1364,17 @@ public class AuthService : IAuthService
                 await _unitOfWork.PaymentCardRepository.AddAsync(paymentCard);
             }
 
+            var isRoleExist = await _roleManager.RoleExistsAsync(StaticUserRoles.Student);
+
+            // Check if role !exist to create new role 
+            if (isRoleExist is false)
+            {
+                await _roleManager.CreateAsync(new IdentityRole(StaticUserRoles.Student));
+            }
+
+            // Add role for the user
+            await _userManager.AddToRoleAsync(user, StaticUserRoles.Student);
+            
             await _unitOfWork.SaveAsync();
 
             return new ResponseDTO()
@@ -1393,7 +1404,7 @@ public class AuthService : IAuthService
     /// <param name="instructorProfileDto"></param>
     /// <returns></returns>
     /// <exception cref="NotImplementedException"></exception>
-    public async Task<ResponseDTO> UpdateInstructorProfile(
+    public async Task<ResponseDTO> CompleteInstructorProfile(
         ClaimsPrincipal User,
         UpdateInstructorProfileDTO instructorProfileDto)
     {
@@ -1461,6 +1472,7 @@ public class AuthService : IAuthService
                 {
                     UserId = user.Id,
                     Introduction = instructorProfileDto.Introduction,
+                    Degree = instructorProfileDto.Degree,
                     Industry = instructorProfileDto.Industry
                 };
                 await _unitOfWork.InstructorRepository.AddAsync(instructor);
@@ -1486,6 +1498,17 @@ public class AuthService : IAuthService
                 await _unitOfWork.PaymentCardRepository.AddAsync(paymentCard);
             }
 
+            var isRoleExist = await _roleManager.RoleExistsAsync(StaticUserRoles.Instructor);
+
+            // Check if role !exist to create new role 
+            if (isRoleExist is false)
+            {
+                await _roleManager.CreateAsync(new IdentityRole(StaticUserRoles.Instructor));
+            }
+
+            // Add role for the user
+            await _userManager.AddToRoleAsync(user, StaticUserRoles.Instructor);
+            
             await _unitOfWork.SaveAsync();
 
             return new ResponseDTO()
@@ -1536,7 +1559,6 @@ public class AuthService : IAuthService
 
             if (user is not null && userLoginInfo is null)
             {
-
                 return new ResponseDTO()
                 {
                     Result = new SignResponseDTO()
@@ -1576,7 +1598,14 @@ public class AuthService : IAuthService
             var userInfo = _mapper.Map<UserInfo>(user);
             var roles = await _userManager.GetRolesAsync(user);
             userInfo.Roles = roles;
-            
+
+            if (roles.Contains(StaticUserRoles.Instructor))
+            {
+                var instructor = await _unitOfWork.InstructorRepository.GetAsync(x => x.UserId == user.Id);
+                userInfo.DegreeImageUrl = instructor.DegreeImageUrl;
+                userInfo.isAccepted = instructor.isAccepted;
+            }
+
             return new ResponseDTO()
             {
                 Result = new SignResponseDTO()
@@ -1605,16 +1634,5 @@ public class AuthService : IAuthService
                 StatusCode = 500
             };
         }
-    }
-
-    public Task<ResponseDTO> CompleteStudentProfile(ClaimsPrincipal User, UpdateStudentProfileDTO studentProfileDto)
-    {
-        throw new NotImplementedException();
-    }
-
-    public Task<ResponseDTO> CompleteInstructorProfile(ClaimsPrincipal User,
-        UpdateInstructorProfileDTO instructorProfileDto)
-    {
-        throw new NotImplementedException();
     }
 }
