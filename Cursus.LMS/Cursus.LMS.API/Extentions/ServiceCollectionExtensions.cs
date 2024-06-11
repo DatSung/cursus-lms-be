@@ -24,6 +24,7 @@ public static class ServiceCollectionExtensions
         services.AddScoped<IEmailSender, EmailSender>();
         // Registering ITokenService with its implementation TokenService
         services.AddScoped<ITokenService, TokenService>();
+        // Registering IRedisService with its implementation RedisService
         services.AddScoped<IRedisService, RedisService>();
 
         // Register the Identity services with default configuration
