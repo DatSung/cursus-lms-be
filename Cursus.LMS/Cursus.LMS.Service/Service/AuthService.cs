@@ -69,7 +69,7 @@ public class AuthService : IAuthService
                     Message = "Email is using by another user",
                     Result = registerStudentDTO,
                     IsSuccess = false,
-                    StatusCode = 500
+                    StatusCode = 400
                 };
             }
 
@@ -82,7 +82,7 @@ public class AuthService : IAuthService
                     Message = "Phone number is using by another user",
                     Result = registerStudentDTO,
                     IsSuccess = false,
-                    StatusCode = 500
+                    StatusCode = 400
                 };
             }
 
@@ -126,7 +126,7 @@ public class AuthService : IAuthService
                 {
                     Message = createUserResult.Errors.ToString(),
                     IsSuccess = false,
-                    StatusCode = 500,
+                    StatusCode = 400,
                     Result = registerStudentDTO
                 };
             }
@@ -595,6 +595,14 @@ public class AuthService : IAuthService
             var userInfo = _mapper.Map<UserInfo>(user);
             var roles = await _userManager.GetRolesAsync(user);
             userInfo.Roles = roles;
+
+            if (roles.Contains(StaticUserRoles.Instructor))
+            {
+                var instructor = await _unitOfWork.InstructorRepository.GetAsync(x => x.UserId == user.Id);
+                userInfo.DegreeImageUrl = instructor.DegreeImageUrl;
+                userInfo.isAccepted = instructor.isAccepted;
+            }
+
 
             return new ResponseDTO()
             {
@@ -1268,7 +1276,7 @@ public class AuthService : IAuthService
     /// <param name="studentProfileDto"></param>
     /// <returns></returns>
     /// <exception cref="NotImplementedException"></exception>
-    public async Task<ResponseDTO> UpdateStudentProfile(
+    public async Task<ResponseDTO> CompleteStudentProfile(
         ClaimsPrincipal User,
         UpdateStudentProfileDTO studentProfileDto)
     {
@@ -1356,6 +1364,17 @@ public class AuthService : IAuthService
                 await _unitOfWork.PaymentCardRepository.AddAsync(paymentCard);
             }
 
+            var isRoleExist = await _roleManager.RoleExistsAsync(StaticUserRoles.Student);
+
+            // Check if role !exist to create new role 
+            if (isRoleExist is false)
+            {
+                await _roleManager.CreateAsync(new IdentityRole(StaticUserRoles.Student));
+            }
+
+            // Add role for the user
+            await _userManager.AddToRoleAsync(user, StaticUserRoles.Student);
+            
             await _unitOfWork.SaveAsync();
 
             return new ResponseDTO()
@@ -1385,7 +1404,7 @@ public class AuthService : IAuthService
     /// <param name="instructorProfileDto"></param>
     /// <returns></returns>
     /// <exception cref="NotImplementedException"></exception>
-    public async Task<ResponseDTO> UpdateInstructorProfile(
+    public async Task<ResponseDTO> CompleteInstructorProfile(
         ClaimsPrincipal User,
         UpdateInstructorProfileDTO instructorProfileDto)
     {
@@ -1453,6 +1472,7 @@ public class AuthService : IAuthService
                 {
                     UserId = user.Id,
                     Introduction = instructorProfileDto.Introduction,
+                    Degree = instructorProfileDto.Degree,
                     Industry = instructorProfileDto.Industry
                 };
                 await _unitOfWork.InstructorRepository.AddAsync(instructor);
@@ -1478,6 +1498,17 @@ public class AuthService : IAuthService
                 await _unitOfWork.PaymentCardRepository.AddAsync(paymentCard);
             }
 
+            var isRoleExist = await _roleManager.RoleExistsAsync(StaticUserRoles.Instructor);
+
+            // Check if role !exist to create new role 
+            if (isRoleExist is false)
+            {
+                await _roleManager.CreateAsync(new IdentityRole(StaticUserRoles.Instructor));
+            }
+
+            // Add role for the user
+            await _userManager.AddToRoleAsync(user, StaticUserRoles.Instructor);
+            
             await _unitOfWork.SaveAsync();
 
             return new ResponseDTO()
@@ -1496,6 +1527,111 @@ public class AuthService : IAuthService
                 IsSuccess = false,
                 StatusCode = 500,
                 Result = null
+            };
+        }
+    }
+
+    /// <summary>
+    /// This method for sign in by google
+    /// </summary>
+    /// <param name="signInByGoogleDto"></param>
+    /// <returns></returns>
+    public async Task<ResponseDTO> SignInByGoogle(SignInByGoogleDTO signInByGoogleDto)
+    {
+        try
+        {
+            //lấy thông tin từ google
+            FirebaseToken googleTokenS =
+                await FirebaseAuth.DefaultInstance.VerifyIdTokenAsync(signInByGoogleDto.Token);
+            string userId = googleTokenS.Uid;
+            string email = googleTokenS.Claims["email"].ToString();
+            string name = googleTokenS.Claims["name"].ToString();
+            string avatarUrl = googleTokenS.Claims["picture"].ToString();
+
+            //tìm kiem người dùng trong database
+            var user = await _userManager.FindByEmailAsync(email);
+            UserLoginInfo? userLoginInfo = null;
+            if (user is not null)
+            {
+                userLoginInfo = _userManager.GetLoginsAsync(user).GetAwaiter().GetResult()
+                    .FirstOrDefault(x => x.LoginProvider == StaticLoginProvider.Google);
+            }
+
+            if (user is not null && userLoginInfo is null)
+            {
+                return new ResponseDTO()
+                {
+                    Result = new SignResponseDTO()
+                    {
+                        RefreshToken = null,
+                        AccessToken = null,
+                        UserInfo = null,
+                    },
+                    Message = "The email is using by another user",
+                    IsSuccess = false,
+                    StatusCode = 400
+                };
+            }
+
+            if (userLoginInfo is null && user is null)
+            {
+                //tạo một user mới khi chưa có trong database
+                user = new ApplicationUser
+                {
+                    Email = email,
+                    FullName = name,
+                    UserName = email,
+                    AvatarUrl = avatarUrl,
+                    EmailConfirmed = true,
+                    UpdateTime = null
+                };
+
+                await _userManager.CreateAsync(user);
+                await _userManager.AddLoginAsync(user,
+                    new UserLoginInfo(StaticLoginProvider.Google, userId, "GOOGLE"));
+            }
+
+            var accessToken = await _tokenService.GenerateJwtAccessTokenAsync(user);
+            var refreshToken = await _tokenService.GenerateJwtRefreshTokenAsync(user);
+            await _tokenService.StoreRefreshToken(user.Id, refreshToken);
+
+            var userInfo = _mapper.Map<UserInfo>(user);
+            var roles = await _userManager.GetRolesAsync(user);
+            userInfo.Roles = roles;
+
+            if (roles.Contains(StaticUserRoles.Instructor))
+            {
+                var instructor = await _unitOfWork.InstructorRepository.GetAsync(x => x.UserId == user.Id);
+                userInfo.DegreeImageUrl = instructor.DegreeImageUrl;
+                userInfo.isAccepted = instructor.isAccepted;
+            }
+
+            return new ResponseDTO()
+            {
+                Result = new SignResponseDTO()
+                {
+                    AccessToken = accessToken,
+                    RefreshToken = refreshToken,
+                    UserInfo = userInfo
+                },
+                Message = "Sign in successfully",
+                IsSuccess = true,
+                StatusCode = 200
+            };
+        }
+        catch (FirebaseAuthException e)
+        {
+            return new ResponseDTO()
+            {
+                Result = new SignResponseDTO()
+                {
+                    AccessToken = null,
+                    RefreshToken = null,
+                    UserInfo = null
+                },
+                Message = "Something went wrong",
+                IsSuccess = false,
+                StatusCode = 500
             };
         }
     }

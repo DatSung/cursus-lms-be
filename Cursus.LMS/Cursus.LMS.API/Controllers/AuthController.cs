@@ -85,7 +85,7 @@ namespace Cursus.LMS.API.Controllers
         /// <returns></returns>
         [HttpPost]
         [Route("upload-instructor-degree")]
-        [Authorize(Roles = StaticUserRoles.Instructor)]
+        [Authorize]
         public async Task<ActionResult<ResponseDTO>> UploadInstructorDegree(DegreeUploadDTO degreeUploadDto)
         {
             var response = await _authService.UploadInstructorDegree(degreeUploadDto.File, User);
@@ -98,7 +98,7 @@ namespace Cursus.LMS.API.Controllers
         /// <returns></returns>
         [HttpGet]
         [Route("get-instructor-degree")]
-        [Authorize(Roles = StaticUserRoles.Instructor)]
+        [Authorize]
         public async Task<IActionResult> GetInstructorDegree([FromQuery] bool Download = false)
         {
             var degreeResponseDto = await _authService.GetInstructorDegree(User);
@@ -178,9 +178,9 @@ namespace Cursus.LMS.API.Controllers
         /// <returns>ResponseDTO</returns>
         [HttpPost]
         [Route("send-verify-email")]
-        public async Task<ActionResult<ResponseDTO>> SendVerifyEmail([FromBody] [EmailAddress] string email)
+        public async Task<ActionResult<ResponseDTO>> SendVerifyEmail([FromBody] SendVerifyEmailDTO email)
         {
-            var user = await _userManager.FindByEmailAsync(email);
+            var user = await _userManager.FindByEmailAsync(email.Email);
             if (user.EmailConfirmed)
             {
                 return new ResponseDTO()
@@ -193,9 +193,8 @@ namespace Cursus.LMS.API.Controllers
             }
 
             var token = await _userManager.GenerateEmailConfirmationTokenAsync(user);
-
-            var confirmationLink = Url.Action("verify-email", "Auth", new { userId = user.Id, token = token },
-                Request.Scheme);
+            
+            var confirmationLink = $"http://localhost:30475/sign-in/verify-email?userId={user.Id}&token={Uri.EscapeDataString(token)}";
 
             var responseDto = await _authService.SendVerifyEmail(user.Email, confirmationLink);
 
@@ -251,31 +250,31 @@ namespace Cursus.LMS.API.Controllers
             return StatusCode(this.responseDto.StatusCode, responseDto);
         }
 
-        // <summary>
-        /// This API for case student sign in by google.
-        /// </summary>
-        /// <returns></returns>
-        [HttpPost]
-        [Route("student-signin-by-google")]
-        public async Task<ActionResult<SignResponseDTO>> StudentSignInByGoogle(
-            [FromBody] StudentSignInByGoogleDTO studentSignInByGoogleDto)
-        {
-            return await _authService.StudentSignInByGoogle(studentSignInByGoogleDto);
-        }
-
-        [HttpPost]
-        [Route("instructor-signin-by-google")]
-        public async Task<ActionResult<SignResponseDTO>> InstructorSignInByGoogle(
-            [FromBody] InstructorSignInByGoogleDTO instructorSignInByGoogleDto)
-        {
-            return await _authService.InstructorSignInByGoogle(instructorSignInByGoogleDto);
-        }
+        // // <summary>
+        // /// This API for case student sign in by google.
+        // /// </summary>
+        // /// <returns></returns>
+        // [HttpPost]
+        // [Route("student-signin-by-google")]
+        // public async Task<ActionResult<SignResponseDTO>> StudentSignInByGoogle(
+        //     [FromBody] StudentSignInByGoogleDTO studentSignInByGoogleDto)
+        // {
+        //     return await _authService.StudentSignInByGoogle(studentSignInByGoogleDto);
+        // }
+        //
+        // [HttpPost]
+        // [Route("instructor-signin-by-google")]
+        // public async Task<ActionResult<SignResponseDTO>> InstructorSignInByGoogle(
+        //     [FromBody] InstructorSignInByGoogleDTO instructorSignInByGoogleDto)
+        // {
+        //     return await _authService.InstructorSignInByGoogle(instructorSignInByGoogleDto);
+        // }
 
         [HttpPost]
         [Route("refresh")]
-        public async Task<ActionResult<ResponseDTO>> Refresh([FromBody] string token)
+        public async Task<ActionResult<ResponseDTO>> Refresh([FromBody] JwtTokenDTO token)
         {
-            var responseDto = await _authService.Refresh(token);
+            var responseDto = await _authService.Refresh(token.RefreshToken);
             return StatusCode(responseDto.StatusCode, responseDto);
         }
 
@@ -297,23 +296,31 @@ namespace Cursus.LMS.API.Controllers
 
 
         [HttpPost]
-        [Route("update-student-profile")]
-        [Authorize(Roles = StaticUserRoles.Student)]
-        public async Task<ActionResult<ResponseDTO>> UpdateStudentProfile(
+        [Route("complete-student-profile")]
+        [Authorize]
+        public async Task<ActionResult<ResponseDTO>> CompleteStudentProfile(
             UpdateStudentProfileDTO updateStudentProfileDto)
         {
-            var responseDto = await _authService.UpdateStudentProfile(User, updateStudentProfileDto);
+            var responseDto = await _authService.CompleteStudentProfile(User, updateStudentProfileDto);
             return StatusCode(this.responseDto.StatusCode, responseDto);
+        }
+        
+        [HttpPost]
+        [Route("complete-instructor-profile")]
+        [Authorize]
+        public async Task<ActionResult<ResponseDTO>> CompleteInstructorProfile(
+            UpdateInstructorProfileDTO updateInstructorProfileDto)
+        {
+            var responseDto = await _authService.CompleteInstructorProfile(User, updateInstructorProfileDto);
+            return StatusCode(responseDto.StatusCode, responseDto);
         }
 
         [HttpPost]
-        [Route("update-instructor-profile")]
-        [Authorize(Roles = StaticUserRoles.Instructor)]
-        public async Task<ActionResult<ResponseDTO>> UpdateInstructorProfile(
-            UpdateInstructorProfileDTO updateInstructorProfileDto)
+        [Route("sign-in-by-google")]
+        public async Task<ActionResult<ResponseDTO>> SignInByGoogle(SignInByGoogleDTO signInByGoogleDto)
         {
-            var responseDto = await _authService.UpdateInstructorProfile(User, updateInstructorProfileDto);
-            return StatusCode(this.responseDto.StatusCode, responseDto);
+            var response = await _authService.SignInByGoogle(signInByGoogleDto);
+            return StatusCode(response.StatusCode, response);
         }
     }
 }

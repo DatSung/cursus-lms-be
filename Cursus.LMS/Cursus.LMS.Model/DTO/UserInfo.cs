@@ -18,6 +18,8 @@ namespace Cursus.LMS.Model.DTO
         public string PhoneNumber { get; set; }
         public string Address { get; set; }
         public DateTime UpdateTime { get; set; }
+        public string? DegreeImageUrl { get; set; }
+        public bool isAccepted { get; set; } = false;
         public IEnumerable<string> Roles { get; set; }
     }
 }

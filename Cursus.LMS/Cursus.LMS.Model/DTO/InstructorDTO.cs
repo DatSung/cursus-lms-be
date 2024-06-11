@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using Cursus.LMS.Utility.ValidationAttribute;
 
 namespace Cursus.LMS.Model.DTO;
@@ -10,6 +11,12 @@ public class InstructorDTO
     [StringLength(100, MinimumLength = 8, ErrorMessage = "Password must be at least 8 characters long.")]
     [Password]
     public string? Password { get; set; }
+    
+    [Required(ErrorMessage = "ConfirmPassword is required.")]
+    [DataType(DataType.Password)]
+    [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
+    [NotMapped]
+    public string ConfirmPassword { get; set; }
 
     [Required]
     [DataType(DataType.EmailAddress)]
