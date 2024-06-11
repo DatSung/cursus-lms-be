@@ -272,9 +272,9 @@ namespace Cursus.LMS.API.Controllers
 
         [HttpPost]
         [Route("refresh")]
-        public async Task<ActionResult<ResponseDTO>> Refresh([FromBody] string token)
+        public async Task<ActionResult<ResponseDTO>> Refresh([FromBody] JwtTokenDTO token)
         {
-            var responseDto = await _authService.Refresh(token);
+            var responseDto = await _authService.Refresh(token.RefreshToken);
             return StatusCode(responseDto.StatusCode, responseDto);
         }
 

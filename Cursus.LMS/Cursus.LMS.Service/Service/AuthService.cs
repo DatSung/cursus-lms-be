@@ -69,7 +69,7 @@ public class AuthService : IAuthService
                     Message = "Email is using by another user",
                     Result = registerStudentDTO,
                     IsSuccess = false,
-                    StatusCode = 500
+                    StatusCode = 400
                 };
             }
 
@@ -82,7 +82,7 @@ public class AuthService : IAuthService
                     Message = "Phone number is using by another user",
                     Result = registerStudentDTO,
                     IsSuccess = false,
-                    StatusCode = 500
+                    StatusCode = 400
                 };
             }
 
@@ -126,7 +126,7 @@ public class AuthService : IAuthService
                 {
                     Message = createUserResult.Errors.ToString(),
                     IsSuccess = false,
-                    StatusCode = 500,
+                    StatusCode = 400,
                     Result = registerStudentDTO
                 };
             }
@@ -595,6 +595,14 @@ public class AuthService : IAuthService
             var userInfo = _mapper.Map<UserInfo>(user);
             var roles = await _userManager.GetRolesAsync(user);
             userInfo.Roles = roles;
+            
+            if (roles.Contains(StaticUserRoles.Instructor))
+            {
+                var instructor = await _unitOfWork.InstructorRepository.GetAsync(x => x.UserId == user.Id);
+                userInfo.DegreeImageUrl = instructor.DegreeImageUrl;
+                userInfo.isAccepted = instructor.isAccepted;
+            }
+            
 
             return new ResponseDTO()
             {
