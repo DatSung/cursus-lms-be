@@ -8,5 +8,5 @@ public interface IUnitOfWork
     IPaymentCardRepository PaymentCardRepository { get; }
     IInstructorRepository InstructorRepository { get; }
 
-    Task SaveAsync();
+    Task<int> SaveAsync();
 }

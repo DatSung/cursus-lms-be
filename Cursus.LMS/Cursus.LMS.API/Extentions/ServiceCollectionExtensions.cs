@@ -26,6 +26,8 @@ public static class ServiceCollectionExtensions
         services.AddScoped<ITokenService, TokenService>();
         // Registering IRedisService with its implementation RedisService
         services.AddScoped<IRedisService, RedisService>();
+        services.AddScoped<IUserManagerRepository, UserManagerRepository>();
+
 
         // Register the Identity services with default configuration
         services.AddIdentity<ApplicationUser, IdentityRole>()

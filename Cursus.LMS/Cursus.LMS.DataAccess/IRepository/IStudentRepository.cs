@@ -6,4 +6,5 @@ public interface IStudentRepository : IRepository<Student>
 {
     void Update(Student student);
     void UpdateRange(IEnumerable<Student> students);
+    Task<Student> AddAsync(Student student);
 }
