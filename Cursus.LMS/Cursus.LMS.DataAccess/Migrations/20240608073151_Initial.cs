@@ -30,12 +30,13 @@ namespace Cursus.LMS.DataAccess.Migrations
                 columns: table => new
                 {
                     Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    Gender = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    FullName = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    BirthDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    Gender = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    FullName = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    BirthDate = table.Column<DateTime>(type: "datetime2", nullable: true),
                     AvatarUrl = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Country = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Address = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Country = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Address = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    TaxNumber = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     UserName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
                     NormalizedUserName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
                     Email = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
@@ -203,6 +204,26 @@ namespace Cursus.LMS.DataAccess.Migrations
                     table.PrimaryKey("PK_Instructors", x => x.InstructorId);
                     table.ForeignKey(
                         name: "FK_Instructors_AspNetUsers_UserId",
+                        column: x => x.UserId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "PaymentCards",
+                columns: table => new
+                {
+                    CardNumber = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    CardName = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    CardProvider = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    UserId = table.Column<string>(type: "nvarchar(450)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_PaymentCards", x => x.CardNumber);
+                    table.ForeignKey(
+                        name: "FK_PaymentCards_AspNetUsers_UserId",
                         column: x => x.UserId,
                         principalTable: "AspNetUsers",
                         principalColumn: "Id",
@@ -561,6 +582,11 @@ namespace Cursus.LMS.DataAccess.Migrations
                 column: "StudentId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_PaymentCards_UserId",
+                table: "PaymentCards",
+                column: "UserId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_SectionDetails_CourseSectionId",
                 table: "SectionDetails",
                 column: "CourseSectionId");
@@ -610,6 +636,9 @@ namespace Cursus.LMS.DataAccess.Migrations
 
             migrationBuilder.DropTable(
                 name: "OrderDetails");
+
+            migrationBuilder.DropTable(
+                name: "PaymentCards");
 
             migrationBuilder.DropTable(
                 name: "SectionDetails");
