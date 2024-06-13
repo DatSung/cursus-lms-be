@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Cursus.LMS.Model.DTO
 {
-    public class UserInfo
+    public class UserInfoDTO
     {
         public string Id { get; set; }
         public string UserName { get; set; }
@@ -17,8 +17,9 @@ namespace Cursus.LMS.Model.DTO
         public string Country { get; set; }
         public string PhoneNumber { get; set; }
         public string Address { get; set; }
+        public string AvatarUrl { get; set; }
         public DateTime UpdateTime { get; set; }
-        public string? DegreeImageUrl { get; set; }
+        public bool isUploadDegree { get; set; }
         public bool isAccepted { get; set; } = false;
         public IEnumerable<string> Roles { get; set; }
     }
