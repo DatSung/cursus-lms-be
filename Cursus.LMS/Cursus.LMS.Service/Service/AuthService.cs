@@ -592,16 +592,16 @@ public class AuthService : IAuthService
             var refreshToken = await _tokenService.GenerateJwtRefreshTokenAsync(user);
             await _tokenService.StoreRefreshToken(user.Id, refreshToken);
 
-            var userInfo = _mapper.Map<UserInfo>(user);
-            var roles = await _userManager.GetRolesAsync(user);
-            userInfo.Roles = roles;
-
-            if (roles.Contains(StaticUserRoles.Instructor))
-            {
-                var instructor = await _unitOfWork.InstructorRepository.GetAsync(x => x.UserId == user.Id);
-                userInfo.DegreeImageUrl = instructor.DegreeImageUrl;
-                userInfo.isAccepted = instructor.isAccepted;
-            }
+            // var userInfo = _mapper.Map<UserInfoDTO>(user);
+            // var roles = await _userManager.GetRolesAsync(user);
+            // userInfo.Roles = roles;
+            //
+            // if (roles.Contains(StaticUserRoles.Instructor))
+            // {
+            //     var instructor = await _unitOfWork.InstructorRepository.GetAsync(x => x.UserId == user.Id);
+            //     userInfo.DegreeImageUrl = instructor.DegreeImageUrl;
+            //     userInfo.isAccepted = instructor.isAccepted;
+            // }
 
 
             return new ResponseDTO()
@@ -610,7 +610,6 @@ public class AuthService : IAuthService
                 {
                     AccessToken = accessToken,
                     RefreshToken = refreshToken,
-                    UserInfo = userInfo
                 },
                 Message = "Sign in successfully",
                 IsSuccess = true,
@@ -697,166 +696,6 @@ public class AuthService : IAuthService
                 IsSuccess = false,
                 StatusCode = 500,
                 Result = null
-            };
-        }
-    }
-
-    //Student-SignInbyGoogle
-    public async Task<SignResponseDTO> StudentSignInByGoogle(StudentSignInByGoogleDTO studentSignInByGoogleDTO)
-    {
-        try
-        {
-            //lấy thông tin từ google
-            FirebaseToken googleTokenS =
-                await FirebaseAuth.DefaultInstance.VerifyIdTokenAsync(studentSignInByGoogleDTO.GoogleToken);
-            string userId = googleTokenS.Uid;
-            string email = googleTokenS.Claims["email"].ToString();
-            string name = googleTokenS.Claims["name"].ToString();
-            string avatarUrl = googleTokenS.Claims["picture"].ToString();
-
-            //tìm kiem người dùng trong database
-            var user = await _userManager.FindByEmailAsync(email);
-            UserLoginInfo? userLoginInfo = null;
-            if (user is not null)
-            {
-                userLoginInfo = _userManager.GetLoginsAsync(user).GetAwaiter().GetResult()
-                    .FirstOrDefault(x => x.LoginProvider == StaticLoginProvider.Google);
-            }
-
-            if (user is not null && userLoginInfo is null)
-            {
-                return new SignResponseDTO()
-                {
-                    Message = "The email is using by another user",
-                    RefreshToken = null,
-                    AccessToken = null,
-                    UserInfo = null,
-                };
-            }
-
-            if (userLoginInfo is null && user is null)
-            {
-                //tạo một user mới khi chưa có trong database
-                user = new ApplicationUser
-                {
-                    Email = email,
-                    FullName = name,
-                    UserName = email,
-                    AvatarUrl = avatarUrl,
-                    EmailConfirmed = true,
-                };
-
-                await _userManager.CreateAsync(user);
-
-                var isRoleExist = await _roleManager.RoleExistsAsync(StaticUserRoles.Student);
-                if (isRoleExist is false)
-                {
-                    await _roleManager.CreateAsync(new IdentityRole(StaticUserRoles.Student));
-                }
-
-                await _userManager.AddToRoleAsync(user, StaticUserRoles.Student);
-                await _userManager.AddLoginAsync(user,
-                    new UserLoginInfo(StaticLoginProvider.Google, userId, "GOOGLE"));
-            }
-
-            var accessToken = await _tokenService.GenerateJwtAccessTokenAsync(user);
-            var refreshToken = await _tokenService.GenerateJwtRefreshTokenAsync(user);
-            await _tokenService.StoreRefreshToken(user.Id, refreshToken);
-
-            var userInfo = _mapper.Map<UserInfo>(user);
-            userInfo.Roles = await _userManager.GetRolesAsync(user);
-            return new SignResponseDTO()
-            {
-                AccessToken = accessToken,
-                RefreshToken = refreshToken,
-                UserInfo = userInfo
-            };
-        }
-        catch (FirebaseAuthException e)
-        {
-            return new SignResponseDTO()
-            {
-                Message = e.Message
-            };
-        }
-    }
-
-    //Instructor-SignInbyGoogle
-    public async Task<SignResponseDTO> InstructorSignInByGoogle(InstructorSignInByGoogleDTO instructorSignInByGoogleDto)
-    {
-        try
-        {
-            //lấy thông tin từ google
-            FirebaseToken googleTokenS =
-                await FirebaseAuth.DefaultInstance.VerifyIdTokenAsync(instructorSignInByGoogleDto.GoogleToken);
-            string userId = googleTokenS.Uid;
-            string email = googleTokenS.Claims["email"].ToString();
-            string name = googleTokenS.Claims["name"].ToString();
-            string avatarUrl = googleTokenS.Claims["picture"].ToString();
-
-            //tìm kiem người dùng trong database
-            var user = await _userManager.FindByEmailAsync(email);
-            UserLoginInfo? userLoginInfo = null;
-            if (user is not null)
-            {
-                userLoginInfo = _userManager.GetLoginsAsync(user).GetAwaiter().GetResult()
-                    .FirstOrDefault(x => x.LoginProvider == StaticLoginProvider.Google);
-            }
-
-            if (user is not null && userLoginInfo is null)
-            {
-                return new SignResponseDTO()
-                {
-                    Message = "The email is using by another user",
-                    RefreshToken = null,
-                    AccessToken = null,
-                    UserInfo = null,
-                };
-            }
-
-            if (userLoginInfo is null && user is null)
-            {
-                //tạo một user mới khi chưa có trong database
-                user = new ApplicationUser
-                {
-                    Email = email,
-                    FullName = name,
-                    UserName = email,
-                    AvatarUrl = avatarUrl,
-                    EmailConfirmed = true,
-                };
-
-                await _userManager.CreateAsync(user);
-
-                var isRoleExist = await _roleManager.RoleExistsAsync(StaticUserRoles.Instructor);
-                if (isRoleExist is false)
-                {
-                    await _roleManager.CreateAsync(new IdentityRole(StaticUserRoles.Instructor));
-                }
-
-                await _userManager.AddToRoleAsync(user, StaticUserRoles.Instructor);
-                await _userManager.AddLoginAsync(user,
-                    new UserLoginInfo(StaticLoginProvider.Google, userId, "GOOGLE"));
-            }
-
-            var accessToken = await _tokenService.GenerateJwtAccessTokenAsync(user);
-            var refreshToken = await _tokenService.GenerateJwtRefreshTokenAsync(user);
-            await _tokenService.StoreRefreshToken(user.Id, refreshToken);
-
-            var userInfo = _mapper.Map<UserInfo>(user);
-            userInfo.Roles = await _userManager.GetRolesAsync(user);
-            return new SignResponseDTO()
-            {
-                AccessToken = accessToken,
-                RefreshToken = refreshToken,
-                UserInfo = userInfo
-            };
-        }
-        catch (FirebaseAuthException e)
-        {
-            return new SignResponseDTO()
-            {
-                Message = e.Message
             };
         }
     }
@@ -1531,6 +1370,58 @@ public class AuthService : IAuthService
         }
     }
 
+    public async Task<ResponseDTO> GetUserInfo(ClaimsPrincipal User)
+    {
+        // Find user in database
+        try
+        {
+            var userId = User.Claims.FirstOrDefault(x => x.Type == ClaimTypes.NameIdentifier)?.Value;
+            var user = await _userManager.FindByIdAsync(userId);
+
+            // user is null mean user does not exist to update
+            if (user is null)
+            {
+                return new ResponseDTO()
+                {
+                    Message = "User does not exist!",
+                    IsSuccess = false,
+                    StatusCode = 404,
+                    Result = null,
+                };
+            }
+
+            var userInfo = _mapper.Map<UserInfoDTO>(user);
+            var roles = await _userManager.GetRolesAsync(user);
+            userInfo.Roles = roles;
+            userInfo.isAccepted = true;
+
+            if (roles.Contains(StaticUserRoles.Instructor))
+            {
+                var instructor = await _unitOfWork.InstructorRepository.GetAsync(x => x.UserId == user.Id);
+                userInfo.isUploadDegree = instructor.DegreeImageUrl != null ? true : false;
+                userInfo.isAccepted = instructor.isAccepted;
+            }
+
+            return new ResponseDTO()
+            {
+                Message = "Get user info successfully",
+                IsSuccess = true,
+                StatusCode = 200,
+                Result = userInfo,
+            };
+        }
+        catch (Exception e)
+        {
+            return new ResponseDTO()
+            {
+                Message = "Something went wrong",
+                IsSuccess = false,
+                StatusCode = 500,
+                Result = null,
+            };
+        }
+    }
+
     /// <summary>
     /// This method for sign in by google
     /// </summary>
@@ -1565,7 +1456,6 @@ public class AuthService : IAuthService
                     {
                         RefreshToken = null,
                         AccessToken = null,
-                        UserInfo = null,
                     },
                     Message = "The email is using by another user",
                     IsSuccess = false,
@@ -1595,24 +1485,12 @@ public class AuthService : IAuthService
             var refreshToken = await _tokenService.GenerateJwtRefreshTokenAsync(user);
             await _tokenService.StoreRefreshToken(user.Id, refreshToken);
 
-            var userInfo = _mapper.Map<UserInfo>(user);
-            var roles = await _userManager.GetRolesAsync(user);
-            userInfo.Roles = roles;
-
-            if (roles.Contains(StaticUserRoles.Instructor))
-            {
-                var instructor = await _unitOfWork.InstructorRepository.GetAsync(x => x.UserId == user.Id);
-                userInfo.DegreeImageUrl = instructor.DegreeImageUrl;
-                userInfo.isAccepted = instructor.isAccepted;
-            }
-
             return new ResponseDTO()
             {
                 Result = new SignResponseDTO()
                 {
                     AccessToken = accessToken,
                     RefreshToken = refreshToken,
-                    UserInfo = userInfo
                 },
                 Message = "Sign in successfully",
                 IsSuccess = true,
@@ -1627,7 +1505,6 @@ public class AuthService : IAuthService
                 {
                     AccessToken = null,
                     RefreshToken = null,
-                    UserInfo = null
                 },
                 Message = "Something went wrong",
                 IsSuccess = false,

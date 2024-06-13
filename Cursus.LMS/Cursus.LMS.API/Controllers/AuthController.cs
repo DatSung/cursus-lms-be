@@ -322,5 +322,13 @@ namespace Cursus.LMS.API.Controllers
             var response = await _authService.SignInByGoogle(signInByGoogleDto);
             return StatusCode(response.StatusCode, response);
         }
+        
+        [HttpGet]
+        [Route("get-user-info")]
+        public async Task<ActionResult<ResponseDTO>> GetUserInfo()
+        {
+            var response = await _authService.GetUserInfo(User);
+            return StatusCode(response.StatusCode, response);
+        }
     }
 }
