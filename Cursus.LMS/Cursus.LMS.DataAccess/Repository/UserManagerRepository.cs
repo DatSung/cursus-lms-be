@@ -47,5 +47,21 @@ namespace Cursus.LMS.DataAccess.Repository
         {
             return await _userManager.Users.FirstOrDefaultAsync(u => u.PhoneNumber == phoneNumber);
         }
+        public async Task<IdentityResult> UpdateAsync(ApplicationUser user)
+        {
+            return await _userManager.UpdateAsync(user);
+        }
+        public async Task<bool> CheckPasswordAsync(ApplicationUser user, string password)
+        {
+            return await _userManager.CheckPasswordAsync(user, password);
+        }
+        public async Task<string> GeneratePasswordResetTokenAsync(ApplicationUser user)
+        {
+            return await _userManager.GeneratePasswordResetTokenAsync(user);
+        }
+        public async Task<IdentityResult> ResetPasswordAsync(ApplicationUser user, string token, string password)
+        {
+            return await _userManager.ResetPasswordAsync(user, token, password);
+        }
     }
 }

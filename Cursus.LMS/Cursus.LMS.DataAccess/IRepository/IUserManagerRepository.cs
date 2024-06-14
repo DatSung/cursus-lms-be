@@ -16,5 +16,9 @@ namespace Cursus.LMS.DataAccess.IRepository
         Task<IdentityResult> AddToRoleAsync(ApplicationUser user, string role);
         Task<ApplicationUser> FindByIdAsync(string userId);
         Task<ApplicationUser> FindByPhoneAsync(string phoneNumber);
+        Task<IdentityResult> UpdateAsync(ApplicationUser user);
+        Task<bool> CheckPasswordAsync(ApplicationUser user, string password);
+        Task<IdentityResult> ResetPasswordAsync(ApplicationUser user, string token, string password);
+        Task<string> GeneratePasswordResetTokenAsync(ApplicationUser user);
     }
 }

@@ -248,7 +248,7 @@ public class AuthService : IAuthService
         try
         {
             // Find exist user with the email from instructorDto
-            var user = await _userManager.FindByEmailAsync(instructorDto.Email);
+            var user = await _userManagerRepository.FindByEmailAsync(instructorDto.Email);
 
             // Check if user exist
             if (user is not null)
@@ -258,11 +258,11 @@ public class AuthService : IAuthService
                     Message = "Email is using by another user",
                     Result = instructorDto,
                     IsSuccess = false,
-                    StatusCode = 500
+                    StatusCode = 400
                 };
             }
 
-            var isPhonenumerExit = await _userManager.Users.AnyAsync(u => u.PhoneNumber == instructorDto.PhoneNumber);
+            var isPhonenumerExit = await _userManagerRepository.CheckIfPhoneNumberExistsAsync(instructorDto.PhoneNumber);
             if (isPhonenumerExit)
             {
                 return new ResponseDTO()
@@ -270,12 +270,12 @@ public class AuthService : IAuthService
                     Message = "Phone number is using by another user",
                     Result = instructorDto,
                     IsSuccess = false,
-                    StatusCode = 500
+                    StatusCode = 400
                 };
             }
 
             var isCardExist =
-                await _unitOfWork.PaymentCardRepository.GetAsync(x => x.CardNumber == instructorDto.CardNumber);
+                await _unitOfWork.PaymentCardRepository.CardNumberExistsAsync(instructorDto.CardNumber);
             if (isCardExist is not null)
             {
                 return new ResponseDTO
@@ -283,7 +283,7 @@ public class AuthService : IAuthService
                     IsSuccess = false,
                     StatusCode = 400,
                     Message = "Card number is using by another user",
-                    Result = null
+                    Result = instructorDto
                 };
             }
 
@@ -303,7 +303,7 @@ public class AuthService : IAuthService
             };
 
             // Create new user to database
-            var createUserResult = await _userManager.CreateAsync(newUser, instructorDto.Password);
+            var createUserResult = await _userManagerRepository.CreateAsync(newUser, instructorDto.Password);
 
 
             // Check if error occur
@@ -314,13 +314,14 @@ public class AuthService : IAuthService
                 {
                     Message = createUserResult.Errors.ToString(),
                     IsSuccess = false,
-                    StatusCode = 500,
+                    StatusCode = 400,
                     Result = instructorDto
                 };
             }
 
+
             // Get the user again 
-            user = await _userManager.FindByEmailAsync(instructorDto.Email);
+            user = await _userManagerRepository.FindByPhoneAsync(instructorDto.PhoneNumber);
 
 
             // Create instance of instructor
@@ -351,16 +352,58 @@ public class AuthService : IAuthService
             }
 
             // Add role for the user
-            await _userManager.AddToRoleAsync(user, StaticUserRoles.Instructor);
+            var isRoleAdd = await _userManagerRepository.AddToRoleAsync(user, StaticUserRoles.Instructor);
+
+            if (!isRoleAdd.Succeeded)
+            {
+                return new ResponseDTO()
+                {
+                    Message = "Error adding role",
+                    IsSuccess = false,
+                    StatusCode = 400,
+                    Result = instructorDto
+                };
+            }
 
             // Create new Instructor relate with ApplicationUser
-            await _unitOfWork.InstructorRepository.AddAsync(instructor);
+            var isInstructorAdd = await _unitOfWork.InstructorRepository.AddAsync(instructor);
+
+            if (isInstructorAdd == null)
+            {
+                return new ResponseDTO()
+                {
+                    Message = "Failed to add instructor",
+                    IsSuccess = false,
+                    StatusCode = 400,
+                    Result = instructorDto
+                };
+            }
 
             // Create card for instructor
-            await _unitOfWork.PaymentCardRepository.AddAsync(paymentCard);
+            var isPaymentAdd = await _unitOfWork.PaymentCardRepository.AddAsync(paymentCard);
+            if (isPaymentAdd == null)
+            {
+                return new ResponseDTO()
+                {
+                    Message = "Failed to add payment card",
+                    IsSuccess = false,
+                    StatusCode = 400,
+                    Result = instructorDto
+                };
+            }
 
             // Save change to database
-            await _unitOfWork.SaveAsync();
+            var isSuccess = await _unitOfWork.SaveAsync();
+            if (isSuccess <= 0)
+            {
+                return new ResponseDTO()
+                {
+                    Message = "Failed to save changes to the database",
+                    IsSuccess = false,
+                    StatusCode = 400,
+                    Result = instructorDto
+                };
+            }
 
             // Return result success
             return new ResponseDTO()
@@ -401,7 +444,7 @@ public class AuthService : IAuthService
                 throw new Exception("Not authentication!");
             }
 
-            var instructor = await _unitOfWork.InstructorRepository.GetAsync(x => x.UserId == userId);
+            var instructor = await _unitOfWork.InstructorRepository.GetAsync( userId);
 
             if (instructor is null)
             {
@@ -417,7 +460,17 @@ public class AuthService : IAuthService
 
             instructor.DegreeImageUrl = responseDto.Result.ToString();
 
-            await _unitOfWork.SaveAsync();
+            var isSuccess = await _unitOfWork.SaveAsync();
+            if (isSuccess <= 0)
+            {
+                return new ResponseDTO()
+                {
+                    Message = "Failed to save changes to the database",
+                    IsSuccess = false,
+                    StatusCode = 400,
+                    Result = responseDto.Result
+                };
+            }
 
             return new ResponseDTO()
             {
@@ -455,7 +508,7 @@ public class AuthService : IAuthService
                 throw new Exception("User Unauthenticated!");
             }
 
-            var instructor = await _unitOfWork.InstructorRepository.GetAsync(x => x.UserId == userId);
+            var instructor = await _unitOfWork.InstructorRepository.GetAsync(userId);
 
             if (instructor is null)
             {
@@ -487,7 +540,7 @@ public class AuthService : IAuthService
                 contentType = StaticFileExtensions.Png;
             }
 
-            if (degreePath.EndsWith(".jpg") || degreePath.EndsWith(",jpeg"))
+            if (degreePath.EndsWith(".jpg") || degreePath.EndsWith(".jpeg"))
             {
                 contentType = StaticFileExtensions.Jpeg;
             }
@@ -528,7 +581,7 @@ public class AuthService : IAuthService
                 throw new Exception("Not authentication!");
             }
 
-            var user = await _userManager.FindByIdAsync(userId);
+            var user = await _userManagerRepository.FindByIdAsync(userId);
 
             if (user is null)
             {
@@ -544,7 +597,7 @@ public class AuthService : IAuthService
 
             user.AvatarUrl = responseDto.Result?.ToString();
 
-            var updateResult = await _userManager.UpdateAsync(user);
+            var updateResult = await _userManagerRepository.UpdateAsync(user);
 
             if (!updateResult.Succeeded)
             {
@@ -582,9 +635,19 @@ public class AuthService : IAuthService
         {
             var userId = User.Claims.FirstOrDefault(x => x.Type == ClaimTypes.NameIdentifier)?.Value;
 
-            var user = await _userManager.FindByIdAsync(userId);
+            var user = await _userManagerRepository.FindByIdAsync(userId);
+
+            if (user is null)
+            {
+                throw new Exception("User does not exist!");
+            }
 
             var stream = await _firebaseService.GetImage(user.AvatarUrl);
+
+            if (stream is null)
+            {
+                throw new Exception("User did not upload avatar");
+            }
 
             return stream;
         }
@@ -600,10 +663,10 @@ public class AuthService : IAuthService
     {
         try
         {
-            var user = await _userManager.FindByEmailAsync(signDTO.Email);
+            var user = await _userManagerRepository.FindByEmailAsync(signDTO.Email);
             if (user == null)
             {
-                new ResponseDTO()
+                return new ResponseDTO()
                 {
                     Message = "User does not exist!",
                     Result = null,
@@ -611,8 +674,18 @@ public class AuthService : IAuthService
                     StatusCode = 404
                 };
             }
+            if (!user.EmailConfirmed)
+            {
+                return new ResponseDTO()
+                {
+                    Message = "You need to confirm email!",
+                    Result = null,
+                    IsSuccess = false,
+                    StatusCode = 401
+                };
+            }
 
-            var isPasswordCorrect = await _userManager.CheckPasswordAsync(user, signDTO.Password);
+            var isPasswordCorrect = await _userManagerRepository.CheckPasswordAsync(user, signDTO.Password);
 
             if (!isPasswordCorrect)
             {
@@ -625,16 +698,7 @@ public class AuthService : IAuthService
                 };
             }
 
-            if (!user.EmailConfirmed)
-            {
-                return new ResponseDTO()
-                {
-                    Message = "You need to confirm email!",
-                    Result = null,
-                    IsSuccess = false,
-                    StatusCode = 401
-                };
-            }
+            
 
             var accessToken = await _tokenService.GenerateJwtAccessTokenAsync(user);
             var refreshToken = await _tokenService.GenerateJwtRefreshTokenAsync(user);
@@ -683,7 +747,7 @@ public class AuthService : IAuthService
             ClaimsPrincipal user = await _tokenService.GetPrincipalFromToken(token);
 
             var userId = user.Claims.FirstOrDefault(x => x.Type == ClaimTypes.NameIdentifier)?.Value;
-            if (userId is null)
+            if (userId is null || userId == "")
             {
                 return new ResponseDTO()
                 {
@@ -694,7 +758,7 @@ public class AuthService : IAuthService
                 };
             }
 
-            var applicationUser = await _userManager.FindByIdAsync(userId);
+            var applicationUser = await _userManagerRepository.FindByIdAsync(userId);
             if (applicationUser is null)
             {
                 return new ResponseDTO()
@@ -761,11 +825,10 @@ public class AuthService : IAuthService
         try
         {
             // Tìm người dùng theo Email/Số điện thoại
-            var user = await _userManager.FindByEmailAsync(forgotPasswordDto.EmailOrPhone);
+            var user = await _userManagerRepository.FindByEmailAsync(forgotPasswordDto.EmailOrPhone);
             if (user == null)
             {
-                user = await _userManager.Users.FirstOrDefaultAsync(
-                    u => u.PhoneNumber == forgotPasswordDto.EmailOrPhone);
+                user = await _userManagerRepository.FindByPhoneAsync(forgotPasswordDto.EmailOrPhone);
             }
 
             if (user == null || !user.EmailConfirmed)
@@ -820,7 +883,7 @@ public class AuthService : IAuthService
             }
 
             // Tạo mã token
-            var token = await _userManager.GeneratePasswordResetTokenAsync(user);
+            var token = await _userManagerRepository.GeneratePasswordResetTokenAsync(user);
 
             // Gửi email chứa đường link đặt lại mật khẩu. //reset-password
 
@@ -912,7 +975,7 @@ public class AuthService : IAuthService
         try
         {
             // Tìm người dùng theo email
-            var user = await _userManager.FindByEmailAsync(email);
+            var user = await _userManagerRepository.FindByEmailAsync(email);
             if (user == null)
             {
                 return new ResponseDTO
@@ -924,7 +987,7 @@ public class AuthService : IAuthService
             }
 
             // Kiểm tra xem mật khẩu mới có trùng với mật khẩu cũ hay không
-            if (await _userManager.CheckPasswordAsync(user, password))
+            if (await _userManagerRepository.CheckPasswordAsync(user, password))
             {
                 return new ResponseDTO
                 {
@@ -935,7 +998,7 @@ public class AuthService : IAuthService
             }
 
             // Xác thực token và reset mật khẩu
-            var result = await _userManager.ResetPasswordAsync(user, token, password);
+            var result = await _userManagerRepository.ResetPasswordAsync(user, token, password);
             if (result.Succeeded)
             {
                 return new ResponseDTO
