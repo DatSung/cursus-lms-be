@@ -7,6 +7,7 @@ public interface IUnitOfWork
     IStudentRepository StudentRepository { get; }
     IPaymentCardRepository PaymentCardRepository { get; }
     IInstructorRepository InstructorRepository { get; }
-
+    ICategoryRepository CategoryRepository { get; }
+    
     Task SaveAsync();
 }

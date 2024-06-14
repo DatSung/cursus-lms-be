@@ -4,6 +4,7 @@ using Cursus.LMS.DataAccess.Context;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Cursus.LMS.DataAccess.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240614020848_AddTableInstructorComment")]
+    partial class AddTableInstructorComment
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -344,12 +347,6 @@ namespace Cursus.LMS.DataAccess.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<string>("AcceptedBy")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime?>("AcceptedTime")
-                        .HasColumnType("datetime2");
-
                     b.Property<string>("Degree")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -365,22 +362,12 @@ namespace Cursus.LMS.DataAccess.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<bool>("IsAccepted")
-                        .HasColumnType("bit");
-
-                    b.Property<bool>("IsRejected")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("RejectedBy")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime?>("RejectedTime")
-                        .HasColumnType("datetime2");
-
                     b.Property<string>("UserId")
                         .IsRequired()
                         .HasColumnType("nvarchar(450)");
+
+                    b.Property<bool>("isAccepted")
+                        .HasColumnType("bit");
 
                     b.HasKey("InstructorId");
 
@@ -421,39 +408,6 @@ namespace Cursus.LMS.DataAccess.Migrations
                     b.HasIndex("InstructorId");
 
                     b.ToTable("InstructorComments");
-                });
-
-            modelBuilder.Entity("Cursus.LMS.Model.Domain.InstructorRating", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<string>("CreateBy")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime>("CreateTime")
-                        .HasColumnType("datetime2");
-
-                    b.Property<Guid>("InstructorId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<int>("Rate")
-                        .HasColumnType("int");
-
-                    b.Property<string>("UpdateBy")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime>("UpdateTime")
-                        .HasColumnType("datetime2");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("InstructorId");
-
-                    b.ToTable("InstructorRatings");
                 });
 
             modelBuilder.Entity("Cursus.LMS.Model.Domain.Level", b =>
@@ -866,17 +820,6 @@ namespace Cursus.LMS.DataAccess.Migrations
                 });
 
             modelBuilder.Entity("Cursus.LMS.Model.Domain.InstructorComment", b =>
-                {
-                    b.HasOne("Cursus.LMS.Model.Domain.Instructor", "Instructor")
-                        .WithMany()
-                        .HasForeignKey("InstructorId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Instructor");
-                });
-
-            modelBuilder.Entity("Cursus.LMS.Model.Domain.InstructorRating", b =>
                 {
                     b.HasOne("Cursus.LMS.Model.Domain.Instructor", "Instructor")
                         .WithMany()

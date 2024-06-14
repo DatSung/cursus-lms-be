@@ -1399,7 +1399,7 @@ public class AuthService : IAuthService
             {
                 var instructor = await _unitOfWork.InstructorRepository.GetAsync(x => x.UserId == user.Id);
                 userInfo.isUploadDegree = instructor.DegreeImageUrl != null ? true : false;
-                userInfo.isAccepted = instructor.isAccepted;
+                userInfo.isAccepted = instructor.IsAccepted;
             }
 
             return new ResponseDTO()
