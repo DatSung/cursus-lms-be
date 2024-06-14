@@ -33,4 +33,5 @@ public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
     public DbSet<PaymentCard> PaymentCards { get; set; }
     public DbSet<InstructorComment> InstructorComments { get; set; }
     public DbSet<InstructorRating> InstructorRatings { get; set; }
+    public DbSet<EmailTemplate> EmailTemplates { get; set; }
 }

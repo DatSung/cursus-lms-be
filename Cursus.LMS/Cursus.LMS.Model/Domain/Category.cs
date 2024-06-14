@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Cursus.LMS.Model.Domain;
 
-public class Category : BaseEntity<string, string>
+public class Category : BaseEntity<string, string, int>
 {
     [Key] public Guid Id { get; set; }
     public string Name { get; set; }

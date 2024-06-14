@@ -54,6 +54,8 @@ builder.AddSwaggerGen();
 
 var app = builder.Build();
 
+ApplyMigration();
+
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
@@ -78,3 +80,16 @@ app.UseAuthorization();
 app.MapControllers();
 
 app.Run();
+
+void ApplyMigration()
+{
+    using (var scope = app.Services.CreateScope())
+    {
+        var context = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
+
+        if (context.Database.GetPendingMigrations().Any())
+        {
+            context.Database.Migrate();
+        }
+    }
+}

@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Cursus.LMS.Model.Domain;
 
-public class InstructorRating : BaseEntity<string, string>
+public class InstructorRating : BaseEntity<string, string, int>
 {
     [Key] public Guid Id { get; set; }
     public Guid InstructorId { get; set; }
