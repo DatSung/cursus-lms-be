@@ -79,6 +79,10 @@ public class AuthServiceTests
         };
     }
 
+    /// <summary>
+    /// SignUpStudent
+    /// </summary>
+    /// <returns></returns>
     [Fact]
     public async Task SignUpStudent_EmailAlreadyExists_ReturnsErrorResponse()
     {
