@@ -22,4 +22,9 @@ public class StudentRepository : Repository<Student>, IStudentRepository
     {
         _context.Students.UpdateRange(students);
     }
+    public async Task<Student> AddAsync(Student student)
+    {
+        var entityEntry = await _context.Students.AddAsync(student);
+        return entityEntry.Entity;
+    }
 }

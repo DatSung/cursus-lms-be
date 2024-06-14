@@ -14,11 +14,13 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using FirebaseAdmin.Auth;
 using Newtonsoft.Json.Linq;
+using Cursus.LMS.DataAccess.Repository;
 
 namespace Cursus.LMS.Service.Service;
 
 public class AuthService : IAuthService
 {
+    private readonly IUserManagerRepository _userManagerRepository;
     private readonly IUnitOfWork _unitOfWork;
     private readonly UserManager<ApplicationUser> _userManager;
     private readonly RoleManager<IdentityRole> _roleManager;
@@ -34,6 +36,7 @@ public class AuthService : IAuthService
         new();
 
     public AuthService(
+        IUserManagerRepository userManagerRepository,
         UserManager<ApplicationUser> userManager,
         RoleManager<IdentityRole> roleManager,
         IConfiguration configuration,
@@ -44,6 +47,7 @@ public class AuthService : IAuthService
         IEmailSender emailSender,
         ITokenService tokenService, IUnitOfWork unitOfWork)
     {
+        _userManagerRepository = userManagerRepository;
         _userManager = userManager;
         _roleManager = roleManager;
         _configuration = configuration;
@@ -56,12 +60,15 @@ public class AuthService : IAuthService
         _unitOfWork = unitOfWork;
     }
 
+    public AuthService(UserManager<ApplicationUser> object1, RoleManager<IdentityRole> object2, IConfiguration object3, IMapper object4, IEmailService object5, IFirebaseService object6, IHttpContextAccessor object7, IEmailSender object8, ITokenService object9, IUnitOfWork object10)
+    {
+    }
 
     public async Task<ResponseDTO> SignUpStudent(RegisterStudentDTO registerStudentDTO)
     {
         try
         {
-            var isEmailExit = await _userManager.FindByEmailAsync(registerStudentDTO.Email);
+            var isEmailExit = await _userManagerRepository.FindByEmailAsync(registerStudentDTO.Email);
             if (isEmailExit is not null)
             {
                 return new ResponseDTO()
@@ -74,7 +81,7 @@ public class AuthService : IAuthService
             }
 
             var isPhonenumerExit =
-                await _userManager.Users.AnyAsync(u => u.PhoneNumber == registerStudentDTO.PhoneNumber);
+                await _userManagerRepository.CheckIfPhoneNumberExistsAsync(registerStudentDTO.PhoneNumber);
             if (isPhonenumerExit)
             {
                 return new ResponseDTO()
@@ -87,7 +94,7 @@ public class AuthService : IAuthService
             }
 
             var isCardExist =
-                await _unitOfWork.PaymentCardRepository.GetAsync(x => x.CardNumber == registerStudentDTO.CardNumber);
+                await _unitOfWork.PaymentCardRepository.CardNumberExistsAsync(registerStudentDTO.CardNumber);
             if (isCardExist is not null)
             {
                 return new ResponseDTO()
@@ -116,7 +123,7 @@ public class AuthService : IAuthService
             };
 
             // Create new user to database
-            var createUserResult = await _userManager.CreateAsync(newUser, registerStudentDTO.Password);
+            var createUserResult = await _userManagerRepository.CreateAsync(newUser, registerStudentDTO.Password);
 
             // Check if error occur
             if (!createUserResult.Succeeded)
@@ -131,7 +138,7 @@ public class AuthService : IAuthService
                 };
             }
 
-            var user = await _userManager.FindByEmailAsync(registerStudentDTO.Email);
+            var user = await _userManagerRepository.FindByPhoneAsync(registerStudentDTO.PhoneNumber);
 
             Student student = new Student()
             {
@@ -157,16 +164,57 @@ public class AuthService : IAuthService
             }
 
             // Add role for the user
-            await _userManager.AddToRoleAsync(user, StaticUserRoles.Student);
+            var isRoleAdd = await _userManagerRepository.AddToRoleAsync(user, StaticUserRoles.Student);
+
+            if (!isRoleAdd.Succeeded)
+            {
+                return new ResponseDTO()
+                {
+                    Message = "Error adding role",
+                    IsSuccess = false,
+                    StatusCode = 500,
+                    Result = registerStudentDTO
+                };
+            }
 
             // Create new Student relate with ApplicationUser
-            await _unitOfWork.StudentRepository.AddAsync(student);
+            var isStudentAdd = await _unitOfWork.StudentRepository.AddAsync(student);
+            if (isStudentAdd == null)
+            {
+                return new ResponseDTO()
+                {
+                    Message = "Failed to add student",
+                    IsSuccess = false,
+                    StatusCode = 500,
+                    Result = registerStudentDTO
+                };
+            }
 
             // Create new Payment relate with ApplicationUser
-            await _unitOfWork.PaymentCardRepository.AddAsync(paymentCard);
+            var isPaymentAdd =  await _unitOfWork.PaymentCardRepository.AddAsync(paymentCard);
+            if (isPaymentAdd == null)
+            {
+                return new ResponseDTO()
+                {
+                    Message = "Failed to add payment card",
+                    IsSuccess = false,
+                    StatusCode = 500,
+                    Result = registerStudentDTO
+                };
+            }
 
             // Save change to database
-            await _unitOfWork.SaveAsync();
+            var isSuccess = await _unitOfWork.SaveAsync();
+            if (isSuccess <= 0)
+            {
+                return new ResponseDTO()
+                {
+                    Message = "Failed to save changes to the database",
+                    IsSuccess = false,
+                    StatusCode = 500,
+                    Result = registerStudentDTO
+                };
+            }
 
             // Return result success
             return new ResponseDTO()
