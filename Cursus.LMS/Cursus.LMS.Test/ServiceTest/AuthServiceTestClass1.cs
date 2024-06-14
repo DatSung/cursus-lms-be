@@ -214,78 +214,118 @@ public class AuthServiceTests
     }
 
 
-    //[Fact]
-    //public async Task SignUpStudent_AddPayment_ReturnsErrorResponse()
-    //{
-    //    // Arrange
-    //    _userManagerRepositoryMock.Setup(x => x.AddToRoleAsync(It.IsAny<ApplicationUser>(), StaticUserRoles.Student)).ReturnsAsync(IdentityResult.Success);
-    //    _unitOfWorkMock.Setup(x => x.StudentRepository.AddAsync(It.IsAny<Student>())).ReturnsAsync(new Student());
-    //    _unitOfWorkMock.Setup(x => x.PaymentCardRepository.AddAsync(It.IsAny<PaymentCard>())).ReturnsAsync((PaymentCard)null);
+    [Fact]
+    public async Task SignUpStudent_AddPayment_ReturnsErrorResponse()
+    {
+        var registerStudentDTO = new RegisterStudentDTO
+        {
+            Email = "test@example.com",
+            PhoneNumber = "1234567890",
+            CardNumber = "1234567890123456",
+            Password = "Password123!",
+            Address = "123 Main St",
+            BirthDate = DateTime.Now.AddYears(-20),
+            FullName = "John Doe",
+            Gender = "Male",
+            Country = "Country",
+            University = "University",
+            CardName = "John Doe",
+            CardProvider = "Visa"
+        }; // Fill with necessary data
+        _userManagerRepositoryMock.Setup(repo => repo.FindByEmailAsync(registerStudentDTO.Email)).ReturnsAsync((ApplicationUser)null);
+        _userManagerRepositoryMock.Setup(repo => repo.CheckIfPhoneNumberExistsAsync(registerStudentDTO.PhoneNumber)).ReturnsAsync(false);
+        _unitOfWorkMock.Setup(uow => uow.PaymentCardRepository.CardNumberExistsAsync(registerStudentDTO.CardNumber)).ReturnsAsync((PaymentCard)null);
+        _userManagerRepositoryMock.Setup(repo => repo.FindByPhoneAsync(registerStudentDTO.PhoneNumber)).ReturnsAsync(new ApplicationUser());
+        _userManagerRepositoryMock.Setup(repo => repo.CreateAsync(It.IsAny<ApplicationUser>(), It.IsAny<string>())).ReturnsAsync(IdentityResult.Success);
+        _roleManagerMock.Setup(repo => repo.RoleExistsAsync(StaticUserRoles.Student)).ReturnsAsync(false);
+        _userManagerRepositoryMock.Setup(repo => repo.AddToRoleAsync(It.IsAny<ApplicationUser>(), It.IsAny<string>())).ReturnsAsync(IdentityResult.Success);
+        _unitOfWorkMock.Setup(uow => uow.StudentRepository.AddAsync(It.IsAny<Student>())).ReturnsAsync(new Student());
+        _unitOfWorkMock.Setup(x => x.PaymentCardRepository.AddAsync(It.IsAny<PaymentCard>())).ReturnsAsync((PaymentCard)null);
 
-    //    // Act
-    //    var result = await _authService.SignUpStudent(registerStudentDTO);
+        // Act
+        var result = await _authService.SignUpStudent(registerStudentDTO);
 
-    //    // Assert
-    //    Assert.False(result.IsSuccess);
-    //    Assert.Equal("Failed to add payment card", result.Message);
-    //    Assert.Equal(500, result.StatusCode);
-    //}
+        // Assert
+        Assert.False(result.IsSuccess);
+        Assert.Equal("Failed to add payment card", result.Message);
+        Assert.Equal(500, result.StatusCode);
+    }
 
-    //[Fact]
-    //public async Task SignUpStudent_SaveChanges_ReturnsErrorResponse()
-    //{
-    //    // Arrange
-    //    _userManagerRepositoryMock.Setup(x => x.AddToRoleAsync(It.IsAny<ApplicationUser>(), StaticUserRoles.Student)).ReturnsAsync(IdentityResult.Success);
-    //    _unitOfWorkMock.Setup(x => x.StudentRepository.AddAsync(It.IsAny<Student>())).ReturnsAsync(new Student());
-    //    _unitOfWorkMock.Setup(x => x.PaymentCardRepository.AddAsync(It.IsAny<PaymentCard>())).ReturnsAsync(new PaymentCard());
-    //    _unitOfWorkMock.Setup(x => x.SaveAsync()).ReturnsAsync(0);
+    [Fact]
+    public async Task SignUpStudent_SaveChanges_ReturnsErrorResponse()
+    {
+        var registerStudentDTO = new RegisterStudentDTO
+        {
+            Email = "test@example.com",
+            PhoneNumber = "1234567890",
+            CardNumber = "1234567890123456",
+            Password = "Password123!",
+            Address = "123 Main St",
+            BirthDate = DateTime.Now.AddYears(-20),
+            FullName = "John Doe",
+            Gender = "Male",
+            Country = "Country",
+            University = "University",
+            CardName = "John Doe",
+            CardProvider = "Visa"
+        }; // Fill with necessary data
+        _userManagerRepositoryMock.Setup(repo => repo.FindByEmailAsync(registerStudentDTO.Email)).ReturnsAsync((ApplicationUser)null);
+        _userManagerRepositoryMock.Setup(repo => repo.CheckIfPhoneNumberExistsAsync(registerStudentDTO.PhoneNumber)).ReturnsAsync(false);
+        _unitOfWorkMock.Setup(uow => uow.PaymentCardRepository.CardNumberExistsAsync(registerStudentDTO.CardNumber)).ReturnsAsync((PaymentCard)null);
+        _userManagerRepositoryMock.Setup(repo => repo.FindByPhoneAsync(registerStudentDTO.PhoneNumber)).ReturnsAsync(new ApplicationUser());
+        _userManagerRepositoryMock.Setup(repo => repo.CreateAsync(It.IsAny<ApplicationUser>(), It.IsAny<string>())).ReturnsAsync(IdentityResult.Success);
+        _roleManagerMock.Setup(repo => repo.RoleExistsAsync(StaticUserRoles.Student)).ReturnsAsync(false);
+        _userManagerRepositoryMock.Setup(repo => repo.AddToRoleAsync(It.IsAny<ApplicationUser>(), It.IsAny<string>())).ReturnsAsync(IdentityResult.Success);
+        _unitOfWorkMock.Setup(uow => uow.StudentRepository.AddAsync(It.IsAny<Student>())).ReturnsAsync(new Student());
+        _unitOfWorkMock.Setup(x => x.PaymentCardRepository.AddAsync(It.IsAny<PaymentCard>())).ReturnsAsync(new PaymentCard());
+        _unitOfWorkMock.Setup(x => x.SaveAsync()).ReturnsAsync(0);
 
-    //    // Act
-    //    var result = await _authService.SignUpStudent(registerStudentDTO);
+        // Act
+        var result = await _authService.SignUpStudent(registerStudentDTO);
 
-    //    // Assert
-    //    Assert.False(result.IsSuccess);
-    //    Assert.Equal("Failed to save changes to the database", result.Message);
-    //    Assert.Equal(500, result.StatusCode);
-    //}
+        // Assert
+        Assert.False(result.IsSuccess);
+        Assert.Equal("Failed to save changes to the database", result.Message);
+        Assert.Equal(500, result.StatusCode);
+    }
 
 
 
-    //[Fact]
-    //public async Task SignUpStudent_Success_ReturnsSuccessResponse()
-    //{
-    //    // Arrange
-    //    var registerStudentDTO = new RegisterStudentDTO
-    //    {
-    //        Email = "test@example.com",
-    //        PhoneNumber = "1234567890",
-    //        CardNumber = "1234567890123456",
-    //        Password = "Password123!",
-    //        Address = "123 Main St",
-    //        BirthDate = DateTime.Now.AddYears(-20),
-    //        FullName = "John Doe",
-    //        Gender = "Male",
-    //        Country = "Country",
-    //        University = "University",
-    //        CardName = "John Doe",
-    //        CardProvider = "Visa"
-    //    };
-    //    _userManagerRepositoryMock.Setup(x => x.FindByEmailAsync(It.IsAny<string>())).ReturnsAsync((ApplicationUser)null);
-    //    _userManagerRepositoryMock.Setup(x => x.CheckIfPhoneNumberExistsAsync(It.IsAny<string>())).ReturnsAsync(false);
-    //    _paymentCardRepositoryMock.Setup(x => x.CardNumberExistsAsync(It.IsAny<string>())).ReturnsAsync((PaymentCard)null);
-    //    _userManagerRepositoryMock.Setup(x => x.CreateAsync(It.IsAny<ApplicationUser>(), It.IsAny<string>())).ReturnsAsync(IdentityResult.Success);
-    //    _userManagerRepositoryMock.Setup(x => x.FindByEmailAsync(It.IsAny<string>())).ReturnsAsync(new ApplicationUser { Id = "user-id" });
-    //    _roleManagerMock.Setup(x => x.RoleExistsAsync(It.IsAny<string>())).ReturnsAsync(true);
-    //    _userManagerRepositoryMock.Setup(x => x.AddToRoleAsync(It.IsAny<ApplicationUser>(), It.IsAny<string>())).ReturnsAsync(IdentityResult.Success);
-    //    _unitOfWorkMock.Setup(x => x.StudentRepository.AddAsync(It.IsAny<Student>())).ReturnsAsync(new Student()); // Mock the AddAsync method
-    //    _paymentCardRepositoryMock.Setup(x => x.AddAsync(It.IsAny<PaymentCard>())).ReturnsAsync(new PaymentCard()); // Mock the AddAsync method
-    //    _unitOfWorkMock.Setup(x => x.SaveAsync()).ReturnsAsync(1); // Mock the SaveAsync method
+    [Fact]
+    public async Task SignUpStudent_Success_ReturnsSuccessResponse()
+    {
+        // Arrange
+        var registerStudentDTO = new RegisterStudentDTO
+        {
+            Email = "test@example.com",
+            PhoneNumber = "1234567890",
+            CardNumber = "1234567890123456",
+            Password = "Password123!",
+            Address = "123 Main St",
+            BirthDate = DateTime.Now.AddYears(-20),
+            FullName = "John Doe",
+            Gender = "Male",
+            Country = "Country",
+            University = "University",
+            CardName = "John Doe",
+            CardProvider = "Visa"
+        }; // Fill with necessary data
+        _userManagerRepositoryMock.Setup(repo => repo.FindByEmailAsync(registerStudentDTO.Email)).ReturnsAsync((ApplicationUser)null);
+        _userManagerRepositoryMock.Setup(repo => repo.CheckIfPhoneNumberExistsAsync(registerStudentDTO.PhoneNumber)).ReturnsAsync(false);
+        _unitOfWorkMock.Setup(uow => uow.PaymentCardRepository.CardNumberExistsAsync(registerStudentDTO.CardNumber)).ReturnsAsync((PaymentCard)null);
+        _userManagerRepositoryMock.Setup(repo => repo.FindByPhoneAsync(registerStudentDTO.PhoneNumber)).ReturnsAsync(new ApplicationUser());
+        _userManagerRepositoryMock.Setup(repo => repo.CreateAsync(It.IsAny<ApplicationUser>(), It.IsAny<string>())).ReturnsAsync(IdentityResult.Success);
+        _roleManagerMock.Setup(repo => repo.RoleExistsAsync(StaticUserRoles.Student)).ReturnsAsync(false);
+        _userManagerRepositoryMock.Setup(repo => repo.AddToRoleAsync(It.IsAny<ApplicationUser>(), It.IsAny<string>())).ReturnsAsync(IdentityResult.Success);
+        _unitOfWorkMock.Setup(uow => uow.StudentRepository.AddAsync(It.IsAny<Student>())).ReturnsAsync(new Student());
+        _unitOfWorkMock.Setup(x => x.PaymentCardRepository.AddAsync(It.IsAny<PaymentCard>())).ReturnsAsync(new PaymentCard());
+        _unitOfWorkMock.Setup(x => x.SaveAsync()).ReturnsAsync(1); // Mock the SaveAsync method
 
-    //    // Act
-    //    var result = await _authService.SignUpStudent(registerStudentDTO);
+        // Act
+        var result = await _authService.SignUpStudent(registerStudentDTO);
 
-    //    // Assert
-    //    Assert.True(result.IsSuccess);
-    //    Assert.Equal("Create new user successfully", result.Message);
-    //}
+        // Assert
+        Assert.True(result.IsSuccess);
+        Assert.Equal("Create new user successfully", result.Message);
+    }
 }
