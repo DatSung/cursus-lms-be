@@ -157,7 +157,7 @@ namespace Cursus.LMS.DataAccess.Migrations
 
                     b.HasIndex("CartHeaderId");
 
-                    b.ToTable("CartDetails");
+                    b.ToTable("CartDetails", (string)null);
                 });
 
             modelBuilder.Entity("Cursus.LMS.Model.Domain.CartHeader", b =>
@@ -176,7 +176,7 @@ namespace Cursus.LMS.DataAccess.Migrations
 
                     b.HasIndex("StudentId");
 
-                    b.ToTable("CartHeaders");
+                    b.ToTable("CartHeaders", (string)null);
                 });
 
             modelBuilder.Entity("Cursus.LMS.Model.Domain.Category", b =>
@@ -216,7 +216,7 @@ namespace Cursus.LMS.DataAccess.Migrations
 
                     b.HasIndex("ParentId");
 
-                    b.ToTable("Categories");
+                    b.ToTable("Categories", (string)null);
                 });
 
             modelBuilder.Entity("Cursus.LMS.Model.Domain.Course", b =>
@@ -274,7 +274,7 @@ namespace Cursus.LMS.DataAccess.Migrations
 
                     b.HasIndex("LevelId");
 
-                    b.ToTable("Courses");
+                    b.ToTable("Courses", (string)null);
                 });
 
             modelBuilder.Entity("Cursus.LMS.Model.Domain.CourseReport", b =>
@@ -306,7 +306,7 @@ namespace Cursus.LMS.DataAccess.Migrations
 
                     b.HasIndex("CourseId");
 
-                    b.ToTable("CourseReports");
+                    b.ToTable("CourseReports", (string)null);
                 });
 
             modelBuilder.Entity("Cursus.LMS.Model.Domain.CourseReview", b =>
@@ -338,7 +338,7 @@ namespace Cursus.LMS.DataAccess.Migrations
 
                     b.HasIndex("CourseId");
 
-                    b.ToTable("CourseReviews");
+                    b.ToTable("CourseReviews", (string)null);
                 });
 
             modelBuilder.Entity("Cursus.LMS.Model.Domain.CourseSection", b =>
@@ -362,7 +362,7 @@ namespace Cursus.LMS.DataAccess.Migrations
 
                     b.HasIndex("CourseId");
 
-                    b.ToTable("CourseSections");
+                    b.ToTable("CourseSections", (string)null);
                 });
 
             modelBuilder.Entity("Cursus.LMS.Model.Domain.EmailTemplate", b =>
@@ -431,7 +431,7 @@ namespace Cursus.LMS.DataAccess.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("EmailTemplates");
+                    b.ToTable("EmailTemplates", (string)null);
                 });
 
             modelBuilder.Entity("Cursus.LMS.Model.Domain.Instructor", b =>
@@ -482,7 +482,7 @@ namespace Cursus.LMS.DataAccess.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("Instructors");
+                    b.ToTable("Instructors", (string)null);
                 });
 
             modelBuilder.Entity("Cursus.LMS.Model.Domain.InstructorComment", b =>
@@ -519,7 +519,7 @@ namespace Cursus.LMS.DataAccess.Migrations
 
                     b.HasIndex("InstructorId");
 
-                    b.ToTable("InstructorComments");
+                    b.ToTable("InstructorComments", (string)null);
                 });
 
             modelBuilder.Entity("Cursus.LMS.Model.Domain.InstructorRating", b =>
@@ -555,7 +555,7 @@ namespace Cursus.LMS.DataAccess.Migrations
 
                     b.HasIndex("InstructorId");
 
-                    b.ToTable("InstructorRatings");
+                    b.ToTable("InstructorRatings", (string)null);
                 });
 
             modelBuilder.Entity("Cursus.LMS.Model.Domain.Level", b =>
@@ -570,7 +570,7 @@ namespace Cursus.LMS.DataAccess.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Levels");
+                    b.ToTable("Levels", (string)null);
                 });
 
             modelBuilder.Entity("Cursus.LMS.Model.Domain.OrderDetails", b =>
@@ -592,7 +592,7 @@ namespace Cursus.LMS.DataAccess.Migrations
 
                     b.HasIndex("OrderHeaderId");
 
-                    b.ToTable("OrderDetails");
+                    b.ToTable("OrderDetails", (string)null);
                 });
 
             modelBuilder.Entity("Cursus.LMS.Model.Domain.OrderHeader", b =>
@@ -620,7 +620,7 @@ namespace Cursus.LMS.DataAccess.Migrations
 
                     b.HasIndex("StudentId");
 
-                    b.ToTable("OrderHeaders");
+                    b.ToTable("OrderHeaders", (string)null);
                 });
 
             modelBuilder.Entity("Cursus.LMS.Model.Domain.PaymentCard", b =>
@@ -644,7 +644,7 @@ namespace Cursus.LMS.DataAccess.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("PaymentCards");
+                    b.ToTable("PaymentCards", (string)null);
                 });
 
             modelBuilder.Entity("Cursus.LMS.Model.Domain.SectionDetails", b =>
@@ -668,7 +668,7 @@ namespace Cursus.LMS.DataAccess.Migrations
 
                     b.HasIndex("CourseSectionId");
 
-                    b.ToTable("SectionDetails");
+                    b.ToTable("SectionDetails", (string)null);
                 });
 
             modelBuilder.Entity("Cursus.LMS.Model.Domain.Student", b =>
@@ -689,7 +689,7 @@ namespace Cursus.LMS.DataAccess.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("Students");
+                    b.ToTable("Students", (string)null);
                 });
 
             modelBuilder.Entity("Cursus.LMS.Model.Domain.StudentCourse", b =>
@@ -729,7 +729,7 @@ namespace Cursus.LMS.DataAccess.Migrations
 
                     b.HasIndex("StudentId");
 
-                    b.ToTable("StudentCourses");
+                    b.ToTable("StudentCourses", (string)null);
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
