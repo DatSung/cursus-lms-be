@@ -10,5 +10,6 @@ public class AutoMapperProfile : Profile
     {
         CreateMap<UserInfoDTO, ApplicationUser>().ReverseMap();
         CreateMap<Category, CategoryDTO>().ReverseMap();
+        CreateMap<Category, AdminCategoryDTO>().ReverseMap();
     }
 }
