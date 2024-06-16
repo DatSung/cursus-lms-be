@@ -157,7 +157,15 @@ public class CategoryService : ICategoryService
             #endregion Query Parameters
 
             // Map to DTO
-            var rootCategoriesDto = _mapper.Map<List<CategoryDTO>>(rootCategories);
+            object rootCategoriesDto;
+            if (userRole ==StaticUserRoles.Admin)
+            {
+                rootCategoriesDto = _mapper.Map<List<AdminCategoryDTO>>(rootCategories);
+            }
+            else
+            {
+                rootCategoriesDto = _mapper.Map<List<CategoryDTO>>(rootCategories);
+            }
 
             return new ResponseDTO()
             {
@@ -282,8 +290,17 @@ public class CategoryService : ICategoryService
 
             #endregion Query Parameters
 
-            var listCategoryDto = _mapper.Map<List<CategoryDTO>>(listCategory);
-
+            object listCategoryDto;
+            if (userRole ==StaticUserRoles.Admin)
+            {
+                listCategoryDto = _mapper.Map<List<AdminCategoryDTO>>(listCategory);
+            }
+            else
+            {
+                listCategoryDto = _mapper.Map<List<CategoryDTO>>(listCategory);
+            }
+            
+            
             return new ResponseDTO()
             {
                 Message = "Get all category successfully",
