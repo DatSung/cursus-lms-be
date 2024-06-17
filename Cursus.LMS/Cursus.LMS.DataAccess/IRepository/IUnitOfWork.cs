@@ -9,4 +9,5 @@ public interface IUnitOfWork
     IInstructorRepository InstructorRepository { get; }
     Task<int> SaveAsync();
     ICategoryRepository CategoryRepository { get; }
+    IEmailTemplateRepository  EmailTemplateRepository { get; }
 }

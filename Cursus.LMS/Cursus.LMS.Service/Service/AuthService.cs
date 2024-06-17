@@ -748,8 +748,10 @@ public class AuthService : IAuthService
         }
     }
 
-
-    //Forgot password
+    /// <summary>
+    /// This method for forgot password
+    /// </summary>
+    /// <returns></returns>
     private string ip;
     private string city;
     private string region;
@@ -760,7 +762,7 @@ public class AuthService : IAuthService
     {
         try
         {
-            // Tìm người dùng theo Email/Số điện thoại
+            // Find users by Email/Phone number
             var user = await _userManager.FindByEmailAsync(forgotPasswordDto.EmailOrPhone);
             if (user == null)
             {
@@ -778,27 +780,27 @@ public class AuthService : IAuthService
                 };
             }
 
-            // Kiểm tra giới hạn gửi yêu cầu đặt lại mật khẩu
+            // Check the limit for sending password reset requests
             var email = user.Email;
             var now = DateTime.Now;
 
             if (ResetPasswordAttempts.TryGetValue(email, out var attempts))
             {
-                // Kiểm tra xem đã quá 1 ngày kể từ lần thử cuối cùng chưa
+                // Check if it has been more than 1 day since the last test
                 if (now - attempts.LastRequest >= TimeSpan.FromSeconds(1))
                 {
-                    // Reset số lần thử về 0 và cập nhật thời gian thử cuối cùng
+                    // Reset the number of attempts to 0 and update the last attempt time
                     ResetPasswordAttempts[email] = (1, now);
                 }
                 else if (attempts.Count >= MaxAttemptsPerDay)
                 {
-                    // Quá số lần reset cho phép trong vòng 1 ngày, gửi thông báo 
+                    // Exceeding the allowed number of resets within 1 day, send a notification 
                     await _emailService.SendEmailAsync(user.Email,
                         "Password Reset Request Limit Exceeded",
                         $"You have exceeded the daily limit for password reset requests. Please try again after 24 hours."
                     );
 
-                    // Vẫn trong thời gian chặn, trả về lỗi
+                    // Still in blocking time, returns error
                     return new ResponseDTO
                     {
                         IsSuccess = false,
@@ -809,35 +811,35 @@ public class AuthService : IAuthService
                 }
                 else
                 {
-                    // Chưa vượt quá số lần thử và thời gian chờ, tăng số lần thử và cập nhật thời gian
+                    // Have not exceeded the number of attempts and timeout, increase the number of attempts and update the time
                     ResetPasswordAttempts[email] = (attempts.Count + 1, now);
                 }
             }
             else
             {
-                // Email chưa có trong danh sách, thêm mới với số lần thử là 1 và thời gian hiện tại
+                // The email is not in the list, add a new one with the number of attempts being 1 and the current time
                 ResetPasswordAttempts.AddOrUpdate(email, (1, now), (key, old) => (old.Count + 1, now));
             }
 
-            // Tạo mã token
+            // Generate tokens
             var token = await _userManager.GeneratePasswordResetTokenAsync(user);
 
-            // Gửi email chứa đường link đặt lại mật khẩu. //reset-password
+            // Send an email containing a password reset link.
 
             var resetLink = $"https://nostran.w3spaces.com?token={token}&email={user.Email}";
 
-            // Lấy ngày hiện tại
+            // Get the current date
             var currentDate = DateTime.Now.ToString("MMMM d, yyyy");
 
             var userAgent = _httpContextAccessor.HttpContext?.Request.Headers["User-Agent"];
 
-            // Lấy tên hệ điều hành
+            // Get the operating system name
             var operatingSystem = GetUserAgentOperatingSystem(userAgent);
 
-            // Lấy tên trình duyệt
+            // Get browser name
             var browser = GetUserAgentBrowser(userAgent);
 
-            // Lấy location
+            // Get location
             var url = "https://ipinfo.io/14.169.10.115/json?token=823e5c403c980f";
             using (HttpClient client = new HttpClient())
             {
@@ -863,15 +865,12 @@ public class AuthService : IAuthService
                 }
             }
 
-            // Gửi email chứa đường link đặt lại mật khẩu
+            // Send an email containing a password reset link
             await _emailService.SendEmailResetAsync(user.Email, "Reset password for your Cursus account", user,
                 currentDate, resetLink, operatingSystem, browser, ip, region, city, country);
-
-            // Helper functions (you might need to refine these based on your User-Agent parsing logic)
+            
             string GetUserAgentOperatingSystem(string userAgent)
             {
-                // ... Logic to extract the operating system from the user-agent string
-                // Example:
                 if (userAgent.Contains("Windows")) return "Windows";
                 else if (userAgent.Contains("Mac")) return "macOS";
                 else if (userAgent.Contains("Linux")) return "Linux";
@@ -880,8 +879,6 @@ public class AuthService : IAuthService
 
             string GetUserAgentBrowser(string userAgent)
             {
-                // ... Logic to extract the browser from the user-agent string
-                // Example:
                 if (userAgent.Contains("Chrome")) return "Chrome";
                 else if (userAgent.Contains("Firefox")) return "Firefox";
                 else if (userAgent.Contains("Safari")) return "Safari";
@@ -906,12 +903,19 @@ public class AuthService : IAuthService
         }
     }
 
-    // Reset password
+    /// <summary>
+    /// This method for reset password
+    /// </summary>
+    /// <param name="email"> A email to reset password</param>
+    /// /// <param name="token"> Token of the user request</param>
+    /// /// <param name="password"> New password to reset password</param>
+    /// <returns></returns>
+    
     public async Task<ResponseDTO> ResetPassword(string email, string token, string password)
     {
         try
         {
-            // Tìm người dùng theo email
+            // Find users by email
             var user = await _userManager.FindByEmailAsync(email);
             if (user == null)
             {
@@ -923,7 +927,7 @@ public class AuthService : IAuthService
                 };
             }
 
-            // Kiểm tra xem mật khẩu mới có trùng với mật khẩu cũ hay không
+            // Check if the new password matches the old password
             if (await _userManager.CheckPasswordAsync(user, password))
             {
                 return new ResponseDTO
@@ -934,7 +938,7 @@ public class AuthService : IAuthService
                 };
             }
 
-            // Xác thực token và reset mật khẩu
+            // Authenticate token and reset password
             var result = await _userManager.ResetPasswordAsync(user, token, password);
             if (result.Succeeded)
             {
@@ -947,7 +951,7 @@ public class AuthService : IAuthService
             }
             else
             {
-                // Xử lý lỗi nếu token không hợp lệ hoặc có lỗi khác
+                // Handle errors if the token is invalid or has other errors
                 StringBuilder errors = new StringBuilder();
                 foreach (var error in result.Errors)
                 {
@@ -973,36 +977,44 @@ public class AuthService : IAuthService
         }
     }
 
-    // Thay đổi mật khẩu người dùng
+    /// <summary>
+    /// This method for change password
+    /// </summary>
+    /// <param name="userId"> Id of user</param>
+    /// <param name="oldPassword"> Old password</param>
+    /// <param name="newPassword"> New password</param>
+    /// <param name="confirmNewPassword"> New confirm password</param>
+    /// <returns></returns>
+    
     public async Task<ResponseDTO> ChangePassword(string userId, string oldPassword, string newPassword,
         string confirmNewPassword)
     {
         try
         {
-            // Lấy id của người dùng
+            // Get the user's id
             var user = await _userManager.FindByIdAsync(userId);
             if (user == null)
             {
                 return new ResponseDTO { IsSuccess = false, Message = "User not found." };
             }
 
-            // Thực hiện xác thực mật khẩu và thay đổi mật khẩu
+            // Perform password authentication and password changes
 
-            // Kiểm tra sự trùng khớp của mật khẩu mới và xác nhận mật khẩu mới 
+            // Check the match of the new password and confirm the new password 
             if (newPassword != confirmNewPassword)
             {
                 return new ResponseDTO
                     { IsSuccess = false, Message = "New password and confirm new password not match." };
             }
 
-            // Không cho phép thay đổi mật khẩu cũ
+            // Changes to old passwords are not allowed
             if (newPassword == oldPassword)
             {
                 return new ResponseDTO
                     { IsSuccess = false, Message = "New password cannot be the same as the old password." };
             }
 
-            // Thực hiện thay đổi mật khẩu
+            // Make a password change
             var result = await _userManager.ChangePasswordAsync(user, oldPassword, newPassword);
             if (result.Succeeded)
             {

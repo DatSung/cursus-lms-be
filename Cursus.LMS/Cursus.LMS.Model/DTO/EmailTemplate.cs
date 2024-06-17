@@ -1,8 +1,7 @@
-﻿namespace Cursus.LMS.Model.Domain;
+﻿namespace Cursus.LMS.Model.DTO;
 
-public class EmailTemplate : BaseEntity<string, string, int>
+public class EmailTemplate
 {
-    public Guid Id { get; set; }                         
     public string TemplateName { get; set; }              
     public string? SenderName { get; set; }               
     public string? SenderEmail { get; set; }             
