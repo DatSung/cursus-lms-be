@@ -77,7 +77,9 @@ namespace Cursus.LMS.API.Controllers
         [HttpPost]
         public async Task<ActionResult<ResponseDTO>> Create(CreateCategoryDTO createCategoryDto)
         {
-            return Ok();
+
+            var responeDto =  await _categoryService.AddAsync(createCategoryDto);
+            return StatusCode(responeDto.StatusCode, responeDto);
         }
 
         [HttpPut]
@@ -85,14 +87,16 @@ namespace Cursus.LMS.API.Controllers
         public async Task<ActionResult<ResponseDTO>> Update([FromRoute] Guid id,
             [FromBody] UpdateCategoryDTO updateCategoryDto)
         {
-            return Ok();
+            var responeDto = await _categoryService.Update(updateCategoryDto);
+            return StatusCode(responeDto.StatusCode, responeDto);
         }
 
         [HttpDelete]
         [Route("{id:guid}")]
         public async Task<ActionResult<ResponseDTO>> Delete([FromRoute] Guid id)
         {
-            return Ok();
+            var responeDto = await _categoryService.Delete(id);
+            return StatusCode(responeDto.StatusCode, responeDto);
         }
     }
 }

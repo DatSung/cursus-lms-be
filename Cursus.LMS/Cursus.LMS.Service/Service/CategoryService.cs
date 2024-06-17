@@ -5,6 +5,8 @@ using Cursus.LMS.Model.Domain;
 using Cursus.LMS.Model.DTO;
 using Cursus.LMS.Service.IService;
 using Cursus.LMS.Utility.Constants;
+using Microsoft.AspNetCore.Http;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 
 namespace Cursus.LMS.Service.Service;
@@ -441,4 +443,193 @@ public class CategoryService : ICategoryService
             };
         }
     }
+
+    /// <summary>
+    /// Create Category
+    /// </summary>
+    /// <param></param>
+    /// <returns></returns>
+    public async Task<ResponseDTO> AddAsync(CreateCategoryDTO createCategoryDto)
+    {
+        /*try
+        {
+            var category = _mapper.Map<Category>(createCategoryDto);
+        
+            // Kiểm tra xem ParentId có tồn tại trong cơ sở dữ liệu không
+            if (category.ParentId.HasValue)
+            {
+                category.ParentId = createCategoryDto.ParentId;
+                category.Status = 1;
+                    
+                //category.ParentId = null;
+            }
+
+            await _unitOfWork.CategoryRepository.AddAsync(category);
+            await _unitOfWork.SaveAsync();
+
+            return new ResponseDTO
+            {
+                Message = "Category added successfully",
+                Result = category,
+                IsSuccess = true,
+                StatusCode = 200,   
+            };
+        }
+        catch (Exception e)
+        {
+            return new ResponseDTO
+            {
+                Message = e.Message,
+                Result = null,
+                IsSuccess = false,
+                StatusCode = 500
+            };
+        }*/
+        try
+        {
+            // Map DTO sang entity Category
+            var category = _mapper.Map<Category>(createCategoryDto);
+
+            if (category.ParentId.HasValue)
+            {
+                var parentCategory = await _unitOfWork.CategoryRepository.GetCategoryByIdAsync(category.ParentId.Value);
+                if (parentCategory == null)
+                {
+                    return new ResponseDTO
+                    {
+                        Message = "ParentId Invalid",
+                        Result = null,
+                        IsSuccess = false,
+                        StatusCode = 400
+                    };
+                }
+            }
+            else
+            {
+                // Kiểm tra xem đây có phải là danh mục đầu tiên không
+                var existingCategories = await _unitOfWork.CategoryRepository.GetAllAsync();
+                if (existingCategories == null || !existingCategories.Any())
+                {
+                    category.ParentId = null;
+                }
+            }
+
+            category.Status = 1;
+
+            // Thêm danh mục vào cơ sở dữ liệu
+            await _unitOfWork.CategoryRepository.AddAsync(category);
+            await _unitOfWork.SaveAsync();
+
+            return new ResponseDTO
+            {
+                Message = "Category created successfully ",
+                Result = category,
+                IsSuccess = true,
+                StatusCode = 200,
+            };
+        }
+        catch (Exception e)
+        {
+            return new ResponseDTO
+            {
+                Message = e.Message,
+                Result = null,
+                IsSuccess = false,
+                StatusCode = 500
+            };
+        }
+    }
+        /// <summary>
+        /// Update Category
+        /// </summary>
+        /// <param name="updateCategoryDTO"></param>
+        /// <returns></returns>
+        public async Task<ResponseDTO> Update(UpdateCategoryDTO updateCategoryDTO)
+    {
+        try
+        {
+            // Tìm kiếm danh mục hiện có ID giống ID mình vừa nhập không
+            var update = 
+                await _unitOfWork.CategoryRepository.GetAsync(filter: x => x.Id == updateCategoryDTO.Id);
+
+            if (update == null)
+            {
+
+                return new ResponseDTO
+                {
+                    Message = "Category not found",
+                    Result = null,
+                    IsSuccess = false,
+                    StatusCode = 404
+                };
+            }
+
+            // Cập nhật các thuộc tính của danh mục
+            _mapper.Map(updateCategoryDTO, update);
+
+            // Lưu thay đổi vào cơ sở dữ liệu
+            _unitOfWork.CategoryRepository.Update(update);
+            await _unitOfWork.SaveAsync();
+
+            return new ResponseDTO
+            {
+                Message = "Category updated successfully",
+                Result = update,
+                IsSuccess = true,
+                StatusCode = 200
+            };
+        }
+        catch (Exception e)
+        {
+            return new ResponseDTO
+            {
+                Message = e.Message,
+                Result = null,
+                IsSuccess = false,
+                StatusCode = 500
+            };
+        }
+    }
+
+    public async Task<ResponseDTO> Delete(Guid id)
+    {
+        var category =
+                await _unitOfWork.CategoryRepository.GetAsync(filter: x => x.Id == id);
+        if(category == null)
+        {
+            return new ResponseDTO()
+            {
+                Message = "Category was not found",
+                IsSuccess = false,
+                StatusCode = 404,
+                Result = null,
+            };
+        }
+
+        //chuyển status về 0 chứ không xóa dữ liệu
+        category.Status = 0;
+        _unitOfWork.CategoryRepository.Update(category);
+
+        //tìm danh sách con của category bị chuyển đổi status về 0
+        /*var childCategories = await _unitOfWork.CategoryRepository.GetAsync(filter: x => x.ParentId == id);
+        if (childCategories != null)
+        {
+            foreach (var childCategory in childCategories)
+            {
+                childCategory.ParentId = null;
+                _unitOfWork.CategoryRepository.Update(childCategory);
+            }
+        }*/
+
+        await _unitOfWork.SaveAsync();
+
+        return new ResponseDTO()
+        {
+            Message = "Category deleted successfully",
+            IsSuccess = true,
+            StatusCode = 200,
+            Result = category.Id,
+        };
+    }
+
 }
