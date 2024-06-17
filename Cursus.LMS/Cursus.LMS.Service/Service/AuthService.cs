@@ -330,8 +330,9 @@ public class AuthService : IAuthService
                 Degree = signUpInstructorDto.Degree,
                 Industry = signUpInstructorDto.Industry,
                 Introduction = signUpInstructorDto.Introduction,
-                RejectedBy = "",
                 AcceptedBy = "",
+                AcceptedTime = null,
+                IsAccepted = false
             };
 
             // Create instance of payment card

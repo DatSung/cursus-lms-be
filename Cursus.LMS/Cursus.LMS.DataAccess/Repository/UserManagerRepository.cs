@@ -57,5 +57,10 @@ namespace Cursus.LMS.DataAccess.Repository
         {
             throw new NotImplementedException();
         }
+
+        public async Task<IEnumerable<ApplicationUser>> GetUsersInRoleAsync(string role)
+        {
+            return await _userManager.GetUsersInRoleAsync(role);
+        }
     }
 }

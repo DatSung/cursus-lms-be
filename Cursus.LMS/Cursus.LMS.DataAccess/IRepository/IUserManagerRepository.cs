@@ -18,5 +18,6 @@ namespace Cursus.LMS.DataAccess.IRepository
         Task<ApplicationUser> FindByPhoneAsync(string phoneNumber);
         Task<List<ApplicationUser>> GetInstructorUser();
         Task<List<ApplicationUser>> GetStudentUser();
+        Task<IEnumerable<ApplicationUser>> GetUsersInRoleAsync(string role);
     }
 }

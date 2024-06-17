@@ -32,25 +32,111 @@ public class InstructorService : IInstructorService
         int pageSize
     )
     {
+        #region MyRegion
+
         try
         {
-            var instructors = await _unitOfWork.InstructorRepository.GetAsync(x => x.IsAccepted == true);
+            List<Instructor> instructors = new List<Instructor>();
+
+            // Filter Query
+            if (!string.IsNullOrEmpty(filterOn) && !string.IsNullOrEmpty(filterQuery))
+            {
+                switch (filterOn.Trim().ToLower())
+                {
+                    case "name":
+                    {
+                        instructors = _unitOfWork.InstructorRepository.GetAllAsync(includeProperties: "ApplicationUser")
+                            .GetAwaiter().GetResult().Where(x =>
+                                x.ApplicationUser.FullName.Contains(filterQuery,
+                                    StringComparison.CurrentCultureIgnoreCase)).ToList();
+                        break;
+                    }
+                    case "email":
+                    {
+                        instructors = _unitOfWork.InstructorRepository.GetAllAsync(includeProperties: "ApplicationUser")
+                            .GetAwaiter().GetResult().Where(x =>
+                                x.ApplicationUser.Email.Contains(filterQuery,
+                                    StringComparison.CurrentCultureIgnoreCase)).ToList();
+                        break;
+                    }
+                    default:
+                    {
+                        instructors = _unitOfWork.InstructorRepository.GetAllAsync(includeProperties: "ApplicationUser")
+                            .GetAwaiter().GetResult().ToList();
+                        break;
+                    }
+                }
+            }
+            else
+            {
+                instructors = _unitOfWork.InstructorRepository.GetAllAsync(includeProperties: "ApplicationUser")
+                    .GetAwaiter().GetResult().ToList();
+            }
+
+            // Sort Query
+            if (!string.IsNullOrEmpty(sortBy))
+            {
+                switch (sortBy.Trim().ToLower())
+                {
+                    case "name":
+                    {
+                        instructors = isAscending == true
+                            ? [.. instructors.OrderBy(x => x.ApplicationUser.FullName)]
+                            : [.. instructors.OrderByDescending(x => x.ApplicationUser.FullName)];
+                        break;
+                    }
+                    case "email":
+                    {
+                        instructors = isAscending == true
+                            ? [.. instructors.OrderBy(x => x.ApplicationUser.Email)]
+                            : [.. instructors.OrderByDescending(x => x.ApplicationUser.Email)];
+                        break;
+                    }
+                    default:
+                    {
+                        break;
+                    }
+                }
+            }
+
+            // Pagination
+            if (pageNumber > 0 && pageSize > 0)
+            {
+                var skipResult = (pageNumber - 1) * pageSize;
+                instructors = instructors.Skip(skipResult).Take(pageSize).ToList();
+            }
+
+            #endregion Query Parameters
+
+            if (instructors.IsNullOrEmpty())
+            {
+                return new ResponseDTO()
+                {
+                    Message = "There are no instructors",
+                    Result = null,
+                    IsSuccess = false,
+                    StatusCode = 404
+                };
+            }
+
+            var instructorInfoLiteDto = _mapper.Map<List<InstructorInfoLiteDTO>>(instructors);
+
             return new ResponseDTO()
             {
+                Message = "Get all category successfully",
+                Result = instructorInfoLiteDto,
                 IsSuccess = true,
-                StatusCode = 200,
-                Result = instructors,
-                Message = "Get all instructor successfully"
+                StatusCode = 200
             };
         }
         catch (Exception e)
         {
             return new ResponseDTO()
             {
-                IsSuccess = false,
-                StatusCode = 500,
+                Message = e.Message,
                 Result = null,
-                Message = e.Message
+                IsSuccess = false,
+                StatusCode = 500
             };
         }
     }
