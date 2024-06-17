@@ -9,6 +9,7 @@ public class UnitOfWork : IUnitOfWork
     public IStudentRepository StudentRepository { get; set; }
     public IInstructorRepository InstructorRepository { get; set; }
     public ICategoryRepository CategoryRepository { get; }
+    public IEmailTemplateRepository EmailTemplateRepository { get; }
     public IPaymentCardRepository PaymentCardRepository { get; set; }
     
     public UnitOfWork(ApplicationDbContext context)
@@ -18,6 +19,7 @@ public class UnitOfWork : IUnitOfWork
         InstructorRepository = new InstructorRepository(_context);
         PaymentCardRepository = new PaymentCardRepository(_context);
         CategoryRepository = new CategoryRepository(_context);
+        EmailTemplateRepository = new EmailTemplateRepository(_context);
     }
 
     public async Task<int> SaveAsync()
