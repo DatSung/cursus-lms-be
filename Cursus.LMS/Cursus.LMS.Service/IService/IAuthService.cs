@@ -7,7 +7,7 @@ namespace Cursus.LMS.Service.IService;
 public interface IAuthService
 {
     Task<ResponseDTO> SignUpStudent(RegisterStudentDTO registerStudentDTO);
-    Task<ResponseDTO> SignUpInstructor(InstructorDTO instructorDto);
+    Task<ResponseDTO> SignUpInstructor(SignUpInstructorDTO signUpInstructorDto);
     Task<ResponseDTO> UploadInstructorDegree(IFormFile file, ClaimsPrincipal user);
     Task<ResponseDTO> UploadUserAvatar(IFormFile file, ClaimsPrincipal user);
     Task<DegreeResponseDTO> GetInstructorDegree(ClaimsPrincipal user);
