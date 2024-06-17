@@ -13,5 +13,6 @@ public class AutoMapperProfile : Profile
         CreateMap<Category, CategoryDTO>().ReverseMap();
         CreateMap<Category, CreateCategoryDTO>().ReverseMap();
         CreateMap<Category, UpdateCategoryDTO>().ReverseMap();
+        CreateMap<Category, AdminCategoryDTO>().ReverseMap();
     }
 }

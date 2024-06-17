@@ -105,21 +105,21 @@ public class CategoryService : ICategoryService
                 switch (filterOn.Trim().ToLower())
                 {
                     case "name":
-                    {
-                        rootCategories = rootCategories.Where(x =>
-                            x.Name.Contains(filterQuery, StringComparison.CurrentCultureIgnoreCase)).ToList();
-                        break;
-                    }
+                        {
+                            rootCategories = rootCategories.Where(x =>
+                                x.Name.Contains(filterQuery, StringComparison.CurrentCultureIgnoreCase)).ToList();
+                            break;
+                        }
                     case "description":
-                    {
-                        rootCategories = rootCategories.Where(x =>
-                            x.Name.Contains(filterQuery, StringComparison.CurrentCultureIgnoreCase)).ToList();
-                        break;
-                    }
+                        {
+                            rootCategories = rootCategories.Where(x =>
+                                x.Name.Contains(filterQuery, StringComparison.CurrentCultureIgnoreCase)).ToList();
+                            break;
+                        }
                     default:
-                    {
-                        break;
-                    }
+                        {
+                            break;
+                        }
                 }
             }
 
@@ -129,23 +129,23 @@ public class CategoryService : ICategoryService
                 switch (sortBy.Trim().ToLower())
                 {
                     case "name":
-                    {
-                        rootCategories = isAscending == true
-                            ? [..rootCategories.OrderBy(x => x.Name)]
-                            : [..rootCategories.OrderByDescending(x => x.Name)];
-                        break;
-                    }
+                        {
+                            rootCategories = isAscending == true
+                                ? [.. rootCategories.OrderBy(x => x.Name)]
+                                : [.. rootCategories.OrderByDescending(x => x.Name)];
+                            break;
+                        }
                     case "description":
-                    {
-                        rootCategories = isAscending == true
-                            ? [..rootCategories.OrderBy(x => x.Description)]
-                            : [..rootCategories.OrderByDescending(x => x.Description)];
-                        break;
-                    }
+                        {
+                            rootCategories = isAscending == true
+                                ? [.. rootCategories.OrderBy(x => x.Description)]
+                                : [.. rootCategories.OrderByDescending(x => x.Description)];
+                            break;
+                        }
                     default:
-                    {
-                        break;
-                    }
+                        {
+                            break;
+                        }
                 }
             }
 
@@ -159,7 +159,15 @@ public class CategoryService : ICategoryService
             #endregion Query Parameters
 
             // Map to DTO
-            var rootCategoriesDto = _mapper.Map<List<CategoryDTO>>(rootCategories);
+            object rootCategoriesDto;
+            if (userRole == StaticUserRoles.Admin)
+            {
+                rootCategoriesDto = _mapper.Map<List<AdminCategoryDTO>>(rootCategories);
+            }
+            else
+            {
+                rootCategoriesDto = _mapper.Map<List<CategoryDTO>>(rootCategories);
+            }
 
             return new ResponseDTO()
             {
@@ -231,21 +239,21 @@ public class CategoryService : ICategoryService
                 switch (filterOn.Trim().ToLower())
                 {
                     case "name":
-                    {
-                        listCategory = listCategory.Where(x =>
-                            x.Name.Contains(filterQuery, StringComparison.CurrentCultureIgnoreCase)).ToList();
-                        break;
-                    }
+                        {
+                            listCategory = listCategory.Where(x =>
+                                x.Name.Contains(filterQuery, StringComparison.CurrentCultureIgnoreCase)).ToList();
+                            break;
+                        }
                     case "description":
-                    {
-                        listCategory = listCategory.Where(x =>
-                            x.Name.Contains(filterQuery, StringComparison.CurrentCultureIgnoreCase)).ToList();
-                        break;
-                    }
+                        {
+                            listCategory = listCategory.Where(x =>
+                                x.Name.Contains(filterQuery, StringComparison.CurrentCultureIgnoreCase)).ToList();
+                            break;
+                        }
                     default:
-                    {
-                        break;
-                    }
+                        {
+                            break;
+                        }
                 }
             }
 
@@ -255,23 +263,23 @@ public class CategoryService : ICategoryService
                 switch (sortBy.Trim().ToLower())
                 {
                     case "name":
-                    {
-                        listCategory = isAscending == true
-                            ? [..listCategory.OrderBy(x => x.Name)]
-                            : [..listCategory.OrderByDescending(x => x.Name)];
-                        break;
-                    }
+                        {
+                            listCategory = isAscending == true
+                                ? [.. listCategory.OrderBy(x => x.Name)]
+                                : [.. listCategory.OrderByDescending(x => x.Name)];
+                            break;
+                        }
                     case "description":
-                    {
-                        listCategory = isAscending == true
-                            ? [..listCategory.OrderBy(x => x.Description)]
-                            : [..listCategory.OrderByDescending(x => x.Description)];
-                        break;
-                    }
+                        {
+                            listCategory = isAscending == true
+                                ? [.. listCategory.OrderBy(x => x.Description)]
+                                : [.. listCategory.OrderByDescending(x => x.Description)];
+                            break;
+                        }
                     default:
-                    {
-                        break;
-                    }
+                        {
+                            break;
+                        }
                 }
             }
 
@@ -284,7 +292,16 @@ public class CategoryService : ICategoryService
 
             #endregion Query Parameters
 
-            var listCategoryDto = _mapper.Map<List<CategoryDTO>>(listCategory);
+            object listCategoryDto;
+            if (userRole == StaticUserRoles.Admin)
+            {
+                listCategoryDto = _mapper.Map<List<AdminCategoryDTO>>(listCategory);
+            }
+            else
+            {
+                listCategoryDto = _mapper.Map<List<CategoryDTO>>(listCategory);
+            }
+
 
             return new ResponseDTO()
             {
@@ -539,18 +556,18 @@ public class CategoryService : ICategoryService
             };
         }
     }
-        /// <summary>
-        /// Update Category
-        /// </summary>
-        /// <param name="updateCategoryDTO"></param>
-        /// <returns></returns>
-        public async Task<ResponseDTO> Update(UpdateCategoryDTO updateCategoryDTO)
+    /// <summary>
+    /// Update Category
+    /// </summary>
+    /// <param name="updateCategoryDTO"></param>
+    /// <returns></returns>
+    public async Task<ResponseDTO> Update(UpdateCategoryDTO updateCategoryDTO)
     {
-        try
+        /*try
         {
             // Tìm kiếm danh mục hiện có ID giống ID mình vừa nhập không
-            var update = 
-                await _unitOfWork.CategoryRepository.GetAsync(filter: x => x.Id == updateCategoryDTO.Id);
+            var update =
+                await _unitOfWork.CategoryRepository.GetCategoryByIdAsync(updateCategoryDTO.Id);
 
             if (update == null)
             {
@@ -588,14 +605,61 @@ public class CategoryService : ICategoryService
                 IsSuccess = false,
                 StatusCode = 500
             };
+        }*/
+
+        try
+        {
+            // Step 1: Retrieve the existing category by ID
+            var categoryToUpdate = await _unitOfWork.CategoryRepository.GetAsync(c => c.Id == updateCategoryDTO.Id);
+
+            // Step 2: Check if the category exists
+            if (categoryToUpdate == null)
+            {
+                return new ResponseDTO
+                {
+                    Message = "Category not found",
+                    Result = null,
+                    IsSuccess = false,
+                    StatusCode = 404
+                };
+            }
+
+            // Step 3 & 4: Map updated values and update in database context
+            _mapper.Map(updateCategoryDTO, categoryToUpdate);
+            _unitOfWork.CategoryRepository.Update(categoryToUpdate);
+
+            // Step 5: Save changes to the database
+            await _unitOfWork.SaveAsync();
+
+            return new ResponseDTO
+            {
+                Message = "Category updated successfully",
+                Result = categoryToUpdate,
+                IsSuccess = true,
+                StatusCode = 200
+            };
         }
+        catch (Exception e)
+        {
+            return new ResponseDTO
+            {
+                Message = e.Message,
+                Result = null,
+                IsSuccess = false,
+                StatusCode = 500
+            };
+        }
+
+
+
+
     }
 
     public async Task<ResponseDTO> Delete(Guid id)
     {
         var category =
                 await _unitOfWork.CategoryRepository.GetAsync(filter: x => x.Id == id);
-        if(category == null)
+        if (category == null)
         {
             return new ResponseDTO()
             {
