@@ -359,6 +359,8 @@ public class InstructorService : IInstructorService
         throw new NotImplementedException();
     }
 
+    // Instructor Comment
+    
     public Task<ResponseDTO> GetAllInstructorComment(Guid instructorId)
     {
         throw new NotImplementedException();
