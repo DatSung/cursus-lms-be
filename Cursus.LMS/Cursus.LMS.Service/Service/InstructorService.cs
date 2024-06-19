@@ -203,13 +203,88 @@ public class InstructorService : IInstructorService
         throw new NotImplementedException();
     }
 
-    public Task<ResponseDTO> AcceptInstructor(ClaimsPrincipal User, Guid id)
+    public async Task<ResponseDTO> AcceptInstructor(ClaimsPrincipal User, Guid instructorId)
     {
-        throw new NotImplementedException();
+        try
+        {
+            var userId = User.Claims.FirstOrDefault(x => x.Type == ClaimTypes.NameIdentifier)?.Value;
+            var instructor = await _unitOfWork.InstructorRepository.GetById(instructorId);
+            if (instructor is null)
+            {
+                return new ResponseDTO()
+                {
+                    Message = "Instructor was not found",
+                    IsSuccess = false,
+                    StatusCode = 404,
+                    Result = null
+                };
+            }
+            
+            instructor.IsAccepted = true;
+            instructor.AcceptedBy = userId;
+            instructor.AcceptedTime = DateTime.UtcNow;
+            await _unitOfWork.SaveAsync();
+
+            return new ResponseDTO()
+            {
+                Message = "Accept instructor successfully",
+                Result = null,
+                IsSuccess = true,
+                StatusCode = 200
+            };
+        }
+        catch (Exception e)
+        {
+            return new ResponseDTO()
+            {
+                Message = e.Message,
+                IsSuccess = true,
+                StatusCode = 500,
+                Result = null
+            };
+        }
     }
 
-    public Task<ResponseDTO> RejectInstructor(ClaimsPrincipal User, Guid id)
+    public async Task<ResponseDTO> RejectInstructor(ClaimsPrincipal User, Guid instructorId)
     {
-        throw new NotImplementedException();
+        try
+        {
+            var userId = User.Claims.FirstOrDefault(x => x.Type == ClaimTypes.NameIdentifier)?.Value;
+            
+            var instructor = await _unitOfWork.InstructorRepository.GetById(instructorId);
+            if (instructor is null)
+            {
+                return new ResponseDTO()
+                {
+                    Message = "Instructor was not found",
+                    IsSuccess = false,
+                    StatusCode = 404,
+                    Result = null
+                };
+            }
+
+            instructor.IsAccepted = false;
+            instructor.RejectedBy = userId;
+            instructor.RejectedTime = DateTime.UtcNow;
+            await _unitOfWork.SaveAsync();
+
+            return new ResponseDTO()
+            {
+                Message = "Reject instructor successfully",
+                Result = null,
+                IsSuccess = true,
+                StatusCode = 200
+            };
+        }
+        catch (Exception e)
+        {
+            return new ResponseDTO()
+            {
+                Message = e.Message,
+                IsSuccess = true,
+                StatusCode = 500,
+                Result = null
+            };
+        }
     }
 }
