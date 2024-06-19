@@ -6,6 +6,7 @@ using Cursus.LMS.Model.DTO;
 using Cursus.LMS.Service.IService;
 using Cursus.LMS.Utility.Constants;
 using Microsoft.IdentityModel.Tokens;
+using static Cursus.LMS.Utility.Constants.StaticStatus;
 
 namespace Cursus.LMS.Service.Service;
 
@@ -44,27 +45,27 @@ public class InstructorService : IInstructorService
                 switch (filterOn.Trim().ToLower())
                 {
                     case "name":
-                    {
-                        instructors = _unitOfWork.InstructorRepository.GetAllAsync(includeProperties: "ApplicationUser")
-                            .GetAwaiter().GetResult().Where(x =>
-                                x.ApplicationUser.FullName.Contains(filterQuery,
-                                    StringComparison.CurrentCultureIgnoreCase)).ToList();
-                        break;
-                    }
+                        {
+                            instructors = _unitOfWork.InstructorRepository.GetAllAsync(includeProperties: "ApplicationUser")
+                                .GetAwaiter().GetResult().Where(x =>
+                                    x.ApplicationUser.FullName.Contains(filterQuery,
+                                        StringComparison.CurrentCultureIgnoreCase)).ToList();
+                            break;
+                        }
                     case "email":
-                    {
-                        instructors = _unitOfWork.InstructorRepository.GetAllAsync(includeProperties: "ApplicationUser")
-                            .GetAwaiter().GetResult().Where(x =>
-                                x.ApplicationUser.Email.Contains(filterQuery,
-                                    StringComparison.CurrentCultureIgnoreCase)).ToList();
-                        break;
-                    }
+                        {
+                            instructors = _unitOfWork.InstructorRepository.GetAllAsync(includeProperties: "ApplicationUser")
+                                .GetAwaiter().GetResult().Where(x =>
+                                    x.ApplicationUser.Email.Contains(filterQuery,
+                                        StringComparison.CurrentCultureIgnoreCase)).ToList();
+                            break;
+                        }
                     default:
-                    {
-                        instructors = _unitOfWork.InstructorRepository.GetAllAsync(includeProperties: "ApplicationUser")
-                            .GetAwaiter().GetResult().ToList();
-                        break;
-                    }
+                        {
+                            instructors = _unitOfWork.InstructorRepository.GetAllAsync(includeProperties: "ApplicationUser")
+                                .GetAwaiter().GetResult().ToList();
+                            break;
+                        }
                 }
             }
             else
@@ -79,23 +80,23 @@ public class InstructorService : IInstructorService
                 switch (sortBy.Trim().ToLower())
                 {
                     case "name":
-                    {
-                        instructors = isAscending == true
-                            ? [.. instructors.OrderBy(x => x.ApplicationUser.FullName)]
-                            : [.. instructors.OrderByDescending(x => x.ApplicationUser.FullName)];
-                        break;
-                    }
+                        {
+                            instructors = isAscending == true
+                                ? [.. instructors.OrderBy(x => x.ApplicationUser.FullName)]
+                                : [.. instructors.OrderByDescending(x => x.ApplicationUser.FullName)];
+                            break;
+                        }
                     case "email":
-                    {
-                        instructors = isAscending == true
-                            ? [.. instructors.OrderBy(x => x.ApplicationUser.Email)]
-                            : [.. instructors.OrderByDescending(x => x.ApplicationUser.Email)];
-                        break;
-                    }
+                        {
+                            instructors = isAscending == true
+                                ? [.. instructors.OrderBy(x => x.ApplicationUser.Email)]
+                                : [.. instructors.OrderByDescending(x => x.ApplicationUser.Email)];
+                            break;
+                        }
                     default:
-                    {
-                        break;
-                    }
+                        {
+                            break;
+                        }
                 }
             }
 
@@ -198,6 +199,12 @@ public class InstructorService : IInstructorService
         }
     }
 
+
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="updateInstructorDto"></param>
+    /// <returns></returns>
     public async Task<ResponseDTO> UpdateById(UpdateInstructorDTO updateInstructorDto)
     {
         try
@@ -222,14 +229,14 @@ public class InstructorService : IInstructorService
 
             instructorToUpdate.ApplicationUser.Address = updateInstructorDto?.Address;
             instructorToUpdate.ApplicationUser.BirthDate = updateInstructorDto?.BirthDate;
-            instructorToUpdate.ApplicationUser.PhoneNumber =updateInstructorDto?.PhoneNumber;
+            instructorToUpdate.ApplicationUser.PhoneNumber = updateInstructorDto?.PhoneNumber;
             instructorToUpdate.ApplicationUser.Gender = updateInstructorDto?.Gender;
             instructorToUpdate.ApplicationUser.FullName = updateInstructorDto?.FullName;
             instructorToUpdate.ApplicationUser.Country = updateInstructorDto?.Country;
             instructorToUpdate.ApplicationUser.Email = updateInstructorDto?.Email;
             instructorToUpdate.ApplicationUser.TaxNumber = updateInstructorDto?.TaxNumber;
 
-            
+
 
             _unitOfWork.InstructorRepository.Update(instructorToUpdate);
             await _unitOfWork.SaveAsync();
@@ -360,26 +367,143 @@ public class InstructorService : IInstructorService
     }
 
     // Instructor Comment
-    
+
     public Task<ResponseDTO> GetAllInstructorComment(Guid instructorId)
     {
         throw new NotImplementedException();
     }
 
-    public Task<ResponseDTO> CreateInstructorComment(ClaimsPrincipal User,
-        CreateInstructorComment createInstructorComment)
+    public async Task<ResponseDTO> CreateInstructorComment(CreateInstructorCommentDTO createInstructorComment)
     {
-        throw new NotImplementedException();
+        try
+        {
+            //Map DTO qua entity InstructorComment
+            var comment = _mapper.Map<InstructorComment>(createInstructorComment);
+            //Tìm xem có đúng ID instructor hay không
+            var instructorId = await _unitOfWork.InstructorRepository.GetAsync(i => i.InstructorId == createInstructorComment.instructorId);
+            if (instructorId == null)
+            {
+                return new ResponseDTO()
+                {
+                    Message = "InstructorId Invalid",
+                    Result = null,
+                    IsSuccess = false,
+                    StatusCode = 400
+                };
+            }
+
+            //chuyển status về 1
+            comment.Status = 1;
+
+            //thêm comment vào cho instructor
+            await _unitOfWork.InstructorCommentRepository.AddAsync(comment);
+            await _unitOfWork.SaveAsync();
+            return new ResponseDTO()
+            {
+                Message = "Comment created successfully",
+                Result = comment,
+                IsSuccess = true,
+                StatusCode = 200,
+            };
+        }
+        catch (Exception e)
+        {
+            return new ResponseDTO
+            {
+                Message = e.Message,
+                Result = null,
+                IsSuccess = false,
+                StatusCode = 500
+            };
+        }
     }
 
-    public Task<ResponseDTO> UpdateInstructorComment(ClaimsPrincipal User,
-        UpdateInstructorComment createInstructorComment)
+    public async Task<ResponseDTO> UpdateInstructorComment(UpdateInstructorCommentDTO updateInstructorCommentDTO)
     {
-        throw new NotImplementedException();
+        try
+        {
+
+            var instructorId =
+                await _unitOfWork.InstructorCommentRepository.GetAsync(i => i.Id == updateInstructorCommentDTO.Id);
+            if (instructorId == null)
+            {
+                return new ResponseDTO()
+                {
+                    Message = "InstructorId Invalid",
+                    Result = null,
+                    IsSuccess = false,
+                    StatusCode = 400
+                };
+            }
+
+            //update comment
+            _mapper.Map(updateInstructorCommentDTO, instructorId);
+            _unitOfWork.InstructorCommentRepository.Update(instructorId);
+
+            //Lưu comment
+            await _unitOfWork.SaveAsync();
+
+            return new ResponseDTO()
+            {
+                Message = "Comment updated successfully",
+                Result = null,
+                IsSuccess = true,
+                StatusCode = 200,
+            };
+
+        }
+        catch (Exception e)
+        {
+            return new ResponseDTO
+            {
+                Message = e.Message,
+                Result = null,
+                IsSuccess = false,
+                StatusCode = 500
+            };
+        }
     }
 
-    public Task<ResponseDTO> DeleteInstructorComment(ClaimsPrincipal User, Guid commentId)
+    public async Task<ResponseDTO> DeleteInstructorComment(Guid commentId)
     {
-        throw new NotImplementedException();
+        try
+        {
+            var comment =
+                    await _unitOfWork.InstructorCommentRepository.GetAsync(x => x.Id == commentId);
+            if (comment == null)
+            {
+                return new ResponseDTO()
+                {
+                    Message = "Category was not found",
+                    IsSuccess = false,
+                    StatusCode = 404,
+                    Result = null,
+                };
+            }
+
+            //chuyển status về 0 chứ không xóa dữ liệu
+            comment.Status = 2;
+            //Lưu thay đổi
+            _unitOfWork.InstructorCommentRepository.Update(comment);
+            await _unitOfWork.SaveAsync();
+
+            return new ResponseDTO()
+            {
+                Message = "Category deleted successfully",
+                IsSuccess = true,
+                StatusCode = 200,
+                Result = comment.Id,
+            };
+        }
+        catch (Exception e)
+        {
+            return new ResponseDTO
+            {
+                Message = e.Message,
+                Result = null,
+                IsSuccess = false,
+                StatusCode = 500
+            };
+        }
     }
 }

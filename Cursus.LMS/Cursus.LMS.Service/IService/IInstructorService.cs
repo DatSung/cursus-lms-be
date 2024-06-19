@@ -27,7 +27,7 @@ public interface IInstructorService
     Task<ResponseDTO> GetInstructorPayoutMoney(Guid instructorId);
 
     Task<ResponseDTO> GetAllInstructorComment(Guid instructorId);
-    Task<ResponseDTO> CreateInstructorComment(ClaimsPrincipal User, CreateInstructorComment createInstructorComment);
-    Task<ResponseDTO> UpdateInstructorComment(ClaimsPrincipal User, UpdateInstructorComment createInstructorComment);
-    Task<ResponseDTO> DeleteInstructorComment(ClaimsPrincipal User, Guid commentId);
+    Task<ResponseDTO> CreateInstructorComment(CreateInstructorCommentDTO createInstructorComment);
+    Task<ResponseDTO> UpdateInstructorComment(UpdateInstructorCommentDTO updateInstructorComment);
+    Task<ResponseDTO> DeleteInstructorComment(Guid commentId);
 }

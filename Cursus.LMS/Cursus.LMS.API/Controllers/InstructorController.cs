@@ -111,9 +111,9 @@ namespace Cursus.LMS.API.Controllers
         [Route("comment/")]
         public async Task<ActionResult<ResponseDTO>> CreateInstructorComment
         (
-            CreateInstructorComment createInstructorComment)
+            CreateInstructorCommentDTO createInstructorComment)
         {
-            var responseDto = await _instructorService.CreateInstructorComment(User, createInstructorComment);
+            var responseDto = await _instructorService.CreateInstructorComment(createInstructorComment);
             return StatusCode(responseDto.StatusCode, responseDto);
         }
 
@@ -121,9 +121,9 @@ namespace Cursus.LMS.API.Controllers
         [Route("comment/")]
         public async Task<ActionResult<ResponseDTO>> UpdateInstructorComment
         (
-            UpdateInstructorComment updateInstructorComment)
+            UpdateInstructorCommentDTO updateInstructorComment)
         {
-            var responseDto = await _instructorService.UpdateInstructorComment(User, updateInstructorComment);
+            var responseDto = await _instructorService.UpdateInstructorComment(updateInstructorComment);
             return StatusCode(responseDto.StatusCode, responseDto);
         }
 
@@ -133,7 +133,7 @@ namespace Cursus.LMS.API.Controllers
         (
             [FromRoute] Guid commentId)
         {
-            var responseDto = await _instructorService.DeleteInstructorComment(User, commentId);
+            var responseDto = await _instructorService.DeleteInstructorComment(commentId);
             return StatusCode(responseDto.StatusCode, responseDto);
         }
     }
