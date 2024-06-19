@@ -83,9 +83,7 @@ namespace Cursus.LMS.API.Controllers
         }
 
         [HttpPut]
-        [Route("{id:guid}")]
-        public async Task<ActionResult<ResponseDTO>> Update([FromRoute] Guid id,
-            [FromBody] UpdateCategoryDTO updateCategoryDto)
+        public async Task<ActionResult<ResponseDTO>> Update([FromBody] UpdateCategoryDTO updateCategoryDto)
         {
             var responeDto = await _categoryService.Update(updateCategoryDto);
             return StatusCode(responeDto.StatusCode, responeDto);

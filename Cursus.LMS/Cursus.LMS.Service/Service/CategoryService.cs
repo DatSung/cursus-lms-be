@@ -507,7 +507,27 @@ public class CategoryService : ICategoryService
             // Map DTO sang entity Category
             var category = _mapper.Map<Category>(createCategoryDto);
 
-            if (category.ParentId.HasValue)
+            // Kiểm tra xem đây có phải là danh mục đầu tiên không
+            var existingCategories = await _unitOfWork.CategoryRepository.GetAllAsync();
+            if (existingCategories == null || !existingCategories.Any())
+            {
+                category.ParentId = null;
+                category.Status = 1;
+
+                // Thêm danh mục vào cơ sở dữ liệu
+                await _unitOfWork.CategoryRepository.AddAsync(category);
+                await _unitOfWork.SaveAsync();
+                return new ResponseDTO
+                {
+                    Message = "Category created successfully",
+                    Result = category,
+                    IsSuccess = true,
+                    StatusCode = 200,
+                };
+            }
+
+            // Kiểm tra xem ParentId là null hoặc tồn tại trong cơ sở dữ liệu
+            else if (category.ParentId != null)
             {
                 var parentCategory = await _unitOfWork.CategoryRepository.GetCategoryByIdAsync(category.ParentId.Value);
                 if (parentCategory == null)
@@ -520,29 +540,28 @@ public class CategoryService : ICategoryService
                         StatusCode = 400
                     };
                 }
-            }
-            else
-            {
-                // Kiểm tra xem đây có phải là danh mục đầu tiên không
-                var existingCategories = await _unitOfWork.CategoryRepository.GetAllAsync();
-                if (existingCategories == null || !existingCategories.Any())
+                category.Status = 1;
+
+                // Thêm danh mục vào cơ sở dữ liệu
+                await _unitOfWork.CategoryRepository.AddAsync(category);
+                var save = await _unitOfWork.SaveAsync();
+                if (save <= 0)
                 {
-                    category.ParentId = null;
+                    return new ResponseDTO
+                    {
+                        Message = "",
+                        Result = null,
+                        IsSuccess = false,
+                        StatusCode = 400
+                    };
                 }
             }
-
-            category.Status = 1;
-
-            // Thêm danh mục vào cơ sở dữ liệu
-            await _unitOfWork.CategoryRepository.AddAsync(category);
-            await _unitOfWork.SaveAsync();
-
             return new ResponseDTO
             {
-                Message = "Category created successfully ",
+                Message = "Category created successfully",
                 Result = category,
                 IsSuccess = true,
-                StatusCode = 200,
+                StatusCode = 200
             };
         }
         catch (Exception e)
@@ -671,7 +690,7 @@ public class CategoryService : ICategoryService
         }
 
         //chuyển status về 0 chứ không xóa dữ liệu
-        category.Status = 0;
+        category.Status = 2;
         _unitOfWork.CategoryRepository.Update(category);
 
         //tìm danh sách con của category bị chuyển đổi status về 0
