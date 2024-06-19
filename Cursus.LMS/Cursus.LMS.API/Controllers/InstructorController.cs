@@ -1,5 +1,7 @@
 using Cursus.LMS.Model.DTO;
 using Cursus.LMS.Service.IService;
+using Cursus.LMS.Service.Service;
+using Hangfire;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -77,7 +79,6 @@ namespace Cursus.LMS.API.Controllers
         {
             var responseDto = await _instructorService.UpdateById(instructorDto);
             return StatusCode(responseDto.StatusCode, responseDto);
-
         }
 
         [HttpPost]
@@ -135,6 +136,14 @@ namespace Cursus.LMS.API.Controllers
         {
             var responseDto = await _instructorService.DeleteInstructorComment(commentId);
             return StatusCode(responseDto.StatusCode, responseDto);
+        }
+
+        [HttpPost]
+        [Route("export")]
+        public async Task<ActionResult<ResponseDTO>> ExportInstructor()
+        {
+            BackgroundJob.Enqueue<InstructorService>(job => job.ExportInstructors());
+            return Ok();
         }
     }
 }

@@ -7,6 +7,7 @@ using Cursus.LMS.Service.IService;
 using Cursus.LMS.Utility.Constants;
 using Microsoft.IdentityModel.Tokens;
 using static Cursus.LMS.Utility.Constants.StaticStatus;
+using Task = DocumentFormat.OpenXml.Office2021.DocumentTasks.Task;
 
 namespace Cursus.LMS.Service.Service;
 
@@ -14,11 +15,13 @@ public class InstructorService : IInstructorService
 {
     private readonly IUnitOfWork _unitOfWork;
     private readonly IMapper _mapper;
+    private readonly IClosedXMLService _closedXmlService;
 
-    public InstructorService(IUnitOfWork unitOfWork, IMapper mapper)
+    public InstructorService(IUnitOfWork unitOfWork, IMapper mapper, IClosedXMLService closedXmlService)
     {
         _unitOfWork = unitOfWork;
         _mapper = mapper;
+        _closedXmlService = closedXmlService;
     }
 
 
@@ -45,27 +48,27 @@ public class InstructorService : IInstructorService
                 switch (filterOn.Trim().ToLower())
                 {
                     case "name":
-                        {
-                            instructors = _unitOfWork.InstructorRepository.GetAllAsync(includeProperties: "ApplicationUser")
-                                .GetAwaiter().GetResult().Where(x =>
-                                    x.ApplicationUser.FullName.Contains(filterQuery,
-                                        StringComparison.CurrentCultureIgnoreCase)).ToList();
-                            break;
-                        }
+                    {
+                        instructors = _unitOfWork.InstructorRepository.GetAllAsync(includeProperties: "ApplicationUser")
+                            .GetAwaiter().GetResult().Where(x =>
+                                x.ApplicationUser.FullName.Contains(filterQuery,
+                                    StringComparison.CurrentCultureIgnoreCase)).ToList();
+                        break;
+                    }
                     case "email":
-                        {
-                            instructors = _unitOfWork.InstructorRepository.GetAllAsync(includeProperties: "ApplicationUser")
-                                .GetAwaiter().GetResult().Where(x =>
-                                    x.ApplicationUser.Email.Contains(filterQuery,
-                                        StringComparison.CurrentCultureIgnoreCase)).ToList();
-                            break;
-                        }
+                    {
+                        instructors = _unitOfWork.InstructorRepository.GetAllAsync(includeProperties: "ApplicationUser")
+                            .GetAwaiter().GetResult().Where(x =>
+                                x.ApplicationUser.Email.Contains(filterQuery,
+                                    StringComparison.CurrentCultureIgnoreCase)).ToList();
+                        break;
+                    }
                     default:
-                        {
-                            instructors = _unitOfWork.InstructorRepository.GetAllAsync(includeProperties: "ApplicationUser")
-                                .GetAwaiter().GetResult().ToList();
-                            break;
-                        }
+                    {
+                        instructors = _unitOfWork.InstructorRepository.GetAllAsync(includeProperties: "ApplicationUser")
+                            .GetAwaiter().GetResult().ToList();
+                        break;
+                    }
                 }
             }
             else
@@ -80,23 +83,23 @@ public class InstructorService : IInstructorService
                 switch (sortBy.Trim().ToLower())
                 {
                     case "name":
-                        {
-                            instructors = isAscending == true
-                                ? [.. instructors.OrderBy(x => x.ApplicationUser.FullName)]
-                                : [.. instructors.OrderByDescending(x => x.ApplicationUser.FullName)];
-                            break;
-                        }
+                    {
+                        instructors = isAscending == true
+                            ? [.. instructors.OrderBy(x => x.ApplicationUser.FullName)]
+                            : [.. instructors.OrderByDescending(x => x.ApplicationUser.FullName)];
+                        break;
+                    }
                     case "email":
-                        {
-                            instructors = isAscending == true
-                                ? [.. instructors.OrderBy(x => x.ApplicationUser.Email)]
-                                : [.. instructors.OrderByDescending(x => x.ApplicationUser.Email)];
-                            break;
-                        }
+                    {
+                        instructors = isAscending == true
+                            ? [.. instructors.OrderBy(x => x.ApplicationUser.Email)]
+                            : [.. instructors.OrderByDescending(x => x.ApplicationUser.Email)];
+                        break;
+                    }
                     default:
-                        {
-                            break;
-                        }
+                    {
+                        break;
+                    }
                 }
             }
 
@@ -162,6 +165,8 @@ public class InstructorService : IInstructorService
 
             InstructorInfoDTO instructorInfoDto = new InstructorInfoDTO()
             {
+                InstructorId = instructor.InstructorId,
+                UserId = instructor.UserId,
                 FullName = instructor.ApplicationUser.FullName,
                 Email = instructor.ApplicationUser.Email,
                 Address = instructor.ApplicationUser.Address,
@@ -235,7 +240,6 @@ public class InstructorService : IInstructorService
             instructorToUpdate.ApplicationUser.Country = updateInstructorDto?.Country;
             instructorToUpdate.ApplicationUser.Email = updateInstructorDto?.Email;
             instructorToUpdate.ApplicationUser.TaxNumber = updateInstructorDto?.TaxNumber;
-
 
 
             _unitOfWork.InstructorRepository.Update(instructorToUpdate);
@@ -380,7 +384,9 @@ public class InstructorService : IInstructorService
             //Map DTO qua entity InstructorComment
             var comment = _mapper.Map<InstructorComment>(createInstructorComment);
             //Tìm xem có đúng ID instructor hay không
-            var instructorId = await _unitOfWork.InstructorRepository.GetAsync(i => i.InstructorId == createInstructorComment.instructorId);
+            var instructorId =
+                await _unitOfWork.InstructorRepository.GetAsync(i =>
+                    i.InstructorId == createInstructorComment.instructorId);
             if (instructorId == null)
             {
                 return new ResponseDTO()
@@ -422,7 +428,6 @@ public class InstructorService : IInstructorService
     {
         try
         {
-
             var instructorId =
                 await _unitOfWork.InstructorCommentRepository.GetAsync(i => i.Id == updateInstructorCommentDTO.Id);
             if (instructorId == null)
@@ -450,7 +455,6 @@ public class InstructorService : IInstructorService
                 IsSuccess = true,
                 StatusCode = 200,
             };
-
         }
         catch (Exception e)
         {
@@ -469,7 +473,7 @@ public class InstructorService : IInstructorService
         try
         {
             var comment =
-                    await _unitOfWork.InstructorCommentRepository.GetAsync(x => x.Id == commentId);
+                await _unitOfWork.InstructorCommentRepository.GetAsync(x => x.Id == commentId);
             if (comment == null)
             {
                 return new ResponseDTO()
@@ -505,5 +509,19 @@ public class InstructorService : IInstructorService
                 StatusCode = 500
             };
         }
+    }
+
+    public async Task<ResponseDTO> ExportInstructors()
+    {
+        var instructors = _unitOfWork.InstructorRepository.GetAllAsync(includeProperties:"ApplicationUser").GetAwaiter().GetResult().ToList();
+        var instructorInfoDtos = _mapper.Map<List<InstructorInfoDTO>>(instructors);
+        await _closedXmlService.ExportInstructorExcel(instructorInfoDtos);
+        return new ResponseDTO()
+        {
+            Message = "Waiting...",
+            IsSuccess = true,
+            StatusCode = 200,
+            Result = null
+        };
     }
 }

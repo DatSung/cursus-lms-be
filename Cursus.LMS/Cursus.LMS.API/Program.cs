@@ -2,6 +2,7 @@ using Cursus.LMS.API.Extentions;
 using Cursus.LMS.DataAccess.Context;
 using Cursus.LMS.Service.Mappings;
 using Cursus.LMS.Utility.Constants;
+using Hangfire;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
@@ -40,6 +41,10 @@ builder.Services.AddFirebaseServices();
 // Base on Extensions.RedisServiceExtensions
 builder.AddRedisCache();
 
+// Register hangfire services life cycle
+// Base on Extensions.HangfireServiceExtensions
+builder.AddHangfireServices();
+
 builder.Services.AddEndpointsApiExplorer();
 
 // Register Authentication
@@ -70,6 +75,10 @@ app.UseCors(options =>
         .AllowAnyMethod()
         .AllowAnyOrigin();
 });
+
+app.UseHangfireDashboard();
+
+app.MapHangfireDashboard("/hangfire");
 
 app.UseHttpsRedirection();
 

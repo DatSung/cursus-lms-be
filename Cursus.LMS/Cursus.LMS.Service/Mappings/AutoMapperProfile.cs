@@ -18,9 +18,9 @@ public class AutoMapperProfile : Profile
                 => opt.MapFrom(src => Guid.NewGuid()))
             .ReverseMap();
         CreateMap<Category, UpdateCategoryDTO>().ReverseMap();
-        
+
         CreateMap<Category, AdminCategoryDTO>()
-            .ForMember(dest => dest.ParentName, opt 
+            .ForMember(dest => dest.ParentName, opt
                 => opt.MapFrom(src => src.ParentCategory.Name)).ReverseMap();
 
         CreateMap<Instructor, InstructorInfoLiteDTO>()
@@ -37,6 +37,36 @@ public class AutoMapperProfile : Profile
             .ForMember(dest => dest.IsAccepted, opt
                 => opt.MapFrom(src => src.IsAccepted))
             .ReverseMap();
+
+        CreateMap<Instructor, InstructorInfoDTO>()
+            .ForMember(dest => dest.InstructorId, opt
+                => opt.MapFrom(src => src.InstructorId))
+            .ForMember(dest => dest.UserId, opt
+                => opt.MapFrom(src => src.UserId))
+            .ForMember(dest => dest.FullName, opt
+                => opt.MapFrom(src => src.ApplicationUser.FullName))
+            .ForMember(dest => dest.Email, opt
+                => opt.MapFrom(src => src.ApplicationUser.Email))
+            .ForMember(dest => dest.PhoneNumber, opt
+                => opt.MapFrom(src => src.ApplicationUser.PhoneNumber))
+            .ForMember(dest => dest.Gender, opt
+                => opt.MapFrom(src => src.ApplicationUser.Gender))
+            .ForMember(dest => dest.BirthDate, opt
+                => opt.MapFrom(src => src.ApplicationUser.BirthDate))
+            .ForMember(dest => dest.Country, opt
+                => opt.MapFrom(src => src.ApplicationUser.Country))
+            .ForMember(dest => dest.Address, opt
+                => opt.MapFrom(src => src.ApplicationUser.Address))
+            .ForMember(dest => dest.Degree, opt
+                => opt.MapFrom(src => src.Degree))
+            .ForMember(dest => dest.Industry, opt
+                => opt.MapFrom(src => src.Industry))
+            .ForMember(dest => dest.TaxNumber, opt
+                => opt.MapFrom(src => src.ApplicationUser.TaxNumber))
+            .ForMember(dest => dest.IsAccepted, opt
+                => opt.MapFrom(src => src.IsAccepted))
+            .ReverseMap();
+
         CreateMap<InstructorComment, CreateInstructorCommentDTO>().ReverseMap();
         CreateMap<InstructorComment, UpdateInstructorCommentDTO>().ReverseMap();
     }
