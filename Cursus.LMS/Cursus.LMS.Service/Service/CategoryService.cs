@@ -690,7 +690,7 @@ public class CategoryService : ICategoryService
         }
 
         //chuyển status về 0 chứ không xóa dữ liệu
-        category.Status = 0;
+        category.Status = 2;
         _unitOfWork.CategoryRepository.Update(category);
 
         //tìm danh sách con của category bị chuyển đổi status về 0
