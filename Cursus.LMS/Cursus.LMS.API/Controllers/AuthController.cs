@@ -72,9 +72,9 @@ namespace Cursus.LMS.API.Controllers
         /// <returns>ResponseDTO</returns>
         [HttpPost]
         [Route("sign-up-instructor")]
-        public async Task<ActionResult<ResponseDTO>> SignUpInstructor([FromBody] InstructorDTO instructorDto)
+        public async Task<ActionResult<ResponseDTO>> SignUpInstructor([FromBody] SignUpInstructorDTO signUpInstructorDto)
         {
-            var result = await _authService.SignUpInstructor(instructorDto);
+            var result = await _authService.SignUpInstructor(signUpInstructorDto);
             return StatusCode(result.StatusCode, result);
         }
 

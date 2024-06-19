@@ -47,5 +47,20 @@ namespace Cursus.LMS.DataAccess.Repository
         {
             return await _userManager.Users.FirstOrDefaultAsync(u => u.PhoneNumber == phoneNumber);
         }
+
+        public Task<List<ApplicationUser>> GetInstructorUser()
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<List<ApplicationUser>> GetStudentUser()
+        {
+            throw new NotImplementedException();
+        }
+
+        public async Task<IEnumerable<ApplicationUser>> GetUsersInRoleAsync(string role)
+        {
+            return await _userManager.GetUsersInRoleAsync(role);
+        }
     }
 }

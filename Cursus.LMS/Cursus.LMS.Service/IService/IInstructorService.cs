@@ -17,7 +17,7 @@ public interface IInstructorService
     );
 
     Task<ResponseDTO> GetById(Guid id);
-    Task<ResponseDTO> UpdateById(Guid id, UpdateInstructorDTO updateInstructorDto);
+    Task<ResponseDTO> UpdateById(UpdateInstructorDTO updateInstructorDto);
     Task<ResponseDTO> AcceptInstructor(ClaimsPrincipal User, Guid id);
     Task<ResponseDTO> RejectInstructor(ClaimsPrincipal User, Guid id);
 }

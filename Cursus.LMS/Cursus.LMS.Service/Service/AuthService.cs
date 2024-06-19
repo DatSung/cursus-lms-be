@@ -241,14 +241,14 @@ public class AuthService : IAuthService
     /// <summary>
     /// Registers a new instructor in the system.
     /// </summary>
-    /// <param name="instructorDto">The data transfer object containing instructor details.</param>
+    /// <param name="signUpInstructorDto">The data transfer object containing instructor details.</param>
     /// <returns><see cref="ResponseDTO"/> object containing the result of the registration process.</returns>
-    public async Task<ResponseDTO> SignUpInstructor(InstructorDTO instructorDto)
+    public async Task<ResponseDTO> SignUpInstructor(SignUpInstructorDTO signUpInstructorDto)
     {
         try
         {
-            // Find exist user with the email from instructorDto
-            var user = await _userManager.FindByEmailAsync(instructorDto.Email);
+            // Find exist user with the email from signUpInstructorDto
+            var user = await _userManager.FindByEmailAsync(signUpInstructorDto.Email);
 
             // Check if user exist
             if (user is not null)
@@ -256,26 +256,26 @@ public class AuthService : IAuthService
                 return new ResponseDTO()
                 {
                     Message = "Email is using by another user",
-                    Result = instructorDto,
+                    Result = signUpInstructorDto,
                     IsSuccess = false,
                     StatusCode = 500
                 };
             }
 
-            var isPhonenumerExit = await _userManager.Users.AnyAsync(u => u.PhoneNumber == instructorDto.PhoneNumber);
+            var isPhonenumerExit = await _userManager.Users.AnyAsync(u => u.PhoneNumber == signUpInstructorDto.PhoneNumber);
             if (isPhonenumerExit)
             {
                 return new ResponseDTO()
                 {
                     Message = "Phone number is using by another user",
-                    Result = instructorDto,
+                    Result = signUpInstructorDto,
                     IsSuccess = false,
                     StatusCode = 500
                 };
             }
 
             var isCardExist =
-                await _unitOfWork.PaymentCardRepository.GetAsync(x => x.CardNumber == instructorDto.CardNumber);
+                await _unitOfWork.PaymentCardRepository.GetAsync(x => x.CardNumber == signUpInstructorDto.CardNumber);
             if (isCardExist is not null)
             {
                 return new ResponseDTO
@@ -290,20 +290,20 @@ public class AuthService : IAuthService
             // Create new instance of ApplicationUser
             ApplicationUser newUser = new ApplicationUser()
             {
-                Address = instructorDto.Address,
-                Email = instructorDto.Email,
-                BirthDate = instructorDto.BirthDate,
-                UserName = instructorDto.Email,
-                FullName = instructorDto.FullName,
-                Gender = instructorDto.Gender,
-                Country = instructorDto.Country,
-                PhoneNumber = instructorDto.PhoneNumber,
-                TaxNumber = instructorDto.TaxNumber,
+                Address = signUpInstructorDto.Address,
+                Email = signUpInstructorDto.Email,
+                BirthDate = signUpInstructorDto.BirthDate,
+                UserName = signUpInstructorDto.Email,
+                FullName = signUpInstructorDto.FullName,
+                Gender = signUpInstructorDto.Gender,
+                Country = signUpInstructorDto.Country,
+                PhoneNumber = signUpInstructorDto.PhoneNumber,
+                TaxNumber = signUpInstructorDto.TaxNumber,
                 UpdateTime = DateTime.Now
             };
 
             // Create new user to database
-            var createUserResult = await _userManager.CreateAsync(newUser, instructorDto.Password);
+            var createUserResult = await _userManager.CreateAsync(newUser, signUpInstructorDto.Password);
 
 
             // Check if error occur
@@ -315,29 +315,32 @@ public class AuthService : IAuthService
                     Message = createUserResult.Errors.ToString(),
                     IsSuccess = false,
                     StatusCode = 500,
-                    Result = instructorDto
+                    Result = signUpInstructorDto
                 };
             }
 
             // Get the user again 
-            user = await _userManager.FindByEmailAsync(instructorDto.Email);
+            user = await _userManager.FindByEmailAsync(signUpInstructorDto.Email);
 
 
             // Create instance of instructor
             Instructor instructor = new Instructor()
             {
                 UserId = user.Id,
-                Degree = instructorDto.Degree,
-                Industry = instructorDto.Industry,
-                Introduction = instructorDto.Introduction
+                Degree = signUpInstructorDto.Degree,
+                Industry = signUpInstructorDto.Industry,
+                Introduction = signUpInstructorDto.Introduction,
+                AcceptedBy = "",
+                AcceptedTime = null,
+                IsAccepted = false
             };
 
             // Create instance of payment card
             PaymentCard paymentCard = new PaymentCard()
             {
-                CardName = instructorDto.CardName,
-                CardNumber = instructorDto.CardNumber,
-                CardProvider = instructorDto.CardProvider,
+                CardName = signUpInstructorDto.CardName,
+                CardNumber = signUpInstructorDto.CardNumber,
+                CardProvider = signUpInstructorDto.CardProvider,
                 UserId = user.Id
             };
 
@@ -368,7 +371,7 @@ public class AuthService : IAuthService
                 Message = "Create new user successfully",
                 IsSuccess = true,
                 StatusCode = 200,
-                Result = instructorDto
+                Result = signUpInstructorDto
             };
         }
         catch (Exception e)
@@ -377,7 +380,7 @@ public class AuthService : IAuthService
             return new ResponseDTO()
             {
                 Message = e.Message,
-                Result = instructorDto,
+                Result = signUpInstructorDto,
                 IsSuccess = false,
                 StatusCode = 500
             };

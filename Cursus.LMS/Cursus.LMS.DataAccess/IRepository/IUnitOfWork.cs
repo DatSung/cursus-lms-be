@@ -10,4 +10,5 @@ public interface IUnitOfWork
     Task<int> SaveAsync();
     ICategoryRepository CategoryRepository { get; }
     IEmailTemplateRepository  EmailTemplateRepository { get; }
+    IUserManagerRepository UserManagerRepository { get; }
 }
