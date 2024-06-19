@@ -7,6 +7,10 @@ public class UpdateInstructorDTO
     [Required]
     [DataType(DataType.EmailAddress)]
     [EmailAddress]
+    public string? InstructorId { get; set; }
+    [Required]
+    [DataType(DataType.EmailAddress)]
+    [EmailAddress]
     public string? Email { get; set; }
 
     [Required]

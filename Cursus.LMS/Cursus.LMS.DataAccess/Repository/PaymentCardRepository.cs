@@ -25,10 +25,16 @@ namespace Cursus.LMS.DataAccess.Repository
             _context.PaymentCards.UpdateRange(paymentCards);
         }
 
-        public async Task<PaymentCard> CardNumberExistsAsync(string cardNumber)
+        public async Task<PaymentCard?> CardNumberExistsAsync(string cardNumber)
         {
             return  await _context.PaymentCards.FirstOrDefaultAsync(x => x.CardNumber == cardNumber);
         }
+
+        public async Task<PaymentCard?> GetCardByUserId(string id)
+        {
+            return await _context.PaymentCards.FirstOrDefaultAsync(x => x.UserId == id);
+        }
+
         public async Task<PaymentCard> AddAsync(PaymentCard paymentCard)
         {
             var entityEntry = await _context.PaymentCards.AddAsync(paymentCard);

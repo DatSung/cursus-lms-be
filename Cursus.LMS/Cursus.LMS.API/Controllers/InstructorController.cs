@@ -17,7 +17,7 @@ namespace Cursus.LMS.API.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult<ResponseDTO>> GetAll
+        public async Task<ActionResult<ResponseDTO>> GetAllInstructor
         (
             [FromQuery] string? filterOn,
             [FromQuery] string? filterQuery,
@@ -34,18 +34,16 @@ namespace Cursus.LMS.API.Controllers
 
         [HttpGet]
         [Route("{id:guid}")]
-        public async Task<ActionResult<ResponseDTO>> GetById([FromQuery] Guid id)
+        public async Task<ActionResult<ResponseDTO>> GetInstructorById([FromRoute] Guid id)
         {
             var responseDto = await _instructorService.GetById(id);
             return StatusCode(responseDto.StatusCode, responseDto);
         }
 
         [HttpPut]
-        [Route("{id:guid}")]
-        public async Task<ActionResult<ResponseDTO>> UpdateById([FromRoute] Guid id,
-            [FromBody] UpdateInstructorDTO instructorDto)
+        public async Task<ActionResult<ResponseDTO>> UpdateInstructorById([FromBody] UpdateInstructorDTO instructorDto)
         {
-            var responseDto = await _instructorService.UpdateById(id, instructorDto);
+            var responseDto = await _instructorService.UpdateById(instructorDto);
             return StatusCode(responseDto.StatusCode, responseDto);
         }
 

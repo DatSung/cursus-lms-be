@@ -141,12 +141,64 @@ public class InstructorService : IInstructorService
         }
     }
 
-    public Task<ResponseDTO> GetById(Guid id)
+    public async Task<ResponseDTO> GetById(Guid id)
     {
-        throw new NotImplementedException();
+        try
+        {
+            var instructor = await _unitOfWork.InstructorRepository.GetById(id);
+            if (instructor is null)
+            {
+                return new ResponseDTO()
+                {
+                    Message = "Instructor was not found",
+                    IsSuccess = false,
+                    StatusCode = 404,
+                    Result = null
+                };
+            }
+
+            var paymentCard = await _unitOfWork.PaymentCardRepository.GetCardByUserId(instructor.UserId);
+
+            InstructorInfoDTO instructorInfoDto = new InstructorInfoDTO()
+            {
+                FullName = instructor.ApplicationUser.FullName,
+                Email = instructor.ApplicationUser.Email,
+                Address = instructor.ApplicationUser.Address,
+                PhoneNumber = instructor.ApplicationUser.PhoneNumber,
+                Gender = instructor.ApplicationUser.Gender,
+                BirthDate = instructor.ApplicationUser.BirthDate,
+                Country = instructor.ApplicationUser.Country,
+                Degree = instructor.Degree,
+                Industry = instructor.Industry,
+                Introduction = instructor.Introduction,
+                TaxNumber = instructor.ApplicationUser.TaxNumber,
+                CardNumber = paymentCard?.CardNumber,
+                CardName = paymentCard?.CardName,
+                CardProvider = paymentCard?.CardProvider,
+                IsAccepted = instructor.IsAccepted
+            };
+
+            return new ResponseDTO()
+            {
+                Message = "Get instructor successfully ",
+                IsSuccess = false,
+                StatusCode = 200,
+                Result = instructorInfoDto
+            };
+        }
+        catch (Exception e)
+        {
+            return new ResponseDTO()
+            {
+                Message = e.Message,
+                IsSuccess = false,
+                StatusCode = 500,
+                Result = null
+            };
+        }
     }
 
-    public Task<ResponseDTO> UpdateById(Guid id, UpdateInstructorDTO updateInstructorDto)
+    public Task<ResponseDTO> UpdateById(UpdateInstructorDTO updateInstructorDto)
     {
         throw new NotImplementedException();
     }

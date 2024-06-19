@@ -16,8 +16,6 @@ public class AutoMapperProfile : Profile
         CreateMap<Category, UpdateCategoryDTO>().ReverseMap();
         CreateMap<Category, AdminCategoryDTO>().ReverseMap();
 
-        CreateMap<Instructor, InstructorInfoDTO>().ReverseMap();
-
         CreateMap<Instructor, InstructorInfoLiteDTO>()
             .ForMember(dest => dest.FullName, opt
                 => opt.MapFrom(src => src.ApplicationUser.FullName))
