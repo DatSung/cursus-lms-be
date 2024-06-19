@@ -2,7 +2,7 @@
 
 namespace Cursus.LMS.Model.DTO;
 
-public class UpdateInstructorProfileDTO
+public class CompleteInstructorProfileDTO
 {
     [Required]
     [DataType(DataType.PhoneNumber)]

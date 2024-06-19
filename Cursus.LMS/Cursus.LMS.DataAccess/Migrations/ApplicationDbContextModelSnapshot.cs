@@ -109,6 +109,33 @@ namespace Cursus.LMS.DataAccess.Migrations
                         .HasFilter("[NormalizedUserName] IS NOT NULL");
 
                     b.ToTable("AspNetUsers", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            Id = "BestZedandYasuo",
+                            AccessFailedCount = 0,
+                            Address = "123 Admin St",
+                            AvatarUrl = "https://example.com/avatar.png",
+                            BirthDate = new DateTime(1990, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            ConcurrencyStamp = "5d615361-3681-458a-a61a-0ab82760942f",
+                            Country = "Country",
+                            Email = "admin@gmail.com",
+                            EmailConfirmed = true,
+                            FullName = "Admin User",
+                            Gender = "Male",
+                            LockoutEnabled = true,
+                            NormalizedEmail = "ADMIN@GMAIL.COM",
+                            NormalizedUserName = "ADMIN@GMAIL.COM",
+                            PasswordHash = "AQAAAAIAAYagAAAAEGFToPJFpj0EU8gQU+6ym20YEYoPjhHkuuYPxCI1zek/rHZfyjShF+lC/P+Cscfnew==",
+                            PhoneNumber = "1234567890",
+                            PhoneNumberConfirmed = true,
+                            SecurityStamp = "260d1548-9211-45b5-9b85-93f36bc43ef3",
+                            TaxNumber = "123456789",
+                            TwoFactorEnabled = false,
+                            UpdateTime = new DateTime(2024, 6, 19, 2, 45, 32, 156, DateTimeKind.Utc).AddTicks(4605),
+                            UserName = "admin@gmail.com"
+                        });
                 });
 
             modelBuilder.Entity("Cursus.LMS.Model.Domain.CartDetails", b =>
@@ -338,6 +365,75 @@ namespace Cursus.LMS.DataAccess.Migrations
                     b.ToTable("CourseSections");
                 });
 
+            modelBuilder.Entity("Cursus.LMS.Model.Domain.EmailTemplate", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("BodyContent")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("CallToAction")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Category")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("CreateBy")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("CreateTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("FooterContent")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Language")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("PersonalizationTags")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("PreHeaderText")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("RecipientType")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("SenderEmail")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("SenderName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("Status")
+                        .HasColumnType("int");
+
+                    b.Property<string>("SubjectLine")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("TemplateName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("UpdateBy")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("UpdateTime")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("EmailTemplates");
+                });
+
             modelBuilder.Entity("Cursus.LMS.Model.Domain.Instructor", b =>
                 {
                     b.Property<Guid>("InstructorId")
@@ -365,14 +461,10 @@ namespace Cursus.LMS.DataAccess.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<bool>("IsAccepted")
-                        .HasColumnType("bit");
-
-                    b.Property<bool>("IsRejected")
+                    b.Property<bool?>("IsAccepted")
                         .HasColumnType("bit");
 
                     b.Property<string>("RejectedBy")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime?>("RejectedTime")
@@ -409,6 +501,9 @@ namespace Cursus.LMS.DataAccess.Migrations
                     b.Property<Guid>("InstructorId")
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<int>("Status")
+                        .HasColumnType("int");
+
                     b.Property<string>("UpdateBy")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -440,6 +535,9 @@ namespace Cursus.LMS.DataAccess.Migrations
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<int>("Rate")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Status")
                         .HasColumnType("int");
 
                     b.Property<string>("UpdateBy")
@@ -655,6 +753,29 @@ namespace Cursus.LMS.DataAccess.Migrations
                         .HasFilter("[NormalizedName] IS NOT NULL");
 
                     b.ToTable("AspNetRoles", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            Id = "8fa7c7bb-b4dc-480d-a660-e07a90855d5d",
+                            ConcurrencyStamp = "STUDENT",
+                            Name = "STUDENT",
+                            NormalizedName = "STUDENT"
+                        },
+                        new
+                        {
+                            Id = "35446074-daa5-4973-bf02-82301a5eb327",
+                            ConcurrencyStamp = "INSTRUCTOR",
+                            Name = "INSTRUCTOR",
+                            NormalizedName = "INSTRUCTOR"
+                        },
+                        new
+                        {
+                            Id = "8fa7c7bb-daa5-a660-bf02-82301a5eb327",
+                            ConcurrencyStamp = "ADMIN",
+                            Name = "ADMIN",
+                            NormalizedName = "ADMIN"
+                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -742,6 +863,13 @@ namespace Cursus.LMS.DataAccess.Migrations
                     b.HasIndex("RoleId");
 
                     b.ToTable("AspNetUserRoles", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            UserId = "BestZedandYasuo",
+                            RoleId = "8fa7c7bb-daa5-a660-bf02-82301a5eb327"
+                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<string>", b =>

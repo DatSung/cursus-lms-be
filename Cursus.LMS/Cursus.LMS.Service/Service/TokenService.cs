@@ -66,7 +66,7 @@ public class TokenService : ITokenService
         var authClaims = new List<Claim>()
         {
             new Claim(ClaimTypes.NameIdentifier, user.Id),
-        };
+        };  
 
         //tạo các đối tượng mã hóa
         var authSecret = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["JWT:Secret"]));

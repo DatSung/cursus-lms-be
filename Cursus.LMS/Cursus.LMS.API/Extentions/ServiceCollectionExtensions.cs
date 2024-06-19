@@ -26,6 +26,11 @@ public static class ServiceCollectionExtensions
         services.AddScoped<ITokenService, TokenService>();
         // Registering IRedisService with its implementation RedisService
         services.AddScoped<IRedisService, RedisService>();
+        // Registering ICategoryService with its implementation CategoryService
+        services.AddScoped<ICategoryService, CategoryService>();
+        // Registering IInstructorService its implementation InstructorService
+        services.AddScoped<IInstructorService, InstructorService>();
+        // Registering IUserManagerRepository its implementation UserManagerRepository
         services.AddScoped<IUserManagerRepository, UserManagerRepository>();
 
 

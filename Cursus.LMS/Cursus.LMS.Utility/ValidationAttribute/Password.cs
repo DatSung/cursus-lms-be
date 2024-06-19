@@ -14,7 +14,7 @@ public class Password : System.ComponentModel.DataAnnotations.ValidationAttribut
     {
         if (value is string password)
         {
-            return Regex.IsMatch(password, "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@$!%*?&#])[A-Za-z\\d@$!%*?&#]{8,}$");
+            return Regex.IsMatch(password, "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[.@$!%*?&#])[A-Za-z\\d.@$!%*?&#]{8,}$");
         }
         return false;
     }

@@ -1,80 +1,97 @@
-    using Cursus.LMS.API.Extentions;
-    using Cursus.LMS.DataAccess.Context;
-    using Cursus.LMS.Service.Mappings;
-    using Cursus.LMS.Utility.Constants;
-    using Microsoft.AspNetCore.Identity;
-    using Microsoft.EntityFrameworkCore;
+using Cursus.LMS.API.Extentions;
+using Cursus.LMS.DataAccess.Context;
+using Cursus.LMS.Service.Mappings;
+using Cursus.LMS.Utility.Constants;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
-    // Add ApplicationDbContext to the application's services to manage database connections.
-    // Use SqlServer as the database provider and retrieve the connection string from the configuration.
+// Add ApplicationDbContext to the application's services to manage database connections.
+// Use SqlServer as the database provider and retrieve the connection string from the configuration.
 
-    builder.Services.AddControllers();
+builder.Services.AddControllers();
 
-    builder.Services.AddHttpContextAccessor();
+builder.Services.AddHttpContextAccessor();
 
-    builder.Services.AddHttpClient();
+builder.Services.AddHttpClient();
 
-    builder.Services.AddDbContext<ApplicationDbContext>(options =>
-    {
-        options.UseSqlServer(builder.Configuration.GetConnectionString(StaticConnectionString.SQLDB_TrongConnection));
-    });
+builder.Services.AddDbContext<ApplicationDbContext>(options =>
+{
+    options.UseSqlServer(builder.Configuration.GetConnectionString(StaticConnectionString.SQLDB_TrongConnection));
+});
 
-    // Set time token
-    builder.Services.Configure<DataProtectionTokenProviderOptions>(options =>
-        options.TokenLifespan = TimeSpan.FromMinutes(15));
 
-    // Register AutoMapper
-    builder.Services.AddAutoMapper(typeof(AutoMapperProfile));
+// Set time token
+builder.Services.Configure<DataProtectionTokenProviderOptions>(options =>
+    options.TokenLifespan = TimeSpan.FromMinutes(15));
 
-    // Register services life cycle
-    // Base on Extensions.ServiceCollectionExtensions
-    builder.Services.RegisterServices();
+// Register AutoMapper
+builder.Services.AddAutoMapper(typeof(AutoMapperProfile));
 
-    // Register firebase services life cycle
-    // Base on Extensions.FirebaseServiceExtensions
-    builder.Services.AddFirebaseServices();
+// Register services life cycle
+// Base on Extensions.ServiceCollectionExtensions
+builder.Services.RegisterServices();
 
-    // Register redis services life cycle
-    // Base on Extensions.RedisServiceExtensions
-    builder.AddRedisCache();
+// Register firebase services life cycle
+// Base on Extensions.FirebaseServiceExtensions
+builder.Services.AddFirebaseServices();
 
-    builder.Services.AddEndpointsApiExplorer();
+// Register redis services life cycle
+// Base on Extensions.RedisServiceExtensions
+builder.AddRedisCache();
 
-    // Register Authentication
-    // Base on Extensions.WebApplicationBuilderExtensions
-    builder.AddAppAuthentication();
+builder.Services.AddEndpointsApiExplorer();
 
-    builder.Services.AddAuthorization();
+// Register Authentication
+// Base on Extensions.WebApplicationBuilderExtensions
+builder.AddAppAuthentication();
+
+builder.Services.AddAuthorization();
 
 // Register SwaggerGen and config for Authorize
 // Base on Extensions.WebApplicationBuilderExtensions
-    builder.Services.AddSwaggerGen();
+builder.Services.AddSwaggerGen();
 
 var app = builder.Build();
 
-    // Configure the HTTP request pipeline.
-    if (app.Environment.IsDevelopment())
-    {
-        app.UseSwagger();
-        app.UseSwaggerUI();
-    }
+// Configure the HTTP request pipeline.
+if (app.Environment.IsDevelopment())
+{
+    app.UseSwagger();
+    app.UseSwaggerUI();
+}
 
-    app.UseCors(options =>
-    {
-        options
-            .AllowAnyHeader()
-            .AllowAnyMethod()
-            .AllowAnyOrigin();
-    });
+//ApplyMigration();
 
-    app.UseHttpsRedirection();
+app.UseCors(options =>
+{
+    options
+        .AllowAnyHeader()
+        .AllowAnyMethod()
+        .AllowAnyOrigin();
+});
 
-    app.UseAuthentication();
+app.UseHttpsRedirection();
 
-    app.UseAuthorization();
+app.UseAuthentication();
 
-    app.MapControllers();
+app.UseAuthorization();
 
-    app.Run();
+app.MapControllers();
+
+app.Run();
+
+//void ApplyMigration()
+//{
+//    using (var scope = app.Services.CreateScope())
+//    {
+//        var context = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
+
+//        if (context.Database.GetPendingMigrations().Any())
+//        {
+//            context.Database.Migrate();
+//        }
+//    }
+//}
+

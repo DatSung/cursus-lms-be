@@ -11,6 +11,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.OpenApi.Models;
 using System;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace Cursus.LMS.API.csproj
 {
@@ -73,7 +74,7 @@ namespace Cursus.LMS.API.csproj
                 app.UseSwagger();
                 app.UseSwaggerUI();
             }
-
+            //ApplyMigration();
             app.UseCors(options =>
             {
                 options
@@ -90,7 +91,24 @@ namespace Cursus.LMS.API.csproj
 
             app.MapControllers();
 
+            // Apply migrations
+            
+
             app.Run();
+
+
+            //void ApplyMigration()
+            //{
+            //    using (var scope = app.Services.CreateScope())
+            //    {
+            //        var context = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
+
+            //        if (context.Database.GetPendingMigrations().Any())
+            //        {
+            //            context.Database.Migrate();
+            //        }
+            //    }
+            //}
         }
     }
 }

@@ -20,5 +20,8 @@ namespace Cursus.LMS.DataAccess.IRepository
         Task<bool> CheckPasswordAsync(ApplicationUser user, string password);
         Task<IdentityResult> ResetPasswordAsync(ApplicationUser user, string token, string password);
         Task<string> GeneratePasswordResetTokenAsync(ApplicationUser user);
+        Task<List<ApplicationUser>> GetInstructorUser();
+        Task<List<ApplicationUser>> GetStudentUser();
+        Task<IEnumerable<ApplicationUser>> GetUsersInRoleAsync(string role);
     }
 }

@@ -191,7 +191,7 @@ public class AuthService : IAuthService
             }
 
             // Create new Payment relate with ApplicationUser
-            var isPaymentAdd =  await _unitOfWork.PaymentCardRepository.AddAsync(paymentCard);
+            var isPaymentAdd = await _unitOfWork.PaymentCardRepository.AddAsync(paymentCard);
             if (isPaymentAdd == null)
             {
                 return new ResponseDTO()
@@ -241,14 +241,14 @@ public class AuthService : IAuthService
     /// <summary>
     /// Registers a new instructor in the system.
     /// </summary>
-    /// <param name="instructorDto">The data transfer object containing instructor details.</param>
+    /// <param name="signUpInstructorDto">The data transfer object containing instructor details.</param>
     /// <returns><see cref="ResponseDTO"/> object containing the result of the registration process.</returns>
-    public async Task<ResponseDTO> SignUpInstructor(InstructorDTO instructorDto)
+    public async Task<ResponseDTO> SignUpInstructor(SignUpInstructorDTO signUpInstructorDto)
     {
         try
         {
-            // Find exist user with the email from instructorDto
-            var user = await _userManagerRepository.FindByEmailAsync(instructorDto.Email);
+            var user = await _userManagerRepository.FindByEmailAsync(signUpInstructorDto.Email);
+
 
             // Check if user exist
             if (user is not null)
@@ -256,26 +256,25 @@ public class AuthService : IAuthService
                 return new ResponseDTO()
                 {
                     Message = "Email is using by another user",
-                    Result = instructorDto,
+                    Result = signUpInstructorDto,
                     IsSuccess = false,
                     StatusCode = 400
                 };
             }
-
-            var isPhonenumerExit = await _userManagerRepository.CheckIfPhoneNumberExistsAsync(instructorDto.PhoneNumber);
+            var isPhonenumerExit = await _userManagerRepository.CheckIfPhoneNumberExistsAsync(signUpInstructorDto.PhoneNumber);
             if (isPhonenumerExit)
             {
                 return new ResponseDTO()
                 {
                     Message = "Phone number is using by another user",
-                    Result = instructorDto,
+                    Result = signUpInstructorDto,
                     IsSuccess = false,
                     StatusCode = 400
                 };
             }
 
             var isCardExist =
-                await _unitOfWork.PaymentCardRepository.CardNumberExistsAsync(instructorDto.CardNumber);
+                await _unitOfWork.PaymentCardRepository.CardNumberExistsAsync(signUpInstructorDto.CardNumber);
             if (isCardExist is not null)
             {
                 return new ResponseDTO
@@ -283,27 +282,27 @@ public class AuthService : IAuthService
                     IsSuccess = false,
                     StatusCode = 400,
                     Message = "Card number is using by another user",
-                    Result = instructorDto
+                    Result = signUpInstructorDto
                 };
             }
 
             // Create new instance of ApplicationUser
             ApplicationUser newUser = new ApplicationUser()
             {
-                Address = instructorDto.Address,
-                Email = instructorDto.Email,
-                BirthDate = instructorDto.BirthDate,
-                UserName = instructorDto.Email,
-                FullName = instructorDto.FullName,
-                Gender = instructorDto.Gender,
-                Country = instructorDto.Country,
-                PhoneNumber = instructorDto.PhoneNumber,
-                TaxNumber = instructorDto.TaxNumber,
+                Address = signUpInstructorDto.Address,
+                Email = signUpInstructorDto.Email,
+                BirthDate = signUpInstructorDto.BirthDate,
+                UserName = signUpInstructorDto.Email,
+                FullName = signUpInstructorDto.FullName,
+                Gender = signUpInstructorDto.Gender,
+                Country = signUpInstructorDto.Country,
+                PhoneNumber = signUpInstructorDto.PhoneNumber,
+                TaxNumber = signUpInstructorDto.TaxNumber,
                 UpdateTime = DateTime.Now
             };
 
             // Create new user to database
-            var createUserResult = await _userManagerRepository.CreateAsync(newUser, instructorDto.Password);
+            var createUserResult = await _userManagerRepository.CreateAsync(newUser, signUpInstructorDto.Password);
 
 
             // Check if error occur
@@ -314,31 +313,39 @@ public class AuthService : IAuthService
                 {
                     Message = createUserResult.Errors.ToString(),
                     IsSuccess = false,
-                    StatusCode = 400,
-                    Result = instructorDto
+
+                    StatusCode = 500,
+                    Result = signUpInstructorDto
                 };
             }
 
 
             // Get the user again 
-            user = await _userManagerRepository.FindByPhoneAsync(instructorDto.PhoneNumber);
+
+            user = await _userManagerRepository.FindByPhoneAsync(signUpInstructorDto.PhoneNumber);
+
 
 
             // Create instance of instructor
             Instructor instructor = new Instructor()
             {
                 UserId = user.Id,
-                Degree = instructorDto.Degree,
-                Industry = instructorDto.Industry,
-                Introduction = instructorDto.Introduction
+                Degree = signUpInstructorDto.Degree,
+                Industry = signUpInstructorDto.Industry,
+                Introduction = signUpInstructorDto.Introduction,
+                AcceptedBy = "",
+                AcceptedTime = null,
+                RejectedBy = "",
+                RejectedTime = null,
+                IsAccepted = null
             };
 
             // Create instance of payment card
             PaymentCard paymentCard = new PaymentCard()
             {
-                CardName = instructorDto.CardName,
-                CardNumber = instructorDto.CardNumber,
-                CardProvider = instructorDto.CardProvider,
+                CardName = signUpInstructorDto.CardName,
+                CardNumber = signUpInstructorDto.CardNumber,
+                CardProvider = signUpInstructorDto.CardProvider,
                 UserId = user.Id
             };
 
@@ -361,7 +368,7 @@ public class AuthService : IAuthService
                     Message = "Error adding role",
                     IsSuccess = false,
                     StatusCode = 400,
-                    Result = instructorDto
+                    Result = signUpInstructorDto
                 };
             }
 
@@ -375,7 +382,7 @@ public class AuthService : IAuthService
                     Message = "Failed to add instructor",
                     IsSuccess = false,
                     StatusCode = 400,
-                    Result = instructorDto
+                    Result = signUpInstructorDto
                 };
             }
 
@@ -388,7 +395,7 @@ public class AuthService : IAuthService
                     Message = "Failed to add payment card",
                     IsSuccess = false,
                     StatusCode = 400,
-                    Result = instructorDto
+                    Result = signUpInstructorDto
                 };
             }
 
@@ -401,7 +408,7 @@ public class AuthService : IAuthService
                     Message = "Failed to save changes to the database",
                     IsSuccess = false,
                     StatusCode = 400,
-                    Result = instructorDto
+                    Result = signUpInstructorDto
                 };
             }
 
@@ -411,7 +418,7 @@ public class AuthService : IAuthService
                 Message = "Create new user successfully",
                 IsSuccess = true,
                 StatusCode = 200,
-                Result = instructorDto
+                Result = signUpInstructorDto
             };
         }
         catch (Exception e)
@@ -420,7 +427,7 @@ public class AuthService : IAuthService
             return new ResponseDTO()
             {
                 Message = e.Message,
-                Result = instructorDto,
+                Result = signUpInstructorDto,
                 IsSuccess = false,
                 StatusCode = 500
             };
@@ -444,7 +451,7 @@ public class AuthService : IAuthService
                 throw new Exception("Not authentication!");
             }
 
-            var instructor = await _unitOfWork.InstructorRepository.GetAsync( userId);
+            var instructor = await _unitOfWork.InstructorRepository.GetAsync(userId);
 
             if (instructor is null)
             {
@@ -698,7 +705,7 @@ public class AuthService : IAuthService
                 };
             }
 
-            
+
 
             var accessToken = await _tokenService.GenerateJwtAccessTokenAsync(user);
             var refreshToken = await _tokenService.GenerateJwtRefreshTokenAsync(user);
@@ -1055,14 +1062,14 @@ public class AuthService : IAuthService
             if (newPassword != confirmNewPassword)
             {
                 return new ResponseDTO
-                    { IsSuccess = false, Message = "New password and confirm new password not match." };
+                { IsSuccess = false, Message = "New password and confirm new password not match." };
             }
 
             // Không cho phép thay đổi mật khẩu cũ
             if (newPassword == oldPassword)
             {
                 return new ResponseDTO
-                    { IsSuccess = false, Message = "New password cannot be the same as the old password." };
+                { IsSuccess = false, Message = "New password cannot be the same as the old password." };
             }
 
             // Thực hiện thay đổi mật khẩu
@@ -1228,7 +1235,7 @@ public class AuthService : IAuthService
     /// <exception cref="NotImplementedException"></exception>
     public async Task<ResponseDTO> CompleteStudentProfile(
         ClaimsPrincipal User,
-        UpdateStudentProfileDTO studentProfileDto)
+        CompleteStudentProfileDTO studentProfileDto)
     {
         try
         {
@@ -1324,7 +1331,7 @@ public class AuthService : IAuthService
 
             // Add role for the user
             await _userManager.AddToRoleAsync(user, StaticUserRoles.Student);
-            
+
             await _unitOfWork.SaveAsync();
 
             return new ResponseDTO()
@@ -1356,7 +1363,7 @@ public class AuthService : IAuthService
     /// <exception cref="NotImplementedException"></exception>
     public async Task<ResponseDTO> CompleteInstructorProfile(
         ClaimsPrincipal User,
-        UpdateInstructorProfileDTO instructorProfileDto)
+        CompleteInstructorProfileDTO instructorProfileDto)
     {
         try
         {
@@ -1458,7 +1465,7 @@ public class AuthService : IAuthService
 
             // Add role for the user
             await _userManager.AddToRoleAsync(user, StaticUserRoles.Instructor);
-            
+
             await _unitOfWork.SaveAsync();
 
             return new ResponseDTO()
@@ -1623,4 +1630,8 @@ public class AuthService : IAuthService
             };
         }
     }
+
+
+
+
 }

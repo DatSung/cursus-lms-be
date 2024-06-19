@@ -30,7 +30,7 @@ public class AuthServiceTests
     private readonly Mock<IPaymentCardRepository> _paymentCardRepositoryMock;
     private readonly AuthService _authService;
     private readonly RegisterStudentDTO registerStudentDTO;
-    private readonly InstructorDTO _instructorDTO;
+    private readonly SignUpInstructorDTO _instructorDTO;
 
     public AuthServiceTests()
     {
@@ -80,7 +80,7 @@ public class AuthServiceTests
             CardProvider = "Visa"
         };
 
-        _instructorDTO = new InstructorDTO
+        _instructorDTO = new SignUpInstructorDTO
         {
             Email = "test@example.com",
             PhoneNumber = "1234567890",

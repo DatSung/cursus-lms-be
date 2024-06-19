@@ -24,6 +24,7 @@ using Microsoft.EntityFrameworkCore;
 namespace Cursus.LMS.IntegrationTest
 {
     public class AuthServiceIntegrationTests<TProgram>: WebApplicationFactory<TProgram> where TProgram : class
+
     {
         protected override void ConfigureWebHost(IWebHostBuilder builder)
         {

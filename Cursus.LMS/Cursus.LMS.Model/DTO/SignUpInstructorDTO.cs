@@ -4,7 +4,7 @@ using Cursus.LMS.Utility.ValidationAttribute;
 
 namespace Cursus.LMS.Model.DTO;
 
-public class InstructorDTO
+public class SignUpInstructorDTO
 {
     [Required]
     [DataType(DataType.Password)]
