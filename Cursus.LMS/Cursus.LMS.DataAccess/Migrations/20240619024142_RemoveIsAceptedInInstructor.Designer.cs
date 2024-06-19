@@ -4,6 +4,7 @@ using Cursus.LMS.DataAccess.Context;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Cursus.LMS.DataAccess.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240619024142_RemoveIsAceptedInInstructor")]
+    partial class RemoveIsAceptedInInstructor
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -118,7 +121,7 @@ namespace Cursus.LMS.DataAccess.Migrations
                             Address = "123 Admin St",
                             AvatarUrl = "https://example.com/avatar.png",
                             BirthDate = new DateTime(1990, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            ConcurrencyStamp = "5d615361-3681-458a-a61a-0ab82760942f",
+                            ConcurrencyStamp = "70965be5-e9cc-4f0c-9245-55cd4462327a",
                             Country = "Country",
                             Email = "admin@gmail.com",
                             EmailConfirmed = true,
@@ -127,13 +130,13 @@ namespace Cursus.LMS.DataAccess.Migrations
                             LockoutEnabled = true,
                             NormalizedEmail = "ADMIN@GMAIL.COM",
                             NormalizedUserName = "ADMIN@GMAIL.COM",
-                            PasswordHash = "AQAAAAIAAYagAAAAEGFToPJFpj0EU8gQU+6ym20YEYoPjhHkuuYPxCI1zek/rHZfyjShF+lC/P+Cscfnew==",
+                            PasswordHash = "AQAAAAIAAYagAAAAEBC2+jm8Pedi+8ej6u/ZJTAUg5NGIS9WVKKHNulA7aEbIW6UbTORRWhjUB5QVA1u9Q==",
                             PhoneNumber = "1234567890",
                             PhoneNumberConfirmed = true,
-                            SecurityStamp = "260d1548-9211-45b5-9b85-93f36bc43ef3",
+                            SecurityStamp = "3b98493c-5ff7-4394-8d3d-25726b9d1cc2",
                             TaxNumber = "123456789",
                             TwoFactorEnabled = false,
-                            UpdateTime = new DateTime(2024, 6, 19, 2, 45, 32, 156, DateTimeKind.Utc).AddTicks(4605),
+                            UpdateTime = new DateTime(2024, 6, 19, 2, 41, 40, 412, DateTimeKind.Utc).AddTicks(2464),
                             UserName = "admin@gmail.com"
                         });
                 });
@@ -460,15 +463,6 @@ namespace Cursus.LMS.DataAccess.Migrations
                     b.Property<string>("Introduction")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
-
-                    b.Property<bool?>("IsAccepted")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("RejectedBy")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime?>("RejectedTime")
-                        .HasColumnType("datetime2");
 
                     b.Property<string>("UserId")
                         .IsRequired()

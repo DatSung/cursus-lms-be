@@ -332,7 +332,9 @@ public class AuthService : IAuthService
                 Introduction = signUpInstructorDto.Introduction,
                 AcceptedBy = "",
                 AcceptedTime = null,
-                IsAccepted = false
+                RejectedBy = "",
+                RejectedTime = null,
+                IsAccepted = null
             };
 
             // Create instance of payment card
@@ -1168,7 +1170,7 @@ public class AuthService : IAuthService
     /// <exception cref="NotImplementedException"></exception>
     public async Task<ResponseDTO> CompleteStudentProfile(
         ClaimsPrincipal User,
-        UpdateStudentProfileDTO studentProfileDto)
+        CompleteStudentProfileDTO studentProfileDto)
     {
         try
         {
@@ -1296,7 +1298,7 @@ public class AuthService : IAuthService
     /// <exception cref="NotImplementedException"></exception>
     public async Task<ResponseDTO> CompleteInstructorProfile(
         ClaimsPrincipal User,
-        UpdateInstructorProfileDTO instructorProfileDto)
+        CompleteInstructorProfileDTO instructorProfileDto)
     {
         try
         {

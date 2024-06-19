@@ -209,13 +209,13 @@ public class CategoryService : ICategoryService
             if (userRole == StaticUserRoles.Admin)
             {
                 categories =
-                    await _unitOfWork.CategoryRepository.GetAllAsync();
+                    await _unitOfWork.CategoryRepository.GetAllAsync(includeProperties:"ParentCategory");
             }
             else
             {
                 categories =
                     await _unitOfWork.CategoryRepository.GetAllAsync(x =>
-                        x.Status <= StaticStatus.Category.Activated);
+                        x.Status <= StaticStatus.Category.Activated, includeProperties:"ParentCategory");
             }
 
             if (categories.IsNullOrEmpty())
