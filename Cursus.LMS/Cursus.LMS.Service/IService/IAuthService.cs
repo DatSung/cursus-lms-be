@@ -22,7 +22,7 @@ public interface IAuthService
     Task<ResponseDTO> CheckEmailExist(string email);
     Task<ResponseDTO> CheckPhoneNumberExist(string phoneNumber);
     Task<ResponseDTO> SignInByGoogle(SignInByGoogleDTO signInByGoogleDto);
-    Task<ResponseDTO> CompleteStudentProfile(ClaimsPrincipal User, UpdateStudentProfileDTO studentProfileDto);
-    Task<ResponseDTO> CompleteInstructorProfile(ClaimsPrincipal User, UpdateInstructorProfileDTO instructorProfileDto);
+    Task<ResponseDTO> CompleteStudentProfile(ClaimsPrincipal User, CompleteStudentProfileDTO studentProfileDto);
+    Task<ResponseDTO> CompleteInstructorProfile(ClaimsPrincipal User, CompleteInstructorProfileDTO instructorProfileDto);
     Task<ResponseDTO> GetUserInfo(ClaimsPrincipal User);
 }

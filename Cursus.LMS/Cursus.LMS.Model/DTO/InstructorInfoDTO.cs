@@ -19,5 +19,5 @@ public class InstructorInfoDTO
     public string? CardNumber { get; set; }
     public string? CardName { get; set; }
     public string? CardProvider { get; set; }
-    public bool IsAccepted { get; set; }
+    public bool? IsAccepted { get; set; }
 }

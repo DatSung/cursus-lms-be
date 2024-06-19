@@ -4,10 +4,8 @@ namespace Cursus.LMS.Model.DTO;
 
 public class UpdateInstructorDTO
 {
-    [Required]
-    [DataType(DataType.EmailAddress)]
-    [EmailAddress]
-    public string? InstructorId { get; set; }
+    [Required] public Guid InstructorId { get; set; }
+
     [Required]
     [DataType(DataType.EmailAddress)]
     [EmailAddress]
