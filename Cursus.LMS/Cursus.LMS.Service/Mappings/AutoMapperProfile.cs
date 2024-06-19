@@ -13,6 +13,10 @@ public class AutoMapperProfile : Profile
 
         CreateMap<Category, CategoryDTO>().ReverseMap();
         CreateMap<Category, CreateCategoryDTO>().ReverseMap();
+        CreateMap<CreateCategoryDTO, Category>()
+            .ForMember(dest => dest.Id, opt
+                => opt.MapFrom(src => Guid.NewGuid()))
+            .ReverseMap();
         CreateMap<Category, UpdateCategoryDTO>().ReverseMap();
         CreateMap<Category, AdminCategoryDTO>().ReverseMap();
 
