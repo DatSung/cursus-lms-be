@@ -219,7 +219,7 @@ public class InstructorService : IInstructorService
                     Result = null
                 };
             }
-            
+
             instructor.IsAccepted = true;
             instructor.AcceptedBy = userId;
             instructor.AcceptedTime = DateTime.UtcNow;
@@ -250,7 +250,7 @@ public class InstructorService : IInstructorService
         try
         {
             var userId = User.Claims.FirstOrDefault(x => x.Type == ClaimTypes.NameIdentifier)?.Value;
-            
+
             var instructor = await _unitOfWork.InstructorRepository.GetById(instructorId);
             if (instructor is null)
             {
@@ -286,5 +286,47 @@ public class InstructorService : IInstructorService
                 Result = null
             };
         }
+    }
+
+    public Task<ResponseDTO> GetInstructorTotalCourses(Guid instructorId)
+    {
+        throw new NotImplementedException();
+    }
+
+    public Task<ResponseDTO> GetInstructorTotalRating(Guid instructorId)
+    {
+        throw new NotImplementedException();
+    }
+
+    public Task<ResponseDTO> GetInstructorEarnedMoney(Guid instructorId)
+    {
+        throw new NotImplementedException();
+    }
+
+    public Task<ResponseDTO> GetInstructorPayoutMoney(Guid instructorId)
+    {
+        throw new NotImplementedException();
+    }
+
+    public Task<ResponseDTO> GetAllInstructorComment(Guid instructorId)
+    {
+        throw new NotImplementedException();
+    }
+
+    public Task<ResponseDTO> CreateInstructorComment(ClaimsPrincipal User,
+        CreateInstructorComment createInstructorComment)
+    {
+        throw new NotImplementedException();
+    }
+
+    public Task<ResponseDTO> UpdateInstructorComment(ClaimsPrincipal User,
+        UpdateInstructorComment createInstructorComment)
+    {
+        throw new NotImplementedException();
+    }
+
+    public Task<ResponseDTO> DeleteInstructorComment(ClaimsPrincipal User, Guid commentId)
+    {
+        throw new NotImplementedException();
     }
 }
