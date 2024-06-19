@@ -13,6 +13,7 @@ public class UnitOfWork : IUnitOfWork
     public ICategoryRepository CategoryRepository { get; }
     public IEmailTemplateRepository EmailTemplateRepository { get; }
     public IUserManagerRepository UserManagerRepository { get; }
+    public IInstructorCommentRepository InstructorCommentRepository { get; }
     public IPaymentCardRepository PaymentCardRepository { get; set; }
 
     public UnitOfWork(ApplicationDbContext context, UserManager<ApplicationUser> userManager)
@@ -24,6 +25,7 @@ public class UnitOfWork : IUnitOfWork
         CategoryRepository = new CategoryRepository(_context);
         EmailTemplateRepository = new EmailTemplateRepository(_context);
         UserManagerRepository = new UserManagerRepository(userManager);
+        InstructorCommentRepository = new InstructorCommentRepository(_context);
     }
 
     public async Task<int> SaveAsync()
