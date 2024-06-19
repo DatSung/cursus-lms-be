@@ -45,6 +45,7 @@ namespace Cursus.LMS.API.Controllers
         {
             var responseDto = await _instructorService.UpdateById(instructorDto);
             return StatusCode(responseDto.StatusCode, responseDto);
+
         }
 
         [HttpPost]
