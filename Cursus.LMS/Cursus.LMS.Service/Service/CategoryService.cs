@@ -559,7 +559,7 @@ public class CategoryService : ICategoryService
             return new ResponseDTO
             {
                 Message = "Category created successfully",
-                Result = category,
+                Result = null,
                 IsSuccess = true,
                 StatusCode = 200
             };

@@ -37,5 +37,7 @@ public class AutoMapperProfile : Profile
             .ForMember(dest => dest.IsAccepted, opt
                 => opt.MapFrom(src => src.IsAccepted))
             .ReverseMap();
+        CreateMap<InstructorComment, CreateInstructorCommentDTO>().ReverseMap();
+        CreateMap<InstructorComment, UpdateInstructorCommentDTO>().ReverseMap();
     }
 }
