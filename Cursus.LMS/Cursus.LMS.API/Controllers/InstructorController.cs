@@ -48,17 +48,19 @@ namespace Cursus.LMS.API.Controllers
         }
 
         [HttpPost]
-        [Route("accept/{id:guid}")]
-        public async Task<ActionResult<ResponseDTO>> AcceptInstructor([FromRoute] Guid id)
+        [Route("accept/{instructorId:guid}")]
+        public async Task<ActionResult<ResponseDTO>> AcceptInstructor([FromRoute] Guid instructorId)
         {
-            return Ok();
+            var responseDto = await _instructorService.AcceptInstructor(User, instructorId);
+            return StatusCode(responseDto.StatusCode, responseDto);
         }
 
         [HttpPost]
-        [Route("reject/{id:guid}")]
-        public async Task<ActionResult<ResponseDTO>> RejectInstructor([FromRoute] Guid id)
+        [Route("reject/{instructorId:guid}")]
+        public async Task<ActionResult<ResponseDTO>> RejectInstructor([FromRoute] Guid instructorId)
         {
-            return Ok();
+            var responseDto = await _instructorService.RejectInstructor(User, instructorId);
+            return StatusCode(responseDto.StatusCode, responseDto);
         }
     }
 }
