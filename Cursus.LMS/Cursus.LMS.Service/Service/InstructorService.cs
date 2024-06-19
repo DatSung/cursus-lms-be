@@ -198,9 +198,60 @@ public class InstructorService : IInstructorService
         }
     }
 
-    public Task<ResponseDTO> UpdateById(UpdateInstructorDTO updateInstructorDto)
+    public async Task<ResponseDTO> UpdateById(UpdateInstructorDTO updateInstructorDto)
     {
-        throw new NotImplementedException();
+        try
+        {
+            var instructorToUpdate =
+                await _unitOfWork.InstructorRepository.GetById(updateInstructorDto.InstructorId);
+
+            if (instructorToUpdate == null)
+            {
+                return new ResponseDTO
+                {
+                    Message = "Instructor not found",
+                    Result = null,
+                    IsSuccess = false,
+                    StatusCode = 404
+                };
+            }
+
+            instructorToUpdate.Degree = updateInstructorDto.Degree;
+            instructorToUpdate.Industry = updateInstructorDto.Industry;
+            instructorToUpdate.Introduction = updateInstructorDto.Introduction;
+
+            instructorToUpdate.ApplicationUser.Address = updateInstructorDto?.Address;
+            instructorToUpdate.ApplicationUser.BirthDate = updateInstructorDto?.BirthDate;
+            instructorToUpdate.ApplicationUser.PhoneNumber =updateInstructorDto?.PhoneNumber;
+            instructorToUpdate.ApplicationUser.Gender = updateInstructorDto?.Gender;
+            instructorToUpdate.ApplicationUser.FullName = updateInstructorDto?.FullName;
+            instructorToUpdate.ApplicationUser.Country = updateInstructorDto?.Country;
+            instructorToUpdate.ApplicationUser.Email = updateInstructorDto?.Email;
+            instructorToUpdate.ApplicationUser.TaxNumber = updateInstructorDto?.TaxNumber;
+
+            
+
+            _unitOfWork.InstructorRepository.Update(instructorToUpdate);
+            await _unitOfWork.SaveAsync();
+
+            return new ResponseDTO
+            {
+                Message = "Instructor updated successfully",
+                Result = null,
+                IsSuccess = true,
+                StatusCode = 200
+            };
+        }
+        catch (Exception e)
+        {
+            return new ResponseDTO
+            {
+                Message = e.Message,
+                Result = null,
+                IsSuccess = false,
+                StatusCode = 500
+            };
+        }
     }
 
     public async Task<ResponseDTO> AcceptInstructor(ClaimsPrincipal User, Guid instructorId)
