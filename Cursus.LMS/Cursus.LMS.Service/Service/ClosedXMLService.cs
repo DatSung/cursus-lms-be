@@ -17,7 +17,7 @@ public class ClosedXMLService : IClosedXMLService
         _config = config;
     }
 
-    public async Task ExportInstructorExcel(List<InstructorInfoDTO> instructorInfoDtos)
+    public async Task<string> ExportInstructorExcel(List<InstructorInfoDTO> instructorInfoDtos)
     {
         // Tạo đường dẫn đến thư mục lưu trữ file Excel
         string exportFolderPath = Path.Combine(_env.ContentRootPath, _config["FolderPath:ExcelExportFolderPath"]);
@@ -79,6 +79,7 @@ public class ClosedXMLService : IClosedXMLService
                 workSheet.Cell(i + 2, 13).Value = instructorInfoDtos[i].TaxNumber;
                 workSheet.Cell(i + 2, 14).Value = instructorInfoDtos[i].IsAccepted.ToString();
             }
+
             workSheet.Columns().AdjustToContents();
             // // Điền dữ liệu từ danh sách instructors vào các ô tương ứng
             // for (int rowIndex = 0; rowIndex < instructorInfoDtos.Count; rowIndex++)
@@ -107,6 +108,8 @@ public class ClosedXMLService : IClosedXMLService
             //         FileName = fileName
             //     };
             // }
+
+            return fileName;
         }
     }
 }

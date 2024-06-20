@@ -142,8 +142,24 @@ namespace Cursus.LMS.API.Controllers
         [Route("export")]
         public async Task<ActionResult<ResponseDTO>> ExportInstructor()
         {
-            BackgroundJob.Enqueue<InstructorService>(job => job.ExportInstructors());
+            BackgroundJob.Enqueue<IInstructorService>(job => job.ExportInstructors());
             return Ok();
+        }
+
+        [HttpPost]
+        [Route("download/{fileName}")]
+        public async Task<ActionResult<ClosedXMLResponseDTO>> DownloadInstructor([FromRoute] string fileName)
+        {
+            var closedXmlResponseDto = await _instructorService.DownloadInstructors(fileName);
+            var stream = closedXmlResponseDto.Stream;
+            var contentType = closedXmlResponseDto.ContentType;
+
+            if (stream is null || contentType is null)
+            {
+                return NotFound();
+            }
+
+            return File(stream, contentType, fileName);
         }
     }
 }

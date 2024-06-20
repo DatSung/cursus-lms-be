@@ -5,6 +5,8 @@ using Cursus.LMS.Model.Domain;
 using Cursus.LMS.Model.DTO;
 using Cursus.LMS.Service.IService;
 using Cursus.LMS.Utility.Constants;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
 using static Cursus.LMS.Utility.Constants.StaticStatus;
 using Task = DocumentFormat.OpenXml.Office2021.DocumentTasks.Task;
@@ -16,12 +18,17 @@ public class InstructorService : IInstructorService
     private readonly IUnitOfWork _unitOfWork;
     private readonly IMapper _mapper;
     private readonly IClosedXMLService _closedXmlService;
+    private readonly IWebHostEnvironment _env;
+    private readonly IConfiguration _config;
 
-    public InstructorService(IUnitOfWork unitOfWork, IMapper mapper, IClosedXMLService closedXmlService)
+    public InstructorService(IUnitOfWork unitOfWork, IMapper mapper, IClosedXMLService closedXmlService,
+        IWebHostEnvironment env, IConfiguration config)
     {
         _unitOfWork = unitOfWork;
         _mapper = mapper;
         _closedXmlService = closedXmlService;
+        _env = env;
+        _config = config;
     }
 
 
@@ -513,9 +520,10 @@ public class InstructorService : IInstructorService
 
     public async Task<ResponseDTO> ExportInstructors()
     {
-        var instructors = _unitOfWork.InstructorRepository.GetAllAsync(includeProperties:"ApplicationUser").GetAwaiter().GetResult().ToList();
+        var instructors = _unitOfWork.InstructorRepository.GetAllAsync(includeProperties: "ApplicationUser")
+            .GetAwaiter().GetResult().ToList();
         var instructorInfoDtos = _mapper.Map<List<InstructorInfoDTO>>(instructors);
-        await _closedXmlService.ExportInstructorExcel(instructorInfoDtos);
+        var fileName = await _closedXmlService.ExportInstructorExcel(instructorInfoDtos);
         return new ResponseDTO()
         {
             Message = "Waiting...",
@@ -523,5 +531,54 @@ public class InstructorService : IInstructorService
             StatusCode = 200,
             Result = null
         };
+    }
+
+    public async Task<ClosedXMLResponseDTO> DownloadInstructors(string fileName)
+    {
+        try
+        {
+            string filePath = Path.Combine(_env.ContentRootPath, _config["FolderPath:ExcelExportFolderPath"], fileName);
+
+            if (!File.Exists(filePath))
+            {
+                return new ClosedXMLResponseDTO()
+                {
+                    Message = "File was not found",
+                    IsSuccess = false,
+                    StatusCode = 404,
+                    Stream = null,
+                    ContentType = null,
+                    FileName = null,
+                };
+            }
+
+            // Đọc file vào memory stream
+            var memory = new MemoryStream();
+            using (var stream = new FileStream(filePath, FileMode.Open))
+            {
+                stream.CopyTo(memory);
+            }
+
+            memory.Position = 0;
+            var contentType = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
+
+            // Delete the file after user download it
+            System.IO.File.Delete(filePath);
+
+            return new ClosedXMLResponseDTO()
+            {
+                Stream = memory,
+                ContentType = contentType,
+                FileName = fileName,
+                StatusCode = 200,
+                IsSuccess = true,
+                Message = "Download file successfully"
+            };
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            throw;
+        }
     }
 }
