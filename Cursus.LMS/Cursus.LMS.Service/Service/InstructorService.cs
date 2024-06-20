@@ -523,7 +523,7 @@ public class InstructorService : IInstructorService
         var instructors = _unitOfWork.InstructorRepository.GetAllAsync(includeProperties: "ApplicationUser")
             .GetAwaiter().GetResult().ToList();
         var instructorInfoDtos = _mapper.Map<List<InstructorInfoDTO>>(instructors);
-        await _closedXmlService.ExportInstructorExcel(instructorInfoDtos);
+        var fileName = await _closedXmlService.ExportInstructorExcel(instructorInfoDtos);
         return new ResponseDTO()
         {
             Message = "Waiting...",
@@ -561,10 +561,10 @@ public class InstructorService : IInstructorService
 
             memory.Position = 0;
             var contentType = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
-            
+
             // Delete the file after user download it
             System.IO.File.Delete(filePath);
-            
+
             return new ClosedXMLResponseDTO()
             {
                 Stream = memory,
