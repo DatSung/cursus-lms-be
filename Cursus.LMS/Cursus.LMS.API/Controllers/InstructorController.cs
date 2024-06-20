@@ -145,5 +145,13 @@ namespace Cursus.LMS.API.Controllers
             BackgroundJob.Enqueue<InstructorService>(job => job.ExportInstructors());
             return Ok();
         }
+
+        [HttpPost]
+        [Route("download/{fileName}")]
+        public async Task<ActionResult<ResponseDTO>> DownloadInstructor([FromRoute] string fileName)
+        {
+            BackgroundJob.Enqueue<InstructorService>(job => job.ExportInstructors());
+            return Ok();
+        }
     }
 }

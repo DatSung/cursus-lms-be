@@ -12,4 +12,5 @@ public class ApplicationUser : IdentityUser
     public string? Address { get; set; }
     public string? TaxNumber { get; set; }
     public DateTime? UpdateTime { get; set; }
+    public DateTime? CreateTime { get; set; } = DateTime.UtcNow;
 }
