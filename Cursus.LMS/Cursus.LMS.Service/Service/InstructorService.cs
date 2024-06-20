@@ -3,9 +3,11 @@ using AutoMapper;
 using Cursus.LMS.DataAccess.IRepository;
 using Cursus.LMS.Model.Domain;
 using Cursus.LMS.Model.DTO;
+using Cursus.LMS.Service.Hubs;
 using Cursus.LMS.Service.IService;
 using Cursus.LMS.Utility.Constants;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.SignalR;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
 using static Cursus.LMS.Utility.Constants.StaticStatus;
@@ -20,15 +22,17 @@ public class InstructorService : IInstructorService
     private readonly IClosedXMLService _closedXmlService;
     private readonly IWebHostEnvironment _env;
     private readonly IConfiguration _config;
+    private readonly IHubContext<NotificationHub> _notificationHub;
 
     public InstructorService(IUnitOfWork unitOfWork, IMapper mapper, IClosedXMLService closedXmlService,
-        IWebHostEnvironment env, IConfiguration config)
+        IWebHostEnvironment env, IConfiguration config, IHubContext<NotificationHub> notificationHub)
     {
         _unitOfWork = unitOfWork;
         _mapper = mapper;
         _closedXmlService = closedXmlService;
         _env = env;
         _config = config;
+        _notificationHub = notificationHub;
     }
 
 
@@ -518,12 +522,17 @@ public class InstructorService : IInstructorService
         }
     }
 
-    public async Task<ResponseDTO> ExportInstructors()
+    public async Task<ResponseDTO> ExportInstructors(ClaimsPrincipal User)
     {
+        var userId = User.Claims.FirstOrDefault(x => x.Type == ClaimTypes.NameIdentifier)?.Value;
         var instructors = _unitOfWork.InstructorRepository.GetAllAsync(includeProperties: "ApplicationUser")
             .GetAwaiter().GetResult().ToList();
         var instructorInfoDtos = _mapper.Map<List<InstructorInfoDTO>>(instructors);
         var fileName = await _closedXmlService.ExportInstructorExcel(instructorInfoDtos);
+
+        // Send signal to user after finish export excel
+        await _notificationHub.Clients.User(userId).SendAsync("DownloadExcelNow", fileName);
+
         return new ResponseDTO()
         {
             Message = "Waiting...",

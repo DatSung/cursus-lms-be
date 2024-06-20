@@ -142,7 +142,7 @@ namespace Cursus.LMS.API.Controllers
         [Route("export")]
         public async Task<ActionResult<ResponseDTO>> ExportInstructor()
         {
-            BackgroundJob.Enqueue<IInstructorService>(job => job.ExportInstructors());
+            BackgroundJob.Enqueue<IInstructorService>(job => job.ExportInstructors(User));
             return Ok();
         }
 
