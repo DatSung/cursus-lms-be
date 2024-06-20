@@ -30,6 +30,6 @@ public interface IInstructorService
     Task<ResponseDTO> CreateInstructorComment(CreateInstructorCommentDTO createInstructorComment);
     Task<ResponseDTO> UpdateInstructorComment(UpdateInstructorCommentDTO updateInstructorComment);
     Task<ResponseDTO> DeleteInstructorComment(Guid commentId);
-    Task<ResponseDTO> ExportInstructors();
+    Task<ResponseDTO> ExportInstructors(ClaimsPrincipal User);
     Task<ClosedXMLResponseDTO> DownloadInstructors(string fileName);
 }
