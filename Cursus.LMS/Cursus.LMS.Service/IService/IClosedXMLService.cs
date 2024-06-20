@@ -5,5 +5,5 @@ namespace Cursus.LMS.Service.IService;
 
 public interface IClosedXMLService
 {
-    Task ExportInstructorExcel(List<InstructorInfoDTO> instructorInfoDtos);
+    Task<string> ExportInstructorExcel(List<InstructorInfoDTO> instructorInfoDtos);
 }
