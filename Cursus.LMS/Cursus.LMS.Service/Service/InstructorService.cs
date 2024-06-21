@@ -522,10 +522,16 @@ public class InstructorService : IInstructorService
         }
     }
 
-    public async Task<ResponseDTO> ExportInstructors(string userId)
+    public async Task<ResponseDTO> ExportInstructors(string userId, int month, int year)
     {
+        
         var instructors = _unitOfWork.InstructorRepository.GetAllAsync(includeProperties: "ApplicationUser")
             .GetAwaiter().GetResult().ToList();
+        
+        instructors = instructors.Where(x =>
+                x.ApplicationUser.CreateTime.Value.Month == month && x.ApplicationUser.CreateTime.Value.Year == year)
+            .ToList();
+
         var instructorInfoDtos = _mapper.Map<List<InstructorInfoDTO>>(instructors);
         var fileName = await _closedXmlService.ExportInstructorExcel(instructorInfoDtos);
 
