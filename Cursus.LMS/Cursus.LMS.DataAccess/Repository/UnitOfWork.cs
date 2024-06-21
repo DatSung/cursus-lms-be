@@ -1,4 +1,4 @@
-﻿using Cursus.LMS.DataAccess.Context;
+using Cursus.LMS.DataAccess.Context;
 using Cursus.LMS.DataAccess.IRepository;
 using Cursus.LMS.Model.Domain;
 using Microsoft.AspNetCore.Identity;
@@ -11,7 +11,6 @@ namespace Cursus.LMS.DataAccess.Repository
     public class UnitOfWork : IUnitOfWork
     {
         private readonly ApplicationDbContext _context;
-
         public IStudentRepository StudentRepository { get; set; }
         public IInstructorRepository InstructorRepository { get; set; }
         public ICategoryRepository CategoryRepository { get; }
@@ -19,6 +18,7 @@ namespace Cursus.LMS.DataAccess.Repository
         public IUserManagerRepository UserManagerRepository { get; }
         public IInstructorCommentRepository InstructorCommentRepository { get; }
         public IPaymentCardRepository PaymentCardRepository { get; set; }
+        public ICourseRepository CourseRepository { get; set; }
         public IInstructorRatingRepository InstructorRatingRepository { get; set; }
 
         public UnitOfWork(ApplicationDbContext context, UserManager<ApplicationUser> userManager)
@@ -31,7 +31,8 @@ namespace Cursus.LMS.DataAccess.Repository
             EmailTemplateRepository = new EmailTemplateRepository(_context);
             UserManagerRepository = new UserManagerRepository(userManager);
             InstructorCommentRepository = new InstructorCommentRepository(_context);
-            InstructorRatingRepository = new InstructorRatingRepository(_context); // Thêm dòng này
+            InstructorRatingRepository = new InstructorRatingRepository(_context);
+            CourseRepository = new CourseRepository(_context);
         }
 
         public async Task<int> SaveAsync()
