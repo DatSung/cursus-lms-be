@@ -6,6 +6,7 @@ using Cursus.LMS.Model.DTO;
 using Cursus.LMS.Service.Hubs;
 using Cursus.LMS.Service.IService;
 using Cursus.LMS.Utility.Constants;
+using DocumentFormat.OpenXml.Office2019.Word.Cid;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.SignalR;
 using Microsoft.Extensions.Configuration;
@@ -406,10 +407,46 @@ public class InstructorService : IInstructorService
         }
     }
 
-    public Task<ResponseDTO> GetInstructorTotalRating(Guid instructorId)
+    public async Task<ResponseDTO> GetInstructorTotalRating(Guid instructorId)
     {
-        throw new NotImplementedException();
+        try
+        {
+            // Lấy tất cả rating của Instructor
+            var instructorRatings = await _unitOfWork.InstructorRatingRepository.GetAllAsync(x => x.InstructorId == instructorId);
+
+            if (instructorRatings == null || !instructorRatings.Any())
+            {
+                return new ResponseDTO
+                {
+                    Message = "No ratings found for this instructor.",
+                    IsSuccess = false,
+                    StatusCode = 404
+                };
+            }
+
+            // Tính tổng số và trung bình tổng Rating
+            var totalRating = instructorRatings.Sum(x => x.Rate);
+
+            return new ResponseDTO
+            {
+                Message = "Get Total Rating Successfull",
+                IsSuccess = true,
+                StatusCode = 200,
+                Result = totalRating
+            };
+        }
+        catch (Exception e)
+        {
+            return new ResponseDTO
+            {
+                Message = e.Message,
+                Result = null,
+                IsSuccess = false,
+                StatusCode = 500
+            };
+        }
     }
+
 
     public Task<ResponseDTO> GetInstructorEarnedMoney(Guid instructorId)
     {
@@ -562,11 +599,16 @@ public class InstructorService : IInstructorService
         }
     }
 
-    public async Task<ResponseDTO> ExportInstructors(ClaimsPrincipal User)
+    public async Task<ResponseDTO> ExportInstructors(string userId, int month, int year)
     {
-        var userId = User.Claims.FirstOrDefault(x => x.Type == ClaimTypes.NameIdentifier)?.Value;
+        
         var instructors = _unitOfWork.InstructorRepository.GetAllAsync(includeProperties: "ApplicationUser")
             .GetAwaiter().GetResult().ToList();
+        
+        instructors = instructors.Where(x =>
+                x.ApplicationUser.CreateTime.Value.Month == month && x.ApplicationUser.CreateTime.Value.Year == year)
+            .ToList();
+
         var instructorInfoDtos = _mapper.Map<List<InstructorInfoDTO>>(instructors);
         var fileName = await _closedXmlService.ExportInstructorExcel(instructorInfoDtos);
 
