@@ -1,7 +1,9 @@
 using Cursus.LMS.API.Extentions;
 using Cursus.LMS.DataAccess.Context;
+using Cursus.LMS.Service.Hubs;
 using Cursus.LMS.Service.Mappings;
 using Cursus.LMS.Utility.Constants;
+using Hangfire;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
@@ -41,6 +43,10 @@ builder.Services.AddFirebaseServices();
 // Base on Extensions.RedisServiceExtensions
 builder.AddRedisCache();
 
+// Register hangfire services life cycle
+// Base on Extensions.HangfireServiceExtensions
+builder.AddHangfireServices();
+
 builder.Services.AddEndpointsApiExplorer();
 
 // Register Authentication
@@ -53,6 +59,20 @@ builder.Services.AddAuthorization();
 // Base on Extensions.WebApplicationBuilderExtensions
 builder.Services.AddSwaggerGen();
 
+// Register SignalR
+builder.Services.AddSignalR();
+
+builder.Services.AddCors(options =>
+{
+    var origin = builder.Configuration["AllowOrigin:FrontEnd"];
+    options.AddPolicy("AllowSpecificOrigin",
+        builder => builder
+            .WithOrigins(origin)
+            .AllowAnyHeader()
+            .AllowAnyMethod()
+            .AllowCredentials());
+});
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -62,15 +82,11 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
-//ApplyMigration();
+app.UseCors("AllowSpecificOrigin");
 
-app.UseCors(options =>
-{
-    options
-        .AllowAnyHeader()
-        .AllowAnyMethod()
-        .AllowAnyOrigin();
-});
+app.UseHangfireDashboard();
+
+app.MapHangfireDashboard("/hangfire");
 
 app.UseHttpsRedirection();
 
@@ -79,19 +95,21 @@ app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();
+    
+app.MapHub<NotificationHub>("/hubs/notification").RequireAuthorization();
 
 app.Run();
 
-//void ApplyMigration()
-//{
-//    using (var scope = app.Services.CreateScope())
-//    {
-//        var context = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
+void ApplyMigration()
+{
+    using (var scope = app.Services.CreateScope())
+    {
+        var context = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
 
-//        if (context.Database.GetPendingMigrations().Any())
-//        {
-//            context.Database.Migrate();
-//        }
-//    }
-//}
+        if (context.Database.GetPendingMigrations().Any())
+        {
+            context.Database.Migrate();
+        }
+    }
+}
 

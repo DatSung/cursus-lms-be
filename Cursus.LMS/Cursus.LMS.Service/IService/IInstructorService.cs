@@ -1,5 +1,6 @@
 ﻿using System.Security.Claims;
 using Cursus.LMS.Model.DTO;
+using Task = DocumentFormat.OpenXml.Office2021.DocumentTasks.Task;
 
 namespace Cursus.LMS.Service.IService;
 
@@ -25,9 +26,10 @@ public interface IInstructorService
     Task<ResponseDTO> GetInstructorTotalRating(Guid instructorId);
     Task<ResponseDTO> GetInstructorEarnedMoney(Guid instructorId);
     Task<ResponseDTO> GetInstructorPayoutMoney(Guid instructorId);
-
     Task<ResponseDTO> GetAllInstructorComment(Guid instructorId);
-    Task<ResponseDTO> CreateInstructorComment(ClaimsPrincipal User, CreateInstructorComment createInstructorComment);
-    Task<ResponseDTO> UpdateInstructorComment(ClaimsPrincipal User, UpdateInstructorComment createInstructorComment);
-    Task<ResponseDTO> DeleteInstructorComment(ClaimsPrincipal User, Guid commentId);
+    Task<ResponseDTO> CreateInstructorComment(CreateInstructorCommentDTO createInstructorComment);
+    Task<ResponseDTO> UpdateInstructorComment(UpdateInstructorCommentDTO updateInstructorComment);
+    Task<ResponseDTO> DeleteInstructorComment(Guid commentId);
+    Task<ResponseDTO> ExportInstructors(string userId, int month, int year);
+    Task<ClosedXMLResponseDTO> DownloadInstructors(string fileName);
 }

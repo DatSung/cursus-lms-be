@@ -1,5 +1,8 @@
+using System.Security.Claims;
 using Cursus.LMS.Model.DTO;
 using Cursus.LMS.Service.IService;
+using Cursus.LMS.Service.Service;
+using Hangfire;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -77,7 +80,6 @@ namespace Cursus.LMS.API.Controllers
         {
             var responseDto = await _instructorService.UpdateById(instructorDto);
             return StatusCode(responseDto.StatusCode, responseDto);
-
         }
 
         [HttpPost]
@@ -111,9 +113,9 @@ namespace Cursus.LMS.API.Controllers
         [Route("comment/")]
         public async Task<ActionResult<ResponseDTO>> CreateInstructorComment
         (
-            CreateInstructorComment createInstructorComment)
+            CreateInstructorCommentDTO createInstructorComment)
         {
-            var responseDto = await _instructorService.CreateInstructorComment(User, createInstructorComment);
+            var responseDto = await _instructorService.CreateInstructorComment(createInstructorComment);
             return StatusCode(responseDto.StatusCode, responseDto);
         }
 
@@ -121,9 +123,9 @@ namespace Cursus.LMS.API.Controllers
         [Route("comment/")]
         public async Task<ActionResult<ResponseDTO>> UpdateInstructorComment
         (
-            UpdateInstructorComment updateInstructorComment)
+            UpdateInstructorCommentDTO updateInstructorComment)
         {
-            var responseDto = await _instructorService.UpdateInstructorComment(User, updateInstructorComment);
+            var responseDto = await _instructorService.UpdateInstructorComment(updateInstructorComment);
             return StatusCode(responseDto.StatusCode, responseDto);
         }
 
@@ -131,10 +133,44 @@ namespace Cursus.LMS.API.Controllers
         [Route("comment/{commentId:guid}")]
         public async Task<ActionResult<ResponseDTO>> DeleteInstructorComment
         (
-            [FromRoute] Guid commentId)
+            [FromRoute] Guid commentId
+        )
+
         {
-            var responseDto = await _instructorService.DeleteInstructorComment(User, commentId);
+            var responseDto = await _instructorService.DeleteInstructorComment(commentId);
             return StatusCode(responseDto.StatusCode, responseDto);
+        }
+
+        [HttpPost]
+        [Route("export/{month:int}/{year:int}")]
+        public async Task<ActionResult<ResponseDTO>> ExportInstructor
+        (
+            [FromRoute] int month,
+            [FromRoute] int year
+        )
+        {
+            var userId = User.Claims.FirstOrDefault(x => x.Type == ClaimTypes.NameIdentifier)?.Value;
+            BackgroundJob.Enqueue<IInstructorService>(job => job.ExportInstructors(userId, month, year));
+            return Ok();
+        }
+
+        [HttpGet]
+        [Route("download/{fileName}")]
+        public async Task<ActionResult<ClosedXMLResponseDTO>> DownloadInstructor
+        (
+            [FromRoute] string fileName
+        )
+        {
+            var closedXmlResponseDto = await _instructorService.DownloadInstructors(fileName);
+            var stream = closedXmlResponseDto.Stream;
+            var contentType = closedXmlResponseDto.ContentType;
+
+            if (stream is null || contentType is null)
+            {
+                return NotFound();
+            }
+
+            return File(stream, contentType, fileName);
         }
     }
 }

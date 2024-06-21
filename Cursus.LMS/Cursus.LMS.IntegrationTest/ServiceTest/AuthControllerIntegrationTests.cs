@@ -8,7 +8,9 @@ using Cursus.LMS.API.csproj;
 using Cursus.LMS.DataAccess.Context;
 using Cursus.LMS.Model.Domain;
 using Cursus.LMS.Model.DTO;
+using FirebaseAdmin;
 using FluentAssertions;
+using FluentAssertions.Common;
 using Google.Apis.Auth.OAuth2;
 using Google.Cloud.Storage.V1;
 using Microsoft.AspNetCore.Hosting;
@@ -30,6 +32,7 @@ namespace Cursus.LMS.IntegrationTest.ServiceTest
 
         public AuthControllerIntegrationTests(WebApplicationFactory<Program1> factory)
         {
+            
             _factory = factory.WithWebHostBuilder(builder =>
             {
                 builder.ConfigureTestServices(services =>
@@ -507,7 +510,9 @@ namespace Cursus.LMS.IntegrationTest.ServiceTest
             Assert.Equal(401, responseDto.StatusCode);
             Assert.Equal("You need to confirm email!", responseDto.Message);
         }
-      
+
+        
+
 
     }
     

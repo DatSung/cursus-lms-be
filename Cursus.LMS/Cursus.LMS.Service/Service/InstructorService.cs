@@ -3,9 +3,16 @@ using AutoMapper;
 using Cursus.LMS.DataAccess.IRepository;
 using Cursus.LMS.Model.Domain;
 using Cursus.LMS.Model.DTO;
+using Cursus.LMS.Service.Hubs;
 using Cursus.LMS.Service.IService;
 using Cursus.LMS.Utility.Constants;
+using DocumentFormat.OpenXml.Office2019.Word.Cid;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.SignalR;
+using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
+using static Cursus.LMS.Utility.Constants.StaticStatus;
+using Task = DocumentFormat.OpenXml.Office2021.DocumentTasks.Task;
 
 namespace Cursus.LMS.Service.Service;
 
@@ -13,11 +20,20 @@ public class InstructorService : IInstructorService
 {
     private readonly IUnitOfWork _unitOfWork;
     private readonly IMapper _mapper;
+    private readonly IClosedXMLService _closedXmlService;
+    private readonly IWebHostEnvironment _env;
+    private readonly IConfiguration _config;
+    private readonly IHubContext<NotificationHub> _notificationHub;
 
-    public InstructorService(IUnitOfWork unitOfWork, IMapper mapper)
+    public InstructorService(IUnitOfWork unitOfWork, IMapper mapper, IClosedXMLService closedXmlService,
+        IWebHostEnvironment env, IConfiguration config, IHubContext<NotificationHub> notificationHub)
     {
         _unitOfWork = unitOfWork;
         _mapper = mapper;
+        _closedXmlService = closedXmlService;
+        _env = env;
+        _config = config;
+        _notificationHub = notificationHub;
     }
 
 
@@ -161,6 +177,8 @@ public class InstructorService : IInstructorService
 
             InstructorInfoDTO instructorInfoDto = new InstructorInfoDTO()
             {
+                InstructorId = instructor.InstructorId,
+                UserId = instructor.UserId,
                 FullName = instructor.ApplicationUser.FullName,
                 Email = instructor.ApplicationUser.Email,
                 Address = instructor.ApplicationUser.Address,
@@ -198,6 +216,12 @@ public class InstructorService : IInstructorService
         }
     }
 
+
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="updateInstructorDto"></param>
+    /// <returns></returns>
     public async Task<ResponseDTO> UpdateById(UpdateInstructorDTO updateInstructorDto)
     {
         try
@@ -222,14 +246,13 @@ public class InstructorService : IInstructorService
 
             instructorToUpdate.ApplicationUser.Address = updateInstructorDto?.Address;
             instructorToUpdate.ApplicationUser.BirthDate = updateInstructorDto?.BirthDate;
-            instructorToUpdate.ApplicationUser.PhoneNumber =updateInstructorDto?.PhoneNumber;
+            instructorToUpdate.ApplicationUser.PhoneNumber = updateInstructorDto?.PhoneNumber;
             instructorToUpdate.ApplicationUser.Gender = updateInstructorDto?.Gender;
             instructorToUpdate.ApplicationUser.FullName = updateInstructorDto?.FullName;
             instructorToUpdate.ApplicationUser.Country = updateInstructorDto?.Country;
             instructorToUpdate.ApplicationUser.Email = updateInstructorDto?.Email;
             instructorToUpdate.ApplicationUser.TaxNumber = updateInstructorDto?.TaxNumber;
 
-            
 
             _unitOfWork.InstructorRepository.Update(instructorToUpdate);
             await _unitOfWork.SaveAsync();
@@ -339,15 +362,91 @@ public class InstructorService : IInstructorService
         }
     }
 
-    public Task<ResponseDTO> GetInstructorTotalCourses(Guid instructorId)
+    public async Task<ResponseDTO> GetInstructorTotalCourses(Guid instructorId)
     {
-        throw new NotImplementedException();
+        try
+        {
+            var id = await _unitOfWork.InstructorRepository.GetAsync(i => i.InstructorId == instructorId);
+
+            if (id == null)
+            {
+                return new ResponseDTO()
+                {
+                    Message = "InstructorId Invalid",
+                    Result = null,
+                    IsSuccess = false,
+                    StatusCode = 400
+                };
+            }
+
+            var courses = await _unitOfWork.CourseRepository.GetAllAsync(c => c.InstructorId == id.InstructorId);
+
+            var totalCourses = courses.Count();
+
+            return new ResponseDTO()
+            {
+                Message = "Get Course Successfull",
+                IsSuccess = true,
+                StatusCode = 200,
+                Result = new
+                {
+                    Courses = courses.Select(x => new { x.Title , TotalCourses = totalCourses }),
+                }
+            };
+
+        }
+        catch (Exception e) 
+        {
+            return new ResponseDTO
+            {
+                Message = e.Message,
+                Result = null,
+                IsSuccess = false,
+                StatusCode = 500
+            };
+        }
     }
 
-    public Task<ResponseDTO> GetInstructorTotalRating(Guid instructorId)
+    public async Task<ResponseDTO> GetInstructorTotalRating(Guid instructorId)
     {
-        throw new NotImplementedException();
+        try
+        {
+            // Lấy tất cả rating của Instructor
+            var instructorRatings = await _unitOfWork.InstructorRatingRepository.GetAllAsync(x => x.InstructorId == instructorId);
+
+            if (instructorRatings == null || !instructorRatings.Any())
+            {
+                return new ResponseDTO
+                {
+                    Message = "No ratings found for this instructor.",
+                    IsSuccess = false,
+                    StatusCode = 404
+                };
+            }
+
+            // Tính tổng số và trung bình tổng Rating
+            var totalRating = instructorRatings.Sum(x => x.Rate);
+
+            return new ResponseDTO
+            {
+                Message = "Get Total Rating Successfull",
+                IsSuccess = true,
+                StatusCode = 200,
+                Result = totalRating
+            };
+        }
+        catch (Exception e)
+        {
+            return new ResponseDTO
+            {
+                Message = e.Message,
+                Result = null,
+                IsSuccess = false,
+                StatusCode = 500
+            };
+        }
     }
+
 
     public Task<ResponseDTO> GetInstructorEarnedMoney(Guid instructorId)
     {
@@ -359,25 +458,218 @@ public class InstructorService : IInstructorService
         throw new NotImplementedException();
     }
 
+    // Instructor Comment
+
     public Task<ResponseDTO> GetAllInstructorComment(Guid instructorId)
     {
         throw new NotImplementedException();
     }
 
-    public Task<ResponseDTO> CreateInstructorComment(ClaimsPrincipal User,
-        CreateInstructorComment createInstructorComment)
+    public async Task<ResponseDTO> CreateInstructorComment(CreateInstructorCommentDTO createInstructorComment)
     {
-        throw new NotImplementedException();
+        try
+        {
+            //Map DTO qua entity InstructorComment
+            var comment = _mapper.Map<InstructorComment>(createInstructorComment);
+            //Tìm xem có đúng ID instructor hay không
+            var instructorId =
+                await _unitOfWork.InstructorRepository.GetAsync(i =>
+                    i.InstructorId == createInstructorComment.instructorId);
+            if (instructorId == null)
+            {
+                return new ResponseDTO()
+                {
+                    Message = "InstructorId Invalid",
+                    Result = null,
+                    IsSuccess = false,
+                    StatusCode = 400
+                };
+            }
+
+            //chuyển status về 1
+            comment.Status = 1;
+
+            //thêm comment vào cho instructor
+            await _unitOfWork.InstructorCommentRepository.AddAsync(comment);
+            await _unitOfWork.SaveAsync();
+            return new ResponseDTO()
+            {
+                Message = "Comment created successfully",
+                Result = comment,
+                IsSuccess = true,
+                StatusCode = 200,
+            };
+        }
+        catch (Exception e)
+        {
+            return new ResponseDTO
+            {
+                Message = e.Message,
+                Result = null,
+                IsSuccess = false,
+                StatusCode = 500
+            };
+        }
     }
 
-    public Task<ResponseDTO> UpdateInstructorComment(ClaimsPrincipal User,
-        UpdateInstructorComment createInstructorComment)
+    public async Task<ResponseDTO> UpdateInstructorComment(UpdateInstructorCommentDTO updateInstructorCommentDTO)
     {
-        throw new NotImplementedException();
+        try
+        {
+            var instructorId =
+                await _unitOfWork.InstructorCommentRepository.GetAsync(i => i.Id == updateInstructorCommentDTO.Id);
+            if (instructorId == null)
+            {
+                return new ResponseDTO()
+                {
+                    Message = "InstructorId Invalid",
+                    Result = null,
+                    IsSuccess = false,
+                    StatusCode = 400
+                };
+            }
+
+            //update comment
+            _mapper.Map(updateInstructorCommentDTO, instructorId);
+            _unitOfWork.InstructorCommentRepository.Update(instructorId);
+
+            //Lưu comment
+            await _unitOfWork.SaveAsync();
+
+            return new ResponseDTO()
+            {
+                Message = "Comment updated successfully",
+                Result = null,
+                IsSuccess = true,
+                StatusCode = 200,
+            };
+        }
+        catch (Exception e)
+        {
+            return new ResponseDTO
+            {
+                Message = e.Message,
+                Result = null,
+                IsSuccess = false,
+                StatusCode = 500
+            };
+        }
     }
 
-    public Task<ResponseDTO> DeleteInstructorComment(ClaimsPrincipal User, Guid commentId)
+    public async Task<ResponseDTO> DeleteInstructorComment(Guid commentId)
     {
-        throw new NotImplementedException();
+        try
+        {
+            var comment =
+                await _unitOfWork.InstructorCommentRepository.GetAsync(x => x.Id == commentId);
+            if (comment == null)
+            {
+                return new ResponseDTO()
+                {
+                    Message = "Category was not found",
+                    IsSuccess = false,
+                    StatusCode = 404,
+                    Result = null,
+                };
+            }
+
+            //chuyển status về 0 chứ không xóa dữ liệu
+            comment.Status = 2;
+            //Lưu thay đổi
+            _unitOfWork.InstructorCommentRepository.Update(comment);
+            await _unitOfWork.SaveAsync();
+
+            return new ResponseDTO()
+            {
+                Message = "Category deleted successfully",
+                IsSuccess = true,
+                StatusCode = 200,
+                Result = comment.Id,
+            };
+        }
+        catch (Exception e)
+        {
+            return new ResponseDTO
+            {
+                Message = e.Message,
+                Result = null,
+                IsSuccess = false,
+                StatusCode = 500
+            };
+        }
+    }
+
+    public async Task<ResponseDTO> ExportInstructors(string userId, int month, int year)
+    {
+        
+        var instructors = _unitOfWork.InstructorRepository.GetAllAsync(includeProperties: "ApplicationUser")
+            .GetAwaiter().GetResult().ToList();
+        
+        instructors = instructors.Where(x =>
+                x.ApplicationUser.CreateTime.Value.Month == month && x.ApplicationUser.CreateTime.Value.Year == year)
+            .ToList();
+
+        var instructorInfoDtos = _mapper.Map<List<InstructorInfoDTO>>(instructors);
+        var fileName = await _closedXmlService.ExportInstructorExcel(instructorInfoDtos);
+
+        // Send signal to user after finish export excel
+        await _notificationHub.Clients.User(userId).SendAsync("DownloadExcelNow", fileName);
+
+        return new ResponseDTO()
+        {
+            Message = "Waiting...",
+            IsSuccess = true,
+            StatusCode = 200,
+            Result = null
+        };
+    }
+
+    public async Task<ClosedXMLResponseDTO> DownloadInstructors(string fileName)
+    {
+        try
+        {
+            string filePath = Path.Combine(_env.ContentRootPath, _config["FolderPath:ExcelExportFolderPath"], fileName);
+
+            if (!File.Exists(filePath))
+            {
+                return new ClosedXMLResponseDTO()
+                {
+                    Message = "File was not found",
+                    IsSuccess = false,
+                    StatusCode = 404,
+                    Stream = null,
+                    ContentType = null,
+                    FileName = null,
+                };
+            }
+
+            // Đọc file vào memory stream
+            var memory = new MemoryStream();
+            using (var stream = new FileStream(filePath, FileMode.Open))
+            {
+                stream.CopyTo(memory);
+            }
+
+            memory.Position = 0;
+            var contentType = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
+
+            // Delete the file after user download it
+            System.IO.File.Delete(filePath);
+
+            return new ClosedXMLResponseDTO()
+            {
+                Stream = memory,
+                ContentType = contentType,
+                FileName = fileName,
+                StatusCode = 200,
+                IsSuccess = true,
+                Message = "Download file successfully"
+            };
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            throw;
+        }
     }
 }
