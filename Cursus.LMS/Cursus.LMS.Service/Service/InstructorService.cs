@@ -388,9 +388,9 @@ public class InstructorService : IInstructorService
                 Message = "Get Course Successfull",
                 IsSuccess = true,
                 StatusCode = 200,
-                Result = new
+                Result = new InstructorTotalCount()
                 {
-                    Courses = courses.Select(x => new { x.Title , TotalCourses = totalCourses }),
+                    Total = totalCourses
                 }
             };
 
@@ -432,7 +432,10 @@ public class InstructorService : IInstructorService
                 Message = "Get Total Rating Successfull",
                 IsSuccess = true,
                 StatusCode = 200,
-                Result = totalRating
+                Result = new InstructorTotalCount()
+                {
+                    Total = totalRating
+                }
             };
         }
         catch (Exception e)
