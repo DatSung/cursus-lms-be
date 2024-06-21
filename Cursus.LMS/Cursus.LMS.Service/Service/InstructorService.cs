@@ -6,6 +6,7 @@ using Cursus.LMS.Model.DTO;
 using Cursus.LMS.Service.Hubs;
 using Cursus.LMS.Service.IService;
 using Cursus.LMS.Utility.Constants;
+using DocumentFormat.OpenXml.Office2019.Word.Cid;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.SignalR;
 using Microsoft.Extensions.Configuration;
@@ -366,10 +367,56 @@ public class InstructorService : IInstructorService
         throw new NotImplementedException();
     }
 
-    public Task<ResponseDTO> GetInstructorTotalRating(Guid instructorId)
+    public async Task<ResponseDTO> GetInstructorTotalRating(Guid instructorId)
     {
-        throw new NotImplementedException();
+        try
+        {
+            // Lấy tất cả rating của Instructor
+            var instructorRatings = await _unitOfWork.InstructorRatingRepository.GetAllAsync(x => x.InstructorId == instructorId);
+
+            if (!instructorRatings.Any())
+            {
+                return new ResponseDTO
+                {
+                    Message = "No ratings found for this instructor.",
+                    IsSuccess = false,
+                    StatusCode = 404
+                };
+            }
+
+            // Tính tổng số và trung bình tổng Rating
+            var totalRating = instructorRatings.Sum(x => x.Rate);
+
+            // Lưu tổng rating vào database
+            var instructorRating = new InstructorRating
+            {
+                Id = Guid.NewGuid(),
+                InstructorId = instructorId,
+                Rate = (int)totalRating
+            };
+            await _unitOfWork.InstructorRatingRepository.AddAsync(instructorRating);
+            await _unitOfWork.SaveAsync();
+
+            return new ResponseDTO
+            {
+                Message = "Instructor total rating calculated and saved successfully.",
+                IsSuccess = true,
+                StatusCode = 200,
+                Result = totalRating
+            };
+        }
+        catch (Exception e)
+        {
+            return new ResponseDTO
+            {
+                Message = e.Message,
+                Result = null,
+                IsSuccess = false,
+                StatusCode = 500
+            };
+        }
     }
+
 
     public Task<ResponseDTO> GetInstructorEarnedMoney(Guid instructorId)
     {
