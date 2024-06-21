@@ -209,13 +209,13 @@ public class CategoryService : ICategoryService
             if (userRole == StaticUserRoles.Admin)
             {
                 categories =
-                    await _unitOfWork.CategoryRepository.GetAllAsync();
+                    await _unitOfWork.CategoryRepository.GetAllAsync(includeProperties: "ParentCategory");
             }
             else
             {
                 categories =
                     await _unitOfWork.CategoryRepository.GetAllAsync(x =>
-                        x.Status <= StaticStatus.Category.Activated);
+                        x.Status <= StaticStatus.Category.Activated, includeProperties: "ParentCategory");
             }
 
             if (categories.IsNullOrEmpty())
@@ -468,40 +468,6 @@ public class CategoryService : ICategoryService
     /// <returns></returns>
     public async Task<ResponseDTO> AddAsync(CreateCategoryDTO createCategoryDto)
     {
-        /*try
-        {
-            var category = _mapper.Map<Category>(createCategoryDto);
-        
-            // Kiểm tra xem ParentId có tồn tại trong cơ sở dữ liệu không
-            if (category.ParentId.HasValue)
-            {
-                category.ParentId = createCategoryDto.ParentId;
-                category.Status = 1;
-                    
-                //category.ParentId = null;
-            }
-
-            await _unitOfWork.CategoryRepository.AddAsync(category);
-            await _unitOfWork.SaveAsync();
-
-            return new ResponseDTO
-            {
-                Message = "Category added successfully",
-                Result = category,
-                IsSuccess = true,
-                StatusCode = 200,   
-            };
-        }
-        catch (Exception e)
-        {
-            return new ResponseDTO
-            {
-                Message = e.Message,
-                Result = null,
-                IsSuccess = false,
-                StatusCode = 500
-            };
-        }*/
         try
         {
             // Map DTO sang entity Category
@@ -559,7 +525,7 @@ public class CategoryService : ICategoryService
             return new ResponseDTO
             {
                 Message = "Category created successfully",
-                Result = category,
+                Result = null,
                 IsSuccess = true,
                 StatusCode = 200
             };
@@ -582,56 +548,12 @@ public class CategoryService : ICategoryService
     /// <returns></returns>
     public async Task<ResponseDTO> Update(UpdateCategoryDTO updateCategoryDTO)
     {
-        /*try
-        {
-            // Tìm kiếm danh mục hiện có ID giống ID mình vừa nhập không
-            var update =
-                await _unitOfWork.CategoryRepository.GetCategoryByIdAsync(updateCategoryDTO.Id);
-
-            if (update == null)
-            {
-
-                return new ResponseDTO
-                {
-                    Message = "Category not found",
-                    Result = null,
-                    IsSuccess = false,
-                    StatusCode = 404
-                };
-            }
-
-            // Cập nhật các thuộc tính của danh mục
-            _mapper.Map(updateCategoryDTO, update);
-
-            // Lưu thay đổi vào cơ sở dữ liệu
-            _unitOfWork.CategoryRepository.Update(update);
-            await _unitOfWork.SaveAsync();
-
-            return new ResponseDTO
-            {
-                Message = "Category updated successfully",
-                Result = update,
-                IsSuccess = true,
-                StatusCode = 200
-            };
-        }
-        catch (Exception e)
-        {
-            return new ResponseDTO
-            {
-                Message = e.Message,
-                Result = null,
-                IsSuccess = false,
-                StatusCode = 500
-            };
-        }*/
-
         try
         {
-            // Step 1: Retrieve the existing category by ID
+            // kiểm tra xem có ID trong database không
             var categoryToUpdate = await _unitOfWork.CategoryRepository.GetAsync(c => c.Id == updateCategoryDTO.Id);
 
-            // Step 2: Check if the category exists
+            // kiểm tra xem có null không
             if (categoryToUpdate == null)
             {
                 return new ResponseDTO
@@ -643,11 +565,11 @@ public class CategoryService : ICategoryService
                 };
             }
 
-            // Step 3 & 4: Map updated values and update in database context
+            // thay đổi dữ liệu
             _mapper.Map(updateCategoryDTO, categoryToUpdate);
             _unitOfWork.CategoryRepository.Update(categoryToUpdate);
 
-            // Step 5: Save changes to the database
+            // lưu dữ liệu vào database
             await _unitOfWork.SaveAsync();
 
             return new ResponseDTO
@@ -668,51 +590,69 @@ public class CategoryService : ICategoryService
                 StatusCode = 500
             };
         }
-
-
-
-
     }
-
+    /// <summary>
+    /// Delete Category
+    /// </summary>
+    /// <param name="id"></param>
+    /// <returns></returns>
     public async Task<ResponseDTO> Delete(Guid id)
     {
-        var category =
-                await _unitOfWork.CategoryRepository.GetAsync(filter: x => x.Id == id);
-        if (category == null)
+        try
         {
+            // kiểm tra xem có đúng ID trong database không
+            var category = await _unitOfWork.CategoryRepository.GetAsync(filter: x => x.Id == id);
+
+            // kiểm tra xem nó có bị null hay không
+            if (category == null)
+            {
+                return new ResponseDTO()
+                {
+                    Message = "Category not found",
+                    IsSuccess = false,
+                    StatusCode = 404,
+                    Result = null,
+                };
+            }
+
+            // kiểm tra các danh mục con có ParentId là danh mục đang bị xóa
+            var subCategories = await _unitOfWork.CategoryRepository.GetAllAsync(filter: x => x.ParentId == id);
+
+            // Nếu có danh mục con, không cho phép xóa và trả về danh sách các danh mục con
+            if (subCategories.Any())
+            {
+                return new ResponseDTO()
+                {
+                    Message = "Category cannot be deleted because it has subcategories.",
+                    IsSuccess = false,
+                    StatusCode = 400,
+                    Result = subCategories.Select(x => new { x.Id, x.Name }).ToList()
+                };
+            }
+
+            // chuyển status về 2 chứ không xóa dữ liệu
+            category.Status = 2;
+            //thay đổi và lưu dữ liệu trong database
+            _unitOfWork.CategoryRepository.Update(category);
+            await _unitOfWork.SaveAsync();
+
             return new ResponseDTO()
             {
-                Message = "Category was not found",
-                IsSuccess = false,
-                StatusCode = 404,
-                Result = null,
+                Message = "Category deleted successful",
+                IsSuccess = true,
+                StatusCode = 200,
+                Result = category.Id,
             };
         }
-
-        //chuyển status về 0 chứ không xóa dữ liệu
-        category.Status = 2;
-        _unitOfWork.CategoryRepository.Update(category);
-
-        //tìm danh sách con của category bị chuyển đổi status về 0
-        /*var childCategories = await _unitOfWork.CategoryRepository.GetAsync(filter: x => x.ParentId == id);
-        if (childCategories != null)
+        catch (Exception e)
         {
-            foreach (var childCategory in childCategories)
+            return new ResponseDTO
             {
-                childCategory.ParentId = null;
-                _unitOfWork.CategoryRepository.Update(childCategory);
-            }
-        }*/
-
-        await _unitOfWork.SaveAsync();
-
-        return new ResponseDTO()
-        {
-            Message = "Category deleted successfully",
-            IsSuccess = true,
-            StatusCode = 200,
-            Result = category.Id,
-        };
+                Message = e.Message,
+                Result = null,
+                IsSuccess = false,
+                StatusCode = 500
+            };
+        }
     }
-
 }

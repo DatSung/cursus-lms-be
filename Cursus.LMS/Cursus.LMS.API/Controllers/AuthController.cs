@@ -299,9 +299,9 @@ namespace Cursus.LMS.API.Controllers
         [Route("complete-student-profile")]
         [Authorize]
         public async Task<ActionResult<ResponseDTO>> CompleteStudentProfile(
-            UpdateStudentProfileDTO updateStudentProfileDto)
+            CompleteStudentProfileDTO completeStudentProfileDto)
         {
-            var responseDto = await _authService.CompleteStudentProfile(User, updateStudentProfileDto);
+            var responseDto = await _authService.CompleteStudentProfile(User, completeStudentProfileDto);
             return StatusCode(this.responseDto.StatusCode, responseDto);
         }
         
@@ -309,9 +309,9 @@ namespace Cursus.LMS.API.Controllers
         [Route("complete-instructor-profile")]
         [Authorize]
         public async Task<ActionResult<ResponseDTO>> CompleteInstructorProfile(
-            UpdateInstructorProfileDTO updateInstructorProfileDto)
+            CompleteInstructorProfileDTO completeInstructorProfileDto)
         {
-            var responseDto = await _authService.CompleteInstructorProfile(User, updateInstructorProfileDto);
+            var responseDto = await _authService.CompleteInstructorProfile(User, completeInstructorProfileDto);
             return StatusCode(responseDto.StatusCode, responseDto);
         }
 

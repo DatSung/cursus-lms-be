@@ -12,9 +12,12 @@ public class Instructor
     public string? DegreeImageUrl { get; set; }
     public string Industry { get; set; }
     public string Introduction { get; set; }
-    public bool IsAccepted { get; set; } = false;
-    public DateTime? AcceptedTime  { get; set; }
+    public bool? IsAccepted { get; set; } = false;
+    public DateTime? AcceptedTime { get; set; }
     public string? AcceptedBy { get; set; }
-    
+
+    public DateTime? RejectedTime { get; set; }
+    public string? RejectedBy { get; set; }
+
     [NotMapped] public virtual IEnumerable<Course> Courses { get; set; }
 }
