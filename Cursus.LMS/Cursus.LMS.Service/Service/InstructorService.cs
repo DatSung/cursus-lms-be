@@ -522,9 +522,8 @@ public class InstructorService : IInstructorService
         }
     }
 
-    public async Task<ResponseDTO> ExportInstructors(ClaimsPrincipal User)
+    public async Task<ResponseDTO> ExportInstructors(string userId)
     {
-        var userId = User.Claims.FirstOrDefault(x => x.Type == ClaimTypes.NameIdentifier)?.Value;
         var instructors = _unitOfWork.InstructorRepository.GetAllAsync(includeProperties: "ApplicationUser")
             .GetAwaiter().GetResult().ToList();
         var instructorInfoDtos = _mapper.Map<List<InstructorInfoDTO>>(instructors);

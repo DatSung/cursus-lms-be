@@ -1,3 +1,4 @@
+using System.Security.Claims;
 using Cursus.LMS.Model.DTO;
 using Cursus.LMS.Service.IService;
 using Cursus.LMS.Service.Service;
@@ -142,11 +143,12 @@ namespace Cursus.LMS.API.Controllers
         [Route("export")]
         public async Task<ActionResult<ResponseDTO>> ExportInstructor()
         {
-            BackgroundJob.Enqueue<IInstructorService>(job => job.ExportInstructors(User));
+            var userId = User.Claims.FirstOrDefault(x => x.Type == ClaimTypes.NameIdentifier)?.Value;
+            BackgroundJob.Enqueue<IInstructorService>(job => job.ExportInstructors(userId));
             return Ok();
         }
 
-        [HttpPost]
+        [HttpGet]
         [Route("download/{fileName}")]
         public async Task<ActionResult<ClosedXMLResponseDTO>> DownloadInstructor([FromRoute] string fileName)
         {
