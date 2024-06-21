@@ -1,3 +1,4 @@
+using System.Security.Claims;
 using Cursus.LMS.Model.DTO;
 using Cursus.LMS.Service.IService;
 using Cursus.LMS.Service.Service;
@@ -132,23 +133,33 @@ namespace Cursus.LMS.API.Controllers
         [Route("comment/{commentId:guid}")]
         public async Task<ActionResult<ResponseDTO>> DeleteInstructorComment
         (
-            [FromRoute] Guid commentId)
+            [FromRoute] Guid commentId
+        )
+
         {
             var responseDto = await _instructorService.DeleteInstructorComment(commentId);
             return StatusCode(responseDto.StatusCode, responseDto);
         }
 
         [HttpPost]
-        [Route("export")]
-        public async Task<ActionResult<ResponseDTO>> ExportInstructor()
+        [Route("export/{month:int}/{year:int}")]
+        public async Task<ActionResult<ResponseDTO>> ExportInstructor
+        (
+            [FromRoute] int month,
+            [FromRoute] int year
+        )
         {
-            BackgroundJob.Enqueue<IInstructorService>(job => job.ExportInstructors(User));
+            var userId = User.Claims.FirstOrDefault(x => x.Type == ClaimTypes.NameIdentifier)?.Value;
+            BackgroundJob.Enqueue<IInstructorService>(job => job.ExportInstructors(userId, month, year));
             return Ok();
         }
 
-        [HttpPost]
+        [HttpGet]
         [Route("download/{fileName}")]
-        public async Task<ActionResult<ClosedXMLResponseDTO>> DownloadInstructor([FromRoute] string fileName)
+        public async Task<ActionResult<ClosedXMLResponseDTO>> DownloadInstructor
+        (
+            [FromRoute] string fileName
+        )
         {
             var closedXmlResponseDto = await _instructorService.DownloadInstructors(fileName);
             var stream = closedXmlResponseDto.Stream;
