@@ -374,7 +374,7 @@ public class InstructorService : IInstructorService
             // Lấy tất cả rating của Instructor
             var instructorRatings = await _unitOfWork.InstructorRatingRepository.GetAllAsync(x => x.InstructorId == instructorId);
 
-            if (!instructorRatings.Any())
+            if (instructorRatings == null || !instructorRatings.Any())
             {
                 return new ResponseDTO
                 {
@@ -387,19 +387,9 @@ public class InstructorService : IInstructorService
             // Tính tổng số và trung bình tổng Rating
             var totalRating = instructorRatings.Sum(x => x.Rate);
 
-            // Lưu tổng rating vào database
-            var instructorRating = new InstructorRating
-            {
-                Id = Guid.NewGuid(),
-                InstructorId = instructorId,
-                Rate = (int)totalRating
-            };
-            await _unitOfWork.InstructorRatingRepository.AddAsync(instructorRating);
-            await _unitOfWork.SaveAsync();
-
             return new ResponseDTO
             {
-                Message = "Instructor total rating calculated and saved successfully.",
+                Message = "Get Total Rating Successfull",
                 IsSuccess = true,
                 StatusCode = 200,
                 Result = totalRating
