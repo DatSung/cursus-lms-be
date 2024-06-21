@@ -361,9 +361,49 @@ public class InstructorService : IInstructorService
         }
     }
 
-    public Task<ResponseDTO> GetInstructorTotalCourses(Guid instructorId)
+    public async Task<ResponseDTO> GetInstructorTotalCourses(Guid instructorId)
     {
-        throw new NotImplementedException();
+        try
+        {
+            var id = await _unitOfWork.InstructorRepository.GetAsync(i => i.InstructorId == instructorId);
+
+            if (id == null)
+            {
+                return new ResponseDTO()
+                {
+                    Message = "InstructorId Invalid",
+                    Result = null,
+                    IsSuccess = false,
+                    StatusCode = 400
+                };
+            }
+
+            var courses = await _unitOfWork.CourseRepository.GetAllAsync(c => c.InstructorId == id.InstructorId);
+
+            var totalCourses = courses.Count();
+
+            return new ResponseDTO()
+            {
+                Message = "Get Course Successfull",
+                IsSuccess = true,
+                StatusCode = 200,
+                Result = new
+                {
+                    Courses = courses.Select(x => new { x.Title , TotalCourses = totalCourses }),
+                }
+            };
+
+        }
+        catch (Exception e) 
+        {
+            return new ResponseDTO
+            {
+                Message = e.Message,
+                Result = null,
+                IsSuccess = false,
+                StatusCode = 500
+            };
+        }
     }
 
     public Task<ResponseDTO> GetInstructorTotalRating(Guid instructorId)

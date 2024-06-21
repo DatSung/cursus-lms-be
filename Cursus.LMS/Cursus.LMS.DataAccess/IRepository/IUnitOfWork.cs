@@ -12,4 +12,5 @@ public interface IUnitOfWork
     IEmailTemplateRepository EmailTemplateRepository { get; }
     IUserManagerRepository UserManagerRepository { get; }
     IInstructorCommentRepository InstructorCommentRepository { get; }
+    ICourseRepository CourseRepository { get; }
 }
