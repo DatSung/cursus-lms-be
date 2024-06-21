@@ -747,77 +747,78 @@ public class AuthService : IAuthService
     /// </summary>
     /// <param name="token"></param>
     /// <returns></returns>
-    public async Task<ResponseDTO> Refresh(string token)
-    {
-        try
+        public async Task<ResponseDTO> Refresh(string token)
         {
-            ClaimsPrincipal user = await _tokenService.GetPrincipalFromToken(token);
+            try
+            {
+                ClaimsPrincipal user = await _tokenService.GetPrincipalFromToken(token);
+                
 
-            var userId = user.Claims.FirstOrDefault(x => x.Type == ClaimTypes.NameIdentifier)?.Value;
-            if (userId is null || userId == "")
+                var userId = user.Claims.FirstOrDefault(x => x.Type == ClaimTypes.NameIdentifier)?.Value;
+                if (userId is null || userId == "")
+                {
+                    return new ResponseDTO()
+                    {
+                        Message = "Token is not valid",
+                        IsSuccess = false,
+                        StatusCode = 400,
+                        Result = null
+                    };
+                }
+
+                var applicationUser = await _userManagerRepository.FindByIdAsync(userId);
+                if (applicationUser is null)
+                {
+                    return new ResponseDTO()
+                    {
+                        Message = "User does not exist",
+                        IsSuccess = false,
+                        StatusCode = 404,
+                        Result = null
+                    };
+                }
+
+
+                var tokenOnRedis = await _tokenService.RetrieveRefreshToken(applicationUser.Id);
+                if (tokenOnRedis != token)
+                {
+                    return new ResponseDTO()
+                    {
+                        Message = "Token is not valid",
+                        IsSuccess = false,
+                        StatusCode = 400,
+                        Result = null
+                    };
+                }
+
+                var accessToken = await _tokenService.GenerateJwtAccessTokenAsync(applicationUser);
+                var refreshToken = await _tokenService.GenerateJwtRefreshTokenAsync(applicationUser);
+
+                await _tokenService.StoreRefreshToken(applicationUser.Id, refreshToken);
+
+                return new ResponseDTO()
+                {
+                    Result = new JwtTokenDTO()
+                    {
+                        AccessToken = accessToken,
+                        RefreshToken = refreshToken
+                    },
+                    IsSuccess = true,
+                    StatusCode = 200,
+                    Message = "Refresh Token Successfully!"
+                };
+            }
+            catch (Exception e)
             {
                 return new ResponseDTO()
                 {
-                    Message = "Token is not valid",
+                    Message = e.Message,
                     IsSuccess = false,
-                    StatusCode = 400,
+                    StatusCode = 500,
                     Result = null
                 };
             }
-
-            var applicationUser = await _userManagerRepository.FindByIdAsync(userId);
-            if (applicationUser is null)
-            {
-                return new ResponseDTO()
-                {
-                    Message = "User does not exist",
-                    IsSuccess = false,
-                    StatusCode = 404,
-                    Result = null
-                };
-            }
-
-
-            var tokenOnRedis = await _tokenService.RetrieveRefreshToken(applicationUser.Id);
-            if (tokenOnRedis != token)
-            {
-                return new ResponseDTO()
-                {
-                    Message = "Token is not valid",
-                    IsSuccess = false,
-                    StatusCode = 400,
-                    Result = null
-                };
-            }
-
-            var accessToken = await _tokenService.GenerateJwtAccessTokenAsync(applicationUser);
-            var refreshToken = await _tokenService.GenerateJwtRefreshTokenAsync(applicationUser);
-
-            await _tokenService.StoreRefreshToken(applicationUser.Id, refreshToken);
-
-            return new ResponseDTO()
-            {
-                Result = new JwtTokenDTO()
-                {
-                    AccessToken = accessToken,
-                    RefreshToken = refreshToken
-                },
-                IsSuccess = true,
-                StatusCode = 200,
-                Message = "Refresh Token Successfully!"
-            };
         }
-        catch (Exception e)
-        {
-            return new ResponseDTO()
-            {
-                Message = e.Message,
-                IsSuccess = false,
-                StatusCode = 500,
-                Result = null
-            };
-        }
-    }
 
 
     //Forgot password

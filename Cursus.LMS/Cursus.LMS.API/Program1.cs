@@ -91,7 +91,7 @@ namespace Cursus.LMS.API.csproj
 
             app.MapControllers();
 
-            // Apply migrations
+            // Apply migrationsf
             
 
             app.Run();

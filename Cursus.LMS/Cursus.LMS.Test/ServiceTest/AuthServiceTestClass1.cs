@@ -187,7 +187,7 @@ public class AuthServiceTests
         _userManagerRepositoryMock.Setup(repo => repo.FindByEmailAsync(registerStudentDTO.Email)).ReturnsAsync((ApplicationUser)null);
         _userManagerRepositoryMock.Setup(repo => repo.CheckIfPhoneNumberExistsAsync(registerStudentDTO.PhoneNumber)).ReturnsAsync(false);
         _unitOfWorkMock.Setup(uow => uow.PaymentCardRepository.CardNumberExistsAsync(registerStudentDTO.CardNumber)).ReturnsAsync((PaymentCard)null);
-        _userManagerRepositoryMock.Setup(repo => repo.FindByPhoneAsync(registerStudentDTO.PhoneNumber)).ReturnsAsync( new ApplicationUser());
+        _userManagerRepositoryMock.Setup(repo => repo.FindByPhoneAsync(registerStudentDTO.PhoneNumber)).ReturnsAsync(new ApplicationUser());
         _userManagerRepositoryMock.Setup(repo => repo.CreateAsync(It.IsAny<ApplicationUser>(), It.IsAny<string>())).ReturnsAsync(IdentityResult.Success);
         _roleManagerMock.Setup(repo => repo.RoleExistsAsync(StaticUserRoles.Student)).ReturnsAsync(false);
         _userManagerRepositoryMock.Setup(repo => repo.AddToRoleAsync(It.IsAny<ApplicationUser>(), It.IsAny<string>())).ReturnsAsync(IdentityResult.Failed(new IdentityError { Description = "Error adding role" }));
@@ -513,7 +513,7 @@ public class AuthServiceTests
     /// UploadInstructorDegree
     /// </summary>
     /// <returns></returns>
-    
+
     [Fact]
     public async Task UploadInstructorDegree_UserNotAuthenticated_ReturnsErrorResponse()
     {
@@ -680,7 +680,7 @@ public class AuthServiceTests
     public async Task GetInstructorDegree_DegreeUploadMissing_ReturnsErrorResponse()
     {
         //Arrange
-       var claimsPrincipal = new ClaimsPrincipal(new ClaimsIdentity(new List<Claim>
+        var claimsPrincipal = new ClaimsPrincipal(new ClaimsIdentity(new List<Claim>
        {
             new Claim(ClaimTypes.NameIdentifier, "userId")
        }));
@@ -690,7 +690,7 @@ public class AuthServiceTests
         _firebaseServiceMock.Setup(x => x.GetImage(It.IsAny<string>())).ReturnsAsync((MemoryStream)null); // Corrected setup
 
         //Act
-       var result = await _authService.GetInstructorDegree(claimsPrincipal);
+        var result = await _authService.GetInstructorDegree(claimsPrincipal);
 
         //Assert
         Assert.Null(result.ContentType);
@@ -753,7 +753,7 @@ public class AuthServiceTests
     /// UploadUserAvatar
     /// </summary>
     /// <returns></returns>
-    
+
     [Fact]
     public async Task UploadUserAvatar_SuccessfullyUploadsAvatar_ReturnsSuccessResponse()
     {
@@ -978,38 +978,38 @@ public class AuthServiceTests
     /// </summary>
     /// <returns></returns>
     [Fact]
-        public async Task SignIn_UserExistsAndCorrectPassword_ReturnsSuccessfulResponse()
-        {
-            // Arrange
-            var signDTO = new SignDTO { Email = "test@example.com", Password = "password" };
-            var user = new ApplicationUser { Email = signDTO.Email, EmailConfirmed = true };
-            var accessToken = "fakeAccessToken";
-            var refreshToken = "fakeRefreshToken";
+    public async Task SignIn_UserExistsAndCorrectPassword_ReturnsSuccessfulResponse()
+    {
+        // Arrange
+        var signDTO = new SignDTO { Email = "test@example.com", Password = "password" };
+        var user = new ApplicationUser { Email = signDTO.Email, EmailConfirmed = true };
+        var accessToken = "fakeAccessToken";
+        var refreshToken = "fakeRefreshToken";
 
-            _userManagerRepositoryMock.Setup(r => r.FindByEmailAsync(signDTO.Email)).ReturnsAsync(user);
-            _userManagerRepositoryMock.Setup(r => r.CheckPasswordAsync(user, signDTO.Password)).ReturnsAsync(true);
-            _tokenServiceMock.Setup(s => s.GenerateJwtAccessTokenAsync(user)).ReturnsAsync(accessToken);
-            _tokenServiceMock.Setup(s => s.GenerateJwtRefreshTokenAsync(user)).ReturnsAsync(refreshToken);
+        _userManagerRepositoryMock.Setup(r => r.FindByEmailAsync(signDTO.Email)).ReturnsAsync(user);
+        _userManagerRepositoryMock.Setup(r => r.CheckPasswordAsync(user, signDTO.Password)).ReturnsAsync(true);
+        _tokenServiceMock.Setup(s => s.GenerateJwtAccessTokenAsync(user)).ReturnsAsync(accessToken);
+        _tokenServiceMock.Setup(s => s.GenerateJwtRefreshTokenAsync(user)).ReturnsAsync(refreshToken);
 
-            // Act
-            var result = await _authService.SignIn(signDTO);
+        // Act
+        var result = await _authService.SignIn(signDTO);
 
-            // Assert
-            Assert.True(result.IsSuccess);
-            Assert.Equal(200, result.StatusCode);
-            Assert.Equal("Sign in successfully", result.Message);
-            Assert.NotNull(result.Result);
-            Assert.IsType<SignResponseDTO>(result.Result);
-            Assert.Equal(accessToken, ((SignResponseDTO)result.Result).AccessToken);
-            Assert.Equal(refreshToken, ((SignResponseDTO)result.Result).RefreshToken);
+        // Assert
+        Assert.True(result.IsSuccess);
+        Assert.Equal(200, result.StatusCode);
+        Assert.Equal("Sign in successfully", result.Message);
+        Assert.NotNull(result.Result);
+        Assert.IsType<SignResponseDTO>(result.Result);
+        Assert.Equal(accessToken, ((SignResponseDTO)result.Result).AccessToken);
+        Assert.Equal(refreshToken, ((SignResponseDTO)result.Result).RefreshToken);
 
-            // Verify interactions
-            _userManagerRepositoryMock.Verify(r => r.FindByEmailAsync(signDTO.Email), Times.Once);
-            _userManagerRepositoryMock.Verify(r => r.CheckPasswordAsync(user, signDTO.Password), Times.Once);
-            _tokenServiceMock.Verify(s => s.GenerateJwtAccessTokenAsync(user), Times.Once);
-            _tokenServiceMock.Verify(s => s.GenerateJwtRefreshTokenAsync(user), Times.Once);
-            _tokenServiceMock.Verify(s => s.StoreRefreshToken(user.Id, refreshToken), Times.Once);
-        }
+        // Verify interactions
+        _userManagerRepositoryMock.Verify(r => r.FindByEmailAsync(signDTO.Email), Times.Once);
+        _userManagerRepositoryMock.Verify(r => r.CheckPasswordAsync(user, signDTO.Password), Times.Once);
+        _tokenServiceMock.Verify(s => s.GenerateJwtAccessTokenAsync(user), Times.Once);
+        _tokenServiceMock.Verify(s => s.GenerateJwtRefreshTokenAsync(user), Times.Once);
+        _tokenServiceMock.Verify(s => s.StoreRefreshToken(user.Id, refreshToken), Times.Once);
+    }
 
     [Fact]
     public async Task SignIn_UserDoesNotExist_ReturnsErrorResponse()

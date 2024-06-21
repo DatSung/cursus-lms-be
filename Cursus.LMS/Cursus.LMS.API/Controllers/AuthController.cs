@@ -242,13 +242,13 @@ namespace Cursus.LMS.API.Controllers
         /// This API for case sign in.
         /// </summary>
         /// <returns>ResponseDTO</returns>
-        [HttpPost]
-        [Route("sign-in")]
-        public async Task<ActionResult<ResponseDTO>> SignIn([FromBody] SignDTO signDto)
-        {
-            var responseDto = await _authService.SignIn(signDto);
-            return StatusCode(this.responseDto.StatusCode, responseDto);
-        }
+            [HttpPost]
+            [Route("sign-in")]
+            public async Task<ActionResult<ResponseDTO>> SignIn([FromBody] SignDTO signDto)
+            {
+                var responseDto = await _authService.SignIn(signDto);
+                return StatusCode(this.responseDto.StatusCode, responseDto);
+            }
 
         // // <summary>
         // /// This API for case student sign in by google.
