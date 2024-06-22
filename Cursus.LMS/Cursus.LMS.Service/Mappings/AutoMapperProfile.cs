@@ -71,6 +71,7 @@ public class AutoMapperProfile : Profile
                 => opt.MapFrom(src => src.IsAccepted))
             .ReverseMap();
 
+        CreateMap<InstructorComment, GetAllCommentsDTO>().ReverseMap();
         CreateMap<InstructorComment, CreateInstructorCommentDTO>().ReverseMap();
         CreateMap<InstructorComment, UpdateInstructorCommentDTO>().ReverseMap();
     }

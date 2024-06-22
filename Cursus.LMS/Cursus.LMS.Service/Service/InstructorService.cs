@@ -5,14 +5,11 @@ using Cursus.LMS.Model.Domain;
 using Cursus.LMS.Model.DTO;
 using Cursus.LMS.Service.Hubs;
 using Cursus.LMS.Service.IService;
-using Cursus.LMS.Utility.Constants;
-using DocumentFormat.OpenXml.Office2019.Word.Cid;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.SignalR;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
-using static Cursus.LMS.Utility.Constants.StaticStatus;
-using Task = DocumentFormat.OpenXml.Office2021.DocumentTasks.Task;
+
 
 namespace Cursus.LMS.Service.Service;
 
@@ -464,17 +461,63 @@ public class InstructorService : IInstructorService
 
     // Instructor Comment
 
-    public Task<ResponseDTO> GetAllInstructorComment(Guid instructorId)
-    {
-        throw new NotImplementedException();
-    }
-
-    public async Task<ResponseDTO> CreateInstructorComment(CreateInstructorCommentDTO createInstructorComment)
+    public async Task<ResponseDTO> GetAllInstructorComment
+    (
+        Guid instructorId,
+        int pageNumber,
+        int pageSize
+    )
     {
         try
         {
-            //Map DTO qua entity InstructorComment
-            var comment = _mapper.Map<InstructorComment>(createInstructorComment);
+            var comments = _unitOfWork.InstructorCommentRepository.GetAllAsync(x => x.InstructorId == instructorId).GetAwaiter().GetResult().ToList();
+            if (comments is null)
+            {
+                return new ResponseDTO()
+                {
+                    Message = "There are no comment",
+                    IsSuccess = true,
+                    StatusCode = 204,
+                    Result = null
+                };
+            }
+
+            comments = comments.OrderByDescending(x => x.CreateTime).ToList();
+
+            // Pagination
+            if (pageNumber > 0 && pageSize > 0)
+            {
+                var skipResult = (pageNumber - 1) * pageSize;
+                comments = comments.Skip(skipResult).Take(pageSize).ToList();
+            }
+
+            var commentsDto = _mapper.Map<List<GetAllCommentsDTO>>(comments);
+            
+            return new ResponseDTO()
+            {
+                Message = "Get instructor comment successfully",
+                IsSuccess = true,
+                StatusCode = 200,
+                Result = commentsDto
+            };
+        }
+        catch (Exception e)
+        {
+            return new ResponseDTO()
+            {
+                Message = e.Message,
+                Result = null,
+                IsSuccess = false,
+                StatusCode = 500
+            };
+        }
+    }
+
+    public async Task<ResponseDTO> CreateInstructorComment(ClaimsPrincipal User ,CreateInstructorCommentDTO createInstructorComment)
+    {
+        try
+        {
+            
             //Tìm xem có đúng ID instructor hay không
             var instructorId =
                 await _unitOfWork.InstructorRepository.GetAsync(i =>
@@ -489,9 +532,21 @@ public class InstructorService : IInstructorService
                     StatusCode = 400
                 };
             }
+            
+            var userId = User.Claims.FirstOrDefault(x => x.Type == ClaimTypes.NameIdentifier)?.Value;
+            var admin = await _unitOfWork.UserManagerRepository.FindByIdAsync(userId);
 
-            //chuyển status về 1
-            comment.Status = 1;
+            //Map DTO qua entity InstructorComment
+            InstructorComment comment = new InstructorComment()
+            {
+                Comment = createInstructorComment.Comment,
+                InstructorId = createInstructorComment.instructorId,
+                UpdateTime = DateTime.Now,
+                CreateTime = DateTime.Now,
+                CreateBy = admin.Email,
+                UpdateBy = "",
+                Status = 0
+            };
 
             //thêm comment vào cho instructor
             await _unitOfWork.InstructorCommentRepository.AddAsync(comment);

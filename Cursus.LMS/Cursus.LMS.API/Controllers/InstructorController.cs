@@ -103,9 +103,14 @@ namespace Cursus.LMS.API.Controllers
 
         [HttpGet]
         [Route("comment/{instructorId:guid}")]
-        public async Task<ActionResult<ResponseDTO>> GetAllInstructorComment([FromRoute] Guid instructorId)
+        public async Task<ActionResult<ResponseDTO>> GetAllInstructorComment
+        (
+            [FromRoute] Guid instructorId,
+            [FromQuery] int pageNumber = 1,
+            [FromQuery] int pageSize = 10
+        )
         {
-            var responseDto = await _instructorService.GetAllInstructorComment(instructorId);
+            var responseDto = await _instructorService.GetAllInstructorComment(instructorId, pageNumber, pageSize);
             return StatusCode(responseDto.StatusCode, responseDto);
         }
 
@@ -115,7 +120,7 @@ namespace Cursus.LMS.API.Controllers
         (
             CreateInstructorCommentDTO createInstructorComment)
         {
-            var responseDto = await _instructorService.CreateInstructorComment(createInstructorComment);
+            var responseDto = await _instructorService.CreateInstructorComment(User, createInstructorComment);
             return StatusCode(responseDto.StatusCode, responseDto);
         }
 
