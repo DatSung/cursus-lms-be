@@ -645,18 +645,6 @@ public class AuthService : IAuthService
             var refreshToken = await _tokenService.GenerateJwtRefreshTokenAsync(user);
             await _tokenService.StoreRefreshToken(user.Id, refreshToken);
 
-            // var userInfo = _mapper.Map<UserInfoDTO>(user);
-            // var roles = await _userManager.GetRolesAsync(user);
-            // userInfo.Roles = roles;
-            //
-            // if (roles.Contains(StaticUserRoles.Instructor))
-            // {
-            //     var instructor = await _unitOfWork.InstructorRepository.GetAsync(x => x.UserId == user.Id);
-            //     userInfo.DegreeImageUrl = instructor.DegreeImageUrl;
-            //     userInfo.isAccepted = instructor.isAccepted;
-            // }
-
-
             return new ResponseDTO()
             {
                 Result = new SignResponseDTO()
@@ -671,8 +659,13 @@ public class AuthService : IAuthService
         }
         catch (Exception e)
         {
-            Console.WriteLine(e);
-            throw;
+            return new ResponseDTO()
+            {
+                Message = e.Message,
+                IsSuccess = false,
+                StatusCode = 500,
+                Result = null
+            };
         }
     }
 
