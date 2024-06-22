@@ -60,7 +60,9 @@ public class AuthService : IAuthService
         _unitOfWork = unitOfWork;
     }
 
-    public AuthService(UserManager<ApplicationUser> object1, RoleManager<IdentityRole> object2, IConfiguration object3, IMapper object4, IEmailService object5, IFirebaseService object6, IHttpContextAccessor object7, IEmailSender object8, ITokenService object9, IUnitOfWork object10)
+    public AuthService(UserManager<ApplicationUser> object1, RoleManager<IdentityRole> object2, IConfiguration object3,
+        IMapper object4, IEmailService object5, IFirebaseService object6, IHttpContextAccessor object7,
+        IEmailSender object8, ITokenService object9, IUnitOfWork object10)
     {
     }
 
@@ -191,7 +193,7 @@ public class AuthService : IAuthService
             }
 
             // Create new Payment relate with ApplicationUser
-            var isPaymentAdd =  await _unitOfWork.PaymentCardRepository.AddAsync(paymentCard);
+            var isPaymentAdd = await _unitOfWork.PaymentCardRepository.AddAsync(paymentCard);
             if (isPaymentAdd == null)
             {
                 return new ResponseDTO()
@@ -262,7 +264,8 @@ public class AuthService : IAuthService
                 };
             }
 
-            var isPhonenumerExit = await _userManager.Users.AnyAsync(u => u.PhoneNumber == signUpInstructorDto.PhoneNumber);
+            var isPhonenumerExit =
+                await _userManager.Users.AnyAsync(u => u.PhoneNumber == signUpInstructorDto.PhoneNumber);
             if (isPhonenumerExit)
             {
                 return new ResponseDTO()
@@ -1259,7 +1262,7 @@ public class AuthService : IAuthService
 
             // Add role for the user
             await _userManager.AddToRoleAsync(user, StaticUserRoles.Student);
-            
+
             await _unitOfWork.SaveAsync();
 
             return new ResponseDTO()
@@ -1393,7 +1396,7 @@ public class AuthService : IAuthService
 
             // Add role for the user
             await _userManager.AddToRoleAsync(user, StaticUserRoles.Instructor);
-            
+
             await _unitOfWork.SaveAsync();
 
             return new ResponseDTO()
@@ -1464,6 +1467,87 @@ public class AuthService : IAuthService
                 IsSuccess = false,
                 StatusCode = 500,
                 Result = null,
+            };
+        }
+    }
+
+    public async Task<MemoryStream> DisplayUserAvatar(string userId)
+    {
+        try
+        {
+            var user = await _userManager.FindByIdAsync(userId);
+
+            var stream = await _firebaseService.GetImage(user.AvatarUrl);
+
+            return stream;
+        }
+        catch (Exception e)
+        {
+            return null;
+        }
+    }
+
+    public async Task<DegreeResponseDTO> DisplayInstructorDegree(string userId)
+    {
+        try
+        {
+            if (userId is null)
+            {
+                throw new Exception("User Unauthenticated!");
+            }
+
+            var instructor = await _unitOfWork.InstructorRepository.GetAsync(x => x.UserId == userId);
+
+            if (instructor is null)
+            {
+                throw new Exception("Instructor does not exist!");
+            }
+
+            var degreePath = instructor?.DegreeImageUrl;
+            if (degreePath.IsNullOrEmpty())
+            {
+                throw new Exception("Instructors did not upload degree!");
+            }
+
+            var stream = await _firebaseService.GetImage(instructor.DegreeImageUrl);
+
+            if (stream is null)
+            {
+                throw new Exception("Instructor did not upload degree");
+            }
+
+            var contentType = "Unsupported extensions!";
+
+            if (degreePath.EndsWith(".pdf"))
+            {
+                contentType = StaticFileExtensions.Pdf;
+            }
+
+            if (degreePath.EndsWith(".png"))
+            {
+                contentType = StaticFileExtensions.Png;
+            }
+
+            if (degreePath.EndsWith(".jpg") || degreePath.EndsWith(",jpeg"))
+            {
+                contentType = StaticFileExtensions.Jpeg;
+            }
+
+            return new DegreeResponseDTO()
+            {
+                Message = "Get file successfully",
+                Stream = stream,
+                ContentType = contentType,
+                FileName = Path.GetFileName(degreePath)
+            };
+        }
+        catch (Exception e)
+        {
+            return new DegreeResponseDTO()
+            {
+                ContentType = null,
+                Message = e.Message,
+                Stream = null
             };
         }
     }
@@ -1558,8 +1642,4 @@ public class AuthService : IAuthService
             };
         }
     }
-
-
-
-
 }

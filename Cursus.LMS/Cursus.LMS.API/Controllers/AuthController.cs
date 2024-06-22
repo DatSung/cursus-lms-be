@@ -114,6 +114,30 @@ namespace Cursus.LMS.API.Controllers
 
             return File(degreeResponseDto.Stream, degreeResponseDto.ContentType);
         }
+        
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="userId"></param>
+        /// <param name="Download"></param>
+        /// <returns></returns>
+        [HttpGet]
+        [Route("display-instructor-degree/{userId}")]
+        public async Task<IActionResult> DisplayInstructorDegree([FromRoute] string userId, [FromQuery] bool Download = false)
+        {
+            var degreeResponseDto = await _authService.DisplayInstructorDegree(userId);
+            if (degreeResponseDto.Stream is null)
+            {
+                return NotFound("User avatar does not exist!");
+            }
+
+            if (Download)
+            {
+                return File(degreeResponseDto.Stream, degreeResponseDto.ContentType, degreeResponseDto.FileName);
+            }
+
+            return File(degreeResponseDto.Stream, degreeResponseDto.ContentType);
+        }
 
         /// <summary>
         /// This API for feature upload user avatar
@@ -139,6 +163,23 @@ namespace Cursus.LMS.API.Controllers
         public async Task<IActionResult> GetUserAvatar()
         {
             var stream = await _authService.GetUserAvatar(User);
+            if (stream is null)
+            {
+                return NotFound("User avatar does not exist!");
+            }
+
+            return File(stream, "image/png");
+        }
+        
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet]
+        [Route("display-user-avatar/{userId}")]
+        public async Task<IActionResult> DisplayUserAvatar([FromRoute] string userId)
+        {
+            var stream = await _authService.DisplayUserAvatar(userId);
             if (stream is null)
             {
                 return NotFound("User avatar does not exist!");

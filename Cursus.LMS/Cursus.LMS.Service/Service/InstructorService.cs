@@ -179,6 +179,7 @@ public class InstructorService : IInstructorService
             {
                 InstructorId = instructor.InstructorId,
                 UserId = instructor.UserId,
+                AvatarUrl = instructor.ApplicationUser.AvatarUrl,
                 FullName = instructor.ApplicationUser.FullName,
                 Email = instructor.ApplicationUser.Email,
                 Address = instructor.ApplicationUser.Address,
@@ -393,9 +394,8 @@ public class InstructorService : IInstructorService
                     Total = totalCourses
                 }
             };
-
         }
-        catch (Exception e) 
+        catch (Exception e)
         {
             return new ResponseDTO
             {
@@ -412,7 +412,8 @@ public class InstructorService : IInstructorService
         try
         {
             // Lấy tất cả rating của Instructor
-            var instructorRatings = await _unitOfWork.InstructorRatingRepository.GetAllAsync(x => x.InstructorId == instructorId);
+            var instructorRatings =
+                await _unitOfWork.InstructorRatingRepository.GetAllAsync(x => x.InstructorId == instructorId);
 
             if (instructorRatings == null || !instructorRatings.Any())
             {
@@ -604,10 +605,9 @@ public class InstructorService : IInstructorService
 
     public async Task<ResponseDTO> ExportInstructors(string userId, int month, int year)
     {
-        
         var instructors = _unitOfWork.InstructorRepository.GetAllAsync(includeProperties: "ApplicationUser")
             .GetAwaiter().GetResult().ToList();
-        
+
         instructors = instructors.Where(x =>
                 x.ApplicationUser.CreateTime.Value.Month == month && x.ApplicationUser.CreateTime.Value.Year == year)
             .ToList();
