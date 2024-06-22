@@ -32,7 +32,7 @@ public interface ICategoryService
     Task<ResponseDTO> GetParentCategory(Guid id);
 
     Task<ResponseDTO> Get(Guid id);
-    Task<ResponseDTO> AddAsync(ClaimsPrincipal User, CreateCategoryDTO createCategoryDto);
+    Task<ResponseDTO> CreateCategory(ClaimsPrincipal User, CreateCategoryDTO createCategoryDto);
     Task<ResponseDTO> Update(ClaimsPrincipal User, UpdateCategoryDTO updateCategoryDto);
     Task<ResponseDTO> Delete(ClaimsPrincipal User, Guid id);
 }

@@ -105,21 +105,21 @@ public class CategoryService : ICategoryService
                 switch (filterOn.Trim().ToLower())
                 {
                     case "name":
-                    {
-                        rootCategories = rootCategories.Where(x =>
-                            x.Name.Contains(filterQuery, StringComparison.CurrentCultureIgnoreCase)).ToList();
-                        break;
-                    }
+                        {
+                            rootCategories = rootCategories.Where(x =>
+                                x.Name.Contains(filterQuery, StringComparison.CurrentCultureIgnoreCase)).ToList();
+                            break;
+                        }
                     case "description":
-                    {
-                        rootCategories = rootCategories.Where(x =>
-                            x.Name.Contains(filterQuery, StringComparison.CurrentCultureIgnoreCase)).ToList();
-                        break;
-                    }
+                        {
+                            rootCategories = rootCategories.Where(x =>
+                                x.Name.Contains(filterQuery, StringComparison.CurrentCultureIgnoreCase)).ToList();
+                            break;
+                        }
                     default:
-                    {
-                        break;
-                    }
+                        {
+                            break;
+                        }
                 }
             }
 
@@ -129,23 +129,23 @@ public class CategoryService : ICategoryService
                 switch (sortBy.Trim().ToLower())
                 {
                     case "name":
-                    {
-                        rootCategories = isAscending == true
-                            ? [.. rootCategories.OrderBy(x => x.Name)]
-                            : [.. rootCategories.OrderByDescending(x => x.Name)];
-                        break;
-                    }
+                        {
+                            rootCategories = isAscending == true
+                                ? [.. rootCategories.OrderBy(x => x.Name)]
+                                : [.. rootCategories.OrderByDescending(x => x.Name)];
+                            break;
+                        }
                     case "description":
-                    {
-                        rootCategories = isAscending == true
-                            ? [.. rootCategories.OrderBy(x => x.Description)]
-                            : [.. rootCategories.OrderByDescending(x => x.Description)];
-                        break;
-                    }
+                        {
+                            rootCategories = isAscending == true
+                                ? [.. rootCategories.OrderBy(x => x.Description)]
+                                : [.. rootCategories.OrderByDescending(x => x.Description)];
+                            break;
+                        }
                     default:
-                    {
-                        break;
-                    }
+                        {
+                            break;
+                        }
                 }
             }
 
@@ -239,21 +239,21 @@ public class CategoryService : ICategoryService
                 switch (filterOn.Trim().ToLower())
                 {
                     case "name":
-                    {
-                        listCategory = listCategory.Where(x =>
-                            x.Name.Contains(filterQuery, StringComparison.CurrentCultureIgnoreCase)).ToList();
-                        break;
-                    }
+                        {
+                            listCategory = listCategory.Where(x =>
+                                x.Name.Contains(filterQuery, StringComparison.CurrentCultureIgnoreCase)).ToList();
+                            break;
+                        }
                     case "description":
-                    {
-                        listCategory = listCategory.Where(x =>
-                            x.Name.Contains(filterQuery, StringComparison.CurrentCultureIgnoreCase)).ToList();
-                        break;
-                    }
+                        {
+                            listCategory = listCategory.Where(x =>
+                                x.Name.Contains(filterQuery, StringComparison.CurrentCultureIgnoreCase)).ToList();
+                            break;
+                        }
                     default:
-                    {
-                        break;
-                    }
+                        {
+                            break;
+                        }
                 }
             }
 
@@ -263,23 +263,23 @@ public class CategoryService : ICategoryService
                 switch (sortBy.Trim().ToLower())
                 {
                     case "name":
-                    {
-                        listCategory = isAscending == true
-                            ? [.. listCategory.OrderBy(x => x.Name)]
-                            : [.. listCategory.OrderByDescending(x => x.Name)];
-                        break;
-                    }
+                        {
+                            listCategory = isAscending == true
+                                ? [.. listCategory.OrderBy(x => x.Name)]
+                                : [.. listCategory.OrderByDescending(x => x.Name)];
+                            break;
+                        }
                     case "description":
-                    {
-                        listCategory = isAscending == true
-                            ? [.. listCategory.OrderBy(x => x.Description)]
-                            : [.. listCategory.OrderByDescending(x => x.Description)];
-                        break;
-                    }
+                        {
+                            listCategory = isAscending == true
+                                ? [.. listCategory.OrderBy(x => x.Description)]
+                                : [.. listCategory.OrderByDescending(x => x.Description)];
+                            break;
+                        }
                     default:
-                    {
-                        break;
-                    }
+                        {
+                            break;
+                        }
                 }
             }
 
@@ -466,22 +466,28 @@ public class CategoryService : ICategoryService
     /// </summary>
     /// <param></param>
     /// <returns></returns>
-    public async Task<ResponseDTO> AddAsync(ClaimsPrincipal User, CreateCategoryDTO createCategoryDto)
+    public async Task<ResponseDTO> CreateCategory(ClaimsPrincipal User, CreateCategoryDTO createCategoryDto)
     {
         try
         {
             // Map DTO sang entity Category
-            var category = _mapper.Map<Category>(createCategoryDto);
+            var category = new Category
+            {
+                Id = Guid.NewGuid(),
+                Name = createCategoryDto.Name,
+                Description = createCategoryDto.Description,
+                ParentId = !string.IsNullOrEmpty(createCategoryDto.ParentId) ? Guid.Parse(createCategoryDto.ParentId) : (Guid?)null,
+                CreateTime = DateTime.Now,
+                UpdateTime = DateTime.Now,
+                CreateBy = User.Identity.Name,
+                UpdateBy = "",
+                Status = 0,
+            };
 
             // Kiểm tra xem đây có phải là danh mục đầu tiên không
             var existingCategories = await _unitOfWork.CategoryRepository.GetAllAsync();
             if (existingCategories == null || !existingCategories.Any())
             {
-                category.ParentId = null;
-                category.Status = 0;
-                category.CreateTime = DateTime.Now;
-                category.UpdateTime = DateTime.Now;
-
                 // Thêm danh mục vào cơ sở dữ liệu
                 await _unitOfWork.CategoryRepository.AddAsync(category);
                 await _unitOfWork.SaveAsync();
@@ -494,42 +500,40 @@ public class CategoryService : ICategoryService
                 };
             }
 
-            // Kiểm tra xem ParentId là null hoặc tồn tại trong cơ sở dữ liệu
-            else if (category.ParentId != null)
+            // 
+            else if (category.ParentId == null)
             {
-                var parentCategory = await _unitOfWork.CategoryRepository.GetCategoryByIdAsync(category.ParentId.Value);
-                if (parentCategory == null)
-                {
-                    return new ResponseDTO
-                    {
-                        Message = "ParentId Invalid",
-                        Result = null,
-                        IsSuccess = false,
-                        StatusCode = 400
-                    };
-                }
 
-                category.Status = 1;
-
-                // Thêm danh mục vào cơ sở dữ liệu
                 await _unitOfWork.CategoryRepository.AddAsync(category);
-                var save = await _unitOfWork.SaveAsync();
-                if (save <= 0)
+                await _unitOfWork.SaveAsync();
+
+                return new ResponseDTO
                 {
-                    return new ResponseDTO
-                    {
-                        Message = "",
-                        Result = null,
-                        IsSuccess = false,
-                        StatusCode = 400
-                    };
-                }
+                    Message = "Category created successfully",
+                    Result = category,
+                    IsSuccess = true,
+                    StatusCode = 200,
+                };
+            }
+
+            // Thêm danh mục vào cơ sở dữ liệu
+            await _unitOfWork.CategoryRepository.AddAsync(category);
+            var save = await _unitOfWork.SaveAsync();
+            if (save <= 0)
+            {
+                return new ResponseDTO
+                {
+                    Message = "",
+                    Result = null,
+                    IsSuccess = false,
+                    StatusCode = 400
+                };
             }
 
             return new ResponseDTO
             {
                 Message = "Category created successfully",
-                Result = null,
+                Result = category,
                 IsSuccess = true,
                 StatusCode = 200
             };
@@ -570,12 +574,30 @@ public class CategoryService : ICategoryService
                 };
             }
 
+            // cập nhật thông tin danh mục
+            categoryToUpdate.Name = updateCategoryDTO.Name;
+            categoryToUpdate.Description = updateCategoryDTO.Description;
+            categoryToUpdate.ParentId = !string.IsNullOrEmpty(updateCategoryDTO.ParentId) ? Guid.Parse(updateCategoryDTO.ParentId) : (Guid?)null;
+            categoryToUpdate.UpdateTime = DateTime.Now;
+            categoryToUpdate.UpdateBy = User.Identity.Name;
+            categoryToUpdate.Status = updateCategoryDTO.Status;
+
+
             // thay đổi dữ liệu
-            _mapper.Map(updateCategoryDTO, categoryToUpdate);
             _unitOfWork.CategoryRepository.Update(categoryToUpdate);
 
-            // lưu dữ liệu vào database
-            await _unitOfWork.SaveAsync();
+            // lưu thay đổi vào cơ sở dữ liệu
+            var save = await _unitOfWork.SaveAsync();
+            if (save <= 0)
+            {
+                return new ResponseDTO
+                {
+                    Message = "Failed to update category",
+                    Result = null,
+                    IsSuccess = false,
+                    StatusCode = 400
+                };
+            }
 
             return new ResponseDTO
             {
@@ -606,28 +628,28 @@ public class CategoryService : ICategoryService
     {
         try
         {
-            // kiểm tra xem có đúng ID trong database không
-            var category = await _unitOfWork.CategoryRepository.GetAsync(filter: x => x.Id == id);
+            // Lấy danh mục từ cơ sở dữ liệu dựa trên Id
+            var category = await _unitOfWork.CategoryRepository.GetAsync(c => c.Id == id);
 
-            // kiểm tra xem nó có bị null hay không
+            // kiểm tra xem danh mục có tồn tại không
             if (category == null)
             {
-                return new ResponseDTO()
+                return new ResponseDTO
                 {
                     Message = "Category not found",
                     IsSuccess = false,
                     StatusCode = 404,
-                    Result = null,
+                    Result = null
                 };
             }
 
             // kiểm tra các danh mục con có ParentId là danh mục đang bị xóa
-            var subCategories = await _unitOfWork.CategoryRepository.GetAllAsync(filter: x => x.ParentId == id);
+            var subCategories = await _unitOfWork.CategoryRepository.GetAllAsync(c => c.ParentId == id);
 
             // Nếu có danh mục con, không cho phép xóa và trả về danh sách các danh mục con
             if (subCategories.Any())
             {
-                return new ResponseDTO()
+                return new ResponseDTO
                 {
                     Message = "Category cannot be deleted because it has subcategories.",
                     IsSuccess = false,
@@ -638,16 +660,30 @@ public class CategoryService : ICategoryService
 
             // chuyển status về 2 chứ không xóa dữ liệu
             category.Status = 2;
-            //thay đổi và lưu dữ liệu trong database
-            _unitOfWork.CategoryRepository.Update(category);
-            await _unitOfWork.SaveAsync();
+            category.UpdateTime = DateTime.Now;
+            category.UpdateBy = User.Identity.Name;
 
-            return new ResponseDTO()
+            // cập nhật và lưu thay đổi trong cơ sở dữ liệu
+            _unitOfWork.CategoryRepository.Update(category);
+            var saveResult = await _unitOfWork.SaveAsync();
+
+            if (saveResult <= 0)
             {
-                Message = "Category deleted successful",
+                return new ResponseDTO
+                {
+                    Message = "Failed to delete category",
+                    IsSuccess = false,
+                    StatusCode = 400,
+                    Result = null
+                };
+            }
+
+            return new ResponseDTO
+            {
+                Message = "Category deleted successfully",
                 IsSuccess = true,
                 StatusCode = 200,
-                Result = category.Id,
+                Result = category.Id
             };
         }
         catch (Exception e)
@@ -660,5 +696,8 @@ public class CategoryService : ICategoryService
                 StatusCode = 500
             };
         }
+
+
+
     }
 }

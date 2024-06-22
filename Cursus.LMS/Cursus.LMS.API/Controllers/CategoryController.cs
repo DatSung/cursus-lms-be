@@ -77,7 +77,7 @@ namespace Cursus.LMS.API.Controllers
         [HttpPost]
         public async Task<ActionResult<ResponseDTO>> Create(CreateCategoryDTO createCategoryDto)
         {
-            var responeDto = await _categoryService.AddAsync(User, createCategoryDto);
+            var responeDto = await _categoryService.CreateCategory(User, createCategoryDto);
             return StatusCode(responeDto.StatusCode, responeDto);
         }
 
