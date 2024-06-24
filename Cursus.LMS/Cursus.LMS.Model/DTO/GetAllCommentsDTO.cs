@@ -22,6 +22,10 @@ public class GetAllCommentsDTO
                 }
                 case 1:
                 {
+                    return "Edited";
+                }
+                case 2:
+                {
                     return "Deleted";
                 }
                 default:

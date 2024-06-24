@@ -470,7 +470,10 @@ public class InstructorService : IInstructorService
     {
         try
         {
-            var comments = _unitOfWork.InstructorCommentRepository.GetAllAsync(x => x.InstructorId == instructorId).GetAwaiter().GetResult().ToList();
+            var comments = _unitOfWork.InstructorCommentRepository.GetAllAsync(
+                x => x.InstructorId == instructorId &&
+                     x.Status != 2
+            ).GetAwaiter().GetResult().ToList();
             if (comments is null)
             {
                 return new ResponseDTO()
@@ -492,7 +495,7 @@ public class InstructorService : IInstructorService
             }
 
             var commentsDto = _mapper.Map<List<GetAllCommentsDTO>>(comments);
-            
+
             return new ResponseDTO()
             {
                 Message = "Get instructor comment successfully",
@@ -513,11 +516,11 @@ public class InstructorService : IInstructorService
         }
     }
 
-    public async Task<ResponseDTO> CreateInstructorComment(ClaimsPrincipal User ,CreateInstructorCommentDTO createInstructorComment)
+    public async Task<ResponseDTO> CreateInstructorComment(ClaimsPrincipal User,
+        CreateInstructorCommentDTO createInstructorComment)
     {
         try
         {
-            
             //Tìm xem có đúng ID instructor hay không
             var instructorId =
                 await _unitOfWork.InstructorRepository.GetAsync(i =>
@@ -532,7 +535,7 @@ public class InstructorService : IInstructorService
                     StatusCode = 400
                 };
             }
-            
+
             var userId = User.Claims.FirstOrDefault(x => x.Type == ClaimTypes.NameIdentifier)?.Value;
             var admin = await _unitOfWork.UserManagerRepository.FindByIdAsync(userId);
 
@@ -571,7 +574,8 @@ public class InstructorService : IInstructorService
         }
     }
 
-    public async Task<ResponseDTO> UpdateInstructorComment(UpdateInstructorCommentDTO updateInstructorCommentDTO)
+    public async Task<ResponseDTO> UpdateInstructorComment(ClaimsPrincipal User,
+        UpdateInstructorCommentDTO updateInstructorCommentDTO)
     {
         try
         {
@@ -588,8 +592,15 @@ public class InstructorService : IInstructorService
                 };
             }
 
+            var userId = User.Claims.FirstOrDefault(x => x.Type == ClaimTypes.NameIdentifier)?.Value;
+            var admin = await _unitOfWork.UserManagerRepository.FindByIdAsync(userId);
+
             //update comment
-            _mapper.Map(updateInstructorCommentDTO, instructorId);
+            instructorId.UpdateTime = DateTime.Now;
+            instructorId.UpdateBy = admin.Email;
+            instructorId.Comment = updateInstructorCommentDTO.comment;
+            instructorId.Status = 1;
+
             _unitOfWork.InstructorCommentRepository.Update(instructorId);
 
             //Lưu comment
@@ -625,7 +636,7 @@ public class InstructorService : IInstructorService
             {
                 return new ResponseDTO()
                 {
-                    Message = "Category was not found",
+                    Message = "Comment was not found",
                     IsSuccess = false,
                     StatusCode = 404,
                     Result = null,
@@ -640,7 +651,7 @@ public class InstructorService : IInstructorService
 
             return new ResponseDTO()
             {
-                Message = "Category deleted successfully",
+                Message = "Comment deleted successfully",
                 IsSuccess = true,
                 StatusCode = 200,
                 Result = comment.Id,

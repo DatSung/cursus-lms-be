@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace Cursus.LMS.Model.DTO;
 
-public class UpdateInstructorCommentDTO : BaseEntity<string, string, int>
+public class UpdateInstructorCommentDTO
 {
     [Required] public Guid Id { get; set; }
     [Required] public string comment { get; set; }

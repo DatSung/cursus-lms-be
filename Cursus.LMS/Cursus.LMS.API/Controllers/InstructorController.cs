@@ -130,7 +130,7 @@ namespace Cursus.LMS.API.Controllers
         (
             UpdateInstructorCommentDTO updateInstructorComment)
         {
-            var responseDto = await _instructorService.UpdateInstructorComment(updateInstructorComment);
+            var responseDto = await _instructorService.UpdateInstructorComment(User, updateInstructorComment);
             return StatusCode(responseDto.StatusCode, responseDto);
         }
 
