@@ -1,8 +1,6 @@
 ﻿using Cursus.LMS.DataAccess.IRepository;
 using Cursus.LMS.Model.DTO;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Cursus.LMS.Utility.Constants;
 
 namespace Cursus.LMS.API.Controllers
 {

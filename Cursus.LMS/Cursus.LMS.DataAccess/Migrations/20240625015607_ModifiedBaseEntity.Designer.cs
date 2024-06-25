@@ -4,6 +4,7 @@ using Cursus.LMS.DataAccess.Context;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Cursus.LMS.DataAccess.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240625015607_ModifiedBaseEntity")]
+    partial class ModifiedBaseEntity
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -121,9 +124,9 @@ namespace Cursus.LMS.DataAccess.Migrations
                             Address = "123 Admin St",
                             AvatarUrl = "https://example.com/avatar.png",
                             BirthDate = new DateTime(1990, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            ConcurrencyStamp = "6cdc202d-d813-4695-8f0c-18cbe4ce2f4d",
+                            ConcurrencyStamp = "0cd13b25-3b45-4cd8-8c59-099eabc32687",
                             Country = "Country",
-                            CreateTime = new DateTime(2024, 6, 25, 2, 8, 36, 442, DateTimeKind.Utc).AddTicks(740),
+                            CreateTime = new DateTime(2024, 6, 25, 1, 56, 3, 942, DateTimeKind.Utc).AddTicks(751),
                             Email = "admin@gmail.com",
                             EmailConfirmed = true,
                             FullName = "Admin User",
@@ -131,13 +134,13 @@ namespace Cursus.LMS.DataAccess.Migrations
                             LockoutEnabled = true,
                             NormalizedEmail = "ADMIN@GMAIL.COM",
                             NormalizedUserName = "ADMIN@GMAIL.COM",
-                            PasswordHash = "AQAAAAIAAYagAAAAEJh3gnDJVr723WjfcPi5RwaXXnkoIgcu52yudZ0/f6eYvCZHtNLbQbjwlYCTcs5gag==",
+                            PasswordHash = "AQAAAAIAAYagAAAAENuC+14JYRD8+QpPhtjFM6uQhbtEv1LbRHJKw3y/ZFnw2bX0XUWfE4jpVjsfwENXTg==",
                             PhoneNumber = "1234567890",
                             PhoneNumberConfirmed = true,
-                            SecurityStamp = "bc66ebe2-2887-43c2-b7f2-7efd53c7a839",
+                            SecurityStamp = "43193cf9-3e28-4c72-82c3-8912e8e77ca4",
                             TaxNumber = "123456789",
                             TwoFactorEnabled = false,
-                            UpdateTime = new DateTime(2024, 6, 25, 2, 8, 36, 560, DateTimeKind.Utc).AddTicks(8535),
+                            UpdateTime = new DateTime(2024, 6, 25, 1, 56, 4, 58, DateTimeKind.Utc).AddTicks(3159),
                             UserName = "admin@gmail.com"
                         });
                 });
@@ -230,23 +233,10 @@ namespace Cursus.LMS.DataAccess.Migrations
                     b.Property<Guid>("CategoryId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<string>("Code")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<string>("CourseImgUrl")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<DateTime?>("CreateTime")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("CreatedBy")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("DeletedBy")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime?>("DeletedTime")
+                    b.Property<DateTime>("CreateAt")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Description")
@@ -256,23 +246,20 @@ namespace Cursus.LMS.DataAccess.Migrations
                     b.Property<Guid>("InstructorId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<int>("LearningTime")
-                        .HasColumnType("int");
+                    b.Property<bool>("IsAccepted")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("IsDelete")
+                        .HasColumnType("bit");
+
+                    b.Property<DateTime>("LearningTime")
+                        .HasColumnType("datetime2");
 
                     b.Property<Guid>("LevelId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<double>("Price")
                         .HasColumnType("float");
-
-                    b.Property<string>("RejectedBy")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime?>("RejectedTime")
-                        .HasColumnType("datetime2");
-
-                    b.Property<int>("Status")
-                        .HasColumnType("int");
 
                     b.Property<int>("StudentSlot")
                         .HasColumnType("int");
@@ -283,12 +270,6 @@ namespace Cursus.LMS.DataAccess.Migrations
 
                     b.Property<float>("TotalRate")
                         .HasColumnType("real");
-
-                    b.Property<DateTime?>("UpdateTime")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("UpdatedBy")
-                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
