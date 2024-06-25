@@ -30,8 +30,7 @@ public interface ICategoryService
 
     Task<ResponseDTO> GetSubCategory(Guid id);
     Task<ResponseDTO> GetParentCategory(Guid id);
-
-    Task<ResponseDTO> Get(Guid id);
+    Task<ResponseDTO> Get(ClaimsPrincipal User, Guid id);
     Task<ResponseDTO> CreateCategory(ClaimsPrincipal User, CreateCategoryDTO createCategoryDto);
     Task<ResponseDTO> Update(ClaimsPrincipal User, UpdateCategoryDTO updateCategoryDto);
     Task<ResponseDTO> Delete(ClaimsPrincipal User, Guid id);

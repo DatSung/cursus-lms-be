@@ -1,5 +1,6 @@
 using Cursus.LMS.Model.DTO;
 using Cursus.LMS.Service.IService;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -67,9 +68,10 @@ namespace Cursus.LMS.API.Controllers
 
         [HttpGet]
         [Route("{id:guid}")]
+        [Authorize]
         public async Task<ActionResult<ResponseDTO>> GetById([FromRoute] Guid id)
         {
-            var responeDto = await _categoryService.Get(id);
+            var responeDto = await _categoryService.Get(User, id);
             return StatusCode(responeDto.StatusCode, responeDto);
         }
 
