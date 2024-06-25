@@ -380,6 +380,10 @@ public class InstructorService : IInstructorService
             var courses = await _unitOfWork.CourseRepository.GetAllAsync(c => c.InstructorId == id.InstructorId);
 
             var totalCourses = courses.Count();
+            var pending = courses.Count(x => x.Status == 0);
+            var activated = courses.Count(x => x.Status == 1);
+            var rejected = courses.Count(x => x.Status == 2);
+            var deleted = courses.Count(x => x.Status == 3);
 
             return new ResponseDTO()
             {
@@ -388,7 +392,11 @@ public class InstructorService : IInstructorService
                 StatusCode = 200,
                 Result = new InstructorTotalCount()
                 {
-                    Total = totalCourses
+                    Total = totalCourses,
+                    Activated = activated,
+                    Deleted = deleted,
+                    Pending = pending,
+                    Rejected = rejected
                 }
             };
         }
@@ -423,16 +431,24 @@ public class InstructorService : IInstructorService
             }
 
             // Tính tổng số và trung bình tổng Rating
-            var totalRating = instructorRatings.Sum(x => x.Rate);
+            var one = instructorRatings.Count(x => x.Rate == 1);
+            var two = instructorRatings.Count(x => x.Rate == 2);
+            var three = instructorRatings.Count(x => x.Rate == 3);
+            var four = instructorRatings.Count(x => x.Rate == 4);
+            var five = instructorRatings.Count(x => x.Rate == 5);
 
             return new ResponseDTO
             {
                 Message = "Get Total Rating Successfull",
                 IsSuccess = true,
                 StatusCode = 200,
-                Result = new InstructorTotalCount()
+                Result = new InstructorAvgCount()
                 {
-                    Total = totalRating
+                    One = one,
+                    Two = two,
+                    Three = three,
+                    Four = four,
+                    Five = five
                 }
             };
         }
