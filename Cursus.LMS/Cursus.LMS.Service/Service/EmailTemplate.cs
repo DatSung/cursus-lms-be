@@ -73,7 +73,8 @@ namespace Cursus.LMS.Service.Models
                 var query = @"SELECT TOP 1 *
                               FROM [Cursus_LMS_DB].[dbo].[EmailTemplates]
                               WHERE TemplateName = @TemplateName";
-                return await connection.QuerySingleOrDefaultAsync<EmailTemplate>(query, new { TemplateName = templateName });
+                return await connection.QuerySingleOrDefaultAsync<EmailTemplate>(query,
+                    new { TemplateName = templateName });
             }
         }
     }

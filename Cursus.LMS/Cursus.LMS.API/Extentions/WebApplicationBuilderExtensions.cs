@@ -2,7 +2,6 @@
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
-
 namespace Cursus.LMS.API.Extentions;
 
 public static class WebApplicationBuilderExtensions

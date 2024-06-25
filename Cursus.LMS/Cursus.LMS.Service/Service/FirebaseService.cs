@@ -12,7 +12,6 @@ public class FirebaseService : IFirebaseService
     private readonly StorageClient _storageClient;
     private readonly string _bucketName = "cursus-lms-storage.appspot.com";
 
-
     public FirebaseService(StorageClient storageClient)
     {
         _storageClient = storageClient;

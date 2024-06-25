@@ -65,7 +65,8 @@ namespace Cursus.LMS.API.Controllers
         /// <param name="updateEmailTemplateDTO">Dữ liệu cập nhật cho mẫu email.</param>
         /// <returns>Kết quả cập nhật.</returns>
         [HttpPut("{id:guid}")]
-        public async Task<ActionResult<ResponseDTO>> UpdateEmailTemplate(Guid id, UpdateEmailTemplateDTO updateEmailTemplateDTO)
+        public async Task<ActionResult<ResponseDTO>> UpdateEmailTemplate(Guid id,
+            UpdateEmailTemplateDTO updateEmailTemplateDTO)
         {
             var emailTemplate = await _unitOfWork.EmailTemplateRepository.GetAsync(x => x.Id == id);
 

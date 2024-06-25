@@ -5,9 +5,6 @@ using Cursus.LMS.Service.IService;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using System.ComponentModel.DataAnnotations;
-using Cursus.LMS.Utility.Constants;
-
 
 namespace Cursus.LMS.API.Controllers
 {
@@ -72,7 +69,8 @@ namespace Cursus.LMS.API.Controllers
         /// <returns>ResponseDTO</returns>
         [HttpPost]
         [Route("sign-up-instructor")]
-        public async Task<ActionResult<ResponseDTO>> SignUpInstructor([FromBody] SignUpInstructorDTO signUpInstructorDto)
+        public async Task<ActionResult<ResponseDTO>> SignUpInstructor(
+            [FromBody] SignUpInstructorDTO signUpInstructorDto)
         {
             var result = await _authService.SignUpInstructor(signUpInstructorDto);
             return StatusCode(result.StatusCode, result);
@@ -114,7 +112,7 @@ namespace Cursus.LMS.API.Controllers
 
             return File(degreeResponseDto.Stream, degreeResponseDto.ContentType);
         }
-        
+
         /// <summary>
         /// 
         /// </summary>
@@ -123,7 +121,8 @@ namespace Cursus.LMS.API.Controllers
         /// <returns></returns>
         [HttpGet]
         [Route("display-instructor-degree/{userId}")]
-        public async Task<IActionResult> DisplayInstructorDegree([FromRoute] string userId, [FromQuery] bool Download = false)
+        public async Task<IActionResult> DisplayInstructorDegree([FromRoute] string userId,
+            [FromQuery] bool Download = false)
         {
             var degreeResponseDto = await _authService.DisplayInstructorDegree(userId);
             if (degreeResponseDto.Stream is null)
@@ -170,7 +169,7 @@ namespace Cursus.LMS.API.Controllers
 
             return File(stream, "image/png");
         }
-        
+
         /// <summary>
         /// 
         /// </summary>
@@ -234,8 +233,9 @@ namespace Cursus.LMS.API.Controllers
             }
 
             var token = await _userManager.GenerateEmailConfirmationTokenAsync(user);
-            
-            var confirmationLink = $"http://localhost:30475/sign-in/verify-email?userId={user.Id}&token={Uri.EscapeDataString(token)}";
+
+            var confirmationLink =
+                $"http://localhost:30475/sign-in/verify-email?userId={user.Id}&token={Uri.EscapeDataString(token)}";
 
             var responseDto = await _authService.SendVerifyEmail(user.Email, confirmationLink);
 
@@ -345,7 +345,7 @@ namespace Cursus.LMS.API.Controllers
             var responseDto = await _authService.CompleteStudentProfile(User, completeStudentProfileDto);
             return StatusCode(this.responseDto.StatusCode, responseDto);
         }
-        
+
         [HttpPost]
         [Route("complete-instructor-profile")]
         [Authorize]
@@ -363,7 +363,7 @@ namespace Cursus.LMS.API.Controllers
             var response = await _authService.SignInByGoogle(signInByGoogleDto);
             return StatusCode(response.StatusCode, response);
         }
-        
+
         [HttpGet]
         [Route("get-user-info")]
         public async Task<ActionResult<ResponseDTO>> GetUserInfo()

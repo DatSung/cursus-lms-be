@@ -44,10 +44,11 @@ public class EmailService : IEmailService
         }
     }
 
-    public async Task<bool> SendEmailResetAsync(string toEmail, string subject, ApplicationUser user, string currentDate, string resetLink,
+    public async Task<bool> SendEmailResetAsync(string toEmail, string subject, ApplicationUser user,
+        string currentDate, string resetLink,
         string operatingSystem, string browser, string ip, string region, string city, string country)
     {
-         // Lấy thông tin cấu hình email từ file appsettings.json
+        // Lấy thông tin cấu hình email từ file appsettings.json
         try
         {
             var fromEmail = _configuration["EmailSettings:FromEmail"];
@@ -134,7 +135,7 @@ public class EmailService : IEmailService
         </div>
     </div>  
 </div>";
-            
+
             // Tạo đối tượng MailMessage
             var message = new MailMessage(fromEmail, toEmail, subject, body);
             message.IsBodyHtml = true;
@@ -153,5 +154,4 @@ public class EmailService : IEmailService
             return false;
         }
     }
-    
 }

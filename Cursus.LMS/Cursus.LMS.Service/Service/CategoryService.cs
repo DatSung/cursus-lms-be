@@ -426,7 +426,8 @@ public class CategoryService : ICategoryService
         try
         {
             var category =
-                await _unitOfWork.CategoryRepository.GetAsync(filter: x => x.Id == id , includeProperties:"ParentCategory");
+                await _unitOfWork.CategoryRepository.GetAsync(filter: x => x.Id == id,
+                    includeProperties: "ParentCategory");
 
             if (category is null)
             {
@@ -481,8 +482,8 @@ public class CategoryService : ICategoryService
     {
         try
         {
-            Guid guidOutput; 
-            var isGuid =Guid.TryParse(createCategoryDto.ParentId, out guidOutput);
+            Guid guidOutput;
+            var isGuid = Guid.TryParse(createCategoryDto.ParentId, out guidOutput);
             // Map DTO sang entity Category
             var category = new Category
             {

@@ -1,9 +1,7 @@
 using System.Security.Claims;
 using Cursus.LMS.Model.DTO;
 using Cursus.LMS.Service.IService;
-using Cursus.LMS.Service.Service;
 using Hangfire;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Cursus.LMS.API.Controllers

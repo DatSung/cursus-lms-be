@@ -1,7 +1,6 @@
 using Cursus.LMS.Model.DTO;
 using Cursus.LMS.Service.IService;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Cursus.LMS.API.Controllers
