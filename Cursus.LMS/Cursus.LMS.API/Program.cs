@@ -20,9 +20,8 @@ builder.Services.AddHttpClient();
 
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
 {
-    options.UseSqlServer(builder.Configuration.GetConnectionString(StaticConnectionString.SQLDB_TrongConnection));
+    options.UseSqlServer(builder.Configuration.GetConnectionString(StaticConnectionString.SQLDB_DefaultConnection));
 });
-
 
 // Set time token
 builder.Services.Configure<DataProtectionTokenProviderOptions>(options =>
@@ -57,7 +56,7 @@ builder.Services.AddAuthorization();
 
 // Register SwaggerGen and config for Authorize
 // Base on Extensions.WebApplicationBuilderExtensions
-builder.Services.AddSwaggerGen();
+builder.AddSwaggerGen();
 
 // Register SignalR
 builder.Services.AddSignalR();
@@ -74,6 +73,8 @@ builder.Services.AddCors(options =>
 });
 
 var app = builder.Build();
+
+//ApplyMigration();
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
@@ -95,7 +96,7 @@ app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();
-    
+
 app.MapHub<NotificationHub>("/hubs/notification").RequireAuthorization();
 
 app.Run();
@@ -112,4 +113,3 @@ void ApplyMigration()
         }
     }
 }
-
