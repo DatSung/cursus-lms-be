@@ -28,7 +28,7 @@ namespace Cursus.LMS.API.Controllers
             {
                 Result = emailTemplates,
                 IsSuccess = true,
-                Message = "Lấy danh sách mẫu email thành công."
+                Message = "Get email template successfully"
             });
         }
 
@@ -46,7 +46,7 @@ namespace Cursus.LMS.API.Controllers
                 return NotFound(new ResponseDTO
                 {
                     IsSuccess = false,
-                    Message = "Không tìm thấy mẫu email."
+                    Message = "Email template was not found"
                 });
             }
 
@@ -54,7 +54,7 @@ namespace Cursus.LMS.API.Controllers
             {
                 Result = emailTemplate,
                 IsSuccess = true,
-                Message = "Lấy mẫu email thành công."
+                Message = "Get email template successfully"
             });
         }
 
@@ -75,7 +75,7 @@ namespace Cursus.LMS.API.Controllers
                 return NotFound(new ResponseDTO
                 {
                     IsSuccess = false,
-                    Message = "Không tìm thấy mẫu email."
+                    Message = "Email template was not found"
                 });
             }
 
@@ -100,7 +100,7 @@ namespace Cursus.LMS.API.Controllers
             {
                 Result = emailTemplate,
                 IsSuccess = true,
-                Message = "Cập nhật mẫu email thành công."
+                Message = "Update email template successfully"
             });
         }
 
@@ -115,7 +115,7 @@ namespace Cursus.LMS.API.Controllers
             return BadRequest(new ResponseDTO
             {
                 IsSuccess = false,
-                Message = "Không thể xóa mẫu email."
+                Message = "You have no permission to deleted email"
             });
         }
 
@@ -130,7 +130,7 @@ namespace Cursus.LMS.API.Controllers
             return BadRequest(new ResponseDTO
             {
                 IsSuccess = false,
-                Message = "Không thể tạo mới mẫu email."
+                Message = "You have no permission to create email"
             });
         }
     }
