@@ -13,5 +13,5 @@ public class CourseSection
     public string Title { get; set; }
     public string Description { get; set; }
 
-    [NotMapped] public virtual IEnumerable<CourseSection> CourseSections { get; set; }
+    [NotMapped] public virtual IEnumerable<SectionDetails>? SectionDetails { get; set; }
 }

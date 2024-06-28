@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Cursus.LMS.Model.Domain;
 
-public class Course : StateEntity<string, string, string, string, int>
+public class Course : StateEntity<string, string, int>
 {
     [Key] public Guid Id { get; set; }
 
@@ -20,6 +20,7 @@ public class Course : StateEntity<string, string, string, string, int>
     public int StudentSlot { get; set; }
     public int LearningTime { get; set; }
     public double Price { get; set; }
+    public double? OldPrice { get; set; }
     public string? CourseImgUrl { get; set; }
     public string Title { get; set; }
     public string Description { get; set; }

@@ -4,6 +4,7 @@ using Cursus.LMS.DataAccess.Context;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Cursus.LMS.DataAccess.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240628031259_AddStateForCourse")]
+    partial class AddStateForCourse
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -121,9 +124,9 @@ namespace Cursus.LMS.DataAccess.Migrations
                             Address = "123 Admin St",
                             AvatarUrl = "https://example.com/avatar.png",
                             BirthDate = new DateTime(1990, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            ConcurrencyStamp = "fb528559-3501-4edc-a3de-abebb91c654c",
+                            ConcurrencyStamp = "cfb8a8e0-97c6-40d4-a105-c662900978cf",
                             Country = "Country",
-                            CreateTime = new DateTime(2024, 6, 28, 3, 52, 39, 281, DateTimeKind.Utc).AddTicks(3245),
+                            CreateTime = new DateTime(2024, 6, 28, 3, 12, 59, 8, DateTimeKind.Utc).AddTicks(7749),
                             Email = "admin@gmail.com",
                             EmailConfirmed = true,
                             FullName = "Admin User",
@@ -131,10 +134,10 @@ namespace Cursus.LMS.DataAccess.Migrations
                             LockoutEnabled = true,
                             NormalizedEmail = "ADMIN@GMAIL.COM",
                             NormalizedUserName = "ADMIN@GMAIL.COM",
-                            PasswordHash = "AQAAAAIAAYagAAAAEKvIysVnvwsVPLqlOCm4etIzD4OI89wqJJlnIEc7vXlB0qcNdnhC+1GojUUDQwFQ+Q==",
+                            PasswordHash = "AQAAAAIAAYagAAAAEBESQKQ2qpVQ9GzZR5CKp/CyWQG9KVPoxsrl3Y9Ftj2fb+nECllXJXZusdbl85ibrw==",
                             PhoneNumber = "1234567890",
                             PhoneNumberConfirmed = true,
-                            SecurityStamp = "f73b5a89-7620-42ff-9c8f-8357d9a92ce5",
+                            SecurityStamp = "b81793a6-500c-4b79-92cc-7674c0685ab6",
                             TaxNumber = "123456789",
                             TwoFactorEnabled = false,
                             UpdateTime = new DateTime(2003, 1, 12, 0, 0, 0, 0, DateTimeKind.Unspecified),
@@ -378,129 +381,6 @@ namespace Cursus.LMS.DataAccess.Migrations
                     b.HasIndex("CourseId");
 
                     b.ToTable("CourseSections");
-                });
-
-            modelBuilder.Entity("Cursus.LMS.Model.Domain.CourseSectionVersion", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid?>("CourseSectionId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid?>("CourseVersionId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<int?>("CurrentStatus")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Description")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Title")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("CourseSectionId");
-
-                    b.HasIndex("CourseVersionId");
-
-                    b.ToTable("CourseSectionVersions");
-                });
-
-            modelBuilder.Entity("Cursus.LMS.Model.Domain.CourseSectionVersionStatus", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid?>("CourseSectionVersionId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<DateTime>("CreateTime")
-                        .HasColumnType("datetime2");
-
-                    b.Property<int>("Status")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("CourseSectionVersionId");
-
-                    b.ToTable("CourseSectionVersionStatus");
-                });
-
-            modelBuilder.Entity("Cursus.LMS.Model.Domain.CourseVersion", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid?>("CategoryId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<string>("Code")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("CourseImgUrl")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<Guid?>("CourseVersionId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<int?>("CurrentStatus")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Description")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<Guid>("InstructorId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<int>("LearningTime")
-                        .HasColumnType("int");
-
-                    b.Property<Guid?>("LevelId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<double?>("OldPrice")
-                        .HasColumnType("float");
-
-                    b.Property<double>("Price")
-                        .HasColumnType("float");
-
-                    b.Property<string>("Title")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("CourseVersionId");
-
-                    b.ToTable("CourseVersions");
-                });
-
-            modelBuilder.Entity("Cursus.LMS.Model.Domain.CourseVersionStatus", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid?>("CourseVersionId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<DateTime>("CreateTime")
-                        .HasColumnType("datetime2");
-
-                    b.Property<int>("Status")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("CourseVersionId");
-
-                    b.ToTable("CourseVersionStatus");
                 });
 
             modelBuilder.Entity("Cursus.LMS.Model.Domain.EmailTemplate", b =>
@@ -797,67 +677,6 @@ namespace Cursus.LMS.DataAccess.Migrations
                     b.HasIndex("CourseSectionId");
 
                     b.ToTable("SectionDetails");
-                });
-
-            modelBuilder.Entity("Cursus.LMS.Model.Domain.SectionDetailsVersion", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid?>("CourseSectionVersionId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<int?>("CurrentStatus")
-                        .HasColumnType("int");
-
-                    b.Property<string>("DocsUrl")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Name")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<Guid>("SectionDetailsId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<string>("SlideUrk")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int?>("Type")
-                        .HasColumnType("int");
-
-                    b.Property<string>("VideoUrl")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("CourseSectionVersionId");
-
-                    b.HasIndex("SectionDetailsId");
-
-                    b.ToTable("SectionDetailsVersions");
-                });
-
-            modelBuilder.Entity("Cursus.LMS.Model.Domain.SectionDetailsVersionStatus", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<DateTime>("CreateTime")
-                        .HasColumnType("datetime2");
-
-                    b.Property<Guid?>("SectionDetailsVersionId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<int>("Status")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("SectionDetailsVersionId");
-
-                    b.ToTable("SectionDetailsVersionStatus");
                 });
 
             modelBuilder.Entity("Cursus.LMS.Model.Domain.Student", b =>
@@ -1175,48 +994,6 @@ namespace Cursus.LMS.DataAccess.Migrations
                     b.Navigation("Course");
                 });
 
-            modelBuilder.Entity("Cursus.LMS.Model.Domain.CourseSectionVersion", b =>
-                {
-                    b.HasOne("Cursus.LMS.Model.Domain.CourseSection", "CourseSection")
-                        .WithMany()
-                        .HasForeignKey("CourseSectionId");
-
-                    b.HasOne("Cursus.LMS.Model.Domain.CourseVersion", "CourseVersions")
-                        .WithMany()
-                        .HasForeignKey("CourseVersionId");
-
-                    b.Navigation("CourseSection");
-
-                    b.Navigation("CourseVersions");
-                });
-
-            modelBuilder.Entity("Cursus.LMS.Model.Domain.CourseSectionVersionStatus", b =>
-                {
-                    b.HasOne("Cursus.LMS.Model.Domain.CourseSectionVersion", "CourseSectionVersion")
-                        .WithMany()
-                        .HasForeignKey("CourseSectionVersionId");
-
-                    b.Navigation("CourseSectionVersion");
-                });
-
-            modelBuilder.Entity("Cursus.LMS.Model.Domain.CourseVersion", b =>
-                {
-                    b.HasOne("Cursus.LMS.Model.Domain.Course", "Course")
-                        .WithMany()
-                        .HasForeignKey("CourseVersionId");
-
-                    b.Navigation("Course");
-                });
-
-            modelBuilder.Entity("Cursus.LMS.Model.Domain.CourseVersionStatus", b =>
-                {
-                    b.HasOne("Cursus.LMS.Model.Domain.CourseVersion", "CourseVersion")
-                        .WithMany()
-                        .HasForeignKey("CourseVersionId");
-
-                    b.Navigation("CourseVersion");
-                });
-
             modelBuilder.Entity("Cursus.LMS.Model.Domain.Instructor", b =>
                 {
                     b.HasOne("Cursus.LMS.Model.Domain.ApplicationUser", "ApplicationUser")
@@ -1292,32 +1069,6 @@ namespace Cursus.LMS.DataAccess.Migrations
                         .IsRequired();
 
                     b.Navigation("CourseSection");
-                });
-
-            modelBuilder.Entity("Cursus.LMS.Model.Domain.SectionDetailsVersion", b =>
-                {
-                    b.HasOne("Cursus.LMS.Model.Domain.CourseSectionVersion", "CourseSectionVersions")
-                        .WithMany()
-                        .HasForeignKey("CourseSectionVersionId");
-
-                    b.HasOne("Cursus.LMS.Model.Domain.SectionDetails", "SectionDetails")
-                        .WithMany()
-                        .HasForeignKey("SectionDetailsId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("CourseSectionVersions");
-
-                    b.Navigation("SectionDetails");
-                });
-
-            modelBuilder.Entity("Cursus.LMS.Model.Domain.SectionDetailsVersionStatus", b =>
-                {
-                    b.HasOne("Cursus.LMS.Model.Domain.SectionDetailsVersion", "SectionDetailsVersion")
-                        .WithMany()
-                        .HasForeignKey("SectionDetailsVersionId");
-
-                    b.Navigation("SectionDetailsVersion");
                 });
 
             modelBuilder.Entity("Cursus.LMS.Model.Domain.Student", b =>
