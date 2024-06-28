@@ -4,6 +4,7 @@ using Cursus.LMS.DataAccess.Context;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Cursus.LMS.DataAccess.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240628164354_RenameColumnInCourseVersion")]
+    partial class RenameColumnInCourseVersion
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -121,9 +124,9 @@ namespace Cursus.LMS.DataAccess.Migrations
                             Address = "123 Admin St",
                             AvatarUrl = "https://example.com/avatar.png",
                             BirthDate = new DateTime(1990, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            ConcurrencyStamp = "52180564-1438-434d-b709-e7e0a1c9b0e1",
+                            ConcurrencyStamp = "32a93484-2cbe-4ff2-a4f5-2a615c994cff",
                             Country = "Country",
-                            CreateTime = new DateTime(2024, 6, 28, 16, 48, 24, 634, DateTimeKind.Utc).AddTicks(6871),
+                            CreateTime = new DateTime(2024, 6, 28, 16, 43, 51, 24, DateTimeKind.Utc).AddTicks(317),
                             Email = "admin@gmail.com",
                             EmailConfirmed = true,
                             FullName = "Admin User",
@@ -131,10 +134,10 @@ namespace Cursus.LMS.DataAccess.Migrations
                             LockoutEnabled = true,
                             NormalizedEmail = "ADMIN@GMAIL.COM",
                             NormalizedUserName = "ADMIN@GMAIL.COM",
-                            PasswordHash = "AQAAAAIAAYagAAAAEPuasXXk55MwxsV3ZcfjfIvggyz5IsPDAbhc419Gi/Wk3I6Rm8fnAgLmZX+eNjT/Dg==",
+                            PasswordHash = "AQAAAAIAAYagAAAAEHvj9VUUAOlR1p8qZM0bKv5yYBj31babuwYPoHeOoVg1K9WIyfYxONaZMv6VSuHyeQ==",
                             PhoneNumber = "1234567890",
                             PhoneNumberConfirmed = true,
-                            SecurityStamp = "49c29927-7706-48ed-8de3-0414ae1fceba",
+                            SecurityStamp = "12b6d2ff-c4af-4676-a22d-c1a1dc8b33c6",
                             TaxNumber = "123456789",
                             TwoFactorEnabled = false,
                             UpdateTime = new DateTime(2003, 1, 12, 0, 0, 0, 0, DateTimeKind.Unspecified),
@@ -233,10 +236,11 @@ namespace Cursus.LMS.DataAccess.Migrations
                     b.Property<DateTime?>("ActivatedTime")
                         .HasColumnType("datetime2");
 
-                    b.Property<Guid?>("CategoryId")
+                    b.Property<Guid>("CategoryId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Code")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("CourseImgUrl")
@@ -249,36 +253,38 @@ namespace Cursus.LMS.DataAccess.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Description")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<Guid?>("InstructorId")
+                    b.Property<Guid>("InstructorId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<int?>("LearningTime")
+                    b.Property<int>("LearningTime")
                         .HasColumnType("int");
 
-                    b.Property<Guid?>("LevelId")
+                    b.Property<Guid>("LevelId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<double?>("OldPrice")
                         .HasColumnType("float");
 
-                    b.Property<double?>("Price")
+                    b.Property<double>("Price")
                         .HasColumnType("float");
 
                     b.Property<int>("Status")
                         .HasColumnType("int");
 
-                    b.Property<int?>("StudentSlot")
+                    b.Property<int>("StudentSlot")
                         .HasColumnType("int");
 
                     b.Property<string>("Title")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<float?>("TotalRate")
+                    b.Property<float>("TotalRate")
                         .HasColumnType("real");
 
-                    b.Property<int?>("Version")
+                    b.Property<int>("Version")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
@@ -1100,15 +1106,21 @@ namespace Cursus.LMS.DataAccess.Migrations
                 {
                     b.HasOne("Cursus.LMS.Model.Domain.Category", "Category")
                         .WithMany()
-                        .HasForeignKey("CategoryId");
+                        .HasForeignKey("CategoryId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("Cursus.LMS.Model.Domain.Instructor", "Instructor")
                         .WithMany()
-                        .HasForeignKey("InstructorId");
+                        .HasForeignKey("InstructorId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("Cursus.LMS.Model.Domain.Level", "Level")
                         .WithMany()
-                        .HasForeignKey("LevelId");
+                        .HasForeignKey("LevelId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("Category");
 
