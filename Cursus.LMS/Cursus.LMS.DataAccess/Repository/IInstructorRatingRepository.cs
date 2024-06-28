@@ -12,4 +12,13 @@ public class InstructorRatingRepository : Repository<InstructorRating>, IInstruc
         _context = context;
     }
 
+    public void Update(InstructorRating instructorRating)
+    {
+        _context.InstructorRatings.Update(instructorRating);
+    }
+
+    public void UpdateRange(IEnumerable<InstructorRating> instructorRatings)
+    {
+        _context.InstructorRatings.UpdateRange(instructorRatings);
+    }
 }
