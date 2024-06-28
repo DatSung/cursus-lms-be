@@ -25,4 +25,5 @@ public class Course : StateEntity<string, string, int>
     public string Title { get; set; }
     public string Description { get; set; }
     public float TotalRate { get; set; }
+    public int Version { get; set; } = 1;
 }
