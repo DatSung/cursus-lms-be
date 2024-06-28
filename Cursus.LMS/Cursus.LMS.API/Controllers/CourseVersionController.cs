@@ -22,6 +22,7 @@ namespace Cursus.LMS.API.Controllers
         [HttpGet]
         public async Task<ResponseDTO> GetCourseVersions
         (
+            [FromQuery] Guid? instructorId,
             [FromQuery] string? filterOn,
             [FromQuery] string? filterQuery,
             [FromQuery] string? sortBy,
@@ -354,9 +355,9 @@ namespace Cursus.LMS.API.Controllers
             catch (Exception e)
             {
                 return new ResponseDTO()
-                {
-                }
-                ;
+                    {
+                    }
+                    ;
             }
         }
 
