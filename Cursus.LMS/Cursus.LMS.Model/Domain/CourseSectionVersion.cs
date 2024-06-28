@@ -9,9 +9,6 @@ public class CourseSectionVersion
 
     public Guid? CourseVersionId { get; set; }
     [ForeignKey("CourseVersionId")] public CourseVersion? CourseVersions { get; set; }
-
-    public Guid? CourseSectionId { get; set; }
-    [ForeignKey("CourseSectionId")] public CourseSection? CourseSection { get; set; }
     
     public string? Title { get; set; }
     public string? Description { get; set; }

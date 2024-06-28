@@ -10,9 +10,6 @@ public class SectionDetailsVersion
     public Guid? CourseSectionVersionId { get; set; }
     [ForeignKey("CourseSectionVersionId")] public CourseSectionVersion? CourseSectionVersions { get; set; }
 
-    public Guid SectionDetailsId { get; set; }
-    [ForeignKey("SectionDetailsId")] public SectionDetails? SectionDetails { get; set; }
-
     public string? Name { get; set; }
     public string? VideoUrl { get; set; }
     public string? SlideUrk { get; set; }
