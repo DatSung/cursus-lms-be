@@ -21,29 +21,29 @@ public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
         var adminRoleId = "8fa7c7bb-daa5-a660-bf02-82301a5eb327"; // Add admin role
 
         var roles = new List<IdentityRole>
+        {
+            new IdentityRole
             {
-                new IdentityRole
-                {
-                    Id = studentRoleId,
-                    ConcurrencyStamp = StaticUserRoles.Student,
-                    Name = StaticUserRoles.Student,
-                    NormalizedName = StaticUserRoles.Student,
-                },
-                new IdentityRole
-                {
-                    Id = instructorRoleId,
-                    ConcurrencyStamp = StaticUserRoles.Instructor,
-                    Name = StaticUserRoles.Instructor,
-                    NormalizedName = StaticUserRoles.Instructor,
-                },
-                new IdentityRole
-                {
-                    Id = adminRoleId,
-                    ConcurrencyStamp = StaticUserRoles.Admin,
-                    Name = StaticUserRoles.Admin,
-                    NormalizedName = StaticUserRoles.Admin,
-                }
-            };
+                Id = studentRoleId,
+                ConcurrencyStamp = StaticUserRoles.Student,
+                Name = StaticUserRoles.Student,
+                NormalizedName = StaticUserRoles.Student,
+            },
+            new IdentityRole
+            {
+                Id = instructorRoleId,
+                ConcurrencyStamp = StaticUserRoles.Instructor,
+                Name = StaticUserRoles.Instructor,
+                NormalizedName = StaticUserRoles.Instructor,
+            },
+            new IdentityRole
+            {
+                Id = adminRoleId,
+                ConcurrencyStamp = StaticUserRoles.Admin,
+                Name = StaticUserRoles.Admin,
+                NormalizedName = StaticUserRoles.Admin,
+            }
+        };
 
         modelBuilder.Entity<IdentityRole>().HasData(roles);
 
@@ -74,7 +74,7 @@ public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
             LockoutEnd = null,
             LockoutEnabled = true,
             AccessFailedCount = 0,
-            UpdateTime = new DateTime(2003,1,12)
+            UpdateTime = new DateTime(2003, 1, 12)
         };
 
         modelBuilder.Entity<ApplicationUser>().HasData(adminUser);
@@ -85,10 +85,9 @@ public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
             RoleId = adminRoleId,
             UserId = adminUserId
         });
-
     }
 
-    public DbSet<ApplicationUser> ApplicationUsers { get; set; }    
+    public DbSet<ApplicationUser> ApplicationUsers { get; set; }
     public DbSet<CartDetails> CartDetails { get; set; }
     public DbSet<CartHeader> CartHeaders { get; set; }
     public DbSet<Category> Categories { get; set; }
@@ -107,11 +106,12 @@ public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
     public DbSet<InstructorComment> InstructorComments { get; set; }
     public DbSet<InstructorRating> InstructorRatings { get; set; }
     public DbSet<EmailTemplate> EmailTemplates { get; set; }
-    
+
     public DbSet<CourseVersion> CourseVersions { get; set; }
     public DbSet<CourseSectionVersion> CourseSectionVersions { get; set; }
-    public DbSet<SectionDetailsVersion>  SectionDetailsVersions { get; set; }
+    public DbSet<SectionDetailsVersion> SectionDetailsVersions { get; set; }
     public DbSet<CourseVersionStatus> CourseVersionStatus { get; set; }
     public DbSet<CourseSectionVersionStatus> CourseSectionVersionStatus { get; set; }
     public DbSet<SectionDetailsVersionStatus> SectionDetailsVersionStatus { get; set; }
+    public DbSet<CourseVersionComment> CourseVersionComments { get; set; }
 }
