@@ -9,6 +9,7 @@ public interface ICourseVersionStatusService
     Task<ResponseDTO> GetCourseVersionsStatus
     (
         ClaimsPrincipal User,
+        Guid? courseVersionId,
         string? filterOn,
         string? filterQuery,
         string? sortBy,
@@ -17,6 +18,15 @@ public interface ICourseVersionStatusService
         int pageSize
     );
 
-    Task<ResponseDTO> GetCourseVersionStatus(ClaimsPrincipal User);
-    Task<ResponseDTO> CreateCourseVersionStatus(ClaimsPrincipal User);
+    Task<ResponseDTO> GetCourseVersionStatus
+    (
+        ClaimsPrincipal User,
+        Guid courseVersionStatusId
+    );
+
+    Task<ResponseDTO> CreateCourseVersionStatus
+    (
+        ClaimsPrincipal User,
+        CreateCourseVersionStatusDTO courseVersionStatusDto
+    );
 }

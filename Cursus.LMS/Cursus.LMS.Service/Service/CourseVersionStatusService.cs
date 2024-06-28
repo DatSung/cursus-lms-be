@@ -17,6 +17,7 @@ public class CourseVersionStatusService : ICourseVersionStatusService
     public Task<ResponseDTO> GetCourseVersionsStatus
     (
         ClaimsPrincipal User,
+        Guid? courseVersionId,
         string? filterOn,
         string? filterQuery,
         string? sortBy,
@@ -27,12 +28,20 @@ public class CourseVersionStatusService : ICourseVersionStatusService
         throw new NotImplementedException();
     }
 
-    public Task<ResponseDTO> GetCourseVersionStatus(ClaimsPrincipal User)
+    public Task<ResponseDTO> GetCourseVersionStatus
+    (
+        ClaimsPrincipal User,
+        Guid courseVersionStatusId
+    )
     {
         throw new NotImplementedException();
     }
 
-    public Task<ResponseDTO> CreateCourseVersionStatus(ClaimsPrincipal User)
+    public Task<ResponseDTO> CreateCourseVersionStatus
+    (
+        ClaimsPrincipal User,
+        CreateCourseVersionStatusDTO courseVersionStatusDto
+    )
     {
         throw new NotImplementedException();
     }
