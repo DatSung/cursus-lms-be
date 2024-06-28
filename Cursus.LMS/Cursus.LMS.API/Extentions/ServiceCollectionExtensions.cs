@@ -34,6 +34,10 @@ public static class ServiceCollectionExtensions
         services.AddScoped<IUserManagerRepository, UserManagerRepository>();
         // Registering IClosedXMLService its implementation ClosedXMLService
         services.AddScoped<IClosedXMLService, ClosedXMLService>();
+        // Registering ICourseService its implementation CourseService
+        services.AddScoped<ICourseService, CourseService>();
+        // Registering ICourseVersionService its implementation CourseVersionService
+        services.AddScoped<ICourseVersionService, CourseVersionService>();
 
         // Register the Identity services with default configuration
         services.AddIdentity<ApplicationUser, IdentityRole>()
