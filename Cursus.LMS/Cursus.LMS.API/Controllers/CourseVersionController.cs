@@ -151,6 +151,24 @@ namespace Cursus.LMS.API.Controllers
             }
         }
 
+        [HttpPost]
+        [Route("submit-course-version/{courseVersionId:guid}")]
+        public async Task<ResponseDTO> SubmitCourseVersion([FromRoute] Guid courseVersionId)
+        {
+            try
+            {
+                return new ResponseDTO()
+                {
+                };
+            }
+            catch (Exception e)
+            {
+                return new ResponseDTO()
+                {
+                };
+            }
+        }
+
         #endregion
 
 
