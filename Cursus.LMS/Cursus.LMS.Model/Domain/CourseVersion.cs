@@ -18,7 +18,7 @@ public class CourseVersion
     public double? OldPrice { get; set; }
     public string? CourseImgUrl { get; set; }
     
-    public Guid InstructorId { get; set; }
+    public Guid? InstructorId { get; set; }
     public Guid? CategoryId { get; set; }
     public Guid? LevelId { get; set; }
     public int? CurrentStatus { get; set; }
