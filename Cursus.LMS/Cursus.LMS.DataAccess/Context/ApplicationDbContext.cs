@@ -106,14 +106,9 @@ public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
     public DbSet<InstructorComment> InstructorComments { get; set; }
     public DbSet<InstructorRating> InstructorRatings { get; set; }
     public DbSet<EmailTemplate> EmailTemplates { get; set; }
-
     public DbSet<CourseVersion> CourseVersions { get; set; }
     public DbSet<CourseSectionVersion> CourseSectionVersions { get; set; }
-
     public DbSet<SectionDetailsVersion> SectionDetailsVersions { get; set; }
-
     public DbSet<CourseVersionStatus> CourseVersionStatus { get; set; }
-    // public DbSet<CourseSectionVersionStatus> CourseSectionVersionStatus { get; set; }
-    // public DbSet<SectionDetailsVersionStatus> SectionDetailsVersionStatus { get; set; }
     public DbSet<CourseVersionComment> CourseVersionComments { get; set; }
 }
