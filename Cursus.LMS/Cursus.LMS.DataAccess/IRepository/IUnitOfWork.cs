@@ -12,6 +12,12 @@ public interface IUnitOfWork
     IInstructorCommentRepository InstructorCommentRepository { get; }
     ICourseRepository CourseRepository { get; }
     IPaymentCardRepository PaymentCardRepository { get; }
-    IInstructorRatingRepository InstructorRatingRepository { get; } // Thêm dòng này
+    IInstructorRatingRepository InstructorRatingRepository { get; }
+    ICourseVersionRepository CourseVersionRepository { get; }
+    ICourseSectionVersionRepository CourseSectionVersionRepository { get; }
+    ISectionDetailsVersionRepository SectionDetailsVersionRepository { get; }
+    ICourseVersionStatusRepository CourseVersionStatusRepository { get; }
+    ICourseSectionVersionStatusRepository CourseSectionVersionStatusRepository { get; }
+    ISectionDetailsVersionStatusRepository SectionDetailsVersionStatusRepository { get; }
     Task<int> SaveAsync();
 }

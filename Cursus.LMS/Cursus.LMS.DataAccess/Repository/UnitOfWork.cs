@@ -20,6 +20,12 @@ namespace Cursus.LMS.DataAccess.Repository
         public IPaymentCardRepository PaymentCardRepository { get; set; }
         public ICourseRepository CourseRepository { get; set; }
         public IInstructorRatingRepository InstructorRatingRepository { get; set; }
+        public ICourseVersionRepository CourseVersionRepository { get; }
+        public ICourseSectionVersionRepository CourseSectionVersionRepository { get; }
+        public ISectionDetailsVersionRepository SectionDetailsVersionRepository { get; }
+        public ICourseVersionStatusRepository CourseVersionStatusRepository { get; }
+        public ICourseSectionVersionStatusRepository CourseSectionVersionStatusRepository { get; }
+        public ISectionDetailsVersionStatusRepository SectionDetailsVersionStatusRepository { get; }
 
         public UnitOfWork(ApplicationDbContext context, UserManager<ApplicationUser> userManager)
         {
@@ -33,6 +39,12 @@ namespace Cursus.LMS.DataAccess.Repository
             InstructorCommentRepository = new InstructorCommentRepository(_context);
             InstructorRatingRepository = new InstructorRatingRepository(_context);
             CourseRepository = new CourseRepository(_context);
+            CourseVersionRepository = new CourseVersionRepository(_context);
+            CourseSectionVersionRepository = new CourseSectionVersionRepository(_context);
+            SectionDetailsVersionRepository = new SectionDetailsVersionRepository(_context);
+            CourseVersionStatusRepository = new CourseVersionStatusRepository(_context);
+            CourseSectionVersionStatusRepository = new CourseSectionVersionStatusRepository(_context);
+            SectionDetailsVersionStatusRepository = new SectionDetailsVersionStatusRepository(_context);
         }
 
         public async Task<int> SaveAsync()
