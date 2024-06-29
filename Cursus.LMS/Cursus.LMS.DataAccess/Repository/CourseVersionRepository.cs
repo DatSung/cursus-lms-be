@@ -24,13 +24,17 @@ public class CourseVersionRepository : Repository<CourseVersion>, ICourseVersion
         _context.CourseVersions.UpdateRange(courseVersions);
     }
 
-    public async Task<CourseVersion?> GetCourseVersionsAsNoTrackingAsync(Guid courserVersionId)
+    public async Task<CourseVersion?> GetCourseVersionAsync
+    (
+        Guid courseVersionId,
+        bool? asNoTracking = false
+    )
     {
-        return await _context.CourseVersions.AsNoTracking().FirstOrDefaultAsync(x => x.Id == courserVersionId);
-    }
+        if (asNoTracking is true)
+        {
+            return await _context.CourseVersions.AsNoTracking().FirstOrDefaultAsync(x => x.Id == courseVersionId);
+        }
 
-    public async Task<CourseVersion?> GetCourseVersionByIdAsync(Guid courseVersionId)
-    {
         return await _context.CourseVersions.FirstOrDefaultAsync(x => x.Id == courseVersionId);
     }
 }

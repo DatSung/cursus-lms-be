@@ -14,7 +14,16 @@ public class SectionDetailsVersionService : ISectionDetailsVersionService
         _unitOfWork = unitOfWork;
     }
 
-    public Task<ResponseDTO> GetSectionsDetails
+    public Task<ResponseDTO> CloneSectionsDetailsVersion
+    (
+        ClaimsPrincipal User,
+        Guid courseSectionVersionId
+    )
+    {
+        throw new NotImplementedException();
+    }
+
+    public Task<ResponseDTO> GetSectionsDetailsVersions
     (
         ClaimsPrincipal User,
         string? filterOn,
@@ -26,22 +35,22 @@ public class SectionDetailsVersionService : ISectionDetailsVersionService
         throw new NotImplementedException();
     }
 
-    public Task<ResponseDTO> GetSectionDetails(ClaimsPrincipal User)
+    public Task<ResponseDTO> GetSectionDetailsVersion(ClaimsPrincipal User)
     {
         throw new NotImplementedException();
     }
 
-    public Task<ResponseDTO> CreateSectionDetails(ClaimsPrincipal User)
+    public Task<ResponseDTO> CreateSectionDetailsVersion(ClaimsPrincipal User)
     {
         throw new NotImplementedException();
     }
 
-    public Task<ResponseDTO> EditSectionDetails(ClaimsPrincipal User)
+    public Task<ResponseDTO> EditSectionDetailsVersion(ClaimsPrincipal User)
     {
         throw new NotImplementedException();
     }
 
-    public Task<ResponseDTO> RemoveSectionDetails(ClaimsPrincipal User)
+    public Task<ResponseDTO> RemoveSectionDetailsVersion(ClaimsPrincipal User)
     {
         throw new NotImplementedException();
     }

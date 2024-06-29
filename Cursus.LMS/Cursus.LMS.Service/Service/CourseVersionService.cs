@@ -11,13 +11,21 @@ public class CourseVersionService : ICourseVersionService
 {
     private readonly IUnitOfWork _unitOfWork;
     private readonly ICourseService _courseService;
+    private readonly ICourseVersionStatusService _courseVersionStatusService;
     private IMapper _mapper;
 
-    public CourseVersionService(IUnitOfWork unitOfWork, ICourseService courseService, IMapper mapper)
+    public CourseVersionService
+    (
+        IUnitOfWork unitOfWork,
+        ICourseService courseService,
+        IMapper mapper,
+        ICourseVersionStatusService courseVersionStatusService
+    )
     {
         _unitOfWork = unitOfWork;
         _courseService = courseService;
         _mapper = mapper;
+        _courseVersionStatusService = courseVersionStatusService;
     }
 
     public async Task<ResponseDTO> GetCourseVersions
@@ -63,7 +71,8 @@ public class CourseVersionService : ICourseVersionService
     {
         try
         {
-            var courseVersion = await _unitOfWork.CourseVersionRepository.GetCourseVersionByIdAsync(courseVersionId);
+            var courseVersion =
+                await _unitOfWork.CourseVersionRepository.GetCourseVersionAsync(courseVersionId, asNoTracking: true);
 
             if (courseVersion is null)
             {
@@ -136,6 +145,29 @@ public class CourseVersionService : ICourseVersionService
             await _unitOfWork.CourseVersionRepository.AddAsync(courseVersion);
             await _unitOfWork.SaveAsync();
 
+            // Save status history of version
+            var responseDto = await _courseVersionStatusService.CreateCourseVersionStatus
+            (
+                User,
+                new CreateCourseVersionStatusDTO()
+                {
+                    CourseVersionId = courseVersion.Id,
+                    Status = 0
+                }
+            );
+
+            // Rollback when save status history fail
+            if (responseDto.IsSuccess is false)
+            {
+                // Remove course version
+                _unitOfWork.CourseVersionRepository.Remove(courseVersion);
+                // Remove course version section
+
+                // Remove section detail version
+
+                return responseDto;
+            }
+
             return new ResponseDTO()
             {
                 Result = courseVersion.Id,
@@ -164,9 +196,13 @@ public class CourseVersionService : ICourseVersionService
     {
         try
         {
+            // Clone course version
             var courseVersion =
-                await _unitOfWork.CourseVersionRepository.GetCourseVersionsAsNoTrackingAsync(cloneNewCourseVersionDto
-                    .CourseVersionId);
+                await _unitOfWork.CourseVersionRepository.GetCourseVersionAsync
+                (
+                    cloneNewCourseVersionDto.CourseVersionId,
+                    asNoTracking: true
+                );
 
             if (courseVersion is null)
             {
@@ -179,8 +215,34 @@ public class CourseVersionService : ICourseVersionService
                 };
             }
 
+            courseVersion.Id = new Guid();
+
             await _unitOfWork.CourseVersionRepository.AddAsync(courseVersion);
             await _unitOfWork.SaveAsync();
+
+            // Clone course section versions
+
+            // Save status history of version
+            var responseDto = await _courseVersionStatusService.CreateCourseVersionStatus
+            (
+                User,
+                new CreateCourseVersionStatusDTO()
+                {
+                    CourseVersionId = courseVersion.Id,
+                    Status = 0
+                }
+            );
+
+            // Rollback when save status history fail
+            if (responseDto.IsSuccess is false)
+            {
+                // Remove course version
+                _unitOfWork.CourseVersionRepository.Remove(courseVersion);
+                // Remove course version section
+
+                // Remove section detail version
+                return responseDto;
+            }
 
             return new ResponseDTO()
             {
