@@ -28,4 +28,9 @@ public class CourseVersionRepository : Repository<CourseVersion>, ICourseVersion
     {
         return await _context.CourseVersions.AsNoTracking().FirstOrDefaultAsync(x => x.Id == courserVersionId);
     }
+
+    public async Task<CourseVersion?> GetCourseVersionById(Guid courseVersionId)
+    {
+        return await _context.CourseVersions.FirstOrDefaultAsync(x => x.Id == courseVersionId);
+    }
 }

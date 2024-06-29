@@ -5,13 +5,13 @@ namespace Cursus.LMS.Service.IService;
 
 public interface ICourseVersionService
 {
-    
     /// <summary>
     /// This method will get all CourseVersion belong to Course.
     /// Base on courseId of the Course
     /// </summary>
     /// <param name="User"></param>
     /// <param name="courseId"></param>
+    /// <param name="instructorId"></param>
     /// <param name="filterOn"></param>
     /// <param name="filterQuery"></param>
     /// <param name="sortBy"></param>
@@ -24,6 +24,7 @@ public interface ICourseVersionService
     (
         ClaimsPrincipal User,
         Guid? courseId,
+        Guid? instructorId,
         string? filterOn,
         string? filterQuery,
         string? sortBy,

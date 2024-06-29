@@ -1,4 +1,5 @@
 ﻿using System.Security.Claims;
+using AutoMapper;
 using Cursus.LMS.DataAccess.IRepository;
 using Cursus.LMS.Model.Domain;
 using Cursus.LMS.Model.DTO;
@@ -10,17 +11,20 @@ public class CourseVersionService : ICourseVersionService
 {
     private readonly IUnitOfWork _unitOfWork;
     private readonly ICourseService _courseService;
+    private IMapper _mapper;
 
-    public CourseVersionService(IUnitOfWork unitOfWork, ICourseService courseService)
+    public CourseVersionService(IUnitOfWork unitOfWork, ICourseService courseService, IMapper mapper)
     {
         _unitOfWork = unitOfWork;
         _courseService = courseService;
+        _mapper = mapper;
     }
-    
+
     public async Task<ResponseDTO> GetCourseVersions
     (
         ClaimsPrincipal User,
         Guid? courseId,
+        Guid? instructorId,
         string? filterOn,
         string? filterQuery,
         string? sortBy,
@@ -31,14 +35,48 @@ public class CourseVersionService : ICourseVersionService
     {
         throw new NotImplementedException();
     }
-    
-    public Task<ResponseDTO> GetCourseVersion
+
+    public async Task<ResponseDTO> GetCourseVersion
     (
         ClaimsPrincipal User,
         Guid courseVersionId
     )
     {
-        throw new NotImplementedException();
+        try
+        {
+            var courseVersion = await _unitOfWork.CourseVersionRepository.GetCourseVersionById(courseVersionId);
+
+            if (courseVersion is null)
+            {
+                return new ResponseDTO()
+                {
+                    Result = "",
+                    Message = "Course version was not found",
+                    IsSuccess = true,
+                    StatusCode = 200
+                };
+            }
+
+            var courseVersionDto = _mapper.Map<GetCourseVersionDTO>(courseVersion);
+
+            return new ResponseDTO()
+            {
+                Result = courseVersionDto,
+                Message = "Get course version successfully",
+                IsSuccess = true,
+                StatusCode = 200
+            };
+        }
+        catch (Exception e)
+        {
+            return new ResponseDTO()
+            {
+                Result = null,
+                Message = e.Message,
+                IsSuccess = true,
+                StatusCode = 200
+            };
+        }
     }
 
     public async Task<ResponseDTO> CreateNewCourseAndCourseVersion
