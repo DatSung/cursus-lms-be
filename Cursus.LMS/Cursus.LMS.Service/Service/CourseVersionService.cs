@@ -98,7 +98,7 @@ public class CourseVersionService : ICourseVersionService
         }
     }
 
-    public async Task<ResponseDTO> CreateNewCourseAndCourseVersion
+    public async Task<ResponseDTO> CreateNewCourseAndVersion
     (
         ClaimsPrincipal User,
         CreateNewCourseAndVersionDTO createNewCourseAndVersionDto
@@ -159,13 +159,13 @@ public class CourseVersionService : ICourseVersionService
     public async Task<ResponseDTO> CloneNewCourseVersion
     (
         ClaimsPrincipal User,
-        Guid courseVersionId
+        CloneNewCourseVersionDTO cloneNewCourseVersionDto
     )
     {
         try
         {
             var courseVersion =
-                await _unitOfWork.CourseVersionRepository.GetCourseVersionsAsNoTracking(courseVersionId);
+                await _unitOfWork.CourseVersionRepository.GetCourseVersionsAsNoTracking(cloneNewCourseVersionDto.CourseVersionId);
 
             if (courseVersion is null)
             {

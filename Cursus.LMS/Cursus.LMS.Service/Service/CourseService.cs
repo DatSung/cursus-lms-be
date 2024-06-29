@@ -42,9 +42,9 @@ public class CourseService : ICourseService
             {
                 return new ResponseDTO()
                 {
-                    Message = "Permission to create course was not allow",
+                    Message = "Permission to create course was not found",
                     IsSuccess = true,
-                    StatusCode = 404,
+                    StatusCode = 403,
                     Result = null
                 };
             }
