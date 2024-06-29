@@ -104,7 +104,7 @@ public class CourseService : ICourseService
     public Task<ResponseDTO> MergeCourseFromCourseVersion
     (
         ClaimsPrincipal User,
-        CourseVersion courseVersion
+        Guid courseVersionId
     )
     {
         throw new NotImplementedException();

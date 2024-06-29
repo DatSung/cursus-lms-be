@@ -63,7 +63,7 @@ public class CourseVersionService : ICourseVersionService
     {
         try
         {
-            var courseVersion = await _unitOfWork.CourseVersionRepository.GetCourseVersionById(courseVersionId);
+            var courseVersion = await _unitOfWork.CourseVersionRepository.GetCourseVersionByIdAsync(courseVersionId);
 
             if (courseVersion is null)
             {
@@ -165,7 +165,8 @@ public class CourseVersionService : ICourseVersionService
         try
         {
             var courseVersion =
-                await _unitOfWork.CourseVersionRepository.GetCourseVersionsAsNoTracking(cloneNewCourseVersionDto.CourseVersionId);
+                await _unitOfWork.CourseVersionRepository.GetCourseVersionsAsNoTrackingAsync(cloneNewCourseVersionDto
+                    .CourseVersionId);
 
             if (courseVersion is null)
             {
@@ -217,6 +218,11 @@ public class CourseVersionService : ICourseVersionService
     }
 
     public Task<ResponseDTO> RejectCourseVersion(ClaimsPrincipal User)
+    {
+        throw new NotImplementedException();
+    }
+
+    public Task<ResponseDTO> SubmitCourseVersion(ClaimsPrincipal User)
     {
         throw new NotImplementedException();
     }
