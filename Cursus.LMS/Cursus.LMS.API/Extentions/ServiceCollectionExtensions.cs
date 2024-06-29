@@ -38,7 +38,13 @@ public static class ServiceCollectionExtensions
         services.AddScoped<ICourseService, CourseService>();
         // Registering ICourseVersionService its implementation CourseVersionService
         services.AddScoped<ICourseVersionService, CourseVersionService>();
-
+        // Registering ICourseVersionStatusService its implementation CourseVersionStatusService
+        services.AddScoped<ICourseVersionStatusService, CourseVersionStatusService>();
+        // Registering ICourseSectionVersionService its implementation CourseSectionVersionService
+        services.AddScoped<ICourseSectionVersionService, CourseSectionVersionService>();
+        // Registering ISectionDetailsVersionService its implementation SectionDetailsVersionService
+        services.AddScoped<ISectionDetailsVersionService, SectionDetailsVersionService>();
+        
         // Register the Identity services with default configuration
         services.AddIdentity<ApplicationUser, IdentityRole>()
             .AddEntityFrameworkStores<ApplicationDbContext>()

@@ -17,7 +17,7 @@ public class AutoMapperProfile : Profile
         CreateMap<CreateCategoryDTO, Category>()
             .ForMember(dest => dest.Id, opt
                 => opt.MapFrom(src => Guid.NewGuid()))
-            .ForMember(dest => dest.ParentId, opt 
+            .ForMember(dest => dest.ParentId, opt
                 => opt.MapFrom(src => src.ParentId != null ? Guid.Parse(src.ParentId) : (Guid?)null))
             .ReverseMap();
 
@@ -74,5 +74,8 @@ public class AutoMapperProfile : Profile
         CreateMap<InstructorComment, GetAllCommentsDTO>().ReverseMap();
         CreateMap<InstructorComment, CreateInstructorCommentDTO>().ReverseMap();
         CreateMap<InstructorComment, UpdateInstructorCommentDTO>().ReverseMap();
+
+
+        CreateMap<CourseVersion, GetCourseVersionDTO>().ReverseMap();
     }
 }

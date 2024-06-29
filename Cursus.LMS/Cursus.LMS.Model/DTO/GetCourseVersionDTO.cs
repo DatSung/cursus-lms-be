@@ -1,15 +1,9 @@
-﻿using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
+﻿namespace Cursus.LMS.Model.DTO;
 
-namespace Cursus.LMS.Model.Domain;
-
-public class CourseVersion
+public class GetCourseVersionDTO
 {
-    [Key] public Guid Id { get; set; }
-
+    public Guid Id { get; set; }
     public Guid? CourseId { get; set; }
-    [ForeignKey("CourseId")] public Course? Course { get; set; }
-
     public string? Title { get; set; }
     public string? Code { get; set; }
     public string? Description { get; set; }
@@ -20,7 +14,5 @@ public class CourseVersion
     public Guid? InstructorId { get; set; }
     public Guid? CategoryId { get; set; }
     public Guid? LevelId { get; set; }
-    public int? Version { get; set; }
-    public DateTime? CreatedTime { get; set; } = DateTime.UtcNow;
     public int? CurrentStatus { get; set; }
 }
