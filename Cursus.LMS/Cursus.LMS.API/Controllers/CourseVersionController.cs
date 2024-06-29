@@ -20,10 +20,10 @@ namespace Cursus.LMS.API.Controllers
         #region Course Version
 
         [HttpGet]
-        public async Task<ResponseDTO> GetCourseVersions
+        public async Task<ActionResult<ResponseDTO>> GetCourseVersions
         (
-            [FromQuery] Guid? instructorId,
             [FromQuery] Guid? courseId,
+            [FromQuery] Guid? instructorId,
             [FromQuery] string? filterOn,
             [FromQuery] string? filterQuery,
             [FromQuery] string? sortBy,
@@ -32,36 +32,28 @@ namespace Cursus.LMS.API.Controllers
             [FromQuery] int pageSize = 5
         )
         {
-            try
-            {
-                return new ResponseDTO()
-                {
-                };
-            }
-            catch (Exception e)
-            {
-                return new ResponseDTO()
-                {
-                };
-            }
+            var responseDto = await _courseVersionService.GetCourseVersions
+            (
+                User,
+                courseId,
+                instructorId,
+                filterOn,
+                filterQuery,
+                sortBy,
+                isAscending,
+                pageNumber,
+                pageSize
+            );
+
+            return StatusCode(responseDto.StatusCode, responseDto);
         }
 
         [HttpGet]
         [Route("{courseVersionId:guid}")]
-        public async Task<ResponseDTO> GetCourseVersion([FromRoute] Guid courseVersionId)
+        public async Task<ActionResult<ResponseDTO>> GetCourseVersion([FromRoute] Guid courseVersionId)
         {
-            try
-            {
-                return new ResponseDTO()
-                {
-                };
-            }
-            catch (Exception e)
-            {
-                return new ResponseDTO()
-                {
-                };
-            }
+            var responseDto = await _courseVersionService.GetCourseVersion(User, courseVersionId);
+            return StatusCode(responseDto.StatusCode, responseDto);
         }
 
         [HttpPost]

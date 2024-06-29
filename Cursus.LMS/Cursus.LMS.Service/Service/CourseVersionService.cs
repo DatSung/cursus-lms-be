@@ -33,7 +33,26 @@ public class CourseVersionService : ICourseVersionService
         int pageSize
     )
     {
-        throw new NotImplementedException();
+        try
+        {
+            return new ResponseDTO()
+            {
+                Result = null,
+                Message = "Get course versions successfully",
+                IsSuccess = true,
+                StatusCode = 200
+            };
+        }
+        catch (Exception e)
+        {
+            return new ResponseDTO()
+            {
+                Result = null,
+                Message = e.Message,
+                IsSuccess = false,
+                StatusCode = 500
+            };
+        }
     }
 
     public async Task<ResponseDTO> GetCourseVersion
@@ -109,7 +128,9 @@ public class CourseVersionService : ICourseVersionService
                 InstructorId = course.InstructorId,
                 CategoryId = createNewCourseAndVersionDto.CategoryId,
                 LevelId = createNewCourseAndVersionDto.LevelId,
-                CurrentStatus = 0
+                CurrentStatus = 0,
+                Version = 1,
+                CreatedTime = DateTime.UtcNow,
             };
 
             await _unitOfWork.CourseVersionRepository.AddAsync(courseVersion);

@@ -17,9 +17,10 @@ public class CourseVersion
     public double Price { get; set; } = 0;
     public double? OldPrice { get; set; }
     public string? CourseImgUrl { get; set; }
-    
     public Guid? InstructorId { get; set; }
     public Guid? CategoryId { get; set; }
     public Guid? LevelId { get; set; }
+    public int? Version { get; set; }
+    public DateTime? CreatedTime { get; set; } = DateTime.UtcNow;
     public int? CurrentStatus { get; set; }
 }
