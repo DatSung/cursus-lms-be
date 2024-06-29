@@ -23,6 +23,7 @@ namespace Cursus.LMS.API.Controllers
         public async Task<ResponseDTO> GetCourseVersions
         (
             [FromQuery] Guid? instructorId,
+            [FromQuery] Guid? courseId,
             [FromQuery] string? filterOn,
             [FromQuery] string? filterQuery,
             [FromQuery] string? sortBy,
