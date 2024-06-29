@@ -21,7 +21,11 @@ public class CourseService : ICourseService
         {
             // Get instructorId by userId
             var userId = User.Claims.FirstOrDefault(x => x.Type == ClaimTypes.NameIdentifier)?.Value;
-            var instructor = await _unitOfWork.InstructorRepository.GetAsync(x => x.UserId == userId);
+            var instructor = await _unitOfWork.InstructorRepository.GetAsync
+            (
+                filter: x => x.UserId == userId,
+                includeProperties: "ApplicationUser"
+            );
 
             if (instructor is null)
             {
@@ -68,6 +72,10 @@ public class CourseService : ICourseService
                 DeactivatedBy = null,
                 ActivatedTime = null,
                 DeactivatedTime = null,
+                MergedTime = null,
+                MergedBy = null,
+                CreatedBy = instructor?.ApplicationUser.Email,
+                CreatedTime = DateTime.UtcNow
             };
 
             await _unitOfWork.CourseRepository.AddAsync(course);
