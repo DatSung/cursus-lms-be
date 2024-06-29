@@ -46,7 +46,7 @@ public interface ICourseVersionService
         Guid courseVersionId
     );
 
-    Task<ResponseDTO> CreateNewCourseAndCourseVersion
+    Task<ResponseDTO> CreateNewCourseAndVersion
     (
         ClaimsPrincipal User,
         CreateNewCourseAndVersionDTO createNewCourseAndVersionDto
@@ -55,7 +55,7 @@ public interface ICourseVersionService
     Task<ResponseDTO> CloneNewCourseVersion
     (
         ClaimsPrincipal User,
-        Guid courseVersionId
+        CloneNewCourseVersionDTO cloneNewCourseVersionDto
     );
 
     Task<ResponseDTO> RemoveCourseVersion(ClaimsPrincipal User);
