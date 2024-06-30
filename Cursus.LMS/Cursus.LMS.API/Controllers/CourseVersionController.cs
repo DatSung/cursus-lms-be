@@ -62,24 +62,24 @@ namespace Cursus.LMS.API.Controllers
         }
 
         [HttpPost]
-        [Route("create-new-version")]
-        public async Task<ActionResult<ResponseDTO>> CreateNewCourseAndVersion
+        [Route("create-course-version")]
+        public async Task<ActionResult<ResponseDTO>> CreateCourseAndVersion
         (
             CreateNewCourseAndVersionDTO createNewCourseAndVersionDto
         )
         {
-            var responseDto = await _courseVersionService.CreateNewCourseAndVersion(User, createNewCourseAndVersionDto);
+            var responseDto = await _courseVersionService.CreateCourseAndVersion(User, createNewCourseAndVersionDto);
             return StatusCode(responseDto.StatusCode, responseDto);
         }
 
         [HttpPost]
-        [Route("clone-new-version")]
-        public async Task<ActionResult<ResponseDTO>> CloneNewCourseVersion
+        [Route("clone-course-version")]
+        public async Task<ActionResult<ResponseDTO>> CloneCourseVersion
         (
             [FromBody] CloneCourseVersionDTO cloneCourseVersionDto
         )
         {
-            var responseDto = await _courseVersionService.CloneNewCourseVersion(User, cloneCourseVersionDto);
+            var responseDto = await _courseVersionService.CloneCourseVersion(User, cloneCourseVersionDto);
             return StatusCode(responseDto.StatusCode, responseDto);
         }
 
@@ -215,20 +215,21 @@ namespace Cursus.LMS.API.Controllers
         [HttpPost]
         [Route("comment")]
         public async Task<ActionResult<ResponseDTO>> CreateCourseVersionComment
-            (
-                CreateCourseVersionCommentsDTO createCourseVersionCommentsDTO
-            )
+        (
+            CreateCourseVersionCommentsDTO createCourseVersionCommentsDTO
+        )
         {
-            var responseDto = await _courseVersionService.CreateCourseVersionComment(User, createCourseVersionCommentsDTO);
+            var responseDto =
+                await _courseVersionService.CreateCourseVersionComment(User, createCourseVersionCommentsDTO);
             return StatusCode(responseDto.StatusCode, responseDto);
         }
 
         [HttpPut]
         [Route("comment")]
         public async Task<ActionResult<ResponseDTO>> EditCourseVersionComment
-            (
-                EditCourseVersionCommentsDTO editCourseVersionCommentsDTO
-            )
+        (
+            EditCourseVersionCommentsDTO editCourseVersionCommentsDTO
+        )
         {
             var responseDto = await _courseVersionService.EditCourseVersionComment(User, editCourseVersionCommentsDTO);
             return StatusCode(responseDto.StatusCode, responseDto);
@@ -236,9 +237,11 @@ namespace Cursus.LMS.API.Controllers
 
         [HttpDelete]
         [Route("comment/")]
-        public async Task<ActionResult<ResponseDTO>> RemoveCourseVersionComment(RemoveCourseVersionCommentDTO removeCourseVersionCommentDTO)
+        public async Task<ActionResult<ResponseDTO>> RemoveCourseVersionComment(
+            RemoveCourseVersionCommentDTO removeCourseVersionCommentDTO)
         {
-            var responseDto = await _courseVersionService.RemoveCourseVersionComment(User, removeCourseVersionCommentDTO);
+            var responseDto =
+                await _courseVersionService.RemoveCourseVersionComment(User, removeCourseVersionCommentDTO);
             return StatusCode(responseDto.StatusCode, responseDto);
         }
 
@@ -342,13 +345,12 @@ namespace Cursus.LMS.API.Controllers
             catch (Exception e)
             {
                 return new ResponseDTO()
-                {
-                }
+                    {
+                    }
                     ;
             }
         }
 
         #endregion
-
-    } 
+    }
 }
