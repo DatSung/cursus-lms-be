@@ -27,7 +27,7 @@ public class SectionDetailsVersionService : ISectionDetailsVersionService
                 await _unitOfWork.SectionDetailsVersionRepository
                     .GetSectionDetailsVersionsOfCourseSectionVersionAsync
                     (
-                        cloneSectionsDetailsVersionDto.CourseSectionVersionId,
+                        cloneSectionsDetailsVersionDto.OldCourseSectionVersionId,
                         asNoTracking: true
                     );
 
@@ -45,7 +45,7 @@ public class SectionDetailsVersionService : ISectionDetailsVersionService
             foreach (var sectionDetailsVersion in sectionDetailsVersions)
             {
                 sectionDetailsVersion.Id = Guid.NewGuid();
-                sectionDetailsVersion.CourseSectionVersionId = cloneSectionsDetailsVersionDto.CourseSectionVersionId;
+                sectionDetailsVersion.CourseSectionVersionId = cloneSectionsDetailsVersionDto.NewCourseSectionVersionId;
             }
 
             await _unitOfWork.SectionDetailsVersionRepository.AddRangeAsync(sectionDetailsVersions);

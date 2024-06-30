@@ -32,7 +32,7 @@ public class CourseSectionVersionService : ICourseSectionVersionService
             var courseSectionVersions =
                 await _unitOfWork.CourseSectionVersionRepository.GetCourseSectionVersionsOfCourseVersionAsync
                 (
-                    cloneCourseSectionVersionDto.CourseVersionId,
+                    cloneCourseSectionVersionDto.OldCourseVersionId,
                     asNoTracking: true
                 );
 
@@ -47,17 +47,26 @@ public class CourseSectionVersionService : ICourseSectionVersionService
                 };
             }
 
+            var cloneSectionsDetailsVersionsDto = new List<CloneSectionsDetailsVersionDTO>();
+
             foreach (var courseSectionVersion in courseSectionVersions)
             {
+                var cloneSectionsDetailsVersionDto = new CloneSectionsDetailsVersionDTO();
+
+                cloneSectionsDetailsVersionDto.OldCourseSectionVersionId = courseSectionVersion.Id;
                 courseSectionVersion.Id = Guid.NewGuid();
-                courseSectionVersion.CourseVersionId = cloneCourseSectionVersionDto.CourseVersionId;
+                cloneSectionsDetailsVersionDto.NewCourseSectionVersionId = courseSectionVersion.Id;
+
+                courseSectionVersion.CourseVersionId = cloneCourseSectionVersionDto.NewCourseVersionId;
+
+                cloneSectionsDetailsVersionsDto.Add(cloneSectionsDetailsVersionDto);
             }
 
             await _unitOfWork.CourseSectionVersionRepository.AddRangeAsync(courseSectionVersions);
             await _unitOfWork.SaveAsync();
 
             // Clone section details version
-            foreach (var courseSectionVersion in courseSectionVersions)
+            foreach (var cloneSectionsDetailsVersionDto in cloneSectionsDetailsVersionsDto)
             {
                 var responseDto =
                     await _sectionDetailsVersionService.CloneSectionsDetailsVersion
@@ -65,10 +74,11 @@ public class CourseSectionVersionService : ICourseSectionVersionService
                         User,
                         new CloneSectionsDetailsVersionDTO()
                         {
-                            CourseSectionVersionId = courseSectionVersion.Id
+                            OldCourseSectionVersionId = cloneSectionsDetailsVersionDto.OldCourseSectionVersionId,
+                            NewCourseSectionVersionId = cloneSectionsDetailsVersionDto.NewCourseSectionVersionId,
                         }
                     );
-                if (responseDto.IsSuccess is false)
+                if (responseDto.StatusCode == 500)
                 {
                     return responseDto;
                 }

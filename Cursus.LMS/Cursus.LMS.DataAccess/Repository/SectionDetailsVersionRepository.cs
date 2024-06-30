@@ -1,6 +1,7 @@
 ﻿using Cursus.LMS.DataAccess.Context;
 using Cursus.LMS.DataAccess.IRepository;
 using Cursus.LMS.Model.Domain;
+using Microsoft.EntityFrameworkCore;
 
 namespace Cursus.LMS.DataAccess.Repository;
 
@@ -29,6 +30,13 @@ public class SectionDetailsVersionRepository : Repository<SectionDetailsVersion>
         bool? asNoTracking
     )
     {
-        throw new NotImplementedException();
+        return asNoTracking is true
+            ? await _context.SectionDetailsVersions
+                .AsNoTracking()
+                .Where(x => x.CourseSectionVersionId == courseSectionVersionId)
+                .ToListAsync()
+            : await _context.SectionDetailsVersions
+                .Where(x => x.CourseSectionVersionId == courseSectionVersionId)
+                .ToListAsync();
     }
 }

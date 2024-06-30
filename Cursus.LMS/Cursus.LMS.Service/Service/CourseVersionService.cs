@@ -218,9 +218,17 @@ public class CourseVersionService : ICourseVersionService
                     StatusCode = 404,
                 };
             }
-            
 
-            courseVersion.Id = Guid.NewGuid();
+            // Create newCourseVersionId and save OldCourseVersionId to create and clone
+            var cloneCourseSectionVersionDto = new CloneCourseSectionVersionDTO()
+            {
+                NewCourseVersionId = Guid.NewGuid(),
+                OldCourseVersionId = courseVersion.Id
+            };
+
+            courseVersion.Id = cloneCourseSectionVersionDto.NewCourseVersionId;
+            courseVersion.Version =
+                await _unitOfWork.CourseVersionRepository.GetTotalCourseVersionsAsync(courseVersion.CourseId) + 1;
 
             await _unitOfWork.CourseVersionRepository.AddAsync(courseVersion);
             await _unitOfWork.SaveAsync();
@@ -230,12 +238,9 @@ public class CourseVersionService : ICourseVersionService
                 await _courseSectionVersionService.CloneCourseSectionVersion
                 (
                     User,
-                    new CloneCourseSectionVersionDTO()
-                    {
-                        CourseVersionId = courseVersion.Id
-                    }
+                    cloneCourseSectionVersionDto
                 );
-            if (responseDto.IsSuccess is false)
+            if (responseDto.StatusCode == 500)
             {
                 return responseDto;
             }

@@ -2,5 +2,6 @@
 
 public class CloneCourseSectionVersionDTO
 {
-    public Guid CourseVersionId { get; set; }
+    public Guid NewCourseVersionId { get; set; }
+    public Guid OldCourseVersionId { get; set; }
 }
