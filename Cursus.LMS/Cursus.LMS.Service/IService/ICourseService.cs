@@ -25,6 +25,6 @@ public interface ICourseService
     Task<ResponseDTO> MergeCourseFromCourseVersion
     (
         ClaimsPrincipal User,
-        CourseVersion courseVersion
+        Guid courseVersionId
     );
 }

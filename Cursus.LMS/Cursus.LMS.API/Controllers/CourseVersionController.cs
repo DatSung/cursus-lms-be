@@ -62,20 +62,25 @@ namespace Cursus.LMS.API.Controllers
         }
 
         [HttpPost]
-        public async Task<ResponseDTO> CreateCourseVersion()
+        [Route("create-new-version")]
+        public async Task<ActionResult<ResponseDTO>> CreateNewCourseAndVersion
+        (
+            CreateNewCourseAndVersionDTO createNewCourseAndVersionDto
+        )
         {
-            try
-            {
-                return new ResponseDTO()
-                {
-                };
-            }
-            catch (Exception e)
-            {
-                return new ResponseDTO()
-                {
-                };
-            }
+            var responseDto = await _courseVersionService.CreateNewCourseAndVersion(User, createNewCourseAndVersionDto);
+            return StatusCode(responseDto.StatusCode, responseDto);
+        }
+
+        [HttpPost]
+        [Route("clone-new-version")]
+        public async Task<ActionResult<ResponseDTO>> CloneNewCourseVersion
+        (
+            [FromBody] CloneNewCourseVersionDTO cloneNewCourseVersionDto
+        )
+        {
+            var responseDto = await _courseVersionService.CloneNewCourseVersion(User, cloneNewCourseVersionDto);
+            return StatusCode(responseDto.StatusCode, responseDto);
         }
 
         [HttpDelete]

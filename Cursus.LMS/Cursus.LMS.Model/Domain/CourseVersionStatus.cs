@@ -19,31 +19,31 @@ public class CourseVersionStatus
             {
                 case 0:
                 {
-                    return "New";
+                    return "New"; // Can edit
                 }
                 case 1:
                 {
-                    return "Submitted";
+                    return "Submitted"; // Clone new version to edit
                 }
                 case 2:
                 {
-                    return "Re-Submitted";
+                    return "Re-Submitted"; //Last status was rejected // Clone new version to edit
                 }
                 case 3:
                 {
-                    return "Pending";
+                    return "Accepted"; // Clone new version to edit
                 }
                 case 4:
                 {
-                    return "Accepted";
+                    return "Rejected"; // Can edit
                 }
                 case 5:
                 {
-                    return "Rejected";
+                    return "Merged"; // Clone new version to edit
                 }
                 default:
                 {
-                    return "";
+                    return "New";
                 }
             }
         }

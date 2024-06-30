@@ -5,6 +5,12 @@ namespace Cursus.LMS.Service.IService;
 
 public interface ICourseSectionVersionService
 {
+    Task<ResponseDTO> CloneCourseSectionVersion
+    (
+        ClaimsPrincipal User,
+        Guid courseVersionId
+    );
+
     Task<ResponseDTO> GetCourseSections
     (
         ClaimsPrincipal User,
