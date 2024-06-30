@@ -1,4 +1,4 @@
-﻿using System.Security.Claims;
+using System.Security.Claims;
 using Cursus.LMS.Model.DTO;
 
 namespace Cursus.LMS.Service.IService;
@@ -76,9 +76,20 @@ public interface ICourseVersionService
     Task<ResponseDTO> AcceptCourseVersion(ClaimsPrincipal User);
     Task<ResponseDTO> RejectCourseVersion(ClaimsPrincipal User);
     Task<ResponseDTO> SubmitCourseVersion(ClaimsPrincipal User);
-    Task<ResponseDTO> GetCourseVersionsComments(ClaimsPrincipal User);
-    Task<ResponseDTO> GetCourseVersionComment(ClaimsPrincipal User);
-    Task<ResponseDTO> CreateCourseVersionComment(ClaimsPrincipal User);
-    Task<ResponseDTO> EditCourseVersionComment(ClaimsPrincipal User);
-    Task<ResponseDTO> RemoveCourseVersionComment(ClaimsPrincipal User);
+
+    Task<ResponseDTO> GetCourseVersionsComments
+    (
+        ClaimsPrincipal User,
+        Guid? courseVersionCommentId,
+        Guid? courseVersionId,
+        string? filterOn,
+        string? filterQuery,
+        string? sortBy,
+        int pageNumber,
+        int pageSize
+     );
+    Task<ResponseDTO> GetCourseVersionComment(ClaimsPrincipal User, Guid courseVersionCommentId);
+    Task<ResponseDTO> CreateCourseVersionComment(ClaimsPrincipal User, CreateCourseVersionCommentsDTO createCourseVersionCommentsDTO);
+    Task<ResponseDTO> EditCourseVersionComment(ClaimsPrincipal User, EditCourseVersionCommentsDTO editCourseVersionCommentsDTO);
+    Task<ResponseDTO> RemoveCourseVersionComment(ClaimsPrincipal User, RemoveCourseVersionCommentDTO removeCourseVersionCommentDTO);
 }

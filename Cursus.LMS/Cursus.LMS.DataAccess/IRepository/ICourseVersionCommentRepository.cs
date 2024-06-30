@@ -6,4 +6,5 @@ public interface ICourseVersionCommentRepository : IRepository<CourseVersionComm
 {
     void Update(CourseVersionComment courseVersionComment);
     void UpdateRange(IEnumerable<CourseVersionComment> courseVersionComments);
+    Task<CourseVersionComment?> GetCourseVersionCommentById(Guid courseversioncommentId);
 }

@@ -1,6 +1,7 @@
 ﻿using Cursus.LMS.DataAccess.Context;
 using Cursus.LMS.DataAccess.IRepository;
 using Cursus.LMS.Model.Domain;
+using Microsoft.EntityFrameworkCore;
 
 namespace Cursus.LMS.DataAccess.Repository;
 
@@ -22,4 +23,9 @@ public class CourseVersionCommentRepository : Repository<CourseVersionComment>, 
     {
         _context.CourseVersionComments.UpdateRange(courseVersionComments);
     }
+    public async Task<CourseVersionComment?> GetCourseVersionCommentById(Guid courseversioncommentId)
+    {
+        return await _context.CourseVersionComments.FirstOrDefaultAsync(x => x.Id == courseversioncommentId);
+    }
+
 }
