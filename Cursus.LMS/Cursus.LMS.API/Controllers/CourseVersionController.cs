@@ -1,7 +1,12 @@
+using Cursus.LMS.Model.Domain;
 using Cursus.LMS.Model.DTO;
 using Cursus.LMS.Service.IService;
+using Cursus.LMS.Service.Service;
+using DocumentFormat.OpenXml.Wordprocessing;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using System.Globalization;
+using System.Threading.Tasks;
 
 namespace Cursus.LMS.API.Controllers
 {
@@ -169,101 +174,67 @@ namespace Cursus.LMS.API.Controllers
 
         [HttpGet]
         [Route("comment/")]
-        public async Task<ResponseDTO> GetCourseVersionComments
+        public async Task<ResponseDTO> GetCourseVersions
         (
             [FromQuery] Guid? courseVersionId,
             [FromQuery] string? filterOn,
             [FromQuery] string? filterQuery,
             [FromQuery] string? sortBy,
-            [FromQuery] bool? isAscending,
             [FromQuery] int pageNumber = 1,
             [FromQuery] int pageSize = 5
         )
         {
-            try
-            {
-                return new ResponseDTO()
-                {
-                };
-            }
-            catch (Exception e)
-            {
-                return new ResponseDTO()
-                {
-                };
-            }
+            /*var responseDto = await _courseVersionService.GetCourseVersions
+                (
+                    User,
+                    courseVersionId,
+                    filterOn,
+                    filterQuery,
+                    sortBy,
+                    pageNumber,
+                    pageSize
+                );*/
+
+            //return StatusCode(responseDto.StatusCode, responseDto);
+            return null;
         }
 
         [HttpGet]
-        [Route("comment/{commentId:guid}")]
-        public async Task<ResponseDTO> GetCourseVersionComment([FromRoute] Guid commentId)
+        [Route("comment/{courseVersionCommentId:guid}")]
+        public async Task<ActionResult<ResponseDTO>> GetCourseVersionComment([FromRoute] Guid courseVersionCommentId)
         {
-            try
-            {
-                return new ResponseDTO()
-                {
-                };
-            }
-            catch (Exception e)
-            {
-                return new ResponseDTO()
-                {
-                };
-            }
+            var responseDto = await _courseVersionService.GetCourseVersionComment(User, courseVersionCommentId);
+            return StatusCode(responseDto.StatusCode, responseDto);
         }
 
         [HttpPost]
         [Route("comment")]
-        public async Task<ResponseDTO> CreateCourseVersionComment()
+        public async Task<ActionResult<ResponseDTO>> CreateCourseVersionComment
+            (
+                CreateCourseVersionCommentsDTO createCourseVersionCommentsDTO
+            )
         {
-            try
-            {
-                return new ResponseDTO()
-                {
-                };
-            }
-            catch (Exception e)
-            {
-                return new ResponseDTO()
-                {
-                };
-            }
+            var responseDto = await _courseVersionService.CreateCourseVersionComment(User, createCourseVersionCommentsDTO);
+            return StatusCode(responseDto.StatusCode, responseDto);
         }
 
         [HttpPut]
         [Route("comment")]
-        public async Task<ResponseDTO> EditCourseVersionComment()
+        public async Task<ActionResult<ResponseDTO>> EditCourseVersionComment
+            (
+                EditCourseVersionCommentsDTO editCourseVersionCommentsDTO
+            )
         {
-            try
-            {
-                return new ResponseDTO()
-                {
-                };
-            }
-            catch (Exception e)
-            {
-                return new ResponseDTO()
-                {
-                };
-            }
+            var responseDto = await _courseVersionService.EditCourseVersionComment(User, editCourseVersionCommentsDTO);
+            return StatusCode(responseDto.StatusCode, responseDto);
         }
 
         [HttpDelete]
-        [Route("comment/{commentId:guid}")]
-        public async Task<ResponseDTO> RemoveCourseVersionComment([FromRoute] Guid commentId)
+        [Route("comment/")]
+        public async Task<ActionResult<ResponseDTO>> RemoveCourseVersionComment(RemoveCourseVersionCommentDTO removeCourseVersionCommentDTO)
         {
-            try
-            {
-                return new ResponseDTO()
-                {
-                };
-            }
-            catch (Exception e)
-            {
-                return new ResponseDTO()
-                {
-                };
-            }
+            var responseDto = await _courseVersionService.RemoveCourseVersionComment(User, removeCourseVersionCommentDTO);
+            return StatusCode(responseDto.StatusCode, responseDto);
         }
 
         #endregion
@@ -366,12 +337,13 @@ namespace Cursus.LMS.API.Controllers
             catch (Exception e)
             {
                 return new ResponseDTO()
-                    {
-                    }
+                {
+                }
                     ;
             }
         }
 
         #endregion
-    }
+
+    } 
 }

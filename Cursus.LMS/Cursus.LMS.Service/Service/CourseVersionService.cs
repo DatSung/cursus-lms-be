@@ -221,28 +221,241 @@ public class CourseVersionService : ICourseVersionService
         throw new NotImplementedException();
     }
 
-    public Task<ResponseDTO> GetCourseVersionsComments(ClaimsPrincipal User)
+    public async Task<ResponseDTO> GetCourseVersionsComments
+    (
+        ClaimsPrincipal User,
+        Guid? courseVersionCommentId,
+        Guid? courseVersionId,
+        string? filterOn,
+        string? filterQuery,
+        string? sortBy,
+        int pageNumber,
+        int pageSize
+    )
     {
-        throw new NotImplementedException();
+        /*try
+        {
+            return new ResponseDTO()
+            {
+                Result = null,
+                Message = "Get course versions successfully",
+                IsSuccess = true,
+                StatusCode = 200
+            };
+        }
+        catch (Exception e)
+        {
+            return new ResponseDTO()
+            {
+                Result = null,
+                Message = e.Message,
+                IsSuccess = false,
+                StatusCode = 500
+            };
+        }*/
+        return null;
     }
 
-    public Task<ResponseDTO> GetCourseVersionComment(ClaimsPrincipal User)
+    public async Task<ResponseDTO> GetCourseVersionComment(ClaimsPrincipal User, Guid courseVersionCommentId)
     {
-        throw new NotImplementedException();
+        /*try
+        {
+            var courseVersionComment =
+                await _unitOfWork.CourseVersionCommentRepository.GetCourseVersionCommentById(courseVersionCommentId);
+
+            if (courseVersionComment is null)
+            {
+                return new ResponseDTO()
+                {
+                    Result = "",
+                    Message = "Course version was not found",
+                    IsSuccess = true,
+                    StatusCode = 404
+                };
+            }
+
+            var courseVersionCommentDto = _mapper.Map<GetCourseCommnetDTO>(courseVersionCommentId);
+
+            return new ResponseDTO()
+            {
+                Result = courseVersionCommentDto,
+                Message = "Get course version successfully",
+                IsSuccess = true,
+                StatusCode = 200
+            };
+        }
+        catch (Exception e)
+        {
+            return new ResponseDTO()
+            {
+                Result = null,
+                Message = e.Message,
+                IsSuccess = true,
+                StatusCode = 500
+            };
+        }*/
+        return null;
     }
 
-    public Task<ResponseDTO> CreateCourseVersionComment(ClaimsPrincipal User)
+
+    public async Task<ResponseDTO> CreateCourseVersionComment(ClaimsPrincipal User,
+        CreateCourseVersionCommentsDTO createCourseVersionCommentsDTO)
     {
-        throw new NotImplementedException();
+        try
+        {
+            //Tìm xem có đúng ID CourseVersion hay không
+            var courseVersionId =
+                await _unitOfWork.CourseVersionRepository.GetAsync(c =>
+                    c.Id == createCourseVersionCommentsDTO.CourseVersionId);
+            if (courseVersionId == null)
+            {
+                return new ResponseDTO()
+                {
+                    Message = "CourseVersionId Invalid",
+                    Result = null,
+                    IsSuccess = false,
+                    StatusCode = 400
+                };
+            }
+
+            var userId = User.Claims.FirstOrDefault(x => x.Type == ClaimTypes.NameIdentifier)?.Value;
+            var admin = await _unitOfWork.UserManagerRepository.FindByIdAsync(userId);
+
+            //Map DTO qua entity CourseVersionComment
+            CourseVersionComment comment = new CourseVersionComment()
+            {
+                Comment = createCourseVersionCommentsDTO.Comment,
+                CourseVersionId = createCourseVersionCommentsDTO.CourseVersionId,
+                CreateBy = admin.Email,
+                CreateTime = DateTime.Now,
+                UpdateTime = null,
+                UpdateBy = "",
+                Status = 0
+            };
+
+            //thêm commetn vào cho CourseVersion
+            await _unitOfWork.CourseVersionCommentRepository.AddAsync(comment);
+            await _unitOfWork.SaveAsync();
+
+            return new ResponseDTO()
+            {
+                Message = "Comment created successfully",
+                Result = comment,
+                IsSuccess = true,
+                StatusCode = 200,
+            };
+        }
+        catch (Exception e)
+        {
+            return new ResponseDTO
+            {
+                Message = e.Message,
+                Result = null,
+                IsSuccess = false,
+                StatusCode = 500
+            };
+        }
     }
 
-    public Task<ResponseDTO> EditCourseVersionComment(ClaimsPrincipal User)
+    public async Task<ResponseDTO> EditCourseVersionComment(ClaimsPrincipal User,
+        EditCourseVersionCommentsDTO editCourseVersionCommentsDTO)
     {
-        throw new NotImplementedException();
+        try
+        {
+            //Tìm xem có đúng ID CourseVersion hay không
+            var courseVersionId =
+                await _unitOfWork.CourseVersionCommentRepository.GetAsync(c =>
+                    c.Id == editCourseVersionCommentsDTO.CourseVersionId);
+            if (courseVersionId == null)
+            {
+                return new ResponseDTO()
+                {
+                    Message = "CourseVersionId Invalid",
+                    Result = null,
+                    IsSuccess = false,
+                    StatusCode = 400
+                };
+            }
+
+            var userId = User.Claims.FirstOrDefault(x => x.Type == ClaimTypes.NameIdentifier)?.Value;
+            var admin = await _unitOfWork.UserManagerRepository.FindByIdAsync(userId);
+
+            //update comment
+            courseVersionId.UpdateTime = DateTime.UtcNow;
+            courseVersionId.UpdateBy = admin.Email;
+            courseVersionId.Comment = editCourseVersionCommentsDTO.Comment;
+            courseVersionId.Status = 1;
+
+            _unitOfWork.CourseVersionCommentRepository.Update(courseVersionId);
+            await _unitOfWork.SaveAsync();
+
+            return new ResponseDTO()
+            {
+                Message = "Comment Edited successfully",
+                Result = null,
+                IsSuccess = true,
+                StatusCode = 200,
+            };
+        }
+        catch (Exception e)
+        {
+            return new ResponseDTO
+            {
+                Message = e.Message,
+                Result = null,
+                IsSuccess = false,
+                StatusCode = 500
+            };
+        }
     }
 
-    public Task<ResponseDTO> RemoveCourseVersionComment(ClaimsPrincipal User)
+    public async Task<ResponseDTO> RemoveCourseVersionComment(ClaimsPrincipal User,
+        RemoveCourseVersionCommentDTO removeCourseVersionCommentDTO)
     {
-        throw new NotImplementedException();
+        try
+        {
+            //Tìm xem có đúng ID CourseVersion hay không
+            var courseVersionId =
+                await _unitOfWork.CourseVersionCommentRepository.GetAsync(c =>
+                    c.Id == removeCourseVersionCommentDTO.CourseVersionId);
+            if (courseVersionId == null)
+            {
+                return new ResponseDTO()
+                {
+                    Message = "CourseVersionId Invalid",
+                    Result = null,
+                    IsSuccess = false,
+                    StatusCode = 400
+                };
+            }
+
+            var userId = User.Claims.FirstOrDefault(x => x.Type == ClaimTypes.NameIdentifier)?.Value;
+            var admin = await _unitOfWork.UserManagerRepository.FindByIdAsync(userId);
+
+            courseVersionId.UpdateTime = DateTime.UtcNow;
+            courseVersionId.UpdateBy = admin.Email;
+            courseVersionId.Status = 2;
+
+            _unitOfWork.CourseVersionCommentRepository.Update(courseVersionId);
+            await _unitOfWork.SaveAsync();
+
+            return new ResponseDTO()
+            {
+                Message = "Comment Removed successfully",
+                Result = null,
+                IsSuccess = true,
+                StatusCode = 200,
+            };
+        }
+        catch (Exception e)
+        {
+            return new ResponseDTO
+            {
+                Message = e.Message,
+                Result = null,
+                IsSuccess = false,
+                StatusCode = 500
+            };
+        }
     }
 }
