@@ -14,13 +14,34 @@ public class SectionDetailsVersionService : ISectionDetailsVersionService
         _unitOfWork = unitOfWork;
     }
 
-    public Task<ResponseDTO> CloneSectionsDetailsVersion
+    public async Task<ResponseDTO> CloneSectionsDetailsVersion
     (
         ClaimsPrincipal User,
         Guid courseSectionVersionId
     )
     {
-        throw new NotImplementedException();
+        try
+        {
+           
+
+            return new ResponseDTO()
+            {
+                IsSuccess = true,
+                StatusCode = 200,
+                Message = "Clone course section of course version successfully",
+                Result = null
+            };
+        }
+        catch (Exception e)
+        {
+            return new ResponseDTO()
+            {
+                IsSuccess = false,
+                StatusCode = 500,
+                Message = e.Message,
+                Result = null
+            };
+        }
     }
 
     public Task<ResponseDTO> GetSectionsDetailsVersions
