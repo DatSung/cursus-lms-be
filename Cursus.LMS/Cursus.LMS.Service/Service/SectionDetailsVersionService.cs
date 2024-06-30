@@ -44,7 +44,8 @@ public class SectionDetailsVersionService : ISectionDetailsVersionService
 
             foreach (var sectionDetailsVersion in sectionDetailsVersions)
             {
-                sectionDetailsVersion.Id = new Guid();
+                sectionDetailsVersion.Id = Guid.NewGuid();
+                sectionDetailsVersion.CourseSectionVersionId = cloneSectionsDetailsVersionDto.CourseSectionVersionId;
             }
 
             await _unitOfWork.SectionDetailsVersionRepository.AddRangeAsync(sectionDetailsVersions);

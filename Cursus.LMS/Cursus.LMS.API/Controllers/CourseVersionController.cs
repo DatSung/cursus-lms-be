@@ -7,6 +7,8 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.Globalization;
 using System.Threading.Tasks;
+using Cursus.LMS.Utility.Constants;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Cursus.LMS.API.Controllers
 {
@@ -63,6 +65,7 @@ namespace Cursus.LMS.API.Controllers
 
         [HttpPost]
         [Route("create-course-version")]
+        [Authorize(Roles = StaticUserRoles.Instructor)]
         public async Task<ActionResult<ResponseDTO>> CreateCourseAndVersion
         (
             CreateNewCourseAndVersionDTO createNewCourseAndVersionDto
@@ -74,6 +77,7 @@ namespace Cursus.LMS.API.Controllers
 
         [HttpPost]
         [Route("clone-course-version")]
+        [Authorize(Roles = StaticUserRoles.Instructor)]
         public async Task<ActionResult<ResponseDTO>> CloneCourseVersion
         (
             [FromBody] CloneCourseVersionDTO cloneCourseVersionDto

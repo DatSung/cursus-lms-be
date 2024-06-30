@@ -49,7 +49,8 @@ public class CourseSectionVersionService : ICourseSectionVersionService
 
             foreach (var courseSectionVersion in courseSectionVersions)
             {
-                courseSectionVersion.Id = new Guid();
+                courseSectionVersion.Id = Guid.NewGuid();
+                courseSectionVersion.CourseVersionId = cloneCourseSectionVersionDto.CourseVersionId;
             }
 
             await _unitOfWork.CourseSectionVersionRepository.AddRangeAsync(courseSectionVersions);

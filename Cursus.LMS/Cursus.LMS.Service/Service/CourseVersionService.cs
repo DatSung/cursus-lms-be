@@ -219,7 +219,7 @@ public class CourseVersionService : ICourseVersionService
                 };
             }
 
-            courseVersion.Id = new Guid();
+            courseVersion.Id = Guid.NewGuid();
 
             await _unitOfWork.CourseVersionRepository.AddAsync(courseVersion);
             await _unitOfWork.SaveAsync();
