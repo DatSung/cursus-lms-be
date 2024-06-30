@@ -24,7 +24,7 @@ public class CourseSectionVersionRepository : Repository<CourseSectionVersion>, 
         _context.CourseSectionVersions.UpdateRange(courseSectionVersions);
     }
 
-    public async Task<List<CourseSectionVersion>> GetCourseSectionVersionsOfCourseVersionAsync
+    public async Task<List<CourseSectionVersion>?> GetCourseSectionVersionsOfCourseVersionAsync
     (
         Guid courseVersionId,
         bool? asNoTracking = false

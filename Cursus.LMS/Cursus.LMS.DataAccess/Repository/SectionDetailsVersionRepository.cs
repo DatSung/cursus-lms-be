@@ -22,4 +22,13 @@ public class SectionDetailsVersionRepository : Repository<SectionDetailsVersion>
     {
         _context.SectionDetailsVersions.UpdateRange(sectionDetailsVersions);
     }
+
+    public async Task<List<SectionDetailsVersion>?> GetSectionDetailsVersionsOfCourseSectionVersionAsync
+    (
+        Guid courseSectionVersionId,
+        bool? asNoTracking
+    )
+    {
+        throw new NotImplementedException();
+    }
 }

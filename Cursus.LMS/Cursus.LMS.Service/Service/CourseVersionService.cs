@@ -11,6 +11,7 @@ public class CourseVersionService : ICourseVersionService
 {
     private readonly IUnitOfWork _unitOfWork;
     private readonly ICourseService _courseService;
+    private readonly ICourseSectionVersionService _courseSectionVersionService;
     private readonly ICourseVersionStatusService _courseVersionStatusService;
     private IMapper _mapper;
 
@@ -19,13 +20,15 @@ public class CourseVersionService : ICourseVersionService
         IUnitOfWork unitOfWork,
         ICourseService courseService,
         IMapper mapper,
-        ICourseVersionStatusService courseVersionStatusService
+        ICourseVersionStatusService courseVersionStatusService,
+        ICourseSectionVersionService courseSectionVersionService
     )
     {
         _unitOfWork = unitOfWork;
         _courseService = courseService;
         _mapper = mapper;
         _courseVersionStatusService = courseVersionStatusService;
+        _courseSectionVersionService = courseSectionVersionService;
     }
 
     public async Task<ResponseDTO> GetCourseVersions
@@ -221,9 +224,17 @@ public class CourseVersionService : ICourseVersionService
             await _unitOfWork.SaveAsync();
 
             // Clone course section versions
+            var responseDto =
+                await _courseSectionVersionService.CloneCourseSectionVersion(User, courseVersion.Id);
+            if (responseDto.IsSuccess is false)
+            {
+                return responseDto;
+            }
+
+            // Clone section details versions
 
             // Save status history of version
-            var responseDto = await _courseVersionStatusService.CreateCourseVersionStatus
+            responseDto = await _courseVersionStatusService.CreateCourseVersionStatus
             (
                 User,
                 new CreateCourseVersionStatusDTO()
@@ -236,11 +247,8 @@ public class CourseVersionService : ICourseVersionService
             // Rollback when save status history fail
             if (responseDto.IsSuccess is false)
             {
-                // Remove course version
+                // Remove section details version, course section version, course version
                 _unitOfWork.CourseVersionRepository.Remove(courseVersion);
-                // Remove course version section
-
-                // Remove section detail version
                 return responseDto;
             }
 
