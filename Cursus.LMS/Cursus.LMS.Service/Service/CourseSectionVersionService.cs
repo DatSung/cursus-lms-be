@@ -9,16 +9,22 @@ namespace Cursus.LMS.Service.Service;
 public class CourseSectionVersionService : ICourseSectionVersionService
 {
     private readonly IUnitOfWork _unitOfWork;
+    private readonly ISectionDetailsVersionService _sectionDetailsVersionService;
 
-    public CourseSectionVersionService(IUnitOfWork unitOfWork)
+    public CourseSectionVersionService
+    (
+        IUnitOfWork unitOfWork,
+        ISectionDetailsVersionService sectionDetailsVersionService
+    )
     {
         _unitOfWork = unitOfWork;
+        _sectionDetailsVersionService = sectionDetailsVersionService;
     }
 
     public async Task<ResponseDTO> CloneCourseSectionVersion
     (
         ClaimsPrincipal User,
-        Guid courseVersionId
+        CloneCourseSectionVersionDTO cloneCourseSectionVersionDto
     )
     {
         try
@@ -26,7 +32,7 @@ public class CourseSectionVersionService : ICourseSectionVersionService
             var courseSectionVersions =
                 await _unitOfWork.CourseSectionVersionRepository.GetCourseSectionVersionsOfCourseVersionAsync
                 (
-                    courseVersionId,
+                    cloneCourseSectionVersionDto.CourseVersionId,
                     asNoTracking: true
                 );
 
@@ -48,6 +54,24 @@ public class CourseSectionVersionService : ICourseSectionVersionService
 
             await _unitOfWork.CourseSectionVersionRepository.AddRangeAsync(courseSectionVersions);
             await _unitOfWork.SaveAsync();
+
+            // Clone section details version
+            foreach (var courseSectionVersion in courseSectionVersions)
+            {
+                var responseDto =
+                    await _sectionDetailsVersionService.CloneSectionsDetailsVersion
+                    (
+                        User,
+                        new CloneSectionsDetailsVersionDTO()
+                        {
+                            CourseSectionVersionId = courseSectionVersion.Id
+                        }
+                    );
+                if (responseDto.IsSuccess is false)
+                {
+                    return responseDto;
+                }
+            }
 
             return new ResponseDTO()
             {

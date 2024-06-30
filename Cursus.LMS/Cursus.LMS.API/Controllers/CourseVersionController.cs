@@ -76,10 +76,10 @@ namespace Cursus.LMS.API.Controllers
         [Route("clone-new-version")]
         public async Task<ActionResult<ResponseDTO>> CloneNewCourseVersion
         (
-            [FromBody] CloneNewCourseVersionDTO cloneNewCourseVersionDto
+            [FromBody] CloneCourseVersionDTO cloneCourseVersionDto
         )
         {
-            var responseDto = await _courseVersionService.CloneNewCourseVersion(User, cloneNewCourseVersionDto);
+            var responseDto = await _courseVersionService.CloneNewCourseVersion(User, cloneCourseVersionDto);
             return StatusCode(responseDto.StatusCode, responseDto);
         }
 

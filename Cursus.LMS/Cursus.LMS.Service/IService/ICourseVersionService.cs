@@ -52,7 +52,7 @@ public interface ICourseVersionService
     /// <param name="User"></param>
     /// <param name="createNewCourseAndVersionDto"></param>
     /// <returns></returns>
-    Task<ResponseDTO> CreateNewCourseAndVersion
+    Task<ResponseDTO> CreateCourseAndVersion
     (
         ClaimsPrincipal User,
         CreateNewCourseAndVersionDTO createNewCourseAndVersionDto
@@ -63,12 +63,12 @@ public interface ICourseVersionService
     /// Clone new course version from exist course version
     /// </summary>
     /// <param name="User"></param>
-    /// <param name="cloneNewCourseVersionDto"></param>
+    /// <param name="cloneCourseVersionDto"></param>
     /// <returns></returns>
-    Task<ResponseDTO> CloneNewCourseVersion
+    Task<ResponseDTO> CloneCourseVersion
     (
         ClaimsPrincipal User,
-        CloneNewCourseVersionDTO cloneNewCourseVersionDto
+        CloneCourseVersionDTO cloneCourseVersionDto
     );
 
     Task<ResponseDTO> RemoveCourseVersion(ClaimsPrincipal User);

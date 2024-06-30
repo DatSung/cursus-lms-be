@@ -2,6 +2,7 @@
 using Cursus.LMS.DataAccess.IRepository;
 using Cursus.LMS.Model.DTO;
 using Cursus.LMS.Service.IService;
+using Microsoft.IdentityModel.Tokens;
 
 namespace Cursus.LMS.Service.Service;
 
@@ -17,12 +18,37 @@ public class SectionDetailsVersionService : ISectionDetailsVersionService
     public async Task<ResponseDTO> CloneSectionsDetailsVersion
     (
         ClaimsPrincipal User,
-        Guid courseSectionVersionId
+        CloneSectionsDetailsVersionDTO cloneSectionsDetailsVersionDto
     )
     {
         try
         {
-           
+            var sectionDetailsVersions =
+                await _unitOfWork.SectionDetailsVersionRepository
+                    .GetSectionDetailsVersionsOfCourseSectionVersionAsync
+                    (
+                        cloneSectionsDetailsVersionDto.CourseSectionVersionId,
+                        asNoTracking: true
+                    );
+
+            if (sectionDetailsVersions.IsNullOrEmpty())
+            {
+                return new ResponseDTO()
+                {
+                    IsSuccess = false,
+                    StatusCode = 404,
+                    Result = null,
+                    Message = "Section details of course section version was not found"
+                };
+            }
+
+            foreach (var sectionDetailsVersion in sectionDetailsVersions)
+            {
+                sectionDetailsVersion.Id = new Guid();
+            }
+
+            await _unitOfWork.SectionDetailsVersionRepository.AddRangeAsync(sectionDetailsVersions);
+            await _unitOfWork.SaveAsync();
 
             return new ResponseDTO()
             {
