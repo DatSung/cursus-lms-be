@@ -77,5 +77,6 @@ public class AutoMapperProfile : Profile
 
 
         CreateMap<CourseVersion, GetCourseVersionDTO>().ReverseMap();
+        CreateMap<CourseVersionStatus, GetCourseVersionStatusDTO>().ReverseMap();
     }
 }

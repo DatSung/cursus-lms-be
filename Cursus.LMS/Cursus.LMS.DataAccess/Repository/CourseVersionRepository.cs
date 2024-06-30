@@ -8,7 +8,7 @@ namespace Cursus.LMS.DataAccess.Repository;
 public class CourseVersionRepository : Repository<CourseVersion>, ICourseVersionRepository
 {
     private readonly ApplicationDbContext _context;
-    
+
     public CourseVersionRepository(ApplicationDbContext context) : base(context)
     {
         _context = context;
@@ -24,13 +24,17 @@ public class CourseVersionRepository : Repository<CourseVersion>, ICourseVersion
         _context.CourseVersions.UpdateRange(courseVersions);
     }
 
-    public async Task<CourseVersion?> GetCourseVersionsAsNoTracking(Guid courserVersionId)
+    public async Task<CourseVersion?> GetCourseVersionAsync
+    (
+        Guid courseVersionId,
+        bool? asNoTracking = false
+    )
     {
-        return await _context.CourseVersions.AsNoTracking().FirstOrDefaultAsync(x => x.Id == courserVersionId);
-    }
+        if (asNoTracking is true)
+        {
+            return await _context.CourseVersions.AsNoTracking().FirstOrDefaultAsync(x => x.Id == courseVersionId);
+        }
 
-    public async Task<CourseVersion?> GetCourseVersionById(Guid courseVersionId)
-    {
         return await _context.CourseVersions.FirstOrDefaultAsync(x => x.Id == courseVersionId);
     }
 }
