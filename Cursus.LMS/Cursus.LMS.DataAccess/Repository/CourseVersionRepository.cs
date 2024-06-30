@@ -37,4 +37,9 @@ public class CourseVersionRepository : Repository<CourseVersion>, ICourseVersion
 
         return await _context.CourseVersions.FirstOrDefaultAsync(x => x.Id == courseVersionId);
     }
+
+    public async Task<int> GetTotalCourseVersionsAsync(Guid courseId)
+    {
+        return await _context.CourseVersions.CountAsync(x => x.CourseId == courseId);
+    }
 }

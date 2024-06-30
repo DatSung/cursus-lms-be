@@ -58,7 +58,7 @@ public class CourseService : ICourseService
                 Description = null,
                 InstructorId = instructor?.InstructorId,
                 Price = 0,
-                Status = 1,
+                Status = 0,
                 Title = null,
                 Version = 1,
                 CategoryId = null,

@@ -129,7 +129,7 @@ public class CourseVersionService : ICourseVersionService
 
             var courseVersion = new CourseVersion()
             {
-                Id = new Guid(),
+                Id = Guid.NewGuid(),
                 CourseId = course.Id,
                 Title = createNewCourseAndVersionDto.Title,
                 Code = createNewCourseAndVersionDto.Code,
@@ -218,6 +218,7 @@ public class CourseVersionService : ICourseVersionService
                     StatusCode = 404,
                 };
             }
+            
 
             courseVersion.Id = Guid.NewGuid();
 
@@ -254,7 +255,6 @@ public class CourseVersionService : ICourseVersionService
             if (responseDto.IsSuccess is false)
             {
                 // Remove section details version, course section version, course version
-                _unitOfWork.CourseVersionRepository.Remove(courseVersion);
                 return responseDto;
             }
 
