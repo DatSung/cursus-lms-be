@@ -111,7 +111,7 @@ public class CourseVersionService : ICourseVersionService
         }
     }
 
-    public async Task<ResponseDTO> CreateNewCourseAndVersion
+    public async Task<ResponseDTO> CreateCourseAndVersion
     (
         ClaimsPrincipal User,
         CreateNewCourseAndVersionDTO createNewCourseAndVersionDto
@@ -129,7 +129,7 @@ public class CourseVersionService : ICourseVersionService
 
             var courseVersion = new CourseVersion()
             {
-                Id = new Guid(),
+                Id = Guid.NewGuid(),
                 CourseId = course.Id,
                 Title = createNewCourseAndVersionDto.Title,
                 Code = createNewCourseAndVersionDto.Code,
@@ -192,10 +192,10 @@ public class CourseVersionService : ICourseVersionService
         }
     }
 
-    public async Task<ResponseDTO> CloneNewCourseVersion
+    public async Task<ResponseDTO> CloneCourseVersion
     (
         ClaimsPrincipal User,
-        CloneNewCourseVersionDTO cloneNewCourseVersionDto
+        CloneCourseVersionDTO cloneCourseVersionDto
     )
     {
         try
@@ -204,7 +204,7 @@ public class CourseVersionService : ICourseVersionService
             var courseVersion =
                 await _unitOfWork.CourseVersionRepository.GetCourseVersionAsync
                 (
-                    cloneNewCourseVersionDto.CourseVersionId,
+                    cloneCourseVersionDto.CourseVersionId,
                     asNoTracking: true
                 );
 
@@ -219,20 +219,31 @@ public class CourseVersionService : ICourseVersionService
                 };
             }
 
-            courseVersion.Id = new Guid();
+            // Create newCourseVersionId and save OldCourseVersionId to create and clone
+            var cloneCourseSectionVersionDto = new CloneCourseSectionVersionDTO()
+            {
+                NewCourseVersionId = Guid.NewGuid(),
+                OldCourseVersionId = courseVersion.Id
+            };
+
+            courseVersion.Id = cloneCourseSectionVersionDto.NewCourseVersionId;
+            courseVersion.Version =
+                await _unitOfWork.CourseVersionRepository.GetTotalCourseVersionsAsync(courseVersion.CourseId) + 1;
 
             await _unitOfWork.CourseVersionRepository.AddAsync(courseVersion);
             await _unitOfWork.SaveAsync();
 
             // Clone course section versions
             var responseDto =
-                await _courseSectionVersionService.CloneCourseSectionVersion(User, courseVersion.Id);
-            if (responseDto.IsSuccess is false)
+                await _courseSectionVersionService.CloneCourseSectionVersion
+                (
+                    User,
+                    cloneCourseSectionVersionDto
+                );
+            if (responseDto.StatusCode == 500)
             {
                 return responseDto;
             }
-
-            // Clone section details versions
 
             // Save status history of version
             responseDto = await _courseVersionStatusService.CreateCourseVersionStatus
@@ -249,7 +260,6 @@ public class CourseVersionService : ICourseVersionService
             if (responseDto.IsSuccess is false)
             {
                 // Remove section details version, course section version, course version
-                _unitOfWork.CourseVersionRepository.Remove(courseVersion);
                 return responseDto;
             }
 

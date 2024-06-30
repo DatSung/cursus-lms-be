@@ -8,7 +8,7 @@ public interface ICourseSectionVersionService
     Task<ResponseDTO> CloneCourseSectionVersion
     (
         ClaimsPrincipal User,
-        Guid courseVersionId
+        CloneCourseSectionVersionDTO cloneCourseSectionVersionDto
     );
 
     Task<ResponseDTO> GetCourseSections

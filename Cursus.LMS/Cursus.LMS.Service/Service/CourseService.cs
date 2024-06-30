@@ -32,7 +32,7 @@ public class CourseService : ICourseService
                 return new ResponseDTO()
                 {
                     Message = "Instructor does not exist",
-                    IsSuccess = true,
+                    IsSuccess = false,
                     StatusCode = 404,
                     Result = null
                 };
@@ -52,13 +52,13 @@ public class CourseService : ICourseService
             // Create an empty course
             var course = new Course()
             {
-                Id = new Guid(),
+                Id = Guid.NewGuid(),
                 Category = null,
                 Code = null,
                 Description = null,
                 InstructorId = instructor?.InstructorId,
                 Price = 0,
-                Status = 1,
+                Status = 0,
                 Title = null,
                 Version = 1,
                 CategoryId = null,

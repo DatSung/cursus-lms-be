@@ -30,16 +30,13 @@ public class CourseSectionVersionRepository : Repository<CourseSectionVersion>, 
         bool? asNoTracking = false
     )
     {
-        if (asNoTracking is true)
-        {
-            return await _context.CourseSectionVersions
+        return asNoTracking is true
+            ? await _context.CourseSectionVersions
                 .AsNoTracking()
                 .Where(x => x.CourseVersionId == courseVersionId)
+                .ToListAsync()
+            : await _context.CourseSectionVersions
+                .Where(x => x.CourseVersionId == courseVersionId)
                 .ToListAsync();
-        }
-
-        return await _context.CourseSectionVersions
-            .Where(x => x.CourseVersionId == courseVersionId)
-            .ToListAsync();
     }
 }

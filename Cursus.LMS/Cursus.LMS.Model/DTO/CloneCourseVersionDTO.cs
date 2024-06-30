@@ -2,7 +2,7 @@
 
 namespace Cursus.LMS.Model.DTO;
 
-public class CloneNewCourseVersionDTO
+public class CloneCourseVersionDTO
 {
     [Required] public Guid CourseVersionId { get; set; }
 }
