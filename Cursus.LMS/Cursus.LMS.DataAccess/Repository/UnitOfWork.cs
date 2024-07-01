@@ -25,8 +25,6 @@ namespace Cursus.LMS.DataAccess.Repository
         public ISectionDetailsVersionRepository SectionDetailsVersionRepository { get; }
         public ICourseVersionStatusRepository CourseVersionStatusRepository { get; }
         public ICourseVersionCommentRepository CourseVersionCommentRepository { get; }
-        public ICourseSectionRepository CourseSectionRepository { get; }
-        public ISectionDetailsRepository SectionDetailsRepository { get; }
 
         public UnitOfWork(ApplicationDbContext context, UserManager<ApplicationUser> userManager)
         {
@@ -45,8 +43,6 @@ namespace Cursus.LMS.DataAccess.Repository
             SectionDetailsVersionRepository = new SectionDetailsVersionRepository(_context);
             CourseVersionStatusRepository = new CourseVersionStatusRepository(_context);
             CourseVersionCommentRepository = new CourseVersionCommentRepository(_context);
-            CourseSectionRepository = new CourseSectionRepository(_context);
-            SectionDetailsRepository = new SectionDetailsRepository(_context);
         }
 
         public async Task<int> SaveAsync()
