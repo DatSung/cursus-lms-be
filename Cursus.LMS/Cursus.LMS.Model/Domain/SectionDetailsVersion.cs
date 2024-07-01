@@ -12,7 +12,7 @@ public class SectionDetailsVersion
 
     public string? Name { get; set; }
     public string? VideoUrl { get; set; }
-    public string? SlideUrk { get; set; }
+    public string? SlideUrl { get; set; }
     public string? DocsUrl { get; set; }
     public int? CurrentStatus { get; set; }
     public int? Type { get; set; } = 0;

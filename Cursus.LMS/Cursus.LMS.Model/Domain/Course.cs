@@ -26,4 +26,6 @@ public class Course : StateEntity<string, string, string, string, int>
     public string? Description { get; set; }
     public float? TotalRate { get; set; }
     public int? Version { get; set; } = 1;
+
+    [NotMapped] public IEnumerable<CourseSection>? CourseSections { get; set; }
 }

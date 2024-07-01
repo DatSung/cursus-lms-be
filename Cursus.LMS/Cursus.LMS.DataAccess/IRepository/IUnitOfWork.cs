@@ -18,5 +18,7 @@ public interface IUnitOfWork
     ISectionDetailsVersionRepository SectionDetailsVersionRepository { get; }
     ICourseVersionStatusRepository CourseVersionStatusRepository { get; }
     ICourseVersionCommentRepository CourseVersionCommentRepository { get; }
+    ICourseSectionRepository CourseSectionRepository { get; }
+    ISectionDetailsRepository SectionDetailsRepository { get; }
     Task<int> SaveAsync();
 }

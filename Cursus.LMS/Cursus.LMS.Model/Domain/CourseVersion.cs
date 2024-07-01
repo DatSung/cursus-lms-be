@@ -23,4 +23,6 @@ public class CourseVersion
     public int? Version { get; set; }
     public DateTime? CreatedTime { get; set; } = DateTime.UtcNow;
     public int? CurrentStatus { get; set; }
+
+    [NotMapped] public IEnumerable<CourseSectionVersion>? CourseSectionVersions { get; set; }
 }
