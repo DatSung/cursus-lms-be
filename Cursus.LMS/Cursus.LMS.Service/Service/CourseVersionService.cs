@@ -160,15 +160,8 @@ public class CourseVersionService : ICourseVersionService
                 }
             );
 
-            // Rollback when save status history fail
             if (responseDto.IsSuccess is false)
             {
-                // Remove course version
-                _unitOfWork.CourseVersionRepository.Remove(courseVersion);
-                // Remove course version section
-
-                // Remove section detail version
-
                 return responseDto;
             }
 
@@ -256,10 +249,8 @@ public class CourseVersionService : ICourseVersionService
                 }
             );
 
-            // Rollback when save status history fail
             if (responseDto.IsSuccess is false)
             {
-                // Remove section details version, course section version, course version
                 return responseDto;
             }
 
@@ -283,29 +274,540 @@ public class CourseVersionService : ICourseVersionService
         }
     }
 
-    public Task<ResponseDTO> RemoveCourseVersion(ClaimsPrincipal User)
+    public Task<ResponseDTO> EditCourseVersion(ClaimsPrincipal User, EditCourseVersionDTO editCourseVersionDto)
     {
         throw new NotImplementedException();
     }
 
-    public Task<ResponseDTO> EditCourseVersion(ClaimsPrincipal User)
+    public async Task<ResponseDTO> RemoveCourseVersion
+    (
+        ClaimsPrincipal User,
+        Guid courseVersionId
+    )
     {
-        throw new NotImplementedException();
+        try
+        {
+            var courseVersion = await _unitOfWork.CourseVersionRepository.GetAsync(x => x.Id == courseVersionId);
+
+            if (courseVersion is null)
+            {
+                return new ResponseDTO()
+                {
+                    Result = null,
+                    IsSuccess = false,
+                    Message = "Course version was not found",
+                    StatusCode = 404
+                };
+            }
+
+            switch (courseVersion.CurrentStatus)
+            {
+                case 4:
+                {
+                    return new ResponseDTO()
+                    {
+                        Message = "Course version have been merged",
+                        StatusCode = 401,
+                        IsSuccess = false,
+                        Result = null
+                    };
+                }
+                case 5:
+                {
+                    return new ResponseDTO()
+                    {
+                        Message = "Course version have been removed",
+                        StatusCode = 401,
+                        IsSuccess = false,
+                        Result = null
+                    };
+                }
+                default:
+                {
+                    courseVersion.CurrentStatus = 5;
+                    break;
+                }
+            }
+
+            _unitOfWork.CourseVersionRepository.Update(courseVersion);
+
+            var responseDto = await _courseVersionStatusService.CreateCourseVersionStatus
+            (
+                User,
+                new CreateCourseVersionStatusDTO()
+                {
+                    CourseVersionId = courseVersion.Id,
+                    Status = 5
+                }
+            );
+
+            if (responseDto.StatusCode == 500)
+            {
+                return responseDto;
+            }
+
+            return new ResponseDTO()
+            {
+                Result = null,
+                IsSuccess = true,
+                Message = "Remove course version successfully",
+                StatusCode = 200
+            };
+        }
+        catch (Exception e)
+        {
+            return new ResponseDTO()
+            {
+                Result = null,
+                IsSuccess = false,
+                Message = e.Message,
+                StatusCode = 500
+            };
+        }
     }
 
-    public Task<ResponseDTO> AcceptCourseVersion(ClaimsPrincipal User)
+    public async Task<ResponseDTO> AcceptCourseVersion
+    (
+        ClaimsPrincipal User,
+        Guid courseVersionId
+    )
     {
-        throw new NotImplementedException();
+        try
+        {
+            var courseVersion = await _unitOfWork.CourseVersionRepository.GetAsync(x => x.Id == courseVersionId);
+
+            if (courseVersion is null)
+            {
+                return new ResponseDTO()
+                {
+                    Result = null,
+                    IsSuccess = false,
+                    Message = "Course version was not found",
+                    StatusCode = 404
+                };
+            }
+
+            switch (courseVersion.CurrentStatus)
+            {
+                case 0:
+                {
+                    return new ResponseDTO()
+                    {
+                        Message = "Course version have not been submit",
+                        StatusCode = 401,
+                        IsSuccess = false,
+                        Result = null
+                    };
+                }
+                case 2:
+                {
+                    return new ResponseDTO()
+                    {
+                        Message = "Course version have been accepted",
+                        StatusCode = 401,
+                        IsSuccess = false,
+                        Result = null
+                    };
+                }
+                case 4:
+                {
+                    return new ResponseDTO()
+                    {
+                        Message = "Course version have been merged",
+                        StatusCode = 401,
+                        IsSuccess = false,
+                        Result = null
+                    };
+                }
+                case 5:
+                {
+                    return new ResponseDTO()
+                    {
+                        Message = "Course version have been removed",
+                        StatusCode = 401,
+                        IsSuccess = false,
+                        Result = null
+                    };
+                }
+                default:
+                {
+                    courseVersion.CurrentStatus = 2;
+                    break;
+                }
+            }
+
+            _unitOfWork.CourseVersionRepository.Update(courseVersion);
+
+            var responseDto = await _courseVersionStatusService.CreateCourseVersionStatus
+            (
+                User,
+                new CreateCourseVersionStatusDTO()
+                {
+                    CourseVersionId = courseVersion.Id,
+                    Status = 2
+                }
+            );
+
+            if (responseDto.StatusCode == 500)
+            {
+                return responseDto;
+            }
+
+            return new ResponseDTO()
+            {
+                Result = null,
+                IsSuccess = true,
+                Message = "Accept course version successfully",
+                StatusCode = 200
+            };
+        }
+        catch (Exception e)
+        {
+            return new ResponseDTO()
+            {
+                Result = null,
+                IsSuccess = false,
+                Message = e.Message,
+                StatusCode = 500
+            };
+        }
     }
 
-    public Task<ResponseDTO> RejectCourseVersion(ClaimsPrincipal User)
+    public async Task<ResponseDTO> RejectCourseVersion
+    (
+        ClaimsPrincipal User,
+        Guid courseVersionId
+    )
     {
-        throw new NotImplementedException();
+        try
+        {
+            var courseVersion = await _unitOfWork.CourseVersionRepository.GetAsync(x => x.Id == courseVersionId);
+
+            if (courseVersion is null)
+            {
+                return new ResponseDTO()
+                {
+                    Result = null,
+                    IsSuccess = false,
+                    Message = "Course version was not found",
+                    StatusCode = 404
+                };
+            }
+
+            switch (courseVersion.CurrentStatus)
+            {
+                case 0:
+                {
+                    return new ResponseDTO()
+                    {
+                        Message = "Course version have not been submit",
+                        StatusCode = 401,
+                        IsSuccess = false,
+                        Result = null
+                    };
+                }
+                case 2:
+                {
+                    return new ResponseDTO()
+                    {
+                        Message = "Course version have been accepted",
+                        StatusCode = 401,
+                        IsSuccess = false,
+                        Result = null
+                    };
+                }
+                case 4:
+                {
+                    return new ResponseDTO()
+                    {
+                        Message = "Course version have been merged",
+                        StatusCode = 401,
+                        IsSuccess = false,
+                        Result = null
+                    };
+                }
+                case 5:
+                {
+                    return new ResponseDTO()
+                    {
+                        Message = "Course version have been removed",
+                        StatusCode = 401,
+                        IsSuccess = false,
+                        Result = null
+                    };
+                }
+                default:
+                {
+                    courseVersion.CurrentStatus = 3;
+                    break;
+                }
+            }
+
+            _unitOfWork.CourseVersionRepository.Update(courseVersion);
+
+            var responseDto = await _courseVersionStatusService.CreateCourseVersionStatus
+            (
+                User,
+                new CreateCourseVersionStatusDTO()
+                {
+                    CourseVersionId = courseVersion.Id,
+                    Status = 3
+                }
+            );
+
+            if (responseDto.StatusCode == 500)
+            {
+                return responseDto;
+            }
+
+            return new ResponseDTO()
+            {
+                Result = null,
+                IsSuccess = true,
+                Message = "Reject course version successfully",
+                StatusCode = 200
+            };
+        }
+        catch (Exception e)
+        {
+            return new ResponseDTO()
+            {
+                Result = null,
+                IsSuccess = false,
+                Message = e.Message,
+                StatusCode = 500
+            };
+        }
     }
 
-    public Task<ResponseDTO> SubmitCourseVersion(ClaimsPrincipal User)
+    public async Task<ResponseDTO> SubmitCourseVersion
+    (
+        ClaimsPrincipal User,
+        Guid courseVersionId
+    )
     {
-        throw new NotImplementedException();
+        try
+        {
+            var courseVersion = await _unitOfWork.CourseVersionRepository.GetAsync(x => x.Id == courseVersionId);
+
+            if (courseVersion is null)
+            {
+                return new ResponseDTO()
+                {
+                    Result = null,
+                    IsSuccess = false,
+                    Message = "Course version was not found",
+                    StatusCode = 404
+                };
+            }
+
+            switch (courseVersion.CurrentStatus)
+            {
+                case 1:
+                {
+                    return new ResponseDTO()
+                    {
+                        Message = "Course version have been submitted",
+                        StatusCode = 401,
+                        IsSuccess = false,
+                        Result = null
+                    };
+                }
+                case 2:
+                {
+                    return new ResponseDTO()
+                    {
+                        Message = "Course version have been accepted",
+                        StatusCode = 401,
+                        IsSuccess = false,
+                        Result = null
+                    };
+                }
+                case 4:
+                {
+                    return new ResponseDTO()
+                    {
+                        Message = "Course version have been merged",
+                        StatusCode = 401,
+                        IsSuccess = false,
+                        Result = null
+                    };
+                }
+                case 5:
+                {
+                    return new ResponseDTO()
+                    {
+                        Message = "Course version have been removed",
+                        StatusCode = 401,
+                        IsSuccess = false,
+                        Result = null
+                    };
+                }
+                default:
+                {
+                    courseVersion.CurrentStatus = 1;
+                    break;
+                }
+            }
+
+            _unitOfWork.CourseVersionRepository.Update(courseVersion);
+
+            var responseDto = await _courseVersionStatusService.CreateCourseVersionStatus
+            (
+                User,
+                new CreateCourseVersionStatusDTO()
+                {
+                    CourseVersionId = courseVersion.Id,
+                    Status = 1
+                }
+            );
+
+            if (responseDto.StatusCode == 500)
+            {
+                return responseDto;
+            }
+
+            return new ResponseDTO()
+            {
+                Result = null,
+                IsSuccess = true,
+                Message = "Submit course version successfully",
+                StatusCode = 200
+            };
+        }
+        catch (Exception e)
+        {
+            return new ResponseDTO()
+            {
+                Result = null,
+                IsSuccess = false,
+                Message = e.Message,
+                StatusCode = 500
+            };
+        }
+    }
+
+    public async Task<ResponseDTO> MergeCourseVersion
+    (
+        ClaimsPrincipal User,
+        Guid courseVersionId
+    )
+    {
+        try
+        {
+            var courseVersion = await _unitOfWork.CourseVersionRepository.GetAsync(x => x.Id == courseVersionId);
+            if (courseVersion is null)
+            {
+                return new ResponseDTO()
+                {
+                    Result = null,
+                    IsSuccess = false,
+                    Message = "Course version was not found",
+                    StatusCode = 404
+                };
+            }
+
+            switch (courseVersion.CurrentStatus)
+            {
+                case 0:
+                {
+                    return new ResponseDTO()
+                    {
+                        Message = "Course version have not been submit",
+                        StatusCode = 401,
+                        IsSuccess = false,
+                        Result = null
+                    };
+                }
+                case 1:
+                {
+                    return new ResponseDTO()
+                    {
+                        Message = "Course version have been submitted",
+                        StatusCode = 401,
+                        IsSuccess = false,
+                        Result = null
+                    };
+                }
+                case 4:
+                {
+                    return new ResponseDTO()
+                    {
+                        Message = "Course version have been merged",
+                        StatusCode = 401,
+                        IsSuccess = false,
+                        Result = null
+                    };
+                }
+                case 5:
+                {
+                    return new ResponseDTO()
+                    {
+                        Message = "Course version have been removed",
+                        StatusCode = 401,
+                        IsSuccess = false,
+                        Result = null
+                    };
+                }
+                default:
+                {
+                    courseVersion.CurrentStatus = 4;
+                    break;
+                }
+            }
+
+            var course = await _unitOfWork.CourseRepository.GetAsync(x => x.Id == courseVersion.CourseId);
+
+            if (course is null)
+            {
+                return new ResponseDTO()
+                {
+                    Message = "Course was not found",
+                    StatusCode = 404,
+                    IsSuccess = false,
+                    Result = null
+                };
+            }
+
+            course.CourseVersionId = courseVersion.Id;
+
+            _unitOfWork.CourseVersionRepository.Update(courseVersion);
+            _unitOfWork.CourseRepository.Update(course);
+            await _unitOfWork.SaveAsync();
+
+            var responseDto = await _courseVersionStatusService.CreateCourseVersionStatus
+            (
+                User,
+                new CreateCourseVersionStatusDTO()
+                {
+                    CourseVersionId = courseVersion.Id,
+                    Status = 4,
+                }
+            );
+
+            if (responseDto.StatusCode == 500)
+            {
+                return responseDto;
+            }
+
+            return new ResponseDTO()
+            {
+                Result = null,
+                IsSuccess = true,
+                Message = "Submit course version successfully",
+                StatusCode = 200
+            };
+        }
+        catch (Exception e)
+        {
+            return new ResponseDTO()
+            {
+                Result = null,
+                IsSuccess = false,
+                Message = e.Message,
+                StatusCode = 500
+            };
+        }
     }
 
     public async Task<ResponseDTO> GetCourseVersionsComments
