@@ -9,6 +9,6 @@ namespace Cursus.LMS.Model.DTO
     public class EditCourseVersionCommentsDTO
     {
         public string Comment {  get; set; }
-        public Guid CourseVersionId { get; set; }
+        public Guid Id { get; set; }
     }
 }
