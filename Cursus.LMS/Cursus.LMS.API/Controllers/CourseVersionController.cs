@@ -5,6 +5,7 @@ using Cursus.LMS.Service.Service;
 using DocumentFormat.OpenXml.Wordprocessing;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using System.ComponentModel.DataAnnotations;
 using System.Globalization;
 using System.Threading.Tasks;
 
@@ -174,29 +175,28 @@ namespace Cursus.LMS.API.Controllers
 
         [HttpGet]
         [Route("comment/")]
-        public async Task<ResponseDTO> GetCourseVersions
+        public async Task<ActionResult<ResponseDTO>> GetCourseVersionsComments
         (
-            [FromQuery] Guid? courseVersionId,
+            [FromQuery][Required] Guid courseVersionId,
             [FromQuery] string? filterOn,
             [FromQuery] string? filterQuery,
             [FromQuery] string? sortBy,
             [FromQuery] int pageNumber = 1,
-            [FromQuery] int pageSize = 5
+            [FromQuery] int pageSize = 10
         )
         {
-            /*var responseDto = await _courseVersionService.GetCourseVersions
+            var responseDto = await _courseVersionService.GetCourseVersionsComments
                 (
                     User,
                     courseVersionId,
-                    filterOn,
-                    filterQuery,
-                    sortBy,
-                    pageNumber,
+                    filterOn, 
+                    filterQuery, 
+                    sortBy, 
+                    pageNumber, 
                     pageSize
-                );*/
+                );
 
-            //return StatusCode(responseDto.StatusCode, responseDto);
-            return null;
+            return StatusCode(responseDto.StatusCode, responseDto);
         }
 
         [HttpGet]

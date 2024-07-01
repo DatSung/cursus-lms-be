@@ -51,7 +51,7 @@ public interface ICourseVersionService
         ClaimsPrincipal User,
         CreateNewCourseAndVersionDTO createNewCourseAndVersionDto
     );
-    
+
     Task<ResponseDTO> CloneNewCourseVersion
     (
         ClaimsPrincipal User,
@@ -64,16 +64,15 @@ public interface ICourseVersionService
     Task<ResponseDTO> RejectCourseVersion(ClaimsPrincipal User);
 
     Task<ResponseDTO> GetCourseVersionsComments
-    (
-        ClaimsPrincipal User,
-        Guid? courseVersionCommentId,
-        Guid? courseVersionId,
-        string? filterOn,
-        string? filterQuery,
-        string? sortBy,
-        int pageNumber,
-        int pageSize
-     );
+        (
+            ClaimsPrincipal User,
+            Guid courseVersionId,
+            string? filterOn,
+            string? filterQuery,
+            string? sortBy,
+            int pageNumber,
+            int pageSize
+        );
     Task<ResponseDTO> GetCourseVersionComment(ClaimsPrincipal User, Guid courseVersionCommentId);
     Task<ResponseDTO> CreateCourseVersionComment(ClaimsPrincipal User, CreateCourseVersionCommentsDTO createCourseVersionCommentsDTO);
     Task<ResponseDTO> EditCourseVersionComment(ClaimsPrincipal User, EditCourseVersionCommentsDTO editCourseVersionCommentsDTO);
