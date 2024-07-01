@@ -88,24 +88,15 @@ namespace Cursus.LMS.API.Controllers
         }
 
         [HttpDelete]
-        [Route("{courseVersionId:guid}")]
-        public async Task<ResponseDTO> RemoveCourseVersion([FromRoute] Guid courseVersionId)
+        [Route("remove-course-version{courseVersionId:guid}")]
+        public async Task<ActionResult<ResponseDTO>> RemoveCourseVersion([FromRoute] Guid courseVersionId)
         {
-            try
-            {
-                return new ResponseDTO()
-                {
-                };
-            }
-            catch (Exception e)
-            {
-                return new ResponseDTO()
-                {
-                };
-            }
+            var responseDto = await _courseVersionService.RemoveCourseVersion(User, courseVersionId);
+            return StatusCode(responseDto.StatusCode, responseDto);
         }
 
         [HttpPut]
+        [Route("edit-course-version")]
         public async Task<ResponseDTO> EditCourseVersion()
         {
             try
