@@ -6,4 +6,5 @@ public interface ICourseVersionStatusRepository : IRepository<CourseVersionStatu
 {
     void Update(CourseVersionStatus courseVersionStatus);
     void UpdateRange(IEnumerable<CourseVersionStatus> courseVersionsStatus);
+    Task<CourseVersionStatus?> GetCourseVersionStatusByIdAsync(Guid courseVersionStatusId);
 }

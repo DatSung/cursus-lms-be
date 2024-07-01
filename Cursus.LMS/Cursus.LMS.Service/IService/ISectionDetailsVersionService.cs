@@ -5,7 +5,13 @@ namespace Cursus.LMS.Service.IService;
 
 public interface ISectionDetailsVersionService
 {
-    Task<ResponseDTO> GetSectionsDetails
+    Task<ResponseDTO> CloneSectionsDetailsVersion
+    (
+        ClaimsPrincipal User,
+        Guid courseSectionVersionId
+    );
+
+    Task<ResponseDTO> GetSectionsDetailsVersions
     (
         ClaimsPrincipal User,
         string? filterOn,
@@ -16,8 +22,8 @@ public interface ISectionDetailsVersionService
         int pageSize
     );
 
-    Task<ResponseDTO> GetSectionDetails(ClaimsPrincipal User);
-    Task<ResponseDTO> CreateSectionDetails(ClaimsPrincipal User);
-    Task<ResponseDTO> EditSectionDetails(ClaimsPrincipal User);
-    Task<ResponseDTO> RemoveSectionDetails(ClaimsPrincipal User);
+    Task<ResponseDTO> GetSectionDetailsVersion(ClaimsPrincipal User);
+    Task<ResponseDTO> CreateSectionDetailsVersion(ClaimsPrincipal User);
+    Task<ResponseDTO> EditSectionDetailsVersion(ClaimsPrincipal User);
+    Task<ResponseDTO> RemoveSectionDetailsVersion(ClaimsPrincipal User);
 }

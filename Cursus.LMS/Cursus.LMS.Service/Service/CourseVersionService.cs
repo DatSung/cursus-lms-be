@@ -1,4 +1,4 @@
-﻿using System.Security.Claims;
+using System.Security.Claims;
 using AutoMapper;
 using Cursus.LMS.DataAccess.IRepository;
 using Cursus.LMS.Model.Domain;
@@ -13,13 +13,21 @@ public class CourseVersionService : ICourseVersionService
 {
     private readonly IUnitOfWork _unitOfWork;
     private readonly ICourseService _courseService;
+    private readonly ICourseVersionStatusService _courseVersionStatusService;
     private IMapper _mapper;
 
-    public CourseVersionService(IUnitOfWork unitOfWork, ICourseService courseService, IMapper mapper)
+    public CourseVersionService
+    (
+        IUnitOfWork unitOfWork,
+        ICourseService courseService,
+        IMapper mapper,
+        ICourseVersionStatusService courseVersionStatusService
+    )
     {
         _unitOfWork = unitOfWork;
         _courseService = courseService;
         _mapper = mapper;
+        _courseVersionStatusService = courseVersionStatusService;
     }
 
     public async Task<ResponseDTO> GetCourseVersions
@@ -65,7 +73,8 @@ public class CourseVersionService : ICourseVersionService
     {
         try
         {
-            var courseVersion = await _unitOfWork.CourseVersionRepository.GetCourseVersionById(courseVersionId);
+            var courseVersion =
+                await _unitOfWork.CourseVersionRepository.GetCourseVersionAsync(courseVersionId, asNoTracking: true);
 
             if (courseVersion is null)
             {
@@ -100,7 +109,7 @@ public class CourseVersionService : ICourseVersionService
         }
     }
 
-    public async Task<ResponseDTO> CreateNewCourseAndCourseVersion
+    public async Task<ResponseDTO> CreateNewCourseAndVersion
     (
         ClaimsPrincipal User,
         CreateNewCourseAndVersionDTO createNewCourseAndVersionDto
@@ -138,6 +147,29 @@ public class CourseVersionService : ICourseVersionService
             await _unitOfWork.CourseVersionRepository.AddAsync(courseVersion);
             await _unitOfWork.SaveAsync();
 
+            // Save status history of version
+            var responseDto = await _courseVersionStatusService.CreateCourseVersionStatus
+            (
+                User,
+                new CreateCourseVersionStatusDTO()
+                {
+                    CourseVersionId = courseVersion.Id,
+                    Status = 0
+                }
+            );
+
+            // Rollback when save status history fail
+            if (responseDto.IsSuccess is false)
+            {
+                // Remove course version
+                _unitOfWork.CourseVersionRepository.Remove(courseVersion);
+                // Remove course version section
+
+                // Remove section detail version
+
+                return responseDto;
+            }
+
             return new ResponseDTO()
             {
                 Result = courseVersion.Id,
@@ -161,13 +193,18 @@ public class CourseVersionService : ICourseVersionService
     public async Task<ResponseDTO> CloneNewCourseVersion
     (
         ClaimsPrincipal User,
-        Guid courseVersionId
+        CloneNewCourseVersionDTO cloneNewCourseVersionDto
     )
     {
         try
         {
+            // Clone course version
             var courseVersion =
-                await _unitOfWork.CourseVersionRepository.GetCourseVersionsAsNoTracking(courseVersionId);
+                await _unitOfWork.CourseVersionRepository.GetCourseVersionAsync
+                (
+                    cloneNewCourseVersionDto.CourseVersionId,
+                    asNoTracking: true
+                );
 
             if (courseVersion is null)
             {
@@ -180,8 +217,34 @@ public class CourseVersionService : ICourseVersionService
                 };
             }
 
+            courseVersion.Id = new Guid();
+
             await _unitOfWork.CourseVersionRepository.AddAsync(courseVersion);
             await _unitOfWork.SaveAsync();
+
+            // Clone course section versions
+
+            // Save status history of version
+            var responseDto = await _courseVersionStatusService.CreateCourseVersionStatus
+            (
+                User,
+                new CreateCourseVersionStatusDTO()
+                {
+                    CourseVersionId = courseVersion.Id,
+                    Status = 0
+                }
+            );
+
+            // Rollback when save status history fail
+            if (responseDto.IsSuccess is false)
+            {
+                // Remove course version
+                _unitOfWork.CourseVersionRepository.Remove(courseVersion);
+                // Remove course version section
+
+                // Remove section detail version
+                return responseDto;
+            }
 
             return new ResponseDTO()
             {
@@ -222,7 +285,12 @@ public class CourseVersionService : ICourseVersionService
     {
         throw new NotImplementedException();
     }
-    //GetAllComment
+    
+    public Task<ResponseDTO> SubmitCourseVersion(ClaimsPrincipal User)
+    {
+        throw new NotImplementedException();
+    }
+    
     public async Task<ResponseDTO> GetCourseVersionsComments
 (
     ClaimsPrincipal User,
@@ -235,6 +303,7 @@ public class CourseVersionService : ICourseVersionService
 )
     {
         try
+
         {
             // Lấy role xem có phải admin không
             var userRole = User.Claims.FirstOrDefault(x => x.Type == ClaimTypes.Role)?.Value;

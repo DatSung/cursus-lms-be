@@ -1,6 +1,7 @@
 ﻿using Cursus.LMS.DataAccess.Context;
 using Cursus.LMS.DataAccess.IRepository;
 using Cursus.LMS.Model.Domain;
+using Microsoft.EntityFrameworkCore;
 
 namespace Cursus.LMS.DataAccess.Repository;
 
@@ -21,5 +22,10 @@ public class CourseVersionStatusRepository : Repository<CourseVersionStatus>, IC
     public void UpdateRange(IEnumerable<CourseVersionStatus> courseVersionsStatus)
     {
         _context.CourseVersionStatus.UpdateRange(courseVersionsStatus);
+    }
+
+    public async Task<CourseVersionStatus?> GetCourseVersionStatusByIdAsync(Guid courseVersionStatusId)
+    {
+        return await _context.CourseVersionStatus.FirstOrDefaultAsync(x => x.Id == courseVersionStatusId);
     }
 }

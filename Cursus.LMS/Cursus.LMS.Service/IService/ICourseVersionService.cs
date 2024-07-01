@@ -1,4 +1,4 @@
-﻿using System.Security.Claims;
+using System.Security.Claims;
 using Cursus.LMS.Model.DTO;
 
 namespace Cursus.LMS.Service.IService;
@@ -46,7 +46,13 @@ public interface ICourseVersionService
         Guid courseVersionId
     );
 
-    Task<ResponseDTO> CreateNewCourseAndCourseVersion
+    /// <summary>
+    /// Create a new course and a version 1 of that course
+    /// </summary>
+    /// <param name="User"></param>
+    /// <param name="createNewCourseAndVersionDto"></param>
+    /// <returns></returns>
+    Task<ResponseDTO> CreateNewCourseAndVersion
     (
         ClaimsPrincipal User,
         CreateNewCourseAndVersionDTO createNewCourseAndVersionDto
@@ -55,13 +61,14 @@ public interface ICourseVersionService
     Task<ResponseDTO> CloneNewCourseVersion
     (
         ClaimsPrincipal User,
-        Guid courseVersionId
+        CloneNewCourseVersionDTO cloneNewCourseVersionDto
     );
 
     Task<ResponseDTO> RemoveCourseVersion(ClaimsPrincipal User);
     Task<ResponseDTO> EditCourseVersion(ClaimsPrincipal User);
     Task<ResponseDTO> AcceptCourseVersion(ClaimsPrincipal User);
     Task<ResponseDTO> RejectCourseVersion(ClaimsPrincipal User);
+    Task<ResponseDTO> SubmitCourseVersion(ClaimsPrincipal User);
 
     Task<ResponseDTO> GetCourseVersionsComments
         (

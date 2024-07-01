@@ -1,4 +1,4 @@
-﻿using AutoMapper;
+using AutoMapper;
 using Cursus.LMS.Model.Domain;
 using Cursus.LMS.Model.DTO;
 using Cursus.LMS.Utility.Constants;
@@ -77,6 +77,8 @@ public class AutoMapperProfile : Profile
 
 
         CreateMap<CourseVersion, GetCourseVersionDTO>().ReverseMap();
+        CreateMap<CourseVersionStatus, GetCourseVersionStatusDTO>().ReverseMap();
+        
         CreateMap<CourseVersionComment, GetCourseCommnetDTO>()
             .ForMember(dest => dest.CourseVersionId, opt => opt.MapFrom(src => src.CourseVersionId))
             .ForMember(dest => dest.Comment, opt => opt.MapFrom(src => src.Comment))
