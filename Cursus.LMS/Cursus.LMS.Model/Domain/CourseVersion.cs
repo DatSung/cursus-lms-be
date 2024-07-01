@@ -9,7 +9,10 @@ public class CourseVersion
 
     public Guid? CourseId { get; set; }
     [ForeignKey("CourseId")] public Course? Course { get; set; }
-
+    public Guid? CategoryId { get; set; }
+    [ForeignKey("CategoryId")] public virtual Category? Category { get; set; }
+    public Guid? LevelId { get; set; }
+    [ForeignKey("LevelId")] public virtual Level? Level { get; set; }
     public string? Title { get; set; }
     public string? Code { get; set; }
     public string? Description { get; set; }
@@ -18,9 +21,9 @@ public class CourseVersion
     public double? OldPrice { get; set; }
     public string? CourseImgUrl { get; set; }
     public Guid? InstructorId { get; set; }
-    public Guid? CategoryId { get; set; }
-    public Guid? LevelId { get; set; }
     public int? Version { get; set; }
     public DateTime? CreatedTime { get; set; } = DateTime.UtcNow;
     public int? CurrentStatus { get; set; }
+
+    [NotMapped] public IEnumerable<CourseSectionVersion>? CourseSectionVersions { get; set; }
 }

@@ -30,11 +30,18 @@ public class CourseVersionRepository : Repository<CourseVersion>, ICourseVersion
         bool? asNoTracking = false
     )
     {
-        if (asNoTracking is true)
-        {
-            return await _context.CourseVersions.AsNoTracking().FirstOrDefaultAsync(x => x.Id == courseVersionId);
-        }
+        return asNoTracking is not null
+            ? await _context.CourseVersions
+                .AsNoTracking()
+                .FirstOrDefaultAsync(x => x.Id == courseVersionId)
+            : await _context.CourseVersions
+                .FirstOrDefaultAsync(x => x.Id == courseVersionId);
+    }
 
-        return await _context.CourseVersions.FirstOrDefaultAsync(x => x.Id == courseVersionId);
+    public async Task<int> GetTotalCourseVersionsAsync(Guid? courseId)
+    {
+        return courseId is not null
+            ? await _context.CourseVersions.CountAsync(x => x.CourseId == courseId)
+            : 0;
     }
 }

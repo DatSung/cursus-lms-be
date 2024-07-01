@@ -6,5 +6,5 @@ public interface ICourseSectionVersionRepository : IRepository<CourseSectionVers
 {
     void Update(CourseSectionVersion courseSectionVersion);
     void UpdateRange(IEnumerable<CourseSectionVersion> courseSectionVersions);
-    Task<List<CourseSectionVersion>> GetCourseSectionVersionsOfCourseVersionAsync(Guid courseVersionId, bool? asNoTracking);
+    Task<List<CourseSectionVersion>?> GetCourseSectionVersionsOfCourseVersionAsync(Guid courseVersionId, bool? asNoTracking);
 }

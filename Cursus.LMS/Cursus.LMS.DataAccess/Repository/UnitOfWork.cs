@@ -25,7 +25,7 @@ namespace Cursus.LMS.DataAccess.Repository
         public ISectionDetailsVersionRepository SectionDetailsVersionRepository { get; }
         public ICourseVersionStatusRepository CourseVersionStatusRepository { get; }
         public ICourseVersionCommentRepository CourseVersionCommentRepository { get; }
-        
+
         public UnitOfWork(ApplicationDbContext context, UserManager<ApplicationUser> userManager)
         {
             _context = context;

@@ -2,6 +2,7 @@
 using Cursus.LMS.DataAccess.IRepository;
 using Cursus.LMS.Model.DTO;
 using Cursus.LMS.Service.IService;
+using Microsoft.IdentityModel.Tokens;
 
 namespace Cursus.LMS.Service.Service;
 
@@ -14,13 +15,60 @@ public class SectionDetailsVersionService : ISectionDetailsVersionService
         _unitOfWork = unitOfWork;
     }
 
-    public Task<ResponseDTO> CloneSectionsDetailsVersion
+    public async Task<ResponseDTO> CloneSectionsDetailsVersion
     (
         ClaimsPrincipal User,
-        Guid courseSectionVersionId
+        CloneSectionsDetailsVersionDTO cloneSectionsDetailsVersionDto
     )
     {
-        throw new NotImplementedException();
+        try
+        {
+            var sectionDetailsVersions =
+                await _unitOfWork.SectionDetailsVersionRepository
+                    .GetSectionDetailsVersionsOfCourseSectionVersionAsync
+                    (
+                        cloneSectionsDetailsVersionDto.OldCourseSectionVersionId,
+                        asNoTracking: true
+                    );
+
+            if (sectionDetailsVersions.IsNullOrEmpty())
+            {
+                return new ResponseDTO()
+                {
+                    IsSuccess = false,
+                    StatusCode = 404,
+                    Result = null,
+                    Message = "Section details of course section version was not found"
+                };
+            }
+
+            foreach (var sectionDetailsVersion in sectionDetailsVersions)
+            {
+                sectionDetailsVersion.Id = Guid.NewGuid();
+                sectionDetailsVersion.CourseSectionVersionId = cloneSectionsDetailsVersionDto.NewCourseSectionVersionId;
+            }
+
+            await _unitOfWork.SectionDetailsVersionRepository.AddRangeAsync(sectionDetailsVersions);
+            await _unitOfWork.SaveAsync();
+
+            return new ResponseDTO()
+            {
+                IsSuccess = true,
+                StatusCode = 200,
+                Message = "Clone course section of course version successfully",
+                Result = null
+            };
+        }
+        catch (Exception e)
+        {
+            return new ResponseDTO()
+            {
+                IsSuccess = false,
+                StatusCode = 500,
+                Message = e.Message,
+                Result = null
+            };
+        }
     }
 
     public Task<ResponseDTO> GetSectionsDetailsVersions

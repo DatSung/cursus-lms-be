@@ -9,16 +9,22 @@ namespace Cursus.LMS.Service.Service;
 public class CourseSectionVersionService : ICourseSectionVersionService
 {
     private readonly IUnitOfWork _unitOfWork;
+    private readonly ISectionDetailsVersionService _sectionDetailsVersionService;
 
-    public CourseSectionVersionService(IUnitOfWork unitOfWork)
+    public CourseSectionVersionService
+    (
+        IUnitOfWork unitOfWork,
+        ISectionDetailsVersionService sectionDetailsVersionService
+    )
     {
         _unitOfWork = unitOfWork;
+        _sectionDetailsVersionService = sectionDetailsVersionService;
     }
 
     public async Task<ResponseDTO> CloneCourseSectionVersion
     (
         ClaimsPrincipal User,
-        Guid courseVersionId
+        CloneCourseSectionVersionDTO cloneCourseSectionVersionDto
     )
     {
         try
@@ -26,7 +32,7 @@ public class CourseSectionVersionService : ICourseSectionVersionService
             var courseSectionVersions =
                 await _unitOfWork.CourseSectionVersionRepository.GetCourseSectionVersionsOfCourseVersionAsync
                 (
-                    courseVersionId,
+                    cloneCourseSectionVersionDto.OldCourseVersionId,
                     asNoTracking: true
                 );
 
@@ -41,13 +47,42 @@ public class CourseSectionVersionService : ICourseSectionVersionService
                 };
             }
 
+            var cloneSectionsDetailsVersionsDto = new List<CloneSectionsDetailsVersionDTO>();
+
             foreach (var courseSectionVersion in courseSectionVersions)
             {
-                courseSectionVersion.Id = new Guid();
+                var cloneSectionsDetailsVersionDto = new CloneSectionsDetailsVersionDTO();
+
+                cloneSectionsDetailsVersionDto.OldCourseSectionVersionId = courseSectionVersion.Id;
+                courseSectionVersion.Id = Guid.NewGuid();
+                cloneSectionsDetailsVersionDto.NewCourseSectionVersionId = courseSectionVersion.Id;
+
+                courseSectionVersion.CourseVersionId = cloneCourseSectionVersionDto.NewCourseVersionId;
+
+                cloneSectionsDetailsVersionsDto.Add(cloneSectionsDetailsVersionDto);
             }
 
             await _unitOfWork.CourseSectionVersionRepository.AddRangeAsync(courseSectionVersions);
             await _unitOfWork.SaveAsync();
+
+            // Clone section details version
+            foreach (var cloneSectionsDetailsVersionDto in cloneSectionsDetailsVersionsDto)
+            {
+                var responseDto =
+                    await _sectionDetailsVersionService.CloneSectionsDetailsVersion
+                    (
+                        User,
+                        new CloneSectionsDetailsVersionDTO()
+                        {
+                            OldCourseSectionVersionId = cloneSectionsDetailsVersionDto.OldCourseSectionVersionId,
+                            NewCourseSectionVersionId = cloneSectionsDetailsVersionDto.NewCourseSectionVersionId,
+                        }
+                    );
+                if (responseDto.StatusCode == 500)
+                {
+                    return responseDto;
+                }
+            }
 
             return new ResponseDTO()
             {

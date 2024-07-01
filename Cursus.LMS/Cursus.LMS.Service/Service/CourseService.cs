@@ -3,6 +3,8 @@ using Cursus.LMS.DataAccess.IRepository;
 using Cursus.LMS.Model.Domain;
 using Cursus.LMS.Model.DTO;
 using Cursus.LMS.Service.IService;
+using DocumentFormat.OpenXml.Office2010.ExcelAc;
+using Microsoft.IdentityModel.Tokens;
 
 namespace Cursus.LMS.Service.Service;
 
@@ -32,7 +34,7 @@ public class CourseService : ICourseService
                 return new ResponseDTO()
                 {
                     Message = "Instructor does not exist",
-                    IsSuccess = true,
+                    IsSuccess = false,
                     StatusCode = 404,
                     Result = null
                 };
@@ -52,22 +54,13 @@ public class CourseService : ICourseService
             // Create an empty course
             var course = new Course()
             {
-                Id = new Guid(),
-                Category = null,
+                Id = Guid.NewGuid(),
                 Code = null,
-                Description = null,
                 InstructorId = instructor?.InstructorId,
-                Price = 0,
-                Status = 1,
-                Title = null,
+                Status = 0,
                 Version = 1,
-                CategoryId = null,
-                LearningTime = 0,
-                LevelId = null,
-                OldPrice = 0,
-                StudentSlot = 0,
+                StudentSlots = 0,
                 TotalRate = 0,
-                CourseImgUrl = null,
                 ActivatedBy = null,
                 DeactivatedBy = null,
                 ActivatedTime = null,
@@ -99,14 +92,5 @@ public class CourseService : ICourseService
                 IsSuccess = true
             };
         }
-    }
-
-    public Task<ResponseDTO> MergeCourseFromCourseVersion
-    (
-        ClaimsPrincipal User,
-        Guid courseVersionId
-    )
-    {
-        throw new NotImplementedException();
     }
 }

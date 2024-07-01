@@ -1,6 +1,7 @@
 ﻿using Cursus.LMS.DataAccess.Context;
 using Cursus.LMS.DataAccess.IRepository;
 using Cursus.LMS.Model.Domain;
+using Microsoft.EntityFrameworkCore;
 
 namespace Cursus.LMS.DataAccess.Repository;
 
@@ -21,5 +22,21 @@ public class SectionDetailsVersionRepository : Repository<SectionDetailsVersion>
     public void UpdateRange(IEnumerable<SectionDetailsVersion> sectionDetailsVersions)
     {
         _context.SectionDetailsVersions.UpdateRange(sectionDetailsVersions);
+    }
+
+    public async Task<List<SectionDetailsVersion>?> GetSectionDetailsVersionsOfCourseSectionVersionAsync
+    (
+        Guid courseSectionVersionId,
+        bool? asNoTracking
+    )
+    {
+        return asNoTracking is true
+            ? await _context.SectionDetailsVersions
+                .AsNoTracking()
+                .Where(x => x.CourseSectionVersionId == courseSectionVersionId)
+                .ToListAsync()
+            : await _context.SectionDetailsVersions
+                .Where(x => x.CourseSectionVersionId == courseSectionVersionId)
+                .ToListAsync();
     }
 }
