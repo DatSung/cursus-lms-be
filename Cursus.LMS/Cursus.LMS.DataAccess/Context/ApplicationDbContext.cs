@@ -94,12 +94,10 @@ public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
     public DbSet<Course> Courses { get; set; }
     public DbSet<CourseReport> CourseReports { get; set; }
     public DbSet<CourseReview> CourseReviews { get; set; }
-    public DbSet<CourseSection> CourseSections { get; set; }
     public DbSet<Instructor> Instructors { get; set; }
     public DbSet<Level> Levels { get; set; }
     public DbSet<OrderDetails> OrderDetails { get; set; }
     public DbSet<OrderHeader> OrderHeaders { get; set; }
-    public DbSet<SectionDetails> SectionDetails { get; set; }
     public DbSet<Student> Students { get; set; }
     public DbSet<StudentCourse> StudentCourses { get; set; }
     public DbSet<PaymentCard> PaymentCards { get; set; }
