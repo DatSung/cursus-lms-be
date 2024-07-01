@@ -5,7 +5,6 @@ using Cursus.LMS.Model.Domain;
 using Cursus.LMS.Model.DTO;
 using Cursus.LMS.Service.IService;
 using Cursus.LMS.Utility.Constants;
-using Microsoft.IdentityModel.Tokens;
 using CreateCourseVersionCommentsDTO = Cursus.LMS.Model.DTO.CreateCourseVersionCommentsDTO;
 
 namespace Cursus.LMS.Service.Service;
@@ -581,17 +580,12 @@ public class CourseVersionService : ICourseVersionService
             };
         }
     }
-<<<<<<< Cursus.LMS/Cursus.LMS.Service/Service/CourseVersionService.cs
-    
-    public Task<ResponseDTO> SubmitCourseVersion(ClaimsPrincipal User)
-=======
 
     public async Task<ResponseDTO> SubmitCourseVersion
     (
         ClaimsPrincipal User,
         Guid courseVersionId
     )
->>>>>>> Cursus.LMS/Cursus.LMS.Service/Service/CourseVersionService.cs
     {
         try
         {
@@ -816,20 +810,19 @@ public class CourseVersionService : ICourseVersionService
             };
         }
     }
-    
+
     public async Task<ResponseDTO> GetCourseVersionsComments
-(
-    ClaimsPrincipal User,
-    Guid courseVersionId,
-    string? filterOn,
-    string? filterQuery,
-    string? sortBy,
-    int pageNumber,
-    int pageSize
-)
+    (
+        ClaimsPrincipal User,
+        Guid? courseVersionId,
+        string? filterOn,
+        string? filterQuery,
+        string? sortBy,
+        int pageNumber,
+        int pageSize
+    )
     {
         try
-
         {
             // Lấy role xem có phải admin không
             var userRole = User.Claims.FirstOrDefault(x => x.Type == ClaimTypes.Role)?.Value;
@@ -839,12 +832,14 @@ public class CourseVersionService : ICourseVersionService
             if (userRole == StaticUserRoles.Admin)
             {
                 // Lấy tất cả các bình luận của phiên bản khóa học theo courseVersionId
-                comments = await _unitOfWork.CourseVersionCommentRepository.GetAllAsync(x => x.CourseVersionId == courseVersionId);
+                comments = await _unitOfWork.CourseVersionCommentRepository.GetAllAsync(x =>
+                    x.CourseVersionId == courseVersionId);
             }
             else
             {
                 // Lấy các bình luận với trạng thái Activated hoặc thấp hơn
-                comments = await _unitOfWork.CourseVersionCommentRepository.GetAllAsync(x => x.CourseVersionId == courseVersionId && x.Status <= StaticStatus.Category.Activated);
+                comments = await _unitOfWork.CourseVersionCommentRepository.GetAllAsync(x =>
+                    x.CourseVersionId == courseVersionId && x.Status <= StaticStatus.Category.Activated);
             }
 
             // Kiểm tra nếu danh sách bình luận là null hoặc rỗng
@@ -867,25 +862,33 @@ public class CourseVersionService : ICourseVersionService
                 switch (filterOn.Trim().ToLower())
                 {
                     case "comment":
-                        listComments = listComments.Where(x => x.Comment.Contains(filterQuery, StringComparison.CurrentCultureIgnoreCase)).ToList();
+                        listComments = listComments.Where(x =>
+                            x.Comment.Contains(filterQuery, StringComparison.CurrentCultureIgnoreCase)).ToList();
                         break;
                     case "createby":
-                        listComments = listComments.Where(x => x.CreateBy.Contains(filterQuery, StringComparison.CurrentCultureIgnoreCase)).ToList();
+                        listComments = listComments.Where(x =>
+                            x.CreateBy.Contains(filterQuery, StringComparison.CurrentCultureIgnoreCase)).ToList();
                         break;
                     case "updateby":
-                        listComments = listComments.Where(x => x.UpdateBy.Contains(filterQuery, StringComparison.CurrentCultureIgnoreCase)).ToList();
+                        listComments = listComments.Where(x =>
+                            x.UpdateBy.Contains(filterQuery, StringComparison.CurrentCultureIgnoreCase)).ToList();
                         break;
                     case "createtime":
-                        listComments = listComments.Where(x => x.CreateTime.HasValue && x.CreateTime.Value.Date == DateTime.Parse(filterQuery).Date).ToList();
+                        listComments = listComments.Where(x =>
+                                x.CreateTime.HasValue && x.CreateTime.Value.Date == DateTime.Parse(filterQuery).Date)
+                            .ToList();
                         break;
                     case "updatetime":
-                        listComments = listComments.Where(x => x.UpdateTime.HasValue && x.UpdateTime.Value.Date == DateTime.Parse(filterQuery).Date).ToList();
+                        listComments = listComments.Where(x =>
+                                x.UpdateTime.HasValue && x.UpdateTime.Value.Date == DateTime.Parse(filterQuery).Date)
+                            .ToList();
                         break;
                     case "status":
                         if (int.TryParse(filterQuery, out var status))
                         {
                             listComments = listComments.Where(x => x.Status == status).ToList();
                         }
+
                         break;
                     default:
                         break;

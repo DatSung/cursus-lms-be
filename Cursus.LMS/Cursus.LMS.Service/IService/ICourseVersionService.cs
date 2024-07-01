@@ -81,7 +81,6 @@ public interface ICourseVersionService
     Task<ResponseDTO> GetCourseVersionsComments
     (
         ClaimsPrincipal User,
-        Guid? courseVersionCommentId,
         Guid? courseVersionId,
         string? filterOn,
         string? filterQuery,

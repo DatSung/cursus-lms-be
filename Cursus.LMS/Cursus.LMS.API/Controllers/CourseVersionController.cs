@@ -86,7 +86,7 @@ namespace Cursus.LMS.API.Controllers
             var responseDto = await _courseVersionService.CloneCourseVersion(User, cloneCourseVersionDto);
             return StatusCode(responseDto.StatusCode, responseDto);
         }
-        
+
         [HttpPut]
         [Route("edit-course-version")]
         public async Task<ActionResult<ResponseDTO>> EditCourseVersion
@@ -146,7 +146,7 @@ namespace Cursus.LMS.API.Controllers
         [Route("comment/")]
         public async Task<ActionResult<ResponseDTO>> GetCourseVersionsComments
         (
-            [FromQuery][Required] Guid courseVersionId,
+            [FromQuery] [Required] Guid courseVersionId,
             [FromQuery] string? filterOn,
             [FromQuery] string? filterQuery,
             [FromQuery] string? sortBy,
@@ -155,15 +155,15 @@ namespace Cursus.LMS.API.Controllers
         )
         {
             var responseDto = await _courseVersionService.GetCourseVersionsComments
-                (
-                    User,
-                    courseVersionId,
-                    filterOn, 
-                    filterQuery, 
-                    sortBy, 
-                    pageNumber, 
-                    pageSize
-                );
+            (
+                User,
+                courseVersionId,
+                filterOn,
+                filterQuery,
+                sortBy,
+                pageNumber,
+                pageSize
+            );
 
             return StatusCode(responseDto.StatusCode, responseDto);
         }
