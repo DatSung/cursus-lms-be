@@ -20,7 +20,7 @@ namespace Cursus.LMS.Model.DTO
         public string AvatarUrl { get; set; }
         public DateTime UpdateTime { get; set; }
         public bool isUploadDegree { get; set; }
-        public bool isAccepted { get; set; } = false;
+        public bool? isAccepted { get; set; } = false;
         public IEnumerable<string> Roles { get; set; }
     }
 }

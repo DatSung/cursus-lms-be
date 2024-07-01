@@ -2,7 +2,7 @@
 
 namespace Cursus.LMS.Model.DTO;
 
-public class UpdateStudentProfileDTO
+public class CompleteStudentProfileDTO
 {
     [Required] public string Country { get; set; }
 

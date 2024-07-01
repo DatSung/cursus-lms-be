@@ -13,6 +13,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Cursus.LMS.Model", "Cursus.
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Cursus.LMS.Utility", "Cursus.LMS.Utility\Cursus.LMS.Utility.csproj", "{1753BA06-257E-4DE0-A656-93C10F676031}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cursus.LMS.Test", "Cursus.LMS.Test\Cursus.LMS.Test.csproj", "{AC4448A3-5575-479D-A002-1030FAE6C3E6}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -39,8 +41,15 @@ Global
 		{1753BA06-257E-4DE0-A656-93C10F676031}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1753BA06-257E-4DE0-A656-93C10F676031}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{1753BA06-257E-4DE0-A656-93C10F676031}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AC4448A3-5575-479D-A002-1030FAE6C3E6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AC4448A3-5575-479D-A002-1030FAE6C3E6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AC4448A3-5575-479D-A002-1030FAE6C3E6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AC4448A3-5575-479D-A002-1030FAE6C3E6}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {ADBA8DF7-DB88-4C46-94B4-22D5463DD903}
 	EndGlobalSection
 EndGlobal

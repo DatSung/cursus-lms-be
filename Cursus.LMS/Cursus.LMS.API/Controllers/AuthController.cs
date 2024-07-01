@@ -5,9 +5,6 @@ using Cursus.LMS.Service.IService;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using System.ComponentModel.DataAnnotations;
-using Cursus.LMS.Utility.Constants;
-
 
 namespace Cursus.LMS.API.Controllers
 {
@@ -72,9 +69,10 @@ namespace Cursus.LMS.API.Controllers
         /// <returns>ResponseDTO</returns>
         [HttpPost]
         [Route("sign-up-instructor")]
-        public async Task<ActionResult<ResponseDTO>> SignUpInstructor([FromBody] InstructorDTO instructorDto)
+        public async Task<ActionResult<ResponseDTO>> SignUpInstructor(
+            [FromBody] SignUpInstructorDTO signUpInstructorDto)
         {
-            var result = await _authService.SignUpInstructor(instructorDto);
+            var result = await _authService.SignUpInstructor(signUpInstructorDto);
             return StatusCode(result.StatusCode, result);
         }
 
@@ -116,6 +114,31 @@ namespace Cursus.LMS.API.Controllers
         }
 
         /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="userId"></param>
+        /// <param name="Download"></param>
+        /// <returns></returns>
+        [HttpGet]
+        [Route("display-instructor-degree/{userId}")]
+        public async Task<IActionResult> DisplayInstructorDegree([FromRoute] string userId,
+            [FromQuery] bool Download = false)
+        {
+            var degreeResponseDto = await _authService.DisplayInstructorDegree(userId);
+            if (degreeResponseDto.Stream is null)
+            {
+                return NotFound("User avatar does not exist!");
+            }
+
+            if (Download)
+            {
+                return File(degreeResponseDto.Stream, degreeResponseDto.ContentType, degreeResponseDto.FileName);
+            }
+
+            return File(degreeResponseDto.Stream, degreeResponseDto.ContentType);
+        }
+
+        /// <summary>
         /// This API for feature upload user avatar
         /// </summary>
         /// <param name="file"></param>
@@ -139,6 +162,23 @@ namespace Cursus.LMS.API.Controllers
         public async Task<IActionResult> GetUserAvatar()
         {
             var stream = await _authService.GetUserAvatar(User);
+            if (stream is null)
+            {
+                return NotFound("User avatar does not exist!");
+            }
+
+            return File(stream, "image/png");
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet]
+        [Route("display-user-avatar/{userId}")]
+        public async Task<IActionResult> DisplayUserAvatar([FromRoute] string userId)
+        {
+            var stream = await _authService.DisplayUserAvatar(userId);
             if (stream is null)
             {
                 return NotFound("User avatar does not exist!");
@@ -193,8 +233,9 @@ namespace Cursus.LMS.API.Controllers
             }
 
             var token = await _userManager.GenerateEmailConfirmationTokenAsync(user);
-            
-            var confirmationLink = $"http://localhost:30475/sign-in/verify-email?userId={user.Id}&token={Uri.EscapeDataString(token)}";
+
+            var confirmationLink =
+                $"http://localhost:30475/user/sign-in/verify-email?userId={user.Id}&token={Uri.EscapeDataString(token)}";
 
             var responseDto = await _authService.SendVerifyEmail(user.Email, confirmationLink);
 
@@ -299,19 +340,19 @@ namespace Cursus.LMS.API.Controllers
         [Route("complete-student-profile")]
         [Authorize]
         public async Task<ActionResult<ResponseDTO>> CompleteStudentProfile(
-            UpdateStudentProfileDTO updateStudentProfileDto)
+            CompleteStudentProfileDTO completeStudentProfileDto)
         {
-            var responseDto = await _authService.CompleteStudentProfile(User, updateStudentProfileDto);
+            var responseDto = await _authService.CompleteStudentProfile(User, completeStudentProfileDto);
             return StatusCode(this.responseDto.StatusCode, responseDto);
         }
-        
+
         [HttpPost]
         [Route("complete-instructor-profile")]
         [Authorize]
         public async Task<ActionResult<ResponseDTO>> CompleteInstructorProfile(
-            UpdateInstructorProfileDTO updateInstructorProfileDto)
+            CompleteInstructorProfileDTO completeInstructorProfileDto)
         {
-            var responseDto = await _authService.CompleteInstructorProfile(User, updateInstructorProfileDto);
+            var responseDto = await _authService.CompleteInstructorProfile(User, completeInstructorProfileDto);
             return StatusCode(responseDto.StatusCode, responseDto);
         }
 
@@ -322,7 +363,7 @@ namespace Cursus.LMS.API.Controllers
             var response = await _authService.SignInByGoogle(signInByGoogleDto);
             return StatusCode(response.StatusCode, response);
         }
-        
+
         [HttpGet]
         [Route("get-user-info")]
         public async Task<ActionResult<ResponseDTO>> GetUserInfo()

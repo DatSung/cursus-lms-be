@@ -26,7 +26,25 @@ public static class ServiceCollectionExtensions
         services.AddScoped<ITokenService, TokenService>();
         // Registering IRedisService with its implementation RedisService
         services.AddScoped<IRedisService, RedisService>();
-
+        // Registering ICategoryService with its implementation CategoryService
+        services.AddScoped<ICategoryService, CategoryService>();
+        // Registering IInstructorService its implementation InstructorService
+        services.AddScoped<IInstructorService, InstructorService>();
+        // Registering IUserManagerRepository its implementation UserManagerRepository
+        services.AddScoped<IUserManagerRepository, UserManagerRepository>();
+        // Registering IClosedXMLService its implementation ClosedXMLService
+        services.AddScoped<IClosedXMLService, ClosedXMLService>();
+        // Registering ICourseService its implementation CourseService
+        services.AddScoped<ICourseService, CourseService>();
+        // Registering ICourseVersionService its implementation CourseVersionService
+        services.AddScoped<ICourseVersionService, CourseVersionService>();
+        // Registering ICourseVersionStatusService its implementation CourseVersionStatusService
+        services.AddScoped<ICourseVersionStatusService, CourseVersionStatusService>();
+        // Registering ICourseSectionVersionService its implementation CourseSectionVersionService
+        services.AddScoped<ICourseSectionVersionService, CourseSectionVersionService>();
+        // Registering ISectionDetailsVersionService its implementation SectionDetailsVersionService
+        services.AddScoped<ISectionDetailsVersionService, SectionDetailsVersionService>();
+        
         // Register the Identity services with default configuration
         services.AddIdentity<ApplicationUser, IdentityRole>()
             .AddEntityFrameworkStores<ApplicationDbContext>()

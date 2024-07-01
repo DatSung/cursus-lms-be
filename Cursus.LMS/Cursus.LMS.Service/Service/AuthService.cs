@@ -14,11 +14,13 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using FirebaseAdmin.Auth;
 using Newtonsoft.Json.Linq;
+using Cursus.LMS.DataAccess.Repository;
 
 namespace Cursus.LMS.Service.Service;
 
 public class AuthService : IAuthService
 {
+    private readonly IUserManagerRepository _userManagerRepository;
     private readonly IUnitOfWork _unitOfWork;
     private readonly UserManager<ApplicationUser> _userManager;
     private readonly RoleManager<IdentityRole> _roleManager;
@@ -34,6 +36,7 @@ public class AuthService : IAuthService
         new();
 
     public AuthService(
+        IUserManagerRepository userManagerRepository,
         UserManager<ApplicationUser> userManager,
         RoleManager<IdentityRole> roleManager,
         IConfiguration configuration,
@@ -44,6 +47,7 @@ public class AuthService : IAuthService
         IEmailSender emailSender,
         ITokenService tokenService, IUnitOfWork unitOfWork)
     {
+        _userManagerRepository = userManagerRepository;
         _userManager = userManager;
         _roleManager = roleManager;
         _configuration = configuration;
@@ -56,12 +60,17 @@ public class AuthService : IAuthService
         _unitOfWork = unitOfWork;
     }
 
+    public AuthService(UserManager<ApplicationUser> object1, RoleManager<IdentityRole> object2, IConfiguration object3,
+        IMapper object4, IEmailService object5, IFirebaseService object6, IHttpContextAccessor object7,
+        IEmailSender object8, ITokenService object9, IUnitOfWork object10)
+    {
+    }
 
     public async Task<ResponseDTO> SignUpStudent(RegisterStudentDTO registerStudentDTO)
     {
         try
         {
-            var isEmailExit = await _userManager.FindByEmailAsync(registerStudentDTO.Email);
+            var isEmailExit = await _userManagerRepository.FindByEmailAsync(registerStudentDTO.Email);
             if (isEmailExit is not null)
             {
                 return new ResponseDTO()
@@ -74,7 +83,7 @@ public class AuthService : IAuthService
             }
 
             var isPhonenumerExit =
-                await _userManager.Users.AnyAsync(u => u.PhoneNumber == registerStudentDTO.PhoneNumber);
+                await _userManagerRepository.CheckIfPhoneNumberExistsAsync(registerStudentDTO.PhoneNumber);
             if (isPhonenumerExit)
             {
                 return new ResponseDTO()
@@ -87,7 +96,7 @@ public class AuthService : IAuthService
             }
 
             var isCardExist =
-                await _unitOfWork.PaymentCardRepository.GetAsync(x => x.CardNumber == registerStudentDTO.CardNumber);
+                await _unitOfWork.PaymentCardRepository.CardNumberExistsAsync(registerStudentDTO.CardNumber);
             if (isCardExist is not null)
             {
                 return new ResponseDTO()
@@ -116,7 +125,7 @@ public class AuthService : IAuthService
             };
 
             // Create new user to database
-            var createUserResult = await _userManager.CreateAsync(newUser, registerStudentDTO.Password);
+            var createUserResult = await _userManagerRepository.CreateAsync(newUser, registerStudentDTO.Password);
 
             // Check if error occur
             if (!createUserResult.Succeeded)
@@ -131,7 +140,7 @@ public class AuthService : IAuthService
                 };
             }
 
-            var user = await _userManager.FindByEmailAsync(registerStudentDTO.Email);
+            var user = await _userManagerRepository.FindByPhoneAsync(registerStudentDTO.PhoneNumber);
 
             Student student = new Student()
             {
@@ -157,16 +166,57 @@ public class AuthService : IAuthService
             }
 
             // Add role for the user
-            await _userManager.AddToRoleAsync(user, StaticUserRoles.Student);
+            var isRoleAdd = await _userManagerRepository.AddToRoleAsync(user, StaticUserRoles.Student);
+
+            if (!isRoleAdd.Succeeded)
+            {
+                return new ResponseDTO()
+                {
+                    Message = "Error adding role",
+                    IsSuccess = false,
+                    StatusCode = 500,
+                    Result = registerStudentDTO
+                };
+            }
 
             // Create new Student relate with ApplicationUser
-            await _unitOfWork.StudentRepository.AddAsync(student);
+            var isStudentAdd = await _unitOfWork.StudentRepository.AddAsync(student);
+            if (isStudentAdd == null)
+            {
+                return new ResponseDTO()
+                {
+                    Message = "Failed to add student",
+                    IsSuccess = false,
+                    StatusCode = 500,
+                    Result = registerStudentDTO
+                };
+            }
 
             // Create new Payment relate with ApplicationUser
-            await _unitOfWork.PaymentCardRepository.AddAsync(paymentCard);
+            var isPaymentAdd = await _unitOfWork.PaymentCardRepository.AddAsync(paymentCard);
+            if (isPaymentAdd == null)
+            {
+                return new ResponseDTO()
+                {
+                    Message = "Failed to add payment card",
+                    IsSuccess = false,
+                    StatusCode = 500,
+                    Result = registerStudentDTO
+                };
+            }
 
             // Save change to database
-            await _unitOfWork.SaveAsync();
+            var isSuccess = await _unitOfWork.SaveAsync();
+            if (isSuccess <= 0)
+            {
+                return new ResponseDTO()
+                {
+                    Message = "Failed to save changes to the database",
+                    IsSuccess = false,
+                    StatusCode = 500,
+                    Result = registerStudentDTO
+                };
+            }
 
             // Return result success
             return new ResponseDTO()
@@ -193,14 +243,14 @@ public class AuthService : IAuthService
     /// <summary>
     /// Registers a new instructor in the system.
     /// </summary>
-    /// <param name="instructorDto">The data transfer object containing instructor details.</param>
+    /// <param name="signUpInstructorDto">The data transfer object containing instructor details.</param>
     /// <returns><see cref="ResponseDTO"/> object containing the result of the registration process.</returns>
-    public async Task<ResponseDTO> SignUpInstructor(InstructorDTO instructorDto)
+    public async Task<ResponseDTO> SignUpInstructor(SignUpInstructorDTO signUpInstructorDto)
     {
         try
         {
-            // Find exist user with the email from instructorDto
-            var user = await _userManager.FindByEmailAsync(instructorDto.Email);
+            // Find exist user with the email from signUpInstructorDto
+            var user = await _userManager.FindByEmailAsync(signUpInstructorDto.Email);
 
             // Check if user exist
             if (user is not null)
@@ -208,26 +258,27 @@ public class AuthService : IAuthService
                 return new ResponseDTO()
                 {
                     Message = "Email is using by another user",
-                    Result = instructorDto,
+                    Result = signUpInstructorDto,
                     IsSuccess = false,
                     StatusCode = 500
                 };
             }
 
-            var isPhonenumerExit = await _userManager.Users.AnyAsync(u => u.PhoneNumber == instructorDto.PhoneNumber);
+            var isPhonenumerExit =
+                await _userManager.Users.AnyAsync(u => u.PhoneNumber == signUpInstructorDto.PhoneNumber);
             if (isPhonenumerExit)
             {
                 return new ResponseDTO()
                 {
                     Message = "Phone number is using by another user",
-                    Result = instructorDto,
+                    Result = signUpInstructorDto,
                     IsSuccess = false,
                     StatusCode = 500
                 };
             }
 
             var isCardExist =
-                await _unitOfWork.PaymentCardRepository.GetAsync(x => x.CardNumber == instructorDto.CardNumber);
+                await _unitOfWork.PaymentCardRepository.GetAsync(x => x.CardNumber == signUpInstructorDto.CardNumber);
             if (isCardExist is not null)
             {
                 return new ResponseDTO
@@ -242,20 +293,20 @@ public class AuthService : IAuthService
             // Create new instance of ApplicationUser
             ApplicationUser newUser = new ApplicationUser()
             {
-                Address = instructorDto.Address,
-                Email = instructorDto.Email,
-                BirthDate = instructorDto.BirthDate,
-                UserName = instructorDto.Email,
-                FullName = instructorDto.FullName,
-                Gender = instructorDto.Gender,
-                Country = instructorDto.Country,
-                PhoneNumber = instructorDto.PhoneNumber,
-                TaxNumber = instructorDto.TaxNumber,
+                Address = signUpInstructorDto.Address,
+                Email = signUpInstructorDto.Email,
+                BirthDate = signUpInstructorDto.BirthDate,
+                UserName = signUpInstructorDto.Email,
+                FullName = signUpInstructorDto.FullName,
+                Gender = signUpInstructorDto.Gender,
+                Country = signUpInstructorDto.Country,
+                PhoneNumber = signUpInstructorDto.PhoneNumber,
+                TaxNumber = signUpInstructorDto.TaxNumber,
                 UpdateTime = DateTime.Now
             };
 
             // Create new user to database
-            var createUserResult = await _userManager.CreateAsync(newUser, instructorDto.Password);
+            var createUserResult = await _userManager.CreateAsync(newUser, signUpInstructorDto.Password);
 
 
             // Check if error occur
@@ -267,29 +318,34 @@ public class AuthService : IAuthService
                     Message = createUserResult.Errors.ToString(),
                     IsSuccess = false,
                     StatusCode = 500,
-                    Result = instructorDto
+                    Result = signUpInstructorDto
                 };
             }
 
             // Get the user again 
-            user = await _userManager.FindByEmailAsync(instructorDto.Email);
+            user = await _userManager.FindByEmailAsync(signUpInstructorDto.Email);
 
 
             // Create instance of instructor
             Instructor instructor = new Instructor()
             {
                 UserId = user.Id,
-                Degree = instructorDto.Degree,
-                Industry = instructorDto.Industry,
-                Introduction = instructorDto.Introduction
+                Degree = signUpInstructorDto.Degree,
+                Industry = signUpInstructorDto.Industry,
+                Introduction = signUpInstructorDto.Introduction,
+                AcceptedBy = "",
+                AcceptedTime = null,
+                RejectedBy = "",
+                RejectedTime = null,
+                IsAccepted = null
             };
 
             // Create instance of payment card
             PaymentCard paymentCard = new PaymentCard()
             {
-                CardName = instructorDto.CardName,
-                CardNumber = instructorDto.CardNumber,
-                CardProvider = instructorDto.CardProvider,
+                CardName = signUpInstructorDto.CardName,
+                CardNumber = signUpInstructorDto.CardNumber,
+                CardProvider = signUpInstructorDto.CardProvider,
                 UserId = user.Id
             };
 
@@ -320,7 +376,7 @@ public class AuthService : IAuthService
                 Message = "Create new user successfully",
                 IsSuccess = true,
                 StatusCode = 200,
-                Result = instructorDto
+                Result = signUpInstructorDto
             };
         }
         catch (Exception e)
@@ -329,7 +385,7 @@ public class AuthService : IAuthService
             return new ResponseDTO()
             {
                 Message = e.Message,
-                Result = instructorDto,
+                Result = signUpInstructorDto,
                 IsSuccess = false,
                 StatusCode = 500
             };
@@ -592,18 +648,6 @@ public class AuthService : IAuthService
             var refreshToken = await _tokenService.GenerateJwtRefreshTokenAsync(user);
             await _tokenService.StoreRefreshToken(user.Id, refreshToken);
 
-            // var userInfo = _mapper.Map<UserInfoDTO>(user);
-            // var roles = await _userManager.GetRolesAsync(user);
-            // userInfo.Roles = roles;
-            //
-            // if (roles.Contains(StaticUserRoles.Instructor))
-            // {
-            //     var instructor = await _unitOfWork.InstructorRepository.GetAsync(x => x.UserId == user.Id);
-            //     userInfo.DegreeImageUrl = instructor.DegreeImageUrl;
-            //     userInfo.isAccepted = instructor.isAccepted;
-            // }
-
-
             return new ResponseDTO()
             {
                 Result = new SignResponseDTO()
@@ -618,8 +662,13 @@ public class AuthService : IAuthService
         }
         catch (Exception e)
         {
-            Console.WriteLine(e);
-            throw;
+            return new ResponseDTO()
+            {
+                Message = e.Message,
+                IsSuccess = false,
+                StatusCode = 500,
+                Result = null
+            };
         }
     }
 
@@ -674,6 +723,7 @@ public class AuthService : IAuthService
             var accessToken = await _tokenService.GenerateJwtAccessTokenAsync(applicationUser);
             var refreshToken = await _tokenService.GenerateJwtRefreshTokenAsync(applicationUser);
 
+            await _tokenService.DeleteRefreshToken(applicationUser.Id);
             await _tokenService.StoreRefreshToken(applicationUser.Id, refreshToken);
 
             return new ResponseDTO()
@@ -1117,7 +1167,7 @@ public class AuthService : IAuthService
     /// <exception cref="NotImplementedException"></exception>
     public async Task<ResponseDTO> CompleteStudentProfile(
         ClaimsPrincipal User,
-        UpdateStudentProfileDTO studentProfileDto)
+        CompleteStudentProfileDTO studentProfileDto)
     {
         try
         {
@@ -1213,7 +1263,7 @@ public class AuthService : IAuthService
 
             // Add role for the user
             await _userManager.AddToRoleAsync(user, StaticUserRoles.Student);
-            
+
             await _unitOfWork.SaveAsync();
 
             return new ResponseDTO()
@@ -1245,7 +1295,7 @@ public class AuthService : IAuthService
     /// <exception cref="NotImplementedException"></exception>
     public async Task<ResponseDTO> CompleteInstructorProfile(
         ClaimsPrincipal User,
-        UpdateInstructorProfileDTO instructorProfileDto)
+        CompleteInstructorProfileDTO instructorProfileDto)
     {
         try
         {
@@ -1347,7 +1397,7 @@ public class AuthService : IAuthService
 
             // Add role for the user
             await _userManager.AddToRoleAsync(user, StaticUserRoles.Instructor);
-            
+
             await _unitOfWork.SaveAsync();
 
             return new ResponseDTO()
@@ -1399,7 +1449,7 @@ public class AuthService : IAuthService
             {
                 var instructor = await _unitOfWork.InstructorRepository.GetAsync(x => x.UserId == user.Id);
                 userInfo.isUploadDegree = instructor.DegreeImageUrl != null ? true : false;
-                userInfo.isAccepted = instructor.isAccepted;
+                userInfo.isAccepted = instructor.IsAccepted;
             }
 
             return new ResponseDTO()
@@ -1418,6 +1468,87 @@ public class AuthService : IAuthService
                 IsSuccess = false,
                 StatusCode = 500,
                 Result = null,
+            };
+        }
+    }
+
+    public async Task<MemoryStream> DisplayUserAvatar(string userId)
+    {
+        try
+        {
+            var user = await _userManager.FindByIdAsync(userId);
+
+            var stream = await _firebaseService.GetImage(user.AvatarUrl);
+
+            return stream;
+        }
+        catch (Exception e)
+        {
+            return null;
+        }
+    }
+
+    public async Task<DegreeResponseDTO> DisplayInstructorDegree(string userId)
+    {
+        try
+        {
+            if (userId is null)
+            {
+                throw new Exception("User Unauthenticated!");
+            }
+
+            var instructor = await _unitOfWork.InstructorRepository.GetAsync(x => x.UserId == userId);
+
+            if (instructor is null)
+            {
+                throw new Exception("Instructor does not exist!");
+            }
+
+            var degreePath = instructor?.DegreeImageUrl;
+            if (degreePath.IsNullOrEmpty())
+            {
+                throw new Exception("Instructors did not upload degree!");
+            }
+
+            var stream = await _firebaseService.GetImage(instructor.DegreeImageUrl);
+
+            if (stream is null)
+            {
+                throw new Exception("Instructor did not upload degree");
+            }
+
+            var contentType = "Unsupported extensions!";
+
+            if (degreePath.EndsWith(".pdf"))
+            {
+                contentType = StaticFileExtensions.Pdf;
+            }
+
+            if (degreePath.EndsWith(".png"))
+            {
+                contentType = StaticFileExtensions.Png;
+            }
+
+            if (degreePath.EndsWith(".jpg") || degreePath.EndsWith(",jpeg"))
+            {
+                contentType = StaticFileExtensions.Jpeg;
+            }
+
+            return new DegreeResponseDTO()
+            {
+                Message = "Get file successfully",
+                Stream = stream,
+                ContentType = contentType,
+                FileName = Path.GetFileName(degreePath)
+            };
+        }
+        catch (Exception e)
+        {
+            return new DegreeResponseDTO()
+            {
+                ContentType = null,
+                Message = e.Message,
+                Stream = null
             };
         }
     }
