@@ -160,15 +160,8 @@ public class CourseVersionService : ICourseVersionService
                 }
             );
 
-            // Rollback when save status history fail
             if (responseDto.IsSuccess is false)
             {
-                // Remove course version
-                _unitOfWork.CourseVersionRepository.Remove(courseVersion);
-                // Remove course version section
-
-                // Remove section detail version
-
                 return responseDto;
             }
 
@@ -256,10 +249,8 @@ public class CourseVersionService : ICourseVersionService
                 }
             );
 
-            // Rollback when save status history fail
             if (responseDto.IsSuccess is false)
             {
-                // Remove section details version, course section version, course version
                 return responseDto;
             }
 
@@ -315,7 +306,7 @@ public class CourseVersionService : ICourseVersionService
                 {
                     return new ResponseDTO()
                     {
-                        Message = "Course have been merged",
+                        Message = "Course version have been merged",
                         StatusCode = 401,
                         IsSuccess = false,
                         Result = null
@@ -325,7 +316,7 @@ public class CourseVersionService : ICourseVersionService
                 {
                     return new ResponseDTO()
                     {
-                        Message = "Course have been removed",
+                        Message = "Course version have been removed",
                         StatusCode = 401,
                         IsSuccess = false,
                         Result = null
@@ -402,7 +393,7 @@ public class CourseVersionService : ICourseVersionService
                 {
                     return new ResponseDTO()
                     {
-                        Message = "Course have not been submit",
+                        Message = "Course version have not been submit",
                         StatusCode = 401,
                         IsSuccess = false,
                         Result = null
@@ -412,7 +403,7 @@ public class CourseVersionService : ICourseVersionService
                 {
                     return new ResponseDTO()
                     {
-                        Message = "Course have been accepted",
+                        Message = "Course version have been accepted",
                         StatusCode = 401,
                         IsSuccess = false,
                         Result = null
@@ -422,7 +413,7 @@ public class CourseVersionService : ICourseVersionService
                 {
                     return new ResponseDTO()
                     {
-                        Message = "Course have been merged",
+                        Message = "Course version have been merged",
                         StatusCode = 401,
                         IsSuccess = false,
                         Result = null
@@ -432,7 +423,7 @@ public class CourseVersionService : ICourseVersionService
                 {
                     return new ResponseDTO()
                     {
-                        Message = "Course have been removed",
+                        Message = "Course version have been removed",
                         StatusCode = 401,
                         IsSuccess = false,
                         Result = null
@@ -509,7 +500,7 @@ public class CourseVersionService : ICourseVersionService
                 {
                     return new ResponseDTO()
                     {
-                        Message = "Course have not been submit",
+                        Message = "Course version have not been submit",
                         StatusCode = 401,
                         IsSuccess = false,
                         Result = null
@@ -519,7 +510,7 @@ public class CourseVersionService : ICourseVersionService
                 {
                     return new ResponseDTO()
                     {
-                        Message = "Course have been accepted",
+                        Message = "Course version have been accepted",
                         StatusCode = 401,
                         IsSuccess = false,
                         Result = null
@@ -529,7 +520,7 @@ public class CourseVersionService : ICourseVersionService
                 {
                     return new ResponseDTO()
                     {
-                        Message = "Course have been merged",
+                        Message = "Course version have been merged",
                         StatusCode = 401,
                         IsSuccess = false,
                         Result = null
@@ -539,7 +530,7 @@ public class CourseVersionService : ICourseVersionService
                 {
                     return new ResponseDTO()
                     {
-                        Message = "Course have been removed",
+                        Message = "Course version have been removed",
                         StatusCode = 401,
                         IsSuccess = false,
                         Result = null
@@ -616,7 +607,7 @@ public class CourseVersionService : ICourseVersionService
                 {
                     return new ResponseDTO()
                     {
-                        Message = "Course have been submitted",
+                        Message = "Course version have been submitted",
                         StatusCode = 401,
                         IsSuccess = false,
                         Result = null
@@ -626,7 +617,7 @@ public class CourseVersionService : ICourseVersionService
                 {
                     return new ResponseDTO()
                     {
-                        Message = "Course have been accepted",
+                        Message = "Course version have been accepted",
                         StatusCode = 401,
                         IsSuccess = false,
                         Result = null
@@ -636,7 +627,7 @@ public class CourseVersionService : ICourseVersionService
                 {
                     return new ResponseDTO()
                     {
-                        Message = "Course have been merged",
+                        Message = "Course version have been merged",
                         StatusCode = 401,
                         IsSuccess = false,
                         Result = null
@@ -646,7 +637,7 @@ public class CourseVersionService : ICourseVersionService
                 {
                     return new ResponseDTO()
                     {
-                        Message = "Course have been removed",
+                        Message = "Course version have been removed",
                         StatusCode = 401,
                         IsSuccess = false,
                         Result = null
@@ -705,7 +696,6 @@ public class CourseVersionService : ICourseVersionService
         try
         {
             var courseVersion = await _unitOfWork.CourseVersionRepository.GetAsync(x => x.Id == courseVersionId);
-
             if (courseVersion is null)
             {
                 return new ResponseDTO()
@@ -723,7 +713,7 @@ public class CourseVersionService : ICourseVersionService
                 {
                     return new ResponseDTO()
                     {
-                        Message = "Course have not been submit",
+                        Message = "Course version have not been submit",
                         StatusCode = 401,
                         IsSuccess = false,
                         Result = null
@@ -733,7 +723,7 @@ public class CourseVersionService : ICourseVersionService
                 {
                     return new ResponseDTO()
                     {
-                        Message = "Course have been submitted",
+                        Message = "Course version have been submitted",
                         StatusCode = 401,
                         IsSuccess = false,
                         Result = null
@@ -743,7 +733,7 @@ public class CourseVersionService : ICourseVersionService
                 {
                     return new ResponseDTO()
                     {
-                        Message = "Course have been merged",
+                        Message = "Course version have been merged",
                         StatusCode = 401,
                         IsSuccess = false,
                         Result = null
@@ -753,7 +743,7 @@ public class CourseVersionService : ICourseVersionService
                 {
                     return new ResponseDTO()
                     {
-                        Message = "Course have been removed",
+                        Message = "Course version have been removed",
                         StatusCode = 401,
                         IsSuccess = false,
                         Result = null
@@ -766,7 +756,24 @@ public class CourseVersionService : ICourseVersionService
                 }
             }
 
+            var course = await _unitOfWork.CourseRepository.GetAsync(x => x.Id == courseVersion.CourseId);
+
+            if (course is null)
+            {
+                return new ResponseDTO()
+                {
+                    Message = "Course was not found",
+                    StatusCode = 404,
+                    IsSuccess = false,
+                    Result = null
+                };
+            }
+
+            course.CourseVersionId = courseVersion.Id;
+
             _unitOfWork.CourseVersionRepository.Update(courseVersion);
+            _unitOfWork.CourseRepository.Update(course);
+            await _unitOfWork.SaveAsync();
 
             var responseDto = await _courseVersionStatusService.CreateCourseVersionStatus
             (
