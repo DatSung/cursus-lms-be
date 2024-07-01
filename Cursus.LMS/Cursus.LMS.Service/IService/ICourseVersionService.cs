@@ -76,6 +76,7 @@ public interface ICourseVersionService
     Task<ResponseDTO> AcceptCourseVersion(ClaimsPrincipal User, Guid courseVersionId);
     Task<ResponseDTO> RejectCourseVersion(ClaimsPrincipal User, Guid courseVersionId);
     Task<ResponseDTO> SubmitCourseVersion(ClaimsPrincipal User, Guid courseVersionId);
+    Task<ResponseDTO> MergeCourseVersion(ClaimsPrincipal User, Guid courseVersionId);
 
     Task<ResponseDTO> GetCourseVersionsComments
     (
