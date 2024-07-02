@@ -14,16 +14,32 @@ public interface ICourseSectionVersionService
     Task<ResponseDTO> GetCourseSections
     (
         ClaimsPrincipal User,
+        Guid? courseVersionId,
         string? filterOn,
         string? filterQuery,
         string? sortBy,
-        bool? isAscending,
         int pageNumber,
         int pageSize
     );
 
-    Task<ResponseDTO> GetCourseSection(ClaimsPrincipal User);
-    Task<ResponseDTO> CreateCourseSection(ClaimsPrincipal User);
-    Task<ResponseDTO> EditCourseSection(ClaimsPrincipal User);
-    Task<ResponseDTO> RemoveCourseSection(ClaimsPrincipal User);
+    Task<ResponseDTO> GetCourseSection
+    (
+        ClaimsPrincipal User, 
+        Guid courseVersionId
+    );
+    Task<ResponseDTO> CreateCourseSection
+    (
+        ClaimsPrincipal User,
+        CreateCourseSectionVersionDTO createCourseSectionVersionDTO
+    );
+    Task<ResponseDTO> EditCourseSection
+    (
+        ClaimsPrincipal User,
+        EditCourseSectionVersionDTO editCourseSectionVersionDTO
+    );
+    Task<ResponseDTO> RemoveCourseSection
+    (
+        ClaimsPrincipal User,
+        RemoveCourseSectionVersionDTO removeCourseSectionVersionDTO
+    );
 }
