@@ -106,8 +106,8 @@ public class CourseVersionService : ICourseVersionService
             {
                 Result = null,
                 Message = e.Message,
-                IsSuccess = true,
-                StatusCode = 200
+                IsSuccess = false,
+                StatusCode = 500
             };
         }
     }
@@ -157,7 +157,7 @@ public class CourseVersionService : ICourseVersionService
                 new CreateCourseVersionStatusDTO()
                 {
                     CourseVersionId = courseVersion.Id,
-                    Status = 0
+                    Status = StaticCourseVersionStatus.New
                 }
             );
 
@@ -246,7 +246,7 @@ public class CourseVersionService : ICourseVersionService
                 new CreateCourseVersionStatusDTO()
                 {
                     CourseVersionId = courseVersion.Id,
-                    Status = 0
+                    Status = StaticCourseVersionStatus.New
                 }
             );
 
@@ -275,9 +275,100 @@ public class CourseVersionService : ICourseVersionService
         }
     }
 
-    public Task<ResponseDTO> EditCourseVersion(ClaimsPrincipal User, EditCourseVersionDTO editCourseVersionDto)
+    public async Task<ResponseDTO> EditCourseVersion(ClaimsPrincipal User, EditCourseVersionDTO editCourseVersionDto)
     {
-        throw new NotImplementedException();
+        try
+        {
+            var courseVersion =
+                await _unitOfWork.CourseVersionRepository.GetAsync(x => x.Id == editCourseVersionDto.Id);
+
+            if (courseVersion is null)
+            {
+                return new ResponseDTO()
+                {
+                    Message = "Course version was not found",
+                    StatusCode = 404,
+                    IsSuccess = false,
+                    Result = null
+                };
+            }
+
+            switch (courseVersion.CurrentStatus)
+            {
+                case StaticCourseVersionStatus.New:
+                {
+                    break;
+                }
+                case StaticCourseVersionStatus.Submitted:
+                {
+                    return new ResponseDTO()
+                    {
+                        Message = "This course version was submitted",
+                        IsSuccess = false,
+                        StatusCode = 401,
+                        Result = null
+                    };
+                }
+                case StaticCourseVersionStatus.Accepted:
+                {
+                    break;
+                }
+                case StaticCourseVersionStatus.Rejected:
+                {
+                    break;
+                }
+                case StaticCourseVersionStatus.Merged:
+                {
+                    return new ResponseDTO()
+                    {
+                        Message = "This course version was merged",
+                        IsSuccess = false,
+                        StatusCode = 401,
+                        Result = null
+                    };
+                }
+                case StaticCourseVersionStatus.Removed:
+                {
+                    return new ResponseDTO()
+                    {
+                        Message = "This course version was removed",
+                        IsSuccess = false,
+                        StatusCode = 401,
+                        Result = null
+                    };
+                }
+            }
+
+            courseVersion.CategoryId = editCourseVersionDto.CategoryId;
+            courseVersion.LevelId = editCourseVersionDto.LevelId;
+            courseVersion.Title = editCourseVersionDto.Title;
+            courseVersion.Code = editCourseVersionDto.Code;
+            courseVersion.Description = editCourseVersionDto.Description;
+            courseVersion.LearningTime = editCourseVersionDto.LearningTime;
+            courseVersion.Price = editCourseVersionDto.Price;
+            courseVersion.CourseImgUrl = editCourseVersionDto.CourseImgUrl;
+
+            _unitOfWork.CourseVersionRepository.Update(courseVersion);
+            await _unitOfWork.SaveAsync();
+
+            return new ResponseDTO()
+            {
+                Message = "Update course version successfully",
+                IsSuccess = true,
+                StatusCode = 200,
+                Result = null
+            };
+        }
+        catch (Exception e)
+        {
+            return new ResponseDTO()
+            {
+                Result = null,
+                IsSuccess = false,
+                Message = e.Message,
+                StatusCode = 500
+            };
+        }
     }
 
     public async Task<ResponseDTO> RemoveCourseVersion
@@ -303,7 +394,7 @@ public class CourseVersionService : ICourseVersionService
 
             switch (courseVersion.CurrentStatus)
             {
-                case 4:
+                case StaticCourseVersionStatus.Merged:
                 {
                     return new ResponseDTO()
                     {
@@ -313,7 +404,7 @@ public class CourseVersionService : ICourseVersionService
                         Result = null
                     };
                 }
-                case 5:
+                case StaticCourseVersionStatus.Removed:
                 {
                     return new ResponseDTO()
                     {
@@ -325,7 +416,7 @@ public class CourseVersionService : ICourseVersionService
                 }
                 default:
                 {
-                    courseVersion.CurrentStatus = 5;
+                    courseVersion.CurrentStatus = StaticCourseVersionStatus.Removed;
                     break;
                 }
             }
@@ -338,7 +429,7 @@ public class CourseVersionService : ICourseVersionService
                 new CreateCourseVersionStatusDTO()
                 {
                     CourseVersionId = courseVersion.Id,
-                    Status = 5
+                    Status = StaticCourseVersionStatus.Removed
                 }
             );
 
@@ -390,7 +481,7 @@ public class CourseVersionService : ICourseVersionService
 
             switch (courseVersion.CurrentStatus)
             {
-                case 0:
+                case StaticCourseVersionStatus.New:
                 {
                     return new ResponseDTO()
                     {
@@ -400,7 +491,7 @@ public class CourseVersionService : ICourseVersionService
                         Result = null
                     };
                 }
-                case 2:
+                case StaticCourseVersionStatus.Accepted:
                 {
                     return new ResponseDTO()
                     {
@@ -410,7 +501,7 @@ public class CourseVersionService : ICourseVersionService
                         Result = null
                     };
                 }
-                case 4:
+                case StaticCourseVersionStatus.Merged:
                 {
                     return new ResponseDTO()
                     {
@@ -420,7 +511,7 @@ public class CourseVersionService : ICourseVersionService
                         Result = null
                     };
                 }
-                case 5:
+                case StaticCourseVersionStatus.Removed:
                 {
                     return new ResponseDTO()
                     {
@@ -432,7 +523,7 @@ public class CourseVersionService : ICourseVersionService
                 }
                 default:
                 {
-                    courseVersion.CurrentStatus = 2;
+                    courseVersion.CurrentStatus = StaticCourseVersionStatus.Accepted;
                     break;
                 }
             }
@@ -445,7 +536,7 @@ public class CourseVersionService : ICourseVersionService
                 new CreateCourseVersionStatusDTO()
                 {
                     CourseVersionId = courseVersion.Id,
-                    Status = 2
+                    Status = StaticCourseVersionStatus.Accepted
                 }
             );
 
@@ -497,7 +588,7 @@ public class CourseVersionService : ICourseVersionService
 
             switch (courseVersion.CurrentStatus)
             {
-                case 0:
+                case StaticCourseVersionStatus.New:
                 {
                     return new ResponseDTO()
                     {
@@ -507,7 +598,7 @@ public class CourseVersionService : ICourseVersionService
                         Result = null
                     };
                 }
-                case 2:
+                case StaticCourseVersionStatus.Accepted:
                 {
                     return new ResponseDTO()
                     {
@@ -517,7 +608,7 @@ public class CourseVersionService : ICourseVersionService
                         Result = null
                     };
                 }
-                case 4:
+                case StaticCourseVersionStatus.Merged:
                 {
                     return new ResponseDTO()
                     {
@@ -527,7 +618,7 @@ public class CourseVersionService : ICourseVersionService
                         Result = null
                     };
                 }
-                case 5:
+                case StaticCourseVersionStatus.Removed:
                 {
                     return new ResponseDTO()
                     {
@@ -539,7 +630,7 @@ public class CourseVersionService : ICourseVersionService
                 }
                 default:
                 {
-                    courseVersion.CurrentStatus = 3;
+                    courseVersion.CurrentStatus = StaticCourseVersionStatus.Rejected;
                     break;
                 }
             }
@@ -552,7 +643,7 @@ public class CourseVersionService : ICourseVersionService
                 new CreateCourseVersionStatusDTO()
                 {
                     CourseVersionId = courseVersion.Id,
-                    Status = 3
+                    Status = StaticCourseVersionStatus.Rejected
                 }
             );
 
@@ -604,7 +695,7 @@ public class CourseVersionService : ICourseVersionService
 
             switch (courseVersion.CurrentStatus)
             {
-                case 1:
+                case StaticCourseVersionStatus.Submitted:
                 {
                     return new ResponseDTO()
                     {
@@ -614,7 +705,7 @@ public class CourseVersionService : ICourseVersionService
                         Result = null
                     };
                 }
-                case 2:
+                case StaticCourseVersionStatus.Accepted:
                 {
                     return new ResponseDTO()
                     {
@@ -624,7 +715,7 @@ public class CourseVersionService : ICourseVersionService
                         Result = null
                     };
                 }
-                case 4:
+                case StaticCourseVersionStatus.Merged:
                 {
                     return new ResponseDTO()
                     {
@@ -634,7 +725,7 @@ public class CourseVersionService : ICourseVersionService
                         Result = null
                     };
                 }
-                case 5:
+                case StaticCourseVersionStatus.Removed:
                 {
                     return new ResponseDTO()
                     {
@@ -646,7 +737,7 @@ public class CourseVersionService : ICourseVersionService
                 }
                 default:
                 {
-                    courseVersion.CurrentStatus = 1;
+                    courseVersion.CurrentStatus = StaticCourseVersionStatus.Submitted;
                     break;
                 }
             }
@@ -659,7 +750,7 @@ public class CourseVersionService : ICourseVersionService
                 new CreateCourseVersionStatusDTO()
                 {
                     CourseVersionId = courseVersion.Id,
-                    Status = 1
+                    Status = StaticCourseVersionStatus.Submitted
                 }
             );
 
@@ -710,7 +801,7 @@ public class CourseVersionService : ICourseVersionService
 
             switch (courseVersion.CurrentStatus)
             {
-                case 0:
+                case StaticCourseVersionStatus.New:
                 {
                     return new ResponseDTO()
                     {
@@ -720,7 +811,7 @@ public class CourseVersionService : ICourseVersionService
                         Result = null
                     };
                 }
-                case 1:
+                case StaticCourseVersionStatus.Submitted:
                 {
                     return new ResponseDTO()
                     {
@@ -730,7 +821,7 @@ public class CourseVersionService : ICourseVersionService
                         Result = null
                     };
                 }
-                case 4:
+                case StaticCourseVersionStatus.Merged:
                 {
                     return new ResponseDTO()
                     {
@@ -740,7 +831,7 @@ public class CourseVersionService : ICourseVersionService
                         Result = null
                     };
                 }
-                case 5:
+                case StaticCourseVersionStatus.Removed:
                 {
                     return new ResponseDTO()
                     {
@@ -752,7 +843,7 @@ public class CourseVersionService : ICourseVersionService
                 }
                 default:
                 {
-                    courseVersion.CurrentStatus = 4;
+                    courseVersion.CurrentStatus = StaticCourseVersionStatus.Merged;
                     break;
                 }
             }
@@ -782,7 +873,7 @@ public class CourseVersionService : ICourseVersionService
                 new CreateCourseVersionStatusDTO()
                 {
                     CourseVersionId = courseVersion.Id,
-                    Status = 4,
+                    Status = StaticCourseVersionStatus.Merged,
                 }
             );
 
