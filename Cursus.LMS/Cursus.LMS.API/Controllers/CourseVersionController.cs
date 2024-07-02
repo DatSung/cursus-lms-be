@@ -220,7 +220,7 @@ namespace Cursus.LMS.API.Controllers
         [Route("sections")]
         public async Task<ActionResult<ResponseDTO>> GetCourseSections
         (
-            [FromQuery] Guid? courseVersionId,
+            [FromQuery] [Required] Guid? courseVersionId,
             [FromQuery] string? filterOn,
             [FromQuery] string? filterQuery,
             [FromQuery] string? sortBy,
