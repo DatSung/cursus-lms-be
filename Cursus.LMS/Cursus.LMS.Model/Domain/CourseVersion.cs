@@ -6,7 +6,6 @@ namespace Cursus.LMS.Model.Domain;
 public class CourseVersion
 {
     [Key] public Guid Id { get; set; }
-
     public Guid? CourseId { get; set; }
     [ForeignKey("CourseId")] public Course? Course { get; set; }
     public Guid? CategoryId { get; set; }
@@ -24,6 +23,6 @@ public class CourseVersion
     public int? Version { get; set; }
     public DateTime? CreatedTime { get; set; } = DateTime.UtcNow;
     public int? CurrentStatus { get; set; }
-
+    
     [NotMapped] public IEnumerable<CourseSectionVersion>? CourseSectionVersions { get; set; }
 }
