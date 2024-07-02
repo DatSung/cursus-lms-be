@@ -17,10 +17,12 @@ namespace Cursus.LMS.API.Controllers
     public class CourseVersionController : ControllerBase
     {
         private readonly ICourseVersionService _courseVersionService;
+        private readonly ICourseSectionVersionService _courseSectionVersionService;
 
-        public CourseVersionController(ICourseVersionService courseVersionService)
+        public CourseVersionController(ICourseVersionService courseVersionService, ICourseSectionVersionService courseSectionVersionService)
         {
             _courseVersionService = courseVersionService;
+            _courseSectionVersionService = courseSectionVersionService;
         }
 
 
@@ -301,58 +303,37 @@ namespace Cursus.LMS.API.Controllers
         }
 
         [HttpPost]
-        [Route("section")]
-        public async Task<ResponseDTO> CreateCourseSection()
+        [Route("create-course-section-version")]
+        [Authorize(Roles = StaticUserRoles.Instructor)]
+        public async Task<ActionResult<ResponseDTO>> CreateCourseSection
+        (
+            CreateCourseSectionVersionDTO createCourseSectionVersionDTO
+        )
         {
-            try
-            {
-                return new ResponseDTO()
-                {
-                };
-            }
-            catch (Exception e)
-            {
-                return new ResponseDTO()
-                {
-                };
-            }
+            var responseDto = await _courseSectionVersionService.CreateCourseSection(User, createCourseSectionVersionDTO);
+            return StatusCode(responseDto.StatusCode, responseDto);
         }
 
         [HttpPut]
-        [Route("section")]
-        public async Task<ResponseDTO> EditCourseSection()
+        [Route("edit-course-section-version")]
+        public async Task<ActionResult<ResponseDTO>> EditCourseSection
+        (
+            EditCourseSectionVersionDTO editCourseSectionVersionDTO
+        )
         {
-            try
-            {
-                return new ResponseDTO()
-                {
-                };
-            }
-            catch (Exception e)
-            {
-                return new ResponseDTO()
-                {
-                };
-            }
+            var responseDto = await _courseSectionVersionService.EditCourseSection(User, editCourseSectionVersionDTO);
+            return StatusCode(responseDto.StatusCode, responseDto);
         }
 
         [HttpDelete]
         [Route("section/{sectionId:guid}")]
-        public async Task<ResponseDTO> DeleteCourseSection([FromRoute] Guid sectionId)
+        public async Task<ActionResult<ResponseDTO>> DeleteCourseSection
+        (
+            RemoveCourseSectionVersionDTO removeCourseSectionVersionDTO
+        )
         {
-            try
-            {
-                return new ResponseDTO()
-                {
-                };
-            }
-            catch (Exception e)
-            {
-                return new ResponseDTO()
-                    {
-                    }
-                    ;
-            }
+            var responseDto = await _courseSectionVersionService.RemoveCourseSection(User, removeCourseSectionVersionDTO);
+            return StatusCode(responseDto.StatusCode, responseDto);
         }
 
         #endregion

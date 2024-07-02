@@ -1,7 +1,10 @@
 ﻿using System.Security.Claims;
+using Azure;
 using Cursus.LMS.DataAccess.IRepository;
+using Cursus.LMS.Model.Domain;
 using Cursus.LMS.Model.DTO;
 using Cursus.LMS.Service.IService;
+using DocumentFormat.OpenXml.Office2010.Excel;
 using Microsoft.IdentityModel.Tokens;
 
 namespace Cursus.LMS.Service.Service;
@@ -104,7 +107,7 @@ public class CourseSectionVersionService : ICourseSectionVersionService
         }
     }
 
-    public Task<ResponseDTO> GetCourseSections
+    public async Task<ResponseDTO> GetCourseSections
     (
         ClaimsPrincipal User,
         string? filterOn,
@@ -117,23 +120,212 @@ public class CourseSectionVersionService : ICourseSectionVersionService
         throw new NotImplementedException();
     }
 
-    public Task<ResponseDTO> GetCourseSection(ClaimsPrincipal User)
+    public async Task<ResponseDTO> GetCourseSection
+    (
+        ClaimsPrincipal User,
+        Guid CourseVersionId
+    )
     {
-        throw new NotImplementedException();
+        //try
+        //{
+        //    var courseVersionId =
+        //        await _unitOfWork.CourseVersionRepository.GetAsync(c =>
+        //            c.Id == CourseVersionId);
+        //    if (courseVersionId == null)
+        //    {
+        //        return new ResponseDTO()
+        //        {
+        //            Message = "CourseVersionId Invalid",
+        //            Result = null,
+        //            IsSuccess = false,
+        //            StatusCode = 400
+        //        };
+        //    }
+
+        //    var courseVersionDto = _mapper.Map<GetCourseVersionDTO>(courseVersion);
+
+        //    return new ResponseDTO()
+        //    {
+        //        Result = courseVersionDto,
+        //        Message = "Get course version successfully",
+        //        IsSuccess = true,
+        //        StatusCode = 200
+        //    };
+        //}
+        //catch (Exception e)
+        //{
+        //    return new ResponseDTO()
+        //    {
+        //        Result = null,
+        //        Message = e.Message,
+        //        IsSuccess = true,
+        //        StatusCode = 200
+        //    };
+        //}
+        return null;
     }
 
-    public Task<ResponseDTO> CreateCourseSection(ClaimsPrincipal User)
+    public async Task<ResponseDTO> CreateCourseSection
+    (
+        ClaimsPrincipal User, 
+        CreateCourseSectionVersionDTO createCourseSectionVersionDTO
+    )
     {
-        throw new NotImplementedException();
+        try
+        {
+            var courseVersionId =
+                await _unitOfWork.CourseVersionRepository.GetAsync(c =>
+                    c.Id == createCourseSectionVersionDTO.CourseVersionId);
+            if (courseVersionId == null)
+            {
+                return new ResponseDTO()
+                {
+                    Message = "CourseVersionId Invalid",
+                    Result = null,
+                    IsSuccess = false,
+                    StatusCode = 400
+                };
+            }
+
+
+            var courseSectionVersion = new CourseSectionVersion()
+            {
+                
+                Id = Guid.NewGuid(),
+                CourseVersionId = createCourseSectionVersionDTO.CourseVersionId,
+                Title = createCourseSectionVersionDTO.Title,
+                Description = createCourseSectionVersionDTO.Description,
+                CurrentStatus = 0
+
+            };
+
+            // Thêm courseSectionVersion vào cơ sở dữ liệu
+            await _unitOfWork.CourseSectionVersionRepository.AddAsync(courseSectionVersion);
+            await _unitOfWork.SaveAsync();
+
+            return new ResponseDTO()
+            {
+                Result = null,
+                Message = "Create new course section version successfully",
+                IsSuccess = true,
+                StatusCode = 200
+            };
+        }
+        catch (Exception e) 
+        {
+            return new ResponseDTO()
+            {
+                Result = null,
+                IsSuccess = false,
+                Message = e.Message,
+                StatusCode = 500
+            };
+        }
     }
 
-    public Task<ResponseDTO> EditCourseSection(ClaimsPrincipal User)
+    public async Task<ResponseDTO> EditCourseSection
+    (
+        ClaimsPrincipal User,
+        EditCourseSectionVersionDTO editCourseSectionVersionDTO
+    )
     {
-        throw new NotImplementedException();
+        try
+        {
+            //Tìm xem có đúng ID CourseVersion hay không
+            var courseSectionVersionId =
+                await _unitOfWork.CourseSectionVersionRepository.GetAsync(c =>
+                    c.Id == editCourseSectionVersionDTO.CourseSectionVersionId);
+            if (courseSectionVersionId == null)
+            {
+                return new ResponseDTO()
+                {
+                    Message = "courseSectionVersionId Invalid",
+                    Result = null,
+                    IsSuccess = false,
+                    StatusCode = 400
+                };
+            }
+
+            //var userId = User.Claims.FirstOrDefault(x => x.Type == ClaimTypes.NameIdentifier)?.Value;
+            //var admin = await _unitOfWork.UserManagerRepository.FindByIdAsync(userId);
+
+            //update comment
+            courseSectionVersionId.Title = editCourseSectionVersionDTO.Title;
+            courseSectionVersionId.Description = editCourseSectionVersionDTO.Description;
+            courseSectionVersionId.CurrentStatus = 1;
+
+            _unitOfWork.CourseSectionVersionRepository.Update(courseSectionVersionId);
+            await _unitOfWork.SaveAsync();
+
+            return new ResponseDTO()
+            {
+                Message = "CourseSectionVersion Edited successfully",
+                Result = null,
+                IsSuccess = true,
+                StatusCode = 200,
+            };
+        }
+        catch (Exception e)
+        {
+            return new ResponseDTO
+            {
+                Message = e.Message,
+                Result = null,
+                IsSuccess = false,
+                StatusCode = 500
+            };
+        }
     }
 
-    public Task<ResponseDTO> RemoveCourseSection(ClaimsPrincipal User)
+    public async Task<ResponseDTO> RemoveCourseSection
+    (
+        ClaimsPrincipal User,
+        RemoveCourseSectionVersionDTO removeCourseSectionVersionDTO
+    )
     {
-        throw new NotImplementedException();
+        try
+        {
+            //Tìm xem có đúng ID CourseVersion hay không
+            var courseSectionVersionId =
+                await _unitOfWork.CourseSectionVersionRepository.GetAsync(c =>
+                    c.Id == removeCourseSectionVersionDTO.CourseSectionVersionId);
+            if (courseSectionVersionId == null)
+            {
+                return new ResponseDTO()
+                {
+                    Message = "courseSectionVersionId Invalid",
+                    Result = null,
+                    IsSuccess = false,
+                    StatusCode = 400
+                };
+            }
+
+            //var userId = User.Claims.FirstOrDefault(x => x.Type == ClaimTypes.NameIdentifier)?.Value;
+            //var admin = await _unitOfWork.UserManagerRepository.FindByIdAsync(userId);
+
+            
+            courseSectionVersionId.CurrentStatus = 2;
+
+            _unitOfWork.CourseSectionVersionRepository.Update(courseSectionVersionId);
+            await _unitOfWork.SaveAsync();
+
+            return new ResponseDTO()
+            {
+                Message = "CourseSectionVersion Removed successfully",
+                Result = null,
+                IsSuccess = true,
+                StatusCode = 200,
+            };
+        }
+        catch (Exception e)
+        {
+            return new ResponseDTO
+            {
+                Message = e.Message,
+                Result = null,
+                IsSuccess = false,
+                StatusCode = 500
+            };
+        }
     }
 }
