@@ -45,7 +45,6 @@ namespace Cursus.LMS.API.Controllers
             (
                 User,
                 courseId,
-                instructorId,
                 filterOn,
                 filterQuery,
                 sortBy,

@@ -24,7 +24,6 @@ public interface ICourseVersionService
     (
         ClaimsPrincipal User,
         Guid? courseId,
-        Guid? instructorId,
         string? filterOn,
         string? filterQuery,
         string? sortBy,

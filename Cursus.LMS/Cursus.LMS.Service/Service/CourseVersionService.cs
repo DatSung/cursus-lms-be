@@ -5,6 +5,7 @@ using Cursus.LMS.Model.Domain;
 using Cursus.LMS.Model.DTO;
 using Cursus.LMS.Service.IService;
 using Cursus.LMS.Utility.Constants;
+using Microsoft.IdentityModel.Tokens;
 using CreateCourseVersionCommentsDTO = Cursus.LMS.Model.DTO.CreateCourseVersionCommentsDTO;
 
 namespace Cursus.LMS.Service.Service;
@@ -37,7 +38,6 @@ public class CourseVersionService : ICourseVersionService
     (
         ClaimsPrincipal User,
         Guid? courseId,
-        Guid? instructorId,
         string? filterOn,
         string? filterQuery,
         string? sortBy,
@@ -48,9 +48,127 @@ public class CourseVersionService : ICourseVersionService
     {
         try
         {
+            if (string.IsNullOrEmpty(courseId.ToString()))
+            {
+                return new ResponseDTO()
+                {
+                    Message = "Course id is require",
+                    IsSuccess = false,
+                    StatusCode = 404,
+                    Result = null
+                };
+            }
+
+            var courseVersions = _unitOfWork.CourseVersionRepository
+                .GetAllAsync(x => x.CourseId == courseId)
+                .GetAwaiter().GetResult().ToList();
+
+            if (courseVersions.IsNullOrEmpty())
+            {
+                return new ResponseDTO()
+                {
+                    Message = "There are no course versions",
+                    Result = courseVersions,
+                    IsSuccess = false,
+                    StatusCode = 404
+                };
+            }
+
+            // Filter Query
+            if (!string.IsNullOrEmpty(filterOn) && !string.IsNullOrEmpty(filterQuery))
+            {
+                switch (filterOn.Trim().ToLower())
+                {
+                    case "title":
+                    {
+                        courseVersions = courseVersions.Where(x =>
+                            x.Title.Contains(filterQuery, StringComparison.CurrentCultureIgnoreCase)).ToList();
+                        break;
+                    }
+                    case "code":
+                    {
+                        courseVersions = courseVersions.Where(x =>
+                            x.Code.Contains(filterQuery, StringComparison.CurrentCultureIgnoreCase)).ToList();
+                        break;
+                    }
+                    case "description":
+                    {
+                        courseVersions = courseVersions.Where(x =>
+                            x.Description.Contains(filterQuery, StringComparison.CurrentCultureIgnoreCase)).ToList();
+                        break;
+                    }
+                    case "status":
+                    {
+                        courseVersions = courseVersions.Where(x =>
+                            x.CurrentStatus == int.Parse(filterQuery.Trim())).ToList();
+                        break;
+                    }
+                }
+            }
+
+            // Sort Query
+            if (!string.IsNullOrEmpty(sortBy))
+            {
+                switch (sortBy.Trim().ToLower())
+                {
+                    case "title":
+                    {
+                        courseVersions = isAscending == true
+                            ? [.. courseVersions.OrderBy(x => x.Title)]
+                            : [.. courseVersions.OrderByDescending(x => x.Title)];
+                        break;
+                    }
+                    case "code":
+                    {
+                        courseVersions = isAscending == true
+                            ? [.. courseVersions.OrderBy(x => x.Code)]
+                            : [.. courseVersions.OrderByDescending(x => x.Code)];
+                        break;
+                    }
+                    case "description":
+                    {
+                        courseVersions = isAscending == true
+                            ? [.. courseVersions.OrderBy(x => x.Description)]
+                            : [.. courseVersions.OrderByDescending(x => x.Description)];
+                        break;
+                    }
+                    case "price":
+                    {
+                        courseVersions = isAscending == true
+                            ? [.. courseVersions.OrderBy(x => x.Price)]
+                            : [.. courseVersions.OrderByDescending(x => x.Price)];
+                        break;
+                    }
+                    default:
+                    {
+                        break;
+                    }
+                }
+            }
+
+            // Pagination
+            if (pageNumber > 0 && pageSize > 0)
+            {
+                var skipResult = (pageNumber - 1) * pageSize;
+                courseVersions = courseVersions.Skip(skipResult).Take(pageSize).ToList();
+            }
+
+            if (courseVersions.IsNullOrEmpty())
+            {
+                return new ResponseDTO()
+                {
+                    Message = "There are no course version",
+                    Result = courseVersions,
+                    IsSuccess = false,
+                    StatusCode = 404
+                };
+            }
+
+            var courseVersionDto = _mapper.Map<List<GetCourseVersionDTO>>(courseVersions);
+
             return new ResponseDTO()
             {
-                Result = null,
+                Result = courseVersionDto,
                 Message = "Get course versions successfully",
                 IsSuccess = true,
                 StatusCode = 200
