@@ -23,13 +23,25 @@ public interface ISectionDetailsVersionService
         int pageSize
     );
 
-    Task<ResponseDTO> GetSectionDetailsVersion(ClaimsPrincipal User, Guid detailsId);
+    Task<ResponseDTO> GetSectionDetailsVersion
+    (
+        ClaimsPrincipal User, Guid detailsId
+    );
 
-    Task<ResponseDTO> CreateSectionDetailsVersion(ClaimsPrincipal User,
-        CreateSectionDetailsVersionDTO createSectionDetailsVersionDto);
+    Task<ResponseDTO> CreateSectionDetailsVersion
+    (
+        ClaimsPrincipal User,
+        CreateSectionDetailsVersionDTO createSectionDetailsVersionDto
+    );
 
-    Task<ResponseDTO> EditSectionDetailsVersion(ClaimsPrincipal User,
-        EditSectionDetailsVersionDTO editSectionDetailsVersionDto);
+    Task<ResponseDTO> EditSectionDetailsVersion
+    (
+        ClaimsPrincipal User,
+        EditSectionDetailsVersionDTO editSectionDetailsVersionDto
+    );
 
-    Task<ResponseDTO> RemoveSectionDetailsVersion(ClaimsPrincipal User, Guid detailsId);
+    Task<ResponseDTO> RemoveSectionDetailsVersion
+    (
+        ClaimsPrincipal User, Guid detailsId
+    );
 }
