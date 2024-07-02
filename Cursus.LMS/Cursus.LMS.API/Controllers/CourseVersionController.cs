@@ -19,11 +19,15 @@ namespace Cursus.LMS.API.Controllers
     {
         private readonly ICourseVersionService _courseVersionService;
         private readonly ICourseSectionVersionService _courseSectionVersionService;
+        private readonly ISectionDetailsVersionService _sectionDetailsVersionService;
 
-        public CourseVersionController(ICourseVersionService courseVersionService, ICourseSectionVersionService courseSectionVersionService)
+        public CourseVersionController(ICourseVersionService courseVersionService,
+            ICourseSectionVersionService courseSectionVersionService,
+            ISectionDetailsVersionService sectionDetailsVersionService)
         {
             _courseVersionService = courseVersionService;
             _courseSectionVersionService = courseSectionVersionService;
+            _sectionDetailsVersionService = sectionDetailsVersionService;
         }
 
         #region Course Version
@@ -32,7 +36,6 @@ namespace Cursus.LMS.API.Controllers
         public async Task<ActionResult<ResponseDTO>> GetCourseVersions
         (
             [FromQuery] Guid? courseId,
-            [FromQuery] Guid? instructorId,
             [FromQuery] string? filterOn,
             [FromQuery] string? filterQuery,
             [FromQuery] string? sortBy,
@@ -45,7 +48,6 @@ namespace Cursus.LMS.API.Controllers
             (
                 User,
                 courseId,
-                instructorId,
                 filterOn,
                 filterQuery,
                 sortBy,
@@ -58,10 +60,10 @@ namespace Cursus.LMS.API.Controllers
         }
 
         [HttpGet]
-        [Route("{courseVersionId:guid}")]
-        public async Task<ActionResult<ResponseDTO>> GetCourseVersion([FromRoute] Guid courseVersionId)
+        [Route("{courseId:guid}")]
+        public async Task<ActionResult<ResponseDTO>> GetCourseVersion([FromRoute] Guid courseId)
         {
-            var responseDto = await _courseVersionService.GetCourseVersion(User, courseVersionId);
+            var responseDto = await _courseVersionService.GetCourseVersion(User, courseId);
             return StatusCode(responseDto.StatusCode, responseDto);
         }
 
@@ -100,49 +102,49 @@ namespace Cursus.LMS.API.Controllers
         }
 
         [HttpDelete]
-        [Route("remove-course-version{courseVersionId:guid}")]
-        public async Task<ActionResult<ResponseDTO>> RemoveCourseVersion([FromRoute] Guid courseVersionId)
+        [Route("remove-course-version{courseId:guid}")]
+        public async Task<ActionResult<ResponseDTO>> RemoveCourseVersion([FromRoute] Guid courseId)
         {
-            var responseDto = await _courseVersionService.RemoveCourseVersion(User, courseVersionId);
+            var responseDto = await _courseVersionService.RemoveCourseVersion(User, courseId);
             return StatusCode(responseDto.StatusCode, responseDto);
         }
 
         [HttpPost]
-        [Route("accept-course-version/{courseVersionId:guid}")]
-        public async Task<ActionResult<ResponseDTO>> AcceptCourseVersion([FromRoute] Guid courseVersionId)
+        [Route("accept-course-version/{courseId:guid}")]
+        public async Task<ActionResult<ResponseDTO>> AcceptCourseVersion([FromRoute] Guid courseId)
         {
-            var responseDto = await _courseVersionService.AcceptCourseVersion(User, courseVersionId);
+            var responseDto = await _courseVersionService.AcceptCourseVersion(User, courseId);
             return StatusCode(responseDto.StatusCode, responseDto);
         }
 
         [HttpPost]
-        [Route("reject-course-version/{courseVersionId:guid}")]
-        public async Task<ActionResult<ResponseDTO>> RejectCourseVersion([FromRoute] Guid courseVersionId)
+        [Route("reject-course-version/{courseId:guid}")]
+        public async Task<ActionResult<ResponseDTO>> RejectCourseVersion([FromRoute] Guid courseId)
         {
-            var responseDto = await _courseVersionService.RejectCourseVersion(User, courseVersionId);
+            var responseDto = await _courseVersionService.RejectCourseVersion(User, courseId);
             return StatusCode(responseDto.StatusCode, responseDto);
         }
 
         [HttpPost]
-        [Route("submit-course-version/{courseVersionId:guid}")]
-        public async Task<ActionResult<ResponseDTO>> SubmitCourseVersion([FromRoute] Guid courseVersionId)
+        [Route("submit-course-version/{courseId:guid}")]
+        public async Task<ActionResult<ResponseDTO>> SubmitCourseVersion([FromRoute] Guid courseId)
         {
-            var responseDto = await _courseVersionService.SubmitCourseVersion(User, courseVersionId);
+            var responseDto = await _courseVersionService.SubmitCourseVersion(User, courseId);
             return StatusCode(responseDto.StatusCode, responseDto);
         }
 
         [HttpPost]
-        [Route("merge-course-version/{courseVersionId:guid}")]
-        public async Task<ActionResult<ResponseDTO>> MergeCourseVersion([FromRoute] Guid courseVersionId)
+        [Route("merge-course-version/{courseId:guid}")]
+        public async Task<ActionResult<ResponseDTO>> MergeCourseVersion([FromRoute] Guid courseId)
         {
-            var responseDto = await _courseVersionService.MergeCourseVersion(User, courseVersionId);
+            var responseDto = await _courseVersionService.MergeCourseVersion(User, courseId);
             return StatusCode(responseDto.StatusCode, responseDto);
         }
 
         #endregion
 
 
-        #region Course Comment
+        #region Course Version Comment
 
         [HttpGet]
         [Route("comment/")]
@@ -171,10 +173,10 @@ namespace Cursus.LMS.API.Controllers
         }
 
         [HttpGet]
-        [Route("comment/{courseVersionCommentId:guid}")]
-        public async Task<ActionResult<ResponseDTO>> GetCourseVersionComment([FromRoute] Guid courseVersionCommentId)
+        [Route("comment/{commentId:guid}")]
+        public async Task<ActionResult<ResponseDTO>> GetCourseVersionComment([FromRoute] Guid commentId)
         {
-            var responseDto = await _courseVersionService.GetCourseVersionComment(User, courseVersionCommentId);
+            var responseDto = await _courseVersionService.GetCourseVersionComment(User, commentId);
             return StatusCode(responseDto.StatusCode, responseDto);
         }
 
@@ -202,22 +204,22 @@ namespace Cursus.LMS.API.Controllers
         }
 
         [HttpDelete]
-        [Route("comment/")]
+        [Route("comment/{commentId:guid}")]
         public async Task<ActionResult<ResponseDTO>> RemoveCourseVersionComment(
-            RemoveCourseVersionCommentDTO removeCourseVersionCommentDTO)
+            [FromRoute] Guid commentId)
         {
             var responseDto =
-                await _courseVersionService.RemoveCourseVersionComment(User, removeCourseVersionCommentDTO);
+                await _courseVersionService.RemoveCourseVersionComment(User, commentId);
             return StatusCode(responseDto.StatusCode, responseDto);
         }
 
         #endregion
 
 
-        #region Course Section
+        #region Course Section Version
 
         [HttpGet]
-        [Route("sections")]
+        [Route("section")]
         public async Task<ActionResult<ResponseDTO>> GetCourseSections
         (
             [FromQuery] [Required] Guid? courseVersionId,
@@ -260,7 +262,8 @@ namespace Cursus.LMS.API.Controllers
             CreateCourseSectionVersionDTO createCourseSectionVersionDTO
         )
         {
-            var responseDto = await _courseSectionVersionService.CreateCourseSection(User, createCourseSectionVersionDTO);
+            var responseDto =
+                await _courseSectionVersionService.CreateCourseSection(User, createCourseSectionVersionDTO);
             return StatusCode(responseDto.StatusCode, responseDto);
         }
 
@@ -276,13 +279,82 @@ namespace Cursus.LMS.API.Controllers
         }
 
         [HttpDelete]
-        [Route("section/{sectionId:guid}")]
+        [Route("section/{sectionId}")]
         public async Task<ActionResult<ResponseDTO>> DeleteCourseSection
         (
-            RemoveCourseSectionVersionDTO removeCourseSectionVersionDTO
+            [FromRoute] Guid sectionId
         )
         {
-            var responseDto = await _courseSectionVersionService.RemoveCourseSection(User, removeCourseSectionVersionDTO);
+            var responseDto =
+                await _courseSectionVersionService.RemoveCourseSection(User, sectionId);
+            return StatusCode(responseDto.StatusCode, responseDto);
+        }
+
+        #endregion
+
+        #region Section Details Version
+
+        [HttpGet]
+        [Route("section/details")]
+        public async Task<ActionResult<ResponseDTO>> GetSectionsDetailsVersions
+        (
+            [FromQuery] Guid? courseSectionId,
+            [FromQuery] string? filterOn,
+            [FromQuery] string? filterQuery,
+            [FromQuery] string? sortBy,
+            [FromQuery] bool? isAscending,
+            [FromQuery] int pageNumber = 1,
+            [FromQuery] int pageSize = 5
+        )
+        {
+            var responseDto = await _sectionDetailsVersionService.GetSectionsDetailsVersions
+            (
+                User,
+                courseSectionId,
+                filterOn,
+                filterQuery,
+                sortBy,
+                isAscending,
+                pageNumber,
+                pageSize
+            );
+            return StatusCode(responseDto.StatusCode, responseDto);
+        }
+
+        [HttpGet]
+        [Route("section/details/{detailsId:guid}")]
+        public async Task<ActionResult<ResponseDTO>> GetSectionsDetailsVersion([FromRoute] Guid detailsId)
+        {
+            var responseDto = await _sectionDetailsVersionService.GetSectionDetailsVersion(User, detailsId);
+            return StatusCode(responseDto.StatusCode, responseDto);
+        }
+
+        [HttpPost]
+        [Route("section/details")]
+        public async Task<ActionResult<ResponseDTO>> CreateSectionDetailsVersion(
+            [FromBody] CreateSectionDetailsVersionDTO createSectionDetailsVersionDto)
+        {
+            var responseDto =
+                await _sectionDetailsVersionService.CreateSectionDetailsVersion(User, createSectionDetailsVersionDto);
+            return StatusCode(responseDto.StatusCode, responseDto);
+        }
+
+        [HttpPut]
+        [Route("section/details")]
+        public async Task<ActionResult<ResponseDTO>> EditSectionDetailsVersion(
+            [FromBody] EditSectionDetailsVersionDTO editSectionDetailsVersionDto)
+        {
+            var responseDto =
+                await _sectionDetailsVersionService.EditSectionDetailsVersion(User, editSectionDetailsVersionDto);
+            return StatusCode(responseDto.StatusCode, responseDto);
+        }
+
+        [HttpDelete]
+        [Route("section/details/{detailsId:guid}")]
+        public async Task<ActionResult<ResponseDTO>> RemoveSectionDetailsVersion([FromRoute] Guid detailsId)
+        {
+            var responseDto =
+                await _sectionDetailsVersionService.RemoveSectionDetailsVersion(User, detailsId);
             return StatusCode(responseDto.StatusCode, responseDto);
         }
 

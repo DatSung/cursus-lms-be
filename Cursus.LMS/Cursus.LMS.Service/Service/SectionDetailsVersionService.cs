@@ -74,6 +74,7 @@ public class SectionDetailsVersionService : ISectionDetailsVersionService
     public Task<ResponseDTO> GetSectionsDetailsVersions
     (
         ClaimsPrincipal User,
+        Guid? courseSectionId,
         string? filterOn,
         string? filterQuery,
         string? sortBy,
@@ -83,22 +84,24 @@ public class SectionDetailsVersionService : ISectionDetailsVersionService
         throw new NotImplementedException();
     }
 
-    public Task<ResponseDTO> GetSectionDetailsVersion(ClaimsPrincipal User)
+    public Task<ResponseDTO> GetSectionDetailsVersion(ClaimsPrincipal User, Guid detailsId)
     {
         throw new NotImplementedException();
     }
 
-    public Task<ResponseDTO> CreateSectionDetailsVersion(ClaimsPrincipal User)
+    public Task<ResponseDTO> CreateSectionDetailsVersion(ClaimsPrincipal User,
+        CreateSectionDetailsVersionDTO createSectionDetailsVersionDto)
     {
         throw new NotImplementedException();
     }
 
-    public Task<ResponseDTO> EditSectionDetailsVersion(ClaimsPrincipal User)
+    public Task<ResponseDTO> EditSectionDetailsVersion(ClaimsPrincipal User,
+        EditSectionDetailsVersionDTO editSectionDetailsVersionDto)
     {
         throw new NotImplementedException();
     }
 
-    public Task<ResponseDTO> RemoveSectionDetailsVersion(ClaimsPrincipal User)
+    public Task<ResponseDTO> RemoveSectionDetailsVersion(ClaimsPrincipal User, Guid detailsId)
     {
         throw new NotImplementedException();
     }
