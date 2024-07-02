@@ -217,8 +217,8 @@ namespace Cursus.LMS.API.Controllers
         #region Course Section
 
         [HttpGet]
-        [Route("section")]
-        public async Task<ResponseDTO> GetCourseSections
+        [Route("sections")]
+        public async Task<ActionResult<ResponseDTO>> GetCourseSections
         (
             [FromQuery] Guid? courseVersionId,
             [FromQuery] string? filterOn,
@@ -229,37 +229,27 @@ namespace Cursus.LMS.API.Controllers
             [FromQuery] int pageSize = 5
         )
         {
-            try
-            {
-                return new ResponseDTO()
-                {
-                };
-            }
-            catch (Exception e)
-            {
-                return new ResponseDTO()
-                {
-                };
-            }
+            var responseDto = await _courseSectionVersionService.GetCourseSections
+            (
+                User,
+                courseVersionId,
+                filterOn,
+                filterQuery,
+                sortBy,
+                pageNumber,
+                pageSize
+            );
+
+            return StatusCode(responseDto.StatusCode, responseDto);
         }
 
 
         [HttpGet]
         [Route("section/{sectionId:guid}")]
-        public async Task<ResponseDTO> GetCourseSection([FromRoute] Guid sectionId)
+        public async Task<ActionResult<ResponseDTO>> GetCourseSection([FromRoute] Guid sectionId)
         {
-            try
-            {
-                return new ResponseDTO()
-                {
-                };
-            }
-            catch (Exception e)
-            {
-                return new ResponseDTO()
-                {
-                };
-            }
+            var responseDto = await _courseSectionVersionService.GetCourseSection(User, sectionId);
+            return StatusCode(responseDto.StatusCode, responseDto);
         }
 
         [HttpPost]

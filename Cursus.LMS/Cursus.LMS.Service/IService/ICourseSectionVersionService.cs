@@ -14,10 +14,10 @@ public interface ICourseSectionVersionService
     Task<ResponseDTO> GetCourseSections
     (
         ClaimsPrincipal User,
+        Guid? courseVersionId,
         string? filterOn,
         string? filterQuery,
         string? sortBy,
-        bool? isAscending,
         int pageNumber,
         int pageSize
     );
