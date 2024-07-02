@@ -14,6 +14,7 @@ public interface ISectionDetailsVersionService
     Task<ResponseDTO> GetSectionsDetailsVersions
     (
         ClaimsPrincipal User,
+        Guid? courseSectionId,
         string? filterOn,
         string? filterQuery,
         string? sortBy,
@@ -22,8 +23,13 @@ public interface ISectionDetailsVersionService
         int pageSize
     );
 
-    Task<ResponseDTO> GetSectionDetailsVersion(ClaimsPrincipal User);
-    Task<ResponseDTO> CreateSectionDetailsVersion(ClaimsPrincipal User);
-    Task<ResponseDTO> EditSectionDetailsVersion(ClaimsPrincipal User);
-    Task<ResponseDTO> RemoveSectionDetailsVersion(ClaimsPrincipal User);
+    Task<ResponseDTO> GetSectionDetailsVersion(ClaimsPrincipal User, Guid detailsId);
+
+    Task<ResponseDTO> CreateSectionDetailsVersion(ClaimsPrincipal User,
+        CreateSectionDetailsVersionDTO createSectionDetailsVersionDto);
+
+    Task<ResponseDTO> EditSectionDetailsVersion(ClaimsPrincipal User,
+        EditSectionDetailsVersionDTO editSectionDetailsVersionDto);
+
+    Task<ResponseDTO> RemoveSectionDetailsVersion(ClaimsPrincipal User, Guid detailsId);
 }

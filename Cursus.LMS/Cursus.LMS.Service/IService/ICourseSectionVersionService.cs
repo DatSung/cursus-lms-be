@@ -40,6 +40,6 @@ public interface ICourseSectionVersionService
     Task<ResponseDTO> RemoveCourseSection
     (
         ClaimsPrincipal User,
-        RemoveCourseSectionVersionDTO removeCourseSectionVersionDTO
+        Guid sectionVersionId
     );
 }

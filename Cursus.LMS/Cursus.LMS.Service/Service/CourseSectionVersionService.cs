@@ -122,124 +122,125 @@ public class CourseSectionVersionService : ICourseSectionVersionService
         int pageNumber,
         int pageSize
     )
+    {
+        try
         {
-            try
+            // Lấy role xem có phải admin không
+            var userRole = User.Claims.FirstOrDefault(x => x.Type == ClaimTypes.Role)?.Value;
+
+            IEnumerable<CourseSectionVersion> sectionVersions;
+
+            if (userRole == StaticUserRoles.Admin)
             {
-                // Lấy role xem có phải admin không
-                var userRole = User.Claims.FirstOrDefault(x => x.Type == ClaimTypes.Role)?.Value;
-
-                IEnumerable<CourseSectionVersion> sectionVersions;
-
-                if (userRole == StaticUserRoles.Admin)
-                {
                 // Lấy tất cả các bình luận của phiên bản khóa học theo courseVersionId
                 sectionVersions = await _unitOfWork.CourseSectionVersionRepository.GetAllAsync(x =>
-                        x.CourseVersionId == courseVersionId);
-                }
-                else
-                {
+                    x.CourseVersionId == courseVersionId);
+            }
+            else
+            {
                 // Lấy các bình luận với trạng thái Activated hoặc thấp hơn
                 sectionVersions = await _unitOfWork.CourseSectionVersionRepository.GetAllAsync(x =>
-                        x.CourseVersionId == courseVersionId && x.CurrentStatus <= StaticStatus.Category.Activated);
-                }
-
-                // Kiểm tra nếu danh sách bình luận là null hoặc rỗng
-                if (!sectionVersions.Any())
-                {
-                    return new ResponseDTO()
-                    {
-                        Message = "There are no sectionVersions",
-                        IsSuccess = true,
-                        StatusCode = 204,
-                        Result = null
-                    };
-                }
-
-                var listSections = sectionVersions.ToList();
-
-                // Filter Query
-                if (!string.IsNullOrEmpty(filterOn) && !string.IsNullOrEmpty(filterQuery))
-                {
-                    switch (filterOn.Trim().ToLower())
-                    {
-                        case "title":
-                        listSections = listSections.Where(x =>
-                                x.Title.Contains(filterQuery, StringComparison.CurrentCultureIgnoreCase)).ToList();
-                            break;
-                        case "description":
-                        listSections = listSections.Where(x =>
-                                x.Description.Contains(filterQuery, StringComparison.CurrentCultureIgnoreCase)).ToList();
-                            break;
-                        case "currentstatus":
-                            if (int.TryParse(filterQuery, out var status))
-                            {
-                            listSections = listSections.Where(x => x.CurrentStatus == status).ToList();
-                            }
-                            break;
-                        default:
-                            break;
-                    }
-                }
-
-                // Sort Query
-                if (!string.IsNullOrEmpty(sortBy))
-                {
-                    switch (sortBy.Trim().ToLower())
-                    {
-                        case "title":
-                        listSections = listSections.OrderBy(x => x.Title).ToList();
-                            break;
-                        case "description":
-                        listSections = listSections.OrderBy(x => x.Description).ToList();
-                            break;
-                        case "currentstatus":
-                            listSections = listSections.OrderBy(x => x.CurrentStatus).ToList();
-                            break;
-                        default:
-                            break;
-                    }
-                }
-                else
-                {
-                    // Sắp xếp Sections theo Title tạo giảm dần nếu không có sortBy được chỉ định
-                    listSections = listSections.OrderBy(x => x.Title).ToList();
-                }
-
-                // Phân trang
-                if (pageNumber > 0 && pageSize > 0)
-                {
-                    var skipResult = (pageNumber - 1) * pageSize;
-                    listSections = listSections.Skip(skipResult).Take(pageSize).ToList();
-                }
-
-                // Chuyển đổi danh sách bình luận thành DTO
-                var sectionsDto = listSections.Select(section => new GetAllSectionsDTO
-                {
-                    Id = section.Id,
-                    Title = section.Title,
-                    Description = section.Description,
-                    CurrentStatus = (int)section.CurrentStatus
-                }).ToList();
-
-                return new ResponseDTO()
-                {
-                    Message = "Get course sections version successfully",
-                    IsSuccess = true,
-                    StatusCode = 200,
-                    Result = sectionsDto
-                };
+                    x.CourseVersionId == courseVersionId && x.CurrentStatus <= StaticStatus.Category.Activated);
             }
-            catch (Exception e)
+
+            // Kiểm tra nếu danh sách bình luận là null hoặc rỗng
+            if (!sectionVersions.Any())
             {
                 return new ResponseDTO()
                 {
-                    Message = e.Message,
-                    Result = null,
-                    IsSuccess = false,
-                    StatusCode = 500
+                    Message = "There are no sectionVersions",
+                    IsSuccess = true,
+                    StatusCode = 204,
+                    Result = null
                 };
             }
+
+            var listSections = sectionVersions.ToList();
+
+            // Filter Query
+            if (!string.IsNullOrEmpty(filterOn) && !string.IsNullOrEmpty(filterQuery))
+            {
+                switch (filterOn.Trim().ToLower())
+                {
+                    case "title":
+                        listSections = listSections.Where(x =>
+                            x.Title.Contains(filterQuery, StringComparison.CurrentCultureIgnoreCase)).ToList();
+                        break;
+                    case "description":
+                        listSections = listSections.Where(x =>
+                            x.Description.Contains(filterQuery, StringComparison.CurrentCultureIgnoreCase)).ToList();
+                        break;
+                    case "currentstatus":
+                        if (int.TryParse(filterQuery, out var status))
+                        {
+                            listSections = listSections.Where(x => x.CurrentStatus == status).ToList();
+                        }
+
+                        break;
+                    default:
+                        break;
+                }
+            }
+
+            // Sort Query
+            if (!string.IsNullOrEmpty(sortBy))
+            {
+                switch (sortBy.Trim().ToLower())
+                {
+                    case "title":
+                        listSections = listSections.OrderBy(x => x.Title).ToList();
+                        break;
+                    case "description":
+                        listSections = listSections.OrderBy(x => x.Description).ToList();
+                        break;
+                    case "currentstatus":
+                        listSections = listSections.OrderBy(x => x.CurrentStatus).ToList();
+                        break;
+                    default:
+                        break;
+                }
+            }
+            else
+            {
+                // Sắp xếp Sections theo Title tạo giảm dần nếu không có sortBy được chỉ định
+                listSections = listSections.OrderBy(x => x.Title).ToList();
+            }
+
+            // Phân trang
+            if (pageNumber > 0 && pageSize > 0)
+            {
+                var skipResult = (pageNumber - 1) * pageSize;
+                listSections = listSections.Skip(skipResult).Take(pageSize).ToList();
+            }
+
+            // Chuyển đổi danh sách bình luận thành DTO
+            var sectionsDto = listSections.Select(section => new GetAllSectionsDTO
+            {
+                Id = section.Id,
+                Title = section.Title,
+                Description = section.Description,
+                CurrentStatus = (int)section.CurrentStatus
+            }).ToList();
+
+            return new ResponseDTO()
+            {
+                Message = "Get course sections version successfully",
+                IsSuccess = true,
+                StatusCode = 200,
+                Result = sectionsDto
+            };
         }
+        catch (Exception e)
+        {
+            return new ResponseDTO()
+            {
+                Message = e.Message,
+                Result = null,
+                IsSuccess = false,
+                StatusCode = 500
+            };
+        }
+    }
 
     public async Task<ResponseDTO> GetCourseSection
     (
@@ -288,7 +289,7 @@ public class CourseSectionVersionService : ICourseSectionVersionService
 
     public async Task<ResponseDTO> CreateCourseSection
     (
-        ClaimsPrincipal User, 
+        ClaimsPrincipal User,
         CreateCourseSectionVersionDTO createCourseSectionVersionDTO
     )
     {
@@ -311,13 +312,11 @@ public class CourseSectionVersionService : ICourseSectionVersionService
 
             var courseSectionVersion = new CourseSectionVersion()
             {
-                
                 Id = Guid.NewGuid(),
                 CourseVersionId = createCourseSectionVersionDTO.CourseVersionId,
                 Title = createCourseSectionVersionDTO.Title,
                 Description = createCourseSectionVersionDTO.Description,
                 CurrentStatus = 0
-
             };
 
             // Thêm courseSectionVersion vào cơ sở dữ liệu
@@ -332,7 +331,7 @@ public class CourseSectionVersionService : ICourseSectionVersionService
                 StatusCode = 200
             };
         }
-        catch (Exception e) 
+        catch (Exception e)
         {
             return new ResponseDTO()
             {
@@ -401,7 +400,7 @@ public class CourseSectionVersionService : ICourseSectionVersionService
     public async Task<ResponseDTO> RemoveCourseSection
     (
         ClaimsPrincipal User,
-        RemoveCourseSectionVersionDTO removeCourseSectionVersionDTO
+        Guid sectionVersionId
     )
     {
         try
@@ -409,7 +408,7 @@ public class CourseSectionVersionService : ICourseSectionVersionService
             //Tìm xem có đúng ID CourseVersion hay không
             var courseSectionVersionId =
                 await _unitOfWork.CourseSectionVersionRepository.GetAsync(c =>
-                    c.Id == removeCourseSectionVersionDTO.CourseSectionVersionId);
+                    c.Id == sectionVersionId);
             if (courseSectionVersionId == null)
             {
                 return new ResponseDTO()
@@ -424,7 +423,7 @@ public class CourseSectionVersionService : ICourseSectionVersionService
             //var userId = User.Claims.FirstOrDefault(x => x.Type == ClaimTypes.NameIdentifier)?.Value;
             //var admin = await _unitOfWork.UserManagerRepository.FindByIdAsync(userId);
 
-            
+
             courseSectionVersionId.CurrentStatus = 2;
 
             _unitOfWork.CourseSectionVersionRepository.Update(courseSectionVersionId);

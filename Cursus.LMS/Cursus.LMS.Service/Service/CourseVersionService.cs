@@ -1333,14 +1333,14 @@ public class CourseVersionService : ICourseVersionService
 
     //Delete đã hoàn thành
     public async Task<ResponseDTO> RemoveCourseVersionComment(ClaimsPrincipal User,
-        RemoveCourseVersionCommentDTO removeCourseVersionCommentDTO)
+        Guid commentId)
     {
         try
         {
             //Tìm xem có đúng ID CourseVersion hay không
             var courseVersionId =
                 await _unitOfWork.CourseVersionCommentRepository.GetAsync(c =>
-                    c.Id == removeCourseVersionCommentDTO.Id);
+                    c.Id == commentId);
             if (courseVersionId == null)
             {
                 return new ResponseDTO()

@@ -97,5 +97,5 @@ public interface ICourseVersionService
         EditCourseVersionCommentsDTO editCourseVersionCommentsDTO);
 
     Task<ResponseDTO> RemoveCourseVersionComment(ClaimsPrincipal User,
-        RemoveCourseVersionCommentDTO removeCourseVersionCommentDTO);
+        Guid commentId);
 }
