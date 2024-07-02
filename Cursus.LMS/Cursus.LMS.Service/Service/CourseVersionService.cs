@@ -4,6 +4,7 @@ using Cursus.LMS.DataAccess.IRepository;
 using Cursus.LMS.Model.Domain;
 using Cursus.LMS.Model.DTO;
 using Cursus.LMS.Service.IService;
+using Cursus.LMS.Utility.Constants;
 using CreateCourseVersionCommentsDTO = Cursus.LMS.Model.DTO.CreateCourseVersionCommentsDTO;
 
 namespace Cursus.LMS.Service.Service;
@@ -160,15 +161,8 @@ public class CourseVersionService : ICourseVersionService
                 }
             );
 
-            // Rollback when save status history fail
             if (responseDto.IsSuccess is false)
             {
-                // Remove course version
-                _unitOfWork.CourseVersionRepository.Remove(courseVersion);
-                // Remove course version section
-
-                // Remove section detail version
-
                 return responseDto;
             }
 
@@ -256,10 +250,8 @@ public class CourseVersionService : ICourseVersionService
                 }
             );
 
-            // Rollback when save status history fail
             if (responseDto.IsSuccess is false)
             {
-                // Remove section details version, course section version, course version
                 return responseDto;
             }
 
@@ -283,56 +275,83 @@ public class CourseVersionService : ICourseVersionService
         }
     }
 
-    public Task<ResponseDTO> RemoveCourseVersion(ClaimsPrincipal User)
+    public Task<ResponseDTO> EditCourseVersion(ClaimsPrincipal User, EditCourseVersionDTO editCourseVersionDto)
     {
         throw new NotImplementedException();
     }
 
-    public Task<ResponseDTO> EditCourseVersion(ClaimsPrincipal User)
-    {
-        throw new NotImplementedException();
-    }
-
-    public Task<ResponseDTO> AcceptCourseVersion(ClaimsPrincipal User)
-    {
-        throw new NotImplementedException();
-    }
-
-    public Task<ResponseDTO> RejectCourseVersion(ClaimsPrincipal User)
-    {
-        throw new NotImplementedException();
-    }
-
-    public Task<ResponseDTO> SubmitCourseVersion(ClaimsPrincipal User)
-    {
-        throw new NotImplementedException();
-    }
-
-    public async Task<ResponseDTO> GetCourseVersionsComments
+    public async Task<ResponseDTO> RemoveCourseVersion
     (
         ClaimsPrincipal User,
-        Guid? courseVersionCommentId,
-        Guid? courseVersionId,
-        string? filterOn,
-        string? filterQuery,
-        string? sortBy,
-        int pageNumber,
-        int pageSize
+        Guid courseVersionId
     )
     {
-        throw new NotImplementedException();
-    }
-
-
-    public Task<ResponseDTO> GetCourseVersionsComments(ClaimsPrincipal User)
-    {
-        /*try
+        try
         {
+            var courseVersion = await _unitOfWork.CourseVersionRepository.GetAsync(x => x.Id == courseVersionId);
+
+            if (courseVersion is null)
+            {
+                return new ResponseDTO()
+                {
+                    Result = null,
+                    IsSuccess = false,
+                    Message = "Course version was not found",
+                    StatusCode = 404
+                };
+            }
+
+            switch (courseVersion.CurrentStatus)
+            {
+                case 4:
+                {
+                    return new ResponseDTO()
+                    {
+                        Message = "Course version have been merged",
+                        StatusCode = 401,
+                        IsSuccess = false,
+                        Result = null
+                    };
+                }
+                case 5:
+                {
+                    return new ResponseDTO()
+                    {
+                        Message = "Course version have been removed",
+                        StatusCode = 401,
+                        IsSuccess = false,
+                        Result = null
+                    };
+                }
+                default:
+                {
+                    courseVersion.CurrentStatus = 5;
+                    break;
+                }
+            }
+
+            _unitOfWork.CourseVersionRepository.Update(courseVersion);
+
+            var responseDto = await _courseVersionStatusService.CreateCourseVersionStatus
+            (
+                User,
+                new CreateCourseVersionStatusDTO()
+                {
+                    CourseVersionId = courseVersion.Id,
+                    Status = 5
+                }
+            );
+
+            if (responseDto.StatusCode == 500)
+            {
+                return responseDto;
+            }
+
             return new ResponseDTO()
             {
                 Result = null,
-                Message = "Get course versions successfully",
                 IsSuccess = true,
+                Message = "Remove course version successfully",
                 StatusCode = 200
             };
         }
@@ -341,17 +360,618 @@ public class CourseVersionService : ICourseVersionService
             return new ResponseDTO()
             {
                 Result = null,
+                IsSuccess = false,
                 Message = e.Message,
+                StatusCode = 500
+            };
+        }
+    }
+
+    public async Task<ResponseDTO> AcceptCourseVersion
+    (
+        ClaimsPrincipal User,
+        Guid courseVersionId
+    )
+    {
+        try
+        {
+            var courseVersion = await _unitOfWork.CourseVersionRepository.GetAsync(x => x.Id == courseVersionId);
+
+            if (courseVersion is null)
+            {
+                return new ResponseDTO()
+                {
+                    Result = null,
+                    IsSuccess = false,
+                    Message = "Course version was not found",
+                    StatusCode = 404
+                };
+            }
+
+            switch (courseVersion.CurrentStatus)
+            {
+                case 0:
+                {
+                    return new ResponseDTO()
+                    {
+                        Message = "Course version have not been submit",
+                        StatusCode = 401,
+                        IsSuccess = false,
+                        Result = null
+                    };
+                }
+                case 2:
+                {
+                    return new ResponseDTO()
+                    {
+                        Message = "Course version have been accepted",
+                        StatusCode = 401,
+                        IsSuccess = false,
+                        Result = null
+                    };
+                }
+                case 4:
+                {
+                    return new ResponseDTO()
+                    {
+                        Message = "Course version have been merged",
+                        StatusCode = 401,
+                        IsSuccess = false,
+                        Result = null
+                    };
+                }
+                case 5:
+                {
+                    return new ResponseDTO()
+                    {
+                        Message = "Course version have been removed",
+                        StatusCode = 401,
+                        IsSuccess = false,
+                        Result = null
+                    };
+                }
+                default:
+                {
+                    courseVersion.CurrentStatus = 2;
+                    break;
+                }
+            }
+
+            _unitOfWork.CourseVersionRepository.Update(courseVersion);
+
+            var responseDto = await _courseVersionStatusService.CreateCourseVersionStatus
+            (
+                User,
+                new CreateCourseVersionStatusDTO()
+                {
+                    CourseVersionId = courseVersion.Id,
+                    Status = 2
+                }
+            );
+
+            if (responseDto.StatusCode == 500)
+            {
+                return responseDto;
+            }
+
+            return new ResponseDTO()
+            {
+                Result = null,
+                IsSuccess = true,
+                Message = "Accept course version successfully",
+                StatusCode = 200
+            };
+        }
+        catch (Exception e)
+        {
+            return new ResponseDTO()
+            {
+                Result = null,
+                IsSuccess = false,
+                Message = e.Message,
+                StatusCode = 500
+            };
+        }
+    }
+
+    public async Task<ResponseDTO> RejectCourseVersion
+    (
+        ClaimsPrincipal User,
+        Guid courseVersionId
+    )
+    {
+        try
+        {
+            var courseVersion = await _unitOfWork.CourseVersionRepository.GetAsync(x => x.Id == courseVersionId);
+
+            if (courseVersion is null)
+            {
+                return new ResponseDTO()
+                {
+                    Result = null,
+                    IsSuccess = false,
+                    Message = "Course version was not found",
+                    StatusCode = 404
+                };
+            }
+
+            switch (courseVersion.CurrentStatus)
+            {
+                case 0:
+                {
+                    return new ResponseDTO()
+                    {
+                        Message = "Course version have not been submit",
+                        StatusCode = 401,
+                        IsSuccess = false,
+                        Result = null
+                    };
+                }
+                case 2:
+                {
+                    return new ResponseDTO()
+                    {
+                        Message = "Course version have been accepted",
+                        StatusCode = 401,
+                        IsSuccess = false,
+                        Result = null
+                    };
+                }
+                case 4:
+                {
+                    return new ResponseDTO()
+                    {
+                        Message = "Course version have been merged",
+                        StatusCode = 401,
+                        IsSuccess = false,
+                        Result = null
+                    };
+                }
+                case 5:
+                {
+                    return new ResponseDTO()
+                    {
+                        Message = "Course version have been removed",
+                        StatusCode = 401,
+                        IsSuccess = false,
+                        Result = null
+                    };
+                }
+                default:
+                {
+                    courseVersion.CurrentStatus = 3;
+                    break;
+                }
+            }
+
+            _unitOfWork.CourseVersionRepository.Update(courseVersion);
+
+            var responseDto = await _courseVersionStatusService.CreateCourseVersionStatus
+            (
+                User,
+                new CreateCourseVersionStatusDTO()
+                {
+                    CourseVersionId = courseVersion.Id,
+                    Status = 3
+                }
+            );
+
+            if (responseDto.StatusCode == 500)
+            {
+                return responseDto;
+            }
+
+            return new ResponseDTO()
+            {
+                Result = null,
+                IsSuccess = true,
+                Message = "Reject course version successfully",
+                StatusCode = 200
+            };
+        }
+        catch (Exception e)
+        {
+            return new ResponseDTO()
+            {
+                Result = null,
+                IsSuccess = false,
+                Message = e.Message,
+                StatusCode = 500
+            };
+        }
+    }
+
+    public async Task<ResponseDTO> SubmitCourseVersion
+    (
+        ClaimsPrincipal User,
+        Guid courseVersionId
+    )
+    {
+        try
+        {
+            var courseVersion = await _unitOfWork.CourseVersionRepository.GetAsync(x => x.Id == courseVersionId);
+
+            if (courseVersion is null)
+            {
+                return new ResponseDTO()
+                {
+                    Result = null,
+                    IsSuccess = false,
+                    Message = "Course version was not found",
+                    StatusCode = 404
+                };
+            }
+
+            switch (courseVersion.CurrentStatus)
+            {
+                case 1:
+                {
+                    return new ResponseDTO()
+                    {
+                        Message = "Course version have been submitted",
+                        StatusCode = 401,
+                        IsSuccess = false,
+                        Result = null
+                    };
+                }
+                case 2:
+                {
+                    return new ResponseDTO()
+                    {
+                        Message = "Course version have been accepted",
+                        StatusCode = 401,
+                        IsSuccess = false,
+                        Result = null
+                    };
+                }
+                case 4:
+                {
+                    return new ResponseDTO()
+                    {
+                        Message = "Course version have been merged",
+                        StatusCode = 401,
+                        IsSuccess = false,
+                        Result = null
+                    };
+                }
+                case 5:
+                {
+                    return new ResponseDTO()
+                    {
+                        Message = "Course version have been removed",
+                        StatusCode = 401,
+                        IsSuccess = false,
+                        Result = null
+                    };
+                }
+                default:
+                {
+                    courseVersion.CurrentStatus = 1;
+                    break;
+                }
+            }
+
+            _unitOfWork.CourseVersionRepository.Update(courseVersion);
+
+            var responseDto = await _courseVersionStatusService.CreateCourseVersionStatus
+            (
+                User,
+                new CreateCourseVersionStatusDTO()
+                {
+                    CourseVersionId = courseVersion.Id,
+                    Status = 1
+                }
+            );
+
+            if (responseDto.StatusCode == 500)
+            {
+                return responseDto;
+            }
+
+            return new ResponseDTO()
+            {
+                Result = null,
+                IsSuccess = true,
+                Message = "Submit course version successfully",
+                StatusCode = 200
+            };
+        }
+        catch (Exception e)
+        {
+            return new ResponseDTO()
+            {
+                Result = null,
+                IsSuccess = false,
+                Message = e.Message,
+                StatusCode = 500
+            };
+        }
+    }
+
+    public async Task<ResponseDTO> MergeCourseVersion
+    (
+        ClaimsPrincipal User,
+        Guid courseVersionId
+    )
+    {
+        try
+        {
+            var courseVersion = await _unitOfWork.CourseVersionRepository.GetAsync(x => x.Id == courseVersionId);
+            if (courseVersion is null)
+            {
+                return new ResponseDTO()
+                {
+                    Result = null,
+                    IsSuccess = false,
+                    Message = "Course version was not found",
+                    StatusCode = 404
+                };
+            }
+
+            switch (courseVersion.CurrentStatus)
+            {
+                case 0:
+                {
+                    return new ResponseDTO()
+                    {
+                        Message = "Course version have not been submit",
+                        StatusCode = 401,
+                        IsSuccess = false,
+                        Result = null
+                    };
+                }
+                case 1:
+                {
+                    return new ResponseDTO()
+                    {
+                        Message = "Course version have been submitted",
+                        StatusCode = 401,
+                        IsSuccess = false,
+                        Result = null
+                    };
+                }
+                case 4:
+                {
+                    return new ResponseDTO()
+                    {
+                        Message = "Course version have been merged",
+                        StatusCode = 401,
+                        IsSuccess = false,
+                        Result = null
+                    };
+                }
+                case 5:
+                {
+                    return new ResponseDTO()
+                    {
+                        Message = "Course version have been removed",
+                        StatusCode = 401,
+                        IsSuccess = false,
+                        Result = null
+                    };
+                }
+                default:
+                {
+                    courseVersion.CurrentStatus = 4;
+                    break;
+                }
+            }
+
+            var course = await _unitOfWork.CourseRepository.GetAsync(x => x.Id == courseVersion.CourseId);
+
+            if (course is null)
+            {
+                return new ResponseDTO()
+                {
+                    Message = "Course was not found",
+                    StatusCode = 404,
+                    IsSuccess = false,
+                    Result = null
+                };
+            }
+
+            course.CourseVersionId = courseVersion.Id;
+
+            _unitOfWork.CourseVersionRepository.Update(courseVersion);
+            _unitOfWork.CourseRepository.Update(course);
+            await _unitOfWork.SaveAsync();
+
+            var responseDto = await _courseVersionStatusService.CreateCourseVersionStatus
+            (
+                User,
+                new CreateCourseVersionStatusDTO()
+                {
+                    CourseVersionId = courseVersion.Id,
+                    Status = 4,
+                }
+            );
+
+            if (responseDto.StatusCode == 500)
+            {
+                return responseDto;
+            }
+
+            return new ResponseDTO()
+            {
+                Result = null,
+                IsSuccess = true,
+                Message = "Submit course version successfully",
+                StatusCode = 200
+            };
+        }
+        catch (Exception e)
+        {
+            return new ResponseDTO()
+            {
+                Result = null,
+                IsSuccess = false,
+                Message = e.Message,
+                StatusCode = 500
+            };
+        }
+    }
+
+    public async Task<ResponseDTO> GetCourseVersionsComments
+    (
+        ClaimsPrincipal User,
+        Guid? courseVersionId,
+        string? filterOn,
+        string? filterQuery,
+        string? sortBy,
+        int pageNumber,
+        int pageSize
+    )
+    {
+        try
+        {
+            // Lấy role xem có phải admin không
+            var userRole = User.Claims.FirstOrDefault(x => x.Type == ClaimTypes.Role)?.Value;
+
+            IEnumerable<CourseVersionComment> comments;
+
+            if (userRole == StaticUserRoles.Admin)
+            {
+                // Lấy tất cả các bình luận của phiên bản khóa học theo courseVersionId
+                comments = await _unitOfWork.CourseVersionCommentRepository.GetAllAsync(x =>
+                    x.CourseVersionId == courseVersionId);
+            }
+            else
+            {
+                // Lấy các bình luận với trạng thái Activated hoặc thấp hơn
+                comments = await _unitOfWork.CourseVersionCommentRepository.GetAllAsync(x =>
+                    x.CourseVersionId == courseVersionId && x.Status <= StaticStatus.Category.Activated);
+            }
+
+            // Kiểm tra nếu danh sách bình luận là null hoặc rỗng
+            if (!comments.Any())
+            {
+                return new ResponseDTO()
+                {
+                    Message = "There are no comments",
+                    IsSuccess = true,
+                    StatusCode = 204,
+                    Result = null
+                };
+            }
+
+            var listComments = comments.ToList();
+
+            // Filter Query
+            if (!string.IsNullOrEmpty(filterOn) && !string.IsNullOrEmpty(filterQuery))
+            {
+                switch (filterOn.Trim().ToLower())
+                {
+                    case "comment":
+                        listComments = listComments.Where(x =>
+                            x.Comment.Contains(filterQuery, StringComparison.CurrentCultureIgnoreCase)).ToList();
+                        break;
+                    case "createby":
+                        listComments = listComments.Where(x =>
+                            x.CreateBy.Contains(filterQuery, StringComparison.CurrentCultureIgnoreCase)).ToList();
+                        break;
+                    case "updateby":
+                        listComments = listComments.Where(x =>
+                            x.UpdateBy.Contains(filterQuery, StringComparison.CurrentCultureIgnoreCase)).ToList();
+                        break;
+                    case "createtime":
+                        listComments = listComments.Where(x =>
+                                x.CreateTime.HasValue && x.CreateTime.Value.Date == DateTime.Parse(filterQuery).Date)
+                            .ToList();
+                        break;
+                    case "updatetime":
+                        listComments = listComments.Where(x =>
+                                x.UpdateTime.HasValue && x.UpdateTime.Value.Date == DateTime.Parse(filterQuery).Date)
+                            .ToList();
+                        break;
+                    case "status":
+                        if (int.TryParse(filterQuery, out var status))
+                        {
+                            listComments = listComments.Where(x => x.Status == status).ToList();
+                        }
+
+                        break;
+                    default:
+                        break;
+                }
+            }
+
+            // Sort Query
+            if (!string.IsNullOrEmpty(sortBy))
+            {
+                switch (sortBy.Trim().ToLower())
+                {
+                    case "comment":
+                        listComments = listComments.OrderBy(x => x.Comment).ToList();
+                        break;
+                    case "createby":
+                        listComments = listComments.OrderBy(x => x.CreateBy).ToList();
+                        break;
+                    case "updateby":
+                        listComments = listComments.OrderBy(x => x.UpdateBy).ToList();
+                        break;
+                    case "createtime":
+                        listComments = listComments.OrderBy(x => x.CreateTime).ToList();
+                        break;
+                    case "updatetime":
+                        listComments = listComments.OrderBy(x => x.UpdateTime).ToList();
+                        break;
+                    case "status":
+                        listComments = listComments.OrderBy(x => x.Status).ToList();
+                        break;
+                    default:
+                        break;
+                }
+            }
+            else
+            {
+                // Sắp xếp bình luận theo thời gian tạo giảm dần nếu không có sortBy được chỉ định
+                listComments = listComments.OrderByDescending(x => x.CreateTime).ToList();
+            }
+
+            // Phân trang
+            if (pageNumber > 0 && pageSize > 0)
+            {
+                var skipResult = (pageNumber - 1) * pageSize;
+                listComments = listComments.Skip(skipResult).Take(pageSize).ToList();
+            }
+
+            // Chuyển đổi danh sách bình luận thành DTO
+            var commentsDto = listComments.Select(comment => new GetAllCommentsDTO
+            {
+                Id = comment.Id,
+                Comment = comment.Comment,
+                CreateTime = comment.CreateTime,
+                CreateBy = comment.CreateBy,
+                UpdateTime = comment.UpdateTime,
+                UpdateBy = comment.UpdateBy,
+                Status = comment.Status
+            }).ToList();
+
+            return new ResponseDTO()
+            {
+                Message = "Get course version comments successfully",
+                IsSuccess = true,
+                StatusCode = 200,
+                Result = commentsDto
+            };
+        }
+        catch (Exception e)
+        {
+            return new ResponseDTO()
+            {
+                Message = e.Message,
+                Result = null,
                 IsSuccess = false,
                 StatusCode = 500
             };
-        }*/
-        return null;
+        }
     }
 
+
+    //Lấy comment bằng id đã hoàn thành
     public async Task<ResponseDTO> GetCourseVersionComment(ClaimsPrincipal User, Guid courseVersionCommentId)
     {
-        /*try
+        try
         {
             var courseVersionComment =
                 await _unitOfWork.CourseVersionCommentRepository.GetCourseVersionCommentById(courseVersionCommentId);
@@ -367,7 +987,7 @@ public class CourseVersionService : ICourseVersionService
                 };
             }
 
-            var courseVersionCommentDto = _mapper.Map<GetCourseCommnetDTO>(courseVersionCommentId);
+            var courseVersionCommentDto = _mapper.Map<GetCourseCommnetDTO>(courseVersionComment);
 
             return new ResponseDTO()
             {
@@ -386,11 +1006,10 @@ public class CourseVersionService : ICourseVersionService
                 IsSuccess = true,
                 StatusCode = 500
             };
-        }*/
-        return null;
+        }
     }
 
-
+    //Create đã hoàn thành
     public async Task<ResponseDTO> CreateCourseVersionComment(ClaimsPrincipal User,
         CreateCourseVersionCommentsDTO createCourseVersionCommentsDTO)
     {
@@ -450,6 +1069,7 @@ public class CourseVersionService : ICourseVersionService
         }
     }
 
+    //Edit đã hoàn thành
     public async Task<ResponseDTO> EditCourseVersionComment(ClaimsPrincipal User,
         EditCourseVersionCommentsDTO editCourseVersionCommentsDTO)
     {
@@ -458,7 +1078,7 @@ public class CourseVersionService : ICourseVersionService
             //Tìm xem có đúng ID CourseVersion hay không
             var courseVersionId =
                 await _unitOfWork.CourseVersionCommentRepository.GetAsync(c =>
-                    c.Id == editCourseVersionCommentsDTO.CourseVersionId);
+                    c.Id == editCourseVersionCommentsDTO.Id);
             if (courseVersionId == null)
             {
                 return new ResponseDTO()
@@ -502,6 +1122,7 @@ public class CourseVersionService : ICourseVersionService
         }
     }
 
+    //Delete đã hoàn thành
     public async Task<ResponseDTO> RemoveCourseVersionComment(ClaimsPrincipal User,
         RemoveCourseVersionCommentDTO removeCourseVersionCommentDTO)
     {
@@ -510,7 +1131,7 @@ public class CourseVersionService : ICourseVersionService
             //Tìm xem có đúng ID CourseVersion hay không
             var courseVersionId =
                 await _unitOfWork.CourseVersionCommentRepository.GetAsync(c =>
-                    c.Id == removeCourseVersionCommentDTO.CourseVersionId);
+                    c.Id == removeCourseVersionCommentDTO.Id);
             if (courseVersionId == null)
             {
                 return new ResponseDTO()

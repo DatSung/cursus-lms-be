@@ -8,6 +8,6 @@ namespace Cursus.LMS.Model.DTO
 {
     public class RemoveCourseVersionCommentDTO
     {
-        public Guid CourseVersionId { get; set; }
+        public Guid Id { get; set; }
     }
 }

@@ -5,6 +5,7 @@ using Cursus.LMS.Service.Service;
 using DocumentFormat.OpenXml.Wordprocessing;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using System.ComponentModel.DataAnnotations;
 using System.Globalization;
 using System.Threading.Tasks;
 using Cursus.LMS.Utility.Constants;
@@ -24,7 +25,6 @@ namespace Cursus.LMS.API.Controllers
             _courseVersionService = courseVersionService;
             _courseSectionVersionService = courseSectionVersionService;
         }
-
 
         #region Course Version
 
@@ -89,93 +89,54 @@ namespace Cursus.LMS.API.Controllers
             return StatusCode(responseDto.StatusCode, responseDto);
         }
 
-        [HttpDelete]
-        [Route("{courseVersionId:guid}")]
-        public async Task<ResponseDTO> RemoveCourseVersion([FromRoute] Guid courseVersionId)
+        [HttpPut]
+        [Route("edit-course-version")]
+        public async Task<ActionResult<ResponseDTO>> EditCourseVersion
+        (
+            [FromBody] EditCourseVersionDTO editCourseVersionDto)
         {
-            try
-            {
-                return new ResponseDTO()
-                {
-                };
-            }
-            catch (Exception e)
-            {
-                return new ResponseDTO()
-                {
-                };
-            }
+            var responseDto = await _courseVersionService.EditCourseVersion(User, editCourseVersionDto);
+            return StatusCode(responseDto.StatusCode, responseDto);
         }
 
-        [HttpPut]
-        public async Task<ResponseDTO> EditCourseVersion()
+        [HttpDelete]
+        [Route("remove-course-version{courseVersionId:guid}")]
+        public async Task<ActionResult<ResponseDTO>> RemoveCourseVersion([FromRoute] Guid courseVersionId)
         {
-            try
-            {
-                return new ResponseDTO()
-                {
-                };
-            }
-            catch (Exception e)
-            {
-                return new ResponseDTO()
-                {
-                };
-            }
+            var responseDto = await _courseVersionService.RemoveCourseVersion(User, courseVersionId);
+            return StatusCode(responseDto.StatusCode, responseDto);
         }
 
         [HttpPost]
         [Route("accept-course-version/{courseVersionId:guid}")]
-        public async Task<ResponseDTO> AcceptCourseVersion([FromRoute] Guid courseVersionId)
+        public async Task<ActionResult<ResponseDTO>> AcceptCourseVersion([FromRoute] Guid courseVersionId)
         {
-            try
-            {
-                return new ResponseDTO()
-                {
-                };
-            }
-            catch (Exception e)
-            {
-                return new ResponseDTO()
-                {
-                };
-            }
+            var responseDto = await _courseVersionService.AcceptCourseVersion(User, courseVersionId);
+            return StatusCode(responseDto.StatusCode, responseDto);
         }
 
         [HttpPost]
         [Route("reject-course-version/{courseVersionId:guid}")]
-        public async Task<ResponseDTO> RejectCourseVersion([FromRoute] Guid courseVersionId)
+        public async Task<ActionResult<ResponseDTO>> RejectCourseVersion([FromRoute] Guid courseVersionId)
         {
-            try
-            {
-                return new ResponseDTO()
-                {
-                };
-            }
-            catch (Exception e)
-            {
-                return new ResponseDTO()
-                {
-                };
-            }
+            var responseDto = await _courseVersionService.RejectCourseVersion(User, courseVersionId);
+            return StatusCode(responseDto.StatusCode, responseDto);
         }
 
         [HttpPost]
         [Route("submit-course-version/{courseVersionId:guid}")]
-        public async Task<ResponseDTO> SubmitCourseVersion([FromRoute] Guid courseVersionId)
+        public async Task<ActionResult<ResponseDTO>> SubmitCourseVersion([FromRoute] Guid courseVersionId)
         {
-            try
-            {
-                return new ResponseDTO()
-                {
-                };
-            }
-            catch (Exception e)
-            {
-                return new ResponseDTO()
-                {
-                };
-            }
+            var responseDto = await _courseVersionService.SubmitCourseVersion(User, courseVersionId);
+            return StatusCode(responseDto.StatusCode, responseDto);
+        }
+
+        [HttpPost]
+        [Route("merge-course-version/{courseVersionId:guid}")]
+        public async Task<ActionResult<ResponseDTO>> MergeCourseVersion([FromRoute] Guid courseVersionId)
+        {
+            var responseDto = await _courseVersionService.MergeCourseVersion(User, courseVersionId);
+            return StatusCode(responseDto.StatusCode, responseDto);
         }
 
         #endregion
@@ -185,29 +146,28 @@ namespace Cursus.LMS.API.Controllers
 
         [HttpGet]
         [Route("comment/")]
-        public async Task<ResponseDTO> GetCourseVersions
+        public async Task<ActionResult<ResponseDTO>> GetCourseVersionsComments
         (
-            [FromQuery] Guid? courseVersionId,
+            [FromQuery] [Required] Guid courseVersionId,
             [FromQuery] string? filterOn,
             [FromQuery] string? filterQuery,
             [FromQuery] string? sortBy,
             [FromQuery] int pageNumber = 1,
-            [FromQuery] int pageSize = 5
+            [FromQuery] int pageSize = 10
         )
         {
-            /*var responseDto = await _courseVersionService.GetCourseVersions
-                (
-                    User,
-                    courseVersionId,
-                    filterOn,
-                    filterQuery,
-                    sortBy,
-                    pageNumber,
-                    pageSize
-                );*/
+            var responseDto = await _courseVersionService.GetCourseVersionsComments
+            (
+                User,
+                courseVersionId,
+                filterOn,
+                filterQuery,
+                sortBy,
+                pageNumber,
+                pageSize
+            );
 
-            //return StatusCode(responseDto.StatusCode, responseDto);
-            return null;
+            return StatusCode(responseDto.StatusCode, responseDto);
         }
 
         [HttpGet]

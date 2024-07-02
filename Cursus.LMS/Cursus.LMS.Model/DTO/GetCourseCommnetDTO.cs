@@ -8,7 +8,6 @@ namespace Cursus.LMS.Model.DTO
 {
     public class GetCourseCommnetDTO
     {
-        public Guid Id { get; set; }
         public Guid? CourseVersionId { get; set; } 
         public string? Comment { get; set; }
         public string? CreateBy { get; set; }
