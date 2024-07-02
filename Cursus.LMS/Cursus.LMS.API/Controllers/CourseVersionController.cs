@@ -1,13 +1,7 @@
-using Cursus.LMS.Model.Domain;
 using Cursus.LMS.Model.DTO;
 using Cursus.LMS.Service.IService;
-using Cursus.LMS.Service.Service;
-using DocumentFormat.OpenXml.Wordprocessing;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.ComponentModel.DataAnnotations;
-using System.Globalization;
-using System.Threading.Tasks;
 using Cursus.LMS.Utility.Constants;
 using Microsoft.AspNetCore.Authorization;
 
@@ -184,11 +178,11 @@ namespace Cursus.LMS.API.Controllers
         [Route("comment")]
         public async Task<ActionResult<ResponseDTO>> CreateCourseVersionComment
         (
-            CreateCourseVersionCommentsDTO createCourseVersionCommentsDTO
+            CreateCourseVersionCommentsDTO createCourseVersionCommentsDto
         )
         {
             var responseDto =
-                await _courseVersionService.CreateCourseVersionComment(User, createCourseVersionCommentsDTO);
+                await _courseVersionService.CreateCourseVersionComment(User, createCourseVersionCommentsDto);
             return StatusCode(responseDto.StatusCode, responseDto);
         }
 
@@ -196,10 +190,10 @@ namespace Cursus.LMS.API.Controllers
         [Route("comment")]
         public async Task<ActionResult<ResponseDTO>> EditCourseVersionComment
         (
-            EditCourseVersionCommentsDTO editCourseVersionCommentsDTO
+            EditCourseVersionCommentsDTO editCourseVersionCommentsDto
         )
         {
-            var responseDto = await _courseVersionService.EditCourseVersionComment(User, editCourseVersionCommentsDTO);
+            var responseDto = await _courseVersionService.EditCourseVersionComment(User, editCourseVersionCommentsDto);
             return StatusCode(responseDto.StatusCode, responseDto);
         }
 
@@ -259,11 +253,11 @@ namespace Cursus.LMS.API.Controllers
         [Authorize(Roles = StaticUserRoles.Instructor)]
         public async Task<ActionResult<ResponseDTO>> CreateCourseSection
         (
-            CreateCourseSectionVersionDTO createCourseSectionVersionDTO
+            CreateCourseSectionVersionDTO createCourseSectionVersionDto
         )
         {
             var responseDto =
-                await _courseSectionVersionService.CreateCourseSection(User, createCourseSectionVersionDTO);
+                await _courseSectionVersionService.CreateCourseSection(User, createCourseSectionVersionDto);
             return StatusCode(responseDto.StatusCode, responseDto);
         }
 
@@ -271,10 +265,10 @@ namespace Cursus.LMS.API.Controllers
         [Route("edit-course-section-version")]
         public async Task<ActionResult<ResponseDTO>> EditCourseSection
         (
-            EditCourseSectionVersionDTO editCourseSectionVersionDTO
+            EditCourseSectionVersionDTO createCourseSectionVersionDto
         )
         {
-            var responseDto = await _courseSectionVersionService.EditCourseSection(User, editCourseSectionVersionDTO);
+            var responseDto = await _courseSectionVersionService.EditCourseSection(User, createCourseSectionVersionDto);
             return StatusCode(responseDto.StatusCode, responseDto);
         }
 
