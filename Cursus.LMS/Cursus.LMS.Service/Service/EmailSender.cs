@@ -90,7 +90,7 @@ namespace Cursus.LMS.Service.Service
         public async Task<bool> SendEmailForAdminAboutNewCourse(string toMail)
         {
             // Truy vấn cơ sở dữ liệu để lấy template
-            var template = await _unitOfWork.EmailTemplateRepository.GetAsync(t => t.TemplateName == "Notification For Admin");
+            var template = await _unitOfWork.EmailTemplateRepository.GetAsync(t => t.TemplateName == "NotificationForAdminAboutNewCourse");
             var courseStatus = await _unitOfWork.CourseVersionRepository.GetAsync(z => z.CurrentStatus == 0);
             if (template == null)
             {
@@ -106,7 +106,75 @@ namespace Cursus.LMS.Service.Service
                 <h1>{template.SubjectLine}</h1>
                 <h2>{template.PreHeaderText}</h2>
                 <p>{template.BodyContent}</p>
-                <p>{courseStatus.CurrentStatus}New</p>
+                <p>The new course status: {courseStatus.CurrentStatus}</p>
+                {template.FooterContent}
+            </body>
+            </html>";
+
+            return await _emailService.SendEmailAsync(toMail, subject, body);
+        }
+
+        /// <summary>
+        /// Generic method for sending email based on template
+        /// </summary>
+        /// <param name="toMail">Email of recipient</param>
+        /// <param name="templateName">Name of the email template</param>
+        /// <param name="replacementValue">Value to replace in the template (like link or token)</param>
+        /// <returns></returns>
+        public async Task<bool> SendApproveEmailForInstructorAboutNewCourse(string toMail)
+        {
+            // Truy vấn cơ sở dữ liệu để lấy template
+            var template = await _unitOfWork.EmailTemplateRepository.GetAsync(t => t.TemplateName == "ApproveInstructorCourse");
+            var courseStatus = await _unitOfWork.CourseVersionRepository.GetAsync(z => z.CurrentStatus == 0);
+            if (template == null)
+            {
+                // Xử lý khi template không tồn tại
+                throw new Exception("Email template not found");
+            }
+
+            // Sử dụng thông tin từ template để tạo email
+            string subject = template.SubjectLine;
+            string body = $@"
+            <html>
+            <body>
+                <h1>{template.SubjectLine}</h1>
+                <h2>{template.PreHeaderText}</h2>
+                <p>{template.BodyContent}</p>
+                <p>The new course status: {courseStatus.CurrentStatus}</p>
+                {template.FooterContent}
+            </body>
+            </html>";
+
+            return await _emailService.SendEmailAsync(toMail, subject, body);
+        }
+
+        /// <summary>
+        /// Generic method for sending email based on template
+        /// </summary>
+        /// <param name="toMail">Email of recipient</param>
+        /// <param name="templateName">Name of the email template</param>
+        /// <param name="replacementValue">Value to replace in the template (like link or token)</param>
+        /// <returns></returns>
+        public async Task<bool> SendRejectEmailForInstructorAboutNewCourse(string toMail)
+        {
+            // Truy vấn cơ sở dữ liệu để lấy template
+            var template = await _unitOfWork.EmailTemplateRepository.GetAsync(t => t.TemplateName == "RejectInstructorCourse");
+            var courseStatus = await _unitOfWork.CourseVersionRepository.GetAsync(z => z.CurrentStatus == 0);
+            if (template == null)
+            {
+                // Xử lý khi template không tồn tại
+                throw new Exception("Email template not found");
+            }
+
+            // Sử dụng thông tin từ template để tạo email
+            string subject = template.SubjectLine;
+            string body = $@"
+            <html>
+            <body>
+                <h1>{template.SubjectLine}</h1>
+                <h2>{template.PreHeaderText}</h2>
+                <p>{template.BodyContent}</p>
+                <p>The new course status: {courseStatus.CurrentStatus}</p>
                 {template.FooterContent}
             </body>
             </html>";
