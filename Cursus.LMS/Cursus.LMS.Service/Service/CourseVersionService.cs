@@ -6,7 +6,6 @@ using Cursus.LMS.Model.DTO;
 using Cursus.LMS.Service.IService;
 using Cursus.LMS.Utility.Constants;
 using Microsoft.IdentityModel.Tokens;
-using CreateCourseVersionCommentsDTO = Cursus.LMS.Model.DTO.CreateCourseVersionCommentsDTO;
 
 namespace Cursus.LMS.Service.Service;
 
