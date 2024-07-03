@@ -1,5 +1,6 @@
 ﻿using System.Security.Claims;
 using Cursus.LMS.Model.DTO;
+using Microsoft.AspNetCore.Http;
 
 namespace Cursus.LMS.Service.IService;
 
@@ -42,6 +43,19 @@ public interface ISectionDetailsVersionService
 
     Task<ResponseDTO> RemoveSectionDetailsVersion
     (
-        ClaimsPrincipal User, Guid detailsId
+        ClaimsPrincipal User,
+        Guid detailsId
+    );
+
+    Task<ResponseDTO> UploadSectionDetailsVersionContent
+    (
+        ClaimsPrincipal User,
+        IFormFile file
+    );
+
+    Task<ResponseDTO> DisplaySectionDetailsVersionContent
+    (
+        ClaimsPrincipal User,
+        string filePath
     );
 }
