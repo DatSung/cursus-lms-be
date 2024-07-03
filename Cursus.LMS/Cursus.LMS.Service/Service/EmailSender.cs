@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Cursus.LMS.Service.IService;
 using Cursus.LMS.DataAccess.IRepository;
+using Microsoft.Extensions.Configuration;
 using Cursus.LMS.Model.DTO;
 using Cursus.LMS.Utility.Constants;
 using Cursus.LMS.Model.Domain;
@@ -16,6 +17,15 @@ namespace Cursus.LMS.Service.Service
     {
         private readonly IEmailService _emailService;
         private readonly IUnitOfWork _unitOfWork;
+<<<<<<< HEAD
+        private readonly IConfiguration _configuration;
+
+        public EmailSender(IEmailService emailService, IUnitOfWork unitOfWork, IConfiguration configuration)
+        {
+            _emailService = emailService;
+            _unitOfWork = unitOfWork;
+            _configuration = configuration;
+=======
         private readonly UserManager<ApplicationUser> _userManager;
 
         public EmailSender(IEmailService emailService, IUnitOfWork unitOfWork, UserManager<ApplicationUser> userManager)
@@ -23,8 +33,9 @@ namespace Cursus.LMS.Service.Service
             _emailService = emailService;
             _unitOfWork = unitOfWork;
             _userManager = userManager;
+>>>>>>> 0abf338af4b19e23ee49d65a8cdf1cc2a669168c
         }
-
+        
         /// <summary>
         /// This method for sending verify email with template
         /// </summary>
@@ -45,6 +56,23 @@ namespace Cursus.LMS.Service.Service
         public async Task<bool> SendEmailForInstructorApproval(string toMail, string token)
         {
             return await SendEmailFromTemplate(toMail, "InstructorApprovalEmail", token);
+        }
+        
+        // Send email for all student enroll into inactive courses
+        public async Task<bool> SendEmailInactiveCourse(string instructorEmail, string instructorName, string courseTitle, List<string> studentEmails)
+        {
+            try
+            {
+                foreach (var studentEmail in studentEmails)
+                {
+                    await SendEmailInactiveCourseTemplate(studentEmail, "InactiveCourseEmail", instructorEmail, instructorName, courseTitle);
+                }
+                return true;
+            }
+            catch (Exception)
+            {
+                return false;
+            }
         }
 
         /// <summary>
@@ -80,6 +108,18 @@ namespace Cursus.LMS.Service.Service
 
             return await _emailService.SendEmailAsync(toMail, subject, body);
         }
+<<<<<<< HEAD
+        
+        private async Task<bool> SendEmailInactiveCourseTemplate(string studentEmail, string templateName, string instructorEmail, string instructorName, string courseTitle)
+        {
+            var template = await _unitOfWork.EmailTemplateRepository.GetAsync(t => t.TemplateName == templateName);
+
+            if (template == null)
+            {
+                throw new Exception("Email template not found");
+            }
+            
+=======
         /// <summary>
         /// Generic method for sending email based on template
         /// </summary>
@@ -99,24 +139,33 @@ namespace Cursus.LMS.Service.Service
             }
 
             // Sử dụng thông tin từ template để tạo email
+>>>>>>> 0abf338af4b19e23ee49d65a8cdf1cc2a669168c
             string subject = template.SubjectLine;
             string body = $@"
             <html>
             <body>
                 <h1>{template.SubjectLine}</h1>
                 <h2>{template.PreHeaderText}</h2>
+<<<<<<< HEAD
+                <p>{template.BodyContent.Replace("{courseTitle}", courseTitle).Replace("instructorName", instructorName)}</p>
+=======
                 <p>{template.BodyContent}</p>
                 <p>{courseStatus.CurrentStatus}New</p>
+>>>>>>> 0abf338af4b19e23ee49d65a8cdf1cc2a669168c
                 {template.FooterContent}
             </body>
             </html>";
 
+<<<<<<< HEAD
+            return await _emailService.SendEmailInactiveCourseAsync(instructorEmail, studentEmail, subject, body);
+=======
             return await _emailService.SendEmailAsync(toMail, subject, body);
         }
 
         public Task<bool> SendEmailForInstructorApproval(string toMail, Guid instructorId)
         {
             throw new NotImplementedException();
+>>>>>>> 0abf338af4b19e23ee49d65a8cdf1cc2a669168c
         }
     }
 }

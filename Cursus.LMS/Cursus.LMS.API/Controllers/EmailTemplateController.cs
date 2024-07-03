@@ -2,7 +2,10 @@
 using Cursus.LMS.Model.Domain;
 using Cursus.LMS.Model.DTO;
 using Cursus.LMS.Service.IService;
+<<<<<<< HEAD
+=======
 using Microsoft.AspNetCore.Identity;
+>>>>>>> 0abf338af4b19e23ee49d65a8cdf1cc2a669168c
 using Microsoft.AspNetCore.Mvc;
 
 namespace Cursus.LMS.API.Controllers
@@ -13,6 +16,14 @@ namespace Cursus.LMS.API.Controllers
     public class EmailTemplateController : ControllerBase
     {
         private readonly IUnitOfWork _unitOfWork;
+<<<<<<< HEAD
+        private readonly IEmailService _emailService;
+
+        public EmailTemplateController(IUnitOfWork unitOfWork, IEmailService emailService)
+        {
+            _unitOfWork = unitOfWork;
+            _emailService = emailService;
+=======
         private readonly IEmailSender _emailService;
 
 
@@ -21,6 +32,7 @@ namespace Cursus.LMS.API.Controllers
         {
             _unitOfWork = unitOfWork;
             _emailService = emailSender;
+>>>>>>> 0abf338af4b19e23ee49d65a8cdf1cc2a669168c
         }
 
         /// <summary>
@@ -28,15 +40,17 @@ namespace Cursus.LMS.API.Controllers
         /// </summary>
         /// <returns>Danh sách các mẫu email.</returns>
         [HttpGet]
-        public async Task<ActionResult<ResponseDTO>> GetAllEmailTemplates()
+        public async Task<ActionResult<ResponseDTO>> GetAllEmailTemplates(
+            [FromQuery] string? filterOn,
+            [FromQuery] string? filterQuery,
+            [FromQuery] string? sortBy,
+            [FromQuery] bool? isAscending,
+            [FromQuery] int pageNumber = 1,
+            [FromQuery] int pageSize = 10)
         {
-            var emailTemplates = await _unitOfWork.EmailTemplateRepository.GetAllAsync();
-            return Ok(new ResponseDTO
-            {
-                Result = emailTemplates,
-                IsSuccess = true,
-                Message = "Get email template successfully"
-            });
+            // var emailTemplates = await _unitOfWork.EmailTemplateRepository.GetAllAsync();
+            var responseDto = await _emailService.GetAll(User, filterOn, filterQuery, sortBy, isAscending, pageNumber, pageSize);
+            return StatusCode(responseDto.StatusCode, responseDto);
         }
 
         /// <summary>
