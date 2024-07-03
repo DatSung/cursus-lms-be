@@ -352,6 +352,38 @@ namespace Cursus.LMS.API.Controllers
             return StatusCode(responseDto.StatusCode, responseDto);
         }
 
+        [HttpPost]
+        [Route("section/details/content")]
+        public async Task<ActionResult<ResponseDTO>> UploadSectionDetailsVersionContent
+        (
+            UploadSectionDetailsVersionContentDTO uploadSectionDetailsVersionContentDto
+        )
+        {
+            var responseDto =
+                await _sectionDetailsVersionService.UploadSectionDetailsVersionContent
+                (
+                    User,
+                    uploadSectionDetailsVersionContentDto
+                );
+            return StatusCode(responseDto.StatusCode, responseDto);
+        }
+
+        [HttpGet]
+        [Route("section/details/content/{filePath}")]
+        public async Task<ActionResult<ResponseDTO>> UploadSectionDetailsVersionContent
+        (
+            [FromRoute] string filePath
+        )
+        {
+            var responseDto =
+                await _sectionDetailsVersionService.DisplaySectionDetailsVersionContent
+                (
+                    User,
+                    filePath
+                );
+            return StatusCode(responseDto.StatusCode, responseDto);
+        }
+
         #endregion
     }
 }

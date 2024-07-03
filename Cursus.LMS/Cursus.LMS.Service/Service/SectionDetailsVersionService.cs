@@ -124,7 +124,7 @@ public class SectionDetailsVersionService : ISectionDetailsVersionService
     public Task<ResponseDTO> UploadSectionDetailsVersionContent
     (
         ClaimsPrincipal User,
-        IFormFile file
+        UploadSectionDetailsVersionContentDTO uploadSectionDetailsVersionContentDto
     )
     {
         throw new NotImplementedException();

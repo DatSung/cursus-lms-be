@@ -50,7 +50,7 @@ public interface ISectionDetailsVersionService
     Task<ResponseDTO> UploadSectionDetailsVersionContent
     (
         ClaimsPrincipal User,
-        IFormFile file
+        UploadSectionDetailsVersionContentDTO uploadSectionDetailsVersionContentDto
     );
 
     Task<ResponseDTO> DisplaySectionDetailsVersionContent
