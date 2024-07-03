@@ -1,11 +1,6 @@
 ﻿using Cursus.LMS.DataAccess.IRepository;
-using Cursus.LMS.Model.Domain;
 using Cursus.LMS.Model.DTO;
 using Cursus.LMS.Service.IService;
-<<<<<<< HEAD
-=======
-using Microsoft.AspNetCore.Identity;
->>>>>>> 0abf338af4b19e23ee49d65a8cdf1cc2a669168c
 using Microsoft.AspNetCore.Mvc;
 
 namespace Cursus.LMS.API.Controllers
@@ -16,23 +11,14 @@ namespace Cursus.LMS.API.Controllers
     public class EmailTemplateController : ControllerBase
     {
         private readonly IUnitOfWork _unitOfWork;
-<<<<<<< HEAD
         private readonly IEmailService _emailService;
+        private readonly IEmailSender _emailSender;
 
-        public EmailTemplateController(IUnitOfWork unitOfWork, IEmailService emailService)
+        public EmailTemplateController(IUnitOfWork unitOfWork, IEmailService emailService, IEmailSender emailSender)
         {
             _unitOfWork = unitOfWork;
             _emailService = emailService;
-=======
-        private readonly IEmailSender _emailService;
-
-
-
-        public EmailTemplateController(IUnitOfWork unitOfWork ,IEmailSender emailSender)
-        {
-            _unitOfWork = unitOfWork;
-            _emailService = emailSender;
->>>>>>> 0abf338af4b19e23ee49d65a8cdf1cc2a669168c
+            _emailSender = emailSender;
         }
 
         /// <summary>
@@ -162,7 +148,48 @@ namespace Cursus.LMS.API.Controllers
 
             try
             {
-                bool result = await _emailService.SendEmailForAdminAboutNewCourse(toMail);
+                bool result = await _emailSender.SendEmailForAdminAboutNewCourse(toMail);
+                response.IsSuccess = result;
+                response.Message = result ? "Email sent successfully." : "Failed to send email.";
+            }
+            catch (Exception ex)
+            {
+                response.IsSuccess = false;
+                response.Message = ex.Message;
+            }
+
+            return Ok(response);
+        }
+
+
+        [HttpGet("Approved-notice-for-instructor-about-new-course")]
+        public async Task<ActionResult<ResponseDTO>> SendApproveEmailForInstructorAboutNewCourse(string toMail)
+        {
+            var response = new ResponseDTO();
+
+            try
+            {
+                bool result = await _emailSender.SendApproveEmailForInstructorAboutNewCourse(toMail);
+                response.IsSuccess = result;
+                response.Message = result ? "Email sent successfully." : "Failed to send email.";
+            }
+            catch (Exception ex)
+            {
+                response.IsSuccess = false;
+                response.Message = ex.Message;
+            }
+
+            return Ok(response);
+        }
+
+        [HttpGet("Rejected-notice-for-instructor-about-new-course")]
+        public async Task<ActionResult<ResponseDTO>> SendRejectEmailForInstructorAboutNewCourse(string toMail)
+        {
+            var response = new ResponseDTO();
+
+            try
+            {
+                bool result = await _emailSender.SendRejectEmailForInstructorAboutNewCourse(toMail);
                 response.IsSuccess = result;
                 response.Message = result ? "Email sent successfully." : "Failed to send email.";
             }
