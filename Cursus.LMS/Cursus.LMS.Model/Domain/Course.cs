@@ -6,7 +6,6 @@ namespace Cursus.LMS.Model.Domain;
 public class Course : StateEntity<string, string, string, string, int>
 {
     [Key] public Guid Id { get; set; }
-
     public Guid? InstructorId { get; set; }
     [ForeignKey("InstructorId")] public virtual Instructor? Instructor { get; set; }
     public string? Code { get; set; }
