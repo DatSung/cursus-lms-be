@@ -325,7 +325,7 @@ public class CourseSectionVersionService : ICourseSectionVersionService
 
             return new ResponseDTO()
             {
-                Result = null,
+                Result = courseSectionVersion.Id,
                 Message = "Create new course section version successfully",
                 IsSuccess = true,
                 StatusCode = 200

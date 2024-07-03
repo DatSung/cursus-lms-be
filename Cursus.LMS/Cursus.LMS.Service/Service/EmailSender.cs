@@ -1,12 +1,6 @@
-﻿using System;
-using System.Net;
-using System.Net.Mail;
-using System.Text;
-using System.Threading.Tasks;
-using Cursus.LMS.Service.IService;
+﻿using Cursus.LMS.Service.IService;
 using Cursus.LMS.DataAccess.IRepository;
-using Cursus.LMS.Model.DTO;
-using Cursus.LMS.Utility.Constants;
+using Microsoft.Extensions.Configuration;
 using Cursus.LMS.Model.Domain;
 using Microsoft.AspNetCore.Identity;
 
@@ -16,13 +10,15 @@ namespace Cursus.LMS.Service.Service
     {
         private readonly IEmailService _emailService;
         private readonly IUnitOfWork _unitOfWork;
+        private readonly IConfiguration _configuration;
         private readonly UserManager<ApplicationUser> _userManager;
-
-        public EmailSender(IEmailService emailService, IUnitOfWork unitOfWork, UserManager<ApplicationUser> userManager)
+        
+        public EmailSender(IConfiguration configuration, IEmailService emailService, IUnitOfWork unitOfWork, UserManager<ApplicationUser> userManager)
         {
             _emailService = emailService;
             _unitOfWork = unitOfWork;
             _userManager = userManager;
+            _configuration = configuration;
         }
 
         /// <summary>
@@ -45,6 +41,46 @@ namespace Cursus.LMS.Service.Service
         public async Task<bool> SendEmailForInstructorApproval(string toMail, string token)
         {
             return await SendEmailFromTemplate(toMail, "InstructorApprovalEmail", token);
+        }
+        
+        // Send email for all student enroll into inactive courses
+        public async Task<bool> SendEmailInactiveCourse(string instructorEmail, string instructorName, string courseTitle, List<string> studentEmails)
+        {
+            try
+            {
+                foreach (var studentEmail in studentEmails)
+                {
+                    await SendEmailInactiveCourseTemplate(studentEmail, "InactiveCourseEmail", instructorEmail, instructorName, courseTitle);
+                }
+                return true;
+            }
+            catch (Exception)
+            {
+                return false;
+            }
+        }
+        
+        private async Task<bool> SendEmailInactiveCourseTemplate(string studentEmail, string templateName, string instructorEmail, string instructorName, string courseTitle)
+        {
+            var template = await _unitOfWork.EmailTemplateRepository.GetAsync(t => t.TemplateName == templateName);
+
+            if (template == null)
+            {
+                throw new Exception("Email template not found");
+            }
+            
+            string subject = template.SubjectLine;
+            string body = $@"
+            <html>
+            <body>
+                <h1>{template.SubjectLine}</h1>
+                <h2>{template.PreHeaderText}</h2>
+                <p>{template.BodyContent.Replace("{courseTitle}", courseTitle).Replace("instructorName", instructorName)}</p>
+                {template.FooterContent}
+            </body>
+            </html>";
+
+            return await _emailService.SendEmailInactiveCourseAsync(instructorEmail, studentEmail, subject, body);
         }
 
         /// <summary>
@@ -90,7 +126,75 @@ namespace Cursus.LMS.Service.Service
         public async Task<bool> SendEmailForAdminAboutNewCourse(string toMail)
         {
             // Truy vấn cơ sở dữ liệu để lấy template
-            var template = await _unitOfWork.EmailTemplateRepository.GetAsync(t => t.TemplateName == "Notification For Admin");
+            var template = await _unitOfWork.EmailTemplateRepository.GetAsync(t => t.TemplateName == "NotificationForAdminAboutNewCourse");
+            var courseStatus = await _unitOfWork.CourseVersionRepository.GetAsync(z => z.CurrentStatus == 0);
+            if (template == null)
+            {
+                // Xử lý khi template không tồn tại
+                throw new Exception("Email template not found");
+            }
+
+            // Sử dụng thông tin từ template để tạo email
+            string subject = template.SubjectLine;
+            string body = $@"
+            <html>
+            <body>
+                <h1>{template.SubjectLine}</h1>
+                <h2>{template.PreHeaderText}</h2>
+                <p>{template.BodyContent}</p>
+                <p>The new course status: {courseStatus.CurrentStatus}</p>
+                {template.FooterContent}
+            </body>
+            </html>";
+
+            return await _emailService.SendEmailAsync(toMail, subject, body);
+        }
+
+        /// <summary>
+        /// Generic method for sending email based on template
+        /// </summary>
+        /// <param name="toMail">Email of recipient</param>
+        /// <param name="templateName">Name of the email template</param>
+        /// <param name="replacementValue">Value to replace in the template (like link or token)</param>
+        /// <returns></returns>
+        public async Task<bool> SendApproveEmailForInstructorAboutNewCourse(string toMail)
+        {
+            // Truy vấn cơ sở dữ liệu để lấy template
+            var template = await _unitOfWork.EmailTemplateRepository.GetAsync(t => t.TemplateName == "ApproveInstructorCourse");
+            var courseStatus = await _unitOfWork.CourseVersionRepository.GetAsync(z => z.CurrentStatus == 0);
+            if (template == null)
+            {
+                // Xử lý khi template không tồn tại
+                throw new Exception("Email template not found");
+            }
+
+            // Sử dụng thông tin từ template để tạo email
+            string subject = template.SubjectLine;
+            string body = $@"
+            <html>
+            <body>
+                <h1>{template.SubjectLine}</h1>
+                <h2>{template.PreHeaderText}</h2>
+                <p>{template.BodyContent}</p>
+                <p>The new course status: {courseStatus.CurrentStatus}</p>
+                {template.FooterContent}
+            </body>
+            </html>";
+
+            return await _emailService.SendEmailAsync(toMail, subject, body);
+        }
+
+        /// <summary>
+        /// Generic method for sending email based on template
+        /// </summary>
+        /// <param name="toMail">Email of recipient</param>
+        /// <param name="templateName">Name of the email template</param>
+        /// <param name="replacementValue">Value to replace in the template (like link or token)</param>
+        /// <returns></returns>
+        public async Task<bool> SendRejectEmailForInstructorAboutNewCourse(string toMail)
+        {
+            // Truy vấn cơ sở dữ liệu để lấy template
+            var template = await _unitOfWork.EmailTemplateRepository.GetAsync(t => t.TemplateName == "RejectInstructorCourse");
             var courseStatus = await _unitOfWork.CourseVersionRepository.GetAsync(z => z.CurrentStatus == 0);
             if (template == null)
             {

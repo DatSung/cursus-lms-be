@@ -26,6 +26,33 @@ public class AutoMapperProfile : Profile
         CreateMap<Category, AdminCategoryDTO>()
             .ForMember(dest => dest.ParentName, opt
                 => opt.MapFrom(src => src.ParentCategory.Name)).ReverseMap();
+        
+        CreateMap<EmailTemplateDTO, EmailTemplateDTO>()
+            .ForMember(dest => dest.TemplateName, opt
+                => opt.MapFrom(src => src.TemplateName))
+            .ForMember(dest => dest.SenderName, opt
+                => opt.MapFrom(src => src.SenderName))
+            .ForMember(dest => dest.SenderEmail, opt
+                => opt.MapFrom(src => src.SenderEmail))
+            .ForMember(dest => dest.Category, opt
+                => opt.MapFrom(src => src.Category))
+            .ForMember(dest => dest.SubjectLine, opt
+                => opt.MapFrom(src => src.SubjectLine))
+            .ForMember(dest => dest.PreHeaderText, opt
+                => opt.MapFrom(src => src.PreHeaderText))
+            .ForMember(dest => dest.PersonalizationTags, opt
+                => opt.MapFrom(src => src.PersonalizationTags))
+            .ForMember(dest => dest.BodyContent, opt
+                => opt.MapFrom(src => src.BodyContent))
+            .ForMember(dest => dest.FooterContent, opt
+                => opt.MapFrom(src => src.FooterContent))
+            .ForMember(dest => dest.CallToAction, opt
+                => opt.MapFrom(src => src.CallToAction))
+            .ForMember(dest => dest.Language, opt
+                => opt.MapFrom(src => src.Language))
+            .ForMember(dest => dest.RecipientType, opt
+                => opt.MapFrom(src => src.RecipientType))
+            .ReverseMap();
 
         CreateMap<Instructor, InstructorInfoLiteDTO>()
             .ForMember(dest => dest.FullName, opt

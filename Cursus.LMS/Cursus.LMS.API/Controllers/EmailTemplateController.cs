@@ -1,8 +1,6 @@
 ﻿using Cursus.LMS.DataAccess.IRepository;
-using Cursus.LMS.Model.Domain;
 using Cursus.LMS.Model.DTO;
 using Cursus.LMS.Service.IService;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Cursus.LMS.API.Controllers
@@ -13,14 +11,14 @@ namespace Cursus.LMS.API.Controllers
     public class EmailTemplateController : ControllerBase
     {
         private readonly IUnitOfWork _unitOfWork;
-        private readonly IEmailSender _emailService;
+        private readonly IEmailService _emailService;
+        private readonly IEmailSender _emailSender;
 
-
-
-        public EmailTemplateController(IUnitOfWork unitOfWork ,IEmailSender emailSender)
+        public EmailTemplateController(IUnitOfWork unitOfWork, IEmailService emailService, IEmailSender emailSender)
         {
             _unitOfWork = unitOfWork;
-            _emailService = emailSender;
+            _emailService = emailService;
+            _emailSender = emailSender;
         }
 
         /// <summary>
@@ -28,15 +26,18 @@ namespace Cursus.LMS.API.Controllers
         /// </summary>
         /// <returns>Danh sách các mẫu email.</returns>
         [HttpGet]
-        public async Task<ActionResult<ResponseDTO>> GetAllEmailTemplates()
+        public async Task<ActionResult<ResponseDTO>> GetAllEmailTemplates(
+            [FromQuery] string? filterOn,
+            [FromQuery] string? filterQuery,
+            [FromQuery] string? sortBy,
+            [FromQuery] bool? isAscending,
+            [FromQuery] int pageNumber = 1,
+            [FromQuery] int pageSize = 10)
         {
-            var emailTemplates = await _unitOfWork.EmailTemplateRepository.GetAllAsync();
-            return Ok(new ResponseDTO
-            {
-                Result = emailTemplates,
-                IsSuccess = true,
-                Message = "Get email template successfully"
-            });
+            // var emailTemplates = await _unitOfWork.EmailTemplateRepository.GetAllAsync();
+            var responseDto =
+                await _emailService.GetAll(User, filterOn, filterQuery, sortBy, isAscending, pageNumber, pageSize);
+            return StatusCode(responseDto.StatusCode, responseDto);
         }
 
         /// <summary>
@@ -148,7 +149,7 @@ namespace Cursus.LMS.API.Controllers
 
             try
             {
-                bool result = await _emailService.SendEmailForAdminAboutNewCourse(toMail);
+                bool result = await _emailSender.SendEmailForAdminAboutNewCourse(toMail);
                 response.IsSuccess = result;
                 response.Message = result ? "Email sent successfully." : "Failed to send email.";
             }
@@ -161,5 +162,45 @@ namespace Cursus.LMS.API.Controllers
             return Ok(response);
         }
 
+
+        [HttpGet("Approved-notice-for-instructor-about-new-course")]
+        public async Task<ActionResult<ResponseDTO>> SendApproveEmailForInstructorAboutNewCourse(string toMail)
+        {
+            var response = new ResponseDTO();
+
+            try
+            {
+                bool result = await _emailSender.SendApproveEmailForInstructorAboutNewCourse(toMail);
+                response.IsSuccess = result;
+                response.Message = result ? "Email sent successfully." : "Failed to send email.";
+            }
+            catch (Exception ex)
+            {
+                response.IsSuccess = false;
+                response.Message = ex.Message;
+            }
+
+            return Ok(response);
+        }
+
+        [HttpGet("Rejected-notice-for-instructor-about-new-course")]
+        public async Task<ActionResult<ResponseDTO>> SendRejectEmailForInstructorAboutNewCourse(string toMail)
+        {
+            var response = new ResponseDTO();
+
+            try
+            {
+                bool result = await _emailSender.SendRejectEmailForInstructorAboutNewCourse(toMail);
+                response.IsSuccess = result;
+                response.Message = result ? "Email sent successfully." : "Failed to send email.";
+            }
+            catch (Exception ex)
+            {
+                response.IsSuccess = false;
+                response.Message = ex.Message;
+            }
+
+            return Ok(response);
+        }
     }
 }
