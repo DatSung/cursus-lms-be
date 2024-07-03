@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Cursus.LMS.Service.IService;
 using Cursus.LMS.DataAccess.IRepository;
+using Microsoft.Extensions.Configuration;
 using Cursus.LMS.Model.DTO;
 using Cursus.LMS.Utility.Constants;
 
@@ -14,13 +15,15 @@ namespace Cursus.LMS.Service.Service
     {
         private readonly IEmailService _emailService;
         private readonly IUnitOfWork _unitOfWork;
+        private readonly IConfiguration _configuration;
 
-        public EmailSender(IEmailService emailService, IUnitOfWork unitOfWork)
+        public EmailSender(IEmailService emailService, IUnitOfWork unitOfWork, IConfiguration configuration)
         {
             _emailService = emailService;
             _unitOfWork = unitOfWork;
+            _configuration = configuration;
         }
-
+        
         /// <summary>
         /// This method for sending verify email with template
         /// </summary>
@@ -41,6 +44,23 @@ namespace Cursus.LMS.Service.Service
         public async Task<bool> SendEmailForInstructorApproval(string toMail, string token)
         {
             return await SendEmailFromTemplate(toMail, "InstructorApprovalEmail", token);
+        }
+        
+        // Send email for all student enroll into inactive courses
+        public async Task<bool> SendEmailInactiveCourse(string instructorEmail, string instructorName, string courseTitle, List<string> studentEmails)
+        {
+            try
+            {
+                foreach (var studentEmail in studentEmails)
+                {
+                    await SendEmailInactiveCourseTemplate(studentEmail, "InactiveCourseEmail", instructorEmail, instructorName, courseTitle);
+                }
+                return true;
+            }
+            catch (Exception)
+            {
+                return false;
+            }
         }
 
         /// <summary>
@@ -75,6 +95,29 @@ namespace Cursus.LMS.Service.Service
             </html>";
 
             return await _emailService.SendEmailAsync(toMail, subject, body);
+        }
+        
+        private async Task<bool> SendEmailInactiveCourseTemplate(string studentEmail, string templateName, string instructorEmail, string instructorName, string courseTitle)
+        {
+            var template = await _unitOfWork.EmailTemplateRepository.GetAsync(t => t.TemplateName == templateName);
+
+            if (template == null)
+            {
+                throw new Exception("Email template not found");
+            }
+            
+            string subject = template.SubjectLine;
+            string body = $@"
+            <html>
+            <body>
+                <h1>{template.SubjectLine}</h1>
+                <h2>{template.PreHeaderText}</h2>
+                <p>{template.BodyContent.Replace("{courseTitle}", courseTitle).Replace("instructorName", instructorName)}</p>
+                {template.FooterContent}
+            </body>
+            </html>";
+
+            return await _emailService.SendEmailInactiveCourseAsync(instructorEmail, studentEmail, subject, body);
         }
     }
 }

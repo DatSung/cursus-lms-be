@@ -1,6 +1,6 @@
 ﻿namespace Cursus.LMS.Model.DTO;
 
-public class EmailTemplate
+public class EmailTemplateDTO
 {
     public string TemplateName { get; set; }              
     public string? SenderName { get; set; }               
