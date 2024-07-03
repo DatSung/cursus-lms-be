@@ -1,5 +1,8 @@
 ﻿using Cursus.LMS.DataAccess.IRepository;
+using Cursus.LMS.Model.Domain;
 using Cursus.LMS.Model.DTO;
+using Cursus.LMS.Service.IService;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Cursus.LMS.API.Controllers
@@ -10,10 +13,14 @@ namespace Cursus.LMS.API.Controllers
     public class EmailTemplateController : ControllerBase
     {
         private readonly IUnitOfWork _unitOfWork;
+        private readonly IEmailSender _emailService;
 
-        public EmailTemplateController(IUnitOfWork unitOfWork)
+
+
+        public EmailTemplateController(IUnitOfWork unitOfWork ,IEmailSender emailSender)
         {
             _unitOfWork = unitOfWork;
+            _emailService = emailSender;
         }
 
         /// <summary>
@@ -133,5 +140,26 @@ namespace Cursus.LMS.API.Controllers
                 Message = "You have no permission to create email"
             });
         }
+
+        [HttpGet("notice-for-admin-about-new-course")]
+        public async Task<ActionResult<ResponseDTO>> SendEmailForAdminAboutNewCourse(string toMail)
+        {
+            var response = new ResponseDTO();
+
+            try
+            {
+                bool result = await _emailService.SendEmailForAdminAboutNewCourse(toMail);
+                response.IsSuccess = result;
+                response.Message = result ? "Email sent successfully." : "Failed to send email.";
+            }
+            catch (Exception ex)
+            {
+                response.IsSuccess = false;
+                response.Message = ex.Message;
+            }
+
+            return Ok(response);
+        }
+
     }
 }
