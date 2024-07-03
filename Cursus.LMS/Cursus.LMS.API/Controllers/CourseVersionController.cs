@@ -325,6 +325,7 @@ namespace Cursus.LMS.API.Controllers
 
         [HttpPost]
         [Route("section/details")]
+        [Authorize(Roles = StaticUserRoles.Instructor)]
         public async Task<ActionResult<ResponseDTO>> CreateSectionDetailsVersion(
             [FromBody] CreateSectionDetailsVersionDTO createSectionDetailsVersionDto)
         {
