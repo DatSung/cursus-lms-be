@@ -35,7 +35,8 @@ namespace Cursus.LMS.API.Controllers
             [FromQuery] int pageSize = 10)
         {
             // var emailTemplates = await _unitOfWork.EmailTemplateRepository.GetAllAsync();
-            var responseDto = await _emailService.GetAll(User, filterOn, filterQuery, sortBy, isAscending, pageNumber, pageSize);
+            var responseDto =
+                await _emailService.GetAll(User, filterOn, filterQuery, sortBy, isAscending, pageNumber, pageSize);
             return StatusCode(responseDto.StatusCode, responseDto);
         }
 
@@ -201,6 +202,5 @@ namespace Cursus.LMS.API.Controllers
 
             return Ok(response);
         }
-
     }
 }
