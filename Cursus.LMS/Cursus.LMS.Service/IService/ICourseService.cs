@@ -1,5 +1,4 @@
 ﻿using System.Security.Claims;
-using Cursus.LMS.Model.Domain;
 using Cursus.LMS.Model.DTO;
 
 namespace Cursus.LMS.Service.IService;
@@ -13,5 +12,36 @@ public interface ICourseService
     /// <param name="User"></param>
     /// <returns></returns>
     Task<ResponseDTO> CreateFrameCourse(ClaimsPrincipal User);
-    
+
+    Task<ResponseDTO> GetCourses
+    (
+        ClaimsPrincipal User,
+        Guid? instructorId,
+        string? filterOn,
+        string? filterQuery,
+        double? fromPrice,
+        double? toPrice,
+        string? sortBy,
+        bool? isAscending,
+        int pageNumber,
+        int pageSize
+    );
+
+    Task<ResponseDTO> GetCourse
+    (
+        ClaimsPrincipal User,
+        Guid courseId
+    );
+
+    Task<ResponseDTO> ActivateCourse
+    (
+        ClaimsPrincipal User,
+        Guid courseId
+    );
+
+    Task<ResponseDTO> DeactivateCourse
+    (
+        ClaimsPrincipal User,
+        Guid courseId
+    );
 }
