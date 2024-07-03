@@ -54,6 +54,117 @@ public class FirebaseService : IFirebaseService
             Message = "Upload image successfully!"
         };
     }
+    /// <summary>
+    /// This method for upload video to firebase storage bucket
+    /// </summary>
+    /// <param name="file"></param>
+    /// <param name="folder"></param>
+    /// <returns></returns>
+    public async Task<ResponseDTO> UploadVideo(IFormFile file, Guid? courseId)
+    {
+        if (file is null || file.Length == 0)
+        {
+            return new ResponseDTO()
+            {
+                IsSuccess = false,
+                StatusCode = 400,
+                Message = "File is empty!"
+            };
+        }
+
+        var fileName = $"{Guid.NewGuid()}_{file.FileName}";
+
+        var filePath = $"{"Course"}/{courseId}/{"Videos"}/{fileName}";
+
+        string url;
+
+        await using (var stream = file.OpenReadStream())
+        {
+            var result = await _storageClient.UploadObjectAsync(_bucketName, filePath, null, stream);
+        }
+
+        return new ResponseDTO()
+        {
+            IsSuccess = true,
+            StatusCode = 200,
+            Result = filePath,
+            Message = "Upload video successfully!"
+        };
+    }
+    /// <summary>
+    /// This method for upload video to firebase storage bucket
+    /// </summary>
+    /// <param name="file"></param>
+    /// <param name="folder"></param>
+    /// <returns></returns>
+    public async Task<ResponseDTO> UploadSlide(IFormFile file, Guid? courseId)
+    {
+        if (file is null || file.Length == 0)
+        {
+            return new ResponseDTO()
+            {
+                IsSuccess = false,
+                StatusCode = 400,
+                Message = "File is empty!"
+            };
+        }
+
+        var fileName = $"{Guid.NewGuid()}_{file.FileName}";
+
+        var filePath = $"{"Course"}/{courseId}/{"Slides"}/{fileName}";
+
+        string url;
+
+        await using (var stream = file.OpenReadStream())
+        {
+            var result = await _storageClient.UploadObjectAsync(_bucketName, filePath, null, stream);
+        }
+
+        return new ResponseDTO()
+        {
+            IsSuccess = true,
+            StatusCode = 200,
+            Result = filePath,
+            Message = "Upload slide successfully!"
+        };
+    }
+    /// <summary>
+    /// This method for upload video to firebase storage bucket
+    /// </summary>
+    /// <param name="file"></param>
+    /// <param name="folder"></param>
+    /// <returns></returns>
+    public async Task<ResponseDTO> UploadDoc(IFormFile file, Guid? courseId)
+    {
+        if (file is null || file.Length == 0)
+        {
+            return new ResponseDTO()
+            {
+                IsSuccess = false,
+                StatusCode = 400,
+                Message = "File is empty!"
+            };
+        }
+
+        var fileName = $"{Guid.NewGuid()}_{file.FileName}";
+
+        var filePath = $"{"Course"}/{courseId}/{"Docs"}/{fileName}";
+
+        string url;
+
+        await using (var stream = file.OpenReadStream())
+        {
+            var result = await _storageClient.UploadObjectAsync(_bucketName, filePath, null, stream);
+        }
+
+        return new ResponseDTO()
+        {
+            IsSuccess = true,
+            StatusCode = 200,
+            Result = filePath,
+            Message = "Upload doc successfully!"
+        };
+    }
 
     /// <summary>
     /// This method for get an image from firebase storage bucket
