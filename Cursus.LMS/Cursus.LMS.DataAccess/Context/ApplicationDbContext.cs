@@ -21,34 +21,34 @@ public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
         var adminRoleId = "8fa7c7bb-daa5-a660-bf02-82301a5eb327"; // Add admin role
 
         var roles = new List<IdentityRole>
+        {
+            new IdentityRole
             {
-                new IdentityRole
-                {
-                    Id = studentRoleId,
-                    ConcurrencyStamp = StaticUserRoles.Student,
-                    Name = StaticUserRoles.Student,
-                    NormalizedName = StaticUserRoles.Student,
-                },
-                new IdentityRole
-                {
-                    Id = instructorRoleId,
-                    ConcurrencyStamp = StaticUserRoles.Instructor,
-                    Name = StaticUserRoles.Instructor,
-                    NormalizedName = StaticUserRoles.Instructor,
-                },
-                new IdentityRole
-                {
-                    Id = adminRoleId,
-                    ConcurrencyStamp = StaticUserRoles.Admin,
-                    Name = StaticUserRoles.Admin,
-                    NormalizedName = StaticUserRoles.Admin,
-                }
-            };
+                Id = studentRoleId,
+                ConcurrencyStamp = StaticUserRoles.Student,
+                Name = StaticUserRoles.Student,
+                NormalizedName = StaticUserRoles.Student,
+            },
+            new IdentityRole
+            {
+                Id = instructorRoleId,
+                ConcurrencyStamp = StaticUserRoles.Instructor,
+                Name = StaticUserRoles.Instructor,
+                NormalizedName = StaticUserRoles.Instructor,
+            },
+            new IdentityRole
+            {
+                Id = adminRoleId,
+                ConcurrencyStamp = StaticUserRoles.Admin,
+                Name = StaticUserRoles.Admin,
+                NormalizedName = StaticUserRoles.Admin,
+            }
+        };
 
         modelBuilder.Entity<IdentityRole>().HasData(roles);
 
         // Seeding admin user
-        var adminUserId = "BestZedandYasuo";
+        var adminUserId = "BestZedAndYasuo";
         var hasher = new PasswordHasher<ApplicationUser>();
         var adminUser = new ApplicationUser
         {
@@ -74,7 +74,7 @@ public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
             LockoutEnd = null,
             LockoutEnabled = true,
             AccessFailedCount = 0,
-            UpdateTime = DateTime.UtcNow
+            UpdateTime = new DateTime(2003, 1, 12)
         };
 
         modelBuilder.Entity<ApplicationUser>().HasData(adminUser);
@@ -85,26 +85,28 @@ public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
             RoleId = adminRoleId,
             UserId = adminUserId
         });
-
     }
 
-    public DbSet<ApplicationUser> ApplicationUsers { get; set; }    
+    public DbSet<ApplicationUser> ApplicationUsers { get; set; }
     public DbSet<CartDetails> CartDetails { get; set; }
     public DbSet<CartHeader> CartHeaders { get; set; }
     public DbSet<Category> Categories { get; set; }
     public DbSet<Course> Courses { get; set; }
     public DbSet<CourseReport> CourseReports { get; set; }
     public DbSet<CourseReview> CourseReviews { get; set; }
-    public DbSet<CourseSection> CourseSections { get; set; }
     public DbSet<Instructor> Instructors { get; set; }
     public DbSet<Level> Levels { get; set; }
     public DbSet<OrderDetails> OrderDetails { get; set; }
     public DbSet<OrderHeader> OrderHeaders { get; set; }
-    public DbSet<SectionDetails> SectionDetails { get; set; }
     public DbSet<Student> Students { get; set; }
     public DbSet<StudentCourse> StudentCourses { get; set; }
     public DbSet<PaymentCard> PaymentCards { get; set; }
     public DbSet<InstructorComment> InstructorComments { get; set; }
     public DbSet<InstructorRating> InstructorRatings { get; set; }
     public DbSet<EmailTemplate> EmailTemplates { get; set; }
+    public DbSet<CourseVersion> CourseVersions { get; set; }
+    public DbSet<CourseSectionVersion> CourseSectionVersions { get; set; }
+    public DbSet<SectionDetailsVersion> SectionDetailsVersions { get; set; }
+    public DbSet<CourseVersionStatus> CourseVersionStatus { get; set; }
+    public DbSet<CourseVersionComment> CourseVersionComments { get; set; }
 }

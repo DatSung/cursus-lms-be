@@ -1,14 +1,40 @@
 ﻿namespace Cursus.LMS.Model.Domain;
 
-public class StateEntity<C, U, D, R, S>
+public class StateEntity<TD, TA, TC, TM, TS>
 {
-    public C? CreatedBy { get; set; }
+    public TD? DeactivatedBy { get; set; }
+    public DateTime? DeactivatedTime { get; set; }
+    public TA? ActivatedBy { get; set; }
+    public DateTime? ActivatedTime { get; set; }
+    public TC? CreatedBy { get; set; }
     public DateTime? CreatedTime { get; set; }
-    public U? UpdatedBy { get; set; }
-    public DateTime? UpdatedTime { get; set; }
-    public D? DeletedBy { get; set; }
-    public DateTime? DeletedTime { get; set; }
-    public R? RejectedBy { get; set; }
-    public DateTime? RejectedTime { get; set; }
-    public S? Status { get; set; }
+    public TM? MergedBy { get; set; }
+    public DateTime? MergedTime { get; set; }
+    public TS? Status { get; set; }
+
+    public string StatusDescription
+    {
+        get
+        {
+            switch (Status)
+            {
+                case 0:
+                {
+                    return "Pending";
+                }
+                case 1:
+                {
+                    return "Activated";
+                }
+                case 2:
+                {
+                    return "Deactivated";
+                }
+                default:
+                {
+                    return "Pending";
+                }
+            }
+        }
+    }
 }

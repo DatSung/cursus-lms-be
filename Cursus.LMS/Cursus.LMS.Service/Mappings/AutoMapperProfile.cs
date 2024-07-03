@@ -1,4 +1,4 @@
-﻿using AutoMapper;
+using AutoMapper;
 using Cursus.LMS.Model.Domain;
 using Cursus.LMS.Model.DTO;
 using Cursus.LMS.Utility.Constants;
@@ -17,7 +17,7 @@ public class AutoMapperProfile : Profile
         CreateMap<CreateCategoryDTO, Category>()
             .ForMember(dest => dest.Id, opt
                 => opt.MapFrom(src => Guid.NewGuid()))
-            .ForMember(dest => dest.ParentId, opt 
+            .ForMember(dest => dest.ParentId, opt
                 => opt.MapFrom(src => src.ParentId != null ? Guid.Parse(src.ParentId) : (Guid?)null))
             .ReverseMap();
 
@@ -101,5 +101,22 @@ public class AutoMapperProfile : Profile
         CreateMap<InstructorComment, GetAllCommentsDTO>().ReverseMap();
         CreateMap<InstructorComment, CreateInstructorCommentDTO>().ReverseMap();
         CreateMap<InstructorComment, UpdateInstructorCommentDTO>().ReverseMap();
+
+
+        CreateMap<CourseVersion, GetCourseVersionDTO>().ReverseMap();
+        CreateMap<CourseVersionStatus, GetCourseVersionStatusDTO>().ReverseMap();
+
+        CreateMap<CourseVersionComment, GetCourseCommnetDTO>()
+            .ForMember(dest => dest.CourseVersionId, opt => opt.MapFrom(src => src.CourseVersionId))
+            .ForMember(dest => dest.Comment, opt => opt.MapFrom(src => src.Comment))
+            .ForMember(dest => dest.CreateBy, opt => opt.MapFrom(src => src.CreateBy))
+            .ForMember(dest => dest.CreateTime, opt => opt.MapFrom(src => src.CreateTime))
+            .ForMember(dest => dest.UpdateBy, opt => opt.MapFrom(src => src.UpdateBy))
+            .ForMember(dest => dest.UpdateTime, opt => opt.MapFrom(src => src.UpdateTime))
+            .ForMember(dest => dest.Status, opt => opt.MapFrom(src => src.Status))
+            .ReverseMap();
+
+
+        CreateMap<Course, GetCourseInfoDTO>().ReverseMap();
     }
 }
