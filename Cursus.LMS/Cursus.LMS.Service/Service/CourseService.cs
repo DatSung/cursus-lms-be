@@ -4,8 +4,7 @@ using Cursus.LMS.DataAccess.IRepository;
 using Cursus.LMS.Model.Domain;
 using Cursus.LMS.Model.DTO;
 using Cursus.LMS.Service.IService;
-using DocumentFormat.OpenXml.Office2010.ExcelAc;
-using Microsoft.IdentityModel.Tokens;
+using Cursus.LMS.Utility.Constants;
 
 namespace Cursus.LMS.Service.Service;
 
@@ -306,13 +305,126 @@ public class CourseService : ICourseService
         }
     }
 
-    public Task<ResponseDTO> ActivateCourse(ClaimsPrincipal User, Guid courseId)
+    public async Task<ResponseDTO> GetCourseInfo(ClaimsPrincipal User, Guid courseId)
     {
-        throw new NotImplementedException();
+        try
+        {
+            var course = await _unitOfWork.CourseRepository.GetAsync(x => x.Id == courseId);
+
+            if (course is null)
+            {
+                return new ResponseDTO()
+                {
+                    IsSuccess = false,
+                    StatusCode = 404,
+                    Result = null,
+                    Message = "Course was not found"
+                };
+            }
+
+            var getCourseInfoDto = _mapper.Map<GetCourseInfoDTO>(course);
+
+            return new ResponseDTO()
+            {
+                IsSuccess = true,
+                StatusCode = 200,
+                Result = getCourseInfoDto,
+                Message = "Get course information successfully"
+            };
+        }
+        catch (Exception e)
+        {
+            return new ResponseDTO()
+            {
+                Message = e.Message,
+                StatusCode = 500,
+                Result = null,
+                IsSuccess = false
+            };
+        }
     }
 
-    public Task<ResponseDTO> DeactivateCourse(ClaimsPrincipal User, Guid courseId)
+    public async Task<ResponseDTO> ActivateCourse(ClaimsPrincipal User, Guid courseId)
     {
-        throw new NotImplementedException();
+        try
+        {
+            var course = await _unitOfWork.CourseRepository.GetAsync(x => x.Id == courseId);
+
+            if (course is null)
+            {
+                return new ResponseDTO()
+                {
+                    IsSuccess = false,
+                    StatusCode = 404,
+                    Result = null,
+                    Message = "Course was not found"
+                };
+            }
+
+            course.Status = StaticCourseStatus.Activated;
+
+            _unitOfWork.CourseRepository.Update(course);
+            await _unitOfWork.SaveAsync();
+
+            return new ResponseDTO()
+            {
+                IsSuccess = true,
+                StatusCode = 200,
+                Result = null,
+                Message = "Activated course successfully"
+            };
+        }
+        catch (Exception e)
+        {
+            return new ResponseDTO()
+            {
+                Message = e.Message,
+                StatusCode = 500,
+                Result = null,
+                IsSuccess = false
+            };
+        }
+    }
+
+    public async Task<ResponseDTO> DeactivateCourse(ClaimsPrincipal User, Guid courseId)
+    {
+        try
+        {
+            var course = await _unitOfWork.CourseRepository.GetAsync(x => x.Id == courseId);
+
+            if (course is null)
+            {
+                return new ResponseDTO()
+                {
+                    IsSuccess = false,
+                    StatusCode = 404,
+                    Result = null,
+                    Message = "Course was not found"
+                };
+            }
+
+            course.Status = StaticCourseStatus.Deactivated;
+
+            _unitOfWork.CourseRepository.Update(course);
+            await _unitOfWork.SaveAsync();
+
+            return new ResponseDTO()
+            {
+                IsSuccess = true,
+                StatusCode = 200,
+                Result = null,
+                Message = "Deactivated course successfully"
+            };
+        }
+        catch (Exception e)
+        {
+            return new ResponseDTO()
+            {
+                Message = e.Message,
+                StatusCode = 500,
+                Result = null,
+                IsSuccess = false
+            };
+        }
     }
 }

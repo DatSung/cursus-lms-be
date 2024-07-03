@@ -33,6 +33,12 @@ public interface ICourseService
         Guid courseId
     );
 
+    Task<ResponseDTO> GetCourseInfo
+    (
+        ClaimsPrincipal User,
+        Guid courseId
+    );
+
     Task<ResponseDTO> ActivateCourse
     (
         ClaimsPrincipal User,

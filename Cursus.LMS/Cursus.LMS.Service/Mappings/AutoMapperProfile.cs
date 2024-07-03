@@ -78,7 +78,7 @@ public class AutoMapperProfile : Profile
 
         CreateMap<CourseVersion, GetCourseVersionDTO>().ReverseMap();
         CreateMap<CourseVersionStatus, GetCourseVersionStatusDTO>().ReverseMap();
-        
+
         CreateMap<CourseVersionComment, GetCourseCommnetDTO>()
             .ForMember(dest => dest.CourseVersionId, opt => opt.MapFrom(src => src.CourseVersionId))
             .ForMember(dest => dest.Comment, opt => opt.MapFrom(src => src.Comment))
@@ -88,5 +88,8 @@ public class AutoMapperProfile : Profile
             .ForMember(dest => dest.UpdateTime, opt => opt.MapFrom(src => src.UpdateTime))
             .ForMember(dest => dest.Status, opt => opt.MapFrom(src => src.Status))
             .ReverseMap();
+
+
+        CreateMap<Course, GetCourseInfoDTO>().ReverseMap();
     }
 }
