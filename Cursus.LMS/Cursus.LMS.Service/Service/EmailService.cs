@@ -1,20 +1,152 @@
 ﻿using System.Net;
 using System.Net.Mail;
+using System.Security.Claims;
+using AutoMapper;
 using Cursus.LMS.Model.Domain;
+using Cursus.LMS.Model.DTO;
 using Cursus.LMS.Service.IService;
 using Microsoft.Extensions.Configuration;
+using Cursus.LMS.DataAccess.IRepository;
+using Microsoft.IdentityModel.Tokens;
 
 namespace Cursus.LMS.Service.Service;
 
 public class EmailService : IEmailService
 {
     private readonly IConfiguration _configuration;
+    private readonly IUnitOfWork _unitOfWork;
+    private readonly IMapper _mapper;
 
-    public EmailService(IConfiguration configuration)
+    public EmailService(IConfiguration configuration, IUnitOfWork unitOfWork, IMapper mapper)
     {
         _configuration = configuration;
+        _unitOfWork = unitOfWork;
+        _mapper = mapper;
     }
 
+    public async Task<ResponseDTO> GetAll(
+        ClaimsPrincipal User, 
+        string? filterOn, 
+        string? filterQuery,
+        string? sortBy,
+        bool? isAscending,
+        int pageNumber,
+        int pageSize)
+    {
+        #region MyRegion
+
+        try
+        {
+            List<EmailTemplate> emailTemplates = new List<EmailTemplate>();
+
+            // Filter Query
+            if (!string.IsNullOrEmpty(filterOn) && !string.IsNullOrEmpty(filterQuery))
+            {
+                switch (filterOn.Trim().ToLower())
+                {
+                    case "templatename":
+                    {
+                        emailTemplates = _unitOfWork.EmailTemplateRepository.GetAllAsync()
+                            .GetAwaiter().GetResult().Where(x => x.TemplateName.Contains(filterQuery, StringComparison.CurrentCultureIgnoreCase)).ToList();
+                        break;
+                    }
+                   
+                    default:
+                    {
+                        emailTemplates = _unitOfWork.EmailTemplateRepository.GetAllAsync()
+                            .GetAwaiter().GetResult().ToList();
+                        break;
+                    }
+                }
+            }
+            else
+            {
+                emailTemplates = _unitOfWork.EmailTemplateRepository.GetAllAsync()
+                    .GetAwaiter().GetResult().ToList();
+            }
+
+            // Sort Query
+            if (!string.IsNullOrEmpty(sortBy))
+            {
+                switch (sortBy.Trim().ToLower())
+                {
+                    case "templatename":
+                    {
+                        emailTemplates = isAscending == true
+                            ? [.. emailTemplates.OrderBy(x => x.TemplateName)]
+                            : [.. emailTemplates.OrderByDescending(x => x.TemplateName)];
+                        break;
+                    }
+                    case "sendername":
+                    {
+                        emailTemplates = isAscending == true
+                            ? [.. emailTemplates.OrderBy(x => x.SenderName)]
+                            : [.. emailTemplates.OrderByDescending(x => x.SenderName)];
+                        break;
+                    }
+                    case "senderemail":
+                    {
+                        emailTemplates = isAscending == true
+                            ? [.. emailTemplates.OrderBy(x => x.SenderEmail)]
+                            : [.. emailTemplates.OrderByDescending(x => x.SenderEmail)];
+                        break;
+                    }
+                    case "category":
+                    {
+                        emailTemplates = isAscending == true
+                            ? [.. emailTemplates.OrderBy(x => x.Category)]
+                            : [.. emailTemplates.OrderByDescending(x => x.Category)];
+                        break;
+                    }
+                    default:
+                    {
+                        break;
+                    }
+                }
+            }
+
+            // Pagination
+            if (pageNumber > 0 && pageSize > 0)
+            {
+                var skipResult = (pageNumber - 1) * pageSize;
+                emailTemplates = emailTemplates.Skip(skipResult).Take(pageSize).ToList();
+            }
+
+            #endregion Query Parameters
+
+            if (emailTemplates.IsNullOrEmpty())
+            {
+                return new ResponseDTO()
+                {
+                    Message = "There are no emailTemplates",
+                    Result = null,
+                    IsSuccess = false,
+                    StatusCode = 404
+                };
+            }
+
+            var instructorInfoLiteDto = _mapper.Map<List<EmailTemplate>>(emailTemplates);
+
+            return new ResponseDTO()
+            {
+                Message = "Get all email template successfully",
+                Result = instructorInfoLiteDto,
+                IsSuccess = true,
+                StatusCode = 200
+            };
+        }
+        catch (Exception e)
+        {
+            return new ResponseDTO()
+            {
+                Message = e.Message,
+                Result = null,
+                IsSuccess = false,
+                StatusCode = 500
+            };
+        }
+    }
+    
     public async Task<bool> SendEmailAsync(string toEmail, string subject, string body)
     {
         // Lấy thông tin cấu hình email từ file appsettings.json
@@ -33,6 +165,33 @@ public class EmailService : IEmailService
             using var smtpClient = new SmtpClient(smtpHost, smtpPort)
             {
                 Credentials = new NetworkCredential(fromEmail, fromPassword),
+                EnableSsl = true
+            };
+            await smtpClient.SendMailAsync(message);
+            return true;
+        }
+        catch (Exception e)
+        {
+            return false;
+        }
+    }
+    
+    
+    // Send Email Inactive Course
+    public async Task<bool> SendEmailInactiveCourseAsync(string instructorEmail, string studentEmail, string subject, string body)
+    {
+        try
+        {
+            var fromPassword = _configuration["EmailSettings:FromPassword"];
+            var smtpHost = _configuration["EmailSettings:SmtpHost"];
+            var smtpPort = int.Parse(_configuration["EmailSettings:SmtpPort"]);
+            
+            var message = new MailMessage(instructorEmail, studentEmail, subject, body);
+            message.IsBodyHtml = true;
+            
+            using var smtpClient = new SmtpClient(smtpHost, smtpPort)
+            {
+                Credentials = new NetworkCredential(instructorEmail, fromPassword),
                 EnableSsl = true
             };
             await smtpClient.SendMailAsync(message);

@@ -1,12 +1,6 @@
-﻿using System;
-using System.Net;
-using System.Net.Mail;
-using System.Text;
-using System.Threading.Tasks;
-using Cursus.LMS.Service.IService;
+﻿using Cursus.LMS.Service.IService;
 using Cursus.LMS.DataAccess.IRepository;
-using Cursus.LMS.Model.DTO;
-using Cursus.LMS.Utility.Constants;
+using Microsoft.Extensions.Configuration;
 using Cursus.LMS.Model.Domain;
 using Microsoft.AspNetCore.Identity;
 
@@ -16,13 +10,15 @@ namespace Cursus.LMS.Service.Service
     {
         private readonly IEmailService _emailService;
         private readonly IUnitOfWork _unitOfWork;
+        private readonly IConfiguration _configuration;
         private readonly UserManager<ApplicationUser> _userManager;
-
-        public EmailSender(IEmailService emailService, IUnitOfWork unitOfWork, UserManager<ApplicationUser> userManager)
+        
+        public EmailSender(IConfiguration configuration, IEmailService emailService, IUnitOfWork unitOfWork, UserManager<ApplicationUser> userManager)
         {
             _emailService = emailService;
             _unitOfWork = unitOfWork;
             _userManager = userManager;
+            _configuration = configuration;
         }
 
         /// <summary>
@@ -45,6 +41,46 @@ namespace Cursus.LMS.Service.Service
         public async Task<bool> SendEmailForInstructorApproval(string toMail, string token)
         {
             return await SendEmailFromTemplate(toMail, "InstructorApprovalEmail", token);
+        }
+        
+        // Send email for all student enroll into inactive courses
+        public async Task<bool> SendEmailInactiveCourse(string instructorEmail, string instructorName, string courseTitle, List<string> studentEmails)
+        {
+            try
+            {
+                foreach (var studentEmail in studentEmails)
+                {
+                    await SendEmailInactiveCourseTemplate(studentEmail, "InactiveCourseEmail", instructorEmail, instructorName, courseTitle);
+                }
+                return true;
+            }
+            catch (Exception)
+            {
+                return false;
+            }
+        }
+        
+        private async Task<bool> SendEmailInactiveCourseTemplate(string studentEmail, string templateName, string instructorEmail, string instructorName, string courseTitle)
+        {
+            var template = await _unitOfWork.EmailTemplateRepository.GetAsync(t => t.TemplateName == templateName);
+
+            if (template == null)
+            {
+                throw new Exception("Email template not found");
+            }
+            
+            string subject = template.SubjectLine;
+            string body = $@"
+            <html>
+            <body>
+                <h1>{template.SubjectLine}</h1>
+                <h2>{template.PreHeaderText}</h2>
+                <p>{template.BodyContent.Replace("{courseTitle}", courseTitle).Replace("instructorName", instructorName)}</p>
+                {template.FooterContent}
+            </body>
+            </html>";
+
+            return await _emailService.SendEmailInactiveCourseAsync(instructorEmail, studentEmail, subject, body);
         }
 
         /// <summary>
@@ -174,7 +210,7 @@ namespace Cursus.LMS.Service.Service
                 <h1>{template.SubjectLine}</h1>
                 <h2>{template.PreHeaderText}</h2>
                 <p>{template.BodyContent}</p>
-                <p>The new course status: {courseStatus.CurrentStatus}</p>
+                <p>{courseStatus.CurrentStatus}New</p>
                 {template.FooterContent}
             </body>
             </html>";

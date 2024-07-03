@@ -2,6 +2,7 @@
 using Cursus.LMS.DataAccess.IRepository;
 using Cursus.LMS.Model.DTO;
 using Cursus.LMS.Service.IService;
+using Microsoft.AspNetCore.Http;
 using Microsoft.IdentityModel.Tokens;
 
 namespace Cursus.LMS.Service.Service;
@@ -84,24 +85,56 @@ public class SectionDetailsVersionService : ISectionDetailsVersionService
         throw new NotImplementedException();
     }
 
-    public Task<ResponseDTO> GetSectionDetailsVersion(ClaimsPrincipal User, Guid detailsId)
+    public Task<ResponseDTO> GetSectionDetailsVersion
+    (
+        ClaimsPrincipal User,
+        Guid detailsId
+    )
     {
         throw new NotImplementedException();
     }
 
-    public Task<ResponseDTO> CreateSectionDetailsVersion(ClaimsPrincipal User,
-        CreateSectionDetailsVersionDTO createSectionDetailsVersionDto)
+    public Task<ResponseDTO> CreateSectionDetailsVersion
+    (
+        ClaimsPrincipal User,
+        CreateSectionDetailsVersionDTO createSectionDetailsVersionDto
+    )
     {
         throw new NotImplementedException();
     }
 
-    public Task<ResponseDTO> EditSectionDetailsVersion(ClaimsPrincipal User,
-        EditSectionDetailsVersionDTO editSectionDetailsVersionDto)
+    public Task<ResponseDTO> EditSectionDetailsVersion
+    (
+        ClaimsPrincipal User,
+        EditSectionDetailsVersionDTO editSectionDetailsVersionDto
+    )
     {
         throw new NotImplementedException();
     }
 
-    public Task<ResponseDTO> RemoveSectionDetailsVersion(ClaimsPrincipal User, Guid detailsId)
+    public Task<ResponseDTO> RemoveSectionDetailsVersion
+    (
+        ClaimsPrincipal User,
+        Guid detailsId
+    )
+    {
+        throw new NotImplementedException();
+    }
+
+    public Task<ResponseDTO> UploadSectionDetailsVersionContent
+    (
+        ClaimsPrincipal User,
+        UploadSectionDetailsVersionContentDTO uploadSectionDetailsVersionContentDto
+    )
+    {
+        throw new NotImplementedException();
+    }
+
+    public Task<ResponseDTO> DisplaySectionDetailsVersionContent
+    (
+        ClaimsPrincipal User,
+        string filePath
+    )
     {
         throw new NotImplementedException();
     }
