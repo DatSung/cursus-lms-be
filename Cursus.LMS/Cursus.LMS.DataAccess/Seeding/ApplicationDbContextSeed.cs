@@ -7,6 +7,10 @@ namespace Cursus.LMS.DataAccess.Seeding;
 
 public static class ApplicationDbContextSeed
 {
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="modelBuilder"></param>
     public static void SeedEmailTemplate(ModelBuilder modelBuilder)
     {
         modelBuilder.Entity<EmailTemplate>().HasData(
@@ -207,6 +211,10 @@ public static class ApplicationDbContextSeed
         );
     }
 
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="modelBuilder"></param>
     public static void SeedAdminAccount(ModelBuilder modelBuilder)
     {
         var studentRoleId = "8fa7c7bb-b4dc-480d-a660-e07a90855d5d";
