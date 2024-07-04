@@ -14,17 +14,15 @@ namespace Cursus.LMS.API.Controllers
     {
         private readonly IEmailService _emailService;
         private readonly IAuthService _authService;
-        private readonly IEmailSender _emailSender;
         private ResponseDTO responseDto = new ResponseDTO();
         private readonly UserManager<ApplicationUser> _userManager;
 
         public AuthController(IEmailService emailService, IAuthService authService,
-            UserManager<ApplicationUser> userManager, IEmailSender emailSender)
+            UserManager<ApplicationUser> userManager)
         {
             _emailService = emailService;
             _authService = authService;
             _userManager = userManager;
-            _emailSender = emailSender;
         }
 
         /// <summary>

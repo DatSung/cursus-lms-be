@@ -12,13 +12,11 @@ namespace Cursus.LMS.API.Controllers
     {
         private readonly IUnitOfWork _unitOfWork;
         private readonly IEmailService _emailService;
-        private readonly IEmailSender _emailSender;
 
-        public EmailTemplateController(IUnitOfWork unitOfWork, IEmailService emailService, IEmailSender emailSender)
+        public EmailTemplateController(IUnitOfWork unitOfWork, IEmailService emailService)
         {
             _unitOfWork = unitOfWork;
             _emailService = emailService;
-            _emailSender = emailSender;
         }
 
         /// <summary>
@@ -149,7 +147,7 @@ namespace Cursus.LMS.API.Controllers
 
             try
             {
-                bool result = await _emailSender.SendEmailForAdminAboutNewCourse(toMail);
+                bool result = await _emailService.SendEmailForAdminAboutNewCourse(toMail);
                 response.IsSuccess = result;
                 response.Message = result ? "Email sent successfully." : "Failed to send email.";
             }
@@ -170,7 +168,7 @@ namespace Cursus.LMS.API.Controllers
 
             try
             {
-                bool result = await _emailSender.SendApproveEmailForInstructorAboutNewCourse(toMail);
+                bool result = await _emailService.SendApproveEmailForInstructorAboutNewCourse(toMail);
                 response.IsSuccess = result;
                 response.Message = result ? "Email sent successfully." : "Failed to send email.";
             }
@@ -190,7 +188,7 @@ namespace Cursus.LMS.API.Controllers
 
             try
             {
-                bool result = await _emailSender.SendRejectEmailForInstructorAboutNewCourse(toMail);
+                bool result = await _emailService.SendRejectEmailForInstructorAboutNewCourse(toMail);
                 response.IsSuccess = result;
                 response.Message = result ? "Email sent successfully." : "Failed to send email.";
             }

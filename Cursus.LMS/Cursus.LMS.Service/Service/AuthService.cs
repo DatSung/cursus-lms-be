@@ -28,7 +28,6 @@ public class AuthService : IAuthService
     private readonly ITokenService _tokenService;
     private readonly IMapper _mapper;
     private readonly IEmailService _emailService;
-    private readonly IEmailSender _emailSender;
     private readonly IFirebaseService _firebaseService;
     private readonly IHttpContextAccessor _httpContextAccessor;
 
@@ -44,7 +43,6 @@ public class AuthService : IAuthService
         IEmailService emailService,
         IFirebaseService firebaseService,
         IHttpContextAccessor httpContextAccessor,
-        IEmailSender emailSender,
         ITokenService tokenService, IUnitOfWork unitOfWork)
     {
         _userManagerRepository = userManagerRepository;
@@ -55,14 +53,13 @@ public class AuthService : IAuthService
         _emailService = emailService;
         _firebaseService = firebaseService;
         _httpContextAccessor = httpContextAccessor;
-        _emailSender = emailSender;
         _tokenService = tokenService;
         _unitOfWork = unitOfWork;
     }
 
     public AuthService(UserManager<ApplicationUser> object1, RoleManager<IdentityRole> object2, IConfiguration object3,
         IMapper object4, IEmailService object5, IFirebaseService object6, IHttpContextAccessor object7,
-        IEmailSender object8, ITokenService object9, IUnitOfWork object10)
+        ITokenService object9, IUnitOfWork object10)
     {
     }
 
@@ -1034,7 +1031,7 @@ public class AuthService : IAuthService
     {
         try
         {
-            await _emailSender.SendVerifyEmail(email, confirmationLink);
+            await _emailService.SendVerifyEmail(email, confirmationLink);
             return new()
             {
                 Message = "Send verify email successfully",
