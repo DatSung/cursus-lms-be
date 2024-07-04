@@ -72,7 +72,6 @@ builder.Services.AddCors(options =>
             .AllowCredentials());
 });
 
-
 var app = builder.Build();
 
 ApplyMigration();
