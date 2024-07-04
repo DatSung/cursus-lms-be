@@ -371,7 +371,7 @@ namespace Cursus.LMS.API.Controllers
 
         [HttpGet]
         [Route("section/details/content/{filePath}")]
-        public async Task<ActionResult<ResponseDTO>> UploadSectionDetailsVersionContent
+        public async Task<IActionResult> UploadSectionDetailsVersionContent
         (
             [FromRoute] string filePath
         )
@@ -382,7 +382,8 @@ namespace Cursus.LMS.API.Controllers
                     User,
                     filePath
                 );
-            return StatusCode(responseDto.StatusCode, responseDto);
+
+            return File(responseDto.Stream, responseDto.ContentType, responseDto.FileName);
         }
 
         #endregion
