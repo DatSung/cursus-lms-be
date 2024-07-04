@@ -1,6 +1,4 @@
-﻿using System.Net;
-using System.Security.Claims;
-using Cursus.LMS.Model.DTO;
+﻿using Cursus.LMS.Model.DTO;
 using Cursus.LMS.Service.IService;
 using Google.Cloud.Storage.V1;
 using Microsoft.AspNetCore.Http;
@@ -169,7 +167,7 @@ public class FirebaseService : IFirebaseService
         };
     }
 
-    public async Task<MemoryStream> GetContent(string filePath)
+    public async Task<MemoryStream> GetContent(string? filePath)
     {
         try
         {

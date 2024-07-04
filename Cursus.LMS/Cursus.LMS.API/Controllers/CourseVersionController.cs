@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using System.ComponentModel.DataAnnotations;
 using Cursus.LMS.Utility.Constants;
 using Microsoft.AspNetCore.Authorization;
+using StaticFileExtensions = Cursus.LMS.Utility.Constants.StaticFileExtensions;
 
 namespace Cursus.LMS.API.Controllers
 {
@@ -370,20 +371,32 @@ namespace Cursus.LMS.API.Controllers
         }
 
         [HttpGet]
-        [Route("section/details/content/{filePath}")]
+        [Route("section/details/content/")]
         public async Task<IActionResult> UploadSectionDetailsVersionContent
         (
-            [FromRoute] string filePath
+            [FromQuery] Guid sectionDetailsVersionId,
+            [FromQuery] string type
         )
         {
-            var responseDto =
+            var contentResponseDto =
                 await _sectionDetailsVersionService.DisplaySectionDetailsVersionContent
                 (
                     User,
-                    filePath
+                    sectionDetailsVersionId,
+                    type
                 );
 
-            return File(responseDto.Stream, responseDto.ContentType, responseDto.FileName);
+            if (contentResponseDto.Stream is null)
+            {
+                return NotFound("User avatar does not exist!");
+            }
+
+            if (contentResponseDto.ContentType == StaticFileExtensions.Mov || contentResponseDto.ContentType == StaticFileExtensions.Mp4)
+            {
+                return File(contentResponseDto.Stream, contentResponseDto.ContentType);
+            }
+            
+            return File(contentResponseDto.Stream, contentResponseDto.ContentType, contentResponseDto.FileName);
         }
 
         #endregion

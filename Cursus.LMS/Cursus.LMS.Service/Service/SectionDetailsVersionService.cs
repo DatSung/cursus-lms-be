@@ -537,44 +537,93 @@ public class SectionDetailsVersionService : ISectionDetailsVersionService
     public async Task<ContentResponseDTO> DisplaySectionDetailsVersionContent
     (
         ClaimsPrincipal User,
-        string filePath
+        Guid sectionDetailsVersionId,
+        string type
     )
     {
         try
         {
-            if (filePath.IsNullOrEmpty())
+            if (sectionDetailsVersionId.ToString().IsNullOrEmpty())
             {
-                throw new Exception("Instructors did not upload degree!");
+                throw new Exception("Section details was not found!");
             }
 
-            var stream = await _firebaseService.GetContent(filePath);
+            if (type.IsNullOrEmpty())
+            {
+                throw new Exception("Content was not found");
+            }
+
+            var sectionDetailVersion = await _unitOfWork.SectionDetailsVersionRepository
+                .GetAsync(x => x.Id == sectionDetailsVersionId);
+
+            if (sectionDetailVersion is null)
+            {
+                throw new Exception("Section details was not found!");
+            }
+
+            var stream = new MemoryStream();
+            var contentType = "Unsupported extensions!";
+            string? filePath = null;
+
+            switch (type.ToLower())
+            {
+                case "video":
+                {
+                    filePath = sectionDetailVersion.VideoUrl;
+
+                    if (filePath == null)
+                    {
+                        throw new Exception("Content was not found");
+                    }
+
+                    stream = await _firebaseService.GetContent(filePath);
+
+                    if (filePath.EndsWith(".mp4"))
+                    {
+                        contentType = StaticFileExtensions.Mp4;
+                    }
+
+                    if (filePath.EndsWith(".mov"))
+                    {
+                        contentType = StaticFileExtensions.Mov;
+                    }
+
+                    break;
+                }
+                case "slide":
+                {
+                    filePath = sectionDetailVersion.SlideUrl;
+
+                    if (filePath == null)
+                    {
+                        throw new Exception("Content was not found");
+                    }
+
+                    stream = await _firebaseService.GetContent(filePath);
+                    contentType = StaticFileExtensions.Pdf;
+                    break;
+                }
+                case "docx":
+                {
+                    filePath = sectionDetailVersion.DocsUrl;
+
+                    if (filePath == null)
+                    {
+                        throw new Exception("Content was not found");
+                    }
+
+                    stream = await _firebaseService.GetContent(filePath);
+                    contentType = StaticFileExtensions.Doc;
+
+                    break;
+                }
+            }
 
             if (stream is null)
             {
                 throw new Exception("Instructor did not upload degree");
             }
 
-            var contentType = "Unsupported extensions!";
-
-            if (filePath.EndsWith(".docx"))
-            {
-                contentType = StaticFileExtensions.Doc;
-            }
-
-            if (filePath.EndsWith(".pdf"))
-            {
-                contentType = StaticFileExtensions.Pdf;
-            }
-
-            if (filePath.EndsWith(".mp4"))
-            {
-                contentType = StaticFileExtensions.Mp4;
-            }
-
-            if (filePath.EndsWith(".mov"))
-            {
-                contentType = StaticFileExtensions.Mov;
-            }
 
             return new ContentResponseDTO()
             {

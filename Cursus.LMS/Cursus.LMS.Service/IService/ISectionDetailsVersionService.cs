@@ -56,6 +56,7 @@ public interface ISectionDetailsVersionService
     Task<ContentResponseDTO> DisplaySectionDetailsVersionContent
     (
         ClaimsPrincipal User,
-        string filePath
+        Guid sectionDetailsVersionId,
+        string type
     );
 }
