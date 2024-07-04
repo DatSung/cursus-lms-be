@@ -61,6 +61,18 @@ builder.AddSwaggerGen();
 // Register SignalR
 builder.Services.AddSignalR();
 
+builder.Services.AddCors(options =>
+{
+    var origin = builder.Configuration["AllowOrigin:FrontEnd"];
+    options.AddPolicy("AllowSpecificOrigin",
+        builder => builder
+            .WithOrigins(origin)
+            .AllowAnyHeader()
+            .AllowAnyMethod()
+            .AllowCredentials());
+});
+
+
 var app = builder.Build();
 
 ApplyMigration();
@@ -72,14 +84,7 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
-app.UseCors(options =>
-{
-    options
-        .AllowAnyHeader()
-        .AllowAnyMethod()
-        .AllowAnyOrigin();
-});
-
+app.UseCors("AllowSpecificOrigin");
 
 app.UseHangfireDashboard();
 
