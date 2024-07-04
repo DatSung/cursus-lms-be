@@ -13,13 +13,11 @@ public class CourseService : ICourseService
 {
     private readonly IUnitOfWork _unitOfWork;
     private readonly IMapper _mapper;
-    private readonly IEmailService _emailService;
 
-    public CourseService(IUnitOfWork unitOfWork, IMapper mapper, IEmailService emailService)
+    public CourseService(IUnitOfWork unitOfWork, IMapper mapper)
     {
         _unitOfWork = unitOfWork;
         _mapper = mapper;
-        _emailService = emailService;
     }
 
     public async Task<ResponseDTO> CreateFrameCourse(ClaimsPrincipal User)
@@ -409,6 +407,8 @@ public class CourseService : ICourseService
             course.Status = StaticCourseStatus.Deactivated;
             _unitOfWork.CourseRepository.Update(course);
             await _unitOfWork.SaveAsync();
+
+            BackgroundJob.Enqueue<IEmailSender>(job => job.SendDeactivatedCourseEmailForStudents(courseId));
 
             return new ResponseDTO()
             {

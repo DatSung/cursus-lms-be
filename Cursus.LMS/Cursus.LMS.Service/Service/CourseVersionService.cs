@@ -5,6 +5,7 @@ using Cursus.LMS.Model.Domain;
 using Cursus.LMS.Model.DTO;
 using Cursus.LMS.Service.IService;
 using Cursus.LMS.Utility.Constants;
+using Hangfire;
 using Microsoft.IdentityModel.Tokens;
 
 namespace Cursus.LMS.Service.Service;
@@ -662,6 +663,8 @@ public class CourseVersionService : ICourseVersionService
                 return responseDto;
             }
 
+            BackgroundJob.Enqueue<IEmailSender>(job => job.SendAcceptedCourseEmailForInstructor(courseVersionId));
+
             return new ResponseDTO()
             {
                 Result = null,
@@ -769,6 +772,8 @@ public class CourseVersionService : ICourseVersionService
                 return responseDto;
             }
 
+            BackgroundJob.Enqueue<IEmailSender>(job => job.SendRejectedCourseEmailForInstructor(courseVersionId));
+
             return new ResponseDTO()
             {
                 Result = null,
@@ -875,6 +880,8 @@ public class CourseVersionService : ICourseVersionService
             {
                 return responseDto;
             }
+
+            BackgroundJob.Enqueue<IEmailSender>(job => job.SendSubmittedCourseEmailForAdmins());
 
             return new ResponseDTO()
             {
