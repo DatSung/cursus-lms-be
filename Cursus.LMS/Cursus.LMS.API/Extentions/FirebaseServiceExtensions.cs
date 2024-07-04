@@ -11,7 +11,7 @@ public static class FirebaseServiceExtensions
     public static IServiceCollection AddFirebaseServices(this IServiceCollection services)
     {
         var credentialPath = Path.Combine(Directory.GetCurrentDirectory(),
-            "cursus-lms-storage-firebase-adminsdk-51r7b-102f4637ef.json");
+            "cursus-lms-storage-firebase-adminsdk-51r7b-b7f2a96794.json");
         FirebaseApp.Create(new AppOptions()
         {
             Credential = GoogleCredential.FromFile(credentialPath)

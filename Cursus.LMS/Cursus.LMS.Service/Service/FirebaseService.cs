@@ -54,6 +54,7 @@ public class FirebaseService : IFirebaseService
             Message = "Upload image successfully!"
         };
     }
+
     /// <summary>
     /// This method for upload video to firebase storage bucket
     /// </summary>
@@ -91,6 +92,7 @@ public class FirebaseService : IFirebaseService
             Message = "Upload video successfully!"
         };
     }
+
     /// <summary>
     /// This method for upload video to firebase storage bucket
     /// </summary>
@@ -128,6 +130,7 @@ public class FirebaseService : IFirebaseService
             Message = "Upload slide successfully!"
         };
     }
+
     /// <summary>
     /// This method for upload video to firebase storage bucket
     /// </summary>
@@ -164,6 +167,24 @@ public class FirebaseService : IFirebaseService
             Result = filePath,
             Message = "Upload doc successfully!"
         };
+    }
+
+    public async Task<MemoryStream> GetContent(string filePath)
+    {
+        try
+        {
+            MemoryStream memoryStream = new MemoryStream();
+
+            await _storageClient.DownloadObjectAsync(_bucketName, filePath, memoryStream);
+
+            memoryStream.Seek(0, SeekOrigin.Begin);
+
+            return memoryStream;
+        }
+        catch (Exception e)
+        {
+            return null;
+        }
     }
 
     /// <summary>

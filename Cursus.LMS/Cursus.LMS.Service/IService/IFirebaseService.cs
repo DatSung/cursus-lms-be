@@ -11,4 +11,5 @@ public interface IFirebaseService
     Task<ResponseDTO> UploadVideo(IFormFile file, Guid? courseId);
     Task<ResponseDTO> UploadSlide(IFormFile file, Guid? courseId);
     Task<ResponseDTO> UploadDoc(IFormFile file, Guid? courseId);
+    Task<MemoryStream> GetContent(string filePath);
 }

@@ -53,7 +53,7 @@ public interface ISectionDetailsVersionService
         UploadSectionDetailsVersionContentDTO uploadSectionDetailsVersionContentDto
     );
 
-    Task<ResponseDTO> DisplaySectionDetailsVersionContent
+    Task<ContentResponseDTO> DisplaySectionDetailsVersionContent
     (
         ClaimsPrincipal User,
         string filePath

@@ -19,6 +19,7 @@ public class SectionDetailsVersionService : ISectionDetailsVersionService
     private readonly IUnitOfWork _unitOfWork;
     private readonly IMapper _mapper;
     private readonly IFirebaseService _firebaseService;
+
     public SectionDetailsVersionService(IUnitOfWork unitOfWork, IMapper mapper, IFirebaseService firebaseService)
     {
         _unitOfWork = unitOfWork;
@@ -97,9 +98,9 @@ public class SectionDetailsVersionService : ISectionDetailsVersionService
         {
             IEnumerable<SectionDetailsVersion> sections;
 
-                // Lấy tất cả các section của phiên bản khóa học theo CourseSectionVersionId
-                sections = await _unitOfWork.SectionDetailsVersionRepository.GetAllAsync(x =>
-                    x.CourseSectionVersionId == courseSectionId);
+            // Lấy tất cả các section của phiên bản khóa học theo CourseSectionVersionId
+            sections = await _unitOfWork.SectionDetailsVersionRepository.GetAllAsync(x =>
+                x.CourseSectionVersionId == courseSectionId);
 
             // Kiểm tra nếu danh sách bình luận là null hoặc rỗng
             if (!sections.Any())
@@ -141,6 +142,7 @@ public class SectionDetailsVersionService : ISectionDetailsVersionService
                         break;
                 }
             }
+
             // Phân trang
             if (pageNumber > 0 && pageSize > 0)
             {
@@ -153,13 +155,12 @@ public class SectionDetailsVersionService : ISectionDetailsVersionService
             {
                 Id = section.Id,
                 courseSectionDetail = section.CourseSectionVersionId,
-                name =  section.Name,
+                name = section.Name,
                 videoUrl = section.VideoUrl,
                 slideUrl = section.SlideUrl,
                 docsUrl = section.DocsUrl,
                 type = section.Type,
                 currentStatus = section.CurrentStatus,
-
             }).ToList();
 
             return new ResponseDTO()
@@ -242,7 +243,7 @@ public class SectionDetailsVersionService : ISectionDetailsVersionService
         {
             var Id =
                 await _unitOfWork.CourseSectionVersionRepository.GetAsync(i =>
-                i.Id == createSectionDetailsVersionDto.courseSectionIVersionId);
+                    i.Id == createSectionDetailsVersionDto.courseSectionIVersionId);
             if (Id == null)
             {
                 return new ResponseDTO()
@@ -293,7 +294,8 @@ public class SectionDetailsVersionService : ISectionDetailsVersionService
     {
         try
         {
-            var id = await _unitOfWork.SectionDetailsVersionRepository.GetAsync(i => i.Id == editSectionDetailsVersionDto.sectionDetailId);
+            var id = await _unitOfWork.SectionDetailsVersionRepository.GetAsync(i =>
+                i.Id == editSectionDetailsVersionDto.sectionDetailId);
 
             if (id == null)
             {
@@ -435,7 +437,8 @@ public class SectionDetailsVersionService : ISectionDetailsVersionService
 
 
             // Lấy thông tin về Course và CourseVersion và CourseDetail
-            var courseDetail = await _unitOfWork.SectionDetailsVersionRepository.GetAsync(x => x.Id == uploadSectionDetailsVersionContentDto.SectionDetailsVersionId);
+            var courseDetail = await _unitOfWork.SectionDetailsVersionRepository.GetAsync(x =>
+                x.Id == uploadSectionDetailsVersionContentDto.SectionDetailsVersionId);
             if (courseDetail == null)
             {
                 return new ResponseDTO()
@@ -446,7 +449,9 @@ public class SectionDetailsVersionService : ISectionDetailsVersionService
                 };
             }
 
-            var courseSection = await _unitOfWork.CourseSectionVersionRepository.GetAsync(x => x.Id == courseDetail.CourseSectionVersionId);
+            var courseSection =
+                await _unitOfWork.CourseSectionVersionRepository.GetAsync(x =>
+                    x.Id == courseDetail.CourseSectionVersionId);
             if (courseSection == null)
             {
                 return new ResponseDTO()
@@ -457,7 +462,8 @@ public class SectionDetailsVersionService : ISectionDetailsVersionService
                 };
             }
 
-            var courseVersion = await _unitOfWork.CourseVersionRepository.GetAsync(x => x.Id == courseSection.CourseVersionId);
+            var courseVersion =
+                await _unitOfWork.CourseVersionRepository.GetAsync(x => x.Id == courseSection.CourseVersionId);
             if (courseVersion == null)
             {
                 return new ResponseDTO()
@@ -467,6 +473,7 @@ public class SectionDetailsVersionService : ISectionDetailsVersionService
                     Message = "Course version not found."
                 };
             }
+
             //Get CourseId
             var courseId = courseVersion.CourseId;
 
@@ -500,6 +507,7 @@ public class SectionDetailsVersionService : ISectionDetailsVersionService
                     Message = "File upload failed."
                 };
             }
+
             // Cập nhật Type và TypeDescription
             courseDetail.UpdateTypeDescription();
             //Save
@@ -526,12 +534,64 @@ public class SectionDetailsVersionService : ISectionDetailsVersionService
         }
     }
 
-    public Task<ResponseDTO> DisplaySectionDetailsVersionContent
+    public async Task<ContentResponseDTO> DisplaySectionDetailsVersionContent
     (
         ClaimsPrincipal User,
         string filePath
     )
     {
-        throw new NotImplementedException();
+        try
+        {
+            if (filePath.IsNullOrEmpty())
+            {
+                throw new Exception("Instructors did not upload degree!");
+            }
+
+            var stream = await _firebaseService.GetContent(filePath);
+
+            if (stream is null)
+            {
+                throw new Exception("Instructor did not upload degree");
+            }
+
+            var contentType = "Unsupported extensions!";
+
+            if (filePath.EndsWith(".docx"))
+            {
+                contentType = StaticFileExtensions.Doc;
+            }
+
+            if (filePath.EndsWith(".pdf"))
+            {
+                contentType = StaticFileExtensions.Pdf;
+            }
+
+            if (filePath.EndsWith(".mp4"))
+            {
+                contentType = StaticFileExtensions.Mp4;
+            }
+
+            if (filePath.EndsWith(".mov"))
+            {
+                contentType = StaticFileExtensions.Mov;
+            }
+
+            return new ContentResponseDTO()
+            {
+                Message = "Get file successfully",
+                Stream = stream,
+                ContentType = contentType,
+                FileName = Path.GetFileName(filePath)
+            };
+        }
+        catch (Exception e)
+        {
+            return new ContentResponseDTO()
+            {
+                ContentType = null,
+                Message = e.Message,
+                Stream = null
+            };
+        }
     }
 }
