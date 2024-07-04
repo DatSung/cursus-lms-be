@@ -23,7 +23,6 @@ public class AuthServiceTests
     private readonly Mock<IEmailService> _emailServiceMock;
     private readonly Mock<IFirebaseService> _firebaseServiceMock;
     private readonly Mock<IHttpContextAccessor> _httpContextAccessorMock;
-    private readonly Mock<IEmailSender> _emailSenderMock;
     private readonly Mock<ITokenService> _tokenServiceMock;
     private readonly Mock<IUnitOfWork> _unitOfWorkMock;
     private readonly Mock<IPaymentCardRepository> _paymentCardRepositoryMock;
@@ -42,7 +41,6 @@ public class AuthServiceTests
         _emailServiceMock = new Mock<IEmailService>();
         _firebaseServiceMock = new Mock<IFirebaseService>();
         _httpContextAccessorMock = new Mock<IHttpContextAccessor>();
-        _emailSenderMock = new Mock<IEmailSender>();
         _tokenServiceMock = new Mock<ITokenService>();
         _unitOfWorkMock = new Mock<IUnitOfWork>();
         _paymentCardRepositoryMock = new Mock<IPaymentCardRepository>();
@@ -58,7 +56,6 @@ public class AuthServiceTests
             _emailServiceMock.Object,
             _firebaseServiceMock.Object,
             _httpContextAccessorMock.Object,
-            _emailSenderMock.Object,
             _tokenServiceMock.Object,
             _unitOfWorkMock.Object);
 

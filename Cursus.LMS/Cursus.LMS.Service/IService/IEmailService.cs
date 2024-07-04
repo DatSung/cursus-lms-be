@@ -21,4 +21,9 @@ public interface IEmailService
     Task<bool> SendEmailResetAsync(string toEmail, string subject, ApplicationUser user, string currentDate,
         string resetLink,
         string operatingSystem, string browser, string ip, string region, string city, string country);
+    Task<bool> SendEmailForAdminAboutNewCourse(string toMail);
+    Task<bool> SendApproveEmailForInstructorAboutNewCourse(string toMail);
+    Task<bool> SendRejectEmailForInstructorAboutNewCourse(string toMail);
+    Task<bool> SendVerifyEmail(string toMail, string confirmationLink);
+    Task<bool> SendEmailInactiveCourse(string instructorEmail, string instructorName, string courseTitle, List<string> studentEmails);
 }
