@@ -12,8 +12,8 @@ public interface ILevelService
         string? filterQuery,
         string? sortBy,
         bool? isAscending,
-        int pageNumber = 1,
-        int pageSize = 5
+        int pageNumber = 0,
+        int pageSize = 0
     );
 
     Task<ResponseDTO> GetLevel(ClaimsPrincipal User, Guid levelId);
