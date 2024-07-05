@@ -24,8 +24,8 @@ namespace Cursus.LMS.API.Controllers
             [FromQuery] string? filterQuery,
             [FromQuery] string? sortBy,
             [FromQuery] bool? isAscending,
-            [FromQuery] int pageNumber = 1,
-            [FromQuery] int pageSize = 5
+            [FromQuery] int pageNumber = 0,
+            [FromQuery] int pageSize = 0
         )
         {
             var responseDto = await _levelService.GetLevels
