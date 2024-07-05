@@ -26,7 +26,7 @@ public class AutoMapperProfile : Profile
         CreateMap<Category, AdminCategoryDTO>()
             .ForMember(dest => dest.ParentName, opt
                 => opt.MapFrom(src => src.ParentCategory.Name)).ReverseMap();
-        
+
         CreateMap<EmailTemplateDTO, EmailTemplateDTO>()
             .ForMember(dest => dest.TemplateName, opt
                 => opt.MapFrom(src => src.TemplateName))
@@ -103,7 +103,10 @@ public class AutoMapperProfile : Profile
         CreateMap<InstructorComment, UpdateInstructorCommentDTO>().ReverseMap();
 
 
-        CreateMap<CourseVersion, GetCourseVersionDTO>().ReverseMap();
+        CreateMap<CourseVersion, GetCourseVersionDTO>()
+            .ForMember(dest => dest.CategoryName, opt => opt.MapFrom(src => src.Category.Name))
+            .ForMember(dest => dest.LevelName, opt => opt.MapFrom(src => src.Level.Name));
+
         CreateMap<CourseVersionStatus, GetCourseVersionStatusDTO>().ReverseMap();
 
         CreateMap<CourseVersionComment, GetCourseCommnetDTO>()

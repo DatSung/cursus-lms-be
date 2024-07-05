@@ -113,11 +113,37 @@ public class CourseService : ICourseService
     {
         try
         {
+            if (string.IsNullOrEmpty(instructorId.ToString()))
+            {
+                var userId = User.Claims.FirstOrDefault(x => x.Type == ClaimTypes.NameIdentifier)?.Value;
+                var instructor = await _unitOfWork.InstructorRepository.GetAsync
+                (
+                    filter: x => x.UserId == userId
+                );
+
+                if (instructor is null)
+                {
+                    return new ResponseDTO()
+                    {
+                        Message = "Courses was not found",
+                        IsSuccess = false,
+                        StatusCode = 404,
+                        Result = null
+                    };
+                }
+
+                instructorId = instructor.InstructorId;
+            }
+
+
             var courses = new List<Course>();
             if (string.IsNullOrEmpty(instructorId.ToString()))
             {
                 courses = _unitOfWork.CourseRepository
-                    .GetAllAsync()
+                    .GetAllAsync
+                    (
+                        includeProperties: "Course,Category,Level"
+                    )
                     .GetAwaiter()
                     .GetResult()
                     .ToList();
@@ -125,7 +151,10 @@ public class CourseService : ICourseService
             else
             {
                 courses = _unitOfWork.CourseRepository
-                    .GetAllAsync(x => x.Id == instructorId)
+                    .GetAllAsync
+                    (
+                        filter: x => x.InstructorId == instructorId
+                    )
                     .GetAwaiter()
                     .GetResult()
                     .ToList();
@@ -136,7 +165,10 @@ public class CourseService : ICourseService
             foreach (var course in courses)
             {
                 var courseVersion = await _unitOfWork.CourseVersionRepository
-                    .GetAsync(x => x.Id == course.CourseVersionId);
+                    .GetAsync(
+                        filter: x => x.Id == course.CourseVersionId,
+                        includeProperties: "Category,Level"
+                    );
                 if (courseVersion is not null)
                 {
                     courseVersions.Add(courseVersion);

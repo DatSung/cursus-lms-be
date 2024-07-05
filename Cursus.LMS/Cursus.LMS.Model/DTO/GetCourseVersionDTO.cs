@@ -14,9 +14,13 @@ public class GetCourseVersionDTO
     public double? OldPrice { get; set; }
     public string? CourseImgUrl { get; set; }
     public Guid? InstructorId { get; set; }
+    public string? InstructorEmail { get; set; }
     public Guid? CategoryId { get; set; }
+    public string? CategoryName { get; set; }
     public Guid? LevelId { get; set; }
+    public string? LevelName { get; set; }
     public int? CurrentStatus { get; set; }
+
     public string CurrentStatusDescription
     {
         get
