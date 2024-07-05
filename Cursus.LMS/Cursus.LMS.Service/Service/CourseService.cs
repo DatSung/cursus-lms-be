@@ -20,7 +20,7 @@ public class CourseService : ICourseService
         _mapper = mapper;
     }
 
-    public async Task<ResponseDTO> CreateFrameCourse(ClaimsPrincipal User)
+    public async Task<ResponseDTO> CreateFrameCourse(ClaimsPrincipal User, Guid courseVersionId)
     {
         try
         {
@@ -60,6 +60,7 @@ public class CourseService : ICourseService
                 Id = Guid.NewGuid(),
                 Code = null,
                 InstructorId = instructor?.InstructorId,
+                CourseVersionId = courseVersionId,
                 Status = 0,
                 Version = 1,
                 StudentSlots = 0,

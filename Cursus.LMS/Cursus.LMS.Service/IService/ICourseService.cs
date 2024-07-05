@@ -11,7 +11,7 @@ public interface ICourseService
     /// </summary>
     /// <param name="User"></param>
     /// <returns></returns>
-    Task<ResponseDTO> CreateFrameCourse(ClaimsPrincipal User);
+    Task<ResponseDTO> CreateFrameCourse(ClaimsPrincipal User, Guid courseVersionId);
 
     Task<ResponseDTO> GetCourses
     (

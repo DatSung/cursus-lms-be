@@ -238,7 +238,8 @@ public class CourseVersionService : ICourseVersionService
     {
         try
         {
-            var response = await _courseService.CreateFrameCourse(User);
+            var courseVersionId = Guid.NewGuid();
+            var response = await _courseService.CreateFrameCourse(User, courseVersionId);
             if (response.IsSuccess == false)
             {
                 return response;
@@ -248,7 +249,7 @@ public class CourseVersionService : ICourseVersionService
 
             var courseVersion = new CourseVersion()
             {
-                Id = Guid.NewGuid(),
+                Id = courseVersionId,
                 CourseId = course.Id,
                 Title = createNewCourseAndVersionDto.Title,
                 Code = createNewCourseAndVersionDto.Code,
