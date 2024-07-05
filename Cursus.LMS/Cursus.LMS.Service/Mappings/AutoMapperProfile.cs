@@ -121,5 +121,7 @@ public class AutoMapperProfile : Profile
 
 
         CreateMap<Course, GetCourseInfoDTO>().ReverseMap();
+        CreateMap<Level, GetLevelDTO>().ReverseMap();
+
     }
 }

@@ -1,6 +1,7 @@
 ﻿using Cursus.LMS.DataAccess.Context;
 using Cursus.LMS.DataAccess.IRepository;
 using Cursus.LMS.Model.Domain;
+using Microsoft.EntityFrameworkCore;
 
 namespace Cursus.LMS.DataAccess.Repository;
 
@@ -13,6 +14,11 @@ public class LevelRepository : Repository<Level>, ILevelRepository
         _context = context;
     }
 
+    public async Task<Level> GetLevelById(Guid levelId)
+    {
+        return await _context.Levels.FirstOrDefaultAsync(x => x.Id == levelId);
+    }
+
     public void Update(Level level)
     {
         _context.Levels.Update(level);
@@ -22,4 +28,5 @@ public class LevelRepository : Repository<Level>, ILevelRepository
     {
         _context.Levels.UpdateRange(levels);
     }
+
 }
