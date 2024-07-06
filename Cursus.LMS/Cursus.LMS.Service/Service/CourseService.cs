@@ -319,11 +319,13 @@ public class CourseService : ICourseService
                 };
             }
 
+            var courseVersionDto = _mapper.Map<GetCourseVersionDTO>(courseVersion);
+            
             return new ResponseDTO()
             {
                 IsSuccess = true,
                 StatusCode = 200,
-                Result = null,
+                Result = courseVersionDto,
                 Message = "Get course successfully"
             };
         }

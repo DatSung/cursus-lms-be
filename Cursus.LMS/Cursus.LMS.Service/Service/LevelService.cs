@@ -104,10 +104,10 @@ public class LevelService : ILevelService
             }
 
             // Chuyển đổi danh sách bình luận thành DTO
-            var levelsDto = listLevels.Select(level => new GetAllCommentsDTO
+            var levelsDto = listLevels.Select(level => new GetLevelDTO()
             {
                 Id = level.Id,
-                Comment = level.Name,
+                Name = level.Name,
                 CreateTime = level.CreateTime,
                 CreateBy = level.CreateBy,
                 UpdateTime = level.UpdateTime,

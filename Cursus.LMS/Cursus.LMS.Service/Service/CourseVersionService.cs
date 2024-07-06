@@ -60,7 +60,10 @@ public class CourseVersionService : ICourseVersionService
             }
 
             var courseVersions = _unitOfWork.CourseVersionRepository
-                .GetAllAsync(x => x.CourseId == courseId)
+                .GetAllAsync(
+                    filter:x => x.CourseId == courseId,
+                    includeProperties:"Category,Level"
+                    )
                 .GetAwaiter().GetResult().ToList();
 
             if (courseVersions.IsNullOrEmpty())
@@ -195,7 +198,11 @@ public class CourseVersionService : ICourseVersionService
         try
         {
             var courseVersion =
-                await _unitOfWork.CourseVersionRepository.GetCourseVersionAsync(courseVersionId, asNoTracking: true);
+                await _unitOfWork.CourseVersionRepository.GetAsync
+                (
+                    filter: x => x.Id == courseVersionId,
+                    includeProperties:"Category,Level"
+                );
 
             if (courseVersion is null)
             {
@@ -513,6 +520,16 @@ public class CourseVersionService : ICourseVersionService
 
             switch (courseVersion.CurrentStatus)
             {
+                case StaticCourseVersionStatus.Submitted:
+                {
+                    return new ResponseDTO()
+                    {
+                        Message = "Course version have been submitted",
+                        StatusCode = 401,
+                        IsSuccess = false,
+                        Result = null
+                    };
+                }
                 case StaticCourseVersionStatus.Merged:
                 {
                     return new ResponseDTO()
@@ -931,6 +948,16 @@ public class CourseVersionService : ICourseVersionService
                     return new ResponseDTO()
                     {
                         Message = "Course version have not been submit",
+                        StatusCode = 401,
+                        IsSuccess = false,
+                        Result = null
+                    };
+                }
+                case StaticCourseVersionStatus.Rejected:
+                {
+                    return new ResponseDTO()
+                    {
+                        Message = "Course version have been rejected",
                         StatusCode = 401,
                         IsSuccess = false,
                         Result = null

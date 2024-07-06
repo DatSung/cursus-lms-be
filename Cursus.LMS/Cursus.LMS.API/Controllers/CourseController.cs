@@ -47,7 +47,7 @@ namespace Cursus.LMS.API.Controllers
         }
 
         [HttpGet]
-        [Route("{couseId:guid}")]
+        [Route("{courseId:guid}")]
         public async Task<ActionResult<ResponseDTO>> GetCourse([FromRoute] Guid courseId)
         {
             var responseDto = await _courseService.GetCourse(User, courseId);
