@@ -347,6 +347,7 @@ public class CourseVersionService : ICourseVersionService
             };
 
             courseVersion.Id = cloneCourseSectionVersionDto.NewCourseVersionId;
+            courseVersion.CurrentStatus = StaticCourseVersionStatus.New;
             courseVersion.Version =
                 await _unitOfWork.CourseVersionRepository.GetTotalCourseVersionsAsync(courseVersion.CourseId) + 1;
 

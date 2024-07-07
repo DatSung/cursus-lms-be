@@ -97,7 +97,7 @@ namespace Cursus.LMS.API.Controllers
         }
 
         [HttpDelete]
-        [Route("remove-course-version{courseId:guid}")]
+        [Route("remove-course-version/{courseId:guid}")]
         public async Task<ActionResult<ResponseDTO>> RemoveCourseVersion([FromRoute] Guid courseId)
         {
             var responseDto = await _courseVersionService.RemoveCourseVersion(User, courseId);
