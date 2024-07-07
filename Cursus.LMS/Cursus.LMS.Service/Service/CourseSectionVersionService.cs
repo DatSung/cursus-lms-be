@@ -406,32 +406,34 @@ public class CourseSectionVersionService : ICourseSectionVersionService
         try
         {
             //Tìm xem có đúng ID CourseVersion hay không
-            var courseSectionVersionId =
+            var courseSectionVersion =
                 await _unitOfWork.CourseSectionVersionRepository.GetAsync(c =>
                     c.Id == sectionVersionId);
-            if (courseSectionVersionId == null)
+            if (courseSectionVersion == null)
             {
                 return new ResponseDTO()
                 {
-                    Message = "courseSectionVersionId Invalid",
+                    Message = "Course section version was not found",
                     Result = null,
                     IsSuccess = false,
-                    StatusCode = 400
+                    StatusCode = 404
                 };
             }
 
             //var userId = User.Claims.FirstOrDefault(x => x.Type == ClaimTypes.NameIdentifier)?.Value;
             //var admin = await _unitOfWork.UserManagerRepository.FindByIdAsync(userId);
 
+            var sectionDetailVersion =
+                await _unitOfWork.SectionDetailsVersionRepository.GetAllAsync(x =>
+                    x.CourseSectionVersionId == courseSectionVersion.Id);
 
-            courseSectionVersionId.CurrentStatus = 2;
-
-            _unitOfWork.CourseSectionVersionRepository.Update(courseSectionVersionId);
+            _unitOfWork.SectionDetailsVersionRepository.RemoveRange(sectionDetailVersion);
+            _unitOfWork.CourseSectionVersionRepository.Remove(courseSectionVersion);
             await _unitOfWork.SaveAsync();
 
             return new ResponseDTO()
             {
-                Message = "CourseSectionVersion Removed successfully",
+                Message = "Course section version removed successfully",
                 Result = null,
                 IsSuccess = true,
                 StatusCode = 200,
