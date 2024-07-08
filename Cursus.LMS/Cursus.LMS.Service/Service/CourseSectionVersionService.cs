@@ -150,8 +150,8 @@ public class CourseSectionVersionService : ICourseSectionVersionService
                 {
                     Message = "There are no sectionVersions",
                     IsSuccess = true,
-                    StatusCode = 204,
-                    Result = null
+                    StatusCode = 200,
+                    Result = sectionVersions
                 };
             }
 

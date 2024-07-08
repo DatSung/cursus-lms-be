@@ -44,6 +44,8 @@ public static class ServiceCollectionExtensions
         services.AddScoped<ISectionDetailsVersionService, SectionDetailsVersionService>();
         // Registering ILevelService its implementation LevelService
         services.AddScoped<ILevelService, LevelService>();
+        // Registering IEmailSender its implementation EmailSender
+        services.AddScoped<IEmailSender, EmailSender>();
         
         // Register the Identity services with default configuration
         services.AddIdentity<ApplicationUser, IdentityRole>()
