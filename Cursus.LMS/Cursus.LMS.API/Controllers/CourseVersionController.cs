@@ -390,7 +390,7 @@ namespace Cursus.LMS.API.Controllers
 
             if (contentResponseDto.Stream is null)
             {
-                return NotFound("User avatar does not exist!");
+                return NotFound("Content was not found");
             }
 
             if (contentResponseDto.ContentType == StaticFileExtensions.Mov || contentResponseDto.ContentType == StaticFileExtensions.Mp4)
@@ -400,7 +400,7 @@ namespace Cursus.LMS.API.Controllers
             
             return File(contentResponseDto.Stream, contentResponseDto.ContentType, contentResponseDto.FileName);
         }
-
+        
         #endregion
     }
 }
