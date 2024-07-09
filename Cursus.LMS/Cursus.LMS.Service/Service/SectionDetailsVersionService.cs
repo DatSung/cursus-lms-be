@@ -382,6 +382,7 @@ public class SectionDetailsVersionService : ISectionDetailsVersionService
     public async Task<ResponseDTO> UploadSectionDetailsVersionContent
     (
         ClaimsPrincipal User,
+        Guid detailsId,
         UploadSectionDetailsVersionContentDTO uploadSectionDetailsVersionContentDto
     )
     {
@@ -438,7 +439,7 @@ public class SectionDetailsVersionService : ISectionDetailsVersionService
 
             // Lấy thông tin về Course và CourseVersion và CourseDetail
             var courseDetail = await _unitOfWork.SectionDetailsVersionRepository.GetAsync(x =>
-                x.Id == uploadSectionDetailsVersionContentDto.SectionDetailsVersionId);
+                x.Id == detailsId);
             if (courseDetail == null)
             {
                 return new ResponseDTO()

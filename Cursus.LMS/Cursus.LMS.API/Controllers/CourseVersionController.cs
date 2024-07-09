@@ -355,9 +355,10 @@ namespace Cursus.LMS.API.Controllers
         }
 
         [HttpPost]
-        [Route("section/details/content")]
+        [Route("section/details/content/{detailsId:guid}")]
         public async Task<ActionResult<ResponseDTO>> UploadSectionDetailsVersionContent
         (
+            [FromRoute] Guid detailsId,
             UploadSectionDetailsVersionContentDTO uploadSectionDetailsVersionContentDto
         )
         {
@@ -365,6 +366,7 @@ namespace Cursus.LMS.API.Controllers
                 await _sectionDetailsVersionService.UploadSectionDetailsVersionContent
                 (
                     User,
+                    detailsId,
                     uploadSectionDetailsVersionContentDto
                 );
             return StatusCode(responseDto.StatusCode, responseDto);
@@ -372,7 +374,7 @@ namespace Cursus.LMS.API.Controllers
 
         [HttpGet]
         [Route("section/details/content/")]
-        public async Task<IActionResult> UploadSectionDetailsVersionContent
+        public async Task<IActionResult> DisplaySectionDetailsVersionContent
         (
             [FromQuery] Guid sectionDetailsVersionId,
             [FromQuery] string type

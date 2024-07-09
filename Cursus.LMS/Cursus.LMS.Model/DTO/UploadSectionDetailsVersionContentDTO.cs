@@ -10,6 +10,4 @@ public class UploadSectionDetailsVersionContentDTO
     [MaxFileSize(100)]
     [AllowedExtensions(new string[] { ".docx", ".pdf", ".mp4", ".mov" })]
     public IFormFile File { get; set; }
-
-    [Required] public Guid SectionDetailsVersionId { get; set; }
 }
