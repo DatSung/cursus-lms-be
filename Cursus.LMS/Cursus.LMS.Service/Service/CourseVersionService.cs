@@ -16,6 +16,7 @@ public class CourseVersionService : ICourseVersionService
     private readonly ICourseService _courseService;
     private readonly ICourseSectionVersionService _courseSectionVersionService;
     private readonly ICourseVersionStatusService _courseVersionStatusService;
+    private readonly IFirebaseService _firebaseService;
     private IMapper _mapper;
 
     public CourseVersionService
@@ -24,14 +25,14 @@ public class CourseVersionService : ICourseVersionService
         ICourseService courseService,
         IMapper mapper,
         ICourseVersionStatusService courseVersionStatusService,
-        ICourseSectionVersionService courseSectionVersionService
-    )
+        ICourseSectionVersionService courseSectionVersionService, IFirebaseService firebaseService)
     {
         _unitOfWork = unitOfWork;
         _courseService = courseService;
         _mapper = mapper;
         _courseVersionStatusService = courseVersionStatusService;
         _courseSectionVersionService = courseSectionVersionService;
+        _firebaseService = firebaseService;
     }
 
     public async Task<ResponseDTO> GetCourseVersions
@@ -61,9 +62,9 @@ public class CourseVersionService : ICourseVersionService
 
             var courseVersions = _unitOfWork.CourseVersionRepository
                 .GetAllAsync(
-                    filter:x => x.CourseId == courseId,
-                    includeProperties:"Category,Level"
-                    )
+                    filter: x => x.CourseId == courseId,
+                    includeProperties: "Category,Level"
+                )
                 .GetAwaiter().GetResult().ToList();
 
             if (courseVersions.IsNullOrEmpty())
@@ -201,7 +202,7 @@ public class CourseVersionService : ICourseVersionService
                 await _unitOfWork.CourseVersionRepository.GetAsync
                 (
                     filter: x => x.Id == courseVersionId,
-                    includeProperties:"Category,Level"
+                    includeProperties: "Category,Level"
                 );
 
             if (courseVersion is null)
@@ -1414,6 +1415,96 @@ public class CourseVersionService : ICourseVersionService
                 IsSuccess = false,
                 StatusCode = 500
             };
+        }
+    }
+
+    public async Task<ResponseDTO> UploadCourseVersionBackgroundImg
+    (
+        ClaimsPrincipal User,
+        Guid courseVersionId,
+        UploadCourseVersionBackgroundImg uploadCourseVersionBackgroundImg)
+    {
+        try
+        {
+            // Kiểm tra nếu File không null và đúng định dạng
+            if (uploadCourseVersionBackgroundImg.File == null)
+            {
+                return new ResponseDTO()
+                {
+                    IsSuccess = false,
+                    StatusCode = 400,
+                    Message = "No file uploaded."
+                };
+            }
+
+            var courseVersion =
+                await _unitOfWork.CourseVersionRepository.GetAsync(x => x.Id == courseVersionId);
+            if (courseVersion == null)
+            {
+                return new ResponseDTO()
+                {
+                    IsSuccess = false,
+                    StatusCode = 404,
+                    Message = "Course version not found."
+                };
+            }
+
+            var filePath = $"Course/{courseVersion.CourseId}/Background";
+            // Xử lý tệp tin dựa trên định dạng
+            var responseDto = await _firebaseService.UploadImage(uploadCourseVersionBackgroundImg.File, filePath);
+
+            if (!responseDto.IsSuccess)
+            {
+                return new ResponseDTO()
+                {
+                    IsSuccess = false,
+                    StatusCode = 500,
+                    Message = "File upload failed."
+                };
+            }
+
+            //Save
+            courseVersion.CourseImgUrl = responseDto.Result?.ToString();
+            _unitOfWork.CourseVersionRepository.Update(courseVersion);
+            await _unitOfWork.SaveAsync();
+
+            return new ResponseDTO()
+            {
+                IsSuccess = true,
+                StatusCode = 200,
+                Result = responseDto.Result,
+                Message = "Upload file successfully"
+            };
+        }
+        catch (Exception e)
+        {
+            return new ResponseDTO()
+            {
+                IsSuccess = false,
+                StatusCode = 500,
+                Result = null,
+                Message = e.Message
+            };
+        }
+    }
+
+    public async Task<MemoryStream> DisplayCourseVersionBackgroundImg(ClaimsPrincipal User, Guid courseVersionId)
+    {
+        try
+        {
+            var courseVersion = await _unitOfWork.CourseVersionRepository.GetAsync(x => x.Id == courseVersionId);
+
+            if (courseVersion != null && courseVersion.CourseImgUrl.IsNullOrEmpty())
+            {
+                return null;
+            }
+
+            var stream = await _firebaseService.GetImage(courseVersion.CourseImgUrl);
+            return stream;
+        }
+        catch (Exception e)
+        {
+            return null;
         }
     }
 }

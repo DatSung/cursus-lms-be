@@ -88,14 +88,40 @@ public interface ICourseVersionService
         int pageSize
     );
 
-    Task<ResponseDTO> GetCourseVersionComment(ClaimsPrincipal User, Guid courseVersionCommentId);
+    Task<ResponseDTO> GetCourseVersionComment
+    (
+        ClaimsPrincipal User,
+        Guid courseVersionCommentId
+    );
 
-    Task<ResponseDTO> CreateCourseVersionComment(ClaimsPrincipal User,
-        CreateCourseVersionCommentsDTO createCourseVersionCommentsDTO);
+    Task<ResponseDTO> CreateCourseVersionComment
+    (
+        ClaimsPrincipal User,
+        CreateCourseVersionCommentsDTO createCourseVersionCommentsDTO
+    );
 
-    Task<ResponseDTO> EditCourseVersionComment(ClaimsPrincipal User,
-        EditCourseVersionCommentsDTO editCourseVersionCommentsDTO);
+    Task<ResponseDTO> EditCourseVersionComment
+    (
+        ClaimsPrincipal User,
+        EditCourseVersionCommentsDTO editCourseVersionCommentsDTO
+    );
 
-    Task<ResponseDTO> RemoveCourseVersionComment(ClaimsPrincipal User,
-        Guid commentId);
+    Task<ResponseDTO> RemoveCourseVersionComment
+    (
+        ClaimsPrincipal User,
+        Guid commentId
+    );
+
+    Task<ResponseDTO> UploadCourseVersionBackgroundImg
+    (
+        ClaimsPrincipal User,
+        Guid courseVersionId,
+        UploadCourseVersionBackgroundImg uploadCourseVersionBackgroundImg
+    );
+    
+    Task<MemoryStream> DisplayCourseVersionBackgroundImg
+    (
+        ClaimsPrincipal User,
+        Guid courseVersionId
+    );
 }
