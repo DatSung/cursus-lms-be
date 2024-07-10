@@ -136,6 +136,35 @@ namespace Cursus.LMS.API.Controllers
             return StatusCode(responseDto.StatusCode, responseDto);
         }
 
+        [HttpPost]
+        [Route("upload-background/{courseVersionId:guid}")]
+        public async Task<ActionResult<ResponseDTO>> UploadCourseVersionBackground
+        (
+            [FromRoute] Guid courseVersionId,
+            UploadCourseVersionBackgroundImg uploadCourseVersionBackgroundImg
+        )
+        {
+            var responseDto =
+                await _courseVersionService.UploadCourseVersionBackgroundImg
+                (
+                    User,
+                    courseVersionId,
+                    uploadCourseVersionBackgroundImg
+                );
+            return StatusCode(responseDto.StatusCode, responseDto);
+        }
+
+        [HttpGet]
+        [Route("display-background/{courseVersionId:guid}")]
+        public async Task<ActionResult> DisplayCourseVersionBackground
+        (
+            [FromRoute] Guid courseVersionId
+        )
+        {
+            var responseDto = await _courseVersionService.DisplayCourseVersionBackgroundImg(User, courseVersionId);
+            return File(responseDto, "image/png");
+        }
+
         #endregion
 
 
@@ -393,14 +422,15 @@ namespace Cursus.LMS.API.Controllers
                 return NotFound("Content was not found");
             }
 
-            if (contentResponseDto.ContentType == StaticFileExtensions.Mov || contentResponseDto.ContentType == StaticFileExtensions.Mp4)
+            if (contentResponseDto.ContentType == StaticFileExtensions.Mov ||
+                contentResponseDto.ContentType == StaticFileExtensions.Mp4)
             {
                 return File(contentResponseDto.Stream, contentResponseDto.ContentType);
             }
-            
+
             return File(contentResponseDto.Stream, contentResponseDto.ContentType, contentResponseDto.FileName);
         }
-        
+
         #endregion
     }
 }
