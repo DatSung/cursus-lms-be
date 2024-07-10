@@ -109,8 +109,8 @@ public class SectionDetailsVersionService : ISectionDetailsVersionService
                 {
                     Message = "There are no section",
                     IsSuccess = true,
-                    StatusCode = 204,
-                    Result = null
+                    StatusCode = 200,
+                    Result = sections
                 };
             }
 
@@ -243,7 +243,7 @@ public class SectionDetailsVersionService : ISectionDetailsVersionService
         {
             var Id =
                 await _unitOfWork.CourseSectionVersionRepository.GetAsync(i =>
-                    i.Id == createSectionDetailsVersionDto.courseSectionIVersionId);
+                    i.Id == createSectionDetailsVersionDto.courseSectionVersionId);
             if (Id == null)
             {
                 return new ResponseDTO()
@@ -257,7 +257,7 @@ public class SectionDetailsVersionService : ISectionDetailsVersionService
 
             var sectionDetail = new SectionDetailsVersion
             {
-                CourseSectionVersionId = createSectionDetailsVersionDto?.courseSectionIVersionId,
+                CourseSectionVersionId = createSectionDetailsVersionDto?.courseSectionVersionId,
                 Name = createSectionDetailsVersionDto?.name,
             };
 
@@ -266,9 +266,9 @@ public class SectionDetailsVersionService : ISectionDetailsVersionService
 
             return new ResponseDTO
             {
-                Message = "Create Section Detail Successfully",
-                Result = sectionDetail,
-                IsSuccess = false,
+                Message = "Create section detail successfully",
+                Result = null,
+                IsSuccess = true,
                 StatusCode = 200
             };
         }
@@ -319,7 +319,7 @@ public class SectionDetailsVersionService : ISectionDetailsVersionService
             {
                 Message = "Edit Section Detail Successfully",
                 Result = id,
-                IsSuccess = false,
+                IsSuccess = true,
                 StatusCode = 200
             };
         }
@@ -382,6 +382,7 @@ public class SectionDetailsVersionService : ISectionDetailsVersionService
     public async Task<ResponseDTO> UploadSectionDetailsVersionContent
     (
         ClaimsPrincipal User,
+        Guid detailsId,
         UploadSectionDetailsVersionContentDTO uploadSectionDetailsVersionContentDto
     )
     {
@@ -438,7 +439,7 @@ public class SectionDetailsVersionService : ISectionDetailsVersionService
 
             // Lấy thông tin về Course và CourseVersion và CourseDetail
             var courseDetail = await _unitOfWork.SectionDetailsVersionRepository.GetAsync(x =>
-                x.Id == uploadSectionDetailsVersionContentDto.SectionDetailsVersionId);
+                x.Id == detailsId);
             if (courseDetail == null)
             {
                 return new ResponseDTO()

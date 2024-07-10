@@ -97,7 +97,7 @@ namespace Cursus.LMS.API.Controllers
         }
 
         [HttpDelete]
-        [Route("remove-course-version{courseId:guid}")]
+        [Route("remove-course-version/{courseId:guid}")]
         public async Task<ActionResult<ResponseDTO>> RemoveCourseVersion([FromRoute] Guid courseId)
         {
             var responseDto = await _courseVersionService.RemoveCourseVersion(User, courseId);
@@ -355,9 +355,10 @@ namespace Cursus.LMS.API.Controllers
         }
 
         [HttpPost]
-        [Route("section/details/content")]
+        [Route("section/details/content/{detailsId:guid}")]
         public async Task<ActionResult<ResponseDTO>> UploadSectionDetailsVersionContent
         (
+            [FromRoute] Guid detailsId,
             UploadSectionDetailsVersionContentDTO uploadSectionDetailsVersionContentDto
         )
         {
@@ -365,6 +366,7 @@ namespace Cursus.LMS.API.Controllers
                 await _sectionDetailsVersionService.UploadSectionDetailsVersionContent
                 (
                     User,
+                    detailsId,
                     uploadSectionDetailsVersionContentDto
                 );
             return StatusCode(responseDto.StatusCode, responseDto);
@@ -372,7 +374,7 @@ namespace Cursus.LMS.API.Controllers
 
         [HttpGet]
         [Route("section/details/content/")]
-        public async Task<IActionResult> UploadSectionDetailsVersionContent
+        public async Task<IActionResult> DisplaySectionDetailsVersionContent
         (
             [FromQuery] Guid sectionDetailsVersionId,
             [FromQuery] string type
@@ -388,7 +390,7 @@ namespace Cursus.LMS.API.Controllers
 
             if (contentResponseDto.Stream is null)
             {
-                return NotFound("User avatar does not exist!");
+                return NotFound("Content was not found");
             }
 
             if (contentResponseDto.ContentType == StaticFileExtensions.Mov || contentResponseDto.ContentType == StaticFileExtensions.Mp4)
@@ -398,7 +400,7 @@ namespace Cursus.LMS.API.Controllers
             
             return File(contentResponseDto.Stream, contentResponseDto.ContentType, contentResponseDto.FileName);
         }
-
+        
         #endregion
     }
 }

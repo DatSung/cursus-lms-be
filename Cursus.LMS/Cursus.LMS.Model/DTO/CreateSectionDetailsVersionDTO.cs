@@ -2,7 +2,7 @@
 
 public class CreateSectionDetailsVersionDTO
 {
-    public Guid courseSectionIVersionId {  get; set; }
+    public Guid courseSectionVersionId {  get; set; }
     public string name { get; set; }
 
 }

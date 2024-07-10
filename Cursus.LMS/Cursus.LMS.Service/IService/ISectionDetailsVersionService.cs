@@ -50,6 +50,7 @@ public interface ISectionDetailsVersionService
     Task<ResponseDTO> UploadSectionDetailsVersionContent
     (
         ClaimsPrincipal User,
+        Guid detailsId,
         UploadSectionDetailsVersionContentDTO uploadSectionDetailsVersionContentDto
     );
 

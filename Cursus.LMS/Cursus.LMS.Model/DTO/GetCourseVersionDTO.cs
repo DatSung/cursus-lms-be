@@ -19,6 +19,7 @@ public class GetCourseVersionDTO
     public string? CategoryName { get; set; }
     public Guid? LevelId { get; set; }
     public string? LevelName { get; set; }
+    public string? Version { get; set; }
     public int? CurrentStatus { get; set; }
 
     public string CurrentStatusDescription
