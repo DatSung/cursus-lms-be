@@ -162,6 +162,10 @@ namespace Cursus.LMS.API.Controllers
         )
         {
             var responseDto = await _courseVersionService.DisplayCourseVersionBackgroundImg(User, courseVersionId);
+            if (responseDto is null)
+            {
+                return null;
+            }
             return File(responseDto, "image/png");
         }
 
