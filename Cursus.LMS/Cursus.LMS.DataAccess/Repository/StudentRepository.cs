@@ -29,9 +29,9 @@ public class StudentRepository : Repository<Student>, IStudentRepository
         return entityEntry.Entity;
     }
 
-    public Task<Student?> GetByUserId(string id)
+    public async Task<Student?> GetByUserId(string id)
     {
-        throw new NotImplementedException();
+        return await _context.Students.Include("ApplicationUser").FirstOrDefaultAsync(x => x.UserId == id);
     }
 
     public async Task<Student?> GetById(Guid id)
