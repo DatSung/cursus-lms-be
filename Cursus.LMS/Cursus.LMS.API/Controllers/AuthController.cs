@@ -289,25 +289,6 @@ namespace Cursus.LMS.API.Controllers
             return StatusCode(this.responseDto.StatusCode, responseDto);
         }
 
-        // // <summary>
-        // /// This API for case student sign in by google.
-        // /// </summary>
-        // /// <returns></returns>
-        // [HttpPost]
-        // [Route("student-signin-by-google")]
-        // public async Task<ActionResult<SignResponseDTO>> StudentSignInByGoogle(
-        //     [FromBody] StudentSignInByGoogleDTO studentSignInByGoogleDto)
-        // {
-        //     return await _authService.StudentSignInByGoogle(studentSignInByGoogleDto);
-        // }
-        //
-        // [HttpPost]
-        // [Route("instructor-signin-by-google")]
-        // public async Task<ActionResult<SignResponseDTO>> InstructorSignInByGoogle(
-        //     [FromBody] InstructorSignInByGoogleDTO instructorSignInByGoogleDto)
-        // {
-        //     return await _authService.InstructorSignInByGoogle(instructorSignInByGoogleDto);
-        // }
 
         [HttpPost]
         [Route("refresh")]

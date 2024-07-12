@@ -51,6 +51,8 @@ public static class ServiceCollectionExtensions
         services.AddIdentity<ApplicationUser, IdentityRole>()
             .AddEntityFrameworkStores<ApplicationDbContext>()
             .AddDefaultTokenProviders();
+        // Registering IStudentsService its implementation StudentsService
+        services.AddScoped<IStudentsService, StudentsService>();
 
         return services;
     }
