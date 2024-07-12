@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<SonarProjectConfig xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns="http://www.sonarsource.com/msbuild/analyzer/2021/1">
+  <AnalysisConfigPath>D:\FPT\Semester 6\Project_Cursus\Backend_Cursus\Cursus.LMS\.sonarqube\conf\SonarQubeAnalysisConfig.xml</AnalysisConfigPath>
+  <ProjectPath>D:\FPT\Semester 6\Project_Cursus\Backend_Cursus\Cursus.LMS\Cursus.LMS.Service\Cursus.LMS.Service.csproj</ProjectPath>
+  <FilesToAnalyzePath>D:\FPT\Semester 6\Project_Cursus\Backend_Cursus\Cursus.LMS\.sonarqube\conf\3\FilesToAnalyze.txt</FilesToAnalyzePath>
+  <OutPath>D:\FPT\Semester 6\Project_Cursus\Backend_Cursus\Cursus.LMS\.sonarqube\out\3</OutPath>
+  <ProjectType>Product</ProjectType>
+  <TargetFramework>net8.0</TargetFramework>
+</SonarProjectConfig>
