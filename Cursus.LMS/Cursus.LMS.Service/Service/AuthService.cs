@@ -1740,7 +1740,7 @@ public class AuthService : IAuthService
     /// </summary>
     /// <param name="updateStudentDto"></param>
     /// <returns></returns>
-    public async Task<ResponseDTO> UpdateIntructor(UpdateIntructorProfileDTO updateIntructorDTO, ClaimsPrincipal User)
+    public async Task<ResponseDTO> UpdateInstructor(UpdateIntructorProfileDTO updateIntructorDTO, ClaimsPrincipal User)
     {
         try
         {
