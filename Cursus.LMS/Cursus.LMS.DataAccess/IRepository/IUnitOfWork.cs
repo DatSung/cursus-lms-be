@@ -20,5 +20,10 @@ public interface IUnitOfWork
     ICourseVersionCommentRepository CourseVersionCommentRepository { get; }
     IStudentCourseRepository StudentCourseRepository { get; }
     ILevelRepository LevelRepository { get; }
+    ICartHeaderRepository CartHeaderRepository { get; }
+    ICartDetailsRepository CartDetailsRepository { get; }
+    ICourseReviewRepository CourseReviewRepository { get; }
+    ICourseReportRepository CourseReportRepository { get; }
+    IStudentCommentRepository StudentCommentRepository { get; }
     Task<int> SaveAsync();
 }

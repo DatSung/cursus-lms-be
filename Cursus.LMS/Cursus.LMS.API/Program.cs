@@ -63,7 +63,7 @@ builder.Services.AddSignalR();
 
 builder.Services.AddCors(options =>
 {
-    var origin = builder.Configuration["AllowOrigin:FrontEndFirebase"];
+    var origin = builder.Configuration["AllowOrigin:FrontEnd"];
     options.AddPolicy("AllowSpecificOrigin",
         builder => builder
             .WithOrigins(origin)
