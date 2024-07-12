@@ -44,4 +44,5 @@ public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
     public DbSet<SectionDetailsVersion> SectionDetailsVersions { get; set; }
     public DbSet<CourseVersionStatus> CourseVersionStatus { get; set; }
     public DbSet<CourseVersionComment> CourseVersionComments { get; set; }
+    public DbSet<StudentComment> StudentComments { get; set; }
 }
