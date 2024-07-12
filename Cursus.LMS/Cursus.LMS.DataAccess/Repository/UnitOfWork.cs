@@ -29,6 +29,8 @@ namespace Cursus.LMS.DataAccess.Repository
         public ILevelRepository LevelRepository { get; }
         public ICartHeaderRepository CartHeaderRepository { get; }
         public ICartDetailsRepository CartDetailsRepository { get; }
+        public ICourseReviewRepository CourseReviewRepository { get; }
+        public ICourseReportRepository CourseReportRepository { get; }
 
         public UnitOfWork(ApplicationDbContext context, UserManager<ApplicationUser> userManager)
         {
@@ -51,6 +53,8 @@ namespace Cursus.LMS.DataAccess.Repository
             LevelRepository = new LevelRepository(_context);
             CartHeaderRepository = new CartHeaderRepository(_context);
             CartDetailsRepository = new CartDetailsRepository(_context);
+            CourseReviewRepository = new CourseReviewRepository(_context);
+            CourseReportRepository = new CourseReportRepository(_context);
         }
 
         public async Task<int> SaveAsync()

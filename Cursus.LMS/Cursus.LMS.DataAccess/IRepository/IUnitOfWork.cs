@@ -22,5 +22,7 @@ public interface IUnitOfWork
     ILevelRepository LevelRepository { get; }
     ICartHeaderRepository CartHeaderRepository { get; }
     ICartDetailsRepository CartDetailsRepository { get; }
+    ICourseReviewRepository CourseReviewRepository { get; }
+    ICourseReportRepository CourseReportRepository { get; }
     Task<int> SaveAsync();
 }
