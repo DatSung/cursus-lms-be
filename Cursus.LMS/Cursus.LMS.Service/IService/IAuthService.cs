@@ -27,4 +27,7 @@ public interface IAuthService
     Task<ResponseDTO> GetUserInfo(ClaimsPrincipal User);
     Task<MemoryStream> DisplayUserAvatar(string userId);
     Task<DegreeResponseDTO> DisplayInstructorDegree(string userId);
+
+    Task<ResponseDTO> UpdateStudent(UpdateStudentProfileDTO updateStudentDto, ClaimsPrincipal User);
+    Task<ResponseDTO> UpdateIntructor(UpdateIntructorProfileDTO updateIntructorDTO, ClaimsPrincipal User);
 }
