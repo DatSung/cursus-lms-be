@@ -380,10 +380,10 @@ namespace Cursus.LMS.API.Controllers
         }
 
         [HttpPut]
-        [Route("update-intructor-profile")]
-        public async Task<ActionResult<ResponseDTO>> UpdateIntructor([FromBody] UpdateIntructorProfileDTO intructorDTO)
+        [Route("update-instructor-profile")]
+        public async Task<ActionResult<ResponseDTO>> UpdateInstructor([FromBody] UpdateIntructorProfileDTO intructorDTO)
         {
-            var responseDto = await _authService.UpdateIntructor(intructorDTO, User);
+            var responseDto = await _authService.UpdateInstructor(intructorDTO, User);
             return StatusCode(responseDto.StatusCode, responseDto);
         }
 
