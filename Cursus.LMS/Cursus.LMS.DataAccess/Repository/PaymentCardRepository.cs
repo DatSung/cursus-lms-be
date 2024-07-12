@@ -40,7 +40,10 @@ namespace Cursus.LMS.DataAccess.Repository
             var entityEntry = await _context.PaymentCards.AddAsync(paymentCard);
             return entityEntry.Entity;
         }
-
+        public void Delete(PaymentCard paymentCard) 
+        {
+            _context.PaymentCards.Remove(paymentCard);
+        }
 
     }
 }

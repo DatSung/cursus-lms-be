@@ -29,6 +29,10 @@ public class InstructorRepository : Repository<Instructor>, IInstructorRepositor
     {
         return await _context.Instructors.Include("ApplicationUser").FirstOrDefaultAsync(x => x.InstructorId == id);
     }
+    public async Task<Instructor?> GetByUserId(string id)
+    {
+        return await _context.Instructors.Include("ApplicationUser").FirstOrDefaultAsync(x => x.UserId == id);
+    }
     public async Task<IDbContextTransaction> BeginTransactionAsync()
     {
         return await _context.Database.BeginTransactionAsync();

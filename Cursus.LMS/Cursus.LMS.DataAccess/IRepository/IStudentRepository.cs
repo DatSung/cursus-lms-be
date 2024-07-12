@@ -8,4 +8,5 @@ public interface IStudentRepository : IRepository<Student>
     void UpdateRange(IEnumerable<Student> students);
     Task<Student?> GetById(Guid id);
     Task<Student> AddAsync(Student student);
+    Task<Student?> GetByUserId(string id);
 }

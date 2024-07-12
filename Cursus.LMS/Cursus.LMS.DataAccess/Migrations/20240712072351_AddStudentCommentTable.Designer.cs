@@ -4,6 +4,7 @@ using Cursus.LMS.DataAccess.Context;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Cursus.LMS.DataAccess.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240712072351_AddStudentCommentTable")]
+    partial class AddStudentCommentTable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -121,9 +124,9 @@ namespace Cursus.LMS.DataAccess.Migrations
                             Address = "123 Admin St",
                             AvatarUrl = "https://example.com/avatar.png",
                             BirthDate = new DateTime(1990, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            ConcurrencyStamp = "69151926-a093-4ce5-a07c-601d1fdc43c7",
+                            ConcurrencyStamp = "5f98d446-4a4d-4eb6-bd01-7e22df63670e",
                             Country = "Country",
-                            CreateTime = new DateTime(2024, 7, 12, 7, 43, 46, 626, DateTimeKind.Utc).AddTicks(868),
+                            CreateTime = new DateTime(2024, 7, 12, 7, 23, 48, 306, DateTimeKind.Utc).AddTicks(3934),
                             Email = "admin@gmail.com",
                             EmailConfirmed = true,
                             FullName = "Admin User",
@@ -131,10 +134,10 @@ namespace Cursus.LMS.DataAccess.Migrations
                             LockoutEnabled = true,
                             NormalizedEmail = "ADMIN@GMAIL.COM",
                             NormalizedUserName = "ADMIN@GMAIL.COM",
-                            PasswordHash = "AQAAAAIAAYagAAAAEMmYNSaHBXOsqq6ofMcNvLbIq8JMFfcmpJEr1thHv4zHC+Y8Q/leZFbT5QDBHUgARQ==",
+                            PasswordHash = "AQAAAAIAAYagAAAAEOGKQnNgaFZZFeb+YwYjOEEboIBnW0s7wA2E/clFLktmw9tt/M4dj5PxEIO2IEgRlw==",
                             PhoneNumber = "1234567890",
                             PhoneNumberConfirmed = true,
-                            SecurityStamp = "4d33ade3-d280-455f-b7c2-063fee2bd9b8",
+                            SecurityStamp = "652e332f-2d5e-4612-bd3e-32684bd9595f",
                             TaxNumber = "123456789",
                             TwoFactorEnabled = false,
                             UpdateTime = new DateTime(2003, 1, 12, 0, 0, 0, 0, DateTimeKind.Unspecified),
@@ -288,27 +291,21 @@ namespace Cursus.LMS.DataAccess.Migrations
                     b.Property<Guid>("CourseId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<string>("CreateBy")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime?>("CreateTime")
+                    b.Property<DateTime>("CreateAt")
                         .HasColumnType("datetime2");
+
+                    b.Property<bool>("IsAccepted")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("IsSent")
+                        .HasColumnType("bit");
 
                     b.Property<string>("Message")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("Status")
-                        .HasColumnType("int");
-
                     b.Property<Guid>("StudentId")
                         .HasColumnType("uniqueidentifier");
-
-                    b.Property<string>("UpdateBy")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime?>("UpdateTime")
-                        .HasColumnType("datetime2");
 
                     b.HasKey("Id");
 
@@ -326,11 +323,11 @@ namespace Cursus.LMS.DataAccess.Migrations
                     b.Property<Guid>("CourseId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<string>("CreateBy")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime?>("CreateTime")
+                    b.Property<DateTime>("CreateAt")
                         .HasColumnType("datetime2");
+
+                    b.Property<bool>("IsDelete")
+                        .HasColumnType("bit");
 
                     b.Property<string>("Message")
                         .IsRequired()
@@ -339,17 +336,8 @@ namespace Cursus.LMS.DataAccess.Migrations
                     b.Property<float>("Rate")
                         .HasColumnType("real");
 
-                    b.Property<int>("Status")
-                        .HasColumnType("int");
-
                     b.Property<Guid>("StudentId")
                         .HasColumnType("uniqueidentifier");
-
-                    b.Property<string>("UpdateBy")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime?>("UpdateTime")
-                        .HasColumnType("datetime2");
 
                     b.HasKey("Id");
 
@@ -568,12 +556,12 @@ namespace Cursus.LMS.DataAccess.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("930aa9e5-133a-4009-8b66-88ebcf0eb81a"),
+                            Id = new Guid("d29c3a74-11cc-49b1-8a0e-aeefb1da7670"),
                             BodyContent = "Dear [UserFullName],<br><br>Welcome to Cursus! We are excited to have you join our learning community.",
                             CallToAction = "<a href=\"https://cursus.com/login\">Login</a>",
                             Category = "Welcome",
                             CreateBy = "System",
-                            CreateTime = new DateTime(2024, 7, 12, 14, 43, 46, 742, DateTimeKind.Local).AddTicks(2423),
+                            CreateTime = new DateTime(2024, 7, 12, 14, 23, 48, 423, DateTimeKind.Local).AddTicks(1319),
                             FooterContent = "<p>Contact us at cursusservicetts@gmail.com</p>",
                             Language = "English",
                             PersonalizationTags = "{FirstName}, {LastName}",
@@ -585,16 +573,16 @@ namespace Cursus.LMS.DataAccess.Migrations
                             SubjectLine = "Welcome to Cursus!",
                             TemplateName = "WelcomeEmail",
                             UpdateBy = "Admin",
-                            UpdateTime = new DateTime(2024, 7, 12, 14, 43, 46, 742, DateTimeKind.Local).AddTicks(2436)
+                            UpdateTime = new DateTime(2024, 7, 12, 14, 23, 48, 423, DateTimeKind.Local).AddTicks(1345)
                         },
                         new
                         {
-                            Id = new Guid("31327de5-6f81-4f6c-af27-ca2b2bd7e75b"),
+                            Id = new Guid("ae786c05-f9e5-48e6-b64f-47974bbe082c"),
                             BodyContent = "Hi [UserFullName],<br><br>We received a request to reset your password. Click the link below to reset your password.",
                             CallToAction = "http://localhost:30475/sign-in/verify-email?userId=user.Id&token=Uri.EscapeDataString(token)",
                             Category = "Security",
                             CreateBy = "System",
-                            CreateTime = new DateTime(2024, 7, 12, 14, 43, 46, 742, DateTimeKind.Local).AddTicks(2443),
+                            CreateTime = new DateTime(2024, 7, 12, 14, 23, 48, 423, DateTimeKind.Local).AddTicks(1352),
                             FooterContent = "If you did not request a password reset, please ignore this email.",
                             Language = "English",
                             PersonalizationTags = "[UserFullName], [ResetPasswordLink]",
@@ -606,16 +594,16 @@ namespace Cursus.LMS.DataAccess.Migrations
                             SubjectLine = "Reset Your Password",
                             TemplateName = "ForgotPasswordEmail",
                             UpdateBy = "Admin",
-                            UpdateTime = new DateTime(2024, 7, 12, 14, 43, 46, 742, DateTimeKind.Local).AddTicks(2444)
+                            UpdateTime = new DateTime(2024, 7, 12, 14, 23, 48, 423, DateTimeKind.Local).AddTicks(1352)
                         },
                         new
                         {
-                            Id = new Guid("6878b65f-422e-4208-9b51-bd41d5273778"),
+                            Id = new Guid("201f211f-3ead-4269-9acf-ebd72cc5eb05"),
                             BodyContent = "<p>Thank you for registering your Cursus account. Click here to go back the page</p>",
                             CallToAction = "<a href=\"{{Login}}\">Login now</a>",
                             Category = "Verify",
                             CreateBy = "System",
-                            CreateTime = new DateTime(2024, 7, 12, 14, 43, 46, 742, DateTimeKind.Local).AddTicks(2448),
+                            CreateTime = new DateTime(2024, 7, 12, 14, 23, 48, 423, DateTimeKind.Local).AddTicks(1356),
                             FooterContent = "<p>Contact us at cursusservicetts@gmail.com</p>",
                             Language = "English",
                             PersonalizationTags = "{FirstName}, {LinkLogin}",
@@ -627,16 +615,16 @@ namespace Cursus.LMS.DataAccess.Migrations
                             SubjectLine = "Cursus Verify Email",
                             TemplateName = "SendVerifyEmail",
                             UpdateBy = "Admin",
-                            UpdateTime = new DateTime(2024, 7, 12, 14, 43, 46, 742, DateTimeKind.Local).AddTicks(2449)
+                            UpdateTime = new DateTime(2024, 7, 12, 14, 23, 48, 423, DateTimeKind.Local).AddTicks(1357)
                         },
                         new
                         {
-                            Id = new Guid("631b1d3e-d10e-4bb5-a0c0-2152cb40e9e0"),
+                            Id = new Guid("49b0fcc7-a967-4d4b-bc48-d29088f3ce55"),
                             BodyContent = "<h2>-Your Account has been aprroval!</h2>",
                             CallToAction = "<p><a href='http://bloodmoonrpg.carrd.co?token={token}' style='padding: 10px 20px; color: white; background-color: #007BFF; text-decoration: none;'>Verify</a></p>",
                             Category = "Approval",
                             CreateBy = "System",
-                            CreateTime = new DateTime(2024, 7, 12, 14, 43, 46, 742, DateTimeKind.Local).AddTicks(2452),
+                            CreateTime = new DateTime(2024, 7, 12, 14, 23, 48, 423, DateTimeKind.Local).AddTicks(1361),
                             FooterContent = "<p>Thank you for your waiting! Click this to go to the main page</p>",
                             Language = "English",
                             PersonalizationTags = "{FirstName}, {LastName}",
@@ -648,16 +636,16 @@ namespace Cursus.LMS.DataAccess.Migrations
                             SubjectLine = "Circus Verify Email For Instructor Approval",
                             TemplateName = "SendEmailForInstructorApproval",
                             UpdateBy = "Admin",
-                            UpdateTime = new DateTime(2024, 7, 12, 14, 43, 46, 742, DateTimeKind.Local).AddTicks(2454)
+                            UpdateTime = new DateTime(2024, 7, 12, 14, 23, 48, 423, DateTimeKind.Local).AddTicks(1362)
                         },
                         new
                         {
-                            Id = new Guid("3429c846-39cd-4da3-8dae-2f5915367ca5"),
+                            Id = new Guid("9cc42316-e076-437a-9613-c07715831839"),
                             BodyContent = "<p>Hello {FirstName},</p><p>Click <a href=\"{ResetLink}\">here</a> to reset your password.</p>",
                             CallToAction = "<a href=\"{{ResetLink}}\">Reset Password</a>",
                             Category = "Security",
                             CreateBy = "System",
-                            CreateTime = new DateTime(2024, 7, 12, 14, 43, 46, 742, DateTimeKind.Local).AddTicks(2458),
+                            CreateTime = new DateTime(2024, 7, 12, 14, 23, 48, 423, DateTimeKind.Local).AddTicks(1366),
                             FooterContent = "<p>Contact us at cursusservicetts@gmail.com</p>",
                             Language = "English",
                             PersonalizationTags = "{FirstName}, {ResetLink}",
@@ -669,16 +657,16 @@ namespace Cursus.LMS.DataAccess.Migrations
                             SubjectLine = "Reset Your Password",
                             TemplateName = "ChangePassword",
                             UpdateBy = "Admin",
-                            UpdateTime = new DateTime(2024, 7, 12, 14, 43, 46, 742, DateTimeKind.Local).AddTicks(2459)
+                            UpdateTime = new DateTime(2024, 7, 12, 14, 23, 48, 423, DateTimeKind.Local).AddTicks(1367)
                         },
                         new
                         {
-                            Id = new Guid("2dce34ad-c1e4-4538-a6d9-e8a3840c85a1"),
+                            Id = new Guid("081c794e-567b-4443-9286-13cb698d30d2"),
                             BodyContent = "<p>Your {courseTitle} course led by {instructorName} is inactive.</p>",
                             CallToAction = "<a href=\"{{LoginLink}}\">Login Now</a>",
                             Category = "Notification",
                             CreateBy = "System",
-                            CreateTime = new DateTime(2024, 7, 12, 14, 43, 46, 742, DateTimeKind.Local).AddTicks(2462),
+                            CreateTime = new DateTime(2024, 7, 12, 14, 23, 48, 423, DateTimeKind.Local).AddTicks(1370),
                             FooterContent = "<p>Contact us at cursusservicetts@gmail.com</p>",
                             Language = "English",
                             PersonalizationTags = "{FullName}",
@@ -690,16 +678,16 @@ namespace Cursus.LMS.DataAccess.Migrations
                             SubjectLine = "Inactive Course",
                             TemplateName = "InactiveCourseEmail",
                             UpdateBy = "Admin",
-                            UpdateTime = new DateTime(2024, 7, 12, 14, 43, 46, 742, DateTimeKind.Local).AddTicks(2463)
+                            UpdateTime = new DateTime(2024, 7, 12, 14, 23, 48, 423, DateTimeKind.Local).AddTicks(1371)
                         },
                         new
                         {
-                            Id = new Guid("39e1e71c-64d7-4eb9-a422-cca45e51c64e"),
+                            Id = new Guid("11d90b0f-588d-40f7-8637-5e064734e13d"),
                             BodyContent = "New course has been added by Instructor, please check in the main page.",
                             CallToAction = "<a href=\"https://cursus.com/login\">Login</a>",
                             Category = "Notice for admin",
                             CreateBy = "System",
-                            CreateTime = new DateTime(2024, 7, 12, 14, 43, 46, 742, DateTimeKind.Local).AddTicks(2466),
+                            CreateTime = new DateTime(2024, 7, 12, 14, 23, 48, 423, DateTimeKind.Local).AddTicks(1378),
                             FooterContent = "<p>Contact us at cursusservicetts@gmail.com</p>",
                             Language = "English",
                             PersonalizationTags = "{FirstName}, {LastName}",
@@ -711,16 +699,16 @@ namespace Cursus.LMS.DataAccess.Migrations
                             SubjectLine = "New course has been created!",
                             TemplateName = "NotificationForAdminAboutNewCourse",
                             UpdateBy = "Admin",
-                            UpdateTime = new DateTime(2024, 7, 12, 14, 43, 46, 742, DateTimeKind.Local).AddTicks(2467)
+                            UpdateTime = new DateTime(2024, 7, 12, 14, 23, 48, 423, DateTimeKind.Local).AddTicks(1378)
                         },
                         new
                         {
-                            Id = new Guid("92705a11-862c-4f3e-8cbd-6037c1a9cbe2"),
+                            Id = new Guid("e96871e3-781b-46fb-81e1-e7bb614593e7"),
                             BodyContent = "New course has been approved by Admin, please check in the main page.",
                             CallToAction = "<a href=\"https://cursus.com/login\">Login</a>",
                             Category = "Notice for instructor",
                             CreateBy = "System",
-                            CreateTime = new DateTime(2024, 7, 12, 14, 43, 46, 742, DateTimeKind.Local).AddTicks(2470),
+                            CreateTime = new DateTime(2024, 7, 12, 14, 23, 48, 423, DateTimeKind.Local).AddTicks(1382),
                             FooterContent = "<p>Contact us at cursusservicetts@gmail.com</p>",
                             Language = "English",
                             PersonalizationTags = "{FirstName}, {LastName}",
@@ -732,16 +720,16 @@ namespace Cursus.LMS.DataAccess.Migrations
                             SubjectLine = "Your course has been approved!",
                             TemplateName = "ApproveInstructorCourse",
                             UpdateBy = "Admin",
-                            UpdateTime = new DateTime(2024, 7, 12, 14, 43, 46, 742, DateTimeKind.Local).AddTicks(2471)
+                            UpdateTime = new DateTime(2024, 7, 12, 14, 23, 48, 423, DateTimeKind.Local).AddTicks(1383)
                         },
                         new
                         {
-                            Id = new Guid("c73545e4-eb95-45d2-89c2-1e299b97cfed"),
+                            Id = new Guid("2f954a57-806d-441b-b80a-dfa7f3bf1b5d"),
                             BodyContent = "New course has been rejected by Admin, please check in the main page.",
                             CallToAction = "<a href=\"https://cursus.com/login\">Login</a>",
                             Category = "Notice for instructor",
                             CreateBy = "System",
-                            CreateTime = new DateTime(2024, 7, 12, 14, 43, 46, 742, DateTimeKind.Local).AddTicks(2478),
+                            CreateTime = new DateTime(2024, 7, 12, 14, 23, 48, 423, DateTimeKind.Local).AddTicks(1386),
                             FooterContent = "<p>Contact us at cursusservicetts@gmail.com</p>",
                             Language = "English",
                             PersonalizationTags = "{FirstName}, {LastName}",
@@ -753,7 +741,7 @@ namespace Cursus.LMS.DataAccess.Migrations
                             SubjectLine = "Your course has been rejected!",
                             TemplateName = "RejectInstructorCourse",
                             UpdateBy = "Admin",
-                            UpdateTime = new DateTime(2024, 7, 12, 14, 43, 46, 742, DateTimeKind.Local).AddTicks(2479)
+                            UpdateTime = new DateTime(2024, 7, 12, 14, 23, 48, 423, DateTimeKind.Local).AddTicks(1387)
                         });
                 });
 

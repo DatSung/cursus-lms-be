@@ -2,6 +2,7 @@ using System.Security.Claims;
 using Cursus.LMS.Model.Domain;
 using Cursus.LMS.Model.DTO;
 using Cursus.LMS.Service.IService;
+using Cursus.LMS.Service.Service;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -350,5 +351,22 @@ namespace Cursus.LMS.API.Controllers
             var response = await _authService.GetUserInfo(User);
             return StatusCode(response.StatusCode, response);
         }
+
+        [HttpPut]
+        [Route("update-student-profile")]
+        public async Task<ActionResult<ResponseDTO>> UpdateStudent([FromBody] UpdateStudentProfileDTO studentDTO)
+        {
+            var responseDto = await _authService.UpdateStudent(studentDTO,User);
+            return StatusCode(responseDto.StatusCode, responseDto);
+        }
+
+        [HttpPut]
+        [Route("update-instructor-profile")]
+        public async Task<ActionResult<ResponseDTO>> UpdateInstructor([FromBody] UpdateIntructorProfileDTO intructorDTO)
+        {
+            var responseDto = await _authService.UpdateInstructor(intructorDTO, User);
+            return StatusCode(responseDto.StatusCode, responseDto);
+        }
+
     }
 }
