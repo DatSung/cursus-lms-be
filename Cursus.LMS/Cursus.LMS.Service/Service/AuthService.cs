@@ -15,6 +15,7 @@ using Microsoft.EntityFrameworkCore;
 using FirebaseAdmin.Auth;
 using Newtonsoft.Json.Linq;
 using Cursus.LMS.DataAccess.Repository;
+using DocumentFormat.OpenXml.Spreadsheet;
 
 namespace Cursus.LMS.Service.Service;
 
@@ -1640,4 +1641,194 @@ public class AuthService : IAuthService
             };
         }
     }
+
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="updateStudentDto"></param>
+    /// <returns></returns>
+    public async Task<ResponseDTO> UpdateStudent(UpdateStudentProfileDTO updateStudentDTO, ClaimsPrincipal User)
+    {
+        try
+        {
+            var userId = User.Claims.FirstOrDefault(x => x.Type == ClaimTypes.NameIdentifier)?.Value;
+
+            if (userId is null)
+            {
+                return new ResponseDTO
+                {
+                    Message = "User not found",
+                    Result = null,
+                    IsSuccess = false,
+                    StatusCode = 404
+                };
+            }
+
+            var studentToUpdate = await _unitOfWork.StudentRepository.GetByUserId(userId);
+
+            if (studentToUpdate == null)
+            {
+                return new ResponseDTO
+                {
+                    Message = "Student not found",
+                    Result = null,
+                    IsSuccess = false,
+                    StatusCode = 404
+                };
+            }
+
+            // Update student-specific fields
+            studentToUpdate.University = updateStudentDTO.University;
+
+            // Update related ApplicationUser fields
+            studentToUpdate.ApplicationUser.Address = updateStudentDTO.Address;
+            studentToUpdate.ApplicationUser.BirthDate = updateStudentDTO.BirthDate;
+            studentToUpdate.ApplicationUser.Gender = updateStudentDTO.Gender;
+            studentToUpdate.ApplicationUser.FullName = updateStudentDTO.FullName;
+            studentToUpdate.ApplicationUser.Country = updateStudentDTO.Country;
+            
+
+            // Update payment card information if provided
+            if (!string.IsNullOrWhiteSpace(updateStudentDTO.CardNumber) &&
+                !string.IsNullOrWhiteSpace(updateStudentDTO.CardName) &&
+                !string.IsNullOrWhiteSpace(updateStudentDTO.CardProvider))
+            {
+                // Delete old payment card if it exists
+                var existingCard = await _unitOfWork.PaymentCardRepository.GetCardByUserId(studentToUpdate.UserId);
+                if (existingCard != null)
+                {
+                    _unitOfWork.PaymentCardRepository.Delete(existingCard);
+                    await _unitOfWork.SaveAsync();
+                }
+
+                // Add new payment card information
+                PaymentCard newPaymentCard = new PaymentCard()
+                {
+                    CardName = updateStudentDTO.CardName,
+                    CardNumber = updateStudentDTO.CardNumber,
+                    CardProvider = updateStudentDTO.CardProvider,
+                    UserId = studentToUpdate.UserId
+                };
+                await _unitOfWork.PaymentCardRepository.AddAsync(newPaymentCard);
+            }
+
+
+            _unitOfWork.StudentRepository.Update(studentToUpdate);
+            await _unitOfWork.SaveAsync();
+
+            return new ResponseDTO
+            {
+                Message = "Student updated successfully",
+                Result = null,
+                IsSuccess = true,
+                StatusCode = 200
+            };
+        }
+        catch (Exception e)
+        {
+            return new ResponseDTO
+            {
+                Message = e.Message,
+                Result = null,
+                IsSuccess = false,
+                StatusCode = 500
+            };
+        }
+    }
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="updateStudentDto"></param>
+    /// <returns></returns>
+    public async Task<ResponseDTO> UpdateIntructor(UpdateIntructorProfileDTO updateIntructorDTO, ClaimsPrincipal User)
+    {
+        try
+        {
+            var userId = User.Claims.FirstOrDefault(x => x.Type == ClaimTypes.NameIdentifier)?.Value;
+
+            if (userId is null)
+            {
+                return new ResponseDTO
+                {
+                    Message = "User not found",
+                    Result = null,
+                    IsSuccess = false,
+                    StatusCode = 404
+                };
+            }
+
+            var intructorToUpdate = await _unitOfWork.InstructorRepository.GetByUserId(userId);
+
+            if (intructorToUpdate == null)
+            {
+                return new ResponseDTO
+                {
+                    Message = "Intructor not found",
+                    Result = null,
+                    IsSuccess = false,
+                    StatusCode = 404
+                };
+            }
+
+            // Update student-specific fields
+            intructorToUpdate.Degree = updateIntructorDTO.Degree;
+            intructorToUpdate.Industry = updateIntructorDTO.Industry;
+            intructorToUpdate.Introduction = updateIntructorDTO.Introduction;
+
+            // Update related ApplicationUser fields
+            intructorToUpdate.ApplicationUser.Address = updateIntructorDTO.Address;
+            intructorToUpdate.ApplicationUser.BirthDate = updateIntructorDTO.BirthDate;            
+            intructorToUpdate.ApplicationUser.Gender = updateIntructorDTO.Gender;
+            intructorToUpdate.ApplicationUser.FullName = updateIntructorDTO.FullName;
+            intructorToUpdate.ApplicationUser.Country = updateIntructorDTO.Country;
+            intructorToUpdate.ApplicationUser.TaxNumber = updateIntructorDTO.TaxNumber;
+
+            // Update payment card information if provided
+            if (!string.IsNullOrWhiteSpace(updateIntructorDTO.CardNumber) &&
+                !string.IsNullOrWhiteSpace(updateIntructorDTO.CardName) &&
+                !string.IsNullOrWhiteSpace(updateIntructorDTO.CardProvider))
+            {
+                // Delete old payment card if it exists
+                var existingCard = await _unitOfWork.PaymentCardRepository.GetCardByUserId(intructorToUpdate.UserId);
+                if (existingCard != null)
+                {
+                    _unitOfWork.PaymentCardRepository.Delete(existingCard);
+                    await _unitOfWork.SaveAsync();
+                }
+
+                // Add new payment card information
+                PaymentCard newPaymentCard = new PaymentCard()
+                {
+                    CardName = updateIntructorDTO.CardName,
+                    CardNumber = updateIntructorDTO.CardNumber,
+                    CardProvider = updateIntructorDTO.CardProvider,
+                    UserId = intructorToUpdate.UserId
+                };
+                await _unitOfWork.PaymentCardRepository.AddAsync(newPaymentCard);
+            }
+
+
+            _unitOfWork.InstructorRepository.Update(intructorToUpdate);
+            await _unitOfWork.SaveAsync();
+
+            return new ResponseDTO
+            {
+                Message = "Intructor updated successfully",
+                Result = null,
+                IsSuccess = true,
+                StatusCode = 200
+            };
+        }
+        catch (Exception e)
+        {
+            return new ResponseDTO
+            {
+                Message = e.Message,
+                Result = null,
+                IsSuccess = false,
+                StatusCode = 500
+            };
+        }
+    }
+
 }
