@@ -19,7 +19,7 @@ public class CartService : ICartService
         throw new NotImplementedException();
     }
 
-    public Task<ResponseDTO> AddToCart(ClaimsPrincipal User, AddCartDetailsDTO addCartDetailsDto)
+    public Task<ResponseDTO> AddToCart(ClaimsPrincipal User, AddToCartDTO addToCartDto)
     {
         throw new NotImplementedException();
     }

@@ -2,7 +2,7 @@
 
 namespace Cursus.LMS.Model.DTO;
 
-public class AddCartDetailsDTO
+public class AddToCartDTO
 {
     [Required] public Guid CourseId { get; set; }
 }

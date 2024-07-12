@@ -24,9 +24,9 @@ namespace Cursus.LMS.API.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult<ResponseDTO>> AddToCart([FromBody] AddCartDetailsDTO addCartDetailsDto)
+        public async Task<ActionResult<ResponseDTO>> AddToCart([FromBody] AddToCartDTO addToCartDto)
         {
-            var responseDto = await _cartService.AddToCart(User, addCartDetailsDto);
+            var responseDto = await _cartService.AddToCart(User, addToCartDto);
             return StatusCode(responseDto.StatusCode, responseDto);
         }
 
