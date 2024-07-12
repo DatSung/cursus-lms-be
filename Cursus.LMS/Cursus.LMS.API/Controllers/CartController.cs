@@ -1,5 +1,7 @@
 using Cursus.LMS.Model.DTO;
 using Cursus.LMS.Service.IService;
+using Cursus.LMS.Utility.Constants;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -7,6 +9,7 @@ namespace Cursus.LMS.API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize(Roles = StaticUserRoles.AdminStudent)]
     public class CartController : ControllerBase
     {
         private readonly ICartService _cartService;
@@ -26,7 +29,11 @@ namespace Cursus.LMS.API.Controllers
         [HttpPost]
         public async Task<ActionResult<ResponseDTO>> AddToCart([FromBody] AddToCartDTO addToCartDto)
         {
-            var responseDto = await _cartService.AddToCart(User, addToCartDto);
+            var responseDto = await _cartService.AddToCart
+            (
+                User,
+                addToCartDto
+            );
             return StatusCode(responseDto.StatusCode, responseDto);
         }
 
@@ -34,7 +41,11 @@ namespace Cursus.LMS.API.Controllers
         [Route("{cartDetailsId:Guid}")]
         public async Task<ActionResult<ResponseDTO>> RemoveFromCart([FromRoute] Guid cartDetailsId)
         {
-            var responseDto = await _cartService.RemoveFromCart(User, cartDetailsId);
+            var responseDto = await _cartService.RemoveFromCart
+            (
+                User,
+                cartDetailsId
+            );
             return StatusCode(responseDto.StatusCode, responseDto);
         }
     }

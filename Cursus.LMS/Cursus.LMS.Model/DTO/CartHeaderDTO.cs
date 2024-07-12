@@ -10,5 +10,5 @@ public class CartHeaderDTO
 
     public double TotalPrice { get; set; }
 
-    public virtual IEnumerable<CartDetailsDTO> CartDetailsDtos { get; set; }
+    public IEnumerable<CartDetailsDTO> CartDetailsDtos { get; set; }
 }
