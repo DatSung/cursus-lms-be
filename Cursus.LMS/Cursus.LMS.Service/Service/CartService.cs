@@ -154,7 +154,8 @@ public class CartService : ICartService
                 Id = Guid.NewGuid(),
                 CartHeaderId = cartHeader.Id,
                 CourseId = course.Id,
-                CoursePrice = courseVersion.Price
+                CoursePrice = courseVersion.Price,
+                CourseTitle = courseVersion.Title
             };
 
             cartHeader.TotalPrice += cartDetails.CoursePrice;

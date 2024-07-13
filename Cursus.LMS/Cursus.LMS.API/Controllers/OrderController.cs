@@ -37,5 +37,13 @@ namespace Cursus.LMS.API.Controllers
             var responseDto = await _orderService.CreateStripeSession(User, stripeRequestDto);
             return StatusCode(responseDto.StatusCode, responseDto);
         }
+        
+        [HttpPost]
+        [Route("validate-stripe-session")]
+        public async Task<ActionResult<ResponseDTO>> ValidateStripeSession([FromBody] ValidateStripeSessionDTO validateStripeSessionDto)
+        {
+            var responseDto = await _orderService.ValidateStripeSession(User, validateStripeSessionDto);
+            return StatusCode(responseDto.StatusCode, responseDto);
+        }
     }
 }

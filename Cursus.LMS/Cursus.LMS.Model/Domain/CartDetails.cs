@@ -11,6 +11,6 @@ public class CartDetails
     [ForeignKey("CartHeaderId")] public virtual CartHeader CartHeader { get; set; }
 
     public Guid CourseId { get; set; }
-
+    public string? CourseTitle { get; set; }
     public double CoursePrice { get; set; }
 }
