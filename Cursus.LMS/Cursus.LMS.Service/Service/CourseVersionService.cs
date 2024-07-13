@@ -1112,20 +1112,20 @@ public class CourseVersionService : ICourseVersionService
                         break;
                     case "createby":
                         listComments = listComments.Where(x =>
-                            x.CreateBy.Contains(filterQuery, StringComparison.CurrentCultureIgnoreCase)).ToList();
+                            x.CreatedBy.Contains(filterQuery, StringComparison.CurrentCultureIgnoreCase)).ToList();
                         break;
                     case "updateby":
                         listComments = listComments.Where(x =>
-                            x.UpdateBy.Contains(filterQuery, StringComparison.CurrentCultureIgnoreCase)).ToList();
+                            x.UpdatedBy.Contains(filterQuery, StringComparison.CurrentCultureIgnoreCase)).ToList();
                         break;
                     case "createtime":
                         listComments = listComments.Where(x =>
-                                x.CreateTime.HasValue && x.CreateTime.Value.Date == DateTime.Parse(filterQuery).Date)
+                                x.CreatedTime.HasValue && x.CreatedTime.Value.Date == DateTime.Parse(filterQuery).Date)
                             .ToList();
                         break;
                     case "updatetime":
                         listComments = listComments.Where(x =>
-                                x.UpdateTime.HasValue && x.UpdateTime.Value.Date == DateTime.Parse(filterQuery).Date)
+                                x.UpdatedTime.HasValue && x.UpdatedTime.Value.Date == DateTime.Parse(filterQuery).Date)
                             .ToList();
                         break;
                     case "status":
@@ -1149,16 +1149,16 @@ public class CourseVersionService : ICourseVersionService
                         listComments = listComments.OrderBy(x => x.Comment).ToList();
                         break;
                     case "createby":
-                        listComments = listComments.OrderBy(x => x.CreateBy).ToList();
+                        listComments = listComments.OrderBy(x => x.CreatedBy).ToList();
                         break;
                     case "updateby":
-                        listComments = listComments.OrderBy(x => x.UpdateBy).ToList();
+                        listComments = listComments.OrderBy(x => x.UpdatedBy).ToList();
                         break;
                     case "createtime":
-                        listComments = listComments.OrderBy(x => x.CreateTime).ToList();
+                        listComments = listComments.OrderBy(x => x.CreatedTime).ToList();
                         break;
                     case "updatetime":
-                        listComments = listComments.OrderBy(x => x.UpdateTime).ToList();
+                        listComments = listComments.OrderBy(x => x.UpdatedTime).ToList();
                         break;
                     case "status":
                         listComments = listComments.OrderBy(x => x.Status).ToList();
@@ -1170,7 +1170,7 @@ public class CourseVersionService : ICourseVersionService
             else
             {
                 // Sắp xếp bình luận theo thời gian tạo giảm dần nếu không có sortBy được chỉ định
-                listComments = listComments.OrderByDescending(x => x.CreateTime).ToList();
+                listComments = listComments.OrderByDescending(x => x.CreatedTime).ToList();
             }
 
             // Phân trang
@@ -1185,10 +1185,10 @@ public class CourseVersionService : ICourseVersionService
             {
                 Id = comment.Id,
                 Comment = comment.Comment,
-                CreateTime = comment.CreateTime,
-                CreateBy = comment.CreateBy,
-                UpdateTime = comment.UpdateTime,
-                UpdateBy = comment.UpdateBy,
+                CreateTime = comment.CreatedTime,
+                CreateBy = comment.CreatedBy,
+                UpdateTime = comment.UpdatedTime,
+                UpdateBy = comment.UpdatedBy,
                 Status = comment.Status
             }).ToList();
 
@@ -1283,10 +1283,10 @@ public class CourseVersionService : ICourseVersionService
             {
                 Comment = createCourseVersionCommentsDTO.Comment,
                 CourseVersionId = createCourseVersionCommentsDTO.CourseVersionId,
-                CreateBy = admin.Email,
-                CreateTime = DateTime.Now,
-                UpdateTime = null,
-                UpdateBy = "",
+                CreatedBy = admin.Email,
+                CreatedTime = DateTime.Now,
+                UpdatedTime = null,
+                UpdatedBy = "",
                 Status = 0
             };
 
@@ -1339,8 +1339,8 @@ public class CourseVersionService : ICourseVersionService
             var admin = await _unitOfWork.UserManagerRepository.FindByIdAsync(userId);
 
             //update comment
-            courseVersionId.UpdateTime = DateTime.UtcNow;
-            courseVersionId.UpdateBy = admin.Email;
+            courseVersionId.UpdatedTime = DateTime.UtcNow;
+            courseVersionId.UpdatedBy = admin.Email;
             courseVersionId.Comment = editCourseVersionCommentsDTO.Comment;
             courseVersionId.Status = 1;
 
@@ -1391,8 +1391,8 @@ public class CourseVersionService : ICourseVersionService
             var userId = User.Claims.FirstOrDefault(x => x.Type == ClaimTypes.NameIdentifier)?.Value;
             var admin = await _unitOfWork.UserManagerRepository.FindByIdAsync(userId);
 
-            courseVersionId.UpdateTime = DateTime.UtcNow;
-            courseVersionId.UpdateBy = admin.Email;
+            courseVersionId.UpdatedTime = DateTime.UtcNow;
+            courseVersionId.UpdatedBy = admin.Email;
             courseVersionId.Status = 2;
 
             _unitOfWork.CourseVersionCommentRepository.Update(courseVersionId);

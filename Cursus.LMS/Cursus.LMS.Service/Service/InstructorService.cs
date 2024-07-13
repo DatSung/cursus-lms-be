@@ -501,7 +501,7 @@ public class InstructorService : IInstructorService
                 };
             }
 
-            comments = comments.OrderByDescending(x => x.CreateTime).ToList();
+            comments = comments.OrderByDescending(x => x.CreatedTime).ToList();
 
             // Pagination
             if (pageNumber > 0 && pageSize > 0)
@@ -560,10 +560,10 @@ public class InstructorService : IInstructorService
             {
                 Comment = createInstructorComment.Comment,
                 InstructorId = createInstructorComment.instructorId,
-                UpdateTime = DateTime.Now,
-                CreateTime = DateTime.Now,
-                CreateBy = admin.Email,
-                UpdateBy = "",
+                UpdatedTime = DateTime.Now,
+                CreatedTime = DateTime.Now,
+                CreatedBy = admin.Email,
+                UpdatedBy = "",
                 Status = 0
             };
 
@@ -612,8 +612,8 @@ public class InstructorService : IInstructorService
             var admin = await _unitOfWork.UserManagerRepository.FindByIdAsync(userId);
 
             //update comment
-            instructorId.UpdateTime = DateTime.Now;
-            instructorId.UpdateBy = admin.Email;
+            instructorId.UpdatedTime = DateTime.Now;
+            instructorId.UpdatedBy = admin.Email;
             instructorId.Comment = updateInstructorCommentDTO.comment;
             instructorId.Status = 1;
 
