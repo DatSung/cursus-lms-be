@@ -422,7 +422,7 @@ namespace Cursus.LMS.Service.Service
                     };
                 }
 
-                comments = comments.OrderByDescending(x => x.CreateTime).ToList();
+                comments = comments.OrderByDescending(x => x.CreatedTime).ToList();
 
                 // Pagination
                 if (pageNumber > 0 && pageSize > 0)
@@ -479,10 +479,10 @@ namespace Cursus.LMS.Service.Service
                 {
                     Comment = createStudentCommentDTO.Comment,
                     StudentId = createStudentCommentDTO.StudentId,
-                    UpdateTime = null,
-                    CreateTime = DateTime.Now,
-                    CreateBy = admin.Email,
-                    UpdateBy = "",
+                    UpdatedTime = null,
+                    CreatedTime = DateTime.Now,
+                    CreatedBy = admin.Email,
+                    UpdatedBy = "",
                     Status = 0
                 };
 
@@ -531,8 +531,8 @@ namespace Cursus.LMS.Service.Service
                 var admin = await _unitOfWork.UserManagerRepository.FindByIdAsync(userId);
 
                 //update comment
-                studentId.UpdateTime = DateTime.Now;
-                studentId.UpdateBy = admin.Email;
+                studentId.UpdatedTime = DateTime.Now;
+                studentId.UpdatedBy = admin.Email;
                 studentId.Comment = updateStudentCommentDTO.Comment;
                 studentId.Status = 1;
 
