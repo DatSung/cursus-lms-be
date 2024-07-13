@@ -75,5 +75,45 @@ namespace Cursus.LMS.API.Controllers
             var responseDto = await _studentsService.GetStudentTotalCourses(studentId);
             return StatusCode(responseDto.StatusCode, responseDto);
         }
+        
+        [HttpGet]
+        [Route("comment/{studentId:guid}")]
+        [Authorize(Roles = StaticUserRoles.Admin)]
+        public async Task<ActionResult<ResponseDTO>> GetStudentComments
+            (
+                [FromRoute] Guid studentId,
+                [FromQuery] int pageNumber = 1,
+                [FromQuery] int pageSize = 10
+            )
+        {
+            var responseDto = await _studentsService.GetAllStudentComment(studentId, pageNumber, pageSize);
+            return StatusCode(responseDto.StatusCode, responseDto);
+        }
+        
+        [HttpPost]
+        [Route("comment/")]
+        [Authorize(Roles = StaticUserRoles.Admin)]
+        public async Task<ActionResult<ResponseDTO>> CreateStudentComment( CreateStudentCommentDTO createStudentCommentDto)
+        {
+            var responseDto = await _studentsService.CreateStudentComment(User,createStudentCommentDto);
+            return StatusCode(responseDto.StatusCode, responseDto);
+        }
+        [HttpPut]
+        [Route("comment/")]
+        [Authorize(Roles = StaticUserRoles.Admin)]
+        public async Task<ActionResult<ResponseDTO>> UpdateStudentComment(UpdateStudentCommentDTO updateStudentCommentDto)
+        {
+            var responseDto = await _studentsService.UpdateStudentComment(User, updateStudentCommentDto);
+            return StatusCode(responseDto.StatusCode, responseDto);
+        }
+        [HttpDelete]
+        [Route("comment/{commentId:guid}")]
+        [Authorize(Roles = StaticUserRoles.Admin)]
+        public async Task<ActionResult<ResponseDTO>> DeleteStudentComment([FromRoute] Guid commentId)
+        {
+            var responseDto = await _studentsService.DeleteStudentComment(commentId);
+            return StatusCode(responseDto.StatusCode, responseDto);
+        }
+        
     }
 }

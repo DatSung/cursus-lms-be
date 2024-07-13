@@ -73,6 +73,9 @@ builder.Services.AddCors(options =>
             .AllowCredentials());
 });
 
+// Add Application Insights Telemetry
+builder.Services.AddApplicationInsightsTelemetry(builder.Configuration["ApplicationInsights:InstrumentationKey"]);
+
 var app = builder.Build();
 
 ApplyMigration();

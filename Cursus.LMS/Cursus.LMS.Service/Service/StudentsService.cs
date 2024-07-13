@@ -348,7 +348,7 @@ namespace Cursus.LMS.Service.Service
         {
             throw new NotImplementedException();
         }
-
+        //GetStudentTotalCourses đã xong
         public async Task<ResponseDTO> GetStudentTotalCourses(Guid studentId)
         {
             try
@@ -399,25 +399,209 @@ namespace Cursus.LMS.Service.Service
                 };
             }
         }
-
-        public Task<ResponseDTO> GetAllStudentComment(Guid studentId, int pageNumber, int pageSize)
+        //
+        public async Task<ResponseDTO> GetAllStudentComment
+            (
+                Guid studentId, int pageNumber, int pageSize
+            )
         {
-            throw new NotImplementedException();
+            try
+            {
+                var comments = _unitOfWork.StudentCommentRepository.GetAllAsync(
+                    x => x.StudentId == studentId &&
+                         x.Status != 2
+                ).GetAwaiter().GetResult().ToList();
+                if (comments is null)
+                {
+                    return new ResponseDTO()
+                    {
+                        Message = "There are no comment",
+                        IsSuccess = true,
+                        StatusCode = 204,
+                        Result = null
+                    };
+                }
+
+                comments = comments.OrderByDescending(x => x.CreateTime).ToList();
+
+                // Pagination
+                if (pageNumber > 0 && pageSize > 0)
+                {
+                    var skipResult = (pageNumber - 1) * pageSize;
+                    comments = comments.Skip(skipResult).Take(pageSize).ToList();
+                }
+
+                var commentsDto = _mapper.Map<List<GetAllCommentsDTO>>(comments);
+
+                return new ResponseDTO()
+                {
+                    Message = "Get student comment successfully",
+                    IsSuccess = true,
+                    StatusCode = 200,
+                    Result = commentsDto
+                };
+            }
+            catch (Exception e)
+            {
+                return new ResponseDTO()
+                {
+                    Message = e.Message,
+                    Result = null,
+                    IsSuccess = false,
+                    StatusCode = 500
+                };
+            }
         }
-
-        public async Task<ResponseDTO> CreateStudentComment(ClaimsPrincipal User, CreateStudentCommentDTO createStudentCommentDTO)
+        //CreateStudentComment đã xong
+        public async Task<ResponseDTO> CreateStudentComment(ClaimsPrincipal User, 
+            CreateStudentCommentDTO createStudentCommentDTO)
         {
-            throw new NotImplementedException();
+            try
+            {
+                var studentId =
+                    await _unitOfWork.StudentRepository.GetAsync(i =>
+                        i.StudentId == createStudentCommentDTO.StudentId);
+                if (studentId is null)
+                {
+                    return new ResponseDTO()
+                    {
+                        Message = "StudentId Invalid",
+                        IsSuccess = false,
+                        StatusCode = 404,
+                        Result = null
+                    };
+                }
+
+                var userId = User.Claims.FirstOrDefault(x => x.Type == ClaimTypes.NameIdentifier)?.Value;
+                var admin = await _unitOfWork.UserManagerRepository.FindByIdAsync(userId);
+                
+                StudentComment studentComment = new StudentComment()
+                {
+                    Comment = createStudentCommentDTO.Comment,
+                    StudentId = createStudentCommentDTO.StudentId,
+                    UpdateTime = null,
+                    CreateTime = DateTime.Now,
+                    CreateBy = admin.Email,
+                    UpdateBy = "",
+                    Status = 0
+                };
+
+                await _unitOfWork.StudentCommentRepository.AddAsync(studentComment);
+                await _unitOfWork.SaveAsync();
+
+                return new ResponseDTO()
+                {
+                    Message = "Create student comment successfully",
+                    IsSuccess = true,
+                    StatusCode = 200,
+                    Result = null
+                };
+            }
+            catch (Exception e)
+            {
+                return new ResponseDTO()
+                {
+                    Message = e.Message,
+                    IsSuccess = false,
+                    StatusCode = 500,
+                    Result = null
+                };
+            }
         }
-
-        public Task<ResponseDTO> UpdateStudentComment(ClaimsPrincipal User, UpdateStudentCommentDTO updateStudentCommentDTO)
+        //UpdateStudentComment đã xong
+        public async Task<ResponseDTO> UpdateStudentComment(ClaimsPrincipal User, 
+            UpdateStudentCommentDTO updateStudentCommentDTO)
         {
-            throw new NotImplementedException();
+            try
+            {
+                var studentId =
+                    await _unitOfWork.StudentCommentRepository.GetAsync(i => i.Id == updateStudentCommentDTO.Id);
+                if (studentId == null)
+                {
+                    return new ResponseDTO()
+                    {
+                        Message = "StudentId Invalid",
+                        Result = null,
+                        IsSuccess = false,
+                        StatusCode = 400
+                    };
+                }
+
+                var userId = User.Claims.FirstOrDefault(x => x.Type == ClaimTypes.NameIdentifier)?.Value;
+                var admin = await _unitOfWork.UserManagerRepository.FindByIdAsync(userId);
+
+                //update comment
+                studentId.UpdateTime = DateTime.Now;
+                studentId.UpdateBy = admin.Email;
+                studentId.Comment = updateStudentCommentDTO.Comment;
+                studentId.Status = 1;
+
+                _unitOfWork.StudentCommentRepository.Update(studentId);
+
+                //Lưu comment
+                await _unitOfWork.SaveAsync();
+
+                return new ResponseDTO()
+                {
+                    Message = "Comment updated successfully",
+                    Result = null,
+                    IsSuccess = true,
+                    StatusCode = 200,
+                };
+            }
+            catch (Exception e)
+            {
+                return new ResponseDTO
+                {
+                    Message = e.Message,
+                    Result = null,
+                    IsSuccess = false,
+                    StatusCode = 500
+                };
+            }
         }
-
-        public Task<ResponseDTO> DeleteStudentComment(Guid commentId)
+        //DeleteStudentComment đã xong
+        public async Task<ResponseDTO> DeleteStudentComment(Guid commentId)
         {
-            throw new NotImplementedException();
+            try
+            {
+                var comment =
+                    await _unitOfWork.StudentCommentRepository.GetAsync(x => x.Id == commentId);
+                if (comment == null)
+                {
+                    return new ResponseDTO()
+                    {
+                        Message = "Comment was not found",
+                        IsSuccess = false,
+                        StatusCode = 404,
+                        Result = null,
+                    };
+                }
+
+                //chuyển status về 0 chứ không xóa dữ liệu
+                comment.Status = 2;
+                //Lưu thay đổi
+                _unitOfWork.StudentCommentRepository.Update(comment);
+                await _unitOfWork.SaveAsync();
+
+                return new ResponseDTO()
+                {
+                    Message = "Comment deleted successfully",
+                    IsSuccess = true,
+                    StatusCode = 200,
+                    Result = comment.Id,
+                };
+            }
+            catch (Exception e)
+            {
+                return new ResponseDTO
+                {
+                    Message = e.Message,
+                    Result = null,
+                    IsSuccess = false,
+                    StatusCode = 500
+                };
+            }
         }
 
         public Task<ClosedXMLResponseDTO> DownloadStudents(string fileName)
