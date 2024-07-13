@@ -26,5 +26,6 @@ public interface IUnitOfWork
     ICourseReportRepository CourseReportRepository { get; }
     IOrderHeaderRepository OrderHeaderRepository { get; }
     IOrderDetailsRepository OrderDetailsRepository { get; }
+    IOrderStatusRepository OrderStatusRepository { get; }
     Task<int> SaveAsync();
 }

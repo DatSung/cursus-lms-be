@@ -12,12 +12,14 @@ namespace Cursus.LMS.Service.Service;
 public class OrderService : IOrderService
 {
     private readonly IUnitOfWork _unitOfWork;
+    private readonly IOrderStatusService _orderStatusService;
     private readonly IMapper _mapper;
 
-    public OrderService(IUnitOfWork unitOfWork, IMapper mapper)
+    public OrderService(IUnitOfWork unitOfWork, IMapper mapper, IOrderStatusService orderStatusService)
     {
         _unitOfWork = unitOfWork;
         _mapper = mapper;
+        _orderStatusService = orderStatusService;
     }
 
     public async Task<ResponseDTO> CreateOrder
@@ -111,6 +113,17 @@ public class OrderService : IOrderService
             await _unitOfWork.SaveAsync();
 
             var orderHeaderDto = _mapper.Map<GetOrderHeaderDTO>(orderHeader);
+
+            await _orderStatusService.CreateOrderStatus
+            (
+                User,
+                new CreateOrderStatusDTO()
+                {
+                    Status = StaticStatus.Order.Pending,
+                    OrderHeaderId = orderHeader.Id
+                }
+            );
+
             return new ResponseDTO()
             {
                 Message = "Create order successfully",
