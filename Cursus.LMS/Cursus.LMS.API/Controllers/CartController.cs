@@ -48,5 +48,7 @@ namespace Cursus.LMS.API.Controllers
             );
             return StatusCode(responseDto.StatusCode, responseDto);
         }
+        
+        
     }
 }

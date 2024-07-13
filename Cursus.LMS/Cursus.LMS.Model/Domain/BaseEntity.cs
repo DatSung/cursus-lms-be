@@ -2,9 +2,9 @@
 
 public class BaseEntity<CID, UID, SID>
 {
-    public CID? CreateBy { get; set; }
-    public DateTime? CreateTime { get; set; }
-    public UID? UpdateBy { get; set; }
-    public DateTime? UpdateTime { get; set; }
+    public CID? CreatedBy { get; set; }
+    public DateTime? CreatedTime { get; set; }
+    public UID? UpdatedBy { get; set; }
+    public DateTime? UpdatedTime { get; set; }
     public SID? Status { get; set; }
 }

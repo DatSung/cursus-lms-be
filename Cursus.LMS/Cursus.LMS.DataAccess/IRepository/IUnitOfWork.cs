@@ -24,6 +24,10 @@ public interface IUnitOfWork
     ICartDetailsRepository CartDetailsRepository { get; }
     ICourseReviewRepository CourseReviewRepository { get; }
     ICourseReportRepository CourseReportRepository { get; }
+    IOrderHeaderRepository OrderHeaderRepository { get; }
+    IOrderDetailsRepository OrderDetailsRepository { get; }
+    IOrderStatusRepository OrderStatusRepository { get; }
     IStudentCommentRepository StudentCommentRepository { get; }
+
     Task<int> SaveAsync();
 }

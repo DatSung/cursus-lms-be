@@ -112,10 +112,10 @@ public class AutoMapperProfile : Profile
         CreateMap<CourseVersionComment, GetCourseCommnetDTO>()
             .ForMember(dest => dest.CourseVersionId, opt => opt.MapFrom(src => src.CourseVersionId))
             .ForMember(dest => dest.Comment, opt => opt.MapFrom(src => src.Comment))
-            .ForMember(dest => dest.CreateBy, opt => opt.MapFrom(src => src.CreateBy))
-            .ForMember(dest => dest.CreateTime, opt => opt.MapFrom(src => src.CreateTime))
-            .ForMember(dest => dest.UpdateBy, opt => opt.MapFrom(src => src.UpdateBy))
-            .ForMember(dest => dest.UpdateTime, opt => opt.MapFrom(src => src.UpdateTime))
+            .ForMember(dest => dest.CreateBy, opt => opt.MapFrom(src => src.CreatedBy))
+            .ForMember(dest => dest.CreateTime, opt => opt.MapFrom(src => src.CreatedTime))
+            .ForMember(dest => dest.UpdateBy, opt => opt.MapFrom(src => src.UpdatedBy))
+            .ForMember(dest => dest.UpdateTime, opt => opt.MapFrom(src => src.UpdatedTime))
             .ForMember(dest => dest.Status, opt => opt.MapFrom(src => src.Status))
             .ReverseMap();
 
@@ -128,8 +128,13 @@ public class AutoMapperProfile : Profile
         CreateMap<CartHeader, CartHeaderDTO>().ReverseMap();
         CreateMap<CartDetails, CartDetailsDTO>().ReverseMap();
 
+
+        CreateMap<OrderHeader, GetOrderHeaderDTO>().ReverseMap();
+        CreateMap<OrderDetails, GetOrderDetailsDTO>().ReverseMap();
+
         CreateMap<StudentComment, GetAllCommentsDTO>().ReverseMap();
         CreateMap<StudentComment,CreateStudentCommentDTO>().ReverseMap();
         CreateMap<StudentComment, UpdateStudentCommentDTO>().ReverseMap();
+
     }
 }

@@ -31,6 +31,9 @@ namespace Cursus.LMS.DataAccess.Repository
         public ICartDetailsRepository CartDetailsRepository { get; }
         public ICourseReviewRepository CourseReviewRepository { get; }
         public ICourseReportRepository CourseReportRepository { get; }
+        public IOrderHeaderRepository OrderHeaderRepository { get; }
+        public IOrderDetailsRepository OrderDetailsRepository { get; }
+        public IOrderStatusRepository OrderStatusRepository { get; }
         public IStudentCommentRepository StudentCommentRepository { get; }
 
         public UnitOfWork(ApplicationDbContext context, UserManager<ApplicationUser> userManager)
@@ -56,6 +59,9 @@ namespace Cursus.LMS.DataAccess.Repository
             CartDetailsRepository = new CartDetailsRepository(_context);
             CourseReviewRepository = new CourseReviewRepository(_context);
             CourseReportRepository = new CourseReportRepository(_context);
+            OrderHeaderRepository = new OrderHeaderRepository(_context);
+            OrderDetailsRepository = new OrderDetailsRepository(_context);
+            OrderStatusRepository = new OrderStatusRepository(_context);
             StudentCommentRepository = new StudentCommentRepository(_context);
         }
 
