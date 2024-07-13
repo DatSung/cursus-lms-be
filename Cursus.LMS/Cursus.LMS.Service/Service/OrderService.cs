@@ -6,6 +6,7 @@ using Cursus.LMS.Model.DTO;
 using Cursus.LMS.Service.IService;
 using Cursus.LMS.Utility.Constants;
 using Microsoft.IdentityModel.Tokens;
+using Stripe;
 using Stripe.Checkout;
 
 namespace Cursus.LMS.Service.Service;
@@ -291,9 +292,54 @@ public class OrderService : IOrderService
     {
         try
         {
+            var orderHeader = await _unitOfWork.OrderHeaderRepository.GetAsync
+            (
+                filter: x => x.Id == validateStripeSessionDto.OrderHeaderId
+            );
+
+            if (orderHeader is null)
+            {
+                return new ResponseDTO()
+                {
+                    Message = "Order was not found",
+                    IsSuccess = false,
+                    StatusCode = 404,
+                    Result = null
+                };
+            }
+
+            var service = new SessionService();
+            var session = await service.GetAsync(orderHeader.StripeSessionId);
+
+            var paymentIntentService = new PaymentIntentService();
+            var paymentIntent = await paymentIntentService.GetAsync(session.PaymentIntentId);
+
+            if (paymentIntent.Status != "succeeded")
+            {
+                return new ResponseDTO()
+                {
+                    Message = "Order still processing",
+                    IsSuccess = false,
+                    StatusCode = 200,
+                    Result = null
+                };
+            }
+
+            orderHeader.PaymentIntentId = paymentIntent.Id;
+            orderHeader.Status = StaticStatus.Order.Paid;
+            await _orderStatusService.CreateOrderStatus
+            (
+                User,
+                new CreateOrderStatusDTO()
+                {
+                    Status = StaticStatus.Order.Paid,
+                    OrderHeaderId = orderHeader.Id
+                }
+            );
+
             return new ResponseDTO()
             {
-                Message = "Create stripe session successfully",
+                Message = "Confirm stripe session successfully",
                 Result = null,
                 StatusCode = 200,
                 IsSuccess = true
