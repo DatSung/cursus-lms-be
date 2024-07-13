@@ -50,7 +50,9 @@ public static class ServiceCollectionExtensions
         services.AddScoped<ICartService, CartService>();
         // Registering IOrderService its implementation OrderService
         services.AddScoped<IOrderService, OrderService>();
-        
+        // Registering IOrderStatusService its implementation OrderStatusService
+        services.AddScoped<IOrderStatusService, OrderStatusService>();
+
         // Register the Identity services with default configuration
         services.AddIdentity<ApplicationUser, IdentityRole>()
             .AddEntityFrameworkStores<ApplicationDbContext>()

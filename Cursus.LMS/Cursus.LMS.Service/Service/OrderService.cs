@@ -6,6 +6,7 @@ using Cursus.LMS.Model.DTO;
 using Cursus.LMS.Service.IService;
 using Cursus.LMS.Utility.Constants;
 using Microsoft.IdentityModel.Tokens;
+using Stripe.Checkout;
 
 namespace Cursus.LMS.Service.Service;
 
@@ -189,21 +190,124 @@ public class OrderService : IOrderService
         }
     }
 
-    public Task<ResponseDTO> CreateStripeSession
+    public async Task<ResponseDTO> CreateStripeSession
     (
         ClaimsPrincipal User,
         StripeRequestDTO stripeRequestDto
     )
     {
-        throw new NotImplementedException();
+        try
+        {
+            var orderHeader = await _unitOfWork.OrderHeaderRepository.GetAsync
+            (
+                filter: x => x.Id == stripeRequestDto.OrderHeaderId
+            );
+            if (orderHeader is null)
+            {
+                return new ResponseDTO()
+                {
+                    Message = "Order was not found",
+                    IsSuccess = false,
+                    StatusCode = 404,
+                    Result = null
+                };
+            }
+
+            var orderDetails = await _unitOfWork.OrderDetailsRepository.GetAllAsync
+            (
+                filter: x => x.OrderHeaderId == orderHeader.Id
+            );
+            if (orderDetails.IsNullOrEmpty())
+            {
+                return new ResponseDTO()
+                {
+                    Message = "Order was empty",
+                    IsSuccess = false,
+                    StatusCode = 404,
+                    Result = null
+                };
+            }
+
+            var options = new SessionCreateOptions
+            {
+                SuccessUrl = stripeRequestDto.ApprovedUrl,
+                CancelUrl = stripeRequestDto.CancelUrl,
+                LineItems = new List<SessionLineItemOptions>(),
+                Mode = "payment",
+            };
+
+            foreach (var orderDetail in orderDetails)
+            {
+                var sessionLineItem = new SessionLineItemOptions()
+                {
+                    PriceData = new SessionLineItemPriceDataOptions()
+                    {
+                        UnitAmount = (long)(orderDetail.CoursePrice * 100),
+                        Currency = "usd",
+                        ProductData = new SessionLineItemPriceDataProductDataOptions()
+                        {
+                            Name = orderDetail.CourseTitle,
+                        }
+                    },
+                    Quantity = 1
+                };
+                options.LineItems.Add(sessionLineItem);
+            }
+
+            var service = new SessionService();
+            var session = await service.CreateAsync(options);
+
+            stripeRequestDto.StripeSessionUrl = session.Url;
+
+            orderHeader.StripeSessionId = session.Id;
+            _unitOfWork.OrderHeaderRepository.Update(orderHeader);
+            await _unitOfWork.SaveAsync();
+
+            return new ResponseDTO()
+            {
+                Message = "Create stripe session successfully",
+                Result = stripeRequestDto,
+                StatusCode = 200,
+                IsSuccess = true
+            };
+        }
+        catch (Exception e)
+        {
+            return new ResponseDTO()
+            {
+                Message = e.Message,
+                Result = null,
+                StatusCode = 500,
+                IsSuccess = false
+            };
+        }
     }
 
-    public Task<ResponseDTO> ValidateStripeSession
+    public async Task<ResponseDTO> ValidateStripeSession
     (
         ClaimsPrincipal User,
         ValidateStripeSessionDTO validateStripeSessionDto
     )
     {
-        throw new NotImplementedException();
+        try
+        {
+            return new ResponseDTO()
+            {
+                Message = "Create stripe session successfully",
+                Result = null,
+                StatusCode = 200,
+                IsSuccess = true
+            };
+        }
+        catch (Exception e)
+        {
+            return new ResponseDTO()
+            {
+                Message = e.Message,
+                Result = null,
+                StatusCode = 500,
+                IsSuccess = false
+            };
+        }
     }
 }
