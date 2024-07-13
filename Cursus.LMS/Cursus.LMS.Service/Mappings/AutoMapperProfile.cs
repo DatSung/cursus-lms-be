@@ -127,5 +127,8 @@ public class AutoMapperProfile : Profile
         
         CreateMap<CartHeader, CartHeaderDTO>().ReverseMap();
         CreateMap<CartDetails, CartDetailsDTO>().ReverseMap();
+
+        CreateMap<OrderHeader, GetOrderHeaderDTO>().ReverseMap();
+        CreateMap<OrderDetails, GetOrderDetailsDTO>().ReverseMap();
     }
 }

@@ -1,19 +1,23 @@
 ﻿using System.Security.Claims;
+using AutoMapper;
 using Cursus.LMS.DataAccess.IRepository;
 using Cursus.LMS.Model.Domain;
 using Cursus.LMS.Model.DTO;
 using Cursus.LMS.Service.IService;
 using Cursus.LMS.Utility.Constants;
+using Microsoft.IdentityModel.Tokens;
 
 namespace Cursus.LMS.Service.Service;
 
 public class OrderService : IOrderService
 {
     private readonly IUnitOfWork _unitOfWork;
+    private readonly IMapper _mapper;
 
-    public OrderService(IUnitOfWork unitOfWork)
+    public OrderService(IUnitOfWork unitOfWork, IMapper mapper)
     {
         _unitOfWork = unitOfWork;
+        _mapper = mapper;
     }
 
     public async Task<ResponseDTO> CreateOrder
@@ -51,6 +55,7 @@ public class OrderService : IOrderService
                 };
                 await _unitOfWork.CartHeaderRepository.AddAsync(cartHeader);
                 await _unitOfWork.SaveAsync();
+
                 return new ResponseDTO()
                 {
                     Message = "Cart was not found",
@@ -61,7 +66,7 @@ public class OrderService : IOrderService
             }
 
             var cartDetails = await _unitOfWork.CartDetailsRepository.GetAllAsync(x => x.CartHeaderId == cartHeader.Id);
-            if (cartDetails is null)
+            if (cartDetails.IsNullOrEmpty())
             {
                 return new ResponseDTO()
                 {
@@ -98,12 +103,18 @@ public class OrderService : IOrderService
 
             await _unitOfWork.OrderHeaderRepository.AddAsync(orderHeader);
             await _unitOfWork.OrderDetailsRepository.AddRangeAsync(orderDetails);
+
+            _unitOfWork.CartDetailsRepository.RemoveRange(cartDetails);
+            cartHeader.TotalPrice = 0;
+            _unitOfWork.CartHeaderRepository.Update(cartHeader);
+
             await _unitOfWork.SaveAsync();
 
+            var orderHeaderDto = _mapper.Map<GetOrderHeaderDTO>(orderHeader);
             return new ResponseDTO()
             {
                 Message = "Create order successfully",
-                Result = null,
+                Result = orderHeaderDto,
                 IsSuccess = true,
                 StatusCode = 200
             };
@@ -120,13 +131,49 @@ public class OrderService : IOrderService
         }
     }
 
-    public Task<ResponseDTO> GetOrder
+    public async Task<ResponseDTO> GetOrder
     (
         ClaimsPrincipal User,
         Guid orderHeaderId
     )
     {
-        throw new NotImplementedException();
+        try
+        {
+            var userId = User.Claims.FirstOrDefault(x => x.Type == ClaimTypes.NameIdentifier)?.Value;
+
+            var student = await _unitOfWork.StudentRepository.GetAsync(x => x.UserId == userId);
+            if (student is null)
+            {
+                return new ResponseDTO()
+                {
+                    Message = "Student was not found",
+                    Result = null,
+                    IsSuccess = false,
+                    StatusCode = 404
+                };
+            }
+
+            var orderHeader = await _unitOfWork.OrderHeaderRepository.GetAsync(x => x.Id == orderHeaderId);
+            var orderDetails =
+                await _unitOfWork.OrderDetailsRepository.GetAllAsync(x => x.OrderHeaderId == orderHeaderId);
+
+            var getOrderHeaderDto = _mapper.Map<GetOrderHeaderDTO>(orderHeader);
+            getOrderHeaderDto.GetOrderDetails = _mapper.Map<List<GetOrderDetailsDTO>>(orderDetails);
+
+            return new ResponseDTO()
+            {
+                Message = "Get order successfully",
+                IsSuccess = true,
+                StatusCode = 200,
+                Result = getOrderHeaderDto
+            };
+        }
+        catch (Exception e)
+        {
+            return new ResponseDTO()
+            {
+            };
+        }
     }
 
     public Task<ResponseDTO> CreateStripeSession
