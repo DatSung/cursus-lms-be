@@ -28,6 +28,7 @@ public interface IUnitOfWork
     IOrderDetailsRepository OrderDetailsRepository { get; }
     IOrderStatusRepository OrderStatusRepository { get; }
     IStudentCommentRepository StudentCommentRepository { get; }
+    IStudentCourseStatusRepository StudentCourseStatusRepository { get; }
 
     Task<int> SaveAsync();
 }

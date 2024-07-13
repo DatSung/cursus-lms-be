@@ -35,6 +35,7 @@ namespace Cursus.LMS.DataAccess.Repository
         public IOrderDetailsRepository OrderDetailsRepository { get; }
         public IOrderStatusRepository OrderStatusRepository { get; }
         public IStudentCommentRepository StudentCommentRepository { get; }
+        public IStudentCourseStatusRepository StudentCourseStatusRepository { get; }
 
         public UnitOfWork(ApplicationDbContext context, UserManager<ApplicationUser> userManager)
         {
@@ -63,6 +64,7 @@ namespace Cursus.LMS.DataAccess.Repository
             OrderDetailsRepository = new OrderDetailsRepository(_context);
             OrderStatusRepository = new OrderStatusRepository(_context);
             StudentCommentRepository = new StudentCommentRepository(_context);
+            StudentCourseStatusRepository = new StudentCourseStatusRepository(_context);
         }
 
         public async Task<int> SaveAsync()
