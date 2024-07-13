@@ -48,6 +48,8 @@ public static class ServiceCollectionExtensions
         services.AddScoped<IEmailSender, EmailSender>();
         // Registering ICartService its implementation CartService
         services.AddScoped<ICartService, CartService>();
+        // Registering IOrderService its implementation OrderService
+        services.AddScoped<IOrderService, OrderService>();
         
         // Register the Identity services with default configuration
         services.AddIdentity<ApplicationUser, IdentityRole>()
