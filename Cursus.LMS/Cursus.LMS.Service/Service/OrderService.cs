@@ -217,6 +217,17 @@ public class OrderService : IOrderService
                 };
             }
 
+            if (orderHeader.Status != 0)
+            {
+                return new ResponseDTO()
+                {
+                    Message = "Order was paid",
+                    IsSuccess = false,
+                    StatusCode = 400,
+                    Result = null
+                };
+            }
+
             var orderDetails = await _unitOfWork.OrderDetailsRepository.GetAllAsync
             (
                 filter: x => x.OrderHeaderId == orderHeader.Id
