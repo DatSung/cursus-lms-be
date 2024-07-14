@@ -9,7 +9,8 @@ public class StudentCourseStatus
     public Guid? StudentCourseId { get; set; }
     [ForeignKey("StudentCourseId")] public StudentCourse? StudentCourse { get; set; }
     public int Status { get; set; }
-    public DateTime CreateTime { get; set; } = DateTime.UtcNow;
+    public DateTime CreatedTime { get; set; } = DateTime.UtcNow;
+    public string? CreatedBy { get; set; }
 
     public string StatusDescription
     {

@@ -52,6 +52,10 @@ public static class ServiceCollectionExtensions
         services.AddScoped<IOrderService, OrderService>();
         // Registering IOrderStatusService its implementation OrderStatusService
         services.AddScoped<IOrderStatusService, OrderStatusService>();
+        // Registering IStudentCourseService its implementation StudentCourseService
+        services.AddScoped<IStudentCourseService, StudentCourseService>();
+        // Registering IStudentCourseStatusService its implementation StudentCourseStatusService
+        services.AddScoped<IStudentCourseStatusService, StudentCourseStatusService>();
 
         // Register the Identity services with default configuration
         services.AddIdentity<ApplicationUser, IdentityRole>()
@@ -59,7 +63,7 @@ public static class ServiceCollectionExtensions
             .AddDefaultTokenProviders();
         // Registering IStudentsService its implementation StudentsService
         services.AddScoped<IStudentsService, StudentsService>();
-        
+
 
         return services;
     }
