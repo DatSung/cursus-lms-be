@@ -5,5 +5,5 @@ namespace Cursus.LMS.Service.IService;
 
 public interface IStudentCourseService
 {
-    Task<ResponseDTO> EnrollCourse(ClaimsPrincipal User, EnrollCourseDTO enrollCourseDto);
+    Task<ResponseDTO> CreateStudentCourse(ClaimsPrincipal User, EnrollCourseDTO enrollCourseDto);
 }
