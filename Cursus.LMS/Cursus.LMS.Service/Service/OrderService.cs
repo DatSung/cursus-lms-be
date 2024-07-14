@@ -191,17 +191,17 @@ public class OrderService : IOrderService
         }
     }
 
-    public async Task<ResponseDTO> CreateStripeSession
+    public async Task<ResponseDTO> PayWithStripe
     (
         ClaimsPrincipal User,
-        StripeRequestDTO stripeRequestDto
+        PayWithStripeDTO payWithStripeDto
     )
     {
         try
         {
             var orderHeader = await _unitOfWork.OrderHeaderRepository.GetAsync
             (
-                filter: x => x.Id == stripeRequestDto.OrderHeaderId
+                filter: x => x.Id == payWithStripeDto.OrderHeaderId
             );
             if (orderHeader is null)
             {
@@ -231,8 +231,8 @@ public class OrderService : IOrderService
 
             var options = new SessionCreateOptions
             {
-                SuccessUrl = stripeRequestDto.ApprovedUrl,
-                CancelUrl = stripeRequestDto.CancelUrl,
+                SuccessUrl = payWithStripeDto.ApprovedUrl,
+                CancelUrl = payWithStripeDto.CancelUrl,
                 LineItems = new List<SessionLineItemOptions>(),
                 Mode = "payment",
             };
@@ -258,7 +258,7 @@ public class OrderService : IOrderService
             var service = new SessionService();
             var session = await service.CreateAsync(options);
 
-            stripeRequestDto.StripeSessionUrl = session.Url;
+            payWithStripeDto.StripeSessionUrl = session.Url;
 
             orderHeader.StripeSessionId = session.Id;
             _unitOfWork.OrderHeaderRepository.Update(orderHeader);
@@ -267,7 +267,7 @@ public class OrderService : IOrderService
             return new ResponseDTO()
             {
                 Message = "Create stripe session successfully",
-                Result = stripeRequestDto,
+                Result = payWithStripeDto,
                 StatusCode = 200,
                 IsSuccess = true
             };
@@ -284,17 +284,17 @@ public class OrderService : IOrderService
         }
     }
 
-    public async Task<ResponseDTO> ValidateStripeSession
+    public async Task<ResponseDTO> ValidateWithStripe
     (
         ClaimsPrincipal User,
-        ValidateStripeSessionDTO validateStripeSessionDto
+        ValidateWithStripeDTO validateWithStripeDto
     )
     {
         try
         {
             var orderHeader = await _unitOfWork.OrderHeaderRepository.GetAsync
             (
-                filter: x => x.Id == validateStripeSessionDto.OrderHeaderId
+                filter: x => x.Id == validateWithStripeDto.OrderHeaderId
             );
 
             if (orderHeader is null)

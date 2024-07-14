@@ -1,6 +1,6 @@
 ﻿namespace Cursus.LMS.Model.DTO;
 
-public class ValidateStripeSessionDTO
+public class CreateStripeSessionDTO
 {
     
 }
