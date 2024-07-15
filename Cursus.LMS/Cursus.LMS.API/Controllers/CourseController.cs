@@ -12,13 +12,20 @@ namespace Cursus.LMS.API.Controllers
     [ApiController]
     public class CourseController : ControllerBase
     {
-        private ICourseService _courseService;
-        private ICourseReviewService _courseReviewService;
+        private readonly ICourseService _courseService;
+        private readonly ICourseReviewService _courseReviewService;
+        private readonly ICourseReportService _courseReportService;
 
-        public CourseController(ICourseService courseService,ICourseReviewService courseReviewService)
+        public CourseController
+        (
+            ICourseService courseService,
+            ICourseReviewService courseReviewService,
+            ICourseReportService courseReportService
+        )
         {
             _courseService = courseService;
             _courseReviewService = courseReviewService;
+            _courseReportService = courseReportService;
         }
 
 
@@ -129,7 +136,8 @@ namespace Cursus.LMS.API.Controllers
 
         [HttpPost]
         [Route("create-course-review")]
-        public async Task<ActionResult<ResponseDTO>> CreateCourseReview([FromBody] CreateCourseReviewDTO createCourseReviewDTO)
+        public async Task<ActionResult<ResponseDTO>> CreateCourseReview(
+            [FromBody] CreateCourseReviewDTO createCourseReviewDTO)
         {
             if (!ModelState.IsValid)
             {
@@ -158,9 +166,11 @@ namespace Cursus.LMS.API.Controllers
                 });
             }
         }
+
         [HttpPut]
         [Route("update-course-review")]
-        public async Task<ActionResult<ResponseDTO>> UpdateCourseReview([FromBody] UpdateCourseReviewDTO updateCourseReviewDTO)
+        public async Task<ActionResult<ResponseDTO>> UpdateCourseReview(
+            [FromBody] UpdateCourseReviewDTO updateCourseReviewDTO)
         {
             if (!ModelState.IsValid)
             {
@@ -210,151 +220,141 @@ namespace Cursus.LMS.API.Controllers
                 });
             }
         }
-        [ApiController]
-        [Route("api/[controller]")]
-        public class CourseReportController : ControllerBase
+
+
+        [HttpGet]
+        [Route("get-course-reports")]
+        public async Task<ActionResult<ResponseDTO>> GetCourseReports(
+            [FromQuery] Guid? courseId,
+            [FromQuery] string? filterOn,
+            [FromQuery] string? filterQuery,
+            [FromQuery] string? sortBy,
+            [FromQuery] bool? isAscending,
+            [FromQuery] int pageNumber = 1,
+            [FromQuery] int pageSize = 5
+        )
         {
-            private readonly ICourseReportService _courseReportService;
+            var responseDto = await _courseReportService.GetCourseReports(
+                User,
+                courseId,
+                filterOn,
+                filterQuery,
+                sortBy,
+                isAscending,
+                pageNumber,
+                pageSize
+            );
 
-            public CourseReportController(ICourseReportService courseReportService)
+            return StatusCode(responseDto.StatusCode, responseDto);
+        }
+
+        [HttpGet]
+        [Route("get-course-report/{id}")]
+        public async Task<ActionResult<ResponseDTO>> GetCourseReport(Guid id)
+        {
+            try
             {
-                _courseReportService = courseReportService;
-            }
-
-            [HttpGet]
-            [Route("get-course-reports")]
-            public async Task<ActionResult<ResponseDTO>> GetCourseReports(
-                [FromQuery] Guid? courseId,
-                [FromQuery] string? filterOn,
-                [FromQuery] string? filterQuery,
-                [FromQuery] string? sortBy,
-                [FromQuery] bool? isAscending,
-                [FromQuery] int pageNumber = 1,
-                [FromQuery] int pageSize = 5
-            )
-            {
-                var responseDto = await _courseReportService.GetCourseReports(
-                    User,
-                    courseId,
-                    filterOn,
-                    filterQuery,
-                    sortBy,
-                    isAscending,
-                    pageNumber,
-                    pageSize
-                );
-
+                var responseDto = await _courseReportService.GetCourseReportById(id);
                 return StatusCode(responseDto.StatusCode, responseDto);
             }
-
-            [HttpGet]
-            [Route("get-course-report/{id}")]
-            public async Task<ActionResult<ResponseDTO>> GetCourseReport(Guid id)
+            catch (Exception ex)
             {
-                try
+                return StatusCode(500, new ResponseDTO
                 {
-                    var responseDto = await _courseReportService.GetCourseReportById(id);
-                    return StatusCode(responseDto.StatusCode, responseDto);
-                }
-                catch (Exception ex)
-                {
-                    return StatusCode(500, new ResponseDTO
-                    {
-                        Message = ex.Message,
-                        Result = null,
-                        IsSuccess = false,
-                        StatusCode = 500
-                    });
-                }
-            }
-
-            [HttpPost]
-            [Route("create-course-report")]
-            public async Task<ActionResult<ResponseDTO>> CreateCourseReport([FromBody] CreateCourseReportDTO createCourseReportDTO)
-            {
-                if (!ModelState.IsValid)
-                {
-                    return BadRequest(new ResponseDTO
-                    {
-                        Message = "Invalid data",
-                        Result = ModelState,
-                        IsSuccess = false,
-                        StatusCode = 400
-                    });
-                }
-
-                try
-                {
-                    var responseDto = await _courseReportService.CreateCourseReport(createCourseReportDTO);
-                    return StatusCode(responseDto.StatusCode, responseDto);
-                }
-                catch (Exception ex)
-                {
-                    return StatusCode(500, new ResponseDTO
-                    {
-                        Message = ex.Message,
-                        Result = null,
-                        IsSuccess = false,
-                        StatusCode = 500
-                    });
-                }
-            }
-
-            [HttpPut]
-            [Route("update-course-report")]
-            public async Task<ActionResult<ResponseDTO>> UpdateCourseReport([FromBody] UpdateCourseReportDTO updateCourseReportDTO)
-            {
-                if (!ModelState.IsValid)
-                {
-                    return BadRequest(new ResponseDTO
-                    {
-                        Message = "Invalid data",
-                        Result = ModelState,
-                        IsSuccess = false,
-                        StatusCode = 400
-                    });
-                }
-
-                try
-                {
-                    var responseDto = await _courseReportService.UpdateCourseReport(updateCourseReportDTO);
-                    return StatusCode(responseDto.StatusCode, responseDto);
-                }
-                catch (Exception ex)
-                {
-                    return StatusCode(500, new ResponseDTO
-                    {
-                        Message = ex.Message,
-                        Result = null,
-                        IsSuccess = false,
-                        StatusCode = 500
-                    });
-                }
-            }
-
-            [HttpDelete]
-            [Route("delete-course-report/{id}")]
-            public async Task<ActionResult<ResponseDTO>> DeleteCourseReport(Guid id)
-            {
-                try
-                {
-                    var responseDto = await _courseReportService.DeleteCourseReport(id);
-                    return StatusCode(responseDto.StatusCode, responseDto);
-                }
-                catch (Exception ex)
-                {
-                    return StatusCode(500, new ResponseDTO
-                    {
-                        Message = ex.Message,
-                        Result = null,
-                        IsSuccess = false,
-                        StatusCode = 500
-                    });
-                }
+                    Message = ex.Message,
+                    Result = null,
+                    IsSuccess = false,
+                    StatusCode = 500
+                });
             }
         }
 
+        [HttpPost]
+        [Route("create-course-report")]
+        public async Task<ActionResult<ResponseDTO>> CreateCourseReport(
+            [FromBody] CreateCourseReportDTO createCourseReportDTO)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(new ResponseDTO
+                {
+                    Message = "Invalid data",
+                    Result = ModelState,
+                    IsSuccess = false,
+                    StatusCode = 400
+                });
+            }
 
+            try
+            {
+                var responseDto = await _courseReportService.CreateCourseReport(createCourseReportDTO);
+                return StatusCode(responseDto.StatusCode, responseDto);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new ResponseDTO
+                {
+                    Message = ex.Message,
+                    Result = null,
+                    IsSuccess = false,
+                    StatusCode = 500
+                });
+            }
+        }
+
+        [HttpPut]
+        [Route("update-course-report")]
+        public async Task<ActionResult<ResponseDTO>> UpdateCourseReport(
+            [FromBody] UpdateCourseReportDTO updateCourseReportDTO)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(new ResponseDTO
+                {
+                    Message = "Invalid data",
+                    Result = ModelState,
+                    IsSuccess = false,
+                    StatusCode = 400
+                });
+            }
+
+            try
+            {
+                var responseDto = await _courseReportService.UpdateCourseReport(updateCourseReportDTO);
+                return StatusCode(responseDto.StatusCode, responseDto);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new ResponseDTO
+                {
+                    Message = ex.Message,
+                    Result = null,
+                    IsSuccess = false,
+                    StatusCode = 500
+                });
+            }
+        }
+
+        [HttpDelete]
+        [Route("delete-course-report/{id}")]
+        public async Task<ActionResult<ResponseDTO>> DeleteCourseReport(Guid id)
+        {
+            try
+            {
+                var responseDto = await _courseReportService.DeleteCourseReport(id);
+                return StatusCode(responseDto.StatusCode, responseDto);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new ResponseDTO
+                {
+                    Message = ex.Message,
+                    Result = null,
+                    IsSuccess = false,
+                    StatusCode = 500
+                });
+            }
+        }
 
 
         [HttpPost]
@@ -365,6 +365,5 @@ namespace Cursus.LMS.API.Controllers
             var responseDto = await _courseService.EnrollCourse(User, enrollCourseDto);
             return StatusCode(responseDto.StatusCode, responseDto);
         }
-
     }
 }
