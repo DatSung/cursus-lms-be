@@ -124,17 +124,31 @@ public class AutoMapperProfile : Profile
         CreateMap<Level, GetLevelDTO>().ReverseMap();
 
         CreateMap<Student, StudentInfoDTO>().ReverseMap();
-        
+        CreateMap<Student, StudentFullInfoDTO>()
+            .ForMember(dest => dest.StudentId, opt => opt.MapFrom(src => src.StudentId))
+            .ForMember(dest => dest.UserId, opt => opt.MapFrom(src => src.UserId))
+            .ForMember(dest => dest.FullName, opt => opt.MapFrom(src => src.ApplicationUser.FullName))
+            .ForMember(dest => dest.Email, opt => opt.MapFrom(src => src.ApplicationUser.Email))
+            .ForMember(dest => dest.PhoneNumber, opt => opt.MapFrom(src => src.ApplicationUser.PhoneNumber))
+            .ForMember(dest => dest.Gender, opt => opt.MapFrom(src => src.ApplicationUser.Gender))
+            .ForMember(dest => dest.BirthDate, opt => opt.MapFrom(src => src.ApplicationUser.BirthDate))
+            .ForMember(dest => dest.Country, opt => opt.MapFrom(src => src.ApplicationUser.Country))
+            .ForMember(dest => dest.Address, opt => opt.MapFrom(src => src.ApplicationUser.Address))
+            .ForMember(dest => dest.AvatarUrl, opt => opt.MapFrom(src => src.ApplicationUser.AvatarUrl))
+            .ForMember(dest => dest.University, opt => opt.MapFrom(src => src.University))
+            .ReverseMap();
+        //CreateMap<Student, StudentFullInfoDTO>().ReverseMap();
+
+
+        CreateMap<StudentComment, GetAllCommentsDTO>().ReverseMap();
+        CreateMap<StudentComment, CreateStudentCommentDTO>().ReverseMap();
+        CreateMap<StudentComment, UpdateStudentCommentDTO>().ReverseMap();
+
         CreateMap<CartHeader, CartHeaderDTO>().ReverseMap();
         CreateMap<CartDetails, CartDetailsDTO>().ReverseMap();
 
 
         CreateMap<OrderHeader, GetOrderHeaderDTO>().ReverseMap();
         CreateMap<OrderDetails, GetOrderDetailsDTO>().ReverseMap();
-
-        CreateMap<StudentComment, GetAllCommentsDTO>().ReverseMap();
-        CreateMap<StudentComment,CreateStudentCommentDTO>().ReverseMap();
-        CreateMap<StudentComment, UpdateStudentCommentDTO>().ReverseMap();
-
     }
 }
