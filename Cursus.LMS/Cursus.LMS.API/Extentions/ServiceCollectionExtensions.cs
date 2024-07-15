@@ -48,7 +48,9 @@ public static class ServiceCollectionExtensions
         services.AddScoped<IEmailSender, EmailSender>();
         // Registering ICartService its implementation CartService
         services.AddScoped<ICartService, CartService>();
-        
+        // Registering ICourseReviewRepository its implementation CourseReviewRepository
+        services.AddScoped<ICourseReviewRepository, CourseReviewRepository>();
+
         // Register the Identity services with default configuration
         services.AddIdentity<ApplicationUser, IdentityRole>()
             .AddEntityFrameworkStores<ApplicationDbContext>()
