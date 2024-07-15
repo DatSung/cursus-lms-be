@@ -53,7 +53,7 @@ public static class ServiceCollectionExtensions
         // Registering IOrderStatusService its implementation OrderStatusService
         services.AddScoped<IOrderStatusService, OrderStatusService>();
         // Registering IStudentsService its implementation StudentsService
-        services.AddScoped<IStudentsService, StudentsService>();
+        services.AddScoped<IStudentsService, StudentService>();
         // Registering IStudentCourseService its implementation StudentCourseService
         services.AddScoped<IStudentCourseService, StudentCourseService>();
         // Registering IStudentCourseStatusService its implementation StudentCourseStatusService
@@ -65,7 +65,6 @@ public static class ServiceCollectionExtensions
         services.AddIdentity<ApplicationUser, IdentityRole>()
             .AddEntityFrameworkStores<ApplicationDbContext>()
             .AddDefaultTokenProviders();
-
 
 
         return services;
