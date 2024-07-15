@@ -2,13 +2,17 @@
 using Cursus.LMS.DataAccess.IRepository;
 using Cursus.LMS.Model.Domain;
 using Cursus.LMS.Model.DTO;
+using Cursus.LMS.Service.Hubs;
 using Cursus.LMS.Service.IService;
+using Microsoft.AspNetCore.SignalR;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.Extensions.Configuration;
 
 namespace Cursus.LMS.Service.Service
 {
@@ -16,11 +20,21 @@ namespace Cursus.LMS.Service.Service
     {
         private readonly IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
+        private readonly IClosedXMLService _closedXmlService;
+        private readonly IHubContext<NotificationHub> _notificationHub;
+        private readonly IWebHostEnvironment _env;
+        private readonly IConfiguration _config;
 
-        public StudentsService(IUnitOfWork unitOfWork, IMapper mapper)
+        public StudentsService(IUnitOfWork unitOfWork, IMapper mapper, 
+            IClosedXMLService closedXmlService, IHubContext<NotificationHub> notificationHub,
+            IWebHostEnvironment env, IConfiguration config)
         {
             _unitOfWork = unitOfWork;
             _mapper = mapper;
+            _closedXmlService = closedXmlService;
+            _notificationHub = notificationHub;
+            _env = env;
+            _config = config;
         }
         //Get all students đã xong
         public async Task<ResponseDTO> GetAllStudent
@@ -604,15 +618,86 @@ namespace Cursus.LMS.Service.Service
             }
         }
 
-        public Task<ClosedXMLResponseDTO> DownloadStudents(string fileName)
+        //ExportStudents đã xong
+        public async Task<ResponseDTO> ExportStudents(string userId, int month, int year)
         {
-            throw new NotImplementedException();
+            // Lấy dữ liệu từ repository
+            var students = _unitOfWork.StudentRepository.GetAllAsync(includeProperties: "ApplicationUser")
+                .GetAwaiter().GetResult().ToList();
+
+            // Lọc dữ liệu theo tháng và năm
+            students = students.Where(x =>
+                    x.ApplicationUser.CreateTime.HasValue && x.ApplicationUser.CreateTime.Value.Month == month && x.ApplicationUser.CreateTime.Value.Year == year)
+                .ToList();
+
+            // Map dữ liệu sang DTO
+            var studentInfoDtos = _mapper.Map<List<StudentFullInfoDTO>>(students);
+
+            // Xuất file Excel
+            var fileStudent = await _closedXmlService.ExportStudentExcel(studentInfoDtos);
+
+            // Gửi tín hiệu cho người dùng sau khi xuất file
+            await _notificationHub.Clients.User(userId).SendAsync("DownloadExcelNow", fileStudent);
+
+            return new ResponseDTO()
+            {
+                Message = "Waiting...",
+                IsSuccess = true,
+                StatusCode = 200,
+                Result = null
+            };
         }
 
-        public Task<ResponseDTO> ExportStudents(string userId, int month, int year)
+        //DownloadStudents đã xong
+        public async Task<ClosedXMLResponseDTO> DownloadStudents(string fileName)
         {
-            throw new NotImplementedException();
+            try
+            {
+                string filePath = Path.Combine(_env.ContentRootPath, _config["FolderPath:StudentExportFolderPath"], fileName);
+                
+                if(!File.Exists(filePath))
+                {
+                    return new ClosedXMLResponseDTO()
+                    {
+                        Message = "File not found",
+                        IsSuccess = false,
+                        StatusCode = 404,
+                        Stream = null,
+                        ContentType = null,
+                        FileName = null
+                    };
+                }
+                // Read the file
+                var memoryStream = new MemoryStream();
+                using (var stream = new FileStream(filePath, FileMode.Open))
+                {
+                    await stream.CopyToAsync(memoryStream);
+                }
+                
+                memoryStream.Position = 0;
+                var contentType = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
+                
+                //Delete file after download
+                File.Delete(filePath);
+                
+                return new ClosedXMLResponseDTO()
+                {
+                    Message = "Download file successfully",
+                    IsSuccess = true,
+                    StatusCode = 200,
+                    Stream = memoryStream,
+                    ContentType = contentType,
+                    FileName = fileName
+                };
+            }catch(Exception e)
+            {
+                Console.WriteLine(e.Message);
+                throw;
+            }
         }
+
+      
+
 
 
     }

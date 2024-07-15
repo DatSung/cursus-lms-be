@@ -112,4 +112,61 @@ public class ClosedXMLService : IClosedXMLService
             return fileName;
         }
     }
+
+    public async Task<string> ExportStudentExcel(List<StudentFullInfoDTO> studentInfoDtos)
+{
+    // Tạo đường dẫn đến thư mục lưu trữ file Excel
+    string exportFolderPath = Path.Combine(_env.ContentRootPath, _config["FolderPath:StudentExportFolderPath"]);
+
+    // Tạo thư mục nếu chưa tồn tại
+    if (!Directory.Exists(exportFolderPath))
+    {
+        Directory.CreateDirectory(exportFolderPath);
+    }
+
+    // Tạo tên file duy nhất
+    string fileNameStudent = $"Students_{DateTime.Now:yyyyMMdd_HHmmss}.xlsx";
+    string filePath = Path.Combine(exportFolderPath, fileNameStudent);
+
+    using (var workBook = new XLWorkbook())
+    {
+        var workSheet = workBook.Worksheets.Add("Students");
+
+        // Create header
+        workSheet.Cell(1, 1).Value = "Student Id";
+        workSheet.Cell(1, 2).Value = "UserId";
+        workSheet.Cell(1, 3).Value = "FullName";
+        workSheet.Cell(1, 4).Value = "Email";
+        workSheet.Cell(1, 5).Value = "PhoneNumber";
+        workSheet.Cell(1, 6).Value = "Gender";
+        workSheet.Cell(1, 7).Value = "BirthDate";
+        workSheet.Cell(1, 8).Value = "Country";
+        workSheet.Cell(1, 9).Value = "Address";
+        workSheet.Cell(1, 10).Value = "University";
+
+        // Create data
+        for (int i = 0; i < studentInfoDtos.Count; i++)
+        {
+            var student = studentInfoDtos[i];
+
+            workSheet.Cell(i + 2, 1).Value = student.StudentId.ToString();
+            workSheet.Cell(i + 2, 2).Value = student.UserId;
+            workSheet.Cell(i + 2, 3).Value = student.FullName;
+            workSheet.Cell(i + 2, 4).Value = student.Email;
+            workSheet.Cell(i + 2, 5).Value = student.PhoneNumber;
+            workSheet.Cell(i + 2, 6).Value = student.Gender;
+            workSheet.Cell(i + 2, 7).Value = student.BirthDate?.ToString("yyyy-MM-dd");
+            workSheet.Cell(i + 2, 8).Value = student.Country;
+            workSheet.Cell(i + 2, 9).Value = student.Address;
+            workSheet.Cell(i + 2, 10).Value = student.University;
+        }
+
+        workSheet.Columns().AdjustToContents();
+
+        // Export to memory stream
+        workBook.SaveAs(filePath);
+
+        return fileNameStudent;
+    }
+}
 }
