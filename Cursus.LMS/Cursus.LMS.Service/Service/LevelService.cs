@@ -93,7 +93,7 @@ public class LevelService : ILevelService
             else
             {
                 // Sắp xếp bình luận theo thời gian tạo giảm dần nếu không có sortBy được chỉ định
-                listLevels = listLevels.OrderByDescending(x => x.CreateTime).ToList();
+                listLevels = listLevels.OrderByDescending(x => x.CreatedTime).ToList();
             }
 
             // Phân trang
@@ -108,10 +108,10 @@ public class LevelService : ILevelService
             {
                 Id = level.Id,
                 Name = level.Name,
-                CreateTime = level.CreateTime,
-                CreateBy = level.CreateBy,
-                UpdateTime = level.UpdateTime,
-                UpdateBy = level.UpdateBy,
+                CreateTime = level.CreatedTime,
+                CreateBy = level.CreatedBy,
+                UpdateTime = level.UpdatedTime,
+                UpdateBy = level.UpdatedBy,
                 Status = level.Status
             }).ToList();
 
@@ -202,10 +202,10 @@ public class LevelService : ILevelService
             Level levels = new Level()
             {
                 Name = createLevelDto.Name,
-                CreateBy = admin.Email,
-                CreateTime = DateTime.Now,
-                UpdateTime = null,
-                UpdateBy = "",
+                CreatedBy = admin.Email,
+                CreatedTime = DateTime.Now,
+                UpdatedTime = null,
+                UpdatedBy = "",
                 Status = 0
             };
 
@@ -254,8 +254,8 @@ public class LevelService : ILevelService
 
             // cập nhật thông tin danh mục
             levelID.Name = updateLevelDto.Name;
-            levelID.UpdateTime = DateTime.Now;
-            levelID.UpdateBy = User.Identity.Name;
+            levelID.UpdatedTime = DateTime.Now;
+            levelID.UpdatedBy = User.Identity.Name;
             levelID.Status = 1;
 
 
@@ -315,8 +315,8 @@ public class LevelService : ILevelService
             }
 
             levelID.Status = 2;
-            levelID.UpdateBy = User.Identity.Name;
-            levelID.UpdateTime = DateTime.Now;
+            levelID.UpdatedBy = User.Identity.Name;
+            levelID.UpdatedTime = DateTime.Now;
 
             _unitOfWork.LevelRepository.Update(levelID);
             await _unitOfWork.SaveAsync();

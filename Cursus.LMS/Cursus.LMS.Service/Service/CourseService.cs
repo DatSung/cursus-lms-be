@@ -13,11 +13,13 @@ public class CourseService : ICourseService
 {
     private readonly IUnitOfWork _unitOfWork;
     private readonly IMapper _mapper;
+    private readonly IStudentCourseService _studentCourseService;
 
-    public CourseService(IUnitOfWork unitOfWork, IMapper mapper)
+    public CourseService(IUnitOfWork unitOfWork, IMapper mapper, IStudentCourseService studentCourseService)
     {
         _unitOfWork = unitOfWork;
         _mapper = mapper;
+        _studentCourseService = studentCourseService;
     }
 
     public async Task<ResponseDTO> CreateFrameCourse(ClaimsPrincipal User, Guid courseVersionId)
@@ -320,7 +322,7 @@ public class CourseService : ICourseService
             }
 
             var courseVersionDto = _mapper.Map<GetCourseVersionDTO>(courseVersion);
-            
+
             return new ResponseDTO()
             {
                 IsSuccess = true,
@@ -463,5 +465,10 @@ public class CourseService : ICourseService
                 IsSuccess = false
             };
         }
+    }
+
+    public async Task<ResponseDTO> EnrollCourse(ClaimsPrincipal User, EnrollCourseDTO enrollCourseDto)
+    {
+        return await _studentCourseService.CreateStudentCourse(User, enrollCourseDto);
     }
 }

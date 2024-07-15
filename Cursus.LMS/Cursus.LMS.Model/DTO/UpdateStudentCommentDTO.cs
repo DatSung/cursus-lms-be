@@ -8,5 +8,7 @@ namespace Cursus.LMS.Model.DTO
 {
     public class UpdateStudentCommentDTO
     {
+        public Guid Id { get; set; }
+        public string Comment { get; set; }
     }
 }

@@ -6,6 +6,7 @@ using Cursus.LMS.Utility.Constants;
 using Hangfire;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using Stripe;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -72,9 +73,14 @@ builder.Services.AddCors(options =>
             .AllowCredentials());
 });
 
+// Add Application Insights Telemetry
+builder.Services.AddApplicationInsightsTelemetry(builder.Configuration["ApplicationInsights:InstrumentationKey"]);
+
 var app = builder.Build();
 
 ApplyMigration();
+
+StripeConfiguration.ApiKey = builder.Configuration.GetSection("Stripe:SecretKey").Get<string>();
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())

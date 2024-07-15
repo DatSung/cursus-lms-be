@@ -9,4 +9,6 @@ public class CartDetailsDTO
     public Guid CourseId { get; set; }
 
     public double CoursePrice { get; set; }
+    
+    public string? CourseTitle { get; set; }
 }

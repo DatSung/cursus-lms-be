@@ -208,8 +208,8 @@ namespace Cursus.LMS.Service.Service
                     StudentId = createCourseReviewDTO.StudentId,
                     Rate = createCourseReviewDTO.Rate,
                     Message = createCourseReviewDTO.Message,
-                    CreateBy = createCourseReviewDTO.StudentId.ToString(), // Or fetch the actual student info
-                    CreateTime = DateTime.UtcNow,
+                    CreatedBy = createCourseReviewDTO.StudentId.ToString(), // Or fetch the actual student info
+                    CreatedTime = DateTime.UtcNow,
                     Status = 1 // Active status
                 };
 
@@ -254,7 +254,7 @@ namespace Cursus.LMS.Service.Service
 
                 courseReview.Rate = updateCourseReviewDTO.Rate;
                 courseReview.Message = updateCourseReviewDTO.Message;
-                courseReview.UpdateTime = DateTime.UtcNow;
+                courseReview.UpdatedTime = DateTime.UtcNow;
 
                 _unitOfWork.CourseReviewRepository.Update(courseReview);
                 await _unitOfWork.SaveAsync();
