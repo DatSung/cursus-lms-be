@@ -11,5 +11,6 @@ namespace Cursus.LMS.DataAccess.IRepository
     {
         void Update(Course course);
         void UpdateRange(IEnumerable<Course> courses);
+        Task<Course?> GetById(Guid courseId);
     }
 }
