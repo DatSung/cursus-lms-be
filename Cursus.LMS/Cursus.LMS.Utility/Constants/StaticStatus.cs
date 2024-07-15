@@ -22,8 +22,8 @@ public static class StaticStatus
 
     public static class StudentCourse
     {
-        public const int Enrolled = 0;
-        public const int Started = 1;
+        public const int Pending = 0;
+        public const int Enrolled = 1;
         public const int Learning = 2;
         public const int Ended = 3;
         public const int Canceled = 4;

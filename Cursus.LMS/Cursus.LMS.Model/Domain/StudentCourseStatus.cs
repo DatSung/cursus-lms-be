@@ -20,11 +20,11 @@ public class StudentCourseStatus
             {
                 case 0:
                 {
-                    return "Enrolled";
+                    return "Pending";
                 }
                 case 1:
                 {
-                    return "Started";
+                    return "Enrolled";
                 }
                 case 2:
                 {
@@ -40,7 +40,7 @@ public class StudentCourseStatus
                 }
                 default:
                 {
-                    return "Enrolled";
+                    return "Pending";
                 }
             }
         }

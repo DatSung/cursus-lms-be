@@ -61,14 +61,15 @@ public class StudentCourseService : IStudentCourseService
             await _unitOfWork.StudentCourseRepository.AddAsync(studentCourse);
             await _unitOfWork.SaveAsync();
 
-            var studentCourseStatus = new CreateStudentCourseStatusDTO()
-            {
-                CreatedBy = userEmail,
-                Status = StaticStatus.StudentCourse.Enrolled,
-                StudentCourseId = studentCourse.Id
-            };
-
-            await _studentCourseStatusService.CreateStudentCourseStatus(studentCourseStatus);
+            await _studentCourseStatusService.CreateStudentCourseStatus
+            (
+                new CreateStudentCourseStatusDTO()
+                {
+                    CreatedBy = userEmail,
+                    Status = StaticStatus.StudentCourse.Enrolled,
+                    StudentCourseId = studentCourse.Id
+                }
+            );
 
             return new ResponseDTO()
             {
@@ -76,6 +77,64 @@ public class StudentCourseService : IStudentCourseService
                 StatusCode = 200,
                 Message = "Enroll student to course successfully",
                 Result = studentCourse
+            };
+        }
+        catch (Exception e)
+        {
+            return new ResponseDTO()
+            {
+                IsSuccess = false,
+                StatusCode = 500,
+                Message = e.Message,
+                Result = null
+            };
+        }
+    }
+
+    public async Task<ResponseDTO> UpdateStudentCourse
+    (
+        ClaimsPrincipal User,
+        UpdateStudentCourseDTO updateStudentCourseDto
+    )
+    {
+        try
+        {
+            var studentCourse = await _unitOfWork.StudentCourseRepository.GetAsync
+            (
+                x => x.StudentId == updateStudentCourseDto.StudentId && x.CourseId == updateStudentCourseDto.CourseId
+            );
+
+            if (studentCourse is null)
+            {
+                return new ResponseDTO()
+                {
+                    IsSuccess = false,
+                    StatusCode = 404,
+                    Message = "Student course was not found",
+                    Result = null
+                };
+            }
+
+            studentCourse.Status = updateStudentCourseDto.Status;
+            _unitOfWork.StudentCourseRepository.Update(studentCourse);
+            await _unitOfWork.SaveAsync();
+
+            await _studentCourseStatusService.CreateStudentCourseStatus
+            (
+                new CreateStudentCourseStatusDTO()
+                {
+                    CreatedBy = User.Claims.FirstOrDefault(x => x.Type == ClaimTypes.Name)?.Value,
+                    StudentCourseId = studentCourse.Id,
+                    Status = updateStudentCourseDto.Status
+                }
+            );
+
+            return new ResponseDTO()
+            {
+                IsSuccess = true,
+                StatusCode = 200,
+                Message = "Update student course successfully",
+                Result = null
             };
         }
         catch (Exception e)
