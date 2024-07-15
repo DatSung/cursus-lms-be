@@ -28,4 +28,6 @@ public interface IOrderService
         ClaimsPrincipal User,
         ValidateWithStripeDTO validateWithStripeDto
     );
+
+    Task<ResponseDTO> ConfirmOrder(ClaimsPrincipal User, Guid orderHeaderId);
 }

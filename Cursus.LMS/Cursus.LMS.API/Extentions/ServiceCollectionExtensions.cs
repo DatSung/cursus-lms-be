@@ -48,6 +48,10 @@ public static class ServiceCollectionExtensions
         services.AddScoped<IEmailSender, EmailSender>();
         // Registering ICartService its implementation CartService
         services.AddScoped<ICartService, CartService>();
+        // Registering ICourseReviewRepository its implementation CourseReviewRepository
+        services.AddScoped<ICourseReviewService, CourseReviewService>();
+        // Registering ICourseReviewRepository its implementation CourseReviewRepository
+        services.AddScoped<ICourseReportService, CourseReportService>();
         // Registering IOrderService its implementation OrderService
         services.AddScoped<IOrderService, OrderService>();
         // Registering IOrderStatusService its implementation OrderStatusService

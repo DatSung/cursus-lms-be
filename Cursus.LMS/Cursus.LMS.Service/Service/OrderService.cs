@@ -17,14 +17,16 @@ public class OrderService : IOrderService
     private readonly IOrderStatusService _orderStatusService;
     private readonly IMapper _mapper;
     private readonly IStripeService _stripeService;
+    private readonly IStudentCourseService _studentCourseService;
 
     public OrderService(IUnitOfWork unitOfWork, IMapper mapper, IOrderStatusService orderStatusService,
-        IStripeService stripeService)
+        IStripeService stripeService, IStudentCourseService studentCourseService)
     {
         _unitOfWork = unitOfWork;
         _mapper = mapper;
         _orderStatusService = orderStatusService;
         _stripeService = stripeService;
+        _studentCourseService = studentCourseService;
     }
 
     public async Task<ResponseDTO> CreateOrder
@@ -352,6 +354,87 @@ public class OrderService : IOrderService
                 Result = null,
                 StatusCode = 500,
                 IsSuccess = false
+            };
+        }
+    }
+
+    public async Task<ResponseDTO> ConfirmOrder
+    (
+        ClaimsPrincipal User,
+        Guid orderHeaderId
+    )
+    {
+        try
+        {
+            var orderHeader = await _unitOfWork.OrderHeaderRepository.GetAsync(x => x.Id == orderHeaderId);
+            if (orderHeader is null)
+            {
+                return new ResponseDTO()
+                {
+                    Message = "Order was not found",
+                    IsSuccess = false,
+                    StatusCode = 404,
+                    Result = null
+                };
+            }
+
+            if (orderHeader.Status != StaticStatus.Order.Paid)
+            {
+                return new ResponseDTO()
+                {
+                    Message = "Order was not paid",
+                    IsSuccess = false,
+                    StatusCode = 400,
+                    Result = null
+                };
+            }
+
+            orderHeader.Status = StaticStatus.Order.Pending;
+            _unitOfWork.OrderHeaderRepository.Update(orderHeader);
+            await _unitOfWork.SaveAsync();
+
+            await _orderStatusService.CreateOrderStatus
+            (
+                User,
+                new CreateOrderStatusDTO()
+                {
+                    Status = StaticStatus.Order.Pending,
+                    OrderHeaderId = orderHeader.Id,
+                }
+            );
+
+            var ordersDetails =
+                await _unitOfWork.OrderDetailsRepository.GetAllAsync(x => x.OrderHeaderId == orderHeader.Id);
+
+            foreach (var orderDetails in ordersDetails)
+            {
+                await _studentCourseService.CreateStudentCourse
+                (
+                    User,
+                    new EnrollCourseDTO()
+                    {
+                        courseId = orderDetails.CourseId,
+                        studentId = orderHeader.StudentId
+                    }
+                );
+            }
+
+            return new ResponseDTO()
+            {
+                Message = "Confirm order successfully",
+                IsSuccess = true,
+                StatusCode = 200,
+                Result = null
+            };
+        }
+        catch (Exception e)
+        {
+            return new ResponseDTO()
+            {
+                Message = e.Message,
+                Result = null,
+                IsSuccess = false,
+                StatusCode = 500
             };
         }
     }
