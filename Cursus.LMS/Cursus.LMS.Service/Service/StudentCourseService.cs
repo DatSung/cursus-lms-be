@@ -18,7 +18,7 @@ public class StudentCourseService : IStudentCourseService
         _studentCourseStatusService = studentCourseStatusService;
     }
 
-    public async Task<ResponseDTO> EnrollCourse(ClaimsPrincipal User, EnrollCourseDTO enrollCourseDto)
+    public async Task<ResponseDTO> CreateStudentCourse(ClaimsPrincipal User, EnrollCourseDTO enrollCourseDto)
     {
         try
         {

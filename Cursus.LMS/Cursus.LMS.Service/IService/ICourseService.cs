@@ -50,4 +50,10 @@ public interface ICourseService
         ClaimsPrincipal User,
         Guid courseId
     );
+
+    Task<ResponseDTO> EnrollCourse
+    (
+        ClaimsPrincipal User,
+        EnrollCourseDTO enrollCourseDto
+    );
 }

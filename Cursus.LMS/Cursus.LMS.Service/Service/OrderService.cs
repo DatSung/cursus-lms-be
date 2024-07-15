@@ -16,12 +16,15 @@ public class OrderService : IOrderService
     private readonly IUnitOfWork _unitOfWork;
     private readonly IOrderStatusService _orderStatusService;
     private readonly IMapper _mapper;
+    private readonly IStripeService _stripeService;
 
-    public OrderService(IUnitOfWork unitOfWork, IMapper mapper, IOrderStatusService orderStatusService)
+    public OrderService(IUnitOfWork unitOfWork, IMapper mapper, IOrderStatusService orderStatusService,
+        IStripeService stripeService)
     {
         _unitOfWork = unitOfWork;
         _mapper = mapper;
         _orderStatusService = orderStatusService;
+        _stripeService = stripeService;
     }
 
     public async Task<ResponseDTO> CreateOrder
@@ -191,17 +194,17 @@ public class OrderService : IOrderService
         }
     }
 
-    public async Task<ResponseDTO> CreateStripeSession
+    public async Task<ResponseDTO> PayWithStripe
     (
         ClaimsPrincipal User,
-        StripeRequestDTO stripeRequestDto
+        PayWithStripeDTO payWithStripeDto
     )
     {
         try
         {
             var orderHeader = await _unitOfWork.OrderHeaderRepository.GetAsync
             (
-                filter: x => x.Id == stripeRequestDto.OrderHeaderId
+                filter: x => x.Id == payWithStripeDto.OrderHeaderId
             );
             if (orderHeader is null)
             {
@@ -210,6 +213,17 @@ public class OrderService : IOrderService
                     Message = "Order was not found",
                     IsSuccess = false,
                     StatusCode = 404,
+                    Result = null
+                };
+            }
+
+            if (orderHeader.Status != 0)
+            {
+                return new ResponseDTO()
+                {
+                    Message = "Order was paid",
+                    IsSuccess = false,
+                    StatusCode = 400,
                     Result = null
                 };
             }
@@ -229,45 +243,26 @@ public class OrderService : IOrderService
                 };
             }
 
-            var options = new SessionCreateOptions
-            {
-                SuccessUrl = stripeRequestDto.ApprovedUrl,
-                CancelUrl = stripeRequestDto.CancelUrl,
-                LineItems = new List<SessionLineItemOptions>(),
-                Mode = "payment",
-            };
-
-            foreach (var orderDetail in orderDetails)
-            {
-                var sessionLineItem = new SessionLineItemOptions()
+            var responseDto = await _stripeService.CreateStripeSession
+            (
+                new CreateStripeSessionDTO()
                 {
-                    PriceData = new SessionLineItemPriceDataOptions()
-                    {
-                        UnitAmount = (long)(orderDetail.CoursePrice * 100),
-                        Currency = "usd",
-                        ProductData = new SessionLineItemPriceDataProductDataOptions()
-                        {
-                            Name = orderDetail.CourseTitle,
-                        }
-                    },
-                    Quantity = 1
-                };
-                options.LineItems.Add(sessionLineItem);
-            }
+                    ApprovedUrl = payWithStripeDto.ApprovedUrl,
+                    CancelUrl = payWithStripeDto.CancelUrl,
+                    OrdersDetails = orderDetails
+                }
+            );
+            var result = (CreateStripeSessionDTO)responseDto.Result!;
 
-            var service = new SessionService();
-            var session = await service.CreateAsync(options);
-
-            stripeRequestDto.StripeSessionUrl = session.Url;
-
-            orderHeader.StripeSessionId = session.Id;
+            payWithStripeDto.StripeSessionUrl = result.StripeSessionUrl;
+            orderHeader.StripeSessionId = result.StripeSessionId;
             _unitOfWork.OrderHeaderRepository.Update(orderHeader);
             await _unitOfWork.SaveAsync();
 
             return new ResponseDTO()
             {
-                Message = "Create stripe session successfully",
-                Result = stripeRequestDto,
+                Message = "Create payment with stripe successfully",
+                Result = payWithStripeDto,
                 StatusCode = 200,
                 IsSuccess = true
             };
@@ -284,17 +279,17 @@ public class OrderService : IOrderService
         }
     }
 
-    public async Task<ResponseDTO> ValidateStripeSession
+    public async Task<ResponseDTO> ValidateWithStripe
     (
         ClaimsPrincipal User,
-        ValidateStripeSessionDTO validateStripeSessionDto
+        ValidateWithStripeDTO validateWithStripeDto
     )
     {
         try
         {
             var orderHeader = await _unitOfWork.OrderHeaderRepository.GetAsync
             (
-                filter: x => x.Id == validateStripeSessionDto.OrderHeaderId
+                filter: x => x.Id == validateWithStripeDto.OrderHeaderId
             );
 
             if (orderHeader is null)
@@ -308,13 +303,17 @@ public class OrderService : IOrderService
                 };
             }
 
-            var service = new SessionService();
-            var session = await service.GetAsync(orderHeader.StripeSessionId);
+            var responseDto = await _stripeService.ValidateStripeSession
+            (
+                new ValidateStripeSessionDTO()
+                {
+                    StripeSessionId = orderHeader.StripeSessionId
+                }
+            );
+            var result = (ValidateStripeSessionDTO)responseDto.Result!;
 
-            var paymentIntentService = new PaymentIntentService();
-            var paymentIntent = await paymentIntentService.GetAsync(session.PaymentIntentId);
 
-            if (paymentIntent.Status != "succeeded")
+            if (result.Status != "succeeded")
             {
                 return new ResponseDTO()
                 {
@@ -325,7 +324,7 @@ public class OrderService : IOrderService
                 };
             }
 
-            orderHeader.PaymentIntentId = paymentIntent.Id;
+            orderHeader.PaymentIntentId = result.PaymentIntentId;
             orderHeader.Status = StaticStatus.Order.Paid;
             await _orderStatusService.CreateOrderStatus
             (
@@ -339,7 +338,7 @@ public class OrderService : IOrderService
 
             return new ResponseDTO()
             {
-                Message = "Confirm stripe session successfully",
+                Message = "Validate payment with stripe successfully",
                 Result = null,
                 StatusCode = 200,
                 IsSuccess = true

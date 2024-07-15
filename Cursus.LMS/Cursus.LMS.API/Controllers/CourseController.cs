@@ -1,5 +1,7 @@
 using Cursus.LMS.Model.DTO;
 using Cursus.LMS.Service.IService;
+using Cursus.LMS.Utility.Constants;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -56,6 +58,7 @@ namespace Cursus.LMS.API.Controllers
 
         [HttpPost]
         [Route("activate-course/{courseId:guid}")]
+        [Authorize(Roles = StaticUserRoles.AdminInstructor)]
         public async Task<ActionResult<ResponseDTO>> ActivateCourse([FromRoute] Guid courseId)
         {
             var responseDto = await _courseService.ActivateCourse(User, courseId);
@@ -64,9 +67,19 @@ namespace Cursus.LMS.API.Controllers
 
         [HttpPost]
         [Route("deactivate-course/{courseId:guid}")]
+        [Authorize(Roles = StaticUserRoles.AdminInstructor)]
         public async Task<ActionResult<ResponseDTO>> DeactivateCourse([FromRoute] Guid courseId)
         {
             var responseDto = await _courseService.DeactivateCourse(User, courseId);
+            return StatusCode(responseDto.StatusCode, responseDto);
+        }
+
+        [HttpPost]
+        [Route("enroll-course")]
+        [Authorize(Roles = StaticUserRoles.Admin)]
+        public async Task<ActionResult<ResponseDTO>> EnrollCourse([FromBody] EnrollCourseDTO enrollCourseDto)
+        {
+            var responseDto = await _courseService.EnrollCourse(User, enrollCourseDto);
             return StatusCode(responseDto.StatusCode, responseDto);
         }
     }

@@ -17,15 +17,15 @@ public interface IOrderService
         Guid orderHeaderId
     );
 
-    Task<ResponseDTO> CreateStripeSession
+    Task<ResponseDTO> PayWithStripe
     (
         ClaimsPrincipal User,
-        StripeRequestDTO stripeRequestDto
+        PayWithStripeDTO payWithStripeDto
     );
 
-    Task<ResponseDTO> ValidateStripeSession
+    Task<ResponseDTO> ValidateWithStripe
     (
         ClaimsPrincipal User,
-        ValidateStripeSessionDTO validateStripeSessionDto
+        ValidateWithStripeDTO validateWithStripeDto
     );
 }

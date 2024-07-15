@@ -2,5 +2,7 @@
 
 public class ValidateStripeSessionDTO
 {
-    public Guid OrderHeaderId { get; set; }
+    public string? StripeSessionId { get; set; }
+    public string? PaymentIntentId { get; set; }
+    public string? Status { get; set; }
 }
