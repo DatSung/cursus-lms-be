@@ -713,7 +713,7 @@ public class InstructorService : IInstructorService
     {
         try
         {
-            string filePath = Path.Combine(_env.ContentRootPath, _config["FolderPath:ExcelExportFolderPath"], fileName);
+            string filePath = Path.Combine(_env.ContentRootPath, _config["FolderPath:InstructorExportFolderPath"], fileName);
 
             if (!File.Exists(filePath))
             {
