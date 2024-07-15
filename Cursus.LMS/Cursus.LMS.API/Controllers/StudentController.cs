@@ -12,11 +12,11 @@ namespace Cursus.LMS.API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class StudentsController : ControllerBase
+    public class StudentController : ControllerBase
     {
         private readonly IStudentsService _studentsService;
 
-        public StudentsController(IStudentsService studentsService)
+        public StudentController(IStudentsService studentsService)
         {
             _studentsService = studentsService;
         }

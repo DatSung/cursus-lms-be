@@ -32,7 +32,7 @@ public class StudentCourseStatus
                 }
                 case 3:
                 {
-                    return "Ended";
+                    return "Completed";
                 }
                 case 4:
                 {
