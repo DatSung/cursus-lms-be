@@ -119,6 +119,7 @@ namespace Cursus.LMS.API.Controllers
 
         [HttpPost]
         [Route("export/{month:int}/{year:int}")]
+        [Authorize(Roles = StaticUserRoles.Admin)]
         public async Task<ActionResult<ResponseDTO>> ExportStudent
         (
             [FromRoute] int month,
@@ -132,6 +133,7 @@ namespace Cursus.LMS.API.Controllers
 
         [HttpGet]
         [Route("download/{fileName}")]
+        [Authorize(Roles = StaticUserRoles.Admin)]
         public async Task<IActionResult> DownloadStudentExport([FromRoute] string fileName)
         {
             var closedXmlResponseDto = await _studentsService.DownloadStudents(fileName);
@@ -144,6 +146,15 @@ namespace Cursus.LMS.API.Controllers
             }
 
             return File(stream, contentType, fileName);
+        }
+
+        [HttpGet]
+        [Route("totalPrices-courses/{studentId:guid}")]
+        [Authorize(Roles = StaticUserRoles.Admin)]
+        public async Task<ActionResult<ResponseDTO>> TotalPricesCourseByStudentId([FromRoute] Guid studentId)
+        {
+            var responseDto = await _studentsService.TotalPricesCoursesByStudentId(studentId);
+            return StatusCode(responseDto.StatusCode, responseDto);
         }
     }
 }
