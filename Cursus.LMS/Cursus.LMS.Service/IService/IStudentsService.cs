@@ -25,14 +25,14 @@ namespace Cursus.LMS.Service.IService
         Task<ResponseDTO> UpdateById(UpdateStudentDTO updateStudentDTO);
         Task<ResponseDTO> ActivateStudent(ClaimsPrincipal User, Guid studentId);
         Task<ResponseDTO> DeactivateStudent(ClaimsPrincipal User, Guid studentId);
-
         Task<ResponseDTO> GetStudentTotalCourses(Guid studentId);
-        Task<ResponseDTO> GetStudentPayoutMoney(Guid studentId);
         Task<ResponseDTO> GetAllStudentComment(Guid studentId, int pageNumber, int pageSize);
         Task<ResponseDTO> CreateStudentComment(ClaimsPrincipal User, CreateStudentCommentDTO createStudentCommentDTO);
         Task<ResponseDTO> UpdateStudentComment(ClaimsPrincipal User, UpdateStudentCommentDTO updateStudentCommentDTO);
         Task<ResponseDTO> DeleteStudentComment(Guid commentId);
         Task<ResponseDTO> ExportStudents(string userId, int month, int year);
         Task<ClosedXMLResponseDTO> DownloadStudents(string fileName);
+        Task<ResponseDTO> TotalPricesCoursesByStudentId(Guid studentId);
+
     }
 }

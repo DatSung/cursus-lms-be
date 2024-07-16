@@ -11,7 +11,7 @@ public class StudentCourseService : IStudentCourseService
 {
     private readonly IUnitOfWork _unitOfWork;
     private readonly IStudentCourseStatusService _studentCourseStatusService;
-
+    
     public StudentCourseService(IUnitOfWork unitOfWork, IStudentCourseStatusService studentCourseStatusService)
     {
         _unitOfWork = unitOfWork;
