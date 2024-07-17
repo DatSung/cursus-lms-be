@@ -2,26 +2,36 @@
 using Cursus.LMS.DataAccess.IRepository;
 using Cursus.LMS.Model.Domain;
 using Cursus.LMS.Model.DTO;
+using Cursus.LMS.Service.Hubs;
 using Cursus.LMS.Service.IService;
-using System;
-using System.Collections.Generic;
-using System.Linq;
+using Microsoft.AspNetCore.SignalR;
 using System.Security.Claims;
-using System.Text;
-using System.Threading.Tasks;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.Extensions.Configuration;
 
 namespace Cursus.LMS.Service.Service
 {
-    public class StudentsService : IStudentsService
+    public class StudentService : IStudentsService
     {
         private readonly IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
+        private readonly IClosedXMLService _closedXmlService;
+        private readonly IHubContext<NotificationHub> _notificationHub;
+        private readonly IWebHostEnvironment _env;
+        private readonly IConfiguration _config;
 
-        public StudentsService(IUnitOfWork unitOfWork, IMapper mapper)
+        public StudentService(IUnitOfWork unitOfWork, IMapper mapper,
+            IClosedXMLService closedXmlService, IHubContext<NotificationHub> notificationHub,
+            IWebHostEnvironment env, IConfiguration config)
         {
             _unitOfWork = unitOfWork;
             _mapper = mapper;
+            _closedXmlService = closedXmlService;
+            _notificationHub = notificationHub;
+            _env = env;
+            _config = config;
         }
+
         //Get all students đã xong
         public async Task<ResponseDTO> GetAllStudent
         (
@@ -35,6 +45,7 @@ namespace Cursus.LMS.Service.Service
         )
         {
             #region MyRegion
+
             try
             {
                 List<Student> students = new List<Student>();
@@ -45,27 +56,27 @@ namespace Cursus.LMS.Service.Service
                     switch (filterOn.Trim().ToLower())
                     {
                         case "name":
-                            {
-                                students = _unitOfWork.StudentRepository.GetAllAsync(includeProperties: "ApplicationUser")
-                                    .GetAwaiter().GetResult().Where(x =>
-                                        x.ApplicationUser.FullName.Contains(filterQuery,
-                                            StringComparison.CurrentCultureIgnoreCase)).ToList();
-                                break;
-                            }
+                        {
+                            students = _unitOfWork.StudentRepository.GetAllAsync(includeProperties: "ApplicationUser")
+                                .GetAwaiter().GetResult().Where(x =>
+                                    x.ApplicationUser.FullName.Contains(filterQuery,
+                                        StringComparison.CurrentCultureIgnoreCase)).ToList();
+                            break;
+                        }
                         case "email":
-                            {
-                                students = _unitOfWork.StudentRepository.GetAllAsync(includeProperties: "ApplicationUser")
-                                    .GetAwaiter().GetResult().Where(x =>
-                                        x.ApplicationUser.Email.Contains(filterQuery,
-                                            StringComparison.CurrentCultureIgnoreCase)).ToList();
-                                break;
-                            }
+                        {
+                            students = _unitOfWork.StudentRepository.GetAllAsync(includeProperties: "ApplicationUser")
+                                .GetAwaiter().GetResult().Where(x =>
+                                    x.ApplicationUser.Email.Contains(filterQuery,
+                                        StringComparison.CurrentCultureIgnoreCase)).ToList();
+                            break;
+                        }
                         default:
-                            {
-                                students = _unitOfWork.StudentRepository.GetAllAsync(includeProperties: "ApplicationUser")
-                                    .GetAwaiter().GetResult().ToList();
-                                break;
-                            }
+                        {
+                            students = _unitOfWork.StudentRepository.GetAllAsync(includeProperties: "ApplicationUser")
+                                .GetAwaiter().GetResult().ToList();
+                            break;
+                        }
                     }
                 }
                 else
@@ -80,23 +91,23 @@ namespace Cursus.LMS.Service.Service
                     switch (sortBy.Trim().ToLower())
                     {
                         case "name":
-                            {
-                                students = isAscending == true
-                                    ? [.. students.OrderBy(x => x.ApplicationUser.FullName)]
-                                    : [.. students.OrderByDescending(x => x.ApplicationUser.FullName)];
-                                break;
-                            }
+                        {
+                            students = isAscending == true
+                                ? [.. students.OrderBy(x => x.ApplicationUser.FullName)]
+                                : [.. students.OrderByDescending(x => x.ApplicationUser.FullName)];
+                            break;
+                        }
                         case "email":
-                            {
-                                students = isAscending == true
-                                    ? [.. students.OrderBy(x => x.ApplicationUser.Email)]
-                                    : [.. students.OrderByDescending(x => x.ApplicationUser.Email)];
-                                break;
-                            }
+                        {
+                            students = isAscending == true
+                                ? [.. students.OrderBy(x => x.ApplicationUser.Email)]
+                                : [.. students.OrderByDescending(x => x.ApplicationUser.Email)];
+                            break;
+                        }
                         default:
-                            {
-                                break;
-                            }
+                        {
+                            break;
+                        }
                     }
                 }
 
@@ -152,8 +163,9 @@ namespace Cursus.LMS.Service.Service
                     IsSuccess = false,
                     StatusCode = 500
                 };
+            }
         }
-    }
+
         //GetById đã xong
         public async Task<ResponseDTO> GetById(Guid id)
         {
@@ -179,7 +191,7 @@ namespace Cursus.LMS.Service.Service
                         StudentId = student.StudentId,
                         UserId = student.UserId,
                         AvatarUrl = student.ApplicationUser.AvatarUrl,
-                        FullName =  student.ApplicationUser.FullName,
+                        FullName = student.ApplicationUser.FullName,
                         University = student.University,
                         Email = student.ApplicationUser.Email,
                         Address = student.ApplicationUser.Address,
@@ -212,6 +224,7 @@ namespace Cursus.LMS.Service.Service
                 }
             }
         }
+
         //UpdateById đã xong
         public async Task<ResponseDTO> UpdateById(UpdateStudentDTO updateStudentDTO)
         {
@@ -230,6 +243,7 @@ namespace Cursus.LMS.Service.Service
                         StatusCode = 404
                     };
                 }
+
                 studentToUpdate.ApplicationUser.FullName = updateStudentDTO?.FullName;
                 studentToUpdate.University = updateStudentDTO.University;
                 studentToUpdate.ApplicationUser.Address = updateStudentDTO?.Address;
@@ -261,6 +275,7 @@ namespace Cursus.LMS.Service.Service
                 };
             }
         }
+
         //activate Student đã xong
         public async Task<ResponseDTO> ActivateStudent(ClaimsPrincipal User, Guid studentId)
         {
@@ -302,6 +317,7 @@ namespace Cursus.LMS.Service.Service
                 };
             }
         }
+
         //Deactivate Student đã xong
         public async Task<ResponseDTO> DeactivateStudent(ClaimsPrincipal User, Guid studentId)
         {
@@ -344,10 +360,6 @@ namespace Cursus.LMS.Service.Service
             }
         }
 
-        public Task<ResponseDTO> GetStudentPayoutMoney(Guid studentId)
-        {
-            throw new NotImplementedException();
-        }
         //GetStudentTotalCourses đã xong
         public async Task<ResponseDTO> GetStudentTotalCourses(Guid studentId)
         {
@@ -366,26 +378,27 @@ namespace Cursus.LMS.Service.Service
                     };
                 }
 
-                var courses = await _unitOfWork.StudentCourseRepository.GetAllAsync(c => c.StudentId == id.StudentId);
+                var courses = await _unitOfWork.StudentCourseStatusRepository.GetAllAsync(c => c.Id == id.StudentId);
 
                 var totalCourses = courses.Count();
-                if(totalCourses == 0)
-                {
-                    return new ResponseDTO()
-                    {
-                        Message = "Student has not registered for any courses",
-                        Result = null,
-                        IsSuccess = false,
-                        StatusCode = 400
-                    };
-                }
-
+                var pending = courses.Count(x => x.Status == 0);
+                var enrolled = courses.Count(x => x.Status == 1);
+                var completed = courses.Count(x => x.Status == 3);
+                var canceled = courses.Count(x => x.Status == 4);
+                
                 return new ResponseDTO()
                 {
                     Message = "Get Course Successfull",
                     IsSuccess = true,
                     StatusCode = 200,
-                    Result = totalCourses
+                    Result = new StudentTotalCountDTO()
+                    {
+                        Total = totalCourses,
+                        Pending = pending,
+                        Enrolled = enrolled,
+                        Completed = completed,
+                        Canceled = canceled
+                    }
                 };
             }
             catch (Exception e)
@@ -399,11 +412,12 @@ namespace Cursus.LMS.Service.Service
                 };
             }
         }
+
         //
         public async Task<ResponseDTO> GetAllStudentComment
-            (
-                Guid studentId, int pageNumber, int pageSize
-            )
+        (
+            Guid studentId, int pageNumber, int pageSize
+        )
         {
             try
             {
@@ -422,7 +436,7 @@ namespace Cursus.LMS.Service.Service
                     };
                 }
 
-                comments = comments.OrderByDescending(x => x.CreateTime).ToList();
+                comments = comments.OrderByDescending(x => x.CreatedTime).ToList();
 
                 // Pagination
                 if (pageNumber > 0 && pageSize > 0)
@@ -452,8 +466,9 @@ namespace Cursus.LMS.Service.Service
                 };
             }
         }
+
         //CreateStudentComment đã xong
-        public async Task<ResponseDTO> CreateStudentComment(ClaimsPrincipal User, 
+        public async Task<ResponseDTO> CreateStudentComment(ClaimsPrincipal User,
             CreateStudentCommentDTO createStudentCommentDTO)
         {
             try
@@ -474,15 +489,15 @@ namespace Cursus.LMS.Service.Service
 
                 var userId = User.Claims.FirstOrDefault(x => x.Type == ClaimTypes.NameIdentifier)?.Value;
                 var admin = await _unitOfWork.UserManagerRepository.FindByIdAsync(userId);
-                
+
                 StudentComment studentComment = new StudentComment()
                 {
                     Comment = createStudentCommentDTO.Comment,
                     StudentId = createStudentCommentDTO.StudentId,
-                    UpdateTime = null,
-                    CreateTime = DateTime.Now,
-                    CreateBy = admin.Email,
-                    UpdateBy = "",
+                    UpdatedTime = null,
+                    CreatedTime = DateTime.Now,
+                    CreatedBy = admin.Email,
+                    UpdatedBy = "",
                     Status = 0
                 };
 
@@ -508,8 +523,9 @@ namespace Cursus.LMS.Service.Service
                 };
             }
         }
+
         //UpdateStudentComment đã xong
-        public async Task<ResponseDTO> UpdateStudentComment(ClaimsPrincipal User, 
+        public async Task<ResponseDTO> UpdateStudentComment(ClaimsPrincipal User,
             UpdateStudentCommentDTO updateStudentCommentDTO)
         {
             try
@@ -531,8 +547,8 @@ namespace Cursus.LMS.Service.Service
                 var admin = await _unitOfWork.UserManagerRepository.FindByIdAsync(userId);
 
                 //update comment
-                studentId.UpdateTime = DateTime.Now;
-                studentId.UpdateBy = admin.Email;
+                studentId.UpdatedTime = DateTime.Now;
+                studentId.UpdatedBy = admin.Email;
                 studentId.Comment = updateStudentCommentDTO.Comment;
                 studentId.Status = 1;
 
@@ -560,6 +576,7 @@ namespace Cursus.LMS.Service.Service
                 };
             }
         }
+
         //DeleteStudentComment đã xong
         public async Task<ResponseDTO> DeleteStudentComment(Guid commentId)
         {
@@ -604,16 +621,151 @@ namespace Cursus.LMS.Service.Service
             }
         }
 
-        public Task<ClosedXMLResponseDTO> DownloadStudents(string fileName)
+        //ExportStudents đã xong
+        public async Task<ResponseDTO> ExportStudents(string userId, int month, int year)
         {
-            throw new NotImplementedException();
+            // Lấy dữ liệu từ repository
+            var students = _unitOfWork.StudentRepository.GetAllAsync(includeProperties: "ApplicationUser")
+                .GetAwaiter().GetResult().ToList();
+
+            // Lọc dữ liệu theo tháng và năm
+            students = students.Where(x =>
+                    x.ApplicationUser.CreateTime.HasValue && x.ApplicationUser.CreateTime.Value.Month == month &&
+                    x.ApplicationUser.CreateTime.Value.Year == year)
+                .ToList();
+
+            // Map dữ liệu sang DTO
+            var studentInfoDtos = _mapper.Map<List<StudentFullInfoDTO>>(students);
+
+            // Xuất file Excel
+            var fileStudent = await _closedXmlService.ExportStudentExcel(studentInfoDtos);
+
+            // Gửi tín hiệu cho người dùng sau khi xuất file
+            await _notificationHub.Clients.User(userId).SendAsync("DownloadExcelNow", fileStudent);
+
+            return new ResponseDTO()
+            {
+                Message = "Waiting...",
+                IsSuccess = true,
+                StatusCode = 200,
+                Result = null
+            };
         }
 
-        public Task<ResponseDTO> ExportStudents(string userId, int month, int year)
+        //DownloadStudents đã xong
+        public async Task<ClosedXMLResponseDTO> DownloadStudents(string fileName)
         {
-            throw new NotImplementedException();
+            try
+            {
+                string filePath = Path.Combine(_env.ContentRootPath, _config["FolderPath:StudentExportFolderPath"],
+                    fileName);
+
+                if (!File.Exists(filePath))
+                {
+                    return new ClosedXMLResponseDTO()
+                    {
+                        Message = "File not found",
+                        IsSuccess = false,
+                        StatusCode = 404,
+                        Stream = null,
+                        ContentType = null,
+                        FileName = null
+                    };
+                }
+
+                // Read the file
+                var memoryStream = new MemoryStream();
+                using (var stream = new FileStream(filePath, FileMode.Open))
+                {
+                    await stream.CopyToAsync(memoryStream);
+                }
+
+                memoryStream.Position = 0;
+                var contentType = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
+
+                //Delete file after download
+                File.Delete(filePath);
+
+                return new ClosedXMLResponseDTO()
+                {
+                    Message = "Download file successfully",
+                    IsSuccess = true,
+                    StatusCode = 200,
+                    Stream = memoryStream,
+                    ContentType = contentType,
+                    FileName = fileName
+                };
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+                throw;
+            }
         }
 
+        public async Task<ResponseDTO> TotalPricesCoursesByStudentId(Guid studentId)
+        {
+            try
+            {
+                // kiểm tra studentId có tồn tại không
+                var student = await _unitOfWork.StudentRepository.GetAsync(s => s.StudentId == studentId);
+
+                if (student == null)
+                {
+                    return new ResponseDTO()
+                    {
+                        Message = "StudentId Invalid",
+                        Result = null,
+                        IsSuccess = false,
+                        StatusCode = 400
+                    };
+                }
+                // Lấy danh sách các OrderHeader của student đó
+                var orderHeaders = await _unitOfWork.OrderHeaderRepository.GetAllAsync(o => o.StudentId == studentId);
+                //kiểm tra xem student đã mua khóa học nào chưa
+                if (orderHeaders == null || !orderHeaders.Any())
+                {
+                    return new ResponseDTO()
+                    {
+                        Message = "Student has not purchased any courses",
+                        Result = null,
+                        IsSuccess = false,
+                        StatusCode = 400
+                    };
+                }
+
+                // Lấy danh sách các OrderHeader
+                var orderHeaderId = orderHeaders.Select(x => x.Id).ToList();
+
+                // Lấy danh sách các OrderDetails của orderHeader
+                var orderDetails = await _unitOfWork.OrderDetailsRepository.GetAllAsync(
+                    od => orderHeaderId.Contains(od.OrderHeaderId) && od.CourseId != Guid.Empty);
+
+                // Đếm số lượng khóa học
+                var courses = orderDetails.Count();
+
+                // Tính tổng giá của các khóa học
+                var totalPrice = orderDetails.Sum(od => od.CoursePrice);
+
+                return new ResponseDTO()
+                {
+                    Message = "Get total money successfully",
+                    Result = new { Courses = courses, TotalPrice = totalPrice },
+                    IsSuccess = true,
+                    StatusCode = 200
+                };
+            }
+            catch (Exception e)
+            {
+                return new ResponseDTO()
+                {
+                    Message = e.Message,
+                    Result = null,
+                    IsSuccess = false,
+                    StatusCode = 500
+                };
+            }
+        }
 
     }
 }

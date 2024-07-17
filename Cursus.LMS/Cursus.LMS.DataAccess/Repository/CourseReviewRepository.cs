@@ -22,4 +22,8 @@ public class CourseReviewRepository : Repository<CourseReview>, ICourseReviewRep
         _context.CourseReviews.UpdateRange(courseReviews);
 
     }
+    public async Task<CourseReview> GetById(Guid id)
+    {
+        return await _context.CourseReviews.FindAsync(id);
+    }
 }

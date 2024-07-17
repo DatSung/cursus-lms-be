@@ -48,14 +48,28 @@ public static class ServiceCollectionExtensions
         services.AddScoped<IEmailSender, EmailSender>();
         // Registering ICartService its implementation CartService
         services.AddScoped<ICartService, CartService>();
-        
+        // Registering ICourseReviewRepository its implementation CourseReviewRepository
+        services.AddScoped<ICourseReviewService, CourseReviewService>();
+        // Registering ICourseReviewRepository its implementation CourseReviewRepository
+        services.AddScoped<ICourseReportService, CourseReportService>();
+        // Registering IOrderService its implementation OrderService
+        services.AddScoped<IOrderService, OrderService>();
+        // Registering IOrderStatusService its implementation OrderStatusService
+        services.AddScoped<IOrderStatusService, OrderStatusService>();
+        // Registering IStudentsService its implementation StudentsService
+        services.AddScoped<IStudentsService, StudentService>();
+        // Registering IStudentCourseService its implementation StudentCourseService
+        services.AddScoped<IStudentCourseService, StudentCourseService>();
+        // Registering IStudentCourseStatusService its implementation StudentCourseStatusService
+        services.AddScoped<IStudentCourseStatusService, StudentCourseStatusService>();
+        // Registering IStripeService its implementation StripeService
+        services.AddScoped<IStripeService, StripeService>();
+
         // Register the Identity services with default configuration
         services.AddIdentity<ApplicationUser, IdentityRole>()
             .AddEntityFrameworkStores<ApplicationDbContext>()
             .AddDefaultTokenProviders();
-        // Registering IStudentsService its implementation StudentsService
-        services.AddScoped<IStudentsService, StudentsService>();
-        
+
 
         return services;
     }

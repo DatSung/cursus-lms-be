@@ -121,9 +121,9 @@ namespace Cursus.LMS.DataAccess.Migrations
                             Address = "123 Admin St",
                             AvatarUrl = "https://example.com/avatar.png",
                             BirthDate = new DateTime(1990, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            ConcurrencyStamp = "69151926-a093-4ce5-a07c-601d1fdc43c7",
+                            ConcurrencyStamp = "74ff5347-8c3c-44ec-87e1-c8b0deef6ffa",
                             Country = "Country",
-                            CreateTime = new DateTime(2024, 7, 12, 7, 43, 46, 626, DateTimeKind.Utc).AddTicks(868),
+                            CreateTime = new DateTime(2024, 7, 17, 1, 48, 39, 1, DateTimeKind.Utc).AddTicks(6412),
                             Email = "admin@gmail.com",
                             EmailConfirmed = true,
                             FullName = "Admin User",
@@ -131,10 +131,10 @@ namespace Cursus.LMS.DataAccess.Migrations
                             LockoutEnabled = true,
                             NormalizedEmail = "ADMIN@GMAIL.COM",
                             NormalizedUserName = "ADMIN@GMAIL.COM",
-                            PasswordHash = "AQAAAAIAAYagAAAAEMmYNSaHBXOsqq6ofMcNvLbIq8JMFfcmpJEr1thHv4zHC+Y8Q/leZFbT5QDBHUgARQ==",
+                            PasswordHash = "AQAAAAIAAYagAAAAEKn4GP5MKhdURfYt7g53GHGV00yVNUh77/ELzYHsIRRVKl4bG6k3pOTVzxTNWZ7ghA==",
                             PhoneNumber = "1234567890",
                             PhoneNumberConfirmed = true,
-                            SecurityStamp = "4d33ade3-d280-455f-b7c2-063fee2bd9b8",
+                            SecurityStamp = "7ce1d262-5646-4e9b-add2-f51dc83bd267",
                             TaxNumber = "123456789",
                             TwoFactorEnabled = false,
                             UpdateTime = new DateTime(2003, 1, 12, 0, 0, 0, 0, DateTimeKind.Unspecified),
@@ -156,6 +156,9 @@ namespace Cursus.LMS.DataAccess.Migrations
 
                     b.Property<double>("CoursePrice")
                         .HasColumnType("float");
+
+                    b.Property<string>("CourseTitle")
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
@@ -189,10 +192,10 @@ namespace Cursus.LMS.DataAccess.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<string>("CreateBy")
+                    b.Property<string>("CreatedBy")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<DateTime?>("CreateTime")
+                    b.Property<DateTime?>("CreatedTime")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Description")
@@ -208,10 +211,10 @@ namespace Cursus.LMS.DataAccess.Migrations
                     b.Property<int>("Status")
                         .HasColumnType("int");
 
-                    b.Property<string>("UpdateBy")
+                    b.Property<string>("UpdatedBy")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<DateTime?>("UpdateTime")
+                    b.Property<DateTime?>("UpdatedTime")
                         .HasColumnType("datetime2");
 
                     b.HasKey("Id");
@@ -288,10 +291,10 @@ namespace Cursus.LMS.DataAccess.Migrations
                     b.Property<Guid>("CourseId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<string>("CreateBy")
+                    b.Property<string>("CreatedBy")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<DateTime?>("CreateTime")
+                    b.Property<DateTime?>("CreatedTime")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Message")
@@ -304,10 +307,10 @@ namespace Cursus.LMS.DataAccess.Migrations
                     b.Property<Guid>("StudentId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<string>("UpdateBy")
+                    b.Property<string>("UpdatedBy")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<DateTime?>("UpdateTime")
+                    b.Property<DateTime?>("UpdatedTime")
                         .HasColumnType("datetime2");
 
                     b.HasKey("Id");
@@ -326,11 +329,14 @@ namespace Cursus.LMS.DataAccess.Migrations
                     b.Property<Guid>("CourseId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<string>("CreateBy")
+                    b.Property<string>("CreatedBy")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<DateTime?>("CreateTime")
+                    b.Property<DateTime?>("CreatedTime")
                         .HasColumnType("datetime2");
+
+                    b.Property<bool>("IsMarked")
+                        .HasColumnType("bit");
 
                     b.Property<string>("Message")
                         .IsRequired()
@@ -345,10 +351,10 @@ namespace Cursus.LMS.DataAccess.Migrations
                     b.Property<Guid>("StudentId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<string>("UpdateBy")
+                    b.Property<string>("UpdatedBy")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<DateTime?>("UpdateTime")
+                    b.Property<DateTime?>("UpdatedTime")
                         .HasColumnType("datetime2");
 
                     b.HasKey("Id");
@@ -455,19 +461,19 @@ namespace Cursus.LMS.DataAccess.Migrations
                     b.Property<Guid>("CourseVersionId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<string>("CreateBy")
+                    b.Property<string>("CreatedBy")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<DateTime?>("CreateTime")
+                    b.Property<DateTime?>("CreatedTime")
                         .HasColumnType("datetime2");
 
                     b.Property<int>("Status")
                         .HasColumnType("int");
 
-                    b.Property<string>("UpdateBy")
+                    b.Property<string>("UpdatedBy")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<DateTime?>("UpdateTime")
+                    b.Property<DateTime?>("UpdatedTime")
                         .HasColumnType("datetime2");
 
                     b.HasKey("Id");
@@ -516,10 +522,10 @@ namespace Cursus.LMS.DataAccess.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("CreateBy")
+                    b.Property<string>("CreatedBy")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<DateTime?>("CreateTime")
+                    b.Property<DateTime?>("CreatedTime")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("FooterContent")
@@ -555,10 +561,10 @@ namespace Cursus.LMS.DataAccess.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("UpdateBy")
+                    b.Property<string>("UpdatedBy")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<DateTime?>("UpdateTime")
+                    b.Property<DateTime?>("UpdatedTime")
                         .HasColumnType("datetime2");
 
                     b.HasKey("Id");
@@ -568,12 +574,10 @@ namespace Cursus.LMS.DataAccess.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("930aa9e5-133a-4009-8b66-88ebcf0eb81a"),
+                            Id = new Guid("6d9a0725-fded-4624-a4d6-1b65c07fcd3c"),
                             BodyContent = "Dear [UserFullName],<br><br>Welcome to Cursus! We are excited to have you join our learning community.",
                             CallToAction = "<a href=\"https://cursus.com/login\">Login</a>",
                             Category = "Welcome",
-                            CreateBy = "System",
-                            CreateTime = new DateTime(2024, 7, 12, 14, 43, 46, 742, DateTimeKind.Local).AddTicks(2423),
                             FooterContent = "<p>Contact us at cursusservicetts@gmail.com</p>",
                             Language = "English",
                             PersonalizationTags = "{FirstName}, {LastName}",
@@ -583,18 +587,14 @@ namespace Cursus.LMS.DataAccess.Migrations
                             SenderName = "Cursus Team",
                             Status = 1,
                             SubjectLine = "Welcome to Cursus!",
-                            TemplateName = "WelcomeEmail",
-                            UpdateBy = "Admin",
-                            UpdateTime = new DateTime(2024, 7, 12, 14, 43, 46, 742, DateTimeKind.Local).AddTicks(2436)
+                            TemplateName = "WelcomeEmail"
                         },
                         new
                         {
-                            Id = new Guid("31327de5-6f81-4f6c-af27-ca2b2bd7e75b"),
+                            Id = new Guid("a2c65376-7407-4ae8-9eca-6c3d25a53a79"),
                             BodyContent = "Hi [UserFullName],<br><br>We received a request to reset your password. Click the link below to reset your password.",
                             CallToAction = "http://localhost:30475/sign-in/verify-email?userId=user.Id&token=Uri.EscapeDataString(token)",
                             Category = "Security",
-                            CreateBy = "System",
-                            CreateTime = new DateTime(2024, 7, 12, 14, 43, 46, 742, DateTimeKind.Local).AddTicks(2443),
                             FooterContent = "If you did not request a password reset, please ignore this email.",
                             Language = "English",
                             PersonalizationTags = "[UserFullName], [ResetPasswordLink]",
@@ -604,18 +604,14 @@ namespace Cursus.LMS.DataAccess.Migrations
                             SenderName = "Cursus Team",
                             Status = 1,
                             SubjectLine = "Reset Your Password",
-                            TemplateName = "ForgotPasswordEmail",
-                            UpdateBy = "Admin",
-                            UpdateTime = new DateTime(2024, 7, 12, 14, 43, 46, 742, DateTimeKind.Local).AddTicks(2444)
+                            TemplateName = "ForgotPasswordEmail"
                         },
                         new
                         {
-                            Id = new Guid("6878b65f-422e-4208-9b51-bd41d5273778"),
+                            Id = new Guid("ccbf4cd5-f7bf-4dfe-8308-80674485a81b"),
                             BodyContent = "<p>Thank you for registering your Cursus account. Click here to go back the page</p>",
                             CallToAction = "<a href=\"{{Login}}\">Login now</a>",
                             Category = "Verify",
-                            CreateBy = "System",
-                            CreateTime = new DateTime(2024, 7, 12, 14, 43, 46, 742, DateTimeKind.Local).AddTicks(2448),
                             FooterContent = "<p>Contact us at cursusservicetts@gmail.com</p>",
                             Language = "English",
                             PersonalizationTags = "{FirstName}, {LinkLogin}",
@@ -625,18 +621,14 @@ namespace Cursus.LMS.DataAccess.Migrations
                             SenderName = "Cursus Team",
                             Status = 1,
                             SubjectLine = "Cursus Verify Email",
-                            TemplateName = "SendVerifyEmail",
-                            UpdateBy = "Admin",
-                            UpdateTime = new DateTime(2024, 7, 12, 14, 43, 46, 742, DateTimeKind.Local).AddTicks(2449)
+                            TemplateName = "SendVerifyEmail"
                         },
                         new
                         {
-                            Id = new Guid("631b1d3e-d10e-4bb5-a0c0-2152cb40e9e0"),
+                            Id = new Guid("4eb542bf-c569-4a02-b34d-728dbcdcbfb5"),
                             BodyContent = "<h2>-Your Account has been aprroval!</h2>",
                             CallToAction = "<p><a href='http://bloodmoonrpg.carrd.co?token={token}' style='padding: 10px 20px; color: white; background-color: #007BFF; text-decoration: none;'>Verify</a></p>",
                             Category = "Approval",
-                            CreateBy = "System",
-                            CreateTime = new DateTime(2024, 7, 12, 14, 43, 46, 742, DateTimeKind.Local).AddTicks(2452),
                             FooterContent = "<p>Thank you for your waiting! Click this to go to the main page</p>",
                             Language = "English",
                             PersonalizationTags = "{FirstName}, {LastName}",
@@ -646,18 +638,14 @@ namespace Cursus.LMS.DataAccess.Migrations
                             SenderName = "Cursus Team",
                             Status = 1,
                             SubjectLine = "Circus Verify Email For Instructor Approval",
-                            TemplateName = "SendEmailForInstructorApproval",
-                            UpdateBy = "Admin",
-                            UpdateTime = new DateTime(2024, 7, 12, 14, 43, 46, 742, DateTimeKind.Local).AddTicks(2454)
+                            TemplateName = "SendEmailForInstructorApproval"
                         },
                         new
                         {
-                            Id = new Guid("3429c846-39cd-4da3-8dae-2f5915367ca5"),
+                            Id = new Guid("1f1eda0d-b058-4a83-948c-3e1b9d776f45"),
                             BodyContent = "<p>Hello {FirstName},</p><p>Click <a href=\"{ResetLink}\">here</a> to reset your password.</p>",
                             CallToAction = "<a href=\"{{ResetLink}}\">Reset Password</a>",
                             Category = "Security",
-                            CreateBy = "System",
-                            CreateTime = new DateTime(2024, 7, 12, 14, 43, 46, 742, DateTimeKind.Local).AddTicks(2458),
                             FooterContent = "<p>Contact us at cursusservicetts@gmail.com</p>",
                             Language = "English",
                             PersonalizationTags = "{FirstName}, {ResetLink}",
@@ -667,18 +655,14 @@ namespace Cursus.LMS.DataAccess.Migrations
                             SenderName = "Cursus Team",
                             Status = 1,
                             SubjectLine = "Reset Your Password",
-                            TemplateName = "ChangePassword",
-                            UpdateBy = "Admin",
-                            UpdateTime = new DateTime(2024, 7, 12, 14, 43, 46, 742, DateTimeKind.Local).AddTicks(2459)
+                            TemplateName = "ChangePassword"
                         },
                         new
                         {
-                            Id = new Guid("2dce34ad-c1e4-4538-a6d9-e8a3840c85a1"),
+                            Id = new Guid("ef6c51f4-9a78-4dda-bf3f-6cec1af5bc60"),
                             BodyContent = "<p>Your {courseTitle} course led by {instructorName} is inactive.</p>",
                             CallToAction = "<a href=\"{{LoginLink}}\">Login Now</a>",
                             Category = "Notification",
-                            CreateBy = "System",
-                            CreateTime = new DateTime(2024, 7, 12, 14, 43, 46, 742, DateTimeKind.Local).AddTicks(2462),
                             FooterContent = "<p>Contact us at cursusservicetts@gmail.com</p>",
                             Language = "English",
                             PersonalizationTags = "{FullName}",
@@ -688,18 +672,14 @@ namespace Cursus.LMS.DataAccess.Migrations
                             SenderName = "Instructor",
                             Status = 1,
                             SubjectLine = "Inactive Course",
-                            TemplateName = "InactiveCourseEmail",
-                            UpdateBy = "Admin",
-                            UpdateTime = new DateTime(2024, 7, 12, 14, 43, 46, 742, DateTimeKind.Local).AddTicks(2463)
+                            TemplateName = "InactiveCourseEmail"
                         },
                         new
                         {
-                            Id = new Guid("39e1e71c-64d7-4eb9-a422-cca45e51c64e"),
+                            Id = new Guid("8b6a711a-2882-4929-b8ee-628b706cb40b"),
                             BodyContent = "New course has been added by Instructor, please check in the main page.",
                             CallToAction = "<a href=\"https://cursus.com/login\">Login</a>",
                             Category = "Notice for admin",
-                            CreateBy = "System",
-                            CreateTime = new DateTime(2024, 7, 12, 14, 43, 46, 742, DateTimeKind.Local).AddTicks(2466),
                             FooterContent = "<p>Contact us at cursusservicetts@gmail.com</p>",
                             Language = "English",
                             PersonalizationTags = "{FirstName}, {LastName}",
@@ -709,18 +689,14 @@ namespace Cursus.LMS.DataAccess.Migrations
                             SenderName = "Cursus Team",
                             Status = 1,
                             SubjectLine = "New course has been created!",
-                            TemplateName = "NotificationForAdminAboutNewCourse",
-                            UpdateBy = "Admin",
-                            UpdateTime = new DateTime(2024, 7, 12, 14, 43, 46, 742, DateTimeKind.Local).AddTicks(2467)
+                            TemplateName = "NotificationForAdminAboutNewCourse"
                         },
                         new
                         {
-                            Id = new Guid("92705a11-862c-4f3e-8cbd-6037c1a9cbe2"),
+                            Id = new Guid("cb94a98f-e415-4404-91f9-469a649a7cb4"),
                             BodyContent = "New course has been approved by Admin, please check in the main page.",
                             CallToAction = "<a href=\"https://cursus.com/login\">Login</a>",
                             Category = "Notice for instructor",
-                            CreateBy = "System",
-                            CreateTime = new DateTime(2024, 7, 12, 14, 43, 46, 742, DateTimeKind.Local).AddTicks(2470),
                             FooterContent = "<p>Contact us at cursusservicetts@gmail.com</p>",
                             Language = "English",
                             PersonalizationTags = "{FirstName}, {LastName}",
@@ -730,18 +706,14 @@ namespace Cursus.LMS.DataAccess.Migrations
                             SenderName = "Cursus Team",
                             Status = 1,
                             SubjectLine = "Your course has been approved!",
-                            TemplateName = "ApproveInstructorCourse",
-                            UpdateBy = "Admin",
-                            UpdateTime = new DateTime(2024, 7, 12, 14, 43, 46, 742, DateTimeKind.Local).AddTicks(2471)
+                            TemplateName = "ApproveInstructorCourse"
                         },
                         new
                         {
-                            Id = new Guid("c73545e4-eb95-45d2-89c2-1e299b97cfed"),
+                            Id = new Guid("262aa023-04d9-42f7-9746-b23097906a89"),
                             BodyContent = "New course has been rejected by Admin, please check in the main page.",
                             CallToAction = "<a href=\"https://cursus.com/login\">Login</a>",
                             Category = "Notice for instructor",
-                            CreateBy = "System",
-                            CreateTime = new DateTime(2024, 7, 12, 14, 43, 46, 742, DateTimeKind.Local).AddTicks(2478),
                             FooterContent = "<p>Contact us at cursusservicetts@gmail.com</p>",
                             Language = "English",
                             PersonalizationTags = "{FirstName}, {LastName}",
@@ -751,9 +723,7 @@ namespace Cursus.LMS.DataAccess.Migrations
                             SenderName = "Cursus Team",
                             Status = 1,
                             SubjectLine = "Your course has been rejected!",
-                            TemplateName = "RejectInstructorCourse",
-                            UpdateBy = "Admin",
-                            UpdateTime = new DateTime(2024, 7, 12, 14, 43, 46, 742, DateTimeKind.Local).AddTicks(2479)
+                            TemplateName = "RejectInstructorCourse"
                         });
                 });
 
@@ -814,10 +784,10 @@ namespace Cursus.LMS.DataAccess.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("CreateBy")
+                    b.Property<string>("CreatedBy")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<DateTime?>("CreateTime")
+                    b.Property<DateTime?>("CreatedTime")
                         .HasColumnType("datetime2");
 
                     b.Property<Guid>("InstructorId")
@@ -826,10 +796,10 @@ namespace Cursus.LMS.DataAccess.Migrations
                     b.Property<int>("Status")
                         .HasColumnType("int");
 
-                    b.Property<string>("UpdateBy")
+                    b.Property<string>("UpdatedBy")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<DateTime?>("UpdateTime")
+                    b.Property<DateTime?>("UpdatedTime")
                         .HasColumnType("datetime2");
 
                     b.HasKey("Id");
@@ -845,10 +815,10 @@ namespace Cursus.LMS.DataAccess.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<string>("CreateBy")
+                    b.Property<string>("CreatedBy")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<DateTime?>("CreateTime")
+                    b.Property<DateTime?>("CreatedTime")
                         .HasColumnType("datetime2");
 
                     b.Property<Guid>("InstructorId")
@@ -860,10 +830,10 @@ namespace Cursus.LMS.DataAccess.Migrations
                     b.Property<int>("Status")
                         .HasColumnType("int");
 
-                    b.Property<string>("UpdateBy")
+                    b.Property<string>("UpdatedBy")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<DateTime?>("UpdateTime")
+                    b.Property<DateTime?>("UpdatedTime")
                         .HasColumnType("datetime2");
 
                     b.HasKey("Id");
@@ -879,10 +849,10 @@ namespace Cursus.LMS.DataAccess.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<string>("CreateBy")
+                    b.Property<string>("CreatedBy")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<DateTime?>("CreateTime")
+                    b.Property<DateTime?>("CreatedTime")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Name")
@@ -892,10 +862,10 @@ namespace Cursus.LMS.DataAccess.Migrations
                     b.Property<int>("Status")
                         .HasColumnType("int");
 
-                    b.Property<string>("UpdateBy")
+                    b.Property<string>("UpdatedBy")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<DateTime?>("UpdateTime")
+                    b.Property<DateTime?>("UpdatedTime")
                         .HasColumnType("datetime2");
 
                     b.HasKey("Id");
@@ -915,6 +885,9 @@ namespace Cursus.LMS.DataAccess.Migrations
                     b.Property<double>("CoursePrice")
                         .HasColumnType("float");
 
+                    b.Property<string>("CourseTitle")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<Guid>("OrderHeaderId")
                         .HasColumnType("uniqueidentifier");
 
@@ -931,26 +904,63 @@ namespace Cursus.LMS.DataAccess.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<DateTime>("CreateAt")
+                    b.Property<string>("CreatedBy")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("CreatedTime")
                         .HasColumnType("datetime2");
-
-                    b.Property<bool>("IsPayout")
-                        .HasColumnType("bit");
-
-                    b.Property<bool>("IsSuccess")
-                        .HasColumnType("bit");
 
                     b.Property<double>("OrderPrice")
                         .HasColumnType("float");
 
+                    b.Property<string>("PaymentIntentId")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("Status")
+                        .HasColumnType("int");
+
+                    b.Property<string>("StripeSessionId")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<Guid>("StudentId")
                         .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("UpdatedBy")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("UpdatedTime")
+                        .HasColumnType("datetime2");
 
                     b.HasKey("Id");
 
                     b.HasIndex("StudentId");
 
                     b.ToTable("OrderHeaders");
+                });
+
+            modelBuilder.Entity("Cursus.LMS.Model.Domain.OrderStatus", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("CreatedBy")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("CreatedTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<Guid?>("OrderHeaderId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<int>("Status")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("OrderHeaderId");
+
+                    b.ToTable("OrdersStatus");
                 });
 
             modelBuilder.Entity("Cursus.LMS.Model.Domain.PaymentCard", b =>
@@ -1042,10 +1052,10 @@ namespace Cursus.LMS.DataAccess.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("CreateBy")
+                    b.Property<string>("CreatedBy")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<DateTime?>("CreateTime")
+                    b.Property<DateTime?>("CreatedTime")
                         .HasColumnType("datetime2");
 
                     b.Property<int>("Status")
@@ -1054,10 +1064,10 @@ namespace Cursus.LMS.DataAccess.Migrations
                     b.Property<Guid>("StudentId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<string>("UpdateBy")
+                    b.Property<string>("UpdatedBy")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<DateTime?>("UpdateTime")
+                    b.Property<DateTime?>("UpdatedTime")
                         .HasColumnType("datetime2");
 
                     b.HasKey("Id");
@@ -1074,29 +1084,28 @@ namespace Cursus.LMS.DataAccess.Migrations
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("CertificateImgUrl")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<Guid?>("CourseId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<DateTime>("EndAt")
+                    b.Property<string>("CreatedBy")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("CreatedTime")
                         .HasColumnType("datetime2");
 
-                    b.Property<bool>("IsExpelled")
-                        .HasColumnType("bit");
-
-                    b.Property<bool>("IsSuccess")
-                        .HasColumnType("bit");
-
-                    b.Property<DateTime>("LearningTime")
-                        .HasColumnType("datetime2");
-
-                    b.Property<DateTime>("StartAt")
-                        .HasColumnType("datetime2");
+                    b.Property<int>("Status")
+                        .HasColumnType("int");
 
                     b.Property<Guid?>("StudentId")
                         .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("UpdatedBy")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("UpdatedTime")
+                        .HasColumnType("datetime2");
 
                     b.HasKey("Id");
 
@@ -1105,6 +1114,31 @@ namespace Cursus.LMS.DataAccess.Migrations
                     b.HasIndex("StudentId");
 
                     b.ToTable("StudentCourses");
+                });
+
+            modelBuilder.Entity("Cursus.LMS.Model.Domain.StudentCourseStatus", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("CreatedBy")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("CreatedTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("Status")
+                        .HasColumnType("int");
+
+                    b.Property<Guid?>("StudentCourseId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("StudentCourseId");
+
+                    b.ToTable("StudentCoursesStatus");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
@@ -1437,6 +1471,15 @@ namespace Cursus.LMS.DataAccess.Migrations
                     b.Navigation("Student");
                 });
 
+            modelBuilder.Entity("Cursus.LMS.Model.Domain.OrderStatus", b =>
+                {
+                    b.HasOne("Cursus.LMS.Model.Domain.OrderHeader", "OrderHeader")
+                        .WithMany()
+                        .HasForeignKey("OrderHeaderId");
+
+                    b.Navigation("OrderHeader");
+                });
+
             modelBuilder.Entity("Cursus.LMS.Model.Domain.PaymentCard", b =>
                 {
                     b.HasOne("Cursus.LMS.Model.Domain.ApplicationUser", "User")
@@ -1492,6 +1535,15 @@ namespace Cursus.LMS.DataAccess.Migrations
                     b.Navigation("Course");
 
                     b.Navigation("Student");
+                });
+
+            modelBuilder.Entity("Cursus.LMS.Model.Domain.StudentCourseStatus", b =>
+                {
+                    b.HasOne("Cursus.LMS.Model.Domain.StudentCourse", "StudentCourse")
+                        .WithMany()
+                        .HasForeignKey("StudentCourseId");
+
+                    b.Navigation("StudentCourse");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>

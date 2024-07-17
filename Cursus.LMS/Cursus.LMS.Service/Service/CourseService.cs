@@ -13,11 +13,13 @@ public class CourseService : ICourseService
 {
     private readonly IUnitOfWork _unitOfWork;
     private readonly IMapper _mapper;
+    private readonly IStudentCourseService _studentCourseService;
 
-    public CourseService(IUnitOfWork unitOfWork, IMapper mapper)
+    public CourseService(IUnitOfWork unitOfWork, IMapper mapper, IStudentCourseService studentCourseService)
     {
         _unitOfWork = unitOfWork;
         _mapper = mapper;
+        _studentCourseService = studentCourseService;
     }
 
     public async Task<ResponseDTO> CreateFrameCourse(ClaimsPrincipal User, Guid courseVersionId)
@@ -320,7 +322,7 @@ public class CourseService : ICourseService
             }
 
             var courseVersionDto = _mapper.Map<GetCourseVersionDTO>(courseVersion);
-            
+
             return new ResponseDTO()
             {
                 IsSuccess = true,
@@ -461,6 +463,68 @@ public class CourseService : ICourseService
                 StatusCode = 500,
                 Result = null,
                 IsSuccess = false
+            };
+        }
+    }
+
+    public async Task<ResponseDTO> EnrollCourse(ClaimsPrincipal User, EnrollCourseDTO enrollCourseDto)
+    {
+        try
+        {
+            var studentCourse = await _unitOfWork.StudentCourseRepository.GetAsync
+            (
+                x => x.StudentId == enrollCourseDto.studentId && x.CourseId == enrollCourseDto.courseId
+            );
+
+            if (studentCourse is null)
+            {
+                return new ResponseDTO()
+                {
+                    Message = "Student was not own this course",
+                    IsSuccess = false,
+                    StatusCode = 400,
+                    Result = null
+                };
+            }
+
+            if (studentCourse.Status != StaticStatus.StudentCourse.Pending)
+            {
+                return new ResponseDTO()
+                {
+                    Message = "Student was not own this course",
+                    IsSuccess = false,
+                    StatusCode = 400,
+                    Result = null
+                };
+            }
+
+            await _studentCourseService.UpdateStudentCourse
+            (
+                User,
+                new UpdateStudentCourseDTO()
+                {
+                    Status = StaticStatus.StudentCourse.Enrolled,
+                    CourseId = enrollCourseDto.courseId,
+                    StudentId = enrollCourseDto.studentId
+                }
+            );
+
+            return new ResponseDTO()
+            {
+                Message = "Enroll course successfully",
+                IsSuccess = true,
+                StatusCode = 200,
+                Result = null
+            };
+        }
+        catch (Exception e)
+        {
+            return new ResponseDTO()
+            {
+                Message = e.Message,
+                StatusCode = 500,
+                Result = null,
+                IsSuccess = true
             };
         }
     }

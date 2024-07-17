@@ -491,10 +491,10 @@ public class CategoryService : ICategoryService
                 Name = createCategoryDto.Name,
                 Description = createCategoryDto.Description,
                 ParentId = isGuid ? guidOutput : null,
-                CreateTime = DateTime.Now,
-                UpdateTime = null,
-                CreateBy = User.Identity.Name,
-                UpdateBy = "",
+                CreatedTime = DateTime.Now,
+                UpdatedTime = null,
+                CreatedBy = User.Identity.Name,
+                UpdatedBy = "",
                 Status = 0,
             };
 
@@ -593,8 +593,8 @@ public class CategoryService : ICategoryService
             categoryToUpdate.ParentId = !string.IsNullOrEmpty(updateCategoryDTO.ParentId)
                 ? Guid.Parse(updateCategoryDTO.ParentId)
                 : (Guid?)null;
-            categoryToUpdate.UpdateTime = DateTime.Now;
-            categoryToUpdate.UpdateBy = User.Identity.Name;
+            categoryToUpdate.UpdatedTime = DateTime.Now;
+            categoryToUpdate.UpdatedBy = User.Identity.Name;
             categoryToUpdate.Status = updateCategoryDTO.Status;
 
 
@@ -675,8 +675,8 @@ public class CategoryService : ICategoryService
 
             // chuyển status về 2 chứ không xóa dữ liệu
             category.Status = 2;
-            category.UpdateTime = DateTime.Now;
-            category.UpdateBy = User.Identity.Name;
+            category.UpdatedTime = DateTime.Now;
+            category.UpdatedBy = User.Identity.Name;
 
             // cập nhật và lưu thay đổi trong cơ sở dữ liệu
             _unitOfWork.CategoryRepository.Update(category);

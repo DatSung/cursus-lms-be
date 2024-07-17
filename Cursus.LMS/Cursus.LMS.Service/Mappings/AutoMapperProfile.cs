@@ -112,10 +112,10 @@ public class AutoMapperProfile : Profile
         CreateMap<CourseVersionComment, GetCourseCommnetDTO>()
             .ForMember(dest => dest.CourseVersionId, opt => opt.MapFrom(src => src.CourseVersionId))
             .ForMember(dest => dest.Comment, opt => opt.MapFrom(src => src.Comment))
-            .ForMember(dest => dest.CreateBy, opt => opt.MapFrom(src => src.CreateBy))
-            .ForMember(dest => dest.CreateTime, opt => opt.MapFrom(src => src.CreateTime))
-            .ForMember(dest => dest.UpdateBy, opt => opt.MapFrom(src => src.UpdateBy))
-            .ForMember(dest => dest.UpdateTime, opt => opt.MapFrom(src => src.UpdateTime))
+            .ForMember(dest => dest.CreateBy, opt => opt.MapFrom(src => src.CreatedBy))
+            .ForMember(dest => dest.CreateTime, opt => opt.MapFrom(src => src.CreatedTime))
+            .ForMember(dest => dest.UpdateBy, opt => opt.MapFrom(src => src.UpdatedBy))
+            .ForMember(dest => dest.UpdateTime, opt => opt.MapFrom(src => src.UpdatedTime))
             .ForMember(dest => dest.Status, opt => opt.MapFrom(src => src.Status))
             .ReverseMap();
 
@@ -124,12 +124,31 @@ public class AutoMapperProfile : Profile
         CreateMap<Level, GetLevelDTO>().ReverseMap();
 
         CreateMap<Student, StudentInfoDTO>().ReverseMap();
-        
+        CreateMap<Student, StudentFullInfoDTO>()
+            .ForMember(dest => dest.StudentId, opt => opt.MapFrom(src => src.StudentId))
+            .ForMember(dest => dest.UserId, opt => opt.MapFrom(src => src.UserId))
+            .ForMember(dest => dest.FullName, opt => opt.MapFrom(src => src.ApplicationUser.FullName))
+            .ForMember(dest => dest.Email, opt => opt.MapFrom(src => src.ApplicationUser.Email))
+            .ForMember(dest => dest.PhoneNumber, opt => opt.MapFrom(src => src.ApplicationUser.PhoneNumber))
+            .ForMember(dest => dest.Gender, opt => opt.MapFrom(src => src.ApplicationUser.Gender))
+            .ForMember(dest => dest.BirthDate, opt => opt.MapFrom(src => src.ApplicationUser.BirthDate))
+            .ForMember(dest => dest.Country, opt => opt.MapFrom(src => src.ApplicationUser.Country))
+            .ForMember(dest => dest.Address, opt => opt.MapFrom(src => src.ApplicationUser.Address))
+            .ForMember(dest => dest.AvatarUrl, opt => opt.MapFrom(src => src.ApplicationUser.AvatarUrl))
+            .ForMember(dest => dest.University, opt => opt.MapFrom(src => src.University))
+            .ReverseMap();
+        //CreateMap<Student, StudentFullInfoDTO>().ReverseMap();
+
+
+        CreateMap<StudentComment, GetAllCommentsDTO>().ReverseMap();
+        CreateMap<StudentComment, CreateStudentCommentDTO>().ReverseMap();
+        CreateMap<StudentComment, UpdateStudentCommentDTO>().ReverseMap();
+
         CreateMap<CartHeader, CartHeaderDTO>().ReverseMap();
         CreateMap<CartDetails, CartDetailsDTO>().ReverseMap();
 
-        CreateMap<StudentComment, GetAllCommentsDTO>().ReverseMap();
-        CreateMap<StudentComment,CreateStudentCommentDTO>().ReverseMap();
-        CreateMap<StudentComment, UpdateStudentCommentDTO>().ReverseMap();
+
+        CreateMap<OrderHeader, GetOrderHeaderDTO>().ReverseMap();
+        CreateMap<OrderDetails, GetOrderDetailsDTO>().ReverseMap();
     }
 }

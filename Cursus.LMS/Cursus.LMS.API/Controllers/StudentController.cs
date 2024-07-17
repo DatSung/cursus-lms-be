@@ -2,19 +2,21 @@
 using Cursus.LMS.Service.IService;
 using Cursus.LMS.Service.Service;
 using Cursus.LMS.Utility.Constants;
+using Hangfire;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using System.Security.Claims;
 
 namespace Cursus.LMS.API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class StudentsController : ControllerBase
+    public class StudentController : ControllerBase
     {
         private readonly IStudentsService _studentsService;
 
-        public StudentsController(IStudentsService studentsService)
+        public StudentController(IStudentsService studentsService)
         {
             _studentsService = studentsService;
         }
@@ -30,8 +32,8 @@ namespace Cursus.LMS.API.Controllers
             [FromQuery] int pageNumber = 1,
             [FromQuery] int pageSize = 10
         )
-        {            
-            var responseDto = 
+        {
+            var responseDto =
                 await _studentsService.GetAllStudent(User, filterOn, filterQuery, sortBy, isAscending, pageNumber, pageSize);
             return StatusCode(responseDto.StatusCode, responseDto);
         }
@@ -75,7 +77,7 @@ namespace Cursus.LMS.API.Controllers
             var responseDto = await _studentsService.GetStudentTotalCourses(studentId);
             return StatusCode(responseDto.StatusCode, responseDto);
         }
-        
+
         [HttpGet]
         [Route("comment/{studentId:guid}")]
         [Authorize(Roles = StaticUserRoles.Admin)]
@@ -89,13 +91,13 @@ namespace Cursus.LMS.API.Controllers
             var responseDto = await _studentsService.GetAllStudentComment(studentId, pageNumber, pageSize);
             return StatusCode(responseDto.StatusCode, responseDto);
         }
-        
+
         [HttpPost]
         [Route("comment/")]
         [Authorize(Roles = StaticUserRoles.Admin)]
-        public async Task<ActionResult<ResponseDTO>> CreateStudentComment( CreateStudentCommentDTO createStudentCommentDto)
+        public async Task<ActionResult<ResponseDTO>> CreateStudentComment(CreateStudentCommentDTO createStudentCommentDto)
         {
-            var responseDto = await _studentsService.CreateStudentComment(User,createStudentCommentDto);
+            var responseDto = await _studentsService.CreateStudentComment(User, createStudentCommentDto);
             return StatusCode(responseDto.StatusCode, responseDto);
         }
         [HttpPut]
@@ -114,6 +116,45 @@ namespace Cursus.LMS.API.Controllers
             var responseDto = await _studentsService.DeleteStudentComment(commentId);
             return StatusCode(responseDto.StatusCode, responseDto);
         }
-        
+
+        [HttpPost]
+        [Route("export/{month:int}/{year:int}")]
+        [Authorize(Roles = StaticUserRoles.Admin)]
+        public async Task<ActionResult<ResponseDTO>> ExportStudent
+        (
+            [FromRoute] int month,
+            [FromRoute] int year
+        )
+        {
+            var userId = User.Claims.FirstOrDefault(x => x.Type == ClaimTypes.NameIdentifier)?.Value;
+            BackgroundJob.Enqueue<IStudentsService>(job => job.ExportStudents(userId, month, year));
+            return Ok();
+        }
+
+        [HttpGet]
+        [Route("download/{fileName}")]
+        [Authorize(Roles = StaticUserRoles.Admin)]
+        public async Task<IActionResult> DownloadStudentExport([FromRoute] string fileName)
+        {
+            var closedXmlResponseDto = await _studentsService.DownloadStudents(fileName);
+            var stream = closedXmlResponseDto.Stream;
+            var contentType = closedXmlResponseDto.ContentType;
+
+            if (stream is null || contentType is null)
+            {
+                return NotFound();
+            }
+
+            return File(stream, contentType, fileName);
+        }
+
+        [HttpGet]
+        [Route("totalPrices-courses/{studentId:guid}")]
+        [Authorize(Roles = StaticUserRoles.Admin)]
+        public async Task<ActionResult<ResponseDTO>> TotalPricesCourseByStudentId([FromRoute] Guid studentId)
+        {
+            var responseDto = await _studentsService.TotalPricesCoursesByStudentId(studentId);
+            return StatusCode(responseDto.StatusCode, responseDto);
+        }
     }
 }
