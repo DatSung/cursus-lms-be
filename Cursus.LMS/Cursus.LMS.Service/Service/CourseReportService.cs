@@ -159,7 +159,7 @@ namespace Cursus.LMS.Service.Service
                     Message = "Course report created successfully",
                     IsSuccess = true,
                     StatusCode = 201,
-                    Result = courseReport
+                    Result = courseReport.Id
                 };
             }
             catch (Exception ex)
@@ -174,10 +174,23 @@ namespace Cursus.LMS.Service.Service
             }
         }
 
-        public async Task<ResponseDTO> UpdateCourseReport(UpdateCourseReportDTO updateCourseReportDTO)
+        public async Task<ResponseDTO> UpdateCourseReport(ClaimsPrincipal User,UpdateCourseReportDTO updateCourseReportDTO)
         {
             try
             {
+                var userId = User.Claims.FirstOrDefault(x => x.Type == ClaimTypes.NameIdentifier)?.Value;
+
+                if (userId is null)
+                {
+                    return new ResponseDTO
+                    {
+                        Message = "User not found",
+                        Result = null,
+                        IsSuccess = false,
+                        StatusCode = 404
+                    };
+                }
+
                 var courseReport = await _unitOfWork.CourseReportRepository.GetById(updateCourseReportDTO.Id);
                 if (courseReport == null)
                 {
@@ -191,6 +204,7 @@ namespace Cursus.LMS.Service.Service
                 }
 
                 courseReport.Message = updateCourseReportDTO.Message;
+                courseReport.UpdatedBy = userId;
                 courseReport.UpdatedTime = DateTime.UtcNow;
 
                 _unitOfWork.CourseReportRepository.Update(courseReport);
@@ -201,7 +215,7 @@ namespace Cursus.LMS.Service.Service
                     Message = "Course report updated successfully",
                     IsSuccess = true,
                     StatusCode = 200,
-                    Result = courseReport
+                    Result = courseReport.Id
                 };
             }
             catch (Exception ex)
@@ -243,7 +257,7 @@ namespace Cursus.LMS.Service.Service
                     Message = "Course report deleted successfully",
                     IsSuccess = true,
                     StatusCode = 200,
-                    Result = courseReport
+                    Result = null
                 };
             }
             catch (Exception ex)

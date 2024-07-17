@@ -221,7 +221,7 @@ namespace Cursus.LMS.Service.Service
                     Message = "Course review created successfully",
                     IsSuccess = true,
                     StatusCode = 201,
-                    Result = courseReview
+                    Result = courseReview.Id
                 };
             }
             catch (Exception ex)
@@ -236,10 +236,23 @@ namespace Cursus.LMS.Service.Service
             }
 
         }
-        public async Task<ResponseDTO> UpdateCourseReview(UpdateCourseReviewDTO updateCourseReviewDTO)
+        public async Task<ResponseDTO> UpdateCourseReview(ClaimsPrincipal User,UpdateCourseReviewDTO updateCourseReviewDTO)
         {
             try
             {
+                var userId = User.Claims.FirstOrDefault(x => x.Type == ClaimTypes.NameIdentifier)?.Value;
+
+                if (userId is null)
+                {
+                    return new ResponseDTO
+                    {
+                        Message = "User not found",
+                        Result = null,
+                        IsSuccess = false,
+                        StatusCode = 404
+                    };
+                }
+
                 var courseReview = await _unitOfWork.CourseReviewRepository.GetById(updateCourseReviewDTO.Id);
                 if (courseReview == null)
                 {
@@ -254,6 +267,7 @@ namespace Cursus.LMS.Service.Service
 
                 courseReview.Rate = updateCourseReviewDTO.Rate;
                 courseReview.Message = updateCourseReviewDTO.Message;
+                courseReview.UpdatedBy = userId;
                 courseReview.UpdatedTime = DateTime.UtcNow;
 
                 _unitOfWork.CourseReviewRepository.Update(courseReview);
@@ -264,7 +278,7 @@ namespace Cursus.LMS.Service.Service
                     Message = "Course review updated successfully",
                     IsSuccess = true,
                     StatusCode = 200,
-                    Result = courseReview
+                    Result = courseReview.Id
                 };
             }
             catch (Exception ex)
@@ -303,6 +317,49 @@ namespace Cursus.LMS.Service.Service
                     IsSuccess = true,
                     StatusCode = 200,
                     Result = null
+                };
+            }
+            catch (Exception ex)
+            {
+                return new ResponseDTO
+                {
+                    Message = ex.Message,
+                    IsSuccess = false,
+                    StatusCode = 500,
+                    Result = null
+                };
+            }
+        }
+        public async Task<ResponseDTO> MarkCourseReview(Guid id)
+        {
+            try
+            {
+
+                var courseReview = await _unitOfWork.CourseReviewRepository.GetById(id);
+                if (courseReview == null)
+                {
+                    return new ResponseDTO
+                    {
+                        Message = "Course review not found",
+                        IsSuccess = false,
+                        StatusCode = 404,
+                        Result = null
+                    };
+                }
+
+                courseReview.IsMarked = !courseReview.IsMarked;
+
+                _unitOfWork.CourseReviewRepository.Update(courseReview);
+                await _unitOfWork.SaveAsync();
+
+                string message = courseReview.IsMarked ? "Marked the review successfully" : "Unmarked the review successfully";
+
+                return new ResponseDTO
+                {
+                    Message = message,
+                    IsSuccess = true,
+                    StatusCode = 200,
+                    Result = courseReview.Id
                 };
             }
             catch (Exception ex)
