@@ -2,7 +2,7 @@
   "dependencies": {
     "apis1": {
       "restored": true,
-      "restoreTime": "2024-06-26T07:18:34.1874866Z"
+      "restoreTime": "2024-07-17T07:30:39.0752428Z"
     }
   },
   "parameters": {
@@ -14,7 +14,7 @@
     "apis1.subscriptionId": {
       "Name": "apis1.subscriptionId",
       "Type": "subscription",
-      "Value": "ded0e732-4435-46c4-ad88-b8a01d4c8889"
+      "Value": "e3e15163-b9ee-45e8-87b1-4cdbf66d4963"
     }
   }
 }
