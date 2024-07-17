@@ -1,6 +1,6 @@
 ﻿namespace Cursus.LMS.Model.DTO;
 
-public class UpSertBalanceDTO
+public class UpsertBalanceDTO
 {
     public string UserId { get; set; }
 

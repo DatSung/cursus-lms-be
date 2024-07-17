@@ -7,9 +7,9 @@ public class Balance
 {
     [Key] public string UserId { get; set; }
 
-    public int AvailableBalance { get; set; }
+    public double AvailableBalance { get; set; }
 
-    public int PendingBalance { get; set; }
+    public double PendingBalance { get; set; }
 
     public string Currency { get; set; }
 

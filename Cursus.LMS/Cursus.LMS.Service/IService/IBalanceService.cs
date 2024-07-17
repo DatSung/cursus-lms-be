@@ -4,5 +4,5 @@ namespace Cursus.LMS.Service.IService;
 
 public interface IBalanceService
 {
-    Task<ResponseDTO> UpSertBalance(UpSertBalanceDTO upSertBalanceDto);
+    Task<ResponseDTO> UpsertBalance(UpsertBalanceDTO upsertBalanceDto);
 }
