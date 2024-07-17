@@ -42,8 +42,8 @@ public class BalanceService : IBalanceService
                 };
             }
 
-            balance.AvailableBalance = upsertBalanceDto.AvailableBalance;
-            balance.PendingBalance = upsertBalanceDto.PendingBalance;
+            balance.AvailableBalance += upsertBalanceDto.AvailableBalance;
+            balance.PendingBalance += upsertBalanceDto.PendingBalance;
             balance.UpdatedTime = DateTime.UtcNow;
 
             _unitOfWork.BalanceRepository.Update(balance);
