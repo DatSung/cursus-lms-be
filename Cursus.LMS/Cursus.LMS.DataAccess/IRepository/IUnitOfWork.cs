@@ -29,6 +29,8 @@ public interface IUnitOfWork
     IOrderStatusRepository OrderStatusRepository { get; }
     IStudentCommentRepository StudentCommentRepository { get; }
     IStudentCourseStatusRepository StudentCourseStatusRepository { get; }
-
+    IBalanceRepository BalanceRepository { get; }
+    ITransactionRepository TransactionRepository { get; }
+    
     Task<int> SaveAsync();
 }
