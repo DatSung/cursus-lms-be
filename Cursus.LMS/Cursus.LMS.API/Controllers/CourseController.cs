@@ -88,6 +88,7 @@ namespace Cursus.LMS.API.Controllers
 
         [HttpGet]
         [Route("get-course-reviews")]
+        [Authorize]
         public async Task<ActionResult<ResponseDTO>> GetCourseReviews
         (
             [FromQuery] Guid? courseId,
@@ -115,6 +116,7 @@ namespace Cursus.LMS.API.Controllers
 
         [HttpGet]
         [Route("get-course-review/{id}")]
+        [Authorize]
         public async Task<ActionResult<ResponseDTO>> GetCourseReview(Guid id)
         {
             try
@@ -136,6 +138,7 @@ namespace Cursus.LMS.API.Controllers
 
         [HttpPost]
         [Route("create-course-review")]
+        [Authorize(Roles = StaticUserRoles.Student)]
         public async Task<ActionResult<ResponseDTO>> CreateCourseReview(
             [FromBody] CreateCourseReviewDTO createCourseReviewDTO)
         {
@@ -169,6 +172,7 @@ namespace Cursus.LMS.API.Controllers
 
         [HttpPut]
         [Route("update-course-review")]
+        [Authorize]
         public async Task<ActionResult<ResponseDTO>> UpdateCourseReview(
             [FromBody] UpdateCourseReviewDTO updateCourseReviewDTO)
         {
@@ -185,7 +189,7 @@ namespace Cursus.LMS.API.Controllers
 
             try
             {
-                var responseDto = await _courseReviewService.UpdateCourseReview(updateCourseReviewDTO);
+                var responseDto = await _courseReviewService.UpdateCourseReview(User,updateCourseReviewDTO);
                 return StatusCode(responseDto.StatusCode, responseDto);
             }
             catch (Exception ex)
@@ -202,6 +206,7 @@ namespace Cursus.LMS.API.Controllers
 
         [HttpDelete]
         [Route("delete-course-review/{id}")]
+        [Authorize]
         public async Task<ActionResult<ResponseDTO>> DeleteCourseReview(Guid id)
         {
             try
@@ -222,8 +227,32 @@ namespace Cursus.LMS.API.Controllers
         }
 
 
+        [HttpPut]
+        [Route("Mark-course-review")]
+        [Authorize(Roles = StaticUserRoles.Instructor) ]
+        public async Task<ActionResult<ResponseDTO>> MarkCourseReview(Guid id)
+        {
+            try
+            {
+                var responseDto = await _courseReviewService.MarkCourseReview(id);
+                return StatusCode(responseDto.StatusCode, responseDto);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new ResponseDTO
+                {
+                    Message = ex.Message,
+                    Result = null,
+                    IsSuccess = false,
+                    StatusCode = 500
+                });
+            }
+        }
+
+
         [HttpGet]
         [Route("get-course-reports")]
+        [Authorize]
         public async Task<ActionResult<ResponseDTO>> GetCourseReports(
             [FromQuery] Guid? courseId,
             [FromQuery] string? filterOn,
@@ -250,6 +279,7 @@ namespace Cursus.LMS.API.Controllers
 
         [HttpGet]
         [Route("get-course-report/{id}")]
+        [Authorize]
         public async Task<ActionResult<ResponseDTO>> GetCourseReport(Guid id)
         {
             try
@@ -271,6 +301,7 @@ namespace Cursus.LMS.API.Controllers
 
         [HttpPost]
         [Route("create-course-report")]
+        [Authorize(Roles = StaticUserRoles.Student)]
         public async Task<ActionResult<ResponseDTO>> CreateCourseReport(
             [FromBody] CreateCourseReportDTO createCourseReportDTO)
         {
@@ -304,6 +335,7 @@ namespace Cursus.LMS.API.Controllers
 
         [HttpPut]
         [Route("update-course-report")]
+        [Authorize]
         public async Task<ActionResult<ResponseDTO>> UpdateCourseReport(
             [FromBody] UpdateCourseReportDTO updateCourseReportDTO)
         {
@@ -320,7 +352,7 @@ namespace Cursus.LMS.API.Controllers
 
             try
             {
-                var responseDto = await _courseReportService.UpdateCourseReport(updateCourseReportDTO);
+                var responseDto = await _courseReportService.UpdateCourseReport(User,updateCourseReportDTO);
                 return StatusCode(responseDto.StatusCode, responseDto);
             }
             catch (Exception ex)
@@ -337,6 +369,7 @@ namespace Cursus.LMS.API.Controllers
 
         [HttpDelete]
         [Route("delete-course-report/{id}")]
+        [Authorize]
         public async Task<ActionResult<ResponseDTO>> DeleteCourseReport(Guid id)
         {
             try

@@ -360,11 +360,6 @@ namespace Cursus.LMS.Service.Service
             }
         }
 
-        public Task<ResponseDTO> GetStudentPayoutMoney(Guid studentId)
-        {
-            throw new NotImplementedException();
-        }
-
         //GetStudentTotalCourses đã xong
         public async Task<ResponseDTO> GetStudentTotalCourses(Guid studentId)
         {
@@ -383,26 +378,27 @@ namespace Cursus.LMS.Service.Service
                     };
                 }
 
-                var courses = await _unitOfWork.StudentCourseRepository.GetAllAsync(c => c.StudentId == id.StudentId);
+                var courses = await _unitOfWork.StudentCourseStatusRepository.GetAllAsync(c => c.Id == id.StudentId);
 
                 var totalCourses = courses.Count();
-                if (totalCourses == 0)
-                {
-                    return new ResponseDTO()
-                    {
-                        Message = "Student has not registered for any courses",
-                        Result = null,
-                        IsSuccess = false,
-                        StatusCode = 400
-                    };
-                }
-
+                var pending = courses.Count(x => x.Status == 0);
+                var enrolled = courses.Count(x => x.Status == 1);
+                var completed = courses.Count(x => x.Status == 3);
+                var canceled = courses.Count(x => x.Status == 4);
+                
                 return new ResponseDTO()
                 {
                     Message = "Get Course Successfull",
                     IsSuccess = true,
                     StatusCode = 200,
-                    Result = totalCourses
+                    Result = new StudentTotalCountDTO()
+                    {
+                        Total = totalCourses,
+                        Pending = pending,
+                        Enrolled = enrolled,
+                        Completed = completed,
+                        Canceled = canceled
+                    }
                 };
             }
             catch (Exception e)
@@ -706,5 +702,70 @@ namespace Cursus.LMS.Service.Service
                 throw;
             }
         }
+
+        public async Task<ResponseDTO> TotalPricesCoursesByStudentId(Guid studentId)
+        {
+            try
+            {
+                // kiểm tra studentId có tồn tại không
+                var student = await _unitOfWork.StudentRepository.GetAsync(s => s.StudentId == studentId);
+
+                if (student == null)
+                {
+                    return new ResponseDTO()
+                    {
+                        Message = "StudentId Invalid",
+                        Result = null,
+                        IsSuccess = false,
+                        StatusCode = 400
+                    };
+                }
+                // Lấy danh sách các OrderHeader của student đó
+                var orderHeaders = await _unitOfWork.OrderHeaderRepository.GetAllAsync(o => o.StudentId == studentId);
+                //kiểm tra xem student đã mua khóa học nào chưa
+                if (orderHeaders == null || !orderHeaders.Any())
+                {
+                    return new ResponseDTO()
+                    {
+                        Message = "Student has not purchased any courses",
+                        Result = null,
+                        IsSuccess = false,
+                        StatusCode = 400
+                    };
+                }
+
+                // Lấy danh sách các OrderHeader
+                var orderHeaderId = orderHeaders.Select(x => x.Id).ToList();
+
+                // Lấy danh sách các OrderDetails của orderHeader
+                var orderDetails = await _unitOfWork.OrderDetailsRepository.GetAllAsync(
+                    od => orderHeaderId.Contains(od.OrderHeaderId) && od.CourseId != Guid.Empty);
+
+                // Đếm số lượng khóa học
+                var courses = orderDetails.Count();
+
+                // Tính tổng giá của các khóa học
+                var totalPrice = orderDetails.Sum(od => od.CoursePrice);
+
+                return new ResponseDTO()
+                {
+                    Message = "Get total money successfully",
+                    Result = new { Courses = courses, TotalPrice = totalPrice },
+                    IsSuccess = true,
+                    StatusCode = 200
+                };
+            }
+            catch (Exception e)
+            {
+                return new ResponseDTO()
+                {
+                    Message = e.Message,
+                    Result = null,
+                    IsSuccess = false,
+                    StatusCode = 500
+                };
+            }
+        }
+
     }
 }
