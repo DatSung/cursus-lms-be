@@ -5,7 +5,7 @@ namespace Cursus.LMS.Model.Domain;
 
 public class Balance
 {
-    [Key] public Guid InstructorId { get; set; }
+    [Key] public string UserId { get; set; }
 
     public int AvailableBalance { get; set; }
 
@@ -15,5 +15,5 @@ public class Balance
 
     public DateTime UpdatedTime { get; set; }
 
-    [ForeignKey("InstructorId")] public virtual Instructor? Instructor { get; set; }
+    [ForeignKey("UserId")] public virtual ApplicationUser ApplicationUser { get; set; }
 }
