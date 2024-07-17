@@ -2,7 +2,6 @@ using Cursus.LMS.Model.DTO;
 using Cursus.LMS.Service.IService;
 using Cursus.LMS.Utility.Constants;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Cursus.LMS.API.Controllers
@@ -48,7 +47,13 @@ namespace Cursus.LMS.API.Controllers
             );
             return StatusCode(responseDto.StatusCode, responseDto);
         }
-        
-        
+
+        [HttpPost]
+        [Route("checkout-with-stripe")]
+        public async Task<ActionResult<ResponseDTO>> CheckoutWithStripe()
+        {
+            var responseDto = await _cartService.Checkout(User);
+            return StatusCode(responseDto.StatusCode, responseDto);
+        }
     }
 }

@@ -246,7 +246,7 @@ public class CartService : ICartService
 
             cartHeader.TotalPrice -= cartDetails.CoursePrice;
             _unitOfWork.CartHeaderRepository.Update(cartHeader);
-            
+
             _unitOfWork.CartDetailsRepository.Remove(cartDetails);
             await _unitOfWork.SaveAsync();
 
@@ -268,5 +268,10 @@ public class CartService : ICartService
                 Result = null
             };
         }
+    }
+
+    public Task<ResponseDTO> Checkout(ClaimsPrincipal User)
+    {
+        throw new NotImplementedException();
     }
 }
