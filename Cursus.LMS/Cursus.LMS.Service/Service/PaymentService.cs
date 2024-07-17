@@ -1,6 +1,8 @@
-﻿namespace Cursus.LMS.Service.Service;
+﻿using Cursus.LMS.Service.IService;
 
-public class PaymentService
+namespace Cursus.LMS.Service.Service;
+
+public class PaymentService : IPaymentService
 {
     
 }

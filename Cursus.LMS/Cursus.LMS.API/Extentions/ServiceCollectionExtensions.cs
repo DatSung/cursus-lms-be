@@ -64,6 +64,12 @@ public static class ServiceCollectionExtensions
         services.AddScoped<IStudentCourseStatusService, StudentCourseStatusService>();
         // Registering IStripeService its implementation StripeService
         services.AddScoped<IStripeService, StripeService>();
+        // Registering ITransactionService its implementation TransactionService
+        services.AddScoped<ITransactionService, TransactionService>();
+        // Registering IBalanceService its implementation BalanceService
+        services.AddScoped<IBalanceService, BalanceService>();
+        // Registering IPaymentService its implementation PaymentService
+        services.AddScoped<IPaymentService, PaymentService>(); 
 
         // Register the Identity services with default configuration
         services.AddIdentity<ApplicationUser, IdentityRole>()
