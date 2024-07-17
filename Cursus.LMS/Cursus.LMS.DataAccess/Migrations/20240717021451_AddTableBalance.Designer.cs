@@ -4,6 +4,7 @@ using Cursus.LMS.DataAccess.Context;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Cursus.LMS.DataAccess.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240717021451_AddTableBalance")]
+    partial class AddTableBalance
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -121,9 +124,9 @@ namespace Cursus.LMS.DataAccess.Migrations
                             Address = "123 Admin St",
                             AvatarUrl = "https://example.com/avatar.png",
                             BirthDate = new DateTime(1990, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            ConcurrencyStamp = "f33da96a-4212-4cff-92ff-e1225f0900bb",
+                            ConcurrencyStamp = "e9b30e3a-4f05-441c-af91-76d204bb7913",
                             Country = "Country",
-                            CreateTime = new DateTime(2024, 7, 17, 4, 4, 22, 117, DateTimeKind.Utc).AddTicks(7250),
+                            CreateTime = new DateTime(2024, 7, 17, 2, 14, 51, 113, DateTimeKind.Utc).AddTicks(1213),
                             Email = "admin@gmail.com",
                             EmailConfirmed = true,
                             FullName = "Admin User",
@@ -131,10 +134,10 @@ namespace Cursus.LMS.DataAccess.Migrations
                             LockoutEnabled = true,
                             NormalizedEmail = "ADMIN@GMAIL.COM",
                             NormalizedUserName = "ADMIN@GMAIL.COM",
-                            PasswordHash = "AQAAAAIAAYagAAAAEIEDjFwE7/6iQsQfHFqd5/3aTHAEK59if70HdLxDTKK7udA2TaOVAfGefNe2UG/zAw==",
+                            PasswordHash = "AQAAAAIAAYagAAAAEPaAMxFckDd5SIdJayv0FVrwRUtBvM34ux9sV4KotBzid1W2FEIsNWE+y1jL9vUn6Q==",
                             PhoneNumber = "1234567890",
                             PhoneNumberConfirmed = true,
-                            SecurityStamp = "1188dab9-a37c-4ab6-9338-46ee2e722ea1",
+                            SecurityStamp = "0e21952a-5523-4d3a-a1d0-13d714a7d2d0",
                             TaxNumber = "123456789",
                             TwoFactorEnabled = false,
                             UpdateTime = new DateTime(2003, 1, 12, 0, 0, 0, 0, DateTimeKind.Unspecified),
@@ -144,23 +147,23 @@ namespace Cursus.LMS.DataAccess.Migrations
 
             modelBuilder.Entity("Cursus.LMS.Model.Domain.Balance", b =>
                 {
-                    b.Property<string>("UserId")
-                        .HasColumnType("nvarchar(450)");
+                    b.Property<Guid>("InstructorId")
+                        .HasColumnType("uniqueidentifier");
 
-                    b.Property<double>("AvailableBalance")
-                        .HasColumnType("float");
+                    b.Property<int>("AvailableBalance")
+                        .HasColumnType("int");
 
                     b.Property<string>("Currency")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<double>("PendingBalance")
-                        .HasColumnType("float");
+                    b.Property<int>("PendingBalance")
+                        .HasColumnType("int");
 
                     b.Property<DateTime>("UpdatedTime")
                         .HasColumnType("datetime2");
 
-                    b.HasKey("UserId");
+                    b.HasKey("InstructorId");
 
                     b.ToTable("Balances");
                 });
@@ -597,7 +600,7 @@ namespace Cursus.LMS.DataAccess.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("c025883b-7c87-4afb-b078-38101b8e4879"),
+                            Id = new Guid("a4973702-ca4b-43f0-8184-7159f5c7de14"),
                             BodyContent = "Dear [UserFullName],<br><br>Welcome to Cursus! We are excited to have you join our learning community.",
                             CallToAction = "<a href=\"https://cursus.com/login\">Login</a>",
                             Category = "Welcome",
@@ -614,7 +617,7 @@ namespace Cursus.LMS.DataAccess.Migrations
                         },
                         new
                         {
-                            Id = new Guid("077bdfef-fbea-4a59-95b9-a3e7dd983557"),
+                            Id = new Guid("31c5b3c2-c125-4c70-90ad-959e55a2cb27"),
                             BodyContent = "Hi [UserFullName],<br><br>We received a request to reset your password. Click the link below to reset your password.",
                             CallToAction = "http://localhost:30475/sign-in/verify-email?userId=user.Id&token=Uri.EscapeDataString(token)",
                             Category = "Security",
@@ -631,7 +634,7 @@ namespace Cursus.LMS.DataAccess.Migrations
                         },
                         new
                         {
-                            Id = new Guid("75cca43e-dd23-4509-94ad-3bc0f11e10af"),
+                            Id = new Guid("97691a44-488f-42c7-a1e2-07c2d94af58c"),
                             BodyContent = "<p>Thank you for registering your Cursus account. Click here to go back the page</p>",
                             CallToAction = "<a href=\"{{Login}}\">Login now</a>",
                             Category = "Verify",
@@ -648,7 +651,7 @@ namespace Cursus.LMS.DataAccess.Migrations
                         },
                         new
                         {
-                            Id = new Guid("1d2e8ed2-bfce-4f12-a4dc-18751b5f98d9"),
+                            Id = new Guid("09019428-1cb9-4702-86c7-cd9eb70344b6"),
                             BodyContent = "<h2>-Your Account has been aprroval!</h2>",
                             CallToAction = "<p><a href='http://bloodmoonrpg.carrd.co?token={token}' style='padding: 10px 20px; color: white; background-color: #007BFF; text-decoration: none;'>Verify</a></p>",
                             Category = "Approval",
@@ -665,7 +668,7 @@ namespace Cursus.LMS.DataAccess.Migrations
                         },
                         new
                         {
-                            Id = new Guid("b026c2ac-2aa4-4f24-a044-a85b82cb5dbf"),
+                            Id = new Guid("05854961-410c-44ef-802e-b0c4c18c4c99"),
                             BodyContent = "<p>Hello {FirstName},</p><p>Click <a href=\"{ResetLink}\">here</a> to reset your password.</p>",
                             CallToAction = "<a href=\"{{ResetLink}}\">Reset Password</a>",
                             Category = "Security",
@@ -682,7 +685,7 @@ namespace Cursus.LMS.DataAccess.Migrations
                         },
                         new
                         {
-                            Id = new Guid("e6500c2d-017d-433f-a7ae-b60be6f5111d"),
+                            Id = new Guid("b74e10a9-8871-4d7d-b931-d92caddcac88"),
                             BodyContent = "<p>Your {courseTitle} course led by {instructorName} is inactive.</p>",
                             CallToAction = "<a href=\"{{LoginLink}}\">Login Now</a>",
                             Category = "Notification",
@@ -699,7 +702,7 @@ namespace Cursus.LMS.DataAccess.Migrations
                         },
                         new
                         {
-                            Id = new Guid("60d0de42-d55c-4dd0-9362-16975a71e8bf"),
+                            Id = new Guid("6f79ce8f-1657-4fec-a006-892146818ed2"),
                             BodyContent = "New course has been added by Instructor, please check in the main page.",
                             CallToAction = "<a href=\"https://cursus.com/login\">Login</a>",
                             Category = "Notice for admin",
@@ -716,7 +719,7 @@ namespace Cursus.LMS.DataAccess.Migrations
                         },
                         new
                         {
-                            Id = new Guid("0975116c-7711-46e4-bf47-0cad194f2bb2"),
+                            Id = new Guid("979078ce-347c-4b73-bc99-c53f4133cd2e"),
                             BodyContent = "New course has been approved by Admin, please check in the main page.",
                             CallToAction = "<a href=\"https://cursus.com/login\">Login</a>",
                             Category = "Notice for instructor",
@@ -733,7 +736,7 @@ namespace Cursus.LMS.DataAccess.Migrations
                         },
                         new
                         {
-                            Id = new Guid("62e5c63b-be1c-402f-8417-a265f184eda5"),
+                            Id = new Guid("df72025e-692c-46c2-8fec-70f0aaeef050"),
                             BodyContent = "New course has been rejected by Admin, please check in the main page.",
                             CallToAction = "<a href=\"https://cursus.com/login\">Login</a>",
                             Category = "Notice for instructor",
@@ -1164,36 +1167,6 @@ namespace Cursus.LMS.DataAccess.Migrations
                     b.ToTable("StudentCoursesStatus");
                 });
 
-            modelBuilder.Entity("Cursus.LMS.Model.Domain.Transaction", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<double>("Amount")
-                        .HasColumnType("float");
-
-                    b.Property<DateTime>("CreatedTime")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("Currency")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("Type")
-                        .HasColumnType("int");
-
-                    b.Property<string>("UserId")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(450)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("UserId");
-
-                    b.ToTable("Transactions");
-                });
-
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
                 {
                     b.Property<string>("Id")
@@ -1359,13 +1332,13 @@ namespace Cursus.LMS.DataAccess.Migrations
 
             modelBuilder.Entity("Cursus.LMS.Model.Domain.Balance", b =>
                 {
-                    b.HasOne("Cursus.LMS.Model.Domain.ApplicationUser", "ApplicationUser")
+                    b.HasOne("Cursus.LMS.Model.Domain.Instructor", "Instructor")
                         .WithMany()
-                        .HasForeignKey("UserId")
+                        .HasForeignKey("InstructorId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("ApplicationUser");
+                    b.Navigation("Instructor");
                 });
 
             modelBuilder.Entity("Cursus.LMS.Model.Domain.CartDetails", b =>
@@ -1608,17 +1581,6 @@ namespace Cursus.LMS.DataAccess.Migrations
                         .HasForeignKey("StudentCourseId");
 
                     b.Navigation("StudentCourse");
-                });
-
-            modelBuilder.Entity("Cursus.LMS.Model.Domain.Transaction", b =>
-                {
-                    b.HasOne("Cursus.LMS.Model.Domain.ApplicationUser", "ApplicationUser")
-                        .WithMany()
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("ApplicationUser");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
