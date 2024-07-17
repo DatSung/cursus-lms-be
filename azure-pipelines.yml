@@ -11,12 +11,12 @@ resources:
 variables:
 
   # Container registry service connection established during pipeline creation
-  dockerRegistryServiceConnection: 'c46454a6-2f4b-4122-bd44-37eea2ac5db7'
+  dockerRegistryServiceConnection: 'f1988515-be04-4a4e-8415-3e6befa0f866'
   imageRepository: 'backendcursuslms'
   containerRegistry: 'cursuscontainer.azurecr.io'
   dockerfilePath: '**/Dockerfile'
   tag: '$(Build.BuildId)'
-  imagePullSecret: 'cursuscontainer13596b2d-auth'
+  imagePullSecret: 'cursuscontainerc416-auth'
 
   # Agent VM image name
   vmImageName: 'ubuntu-latest'
@@ -53,7 +53,7 @@ stages:
     displayName: Deploy
     pool:
       vmImage: $(vmImageName)
-    environment: 'BackendCursusLMS-2303.default'
+    environment: 'BackendCursusLMS.default'
     strategy:
       runOnce:
         deploy:
