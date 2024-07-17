@@ -7,6 +7,7 @@ public static class StaticEnum
         Json,
         MultipartFormData,
     }
+
     public enum ApiType
     {
         GET,
@@ -14,5 +15,10 @@ public static class StaticEnum
         PUT,
         DELETE
     }
-    
+
+    public enum TransactionType
+    {
+        Purchase,
+        Payout
+    }
 }

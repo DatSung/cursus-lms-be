@@ -7,8 +7,9 @@ namespace Cursus.LMS.Service.IService;
 public interface ICourseReviewService
 {
     Task<ResponseDTO> CreateCourseReview(CreateCourseReviewDTO createCourseReviewDTO);
-    Task<ResponseDTO> UpdateCourseReview(UpdateCourseReviewDTO updateCourseReviewDTO);
+    Task<ResponseDTO> UpdateCourseReview(ClaimsPrincipal User,UpdateCourseReviewDTO updateCourseReviewDTO);
     Task<ResponseDTO> DeleteCourseReview(Guid id);
+    Task<ResponseDTO> MarkCourseReview(Guid id);
     Task<ResponseDTO> GetCourseReviewById(Guid id);
     Task<ResponseDTO> GetCourseReviews
     (
