@@ -22,4 +22,17 @@ public static class StaticEnum
         Payout,
         Income
     }
+
+    public enum StripeAccountType
+    {
+        express,
+        standard,
+        custom
+    }
+
+    public enum StripeAccountLinkType
+    {
+        account_onboarding,
+        account_update
+    }
 }

@@ -8,6 +8,7 @@ using Cursus.LMS.Utility.Constants;
 using Microsoft.IdentityModel.Tokens;
 using Stripe;
 using Stripe.Checkout;
+using Exception = System.Exception;
 
 namespace Cursus.LMS.Service.Service;
 
@@ -19,9 +20,18 @@ public class OrderService : IOrderService
     private readonly IStripeService _stripeService;
     private readonly IStudentCourseService _studentCourseService;
     private readonly IPaymentService _paymentService;
+    private readonly ITransactionService _transactionService;
 
-    public OrderService(IUnitOfWork unitOfWork, IMapper mapper, IOrderStatusService orderStatusService,
-        IStripeService stripeService, IStudentCourseService studentCourseService, IPaymentService paymentService)
+    public OrderService
+    (
+        IUnitOfWork unitOfWork,
+        IMapper mapper,
+        IOrderStatusService orderStatusService,
+        IStripeService stripeService,
+        IStudentCourseService studentCourseService,
+        IPaymentService paymentService,
+        ITransactionService transactionService
+    )
     {
         _unitOfWork = unitOfWork;
         _mapper = mapper;
@@ -29,6 +39,7 @@ public class OrderService : IOrderService
         _stripeService = stripeService;
         _studentCourseService = studentCourseService;
         _paymentService = paymentService;
+        _transactionService = transactionService;
     }
 
     public async Task<ResponseDTO> CreateOrder
@@ -247,7 +258,7 @@ public class OrderService : IOrderService
                 };
             }
 
-            var responseDto = await _stripeService.CreateStripeSession
+            var responseDto = await _stripeService.CreatePaymentSession
             (
                 new CreateStripeSessionDTO()
                 {
@@ -307,7 +318,20 @@ public class OrderService : IOrderService
                 };
             }
 
-            var responseDto = await _stripeService.ValidateStripeSession
+            var student = await _unitOfWork.StudentRepository.GetAsync(x => x.StudentId == orderHeader.StudentId);
+
+            if (student is null)
+            {
+                return new ResponseDTO()
+                {
+                    Message = "Student was not found",
+                    IsSuccess = false,
+                    StatusCode = 404,
+                    Result = null
+                };
+            }
+
+            var responseDto = await _stripeService.ValidatePaymentSession
             (
                 new ValidateStripeSessionDTO()
                 {
@@ -337,6 +361,17 @@ public class OrderService : IOrderService
                 {
                     Status = StaticStatus.Order.Paid,
                     OrderHeaderId = orderHeader.Id
+                }
+            );
+
+
+            await _transactionService.CreateTransaction
+            (
+                new CreateTransactionDTO()
+                {
+                    UserId = student.UserId,
+                    Amount = orderHeader.OrderPrice,
+                    Type = StaticEnum.TransactionType.Purchase
                 }
             );
 

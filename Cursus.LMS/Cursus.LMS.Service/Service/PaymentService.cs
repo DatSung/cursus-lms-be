@@ -1,8 +1,9 @@
-﻿using Cursus.LMS.DataAccess.IRepository;
-using Cursus.LMS.Model.Domain;
+﻿using System.Security.Claims;
+using Cursus.LMS.DataAccess.IRepository;
 using Cursus.LMS.Model.DTO;
 using Cursus.LMS.Service.IService;
 using Cursus.LMS.Utility.Constants;
+using Stripe;
 
 namespace Cursus.LMS.Service.Service;
 
@@ -11,17 +12,20 @@ public class PaymentService : IPaymentService
     private readonly IUnitOfWork _unitOfWork;
     private readonly IBalanceService _balanceService;
     private readonly ITransactionService _transactionService;
+    private readonly IStripeService _stripeService;
 
     public PaymentService
     (
         IUnitOfWork unitOfWork,
         IBalanceService balanceService,
-        ITransactionService transactionService
+        ITransactionService transactionService,
+        IStripeService stripeService
     )
     {
         _unitOfWork = unitOfWork;
         _balanceService = balanceService;
         _transactionService = transactionService;
+        _stripeService = stripeService;
     }
 
     public async Task<ResponseDTO> UpdateBalanceByOrderId(Guid orderHeaderId)
@@ -82,5 +86,20 @@ public class PaymentService : IPaymentService
                 Result = null
             };
         }
+    }
+
+    public async Task<ResponseDTO> CreateStripeConnectedAccount(CreateStripeConnectedAccountDTO createStripeConnectedAccountDto)
+    {
+        return await _stripeService.CreateConnectedAccount(createStripeConnectedAccountDto);
+    }
+
+    public async Task<ResponseDTO> CreateStripeTransfer(CreateStripeTransferDTO createStripeTransferDto)
+    {
+        return await _stripeService.CreateTransfer(createStripeTransferDto);
+    }
+
+    public async Task<ResponseDTO> AddStripeCard(AddStripeCardDTO addStripeCardDto)
+    {
+        return await _stripeService.AddCard(addStripeCardDto);
     }
 }
