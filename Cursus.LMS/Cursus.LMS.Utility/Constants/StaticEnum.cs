@@ -19,6 +19,7 @@ public static class StaticEnum
     public enum TransactionType
     {
         Purchase,
-        Payout
+        Payout,
+        Income
     }
 }

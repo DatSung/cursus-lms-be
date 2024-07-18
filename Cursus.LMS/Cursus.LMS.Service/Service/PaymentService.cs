@@ -2,6 +2,7 @@
 using Cursus.LMS.Model.Domain;
 using Cursus.LMS.Model.DTO;
 using Cursus.LMS.Service.IService;
+using Cursus.LMS.Utility.Constants;
 
 namespace Cursus.LMS.Service.Service;
 
@@ -9,11 +10,18 @@ public class PaymentService : IPaymentService
 {
     private readonly IUnitOfWork _unitOfWork;
     private readonly IBalanceService _balanceService;
+    private readonly ITransactionService _transactionService;
 
-    public PaymentService(IUnitOfWork unitOfWork, IBalanceService balanceService)
+    public PaymentService
+    (
+        IUnitOfWork unitOfWork,
+        IBalanceService balanceService,
+        ITransactionService transactionService
+    )
     {
         _unitOfWork = unitOfWork;
         _balanceService = balanceService;
+        _transactionService = transactionService;
     }
 
     public async Task<ResponseDTO> UpdateBalanceByOrderId(Guid orderHeaderId)
@@ -42,6 +50,16 @@ public class PaymentService : IPaymentService
                         AvailableBalance = orderDetails.CoursePrice,
                         PendingBalance = 0,
                         UserId = instructor.UserId
+                    }
+                );
+
+                await _transactionService.CreateTransaction
+                (
+                    new CreateTransactionDTO()
+                    {
+                        UserId = instructor.UserId,
+                        Amount = orderDetails.CoursePrice,
+                        Type = StaticEnum.TransactionType.Income,
                     }
                 );
             }
