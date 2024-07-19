@@ -163,27 +163,26 @@ public class PaymentService : IPaymentService
 
         var responseDto = await _stripeService.CreateTransfer(createStripeTransferDto);
 
-        if (responseDto.StatusCode == 200)
-        {
-            await _balanceService.UpsertBalance(new UpsertBalanceDTO()
-                {
-                    Currency = "usd",
-                    AvailableBalance = createStripeTransferDto.Amount,
-                    PayoutBalance = 0,
-                    UserId = user.Id
-                }
-            );
+        if (responseDto.StatusCode != 200) return responseDto;
 
-            await _transactionService.CreateTransaction
-            (
-                new CreateTransactionDTO()
-                {
-                    UserId = user.Id,
-                    Amount = createStripeTransferDto.Amount,
-                    Type = StaticEnum.TransactionType.Income
-                }
-            );
-        }
+        await _balanceService.UpsertBalance(new UpsertBalanceDTO()
+            {
+                Currency = "usd",
+                AvailableBalance = createStripeTransferDto.Amount,
+                PayoutBalance = 0,
+                UserId = user.Id
+            }
+        );
+
+        await _transactionService.CreateTransaction
+        (
+            new CreateTransactionDTO()
+            {
+                UserId = user.Id,
+                Amount = createStripeTransferDto.Amount,
+                Type = StaticEnum.TransactionType.Income
+            }
+        );
 
         return responseDto;
     }
