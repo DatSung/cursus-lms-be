@@ -28,4 +28,9 @@ public interface IStripeService
     (
         CreateStripeTransferDTO createStripeTransferDto
     );
+
+    Task<ResponseDTO> CreatePayout
+    (
+        CreateStripePayoutDTO createStripePayoutDto
+    );
 }

@@ -38,6 +38,14 @@ namespace Cursus.LMS.API.Controllers
         }
 
         [HttpPost]
+        [Route("create-stripe-payout")]
+        public async Task<ActionResult<ResponseDTO>> CreateStripePayout(CreateStripePayoutDTO createStripePayoutDto)
+        {
+            var responseDto = await _paymentService.CreateStripePayout(User, createStripePayoutDto);
+            return StatusCode(responseDto.StatusCode, responseDto);
+        }
+
+        [HttpPost]
         [Route("add-stripe-card")]
         public async Task<ActionResult<ResponseDTO>> AddStripeCard
         (
