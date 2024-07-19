@@ -414,7 +414,7 @@ public class EmailService : IEmailService
     }
     
     /// <summary>
-    /// Generic method for sending email based on template
+    /// Send Email For Admin Abou tNew Course
     /// </summary>
     /// <param name="toMail">Email of recipient</param>
     /// <param name="templateName">Name of the email template</param>
@@ -422,16 +422,13 @@ public class EmailService : IEmailService
     /// <returns></returns>
     public async Task<bool> SendEmailForAdminAboutNewCourse(string toMail)
     {
-        // Truy vấn cơ sở dữ liệu để lấy template
         var template = await _unitOfWork.EmailTemplateRepository.GetAsync(t => t.TemplateName == "NotificationForAdminAboutNewCourse");
         var courseStatus = await _unitOfWork.CourseVersionRepository.GetAsync(z => z.CurrentStatus == 0);
         if (template == null)
         {
-            // Xử lý khi template không tồn tại
             throw new Exception("Email template not found");
         }
-
-        // Sử dụng thông tin từ template để tạo email
+        
         string subject = template.SubjectLine;
         string body = $@"
             <html>
@@ -446,26 +443,52 @@ public class EmailService : IEmailService
 
         return await SendEmailAsync(toMail, subject, body);
     }
-    
+
     /// <summary>
-    /// Generic method for sending email based on template
+    /// Send Email For Admin Abou tNew Course
     /// </summary>
     /// <param name="toMail">Email of recipient</param>
     /// <param name="templateName">Name of the email template</param>
     /// <param name="replacementValue">Value to replace in the template (like link or token)</param>
     /// <returns></returns>
+    public async Task<bool> SendEmailForStudentAboutCompleteCourse(string toMail)
+    {
+        var template = await _unitOfWork.EmailTemplateRepository.GetAsync(t => t.TemplateName == "StudentCompletedCourse");
+        var courseStatus = await _unitOfWork.CourseVersionRepository.GetAsync(z => z.CurrentStatus == 0);
+        if (template == null)
+        {
+            throw new Exception("Email template not found");
+        }
+
+        string subject = template.SubjectLine;
+        string body = $@"
+            <html>
+            <body>
+                <h1>{template.SubjectLine}</h1>
+                <h2>{template.PreHeaderText}</h2>
+                <p>{template.BodyContent}</p>
+                <p>The new course status: {courseStatus.CurrentStatus}</p>
+                {template.FooterContent}
+            </body>
+            </html>";
+
+        return await SendEmailAsync(toMail, subject, body);
+    }
+
+    /// <summary>
+    /// Send Approv eEmail For Instructor About New Course
+    /// </summary>
+    /// <param name="toMail">Email of recipient</param>
+    /// <returns></returns>
     public async Task<bool> SendApproveEmailForInstructorAboutNewCourse(string toMail)
     {
-        // Truy vấn cơ sở dữ liệu để lấy template
         var template = await _unitOfWork.EmailTemplateRepository.GetAsync(t => t.TemplateName == "ApproveInstructorCourse");
         var courseStatus = await _unitOfWork.CourseVersionRepository.GetAsync(z => z.CurrentStatus == 0);
         if (template == null)
         {
-            // Xử lý khi template không tồn tại
             throw new Exception("Email template not found");
         }
-
-        // Sử dụng thông tin từ template để tạo email
+        
         string subject = template.SubjectLine;
         string body = $@"
             <html>
@@ -482,24 +505,19 @@ public class EmailService : IEmailService
     }
     
     /// <summary>
-    /// Generic method for sending email based on template
+    /// Send Reject Email For Instructor About New Course
     /// </summary>
     /// <param name="toMail">Email of recipient</param>
-    /// <param name="templateName">Name of the email template</param>
-    /// <param name="replacementValue">Value to replace in the template (like link or token)</param>
     /// <returns></returns>
     public async Task<bool> SendRejectEmailForInstructorAboutNewCourse(string toMail)
     {
-        // Truy vấn cơ sở dữ liệu để lấy template
         var template = await _unitOfWork.EmailTemplateRepository.GetAsync(t => t.TemplateName == "RejectInstructorCourse");
         var courseStatus = await _unitOfWork.CourseVersionRepository.GetAsync(z => z.CurrentStatus == 0);
         if (template == null)
         {
-            // Xử lý khi template không tồn tại
             throw new Exception("Email template not found");
         }
-
-        // Sử dụng thông tin từ template để tạo email
+        
         string subject = template.SubjectLine;
         string body = $@"
             <html>
@@ -508,6 +526,92 @@ public class EmailService : IEmailService
                 <h2>{template.PreHeaderText}</h2>
                 <p>{template.BodyContent}</p>
                 <p>{courseStatus.CurrentStatus}New</p>
+                {template.FooterContent}
+            </body>
+            </html>";
+
+        return await SendEmailAsync(toMail, subject, body);
+    }
+    
+    /// <summary>
+    /// Sends a reminder email for account deletion
+    /// </summary>
+    /// <param name="toMail">Email of recipient</param>
+    /// <returns></returns>
+    public async Task<bool> SendEmailRemindDeleteAccount(string toMail)
+    {
+        var template = await _unitOfWork.EmailTemplateRepository.GetAsync(t => t.TemplateName == "RemindDeleteAccount");
+        if (template == null)
+        {
+            throw new Exception("Email template not found");
+        }
+        
+        string subject = template.SubjectLine;
+        string body = $@"
+            <html>
+            <body>
+                <h1>{template.SubjectLine}</h1>
+                <h2>{template.PreHeaderText}</h2>
+                <p>{template.BodyContent}</p>
+                {template.FooterContent}
+            </body>
+            </html>";
+
+        return await SendEmailAsync(toMail, subject, body);
+    }
+    
+    /// <summary>
+    /// Sends a email for account deletion
+    /// </summary>
+    /// <param name="toMail">Email of recipient</param>
+    /// <returns></returns>
+    public async Task<bool> SendEmailDeleteAccount(string toMail)
+    {
+        var template = await _unitOfWork.EmailTemplateRepository.GetAsync(t => t.TemplateName == "DeleteAccount");
+        if (template == null)
+        {
+            throw new Exception("Email template not found");
+        }
+        
+        string subject = template.SubjectLine;
+        string body = $@"
+            <html>
+            <body>
+                <h1>{template.SubjectLine}</h1>
+                <h2>{template.PreHeaderText}</h2>
+                <p>{template.BodyContent}</p>
+                {template.FooterContent}
+            </body>
+            </html>";
+
+        return await SendEmailAsync(toMail, subject, body);
+    }
+
+    /// <summary>
+    /// Sends a email for payout of instructor
+    /// </summary>
+    /// <param name="toMail">Email of recipient</param>
+    /// <param name="PayoutAmount">Transaction amount</param>
+    /// <param name="TransactionDate">Transaction Date</param>
+    /// <returns></returns>
+    public async Task<bool> SendEmailToInstructorAfterPayout(string toMail, double PayoutAmount, DateTime TransactionDate)
+    {
+        var template =
+            await _unitOfWork.EmailTemplateRepository.GetAsync(t => t.TemplateName == "NotifyInstructorPaymentReceived");
+        if (template == null)
+        {
+            throw new Exception("Email template not found");
+        }
+        
+        string subject = template.SubjectLine;
+        string body = $@"
+            <html>
+            <body>
+                <h1>{template.SubjectLine}</h1>
+                <h2>{template.PreHeaderText}</h2>
+                <p>{template.BodyContent}</p>
+                {{template.BodyContent.Replace(""{{PayoutAmount}}"", PayoutAmount.ToString(""C""))
+                                      .Replace(""{{TransactionDate}}"", TransactionDate.ToString(""d""))}}
                 {template.FooterContent}
             </body>
             </html>";

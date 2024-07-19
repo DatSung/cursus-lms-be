@@ -28,6 +28,19 @@ public class EmailSender : IEmailSender
         }
     }
 
+    public async Task SendCompletedCoursForStudent()
+    {
+        var students = await _unitOfWork.UserManagerRepository.GetUsersInRoleAsync(StaticUserRoles.Student);
+        //get student mail
+        foreach (var user in students)
+        {
+            if (user.Email != null)
+            {
+                await _emailService.SendEmailForStudentAboutCompleteCourse(user.Email);
+            }
+        }
+    }
+
     public async Task SendRejectedCourseEmailForInstructor(Guid courseVersionId)
     {
         try

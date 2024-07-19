@@ -201,7 +201,108 @@ public static class ApplicationDbContextSeed
                 FooterContent = "<p>Contact us at cursusservicetts@gmail.com</p>",
                 CallToAction = "<a href=\"https://cursuslms.xyz/user/sign-in\">Login</a>",
                 Language = "English",
-                RecipientType = "Instructor",
+                RecipientType = "Student",
+                CreateBy = "System",
+                CreateTime = DateTime.Now,
+                UpdateBy = "Admin",
+                UpdateTime = DateTime.Now,
+                Status = 1
+            },
+            new
+            {
+                Id = Guid.NewGuid(),
+                TemplateName = "RemindDeleteAccount",
+                SenderName = "Cursus Team",
+                SenderEmail = "cursusservicetts@gmail.com",
+                Category = "Remind Account",
+                SubjectLine = "Remind Delete Account!",
+                PreHeaderText = "Hello!",
+                PersonalizationTags = "{FirstName}, {LastName}",
+                BodyContent =
+                    "Dear [UserFullName],<br><br>You have completed our course program, you can take new courses to increase your knowledge and skills.",
+                FooterContent = "<p>Contact us at cursusservicetts@gmail.com</p>",
+                CallToAction = "<a href=\"https://cursuslms.xyz/user/sign-in\">Login</a>",
+                Language = "English",
+                RecipientType = "Customer",
+                CreateBy = "System",
+                CreateTime = DateTime.Now,
+                UpdateBy = "Admin",
+                UpdateTime = DateTime.Now,
+                Status = 1
+            },
+             new
+             {
+                 Id = Guid.NewGuid(),
+                 TemplateName = "StudentCompleteCourse",
+                 SenderName = "Cursus Team",
+                 SenderEmail = "cursusservicetts@gmail.com",
+                 Category = "Course completed",
+                 SubjectLine = "Congratulations on completing the course!",
+                 PreHeaderText = "Hello!",
+                 PersonalizationTags = "{FirstName}, {LastName}",
+                 BodyContent =
+                    "Dear [UserFullName],<br><br>Your account will be deleted after 14 days.",
+                 FooterContent = "<p>Contact us at cursusservicetts@gmail.com</p>",
+                 CallToAction = "<a href=\"https://cursuslms.xyz/user/sign-in\">Login</a>",
+                 Language = "English",
+                 RecipientType = "Customer",
+                 CreateBy = "System",
+                 CreateTime = DateTime.Now,
+                 UpdateBy = "Admin",
+                 UpdateTime = DateTime.Now,
+                 Status = 1
+             },
+            new
+            {
+                Id = Guid.NewGuid(),
+                TemplateName = "DeleteAccount",
+                SenderName = "Cursus Team",
+                SenderEmail = "cursusservicetts@gmail.com",
+                Category = "Delete Account",
+                SubjectLine = "Delete Account!",
+                PreHeaderText = "Hello!",
+                PersonalizationTags = "{FirstName}, {LastName}",
+                BodyContent =
+                    "Dear [UserFullName],<br><br>Your account has been deleted.",
+                FooterContent = "<p>Contact us at cursusservicetts@gmail.com</p>",
+                CallToAction = "<a href=\"https://cursuslms.xyz/user/sign-in\">Login</a>",
+                Language = "English",
+                RecipientType = "Customer",
+                CreateBy = "System",
+                CreateTime = DateTime.Now,
+                UpdateBy = "Admin",
+                UpdateTime = DateTime.Now,
+                Status = 1
+            },
+            new
+            {
+                Id = Guid.NewGuid(),
+                TemplateName = "NotifyInstructorPaymentReceived",
+                SenderName = "Cursus Team",
+                SenderEmail = "cursusservicetts@gmail.com",
+                Category = "Payout",
+                SubjectLine = "Your Cursus Payout is Complete!",
+                PreHeaderText = "Payout Successful!",
+                PersonalizationTags = "{FirstName}, {LastName}, {PayoutAmount}, {TransactionDate}",
+                BodyContent =
+                    @"Dear {FirstName} {LastName},<br><br>
+
+                    This email confirms that your payout request has been processed successfully.
+                    <br>
+                    <strong>Payout Details:</strong>
+                    <ul>
+                    <li>Amount: {PayoutAmount}</li>
+                    <li>Transaction Date: {TransactionDate}</li> 
+                    </ul>
+                    <br>
+                    You can view your payout history in your instructor dashboard. 
+                    <br> 
+                    Thank you for being a valued Cursus instructor!
+                    <br>",
+                FooterContent = "<p>Contact us at cursusservicetts@gmail.com</p>",
+                CallToAction = "<a href=\"https://cursuslms.xyz/user/sign-in\">Login</a>",
+                Language = "English",
+                RecipientType = "Customer",
                 CreateBy = "System",
                 CreateTime = DateTime.Now,
                 UpdateBy = "Admin",

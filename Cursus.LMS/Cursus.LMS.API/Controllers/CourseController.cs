@@ -398,5 +398,13 @@ namespace Cursus.LMS.API.Controllers
             var responseDto = await _courseService.EnrollCourse(User, enrollCourseDto);
             return StatusCode(responseDto.StatusCode, responseDto);
         }
+
+        [HttpGet]
+        [Route("new-suggest-courses/{studentId}")]
+        public async Task<IActionResult> SuggestCourses(Guid studentId)
+        {
+            var response = await _courseService.SuggestCourse(studentId);
+            return StatusCode(response.StatusCode, response);
+        }
     }
 }

@@ -767,5 +767,81 @@ namespace Cursus.LMS.Service.Service
             }
         }
 
+        public async Task<ResponseDTO> GetAllCourseByStudentId(Guid studentId)
+        {
+            try
+            {
+                var student = await _unitOfWork.StudentRepository.GetAsync(i => i.StudentId == studentId);
+                if (student == null)
+                {
+                    return new ResponseDTO()
+                    {
+                        Message = "StudentId Invalid",
+                        Result = null,
+                        IsSuccess = false,
+                        StatusCode = 400
+                    };
+                }
+
+                var courses = await _unitOfWork.StudentCourseRepository.GetAllAsync(
+                    c => c.StudentId == studentId,
+                    includeProperties: "Course.Instructor.ApplicationUser"
+                );
+
+                if (courses == null)
+                {
+                    return new ResponseDTO()
+                    {
+                        Message = "courses Invalid",
+                        Result = null,
+                        IsSuccess = false,
+                        StatusCode = 400
+                    };
+                }
+
+                var listCourses = courses.Select(cs => new
+                {
+                    cs.Id,
+                    cs.StudentId,
+                    cs.CourseId,
+                    cs.CertificateImgUrl,
+                    cs.CreatedTime,
+                    cs.UpdatedBy,
+                    cs.UpdatedTime,
+                    cs.Status,
+                    InstructorName = cs.Course.Instructor.ApplicationUser.FullName
+                }).ToList();
+
+                if (!listCourses.Any())
+                {
+                    return new ResponseDTO()
+                    {
+                        Message = "Student has not enrolled in any courses",
+                        Result = null,
+                        IsSuccess = false,
+                        StatusCode = 400
+                    };
+                }
+
+                return new ResponseDTO()
+                {
+                    Message = "Get all courses successfully",
+                    Result = listCourses,
+                    IsSuccess = true,
+                    StatusCode = 200
+                };
+            }
+            catch (Exception e)
+            {
+                return new ResponseDTO()
+                {
+                    Message = e.Message,
+                    Result = null,
+                    IsSuccess = false,
+                    StatusCode = 500
+                };
+            }
+        }
+
     }
 }
