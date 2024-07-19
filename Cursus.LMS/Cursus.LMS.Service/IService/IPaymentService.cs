@@ -10,5 +10,5 @@ public interface IPaymentService
     Task<ResponseDTO> AddStripeCard(AddStripeCardDTO addStripeCardDto);
     Task<ResponseDTO> CreateStripePayout(ClaimsPrincipal User, CreateStripePayoutDTO createStripePayoutDto);
     Task<ResponseDTO> GetLeastInstructorsByPayout(int topN,int? filterYear,int? filterMonth,int? filterQuarter);
-    Task<ResponseDTO> GetTopInstructorsByPayout(ClaimsPrincipal User, CreateStripePayoutDTO createStripePayoutDto);
+    Task<ResponseDTO> GetTopInstructorsByPayout(int topN, int? filterYear, int? filterMonth, int? filterQuarter);
 }
