@@ -201,7 +201,7 @@ public static class ApplicationDbContextSeed
                 FooterContent = "<p>Contact us at cursusservicetts@gmail.com</p>",
                 CallToAction = "<a href=\"https://cursuslms.xyz/user/sign-in\">Login</a>",
                 Language = "English",
-                RecipientType = "Instructor",
+                RecipientType = "Student",
                 CreateBy = "System",
                 CreateTime = DateTime.Now,
                 UpdateBy = "Admin",
@@ -219,7 +219,7 @@ public static class ApplicationDbContextSeed
                 PreHeaderText = "Hello!",
                 PersonalizationTags = "{FirstName}, {LastName}",
                 BodyContent =
-                    "Dear [UserFullName],<br><br>Your account will be deleted after 14 days.",
+                    "Dear [UserFullName],<br><br>You have completed our course program, you can take new courses to increase your knowledge and skills.",
                 FooterContent = "<p>Contact us at cursusservicetts@gmail.com</p>",
                 CallToAction = "<a href=\"https://cursuslms.xyz/user/sign-in\">Login</a>",
                 Language = "English",
@@ -230,6 +230,28 @@ public static class ApplicationDbContextSeed
                 UpdateTime = DateTime.Now,
                 Status = 1
             },
+             new
+             {
+                 Id = Guid.NewGuid(),
+                 TemplateName = "StudentCompleteCourse",
+                 SenderName = "Cursus Team",
+                 SenderEmail = "cursusservicetts@gmail.com",
+                 Category = "Course completed",
+                 SubjectLine = "Congratulations on completing the course!",
+                 PreHeaderText = "Hello!",
+                 PersonalizationTags = "{FirstName}, {LastName}",
+                 BodyContent =
+                    "Dear [UserFullName],<br><br>Your account will be deleted after 14 days.",
+                 FooterContent = "<p>Contact us at cursusservicetts@gmail.com</p>",
+                 CallToAction = "<a href=\"https://cursuslms.xyz/user/sign-in\">Login</a>",
+                 Language = "English",
+                 RecipientType = "Customer",
+                 CreateBy = "System",
+                 CreateTime = DateTime.Now,
+                 UpdateBy = "Admin",
+                 UpdateTime = DateTime.Now,
+                 Status = 1
+             },
             new
             {
                 Id = Guid.NewGuid(),

@@ -443,7 +443,38 @@ public class EmailService : IEmailService
 
         return await SendEmailAsync(toMail, subject, body);
     }
-    
+
+    /// <summary>
+    /// Send Email For Admin Abou tNew Course
+    /// </summary>
+    /// <param name="toMail">Email of recipient</param>
+    /// <param name="templateName">Name of the email template</param>
+    /// <param name="replacementValue">Value to replace in the template (like link or token)</param>
+    /// <returns></returns>
+    public async Task<bool> SendEmailForStudentAboutCompleteCourse(string toMail)
+    {
+        var template = await _unitOfWork.EmailTemplateRepository.GetAsync(t => t.TemplateName == "StudentCompletedCourse");
+        var courseStatus = await _unitOfWork.CourseVersionRepository.GetAsync(z => z.CurrentStatus == 0);
+        if (template == null)
+        {
+            throw new Exception("Email template not found");
+        }
+
+        string subject = template.SubjectLine;
+        string body = $@"
+            <html>
+            <body>
+                <h1>{template.SubjectLine}</h1>
+                <h2>{template.PreHeaderText}</h2>
+                <p>{template.BodyContent}</p>
+                <p>The new course status: {courseStatus.CurrentStatus}</p>
+                {template.FooterContent}
+            </body>
+            </html>";
+
+        return await SendEmailAsync(toMail, subject, body);
+    }
+
     /// <summary>
     /// Send Approv eEmail For Instructor About New Course
     /// </summary>
