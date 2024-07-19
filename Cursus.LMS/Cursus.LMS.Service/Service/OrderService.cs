@@ -456,7 +456,7 @@ public class OrderService : IOrderService
                 );
             }
 
-            await _paymentService.UpdateBalanceByOrderId(orderHeader.Id);
+            await _paymentService.UpdateAvailableBalanceByOrderId(orderHeader.Id);
 
             return new ResponseDTO()
             {

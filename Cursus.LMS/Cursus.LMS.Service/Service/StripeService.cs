@@ -127,9 +127,12 @@ public class StripeService : IStripeService
         var accountLinkService = new AccountLinkService();
         var accountLink = await accountLinkService.CreateAsync(accountLinkOptions);
 
+        createStripeConnectedAccountDto.AccountId = account.Id;
+        createStripeConnectedAccountDto.AccountLinkUrl = accountLink.Url;
+
         return new ResponseDTO()
         {
-            Result = accountLink.Url,
+            Result = createStripeConnectedAccountDto,
             IsSuccess = true,
             StatusCode = 200,
             Message = "Create stripe connected account successfully"

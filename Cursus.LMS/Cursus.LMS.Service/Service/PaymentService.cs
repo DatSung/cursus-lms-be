@@ -28,7 +28,7 @@ public class PaymentService : IPaymentService
         _stripeService = stripeService;
     }
 
-    public async Task<ResponseDTO> UpdateBalanceByOrderId(Guid orderHeaderId)
+    public async Task<ResponseDTO> UpdateAvailableBalanceByOrderId(Guid orderHeaderId)
     {
         try
         {
@@ -88,13 +88,79 @@ public class PaymentService : IPaymentService
         }
     }
 
-    public async Task<ResponseDTO> CreateStripeConnectedAccount(CreateStripeConnectedAccountDTO createStripeConnectedAccountDto)
+    public async Task<ResponseDTO> CreateStripeConnectedAccount
+    (
+        CreateStripeConnectedAccountDTO createStripeConnectedAccountDto)
     {
-        return await _stripeService.CreateConnectedAccount(createStripeConnectedAccountDto);
+        var user = await _unitOfWork.UserManagerRepository.FindByEmailAsync(createStripeConnectedAccountDto.Email);
+        var instructor = await _unitOfWork.InstructorRepository.GetAsync(x => x.UserId == user.Id);
+
+        if (instructor is null)
+        {
+            return new ResponseDTO()
+            {
+                Message = "Instructor was not found",
+                IsSuccess = false,
+                StatusCode = 404,
+                Result = null
+            };
+        }
+
+        var responseDto = await _stripeService.CreateConnectedAccount(createStripeConnectedAccountDto);
+
+        if (responseDto.StatusCode == 500)
+        {
+            return responseDto;
+        }
+
+        var result = (CreateStripeConnectedAccountDTO)responseDto.Result!;
+        instructor.StripeAccountId = result.AccountId;
+        await _unitOfWork.SaveAsync();
+
+        return responseDto;
     }
 
     public async Task<ResponseDTO> CreateStripeTransfer(CreateStripeTransferDTO createStripeTransferDto)
     {
+        if (createStripeTransferDto.UserId is null && createStripeTransferDto.ConnectedAccountId is null)
+        {
+            return new ResponseDTO()
+            {
+                Message = "User was not found",
+                IsSuccess = false,
+                StatusCode = 404,
+                Result = createStripeTransferDto
+            };
+        }
+
+        var user = await _unitOfWork.UserManagerRepository.FindByIdAsync(createStripeTransferDto.UserId);
+
+        if (user is null)
+        {
+            return new ResponseDTO()
+            {
+                Message = "User was not found",
+                IsSuccess = false,
+                StatusCode = 404,
+                Result = createStripeTransferDto
+            };
+        }
+
+        var instructor = await _unitOfWork.InstructorRepository.GetAsync(x => x.UserId == user.Id);
+
+        if (instructor is null)
+        {
+            return new ResponseDTO()
+            {
+                Message = "Instructor was not found",
+                IsSuccess = false,
+                StatusCode = 404,
+                Result = createStripeTransferDto
+            };
+        }
+
+        createStripeTransferDto.ConnectedAccountId = instructor?.StripeAccountId;
+
         return await _stripeService.CreateTransfer(createStripeTransferDto);
     }
 

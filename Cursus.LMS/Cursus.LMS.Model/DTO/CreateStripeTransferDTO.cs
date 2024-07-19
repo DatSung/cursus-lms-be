@@ -2,7 +2,8 @@
 
 public class CreateStripeTransferDTO
 {
-    public string ConnectedAccountId { get; set; }
+    public string? UserId { get; set; }
+    public string? ConnectedAccountId { get; set; }
     public long Amount { get; set; }
     public string Currency { get; set; }
 }
