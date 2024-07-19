@@ -52,7 +52,7 @@ public class PaymentService : IPaymentService
                     {
                         Currency = "usd",
                         AvailableBalance = orderDetails.CoursePrice,
-                        PendingBalance = 0,
+                        PayoutBalance = 0,
                         UserId = instructor.UserId
                     }
                 );
@@ -161,7 +161,31 @@ public class PaymentService : IPaymentService
 
         createStripeTransferDto.ConnectedAccountId = instructor?.StripeAccountId;
 
-        return await _stripeService.CreateTransfer(createStripeTransferDto);
+        var responseDto = await _stripeService.CreateTransfer(createStripeTransferDto);
+
+        if (responseDto.StatusCode == 200)
+        {
+            await _balanceService.UpsertBalance(new UpsertBalanceDTO()
+                {
+                    Currency = "usd",
+                    AvailableBalance = createStripeTransferDto.Amount,
+                    PayoutBalance = 0,
+                    UserId = user.Id
+                }
+            );
+
+            await _transactionService.CreateTransaction
+            (
+                new CreateTransactionDTO()
+                {
+                    UserId = user.Id,
+                    Amount = createStripeTransferDto.Amount,
+                    Type = StaticEnum.TransactionType.Income
+                }
+            );
+        }
+
+        return responseDto;
     }
 
     public async Task<ResponseDTO> AddStripeCard(AddStripeCardDTO addStripeCardDto)

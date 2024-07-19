@@ -19,7 +19,6 @@ public class OrderService : IOrderService
     private readonly IMapper _mapper;
     private readonly IStripeService _stripeService;
     private readonly IStudentCourseService _studentCourseService;
-    private readonly IPaymentService _paymentService;
     private readonly ITransactionService _transactionService;
 
     public OrderService
@@ -29,7 +28,6 @@ public class OrderService : IOrderService
         IOrderStatusService orderStatusService,
         IStripeService stripeService,
         IStudentCourseService studentCourseService,
-        IPaymentService paymentService,
         ITransactionService transactionService
     )
     {
@@ -38,7 +36,6 @@ public class OrderService : IOrderService
         _orderStatusService = orderStatusService;
         _stripeService = stripeService;
         _studentCourseService = studentCourseService;
-        _paymentService = paymentService;
         _transactionService = transactionService;
     }
 
@@ -455,8 +452,6 @@ public class OrderService : IOrderService
                     }
                 );
             }
-
-            await _paymentService.UpdateAvailableBalanceByOrderId(orderHeader.Id);
 
             return new ResponseDTO()
             {

@@ -160,22 +160,35 @@ public class StripeService : IStripeService
 
     public async Task<ResponseDTO> CreateTransfer(CreateStripeTransferDTO createStripeTransferDto)
     {
-        var options = new TransferCreateOptions
+        try
         {
-            Amount = createStripeTransferDto.Amount * 100,
-            Currency = createStripeTransferDto.Currency,
-            Destination = createStripeTransferDto.ConnectedAccountId,
-        };
+            var options = new TransferCreateOptions
+            {
+                Amount = createStripeTransferDto.Amount * 100,
+                Currency = createStripeTransferDto.Currency,
+                Destination = createStripeTransferDto.ConnectedAccountId,
+            };
 
-        var transferService = new TransferService();
-        var transfer = await transferService.CreateAsync(options);
+            var transferService = new TransferService();
+            await transferService.CreateAsync(options);
 
-        return new ResponseDTO()
+            return new ResponseDTO()
+            {
+                Result = createStripeTransferDto,
+                IsSuccess = true,
+                StatusCode = 200,
+                Message = "Create transfer successfully"
+            };
+        }
+        catch (Exception e)
         {
-            Result = transfer,
-            IsSuccess = true,
-            StatusCode = 200,
-            Message = "Create transfer successfully"
-        };
+            return new ResponseDTO()
+            {
+                Result = null,
+                IsSuccess = true,
+                StatusCode = 500,
+                Message = e.Message
+            };
+        }
     }
 }
