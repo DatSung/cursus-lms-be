@@ -57,5 +57,26 @@ public interface ICourseService
         EnrollCourseDTO enrollCourseDto
     );
 
+    Task<ResponseDTO> GetTopPurchasedCourses
+    (
+        int? year,
+        int? month,
+        int? quarter,
+        int top,
+        int pageNumber,
+        int pageSize,
+        string? byCategoryName
+    );
+    Task<ResponseDTO> GetLeastPurchasedCourses
+    (
+        int? year,
+        int? month,
+        int? quarter,
+        int top,
+        int pageNumber,
+        int pageSize,
+        string? byCategoryName
+    );
     Task<ResponseDTO> SuggestCourse(Guid studentId);
+
 }

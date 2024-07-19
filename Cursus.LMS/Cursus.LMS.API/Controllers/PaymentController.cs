@@ -1,5 +1,8 @@
 using Cursus.LMS.Model.DTO;
 using Cursus.LMS.Service.IService;
+using Cursus.LMS.Service.Service;
+using Cursus.LMS.Utility.Constants;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -53,6 +56,48 @@ namespace Cursus.LMS.API.Controllers
         )
         {
             var responseDto = await _paymentService.AddStripeCard(addStripeCardDto);
+            return StatusCode(responseDto.StatusCode, responseDto);
+        }
+
+        [HttpGet]
+        [Route("get-top-Instructors-Payout")]
+        [Authorize(Roles = StaticUserRoles.Admin)]
+        public async Task<ActionResult<ResponseDTO>> GetTopInstructorsByPayout
+        (
+            [FromQuery] int topN,
+            [FromQuery] int? filterYear,
+            [FromQuery] int? filterMonth,
+            [FromQuery] int? filterQuarter
+        )
+        {
+            var responseDto = await _paymentService.GetTopInstructorsByPayout
+                (
+                    topN,
+                    filterYear,
+                    filterMonth,
+                    filterQuarter
+                );
+            return StatusCode(responseDto.StatusCode, responseDto);
+        }
+
+        [HttpGet]
+        [Route("get-least-Instructors-Payout")]
+        [Authorize(Roles = StaticUserRoles.Admin)]
+        public async Task<ActionResult<ResponseDTO>> GetLeastInstructorsByPayout
+        (
+            [FromQuery] int topN,
+            [FromQuery] int? filterYear,
+            [FromQuery] int? filterMonth,
+            [FromQuery] int? filterQuarter
+        )
+        {
+            var responseDto = await _paymentService.GetLeastInstructorsByPayout
+                (
+                    topN,
+                    filterYear,
+                    filterMonth,
+                    filterQuarter
+                );
             return StatusCode(responseDto.StatusCode, responseDto);
         }
     }
