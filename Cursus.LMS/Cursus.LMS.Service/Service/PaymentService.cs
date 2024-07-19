@@ -3,7 +3,6 @@ using Cursus.LMS.DataAccess.IRepository;
 using Cursus.LMS.Model.DTO;
 using Cursus.LMS.Service.IService;
 using Cursus.LMS.Utility.Constants;
-using Stripe;
 
 namespace Cursus.LMS.Service.Service;
 
