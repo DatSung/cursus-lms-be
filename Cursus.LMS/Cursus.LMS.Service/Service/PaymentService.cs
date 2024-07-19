@@ -3,6 +3,8 @@ using Cursus.LMS.DataAccess.IRepository;
 using Cursus.LMS.Model.DTO;
 using Cursus.LMS.Service.IService;
 using Cursus.LMS.Utility.Constants;
+using Microsoft.IdentityModel.Tokens;
+using Stripe;
 
 namespace Cursus.LMS.Service.Service;
 
@@ -132,20 +134,8 @@ public class PaymentService : IPaymentService
             };
         }
 
-        var user = await _unitOfWork.UserManagerRepository.FindByIdAsync(createStripeTransferDto.UserId);
-
-        if (user is null)
-        {
-            return new ResponseDTO()
-            {
-                Message = "User was not found",
-                IsSuccess = false,
-                StatusCode = 404,
-                Result = createStripeTransferDto
-            };
-        }
-
-        var instructor = await _unitOfWork.InstructorRepository.GetAsync(x => x.UserId == user.Id);
+        var instructor =
+            await _unitOfWork.InstructorRepository.GetAsync(x => x.UserId == createStripeTransferDto.UserId);
 
         if (instructor is null)
         {
@@ -169,7 +159,7 @@ public class PaymentService : IPaymentService
                 Currency = "usd",
                 AvailableBalance = createStripeTransferDto.Amount,
                 PayoutBalance = 0,
-                UserId = user.Id
+                UserId = createStripeTransferDto.UserId
             }
         );
 
@@ -177,7 +167,7 @@ public class PaymentService : IPaymentService
         (
             new CreateTransactionDTO()
             {
-                UserId = user.Id,
+                UserId = createStripeTransferDto.UserId,
                 Amount = createStripeTransferDto.Amount,
                 Type = StaticEnum.TransactionType.Income
             }
@@ -189,5 +179,74 @@ public class PaymentService : IPaymentService
     public async Task<ResponseDTO> AddStripeCard(AddStripeCardDTO addStripeCardDto)
     {
         return await _stripeService.AddCard(addStripeCardDto);
+    }
+
+    public async Task<ResponseDTO> CreateStripePayout
+    (
+        ClaimsPrincipal User,
+        CreateStripePayoutDTO createStripePayoutDto
+    )
+    {
+        var userId = User.Claims.FirstOrDefault(x => x.Type == ClaimTypes.NameIdentifier)?.Value;
+
+        if (createStripePayoutDto.ConnectedAccountId.IsNullOrEmpty())
+        {
+            if (userId is null)
+            {
+                return new ResponseDTO()
+                {
+                    Message = "User was not found",
+                    IsSuccess = false,
+                    StatusCode = 404,
+                    Result = createStripePayoutDto
+                };
+            }
+
+            var instructor = await _unitOfWork.InstructorRepository.GetAsync(x => x.UserId == userId);
+
+            if (instructor is null)
+            {
+                return new ResponseDTO()
+                {
+                    Message = "Instructor was not found",
+                    IsSuccess = false,
+                    StatusCode = 404,
+                    Result = createStripePayoutDto
+                };
+            }
+
+            createStripePayoutDto.ConnectedAccountId = instructor?.StripeAccountId;
+        }
+
+        var responseDto = await _stripeService.CreatePayout(createStripePayoutDto);
+
+        var payout = (Payout)responseDto.Result!;
+
+        if (payout.Status != "paid")
+        {
+            return responseDto;
+        }
+
+        await _transactionService.CreateTransaction
+        (
+            new CreateTransactionDTO()
+            {
+                Amount = createStripePayoutDto.Amount,
+                Type = StaticEnum.TransactionType.Payout,
+                UserId = userId
+            }
+        );
+
+        await _balanceService.UpsertBalance
+        (
+            new UpsertBalanceDTO()
+            {
+                Currency = "usd",
+                AvailableBalance = -createStripePayoutDto.Amount,
+                PayoutBalance = createStripePayoutDto.Amount,
+                UserId = userId
+            }
+        );
+        return responseDto;
     }
 }

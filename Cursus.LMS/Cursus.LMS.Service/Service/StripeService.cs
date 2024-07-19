@@ -191,4 +191,44 @@ public class StripeService : IStripeService
             };
         }
     }
+
+    public async Task<ResponseDTO> CreatePayout(CreateStripePayoutDTO createStripePayoutDto)
+    {
+        try
+        {
+            var options = new PayoutCreateOptions
+            {
+                Amount = createStripePayoutDto.Amount * 100,
+                Currency = createStripePayoutDto.Currency,
+            };
+
+            var service = new PayoutService();
+
+            var payout = await service.CreateAsync
+            (
+                options, new RequestOptions
+                {
+                    StripeAccount = createStripePayoutDto.ConnectedAccountId
+                }
+            );
+
+            return new ResponseDTO()
+            {
+                Result = payout,
+                IsSuccess = true,
+                StatusCode = 200,
+                Message = "Create payout successfully"
+            };
+        }
+        catch (Exception e)
+        {
+            return new ResponseDTO()
+            {
+                Result = null,
+                IsSuccess = true,
+                StatusCode = 500,
+                Message = e.Message
+            };
+        }
+    }
 }
