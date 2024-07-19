@@ -389,6 +389,63 @@ namespace Cursus.LMS.API.Controllers
             }
         }
 
+        [HttpGet]
+        [Route("get-top-purchased-courses")]
+        [Authorize(Roles = StaticUserRoles.Admin)]
+        public async Task<ActionResult<ResponseDTO>> GetTopPurchasedCourses
+        (
+            [FromQuery] int? year,
+            [FromQuery] int? month,
+            [FromQuery] int? quarter,
+            [FromQuery] int top,
+            [FromQuery] bool? isAscending,
+            [FromQuery] int pageNumber,
+            [FromQuery] int pageSize,
+            [FromQuery] string? byCategoryName
+        )
+        {
+            var responseDto = await _courseService.GetTopPurchasedCourses
+                (
+                    year,
+                    month,
+                    quarter,
+                    top,
+                    isAscending,
+                    pageNumber,
+                    pageSize,
+                    byCategoryName
+                );
+            return StatusCode(responseDto.StatusCode, responseDto);
+        }
+        
+        [HttpGet]
+        [Route("get-top-purchased-courses")]
+        [Authorize(Roles = StaticUserRoles.Admin)]
+        public async Task<ActionResult<ResponseDTO>> GetLeastPurchasedCourses
+        (
+            [FromQuery] int? year,
+            [FromQuery] int? month,
+            [FromQuery] int? quarter,
+            [FromQuery] int top,
+            [FromQuery] bool? isAscending,
+            [FromQuery] int pageNumber,
+            [FromQuery] int pageSize,
+            [FromQuery] string? byCategoryName
+        )
+        {
+            var responseDto = await _courseService.GetLeastPurchasedCourses
+                (
+                    year,
+                    month,
+                    quarter,
+                    top,
+                    isAscending,
+                    pageNumber,
+                    pageSize,
+                    byCategoryName
+                );
+            return StatusCode(responseDto.StatusCode, responseDto);
+        }
 
         [HttpPost]
         [Route("enroll-course")]

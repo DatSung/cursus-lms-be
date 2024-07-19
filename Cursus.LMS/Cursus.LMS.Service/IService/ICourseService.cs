@@ -56,4 +56,29 @@ public interface ICourseService
         ClaimsPrincipal User,
         EnrollCourseDTO enrollCourseDto
     );
+    
+    Task<ResponseDTO> GetTopPurchasedCourses
+    (
+        int? year,
+        int? month,
+        int? quarter,
+        int top,
+        bool? isAscending,
+        int pageNumber,
+        int pageSize,
+        string? byCategoryName
+    );
+    Task<ResponseDTO> GetLeastPurchasedCourses
+    (
+        int? year,
+        int? month,
+        int? quarter,
+        int top,
+        bool? isAscending,
+        int pageNumber,
+        int pageSize,
+        string? byCategoryName
+    );
+
+
 }
