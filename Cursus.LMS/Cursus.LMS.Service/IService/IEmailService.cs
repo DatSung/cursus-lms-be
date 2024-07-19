@@ -22,6 +22,7 @@ public interface IEmailService
         string resetLink,
         string operatingSystem, string browser, string ip, string region, string city, string country);
     Task<bool> SendEmailForAdminAboutNewCourse(string toMail);
+    Task<bool> SendEmailForStudentAboutCompleteCourse(string toMail);
     Task<bool> SendApproveEmailForInstructorAboutNewCourse(string toMail);
     Task<bool> SendRejectEmailForInstructorAboutNewCourse(string toMail);
     Task<bool> SendVerifyEmail(string toMail, string confirmationLink);

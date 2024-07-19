@@ -51,7 +51,8 @@ namespace Cursus.LMS.API.Controllers
         [Authorize]
         public async Task<ActionResult<ResponseDTO>> ValidateWithStripe
         (
-            [FromBody] ValidateWithStripeDTO validateWithStripeDto)
+            [FromBody] ValidateWithStripeDTO validateWithStripeDto
+        )
         {
             var responseDto = await _orderService.ValidateWithStripe(User, validateWithStripeDto);
             return StatusCode(responseDto.StatusCode, responseDto);

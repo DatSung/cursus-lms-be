@@ -19,6 +19,20 @@ public static class StaticEnum
     public enum TransactionType
     {
         Purchase,
-        Payout
+        Payout,
+        Income
+    }
+
+    public enum StripeAccountType
+    {
+        express,
+        standard,
+        custom
+    }
+
+    public enum StripeAccountLinkType
+    {
+        account_onboarding,
+        account_update
     }
 }

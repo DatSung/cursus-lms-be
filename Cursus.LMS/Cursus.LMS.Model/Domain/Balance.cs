@@ -9,7 +9,7 @@ public class Balance
 
     public double AvailableBalance { get; set; }
 
-    public double PendingBalance { get; set; }
+    public double PayoutBalance { get; set; }
 
     public string Currency { get; set; }
 

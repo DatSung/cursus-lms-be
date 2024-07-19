@@ -398,7 +398,6 @@ namespace Cursus.LMS.API.Controllers
             [FromQuery] int? month,
             [FromQuery] int? quarter,
             [FromQuery] int top,
-            [FromQuery] bool? isAscending,
             [FromQuery] int pageNumber,
             [FromQuery] int pageSize,
             [FromQuery] string? byCategoryName
@@ -410,7 +409,6 @@ namespace Cursus.LMS.API.Controllers
                     month,
                     quarter,
                     top,
-                    isAscending,
                     pageNumber,
                     pageSize,
                     byCategoryName
@@ -419,7 +417,7 @@ namespace Cursus.LMS.API.Controllers
         }
         
         [HttpGet]
-        [Route("get-top-purchased-courses")]
+        [Route("get-least-purchased-courses")]
         [Authorize(Roles = StaticUserRoles.Admin)]
         public async Task<ActionResult<ResponseDTO>> GetLeastPurchasedCourses
         (
@@ -427,7 +425,6 @@ namespace Cursus.LMS.API.Controllers
             [FromQuery] int? month,
             [FromQuery] int? quarter,
             [FromQuery] int top,
-            [FromQuery] bool? isAscending,
             [FromQuery] int pageNumber,
             [FromQuery] int pageSize,
             [FromQuery] string? byCategoryName
@@ -439,7 +436,6 @@ namespace Cursus.LMS.API.Controllers
                     month,
                     quarter,
                     top,
-                    isAscending,
                     pageNumber,
                     pageSize,
                     byCategoryName
@@ -454,6 +450,14 @@ namespace Cursus.LMS.API.Controllers
         {
             var responseDto = await _courseService.EnrollCourse(User, enrollCourseDto);
             return StatusCode(responseDto.StatusCode, responseDto);
+        }
+
+        [HttpGet]
+        [Route("new-suggest-courses/{studentId}")]
+        public async Task<IActionResult> SuggestCourses(Guid studentId)
+        {
+            var response = await _courseService.SuggestCourse(studentId);
+            return StatusCode(response.StatusCode, response);
         }
     }
 }
