@@ -1,4 +1,5 @@
-﻿using System.Security.Claims;
+﻿using System.Collections.Generic;
+using System.Security.Claims;
 using AutoMapper;
 using Cursus.LMS.DataAccess.IRepository;
 using Cursus.LMS.Model.Domain;
@@ -6,6 +7,7 @@ using Cursus.LMS.Model.DTO;
 using Cursus.LMS.Service.IService;
 using Cursus.LMS.Utility.Constants;
 using Hangfire;
+using NuGet.Packaging;
 
 namespace Cursus.LMS.Service.Service;
 
@@ -548,12 +550,10 @@ public class CourseService : ICourseService
             
             //Lấy danh sách các khóa học mà student đã mua
             var courses = await _unitOfWork.StudentCourseRepository.GetAllAsync
-                (c => c.StudentId == studentId && c.Status == 0 || c.Status == 1 || c.Status == 3,
-                    includeProperties: "Course.CourseVersion");
-            
-            
+                (c => c.StudentId == studentId && c.Status == 0 || c.Status == 1 || c.Status == 3);
+            var coursesEnroll = courses.Select(c => c.CourseId).Distinct().ToList();
 
-            if(courses == null || !courses.Any())
+            if (courses == null || !courses.Any())
             {
                 return new ResponseDTO()
                 {
@@ -566,27 +566,43 @@ public class CourseService : ICourseService
             
             //tạo danh sách gợi ý khóa học
             var suggestCourse = new List<Course>();
-            
-            //lấy danh sách gợi ý khóa học trùng categoryID với các khóa học đã mua của student
-            foreach (var course in courses) {               
-                var courseList = course.Id;
-                var courseVersion = await _unitOfWork.CourseVersionRepository.GetAllAsync(cv => cv.CourseId == courseList );
-                foreach (var courseCategory in courseVersion)
-                {
-                    var Category = await _unitOfWork.CourseVersionRepository.GetAllAsync(c => c.CategoryId == courseCategory.CategoryId);
-                    suggestCourse.AddRange(Category);
-                }
-                
-            };
+            var redFlag = 0;
+            // Lấy danh sách gợi ý khóa học trùng CategoryId với các khóa học đã mua của student
+            foreach (var course in courses)
+            {
+                if (redFlag >= 5) break;
+                var courseId = course.CourseId;
+                var courseVersions = await _unitOfWork.CourseVersionRepository.GetAllAsync(
+                    cv => cv.CourseId == courseId,
+                    includeProperties: "Category");
 
-            var distinctCourse = suggestCourse.Distinct().ToList();
+                foreach (var courseVersion in courseVersions)
+                {
+                    var categoryId = courseVersion.CategoryId;
+
+                    // Lấy danh sách các CourseVersion khác cùng CategoryId
+                    var relatedCourseVersions = await _unitOfWork.CourseVersionRepository.GetAllAsync(cv => cv.CategoryId == categoryId && !coursesEnroll.Contains(cv.CourseId));
+
+                    // Lấy danh sách các khóa học từ các CourseVersion này
+                    foreach (var relatedCourseVersion in relatedCourseVersions)
+                    {
+                        var relatedCourse = await _unitOfWork.CourseRepository.GetAsync(c => c.Id == relatedCourseVersion.CourseId);
+                        if (relatedCourse != null)
+                        {
+                            suggestCourse.Add(relatedCourse);
+                        }
+                    }
+                }
+            }
+
+            var distinctCourses = suggestCourse.Distinct().ToList();
             
             return new ResponseDTO()
             {
                 Message = "Suggest course successfully",
                 IsSuccess = true,
                 StatusCode = 200,
-                Result = distinctCourse
+                Result = distinctCourses
             };
 
         }
