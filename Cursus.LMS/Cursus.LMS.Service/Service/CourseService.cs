@@ -528,4 +528,77 @@ public class CourseService : ICourseService
             };
         }
     }
+    public async Task<ResponseDTO> SuggestCourse(Guid studentId)
+    {
+        try
+        {
+            //kiểm tra Id student có tồn tại không
+            var id = 
+                await _unitOfWork.StudentCourseRepository.GetAsync(i => i.StudentId == studentId);
+            if (id == null)
+            {
+                return new ResponseDTO()
+                {
+                    Message = "StudentID Invalid",
+                    IsSuccess = false,
+                    StatusCode = 400,
+                    Result = null
+                };
+            }
+            
+            //Lấy danh sách các khóa học mà student đã mua
+            var courses = await _unitOfWork.StudentCourseRepository.GetAllAsync
+                (c => c.StudentId == studentId && c.Status == 0 || c.Status == 1 || c.Status == 3,
+                    includeProperties: "Course.CourseVersion");
+            
+            
+
+            if(courses == null || !courses.Any())
+            {
+                return new ResponseDTO()
+                {
+                    Message = "Student has not enrolled in any courses",
+                    IsSuccess = false,
+                    StatusCode = 400,
+                    Result = null
+                };
+            }
+            
+            //tạo danh sách gợi ý khóa học
+            var suggestCourse = new List<Course>();
+            
+            //lấy danh sách gợi ý khóa học trùng categoryID với các khóa học đã mua của student
+            foreach (var course in courses) {               
+                var courseList = course.Id;
+                var courseVersion = await _unitOfWork.CourseVersionRepository.GetAllAsync(cv => cv.CourseId == courseList );
+                foreach (var courseCategory in courseVersion)
+                {
+                    var Category = await _unitOfWork.CourseVersionRepository.GetAllAsync(c => c.CategoryId == courseCategory.CategoryId);
+                    suggestCourse.AddRange(Category);
+                }
+                
+            };
+
+            var distinctCourse = suggestCourse.Distinct().ToList();
+            
+            return new ResponseDTO()
+            {
+                Message = "Suggest course successfully",
+                IsSuccess = true,
+                StatusCode = 200,
+                Result = distinctCourse
+            };
+
+        }
+        catch (Exception e)
+        {
+            return new ResponseDTO()
+            {
+                Message = e.Message,
+                StatusCode = 500,
+                Result = null,
+                IsSuccess = true
+            };
+        }
+    }
 }

@@ -156,5 +156,15 @@ namespace Cursus.LMS.API.Controllers
             var responseDto = await _studentsService.TotalPricesCoursesByStudentId(studentId);
             return StatusCode(responseDto.StatusCode, responseDto);
         }
+
+        [HttpGet]
+        [Route("courses/{studentId:guid}")]
+        //[Authorize(Roles = StaticUserRoles.Student)]
+        public async Task<ActionResult<ResponseDTO>> GetAllCoursesByStudentId([FromRoute] Guid studentId)
+        {
+            var responseDto = await _studentsService.GetAllCourseByStudentId(studentId);
+            return StatusCode(responseDto.StatusCode, responseDto);
+        }
+
     }
 }

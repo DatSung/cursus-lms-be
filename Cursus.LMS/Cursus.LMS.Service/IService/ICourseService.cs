@@ -56,4 +56,6 @@ public interface ICourseService
         ClaimsPrincipal User,
         EnrollCourseDTO enrollCourseDto
     );
+
+    Task<ResponseDTO> SuggestCourse(Guid studentId);
 }
