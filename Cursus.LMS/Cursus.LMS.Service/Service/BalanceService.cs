@@ -26,7 +26,7 @@ public class BalanceService : IBalanceService
                     Currency = "usd",
                     UserId = upsertBalanceDto.UserId,
                     AvailableBalance = upsertBalanceDto.AvailableBalance,
-                    PayoutBalance = upsertBalanceDto.PendingBalance,
+                    PayoutBalance = upsertBalanceDto.PayoutBalance,
                     UpdatedTime = DateTime.UtcNow
                 };
 
@@ -43,7 +43,7 @@ public class BalanceService : IBalanceService
             }
 
             balance.AvailableBalance += upsertBalanceDto.AvailableBalance;
-            balance.PayoutBalance += upsertBalanceDto.PendingBalance;
+            balance.PayoutBalance += upsertBalanceDto.PayoutBalance;
             balance.UpdatedTime = DateTime.UtcNow;
 
             _unitOfWork.BalanceRepository.Update(balance);
