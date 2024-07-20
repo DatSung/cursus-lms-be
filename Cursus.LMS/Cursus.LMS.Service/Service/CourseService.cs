@@ -137,8 +137,7 @@ public class CourseService : ICourseService
 
                 instructorId = instructor.InstructorId;
             }
-
-
+            
             var courses = new List<Course>();
             if (string.IsNullOrEmpty(instructorId.ToString()))
             {

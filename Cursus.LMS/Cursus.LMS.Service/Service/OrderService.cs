@@ -20,6 +20,7 @@ public class OrderService : IOrderService
     private readonly IStripeService _stripeService;
     private readonly IStudentCourseService _studentCourseService;
     private readonly ITransactionService _transactionService;
+    private readonly ICourseService _courseService;
 
     public OrderService
     (
@@ -28,8 +29,7 @@ public class OrderService : IOrderService
         IOrderStatusService orderStatusService,
         IStripeService stripeService,
         IStudentCourseService studentCourseService,
-        ITransactionService transactionService
-    )
+        ITransactionService transactionService, ICourseService courseService)
     {
         _unitOfWork = unitOfWork;
         _mapper = mapper;
@@ -37,6 +37,7 @@ public class OrderService : IOrderService
         _stripeService = stripeService;
         _studentCourseService = studentCourseService;
         _transactionService = transactionService;
+        _courseService = courseService;
     }
 
     public async Task<ResponseDTO> CreateOrder
@@ -464,6 +465,15 @@ public class OrderService : IOrderService
                     {
                         courseId = orderDetails.CourseId,
                         studentId = orderHeader.StudentId
+                    }
+                );
+
+                await _courseService.UpsertCourseTotal
+                (
+                    new UpsertCourseTotalDTO()
+                    {
+                        CourseId = orderDetails.CourseId,
+                        TotalEarned = orderDetails.CoursePrice
                     }
                 );
             }
