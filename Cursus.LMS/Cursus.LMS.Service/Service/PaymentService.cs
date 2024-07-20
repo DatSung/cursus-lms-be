@@ -273,4 +273,174 @@ public class PaymentService : IPaymentService
             throw;
         }
     }
+    public async Task<ResponseDTO> GetTopInstructorsByPayout
+    (
+        int topN = 5,
+        int? filterYear = null,
+        int? filterMonth = null,
+        int? filterQuarter = null
+    )
+    {
+        try
+        {
+            // Kiểm tra tham số topN để đảm bảo nó hợp lệ
+            if (topN <= 0)
+            {
+                throw new ArgumentException("The number of top instructors must be greater than zero.");
+            }
+
+            var currentYear = DateTime.UtcNow.Year;
+            var startDate = DateTime.UtcNow;
+            var endDate = DateTime.UtcNow;
+
+            // Xác định khoảng thời gian dựa trên các bộ lọc
+            if (filterYear.HasValue)
+            {
+                startDate = new DateTime(filterYear.Value, 1, 1);
+                endDate = new DateTime(filterYear.Value, 12, 31, 23, 59, 59);
+            }
+            else
+            {
+                startDate = new DateTime(currentYear, 1, 1);
+                endDate = new DateTime(currentYear, 12, 31, 23, 59, 59);
+            }
+
+            if (filterMonth.HasValue)
+            {
+                startDate = new DateTime(startDate.Year, filterMonth.Value, 1);
+                endDate = startDate.AddMonths(1).AddSeconds(-1);
+            }
+
+            if (filterQuarter.HasValue)
+            {
+                int startMonth = (filterQuarter.Value - 1) * 3 + 1;
+                startDate = new DateTime(startDate.Year, startMonth, 1);
+                endDate = startDate.AddMonths(3).AddSeconds(-1);
+            }
+
+            var transactions = await _unitOfWork.TransactionRepository
+                .GetAllAsync(
+                    filter: x => x.Type == StaticEnum.TransactionType.Payout &&
+                                 x.CreatedTime >= startDate && x.CreatedTime <= endDate,
+                    includeProperties: "ApplicationUser"
+                );
+
+            var instructorPayouts = transactions
+                .GroupBy(x => x.UserId)
+                .Select(group => new
+                {
+                    InstructorId = group.First().ApplicationUser.Id,
+                    FullName = group.First().ApplicationUser.FullName,
+                    TotalPayout = group.Sum(x => x.Amount)
+                })
+                .OrderByDescending(x => x.TotalPayout)
+                .Take(topN) 
+                .ToList();
+
+            return new ResponseDTO()
+            {
+                Result = instructorPayouts,
+                Message = "Get top instructors by payout successfully",
+                IsSuccess = true,
+                StatusCode = 200
+            };
+        }
+        catch (Exception e)
+        {
+            return new ResponseDTO()
+            {
+                Message = e.Message,
+                StatusCode = 500,
+                Result = null,
+                IsSuccess = false
+            };
+        }
+    }
+
+    public async Task<ResponseDTO> GetLeastInstructorsByPayout(
+    int topN = 5, 
+    int? filterYear = null,
+    int? filterMonth = null,
+    int? filterQuarter = null
+)
+    {
+        try
+        {
+            // Kiểm tra tham số topN để đảm bảo nó hợp lệ
+            if (topN <= 0)
+            {
+                throw new ArgumentException("The number of least instructors must be greater than zero.");
+            }
+
+            var currentYear = DateTime.UtcNow.Year;
+            var startDate = DateTime.UtcNow;
+            var endDate = DateTime.UtcNow;
+
+            // Xác định khoảng thời gian dựa trên các bộ lọc
+            if (filterYear.HasValue)
+            {
+                startDate = new DateTime(filterYear.Value, 1, 1);
+                endDate = new DateTime(filterYear.Value, 12, 31, 23, 59, 59);
+            }
+            else
+            {
+                startDate = new DateTime(currentYear, 1, 1);
+                endDate = new DateTime(currentYear, 12, 31, 23, 59, 59);
+            }
+
+            if (filterMonth.HasValue)
+            {
+                startDate = new DateTime(startDate.Year, filterMonth.Value, 1);
+                endDate = startDate.AddMonths(1).AddSeconds(-1);
+            }
+
+            if (filterQuarter.HasValue)
+            {
+                int startMonth = (filterQuarter.Value - 1) * 3 + 1;
+                startDate = new DateTime(startDate.Year, startMonth, 1);
+                endDate = startDate.AddMonths(3).AddSeconds(-1);
+            }
+
+            var transactions = await _unitOfWork.TransactionRepository
+                .GetAllAsync(
+                    filter: x => x.Type == StaticEnum.TransactionType.Payout &&
+                                 x.CreatedTime >= startDate && x.CreatedTime <= endDate,
+                    includeProperties: "ApplicationUser"
+                );
+
+            var instructorPayouts = transactions
+                .GroupBy(x => x.UserId)
+                .Select(group => new
+                {
+                    InstructorId = group.First().ApplicationUser.Id,
+                    FullName = group.First().ApplicationUser.FullName,
+                    TotalPayout = group.Sum(x => x.Amount)
+                })
+                .OrderBy(x => x.TotalPayout) 
+                .Take(topN) 
+                .ToList();
+
+            return new ResponseDTO()
+            {
+                Result = instructorPayouts,
+                Message = "Get least instructors by payout successfully",
+                IsSuccess = true,
+                StatusCode = 200
+            };
+        }
+        catch (Exception e)
+        {
+            return new ResponseDTO()
+            {
+                Message = e.Message,
+                StatusCode = 500,
+                Result = null,
+                IsSuccess = false
+            };
+        }
+    }
+
+
+
+
 }

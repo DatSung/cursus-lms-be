@@ -289,6 +289,224 @@ public class CourseService : ICourseService
             };
         }
     }
+    public async Task<ResponseDTO> GetTopPurchasedCourses(
+    int? year = null,
+    int? month = null,
+    int? quarter = null,
+    int top = 5,
+    int pageNumber = 1,
+    int pageSize = 5,
+    string? byCategoryName = null
+)
+    {
+        try
+        {
+            // Lấy danh sách StudentCourse ban đầu
+            var studentCoursesQuery = _unitOfWork.StudentCourseRepository.GetAllAsync(
+                sc => sc.CreatedTime.HasValue,
+                includeProperties: "Course"
+            );
+
+            var studentCourses = (await studentCoursesQuery).ToList();
+
+            // Áp dụng bộ lọc theo thời gian
+            if (year.HasValue)
+            {
+                studentCourses = studentCourses
+                    .Where(sc => sc.CreatedTime.Value.Year == year.Value)
+                    .ToList();
+            }
+
+            if (month.HasValue)
+            {
+                studentCourses = studentCourses
+                    .Where(sc => sc.CreatedTime.Value.Month == month.Value)
+                    .ToList();
+            }
+
+            if (quarter.HasValue)
+            {
+                int startMonth = (quarter.Value - 1) * 3 + 1;
+                int endMonth = startMonth + 2;
+                studentCourses = studentCourses
+                    .Where(sc => sc.CreatedTime.Value.Month >= startMonth && sc.CreatedTime.Value.Month <= endMonth)
+                    .ToList();
+            }
+
+            // Lấy danh sách CourseVersionId từ studentCourses
+            var courseVersionIds = studentCourses
+                .Select(sc => sc.Course.CourseVersionId)
+                .Distinct()
+                .ToList();
+
+            // Lấy các CourseVersion tương ứng
+            var courseVersions = (await _unitOfWork.CourseVersionRepository.GetAllAsync(
+                cv => courseVersionIds.Contains(cv.Id),
+                includeProperties: "Category"
+            )).ToList();
+
+            // Áp dụng bộ lọc CategoryName
+            if (!string.IsNullOrEmpty(byCategoryName))
+            {
+                courseVersions = courseVersions
+                    .Where(cv => cv.Category != null &&
+                                 cv.Category.Name.Contains(byCategoryName, StringComparison.CurrentCultureIgnoreCase))
+                    .ToList();
+            }
+
+            // Lọc lại danh sách studentCourses dựa trên CourseVersion
+            studentCourses = studentCourses
+                .Where(sc => courseVersions.Any(cv => cv.Id == sc.Course.CourseVersionId))
+                .ToList();
+
+            // Sắp xếp danh sách theo thứ tự giảm dần
+            studentCourses = studentCourses.OrderByDescending(sc => sc.CreatedTime).ToList();
+
+            // Áp dụng phân trang và giới hạn top
+            int skip = (pageNumber - 1) * pageSize;
+            studentCourses = studentCourses
+                .Skip(skip)
+                .Take(pageSize > top ? top : pageSize)
+                .ToList();
+
+            return new ResponseDTO
+            {
+                Result = studentCourses,
+                Message = "Get top purchased courses successfully",
+                IsSuccess = true,
+                StatusCode = 200
+            };
+        }
+        catch (Exception ex)
+        {
+            return new ResponseDTO
+            {
+                Message = ex.Message,
+                IsSuccess = false,
+                StatusCode = 500,
+                Result = null
+            };
+        }
+    }
+
+
+    public async Task<ResponseDTO> GetLeastPurchasedCourses(
+    int? year = null,
+    int? month = null,
+    int? quarter = null,
+    int top = 5,
+    int pageNumber = 1,
+    int pageSize = 5,
+    string? byCategoryName = null
+)
+    {
+        try
+        {
+            // Lấy danh sách StudentCourse ban đầu
+            var studentCoursesQuery = _unitOfWork.StudentCourseRepository.GetAllAsync(
+                sc => sc.CreatedTime.HasValue,
+                includeProperties: "Course"
+            );
+
+            var studentCourses = (await studentCoursesQuery).ToList();
+
+            // Áp dụng bộ lọc theo thời gian
+            if (year.HasValue)
+            {
+                studentCourses = studentCourses
+                    .Where(sc => sc.CreatedTime.Value.Year == year.Value)
+                    .ToList();
+            }
+
+            if (month.HasValue)
+            {
+                studentCourses = studentCourses
+                    .Where(sc => sc.CreatedTime.Value.Month == month.Value)
+                    .ToList();
+            }
+
+            if (quarter.HasValue)
+            {
+                int startMonth = (quarter.Value - 1) * 3 + 1;
+                int endMonth = startMonth + 2;
+                studentCourses = studentCourses
+                    .Where(sc => sc.CreatedTime.Value.Month >= startMonth && sc.CreatedTime.Value.Month <= endMonth)
+                    .ToList();
+            }
+
+            // Lấy danh sách CourseVersionId từ studentCourses
+            var courseVersionIds = studentCourses
+                .Select(sc => sc.Course.CourseVersionId)
+                .Distinct()
+                .ToList();
+
+            // Lấy các CourseVersion tương ứng
+            var courseVersions = (await _unitOfWork.CourseVersionRepository.GetAllAsync(
+                cv => courseVersionIds.Contains(cv.Id),
+                includeProperties: "Category"
+            )).ToList();
+
+            // Áp dụng bộ lọc CategoryName
+            if (!string.IsNullOrEmpty(byCategoryName))
+            {
+                courseVersions = courseVersions
+                    .Where(cv => cv.Category != null &&
+                                 cv.Category.Name.Contains(byCategoryName, StringComparison.CurrentCultureIgnoreCase))
+                    .ToList();
+            }
+
+            // Lọc lại danh sách studentCourses dựa trên CourseVersion
+            studentCourses = studentCourses
+                .Where(sc => courseVersions.Any(cv => cv.Id == sc.Course.CourseVersionId))
+                .ToList();
+
+            // Đếm số lần mua của mỗi khóa học
+            var coursePurchaseCounts = studentCourses
+                .GroupBy(sc => sc.Course.CourseVersionId)
+                .Select(g => new
+                {
+                    CourseVersionId = g.Key,
+                    PurchaseCount = g.Count()
+                })
+                .OrderBy(g => g.PurchaseCount) // Sắp xếp theo số lượng mua ít nhất
+                .Take(top)
+                .ToList();
+
+            // Lấy lại danh sách studentCourses dựa trên khóa học ít được mua nhất
+            var leastPurchasedCourses = studentCourses
+                .Where(sc => coursePurchaseCounts.Any(cpc => cpc.CourseVersionId == sc.Course.CourseVersionId))
+                .ToList();
+
+            // Áp dụng phân trang
+            int skip = (pageNumber - 1) * pageSize;
+            leastPurchasedCourses = leastPurchasedCourses
+                .Skip(skip)
+                .Take(pageSize)
+                .ToList();
+
+            return new ResponseDTO
+            {
+                Result = leastPurchasedCourses,
+                Message = "Get least purchased courses successfully",
+                IsSuccess = true,
+                StatusCode = 200
+            };
+        }
+        catch (Exception ex)
+        {
+            return new ResponseDTO
+            {
+                Message = ex.Message,
+                IsSuccess = false,
+                StatusCode = 500,
+                Result = null
+            };
+        }
+    }
+
+
+
+
 
     public async Task<ResponseDTO> GetCourse(ClaimsPrincipal User, Guid courseId)
     {
