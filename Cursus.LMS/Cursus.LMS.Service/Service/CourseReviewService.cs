@@ -10,12 +10,14 @@ namespace Cursus.LMS.Service.Service
     public class CourseReviewService : ICourseReviewService
     {
         private readonly IUnitOfWork _unitOfWork;
+        private readonly ICourseService _courseService;
         private readonly IMapper _mapper;
 
-        public CourseReviewService(IUnitOfWork unitOfWork, IMapper mapper)
+        public CourseReviewService(IUnitOfWork unitOfWork, IMapper mapper, ICourseService courseService)
         {
             _unitOfWork = unitOfWork;
             _mapper = mapper;
+            _courseService = courseService;
         }
 
         public async Task<ResponseDTO> GetCourseReviews
@@ -28,7 +30,7 @@ namespace Cursus.LMS.Service.Service
             bool? isAscending,
             int pageNumber,
             int pageSize
-)
+        )
         {
             try
             {
@@ -216,6 +218,15 @@ namespace Cursus.LMS.Service.Service
                 await _unitOfWork.CourseReviewRepository.AddAsync(courseReview);
                 await _unitOfWork.SaveAsync();
 
+                await _courseService.UpsertCourseTotal
+                (
+                    new UpsertCourseTotalDTO()
+                    {
+                        CourseId = course.Id,
+                        UpdateTotalRate = true
+                    }
+                );
+
                 return new ResponseDTO
                 {
                     Message = "Course review created successfully",
@@ -234,9 +245,10 @@ namespace Cursus.LMS.Service.Service
                     Result = null
                 };
             }
-
         }
-        public async Task<ResponseDTO> UpdateCourseReview(ClaimsPrincipal User,UpdateCourseReviewDTO updateCourseReviewDTO)
+
+        public async Task<ResponseDTO> UpdateCourseReview(ClaimsPrincipal User,
+            UpdateCourseReviewDTO updateCourseReviewDTO)
         {
             try
             {
@@ -292,6 +304,7 @@ namespace Cursus.LMS.Service.Service
                 };
             }
         }
+
         public async Task<ResponseDTO> DeleteCourseReview(Guid id)
         {
             try
@@ -310,6 +323,15 @@ namespace Cursus.LMS.Service.Service
 
                 _unitOfWork.CourseReviewRepository.Remove(courseReview);
                 await _unitOfWork.SaveAsync();
+
+                await _courseService.UpsertCourseTotal
+                (
+                    new UpsertCourseTotalDTO()
+                    {
+                        CourseId = courseReview.CourseId,
+                        UpdateTotalRate = true
+                    }
+                );
 
                 return new ResponseDTO
                 {
@@ -330,11 +352,11 @@ namespace Cursus.LMS.Service.Service
                 };
             }
         }
+
         public async Task<ResponseDTO> MarkCourseReview(Guid id)
         {
             try
             {
-
                 var courseReview = await _unitOfWork.CourseReviewRepository.GetById(id);
                 if (courseReview == null)
                 {
@@ -352,7 +374,9 @@ namespace Cursus.LMS.Service.Service
                 _unitOfWork.CourseReviewRepository.Update(courseReview);
                 await _unitOfWork.SaveAsync();
 
-                string message = courseReview.IsMarked ? "Marked the review successfully" : "Unmarked the review successfully";
+                string message = courseReview.IsMarked
+                    ? "Marked the review successfully"
+                    : "Unmarked the review successfully";
 
                 return new ResponseDTO
                 {
@@ -373,7 +397,5 @@ namespace Cursus.LMS.Service.Service
                 };
             }
         }
-
-
     }
 }

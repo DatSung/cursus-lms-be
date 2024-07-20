@@ -1,4 +1,4 @@
-﻿using System.Security.Claims;
+using System.Security.Claims;
 using Cursus.LMS.Model.DTO;
 
 namespace Cursus.LMS.Service.IService;
@@ -67,6 +67,7 @@ public interface ICourseService
         int pageSize,
         string? byCategoryName
     );
+
     Task<ResponseDTO> GetLeastPurchasedCourses
     (
         int? year,
@@ -77,6 +78,9 @@ public interface ICourseService
         int pageSize,
         string? byCategoryName
     );
+    
     Task<ResponseDTO> SuggestCourse(Guid studentId);
+
+    Task<ResponseDTO> UpsertCourseTotal(UpsertCourseTotalDTO upsertCourseTotalDto);
 
 }

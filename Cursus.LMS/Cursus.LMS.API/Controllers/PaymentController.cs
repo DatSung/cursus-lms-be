@@ -13,11 +13,41 @@ namespace Cursus.LMS.API.Controllers
     public class PaymentController : ControllerBase
     {
         private readonly IPaymentService _paymentService;
+        private readonly ITransactionService _transactionService;
 
-        public PaymentController(IPaymentService paymentService)
+        public PaymentController(IPaymentService paymentService, ITransactionService transactionService)
         {
             _paymentService = paymentService;
+            _transactionService = transactionService;
         }
+
+        [HttpGet]
+        [Route("get-transaction-history")]
+        public async Task<ActionResult<ResponseDTO>> GetTransactionHistory
+        (
+            [FromQuery] string? userId,
+            [FromQuery] string? filterOn,
+            [FromQuery] string? filterQuery,
+            [FromQuery] string? sortBy,
+            [FromQuery] bool? isAscending,
+            [FromQuery] int pageNumber = 1,
+            [FromQuery] int pageSize = 5
+        )
+        {
+            var responseDto = await _transactionService.GetTransactions
+            (
+                User,
+                userId,
+                filterOn,
+                filterQuery,
+                sortBy,
+                isAscending,
+                pageNumber,
+                pageSize
+            );
+            return StatusCode(responseDto.StatusCode, responseDto);
+        }
+
 
         [HttpPost]
         [Route("create-stripe-connected-account")]

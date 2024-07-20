@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Security.Claims;
+﻿using System.Security.Claims;
 using AutoMapper;
 using Cursus.LMS.DataAccess.IRepository;
 using Cursus.LMS.Model.Domain;
@@ -7,7 +6,6 @@ using Cursus.LMS.Model.DTO;
 using Cursus.LMS.Service.IService;
 using Cursus.LMS.Utility.Constants;
 using Hangfire;
-using NuGet.Packaging;
 
 namespace Cursus.LMS.Service.Service;
 
@@ -67,7 +65,7 @@ public class CourseService : ICourseService
                 CourseVersionId = courseVersionId,
                 Status = 0,
                 Version = 1,
-                StudentSlots = 0,
+                TotalStudent = 0,
                 TotalRate = 0,
                 ActivatedBy = null,
                 DeactivatedBy = null,
@@ -139,8 +137,7 @@ public class CourseService : ICourseService
 
                 instructorId = instructor.InstructorId;
             }
-
-
+            
             var courses = new List<Course>();
             if (string.IsNullOrEmpty(instructorId.ToString()))
             {
@@ -748,12 +745,13 @@ public class CourseService : ICourseService
             };
         }
     }
+
     public async Task<ResponseDTO> SuggestCourse(Guid studentId)
     {
         try
         {
             //kiểm tra Id student có tồn tại không
-            var id = 
+            var id =
                 await _unitOfWork.StudentCourseRepository.GetAsync(i => i.StudentId == studentId);
             if (id == null)
             {
@@ -765,7 +763,7 @@ public class CourseService : ICourseService
                     Result = null
                 };
             }
-            
+
             //Lấy danh sách các khóa học mà student đã mua
             var courses = await _unitOfWork.StudentCourseRepository.GetAllAsync
                 (c => c.StudentId == studentId && c.Status == 0 || c.Status == 1 || c.Status == 3);
@@ -781,7 +779,7 @@ public class CourseService : ICourseService
                     Result = null
                 };
             }
-            
+
             //tạo danh sách gợi ý khóa học
             var suggestCourse = new List<Course>();
             var redFlag = 0;
@@ -799,12 +797,14 @@ public class CourseService : ICourseService
                     var categoryId = courseVersion.CategoryId;
 
                     // Lấy danh sách các CourseVersion khác cùng CategoryId
-                    var relatedCourseVersions = await _unitOfWork.CourseVersionRepository.GetAllAsync(cv => cv.CategoryId == categoryId && !coursesEnroll.Contains(cv.CourseId));
+                    var relatedCourseVersions = await _unitOfWork.CourseVersionRepository.GetAllAsync(cv =>
+                        cv.CategoryId == categoryId && !coursesEnroll.Contains(cv.CourseId));
 
                     // Lấy danh sách các khóa học từ các CourseVersion này
                     foreach (var relatedCourseVersion in relatedCourseVersions)
                     {
-                        var relatedCourse = await _unitOfWork.CourseRepository.GetAsync(c => c.Id == relatedCourseVersion.CourseId);
+                        var relatedCourse =
+                            await _unitOfWork.CourseRepository.GetAsync(c => c.Id == relatedCourseVersion.CourseId);
                         if (relatedCourse != null)
                         {
                             suggestCourse.Add(relatedCourse);
@@ -814,7 +814,7 @@ public class CourseService : ICourseService
             }
 
             var distinctCourses = suggestCourse.Distinct().ToList();
-            
+
             return new ResponseDTO()
             {
                 Message = "Suggest course successfully",
@@ -822,7 +822,6 @@ public class CourseService : ICourseService
                 StatusCode = 200,
                 Result = distinctCourses
             };
-
         }
         catch (Exception e)
         {
@@ -836,5 +835,67 @@ public class CourseService : ICourseService
         }
     }
 
+    public async Task<ResponseDTO> UpsertCourseTotal(UpsertCourseTotalDTO upsertCourseTotalDto)
+    {
+        try
+        {
+            var course = await _unitOfWork.CourseRepository.GetAsync(x => x.Id == upsertCourseTotalDto.CourseId);
 
+            if (course is null)
+            {
+                return new ResponseDTO()
+                {
+                    Message = "Course was not found",
+                    IsSuccess = false,
+                    StatusCode = 404,
+                    Result = null
+                };
+            }
+
+            if (upsertCourseTotalDto.TotalStudent is not null)
+            {
+                course.TotalStudent += upsertCourseTotalDto.TotalStudent;
+            }
+
+            if (upsertCourseTotalDto.TotalEarned is not null)
+            {
+                course.TotalEarned += upsertCourseTotalDto.TotalEarned;
+                course.TotalStudent += 1;
+            }
+
+            if (upsertCourseTotalDto.UpdateTotalRate)
+            {
+                var courseReviews = _unitOfWork.CourseReviewRepository
+                    .GetAllAsync(x => x.CourseId == upsertCourseTotalDto.CourseId)
+                    .GetAwaiter()
+                    .GetResult()
+                    .ToList();
+
+                var totalRate = courseReviews.ToList().Sum(x => x.Rate);
+                var avgRate = totalRate / courseReviews.Count;
+
+                course.TotalRate = avgRate;
+            }
+
+            await _unitOfWork.SaveAsync();
+
+            return new ResponseDTO()
+            {
+                Message = "Upsert course total successfully",
+                IsSuccess = true,
+                StatusCode = 200,
+                Result = course
+            };
+        }
+        catch (Exception e)
+        {
+            return new ResponseDTO()
+            {
+                Message = e.Message,
+                IsSuccess = false,
+                StatusCode = 500,
+                Result = null
+            };
+        }
+    }
 }
