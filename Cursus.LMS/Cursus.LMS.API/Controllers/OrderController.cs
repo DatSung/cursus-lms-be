@@ -26,6 +26,34 @@ namespace Cursus.LMS.API.Controllers
         }
 
         [HttpGet]
+        [Authorize]
+        public async Task<ActionResult<ResponseDTO>> GetOrders
+        (
+            [FromQuery] Guid? studentId,
+            [FromQuery] string? filterOn,
+            [FromQuery] string? filterQuery,
+            [FromQuery] string? sortBy,
+            [FromQuery] bool? isAscending,
+            [FromQuery] int pageNumber = 1,
+            [FromQuery] int pageSize = 5
+        )
+        {
+            var responseDto = await _orderService.GetOrders
+            (
+                User,
+                studentId,
+                filterOn,
+                filterQuery,
+                sortBy,
+                isAscending,
+                pageNumber,
+                pageSize
+            );
+
+            return StatusCode(responseDto.StatusCode, responseDto);
+        }
+
+        [HttpGet]
         [Route("{orderHeaderId:guid}")]
         [Authorize]
         public async Task<ActionResult<ResponseDTO>> GetOrder([FromRoute] Guid orderHeaderId)

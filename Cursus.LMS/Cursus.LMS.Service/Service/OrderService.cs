@@ -161,6 +161,21 @@ public class OrderService : IOrderService
         }
     }
 
+    public Task<ResponseDTO> GetOrders
+    (
+        ClaimsPrincipal User,
+        Guid? studentId,
+        string? filterOn,
+        string? filterQuery,
+        string? sortBy,
+        bool? isAscending,
+        int pageNumber = 1,
+        int pageSize = 5
+    )
+    {
+        throw new NotImplementedException();
+    }
+
     public async Task<ResponseDTO> GetOrder
     (
         ClaimsPrincipal User,

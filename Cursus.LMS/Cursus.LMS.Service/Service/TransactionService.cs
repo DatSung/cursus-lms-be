@@ -5,6 +5,7 @@ using Cursus.LMS.Model.Domain;
 using Cursus.LMS.Model.DTO;
 using Cursus.LMS.Service.IService;
 using Cursus.LMS.Utility.Constants;
+using Microsoft.IdentityModel.Tokens;
 
 namespace Cursus.LMS.Service.Service;
 
@@ -32,7 +33,14 @@ public class TransactionService : ITransactionService
     {
         try
         {
+            if (userId.IsNullOrEmpty())
+            {
+                userId = User.Claims.FirstOrDefault(x => x.Type == ClaimTypes.NameIdentifier)?.Value;
+            }
+
             var transactions = await _unitOfWork.TransactionRepository.GetAllAsync(x => x.UserId == userId);
+
+
             var transactionsDto = _mapper.Map<IEnumerable<GetTransactionDTO>>(transactions);
             return new ResponseDTO()
             {
