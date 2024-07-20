@@ -12,5 +12,6 @@ public class Course : StateEntity<string, string, string, string, int>
     public int? StudentSlots { get; set; }
     public float? TotalRate { get; set; }
     public int? Version { get; set; } = 1;
+    public double TotalEarned { get; set; } = 0;
     public Guid? CourseVersionId { get; set; }
 }
