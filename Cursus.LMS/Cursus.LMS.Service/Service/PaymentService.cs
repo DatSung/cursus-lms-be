@@ -93,87 +93,103 @@ public class PaymentService : IPaymentService
     (
         CreateStripeConnectedAccountDTO createStripeConnectedAccountDto)
     {
-        var user = await _unitOfWork.UserManagerRepository.FindByEmailAsync(createStripeConnectedAccountDto.Email);
-        var instructor = await _unitOfWork.InstructorRepository.GetAsync(x => x.UserId == user.Id);
-
-        if (instructor is null)
+        try
         {
-            return new ResponseDTO()
+            var user = await _unitOfWork.UserManagerRepository.FindByEmailAsync(createStripeConnectedAccountDto.Email);
+            var instructor = await _unitOfWork.InstructorRepository.GetAsync(x => x.UserId == user.Id);
+
+            if (instructor is null)
             {
-                Message = "Instructor was not found",
-                IsSuccess = false,
-                StatusCode = 404,
-                Result = null
-            };
-        }
+                return new ResponseDTO()
+                {
+                    Message = "Instructor was not found",
+                    IsSuccess = false,
+                    StatusCode = 404,
+                    Result = null
+                };
+            }
 
-        var responseDto = await _stripeService.CreateConnectedAccount(createStripeConnectedAccountDto);
+            var responseDto = await _stripeService.CreateConnectedAccount(createStripeConnectedAccountDto);
 
-        if (responseDto.StatusCode == 500)
-        {
+            if (responseDto.StatusCode == 500)
+            {
+                return responseDto;
+            }
+
+            var result = (CreateStripeConnectedAccountDTO)responseDto.Result!;
+            instructor.StripeAccountId = result.AccountId;
+            await _unitOfWork.SaveAsync();
+
             return responseDto;
         }
-
-        var result = (CreateStripeConnectedAccountDTO)responseDto.Result!;
-        instructor.StripeAccountId = result.AccountId;
-        await _unitOfWork.SaveAsync();
-
-        return responseDto;
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            throw;
+        }
     }
 
     public async Task<ResponseDTO> CreateStripeTransfer(CreateStripeTransferDTO createStripeTransferDto)
     {
-        if (createStripeTransferDto.UserId is null && createStripeTransferDto.ConnectedAccountId is null)
+        try
         {
-            return new ResponseDTO()
+            if (createStripeTransferDto.UserId is null && createStripeTransferDto.ConnectedAccountId is null)
             {
-                Message = "User was not found",
-                IsSuccess = false,
-                StatusCode = 404,
-                Result = createStripeTransferDto
-            };
+                return new ResponseDTO()
+                {
+                    Message = "User was not found",
+                    IsSuccess = false,
+                    StatusCode = 404,
+                    Result = createStripeTransferDto
+                };
+            }
+
+            var instructor =
+                await _unitOfWork.InstructorRepository.GetAsync(x => x.UserId == createStripeTransferDto.UserId);
+
+            if (instructor is null)
+            {
+                return new ResponseDTO()
+                {
+                    Message = "Instructor was not found",
+                    IsSuccess = false,
+                    StatusCode = 404,
+                    Result = createStripeTransferDto
+                };
+            }
+
+            createStripeTransferDto.ConnectedAccountId = instructor?.StripeAccountId;
+
+            var responseDto = await _stripeService.CreateTransfer(createStripeTransferDto);
+
+            if (responseDto.StatusCode != 200) return responseDto;
+
+            await _balanceService.UpsertBalance(new UpsertBalanceDTO()
+                {
+                    Currency = "usd",
+                    AvailableBalance = createStripeTransferDto.Amount,
+                    PayoutBalance = 0,
+                    UserId = createStripeTransferDto.UserId
+                }
+            );
+
+            await _transactionService.CreateTransaction
+            (
+                new CreateTransactionDTO()
+                {
+                    UserId = createStripeTransferDto.UserId,
+                    Amount = createStripeTransferDto.Amount,
+                    Type = StaticEnum.TransactionType.Income
+                }
+            );
+
+            return responseDto;
         }
-
-        var instructor =
-            await _unitOfWork.InstructorRepository.GetAsync(x => x.UserId == createStripeTransferDto.UserId);
-
-        if (instructor is null)
+        catch (Exception e)
         {
-            return new ResponseDTO()
-            {
-                Message = "Instructor was not found",
-                IsSuccess = false,
-                StatusCode = 404,
-                Result = createStripeTransferDto
-            };
+            Console.WriteLine(e);
+            throw;
         }
-
-        createStripeTransferDto.ConnectedAccountId = instructor?.StripeAccountId;
-
-        var responseDto = await _stripeService.CreateTransfer(createStripeTransferDto);
-
-        if (responseDto.StatusCode != 200) return responseDto;
-
-        await _balanceService.UpsertBalance(new UpsertBalanceDTO()
-            {
-                Currency = "usd",
-                AvailableBalance = createStripeTransferDto.Amount,
-                PayoutBalance = 0,
-                UserId = createStripeTransferDto.UserId
-            }
-        );
-
-        await _transactionService.CreateTransaction
-        (
-            new CreateTransactionDTO()
-            {
-                UserId = createStripeTransferDto.UserId,
-                Amount = createStripeTransferDto.Amount,
-                Type = StaticEnum.TransactionType.Income
-            }
-        );
-
-        return responseDto;
     }
 
     public async Task<ResponseDTO> AddStripeCard(AddStripeCardDTO addStripeCardDto)
@@ -187,66 +203,74 @@ public class PaymentService : IPaymentService
         CreateStripePayoutDTO createStripePayoutDto
     )
     {
-        var userId = User.Claims.FirstOrDefault(x => x.Type == ClaimTypes.NameIdentifier)?.Value;
-
-        if (createStripePayoutDto.ConnectedAccountId.IsNullOrEmpty())
+        try
         {
-            if (userId is null)
+            var userId = User.Claims.FirstOrDefault(x => x.Type == ClaimTypes.NameIdentifier)?.Value;
+
+            if (createStripePayoutDto.ConnectedAccountId.IsNullOrEmpty())
             {
-                return new ResponseDTO()
+                if (userId is null)
                 {
-                    Message = "User was not found",
-                    IsSuccess = false,
-                    StatusCode = 404,
-                    Result = createStripePayoutDto
-                };
+                    return new ResponseDTO()
+                    {
+                        Message = "User was not found",
+                        IsSuccess = false,
+                        StatusCode = 404,
+                        Result = createStripePayoutDto
+                    };
+                }
+
+                var instructor = await _unitOfWork.InstructorRepository.GetAsync(x => x.UserId == userId);
+
+                if (instructor is null)
+                {
+                    return new ResponseDTO()
+                    {
+                        Message = "Instructor was not found",
+                        IsSuccess = false,
+                        StatusCode = 404,
+                        Result = createStripePayoutDto
+                    };
+                }
+
+                createStripePayoutDto.ConnectedAccountId = instructor?.StripeAccountId;
             }
 
-            var instructor = await _unitOfWork.InstructorRepository.GetAsync(x => x.UserId == userId);
+            var responseDto = await _stripeService.CreatePayout(createStripePayoutDto);
 
-            if (instructor is null)
+            var payout = (Payout)responseDto.Result!;
+
+            if (payout.Status != "paid")
             {
-                return new ResponseDTO()
-                {
-                    Message = "Instructor was not found",
-                    IsSuccess = false,
-                    StatusCode = 404,
-                    Result = createStripePayoutDto
-                };
+                return responseDto;
             }
 
-            createStripePayoutDto.ConnectedAccountId = instructor?.StripeAccountId;
-        }
+            await _transactionService.CreateTransaction
+            (
+                new CreateTransactionDTO()
+                {
+                    Amount = createStripePayoutDto.Amount,
+                    Type = StaticEnum.TransactionType.Payout,
+                    UserId = userId
+                }
+            );
 
-        var responseDto = await _stripeService.CreatePayout(createStripePayoutDto);
-
-        var payout = (Payout)responseDto.Result!;
-
-        if (payout.Status != "paid")
-        {
+            await _balanceService.UpsertBalance
+            (
+                new UpsertBalanceDTO()
+                {
+                    Currency = "usd",
+                    AvailableBalance = -createStripePayoutDto.Amount,
+                    PayoutBalance = createStripePayoutDto.Amount,
+                    UserId = userId
+                }
+            );
             return responseDto;
         }
-
-        await _transactionService.CreateTransaction
-        (
-            new CreateTransactionDTO()
-            {
-                Amount = createStripePayoutDto.Amount,
-                Type = StaticEnum.TransactionType.Payout,
-                UserId = userId
-            }
-        );
-
-        await _balanceService.UpsertBalance
-        (
-            new UpsertBalanceDTO()
-            {
-                Currency = "usd",
-                AvailableBalance = -createStripePayoutDto.Amount,
-                PayoutBalance = createStripePayoutDto.Amount,
-                UserId = userId
-            }
-        );
-        return responseDto;
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            throw;
+        }
     }
 }
