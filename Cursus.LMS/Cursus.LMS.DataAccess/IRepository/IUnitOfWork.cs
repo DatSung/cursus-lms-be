@@ -31,6 +31,7 @@ public interface IUnitOfWork
     IStudentCourseStatusRepository StudentCourseStatusRepository { get; }
     IBalanceRepository BalanceRepository { get; }
     ITransactionRepository TransactionRepository { get; }
-    
+    ICourseBookmarkRepository CourseBookmarkRepository { get; }
+
     Task<int> SaveAsync();
 }
