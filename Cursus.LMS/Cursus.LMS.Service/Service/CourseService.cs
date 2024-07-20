@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Security.Claims;
+﻿using System.Security.Claims;
 using AutoMapper;
 using Cursus.LMS.DataAccess.IRepository;
 using Cursus.LMS.Model.Domain;
@@ -7,7 +6,6 @@ using Cursus.LMS.Model.DTO;
 using Cursus.LMS.Service.IService;
 using Cursus.LMS.Utility.Constants;
 using Hangfire;
-using NuGet.Packaging;
 
 namespace Cursus.LMS.Service.Service;
 
@@ -616,6 +614,70 @@ public class CourseService : ICourseService
                 StatusCode = 500,
                 Result = null,
                 IsSuccess = true
+            };
+        }
+    }
+
+    public async Task<ResponseDTO> UpsertCourseTotal(UpsertCourseTotalDTO upsertCourseTotalDto)
+    {
+        try
+        {
+            var course = await _unitOfWork.CourseRepository.GetAsync(x => x.Id == upsertCourseTotalDto.CourseId);
+
+            if (course is null)
+            {
+                return new ResponseDTO()
+                {
+                    Message = "Course was not found",
+                    IsSuccess = false,
+                    StatusCode = 404,
+                    Result = null
+                };
+            }
+
+            if (upsertCourseTotalDto.TotalStudent is not null)
+            {
+                course.TotalStudent += upsertCourseTotalDto.TotalStudent;
+            }
+
+            if (upsertCourseTotalDto.TotalEarned is not null)
+            {
+                course.TotalEarned += upsertCourseTotalDto.TotalEarned;
+                course.TotalStudent += 1;
+            }
+
+            if (upsertCourseTotalDto.UpdateTotalRate)
+            {
+                var courseReviews = _unitOfWork.CourseReviewRepository
+                    .GetAllAsync(x => x.CourseId == upsertCourseTotalDto.CourseId)
+                    .GetAwaiter()
+                    .GetResult()
+                    .ToList();
+
+                var totalRate = courseReviews.ToList().Sum(x => x.Rate);
+                var avgRate = totalRate / courseReviews.Count;
+
+                course.TotalRate = avgRate;
+            }
+
+            await _unitOfWork.SaveAsync();
+
+            return new ResponseDTO()
+            {
+                Message = "Upsert course total successfully",
+                IsSuccess = true,
+                StatusCode = 200,
+                Result = course
+            };
+        }
+        catch (Exception e)
+        {
+            return new ResponseDTO()
+            {
+                Message = e.Message,
+                IsSuccess = false,
+                StatusCode = 500,
+                Result = null
             };
         }
     }

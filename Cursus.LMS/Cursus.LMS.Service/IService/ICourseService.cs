@@ -58,4 +58,6 @@ public interface ICourseService
     );
 
     Task<ResponseDTO> SuggestCourse(Guid studentId);
+
+    Task<ResponseDTO> UpsertCourseTotal(UpsertCourseTotalDTO upsertCourseTotalDto);
 }
