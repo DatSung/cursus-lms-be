@@ -49,4 +49,5 @@ public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
     public DbSet<StudentCourseStatus> StudentCoursesStatus { get; set; }
     public DbSet<Balance> Balances { get; set; }
     public DbSet<Transaction> Transactions { get; set; }
+    public DbSet<CourseBookmark> CourseBookmarks { get; set; }
 }
