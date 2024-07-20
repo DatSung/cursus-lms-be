@@ -15,7 +15,12 @@ public class CourseService : ICourseService
     private readonly IMapper _mapper;
     private readonly IStudentCourseService _studentCourseService;
 
-    public CourseService(IUnitOfWork unitOfWork, IMapper mapper, IStudentCourseService studentCourseService)
+    public CourseService
+    (
+        IUnitOfWork unitOfWork,
+        IMapper mapper,
+        IStudentCourseService studentCourseService
+    )
     {
         _unitOfWork = unitOfWork;
         _mapper = mapper;
@@ -137,7 +142,7 @@ public class CourseService : ICourseService
 
                 instructorId = instructor.InstructorId;
             }
-            
+
             var courses = new List<Course>();
             if (string.IsNullOrEmpty(instructorId.ToString()))
             {
@@ -289,15 +294,16 @@ public class CourseService : ICourseService
             };
         }
     }
+
     public async Task<ResponseDTO> GetTopPurchasedCourses(
-    int? year = null,
-    int? month = null,
-    int? quarter = null,
-    int top = 5,
-    int pageNumber = 1,
-    int pageSize = 5,
-    string? byCategoryName = null
-)
+        int? year = null,
+        int? month = null,
+        int? quarter = null,
+        int top = 5,
+        int pageNumber = 1,
+        int pageSize = 5,
+        string? byCategoryName = null
+    )
     {
         try
         {
@@ -391,14 +397,14 @@ public class CourseService : ICourseService
 
 
     public async Task<ResponseDTO> GetLeastPurchasedCourses(
-    int? year = null,
-    int? month = null,
-    int? quarter = null,
-    int top = 5,
-    int pageNumber = 1,
-    int pageSize = 5,
-    string? byCategoryName = null
-)
+        int? year = null,
+        int? month = null,
+        int? quarter = null,
+        int top = 5,
+        int pageNumber = 1,
+        int pageSize = 5,
+        string? byCategoryName = null
+    )
     {
         try
         {
@@ -503,9 +509,6 @@ public class CourseService : ICourseService
             };
         }
     }
-
-
-
 
 
     public async Task<ResponseDTO> GetCourse(ClaimsPrincipal User, Guid courseId)
