@@ -69,7 +69,7 @@ namespace Cursus.LMS.API.Controllers
         }
 
         [HttpPost]
-        [Route("activate-course/{courseId:guid}")]
+        [Route("activate/{courseId:guid}")]
         [Authorize(Roles = StaticUserRoles.AdminInstructor)]
         public async Task<ActionResult<ResponseDTO>> ActivateCourse([FromRoute] Guid courseId)
         {
@@ -78,7 +78,7 @@ namespace Cursus.LMS.API.Controllers
         }
 
         [HttpPost]
-        [Route("deactivate-course/{courseId:guid}")]
+        [Route("deactivate/{courseId:guid}")]
         [Authorize(Roles = StaticUserRoles.AdminInstructor)]
         public async Task<ActionResult<ResponseDTO>> DeactivateCourse([FromRoute] Guid courseId)
         {
@@ -88,7 +88,7 @@ namespace Cursus.LMS.API.Controllers
 
 
         [HttpGet]
-        [Route("get-course-reviews")]
+        [Route("review")]
         [Authorize]
         public async Task<ActionResult<ResponseDTO>> GetCourseReviews
         (
@@ -116,7 +116,7 @@ namespace Cursus.LMS.API.Controllers
         }
 
         [HttpGet]
-        [Route("get-course-review/{id}")]
+        [Route("review/{id}")]
         [Authorize]
         public async Task<ActionResult<ResponseDTO>> GetCourseReview(Guid id)
         {
@@ -138,7 +138,7 @@ namespace Cursus.LMS.API.Controllers
         }
 
         [HttpPost]
-        [Route("create-course-review")]
+        [Route("review")]
         [Authorize(Roles = StaticUserRoles.Student)]
         public async Task<ActionResult<ResponseDTO>> CreateCourseReview(
             [FromBody] CreateCourseReviewDTO createCourseReviewDTO)
@@ -172,7 +172,7 @@ namespace Cursus.LMS.API.Controllers
         }
 
         [HttpPut]
-        [Route("update-course-review")]
+        [Route("review")]
         [Authorize]
         public async Task<ActionResult<ResponseDTO>> UpdateCourseReview(
             [FromBody] UpdateCourseReviewDTO updateCourseReviewDTO)
@@ -206,7 +206,7 @@ namespace Cursus.LMS.API.Controllers
         }
 
         [HttpDelete]
-        [Route("delete-course-review/{id}")]
+        [Route("review/{id}")]
         [Authorize]
         public async Task<ActionResult<ResponseDTO>> DeleteCourseReview(Guid id)
         {
@@ -229,7 +229,7 @@ namespace Cursus.LMS.API.Controllers
 
 
         [HttpPut]
-        [Route("Mark-course-review")]
+        [Route("review/mark")]
         [Authorize(Roles = StaticUserRoles.Instructor) ]
         public async Task<ActionResult<ResponseDTO>> MarkCourseReview(Guid id)
         {
@@ -252,7 +252,7 @@ namespace Cursus.LMS.API.Controllers
 
 
         [HttpGet]
-        [Route("get-course-reports")]
+        [Route("report")]
         [Authorize]
         public async Task<ActionResult<ResponseDTO>> GetCourseReports(
             [FromQuery] Guid? courseId,
@@ -279,7 +279,7 @@ namespace Cursus.LMS.API.Controllers
         }
 
         [HttpGet]
-        [Route("get-course-report/{id}")]
+        [Route("report/{id}")]
         [Authorize]
         public async Task<ActionResult<ResponseDTO>> GetCourseReport(Guid id)
         {
@@ -301,7 +301,7 @@ namespace Cursus.LMS.API.Controllers
         }
 
         [HttpPost]
-        [Route("create-course-report")]
+        [Route("report")]
         [Authorize(Roles = StaticUserRoles.Student)]
         public async Task<ActionResult<ResponseDTO>> CreateCourseReport(
             [FromBody] CreateCourseReportDTO createCourseReportDTO)
@@ -335,7 +335,7 @@ namespace Cursus.LMS.API.Controllers
         }
 
         [HttpPut]
-        [Route("update-course-report")]
+        [Route("report")]
         [Authorize]
         public async Task<ActionResult<ResponseDTO>> UpdateCourseReport(
             [FromBody] UpdateCourseReportDTO updateCourseReportDTO)
@@ -369,7 +369,7 @@ namespace Cursus.LMS.API.Controllers
         }
 
         [HttpDelete]
-        [Route("delete-course-report/{id}")]
+        [Route("report/{id}")]
         [Authorize]
         public async Task<ActionResult<ResponseDTO>> DeleteCourseReport(Guid id)
         {
@@ -391,7 +391,7 @@ namespace Cursus.LMS.API.Controllers
         }
 
         [HttpGet]
-        [Route("get-top-purchased-courses")]
+        [Route("top-purchased")]
         [Authorize(Roles = StaticUserRoles.Admin)]
         public async Task<ActionResult<ResponseDTO>> GetTopPurchasedCourses
         (
@@ -418,7 +418,7 @@ namespace Cursus.LMS.API.Controllers
         }
         
         [HttpGet]
-        [Route("get-least-purchased-courses")]
+        [Route("least-purchased")]
         [Authorize(Roles = StaticUserRoles.Admin)]
         public async Task<ActionResult<ResponseDTO>> GetLeastPurchasedCourses
         (
@@ -445,7 +445,7 @@ namespace Cursus.LMS.API.Controllers
         }
 
         [HttpPost]
-        [Route("enroll-course")]
+        [Route("enroll")]
         [Authorize(Roles = StaticUserRoles.Admin)]
         public async Task<ActionResult<ResponseDTO>> EnrollCourse([FromBody] EnrollCourseDTO enrollCourseDto)
         {
@@ -454,14 +454,14 @@ namespace Cursus.LMS.API.Controllers
         }
 
         [HttpGet]
-        [Route("new-suggest-courses/{studentId}")]
+        [Route("suggest/{studentId}")]
         public async Task<ActionResult> SuggestCourses(Guid studentId)
         {
             var response = await _courseService.SuggestCourse(studentId);
             return StatusCode(response.StatusCode, response);
         }
 
-        [HttpGet("Bookmarked/{studentId}")]
+        [HttpGet("bookmarked/{studentId}")]
         public async Task<IActionResult> GetAllBookMarkedCoursesByID(Guid studentId, [FromQuery] string sortOrder = "desc")
         {
             var response = await _courseService.GetAllBookMarkedCoursesByID(studentId, sortOrder);
@@ -469,14 +469,14 @@ namespace Cursus.LMS.API.Controllers
         }
 
         [HttpPost]
-        [Route("courses-bookmarked")]
+        [Route("bookmarked")]
         public async Task<ActionResult> CreateBookMarkedCourse(CreateCourseBookmarkDTO createCourseBookmarkDTO)
         {
             var response = await _courseService.CreateBookMarkedCourse(User, createCourseBookmarkDTO);
             return StatusCode(response.StatusCode, response);
         }
         [HttpDelete]
-        [Route("courses-bookmarked/{Id}")]
+        [Route("bookmarked/{Id}")]
         public async Task<ActionResult> DeleteBookMarkedCourse(Guid Id)
         {
             var response = await _courseService.DeleteBookMarkedCourse(Id);

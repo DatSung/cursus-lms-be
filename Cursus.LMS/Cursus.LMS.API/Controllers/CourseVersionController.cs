@@ -63,7 +63,7 @@ namespace Cursus.LMS.API.Controllers
         }
 
         [HttpPost]
-        [Route("create-course-version")]
+        [Route("create")]
         [Authorize(Roles = StaticUserRoles.Instructor)]
         public async Task<ActionResult<ResponseDTO>> CreateCourseAndVersion
         (
@@ -75,7 +75,7 @@ namespace Cursus.LMS.API.Controllers
         }
 
         [HttpPost]
-        [Route("clone-course-version")]
+        [Route("clone")]
         [Authorize(Roles = StaticUserRoles.Instructor)]
         public async Task<ActionResult<ResponseDTO>> CloneCourseVersion
         (
@@ -87,7 +87,7 @@ namespace Cursus.LMS.API.Controllers
         }
 
         [HttpPut]
-        [Route("edit-course-version")]
+        [Route("edit")]
         public async Task<ActionResult<ResponseDTO>> EditCourseVersion
         (
             [FromBody] EditCourseVersionDTO editCourseVersionDto)
@@ -97,7 +97,7 @@ namespace Cursus.LMS.API.Controllers
         }
 
         [HttpDelete]
-        [Route("remove-course-version/{courseId:guid}")]
+        [Route("remove/{courseId:guid}")]
         public async Task<ActionResult<ResponseDTO>> RemoveCourseVersion([FromRoute] Guid courseId)
         {
             var responseDto = await _courseVersionService.RemoveCourseVersion(User, courseId);
@@ -105,7 +105,7 @@ namespace Cursus.LMS.API.Controllers
         }
 
         [HttpPost]
-        [Route("accept-course-version/{courseId:guid}")]
+        [Route("accept/{courseId:guid}")]
         public async Task<ActionResult<ResponseDTO>> AcceptCourseVersion([FromRoute] Guid courseId)
         {
             var responseDto = await _courseVersionService.AcceptCourseVersion(User, courseId);
@@ -113,7 +113,7 @@ namespace Cursus.LMS.API.Controllers
         }
 
         [HttpPost]
-        [Route("reject-course-version/{courseId:guid}")]
+        [Route("reject/{courseId:guid}")]
         public async Task<ActionResult<ResponseDTO>> RejectCourseVersion([FromRoute] Guid courseId)
         {
             var responseDto = await _courseVersionService.RejectCourseVersion(User, courseId);
@@ -121,7 +121,7 @@ namespace Cursus.LMS.API.Controllers
         }
 
         [HttpPost]
-        [Route("submit-course-version/{courseId:guid}")]
+        [Route("submit/{courseId:guid}")]
         public async Task<ActionResult<ResponseDTO>> SubmitCourseVersion([FromRoute] Guid courseId)
         {
             var responseDto = await _courseVersionService.SubmitCourseVersion(User, courseId);
@@ -129,7 +129,7 @@ namespace Cursus.LMS.API.Controllers
         }
 
         [HttpPost]
-        [Route("merge-course-version/{courseId:guid}")]
+        [Route("merge/{courseId:guid}")]
         public async Task<ActionResult<ResponseDTO>> MergeCourseVersion([FromRoute] Guid courseId)
         {
             var responseDto = await _courseVersionService.MergeCourseVersion(User, courseId);
@@ -242,8 +242,7 @@ namespace Cursus.LMS.API.Controllers
         }
 
         #endregion
-
-
+        
         #region Course Section Version
 
         [HttpGet]
