@@ -22,7 +22,7 @@ namespace Cursus.LMS.API.Controllers
         }
 
         [HttpGet]
-        [Route("get-transaction-history")]
+        [Route("transaction")]
         public async Task<ActionResult<ResponseDTO>> GetTransactionHistory
         (
             [FromQuery] string? userId,
@@ -50,7 +50,7 @@ namespace Cursus.LMS.API.Controllers
 
 
         [HttpPost]
-        [Route("create-stripe-connected-account")]
+        [Route("stripe/account")]
         public async Task<ActionResult<ResponseDTO>> CreateStripeConnectedAccount
         (
             CreateStripeConnectedAccountDTO createStripeConnectedAccountDto
@@ -61,7 +61,7 @@ namespace Cursus.LMS.API.Controllers
         }
 
         [HttpPost]
-        [Route("create-stripe-transfer")]
+        [Route("stripe/transfer")]
         public async Task<ActionResult<ResponseDTO>> CreateStripeTransfer
         (
             CreateStripeTransferDTO createStripeTransferDto)
@@ -71,7 +71,7 @@ namespace Cursus.LMS.API.Controllers
         }
 
         [HttpPost]
-        [Route("create-stripe-payout")]
+        [Route("stripe/payout")]
         public async Task<ActionResult<ResponseDTO>> CreateStripePayout(CreateStripePayoutDTO createStripePayoutDto)
         {
             var responseDto = await _paymentService.CreateStripePayout(User, createStripePayoutDto);
@@ -79,7 +79,7 @@ namespace Cursus.LMS.API.Controllers
         }
 
         [HttpPost]
-        [Route("add-stripe-card")]
+        [Route("stripe/card")]
         public async Task<ActionResult<ResponseDTO>> AddStripeCard
         (
             AddStripeCardDTO addStripeCardDto

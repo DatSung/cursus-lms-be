@@ -50,7 +50,7 @@ namespace Cursus.LMS.API.Controllers
         }
 
         [HttpGet]
-        [Route("get-sub-category/{id:guid}")]
+        [Route("sub/{id:guid}")]
         public async Task<ActionResult<ResponseDTO>> GetSubCategory([FromRoute] Guid id)
         {
             var responseDto = await _categoryService.GetSubCategory(id);
@@ -58,7 +58,7 @@ namespace Cursus.LMS.API.Controllers
         }
 
         [HttpGet]
-        [Route("get-parent-category/{id:guid}")]
+        [Route("parent/{id:guid}")]
         public async Task<ActionResult<ResponseDTO>> GetParentCategory([FromRoute] Guid id)
         {
             var responseDto = await _categoryService.GetParentCategory(id);

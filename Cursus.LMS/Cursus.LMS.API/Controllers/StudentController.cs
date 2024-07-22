@@ -70,7 +70,7 @@ namespace Cursus.LMS.API.Controllers
             return StatusCode(responseDto.StatusCode, responseDto);
         }
         [HttpGet]
-        [Route("total-courses/{studentId:guid}")]
+        [Route("course/total/{studentId:guid}")]
         [Authorize(Roles = StaticUserRoles.Admin)]
         public async Task<ActionResult<ResponseDTO>> GetTotalCoursesStudentById([FromRoute] Guid studentId)
         {
@@ -149,7 +149,7 @@ namespace Cursus.LMS.API.Controllers
         }
 
         [HttpGet]
-        [Route("totalPrices-courses/{studentId:guid}")]
+        [Route("course/price/total/{studentId:guid}")]
         [Authorize(Roles = StaticUserRoles.Admin)]
         public async Task<ActionResult<ResponseDTO>> TotalPricesCourseByStudentId([FromRoute] Guid studentId)
         {
@@ -158,7 +158,7 @@ namespace Cursus.LMS.API.Controllers
         }
 
         [HttpGet]
-        [Route("courses/{studentId:guid}")]
+        [Route("course/{studentId:guid}")]
         [Authorize(Roles = StaticUserRoles.Student)]
         public async Task<ActionResult<ResponseDTO>> GetAllCoursesByStudentId([FromRoute] Guid studentId)
         {
@@ -166,7 +166,7 @@ namespace Cursus.LMS.API.Controllers
             return StatusCode(responseDto.StatusCode, responseDto);
         }
         [HttpGet]
-        [Route("courses-enrolled/{studentId:guid}")]
+        [Route("course/enroll/total{studentId:guid}")]
         //[Authorize(Roles = StaticUserRoles.Student)]
         public async Task<ActionResult<ResponseDTO>> GetAllCoursesStudentEnrolled([FromRoute] Guid studentId)
         {

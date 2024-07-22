@@ -137,7 +137,7 @@ namespace Cursus.LMS.API.Controllers
         }
 
         [HttpPost]
-        [Route("upload-background/{courseVersionId:guid}")]
+        [Route("background/{courseVersionId:guid}")]
         public async Task<ActionResult<ResponseDTO>> UploadCourseVersionBackground
         (
             [FromRoute] Guid courseVersionId,
@@ -155,7 +155,7 @@ namespace Cursus.LMS.API.Controllers
         }
 
         [HttpGet]
-        [Route("display-background/{courseVersionId:guid}")]
+        [Route("background/{courseVersionId:guid}")]
         public async Task<ActionResult> DisplayCourseVersionBackground
         (
             [FromRoute] Guid courseVersionId

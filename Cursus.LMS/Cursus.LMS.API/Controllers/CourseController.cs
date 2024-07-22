@@ -391,7 +391,7 @@ namespace Cursus.LMS.API.Controllers
         }
 
         [HttpGet]
-        [Route("top-purchased")]
+        [Route("purchased/top")]
         [Authorize(Roles = StaticUserRoles.Admin)]
         public async Task<ActionResult<ResponseDTO>> GetTopPurchasedCourses
         (
@@ -418,7 +418,7 @@ namespace Cursus.LMS.API.Controllers
         }
         
         [HttpGet]
-        [Route("least-purchased")]
+        [Route("purchased/least")]
         [Authorize(Roles = StaticUserRoles.Admin)]
         public async Task<ActionResult<ResponseDTO>> GetLeastPurchasedCourses
         (

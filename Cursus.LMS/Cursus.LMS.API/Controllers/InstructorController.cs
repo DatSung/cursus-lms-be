@@ -42,7 +42,7 @@ namespace Cursus.LMS.API.Controllers
         }
 
         [HttpGet]
-        [Route("total-courses/{instructorId:guid}")]
+        [Route("course/total/{instructorId:guid}")]
         public async Task<ActionResult<ResponseDTO>> GetTotalCoursesInstructorById([FromRoute] Guid instructorId)
         {
             var responseDto = await _instructorService.GetInstructorTotalCourses(instructorId);
@@ -50,7 +50,7 @@ namespace Cursus.LMS.API.Controllers
         }
 
         [HttpGet]
-        [Route("total-rating/{instructorId:guid}")]
+        [Route("rating/total/{instructorId:guid}")]
         public async Task<ActionResult<ResponseDTO>> GetTotalRatingInstructorById([FromRoute] Guid instructorId)
         {
             var responseDto = await _instructorService.GetInstructorTotalRating(instructorId);
@@ -58,7 +58,7 @@ namespace Cursus.LMS.API.Controllers
         }
 
         [HttpGet]
-        [Route("total-earned-money/{instructorId:guid}")]
+        [Route("money/earned/total/{instructorId:guid}")]
         public async Task<ActionResult<ResponseDTO>> GetTotalEarnedMoneyInstructorById([FromRoute] Guid instructorId)
         {
             var responseDto = await _instructorService.GetInstructorEarnedMoney(instructorId);
@@ -66,7 +66,7 @@ namespace Cursus.LMS.API.Controllers
         }
 
         [HttpGet]
-        [Route("total-payout-money/{instructorId:guid}")]
+        [Route("money/payout/total{instructorId:guid}")]
         public async Task<ActionResult<ResponseDTO>> GetTotalPayoutMoneyInstructorById([FromRoute] Guid instructorId)
         {
             var responseDto = await _instructorService.GetInstructorPayoutMoney(instructorId);
