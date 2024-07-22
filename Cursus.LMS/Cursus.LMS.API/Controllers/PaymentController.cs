@@ -72,6 +72,7 @@ namespace Cursus.LMS.API.Controllers
 
         [HttpPost]
         [Route("stripe/payout")]
+        [Authorize(Roles = StaticUserRoles.Instructor)]
         public async Task<ActionResult<ResponseDTO>> CreateStripePayout(CreateStripePayoutDTO createStripePayoutDto)
         {
             var responseDto = await _paymentService.CreateStripePayout(User, createStripePayoutDto);
