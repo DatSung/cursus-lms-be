@@ -6,6 +6,7 @@ using Cursus.LMS.Model.DTO;
 using Cursus.LMS.Service.IService;
 using Cursus.LMS.Utility.Constants;
 using Hangfire;
+using static Microsoft.ApplicationInsights.MetricDimensionNames.TelemetryContext;
 
 namespace Cursus.LMS.Service.Service;
 
@@ -189,29 +190,29 @@ public class CourseService : ICourseService
                 switch (filterOn.Trim().ToLower())
                 {
                     case "title":
-                    {
-                        courseVersions = courseVersions.Where(x =>
-                            x.Title.Contains(filterQuery, StringComparison.CurrentCultureIgnoreCase)).ToList();
-                        break;
-                    }
+                        {
+                            courseVersions = courseVersions.Where(x =>
+                                x.Title.Contains(filterQuery, StringComparison.CurrentCultureIgnoreCase)).ToList();
+                            break;
+                        }
                     case "code":
-                    {
-                        courseVersions = courseVersions.Where(x =>
-                            x.Code.Contains(filterQuery, StringComparison.CurrentCultureIgnoreCase)).ToList();
-                        break;
-                    }
+                        {
+                            courseVersions = courseVersions.Where(x =>
+                                x.Code.Contains(filterQuery, StringComparison.CurrentCultureIgnoreCase)).ToList();
+                            break;
+                        }
                     case "description":
-                    {
-                        courseVersions = courseVersions.Where(x =>
-                            x.Description.Contains(filterQuery, StringComparison.CurrentCultureIgnoreCase)).ToList();
-                        break;
-                    }
+                        {
+                            courseVersions = courseVersions.Where(x =>
+                                x.Description.Contains(filterQuery, StringComparison.CurrentCultureIgnoreCase)).ToList();
+                            break;
+                        }
                     case "status":
-                    {
-                        courseVersions = courseVersions.Where(x =>
-                            x.CurrentStatus == int.Parse(filterQuery.Trim())).ToList();
-                        break;
-                    }
+                        {
+                            courseVersions = courseVersions.Where(x =>
+                                x.CurrentStatus == int.Parse(filterQuery.Trim())).ToList();
+                            break;
+                        }
                 }
             }
 
@@ -232,37 +233,37 @@ public class CourseService : ICourseService
                 switch (sortBy.Trim().ToLower())
                 {
                     case "title":
-                    {
-                        courseVersions = isAscending == true
-                            ? [.. courseVersions.OrderBy(x => x.Title)]
-                            : [.. courseVersions.OrderByDescending(x => x.Title)];
-                        break;
-                    }
+                        {
+                            courseVersions = isAscending == true
+                                ? [.. courseVersions.OrderBy(x => x.Title)]
+                                : [.. courseVersions.OrderByDescending(x => x.Title)];
+                            break;
+                        }
                     case "code":
-                    {
-                        courseVersions = isAscending == true
-                            ? [.. courseVersions.OrderBy(x => x.Code)]
-                            : [.. courseVersions.OrderByDescending(x => x.Code)];
-                        break;
-                    }
+                        {
+                            courseVersions = isAscending == true
+                                ? [.. courseVersions.OrderBy(x => x.Code)]
+                                : [.. courseVersions.OrderByDescending(x => x.Code)];
+                            break;
+                        }
                     case "description":
-                    {
-                        courseVersions = isAscending == true
-                            ? [.. courseVersions.OrderBy(x => x.Description)]
-                            : [.. courseVersions.OrderByDescending(x => x.Description)];
-                        break;
-                    }
+                        {
+                            courseVersions = isAscending == true
+                                ? [.. courseVersions.OrderBy(x => x.Description)]
+                                : [.. courseVersions.OrderByDescending(x => x.Description)];
+                            break;
+                        }
                     case "price":
-                    {
-                        courseVersions = isAscending == true
-                            ? [.. courseVersions.OrderBy(x => x.Price)]
-                            : [.. courseVersions.OrderByDescending(x => x.Price)];
-                        break;
-                    }
+                        {
+                            courseVersions = isAscending == true
+                                ? [.. courseVersions.OrderBy(x => x.Price)]
+                                : [.. courseVersions.OrderByDescending(x => x.Price)];
+                            break;
+                        }
                     default:
-                    {
-                        break;
-                    }
+                        {
+                            break;
+                        }
                 }
             }
 
@@ -898,6 +899,158 @@ public class CourseService : ICourseService
                 IsSuccess = false,
                 StatusCode = 500,
                 Result = null
+            };
+        }
+    }
+
+    public async Task<ResponseDTO> GetAllBookMarkedCoursesByID(Guid studentId, string sortOrder = "desc")
+    {
+        try
+        {
+            // Kiểm tra xem StudentId có tồn tại không
+            var studentExists = await _unitOfWork.StudentRepository.GetAsync(s => s.StudentId == studentId) != null;
+            if (!studentExists)
+            {
+                return new ResponseDTO
+                {
+                    Message = "Student not found",
+                    IsSuccess = false,
+                    StatusCode = 404
+                };
+            }
+
+            // Lấy danh sách CourseBookmark của Student
+            var courseBookmarksQuery = _unitOfWork.CourseBookmarkRepository.GetAllAsync( cb => cb.StudentId == studentId);
+
+            var courseBookmarks = (await courseBookmarksQuery).ToList();
+
+            // Sắp xếp danh sách CourseBookmark
+            switch (sortOrder.Trim().ToLower())
+            {
+                case "asc":
+                    courseBookmarks = courseBookmarks.OrderBy(cb => cb.CreatedTime).ToList();
+                    break;
+                case "desc":
+                    courseBookmarks = courseBookmarks.OrderByDescending(cb => cb.CreatedTime).ToList();
+                    break;
+                default:
+                    // Default sorting by CreatedTime descending
+                    courseBookmarks = courseBookmarks.OrderByDescending(cb => cb.CreatedTime).ToList();
+                    break;
+            }
+
+            return new ResponseDTO
+            {
+                Message = "Get all bookmarked courses by student ID successfully",
+                IsSuccess = true,
+                StatusCode = 200,
+                Result = courseBookmarks
+            };
+        }
+        catch (Exception ex)
+        {
+            return new ResponseDTO
+            {
+                Message = ex.Message,
+                IsSuccess = false,
+                StatusCode = 500
+            };
+        }
+    }
+
+    public async Task<ResponseDTO> CreateBookMarkedCourse(ClaimsPrincipal User, CreateCourseBookmarkDTO createCourseBookmarkDTO)
+    {
+        try
+        {
+            //Check if studentId is valid
+            var id = await _unitOfWork.StudentRepository.GetAsync(i => i.StudentId == createCourseBookmarkDTO.StudentId);
+            if (id == null)
+            {
+                return new ResponseDTO()
+                {
+                    Message = "StudentID Invalid",
+                    IsSuccess = false,
+                    StatusCode = 404,
+                    Result = null
+                };
+            }
+            //Check CourseId is already bookmarked
+            var course = await _unitOfWork.CourseBookmarkRepository.GetAsync( c => c.CourseId == createCourseBookmarkDTO.CourseId && c.StudentId == createCourseBookmarkDTO.StudentId);
+            if (course != null)
+            {
+                return new ResponseDTO()
+                {
+                    Message = "Course is already bookmarked",
+                    IsSuccess = false,
+                    StatusCode = 400,
+                    Result = null
+                };
+            }
+            //Create new bookmarked course
+            var courseBookmark = new CourseBookmark()
+            {
+                StudentId = createCourseBookmarkDTO.StudentId,
+                CourseId = createCourseBookmarkDTO.CourseId,
+                CreatedTime = DateTime.UtcNow,
+                CreatedBy = User.Identity.Name,
+            };
+            //Add new bookmarked course to database
+            await _unitOfWork.CourseBookmarkRepository.AddAsync(courseBookmark);
+            await _unitOfWork.SaveAsync();
+            //Return response
+            return new ResponseDTO()
+            {
+                Message = "Course bookmarked successfully.",
+                Result = null,
+                IsSuccess = true,
+                StatusCode = 200
+            };
+        }
+        catch (Exception ex)
+        {
+            return new ResponseDTO
+            {
+                Message = ex.Message,
+                IsSuccess = false,
+                StatusCode = 500
+            };
+        }
+    }
+
+    public async Task<ResponseDTO> DeleteBookMarkedCourse(Guid Id)
+    {
+        try
+        {
+            var courseBookmark = await _unitOfWork.CourseBookmarkRepository.GetAsync(
+                x => x.Id == Id);
+
+            if (courseBookmark is null)
+            {
+                return new ResponseDTO
+                {
+                    Message = "Course bookmark not found.",
+                    IsSuccess = false,
+                    StatusCode = 404
+                };
+            }
+
+            _unitOfWork.CourseBookmarkRepository.Remove(courseBookmark);
+            await _unitOfWork.SaveAsync();
+
+            return new ResponseDTO
+            {
+                Message = "Course bookmark removed successfully.",
+                IsSuccess = true,
+                StatusCode = 200
+            };
+        }
+        catch (Exception ex)
+        {
+            return new ResponseDTO
+            {
+                Message = ex.Message,
+                IsSuccess = false,
+                StatusCode = 500
             };
         }
     }
