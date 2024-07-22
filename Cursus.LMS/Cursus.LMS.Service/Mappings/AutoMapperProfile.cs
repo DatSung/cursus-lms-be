@@ -152,5 +152,7 @@ public class AutoMapperProfile : Profile
         CreateMap<OrderDetails, GetOrderDetailsDTO>().ReverseMap();
 
         CreateMap<Transaction, GetTransactionDTO>().ReverseMap();
+
+        CreateMap<CourseBookmark, CreateCourseBookmarkDTO>().ReverseMap();
     }
 }
