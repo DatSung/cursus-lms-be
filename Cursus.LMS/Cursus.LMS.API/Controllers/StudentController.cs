@@ -166,7 +166,7 @@ namespace Cursus.LMS.API.Controllers
             return StatusCode(responseDto.StatusCode, responseDto);
         }
         [HttpGet]
-        [Route("course/total{studentId:guid}")]
+        [Route("course/enroll/total/{studentId:guid}")]
         //[Authorize(Roles = StaticUserRoles.Student)]
         public async Task<ActionResult<ResponseDTO>> GetAllCoursesStudentEnrolled([FromRoute] Guid studentId)
         {

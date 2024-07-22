@@ -174,7 +174,7 @@ namespace Cursus.LMS.API.Controllers
         /// </summary>
         /// <returns></returns>
         [HttpGet]
-        [Route("user/avatar/display{userId}")]
+        [Route("user/avatar/display/{userId}")]
         public async Task<IActionResult> DisplayUserAvatar([FromRoute] string userId)
         {
             var stream = await _authService.DisplayUserAvatar(userId);
