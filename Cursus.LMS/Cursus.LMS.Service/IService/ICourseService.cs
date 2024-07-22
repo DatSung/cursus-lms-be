@@ -78,9 +78,13 @@ public interface ICourseService
         int pageSize,
         string? byCategoryName
     );
-    
+
     Task<ResponseDTO> SuggestCourse(Guid studentId);
 
     Task<ResponseDTO> UpsertCourseTotal(UpsertCourseTotalDTO upsertCourseTotalDto);
+
+    Task<ResponseDTO> GetAllBookMarkedCoursesByID(Guid studentId, string sortOrder = "desc");
+    Task<ResponseDTO> CreateBookMarkedCourse(ClaimsPrincipal User, CreateCourseBookmarkDTO createCourseBookmarkDto);
+    Task<ResponseDTO> DeleteBookMarkedCourse(Guid id);
 
 }

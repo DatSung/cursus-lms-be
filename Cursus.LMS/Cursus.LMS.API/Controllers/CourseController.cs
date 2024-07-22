@@ -5,6 +5,7 @@ using Cursus.LMS.Utility.Constants;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using System.Security.Claims;
 
 namespace Cursus.LMS.API.Controllers
 {
@@ -454,9 +455,31 @@ namespace Cursus.LMS.API.Controllers
 
         [HttpGet]
         [Route("new-suggest-courses/{studentId}")]
-        public async Task<IActionResult> SuggestCourses(Guid studentId)
+        public async Task<ActionResult> SuggestCourses(Guid studentId)
         {
             var response = await _courseService.SuggestCourse(studentId);
+            return StatusCode(response.StatusCode, response);
+        }
+
+        [HttpGet("Bookmarked/{studentId}")]
+        public async Task<IActionResult> GetAllBookMarkedCoursesByID(Guid studentId, [FromQuery] string sortOrder = "desc")
+        {
+            var response = await _courseService.GetAllBookMarkedCoursesByID(studentId, sortOrder);
+            return StatusCode(response.StatusCode, response);
+        }
+
+        [HttpPost]
+        [Route("courses-bookmarked")]
+        public async Task<ActionResult> CreateBookMarkedCourse(CreateCourseBookmarkDTO createCourseBookmarkDTO)
+        {
+            var response = await _courseService.CreateBookMarkedCourse(User, createCourseBookmarkDTO);
+            return StatusCode(response.StatusCode, response);
+        }
+        [HttpDelete]
+        [Route("courses-bookmarked/{Id}")]
+        public async Task<ActionResult> DeleteBookMarkedCourse(Guid Id)
+        {
+            var response = await _courseService.DeleteBookMarkedCourse(Id);
             return StatusCode(response.StatusCode, response);
         }
     }
