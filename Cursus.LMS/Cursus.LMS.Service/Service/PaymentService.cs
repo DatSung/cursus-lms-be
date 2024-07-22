@@ -240,7 +240,7 @@ public class PaymentService : IPaymentService
 
             var payout = (Payout)responseDto.Result!;
 
-            if (payout.Status != "paid")
+            if (payout.Status != "pending")
             {
                 return responseDto;
             }
