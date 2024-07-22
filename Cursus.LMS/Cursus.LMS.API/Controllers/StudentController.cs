@@ -34,7 +34,8 @@ namespace Cursus.LMS.API.Controllers
         )
         {
             var responseDto =
-                await _studentsService.GetAllStudent(User, filterOn, filterQuery, sortBy, isAscending, pageNumber, pageSize);
+                await _studentsService.GetAllStudent(User, filterOn, filterQuery, sortBy, isAscending, pageNumber,
+                    pageSize);
             return StatusCode(responseDto.StatusCode, responseDto);
         }
 
@@ -46,6 +47,7 @@ namespace Cursus.LMS.API.Controllers
             var responseDto = await _studentsService.GetById(studentId);
             return StatusCode(responseDto.StatusCode, responseDto);
         }
+
         [HttpPut]
         [Authorize(Roles = StaticUserRoles.Admin)]
         public async Task<ActionResult<ResponseDTO>> UpdateStudent([FromBody] UpdateStudentDTO updateStudentDTO)
@@ -53,6 +55,7 @@ namespace Cursus.LMS.API.Controllers
             var responseDto = await _studentsService.UpdateById(updateStudentDTO);
             return StatusCode(responseDto.StatusCode, responseDto);
         }
+
         [HttpPost]
         [Route("activate/{studentId:guid}")]
         [Authorize(Roles = StaticUserRoles.Admin)]
@@ -61,6 +64,7 @@ namespace Cursus.LMS.API.Controllers
             var responseDto = await _studentsService.ActivateStudent(User, studentId);
             return StatusCode(responseDto.StatusCode, responseDto);
         }
+
         [HttpPost]
         [Route("deactivate/{studentId:guid}")]
         [Authorize(Roles = StaticUserRoles.Admin)]
@@ -69,8 +73,9 @@ namespace Cursus.LMS.API.Controllers
             var responseDto = await _studentsService.DeactivateStudent(User, studentId);
             return StatusCode(responseDto.StatusCode, responseDto);
         }
+
         [HttpGet]
-        [Route("total-courses/{studentId:guid}")]
+        [Route("course/total/{studentId:guid}")]
         [Authorize(Roles = StaticUserRoles.Admin)]
         public async Task<ActionResult<ResponseDTO>> GetTotalCoursesStudentById([FromRoute] Guid studentId)
         {
@@ -82,11 +87,11 @@ namespace Cursus.LMS.API.Controllers
         [Route("comment/{studentId:guid}")]
         [Authorize(Roles = StaticUserRoles.Admin)]
         public async Task<ActionResult<ResponseDTO>> GetStudentComments
-            (
-                [FromRoute] Guid studentId,
-                [FromQuery] int pageNumber = 1,
-                [FromQuery] int pageSize = 10
-            )
+        (
+            [FromRoute] Guid studentId,
+            [FromQuery] int pageNumber = 1,
+            [FromQuery] int pageSize = 10
+        )
         {
             var responseDto = await _studentsService.GetAllStudentComment(studentId, pageNumber, pageSize);
             return StatusCode(responseDto.StatusCode, responseDto);
@@ -95,19 +100,23 @@ namespace Cursus.LMS.API.Controllers
         [HttpPost]
         [Route("comment/")]
         [Authorize(Roles = StaticUserRoles.Admin)]
-        public async Task<ActionResult<ResponseDTO>> CreateStudentComment(CreateStudentCommentDTO createStudentCommentDto)
+        public async Task<ActionResult<ResponseDTO>> CreateStudentComment(
+            CreateStudentCommentDTO createStudentCommentDto)
         {
             var responseDto = await _studentsService.CreateStudentComment(User, createStudentCommentDto);
             return StatusCode(responseDto.StatusCode, responseDto);
         }
+
         [HttpPut]
         [Route("comment/")]
         [Authorize(Roles = StaticUserRoles.Admin)]
-        public async Task<ActionResult<ResponseDTO>> UpdateStudentComment(UpdateStudentCommentDTO updateStudentCommentDto)
+        public async Task<ActionResult<ResponseDTO>> UpdateStudentComment(
+            UpdateStudentCommentDTO updateStudentCommentDto)
         {
             var responseDto = await _studentsService.UpdateStudentComment(User, updateStudentCommentDto);
             return StatusCode(responseDto.StatusCode, responseDto);
         }
+
         [HttpDelete]
         [Route("comment/{commentId:guid}")]
         [Authorize(Roles = StaticUserRoles.Admin)]
@@ -149,8 +158,8 @@ namespace Cursus.LMS.API.Controllers
         }
 
         [HttpGet]
-        [Route("totalPrices-courses/{studentId:guid}")]
-        [Authorize(Roles = StaticUserRoles.Admin)]
+        [Route("course/price/total/{studentId:guid}")]
+        [Authorize(Roles = StaticUserRoles.AdminStudent)]
         public async Task<ActionResult<ResponseDTO>> TotalPricesCourseByStudentId([FromRoute] Guid studentId)
         {
             var responseDto = await _studentsService.TotalPricesCoursesByStudentId(studentId);
@@ -158,16 +167,17 @@ namespace Cursus.LMS.API.Controllers
         }
 
         [HttpGet]
-        [Route("courses/{studentId:guid}")]
-        [Authorize(Roles = StaticUserRoles.Student)]
+        [Route("course/{studentId:guid}")]
+        [Authorize(Roles = StaticUserRoles.AdminStudent)]
         public async Task<ActionResult<ResponseDTO>> GetAllCoursesByStudentId([FromRoute] Guid studentId)
         {
             var responseDto = await _studentsService.GetAllCourseByStudentId(studentId);
             return StatusCode(responseDto.StatusCode, responseDto);
         }
+
         [HttpGet]
-        [Route("courses-enrolled/{studentId:guid}")]
-        //[Authorize(Roles = StaticUserRoles.Student)]
+        [Route("course/enroll/total/{studentId:guid}")]
+        [Authorize(Roles = StaticUserRoles.AdminStudent)]
         public async Task<ActionResult<ResponseDTO>> GetAllCoursesStudentEnrolled([FromRoute] Guid studentId)
         {
             var responseDto = await _studentsService.GetAllCourseStudentEnrolled(studentId);

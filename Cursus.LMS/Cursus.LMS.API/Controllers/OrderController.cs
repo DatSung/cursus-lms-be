@@ -63,7 +63,7 @@ namespace Cursus.LMS.API.Controllers
         }
 
         [HttpPost]
-        [Route("pay-with-stripe")]
+        [Route("stripe/checkout")]
         [Authorize]
         public async Task<ActionResult<ResponseDTO>> PayWithStripe
         (
@@ -75,7 +75,7 @@ namespace Cursus.LMS.API.Controllers
         }
 
         [HttpPost]
-        [Route("validate-with-stripe")]
+        [Route("stripe/validate")]
         [Authorize]
         public async Task<ActionResult<ResponseDTO>> ValidateWithStripe
         (
@@ -87,7 +87,7 @@ namespace Cursus.LMS.API.Controllers
         }
 
         [HttpPut]
-        [Route("confirm-order/{orderHeaderId:guid}")]
+        [Route("confirm/{orderHeaderId:guid}")]
         [Authorize(Roles = StaticUserRoles.Admin)]
         public async Task<ActionResult<ResponseDTO>> ConfirmOrder([FromRoute] Guid orderHeaderId)
         {

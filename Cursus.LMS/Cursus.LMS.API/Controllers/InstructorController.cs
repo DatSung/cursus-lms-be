@@ -1,7 +1,9 @@
 using System.Security.Claims;
 using Cursus.LMS.Model.DTO;
 using Cursus.LMS.Service.IService;
+using Cursus.LMS.Utility.Constants;
 using Hangfire;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Cursus.LMS.API.Controllers
@@ -11,10 +13,12 @@ namespace Cursus.LMS.API.Controllers
     public class InstructorController : ControllerBase
     {
         private readonly IInstructorService _instructorService;
+        private readonly IPaymentService _paymentService;
 
-        public InstructorController(IInstructorService instructorService)
+        public InstructorController(IInstructorService instructorService, IPaymentService paymentService)
         {
             _instructorService = instructorService;
+            _paymentService = paymentService;
         }
 
         [HttpGet]
@@ -42,7 +46,7 @@ namespace Cursus.LMS.API.Controllers
         }
 
         [HttpGet]
-        [Route("total-courses/{instructorId:guid}")]
+        [Route("course/total/{instructorId:guid}")]
         public async Task<ActionResult<ResponseDTO>> GetTotalCoursesInstructorById([FromRoute] Guid instructorId)
         {
             var responseDto = await _instructorService.GetInstructorTotalCourses(instructorId);
@@ -50,7 +54,7 @@ namespace Cursus.LMS.API.Controllers
         }
 
         [HttpGet]
-        [Route("total-rating/{instructorId:guid}")]
+        [Route("rating/total/{instructorId:guid}")]
         public async Task<ActionResult<ResponseDTO>> GetTotalRatingInstructorById([FromRoute] Guid instructorId)
         {
             var responseDto = await _instructorService.GetInstructorTotalRating(instructorId);
@@ -58,7 +62,7 @@ namespace Cursus.LMS.API.Controllers
         }
 
         [HttpGet]
-        [Route("total-earned-money/{instructorId:guid}")]
+        [Route("money/earned/total/{instructorId:guid}")]
         public async Task<ActionResult<ResponseDTO>> GetTotalEarnedMoneyInstructorById([FromRoute] Guid instructorId)
         {
             var responseDto = await _instructorService.GetInstructorEarnedMoney(instructorId);
@@ -66,7 +70,7 @@ namespace Cursus.LMS.API.Controllers
         }
 
         [HttpGet]
-        [Route("total-payout-money/{instructorId:guid}")]
+        [Route("money/payout/total/{instructorId:guid}")]
         public async Task<ActionResult<ResponseDTO>> GetTotalPayoutMoneyInstructorById([FromRoute] Guid instructorId)
         {
             var responseDto = await _instructorService.GetInstructorPayoutMoney(instructorId);
@@ -174,6 +178,48 @@ namespace Cursus.LMS.API.Controllers
             }
 
             return File(stream, contentType, fileName);
+        }
+
+        [HttpGet]
+        [Route("payout/top")]
+        [Authorize(Roles = StaticUserRoles.Admin)]
+        public async Task<ActionResult<ResponseDTO>> GetTopInstructorsByPayout
+        (
+            [FromQuery] int topN,
+            [FromQuery] int? filterYear,
+            [FromQuery] int? filterMonth,
+            [FromQuery] int? filterQuarter
+        )
+        {
+            var responseDto = await _paymentService.GetTopInstructorsByPayout
+            (
+                topN,
+                filterYear,
+                filterMonth,
+                filterQuarter
+            );
+            return StatusCode(responseDto.StatusCode, responseDto);
+        }
+
+        [HttpGet]
+        [Route("payout/least")]
+        [Authorize(Roles = StaticUserRoles.Admin)]
+        public async Task<ActionResult<ResponseDTO>> GetLeastInstructorsByPayout
+        (
+            [FromQuery] int topN,
+            [FromQuery] int? filterYear,
+            [FromQuery] int? filterMonth,
+            [FromQuery] int? filterQuarter
+        )
+        {
+            var responseDto = await _paymentService.GetLeastInstructorsByPayout
+            (
+                topN,
+                filterYear,
+                filterMonth,
+                filterQuarter
+            );
+            return StatusCode(responseDto.StatusCode, responseDto);
         }
     }
 }
