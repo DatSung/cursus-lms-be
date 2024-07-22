@@ -282,7 +282,7 @@ namespace Cursus.LMS.API.Controllers
         }
 
         [HttpPost]
-        [Route("create-course-section-version")]
+        [Route("section")]
         [Authorize(Roles = StaticUserRoles.Instructor)]
         public async Task<ActionResult<ResponseDTO>> CreateCourseSection
         (
@@ -295,7 +295,7 @@ namespace Cursus.LMS.API.Controllers
         }
 
         [HttpPut]
-        [Route("edit-course-section-version")]
+        [Route("section")]
         public async Task<ActionResult<ResponseDTO>> EditCourseSection
         (
             EditCourseSectionVersionDTO createCourseSectionVersionDto
