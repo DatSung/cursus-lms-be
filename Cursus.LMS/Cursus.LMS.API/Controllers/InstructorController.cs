@@ -70,7 +70,7 @@ namespace Cursus.LMS.API.Controllers
         }
 
         [HttpGet]
-        [Route("money/payout/total{instructorId:guid}")]
+        [Route("money/payout/total/{instructorId:guid}")]
         public async Task<ActionResult<ResponseDTO>> GetTotalPayoutMoneyInstructorById([FromRoute] Guid instructorId)
         {
             var responseDto = await _instructorService.GetInstructorPayoutMoney(instructorId);
