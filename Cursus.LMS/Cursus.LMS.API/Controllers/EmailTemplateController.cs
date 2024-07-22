@@ -140,65 +140,65 @@ namespace Cursus.LMS.API.Controllers
             });
         }
 
-        [HttpGet("notice-for-admin-about-new-course")]
-        public async Task<ActionResult<ResponseDTO>> SendEmailForAdminAboutNewCourse(string toMail)
-        {
-            var response = new ResponseDTO();
-
-            try
-            {
-                bool result = await _emailService.SendEmailForAdminAboutNewCourse(toMail);
-                response.IsSuccess = result;
-                response.Message = result ? "Email sent successfully." : "Failed to send email.";
-            }
-            catch (Exception ex)
-            {
-                response.IsSuccess = false;
-                response.Message = ex.Message;
-            }
-
-            return Ok(response);
-        }
-
-
-        [HttpGet("Approved-notice-for-instructor-about-new-course")]
-        public async Task<ActionResult<ResponseDTO>> SendApproveEmailForInstructorAboutNewCourse(string toMail)
-        {
-            var response = new ResponseDTO();
-
-            try
-            {
-                bool result = await _emailService.SendApproveEmailForInstructorAboutNewCourse(toMail);
-                response.IsSuccess = result;
-                response.Message = result ? "Email sent successfully." : "Failed to send email.";
-            }
-            catch (Exception ex)
-            {
-                response.IsSuccess = false;
-                response.Message = ex.Message;
-            }
-
-            return Ok(response);
-        }
-
-        [HttpGet("Rejected-notice-for-instructor-about-new-course")]
-        public async Task<ActionResult<ResponseDTO>> SendRejectEmailForInstructorAboutNewCourse(string toMail)
-        {
-            var response = new ResponseDTO();
-
-            try
-            {
-                bool result = await _emailService.SendRejectEmailForInstructorAboutNewCourse(toMail);
-                response.IsSuccess = result;
-                response.Message = result ? "Email sent successfully." : "Failed to send email.";
-            }
-            catch (Exception ex)
-            {
-                response.IsSuccess = false;
-                response.Message = ex.Message;
-            }
-
-            return Ok(response);
-        }
+        // [HttpGet("notice-for-admin-about-new-course")]
+        // public async Task<ActionResult<ResponseDTO>> SendEmailForAdminAboutNewCourse(string toMail)
+        // {
+        //     var response = new ResponseDTO();
+        //
+        //     try
+        //     {
+        //         bool result = await _emailService.SendEmailForAdminAboutNewCourse(toMail);
+        //         response.IsSuccess = result;
+        //         response.Message = result ? "Email sent successfully." : "Failed to send email.";
+        //     }
+        //     catch (Exception ex)
+        //     {
+        //         response.IsSuccess = false;
+        //         response.Message = ex.Message;
+        //     }
+        //
+        //     return Ok(response);
+        // }
+        //
+        //
+        // [HttpGet("Approved-notice-for-instructor-about-new-course")]
+        // public async Task<ActionResult<ResponseDTO>> SendApproveEmailForInstructorAboutNewCourse(string toMail)
+        // {
+        //     var response = new ResponseDTO();
+        //
+        //     try
+        //     {
+        //         bool result = await _emailService.SendApproveEmailForInstructorAboutNewCourse(toMail);
+        //         response.IsSuccess = result;
+        //         response.Message = result ? "Email sent successfully." : "Failed to send email.";
+        //     }
+        //     catch (Exception ex)
+        //     {
+        //         response.IsSuccess = false;
+        //         response.Message = ex.Message;
+        //     }
+        //
+        //     return Ok(response);
+        // }
+        //
+        // [HttpGet("Rejected-notice-for-instructor-about-new-course")]
+        // public async Task<ActionResult<ResponseDTO>> SendRejectEmailForInstructorAboutNewCourse(string toMail)
+        // {
+        //     var response = new ResponseDTO();
+        //
+        //     try
+        //     {
+        //         bool result = await _emailService.SendRejectEmailForInstructorAboutNewCourse(toMail);
+        //         response.IsSuccess = result;
+        //         response.Message = result ? "Email sent successfully." : "Failed to send email.";
+        //     }
+        //     catch (Exception ex)
+        //     {
+        //         response.IsSuccess = false;
+        //         response.Message = ex.Message;
+        //     }
+        //
+        //     return Ok(response);
+        // }
     }
 }

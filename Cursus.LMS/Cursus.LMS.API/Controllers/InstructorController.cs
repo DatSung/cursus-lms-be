@@ -1,7 +1,9 @@
 using System.Security.Claims;
 using Cursus.LMS.Model.DTO;
 using Cursus.LMS.Service.IService;
+using Cursus.LMS.Utility.Constants;
 using Hangfire;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Cursus.LMS.API.Controllers
@@ -11,10 +13,12 @@ namespace Cursus.LMS.API.Controllers
     public class InstructorController : ControllerBase
     {
         private readonly IInstructorService _instructorService;
+        private readonly IPaymentService _paymentService;
 
-        public InstructorController(IInstructorService instructorService)
+        public InstructorController(IInstructorService instructorService, IPaymentService paymentService)
         {
             _instructorService = instructorService;
+            _paymentService = paymentService;
         }
 
         [HttpGet]
@@ -174,6 +178,48 @@ namespace Cursus.LMS.API.Controllers
             }
 
             return File(stream, contentType, fileName);
+        }
+
+        [HttpGet]
+        [Route("payout/top")]
+        [Authorize(Roles = StaticUserRoles.Admin)]
+        public async Task<ActionResult<ResponseDTO>> GetTopInstructorsByPayout
+        (
+            [FromQuery] int topN,
+            [FromQuery] int? filterYear,
+            [FromQuery] int? filterMonth,
+            [FromQuery] int? filterQuarter
+        )
+        {
+            var responseDto = await _paymentService.GetTopInstructorsByPayout
+            (
+                topN,
+                filterYear,
+                filterMonth,
+                filterQuarter
+            );
+            return StatusCode(responseDto.StatusCode, responseDto);
+        }
+
+        [HttpGet]
+        [Route("payout/least")]
+        [Authorize(Roles = StaticUserRoles.Admin)]
+        public async Task<ActionResult<ResponseDTO>> GetLeastInstructorsByPayout
+        (
+            [FromQuery] int topN,
+            [FromQuery] int? filterYear,
+            [FromQuery] int? filterMonth,
+            [FromQuery] int? filterQuarter
+        )
+        {
+            var responseDto = await _paymentService.GetLeastInstructorsByPayout
+            (
+                topN,
+                filterYear,
+                filterMonth,
+                filterQuarter
+            );
+            return StatusCode(responseDto.StatusCode, responseDto);
         }
     }
 }
