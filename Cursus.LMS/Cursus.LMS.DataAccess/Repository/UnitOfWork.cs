@@ -39,6 +39,7 @@ namespace Cursus.LMS.DataAccess.Repository
         public IBalanceRepository BalanceRepository { get; }
         public ITransactionRepository TransactionRepository { get; }
         public ICourseBookmarkRepository CourseBookmarkRepository { get; }
+        public ICourseProgressRepository CourseProgressRepository { get; }
 
         public UnitOfWork(ApplicationDbContext context, UserManager<ApplicationUser> userManager)
         {
@@ -71,6 +72,7 @@ namespace Cursus.LMS.DataAccess.Repository
             BalanceRepository = new BalanceRepository(_context);
             TransactionRepository = new TransactionRepository(_context);
             CourseBookmarkRepository = new CourseBookmarkRepository(_context);
+            CourseProgressRepository = new CourseProgressRepository(_context);
         }
 
         public async Task<int> SaveAsync()
