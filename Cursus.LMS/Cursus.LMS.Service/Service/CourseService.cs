@@ -919,7 +919,7 @@ public class CourseService : ICourseService
         }
     }
 
-    public async Task<ResponseDTO> GetAllBookMarkedCoursesByID(Guid studentId, string sortOrder = "desc")
+    public async Task<ResponseDTO> GetAllBookMarkedCoursesById(Guid studentId, string sortOrder = "desc")
     {
         try
         {
