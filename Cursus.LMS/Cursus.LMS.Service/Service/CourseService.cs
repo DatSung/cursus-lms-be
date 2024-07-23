@@ -150,6 +150,7 @@ public class CourseService : ICourseService
                 courses = _unitOfWork.CourseRepository
                     .GetAllAsync
                     (
+                        filter: x => x.Status == 1,
                         includeProperties: "Course,Category,Level"
                     )
                     .GetAwaiter()
@@ -205,6 +206,18 @@ public class CourseService : ICourseService
                         {
                             courseVersions = courseVersions.Where(x =>
                                 x.Description.Contains(filterQuery, StringComparison.CurrentCultureIgnoreCase)).ToList();
+                            break;
+                        }
+                    case "category":
+                        {
+                            courseVersions = courseVersions.Where(x =>
+                                x.Category != null && x.Category.Name.Contains(filterQuery, StringComparison.CurrentCultureIgnoreCase)).ToList(); 
+                            break;
+                        }
+                    case "instructor":
+                        {
+                            courseVersions = courseVersions.Where(x =>
+                                x.Course.Instructor != null && x.Course.Instructor.ApplicationUser.FullName.Contains(filterQuery, StringComparison.CurrentCultureIgnoreCase)).ToList();
                             break;
                         }
                     case "status":
@@ -266,6 +279,9 @@ public class CourseService : ICourseService
                         }
                 }
             }
+
+            // Sort by highest rank (TotalStudent) after all other sorting and filtering
+            courseVersions = courseVersions.OrderByDescending(cv => cv.Course.TotalStudent).ToList();
 
             // Pagination
             if (pageNumber > 0 && pageSize > 0)
