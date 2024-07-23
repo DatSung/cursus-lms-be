@@ -468,7 +468,7 @@ namespace Cursus.LMS.API.Controllers
             [FromQuery] string sortOrder = "desc"
         )
         {
-            var response = await _courseService.GetAllBookMarkedCoursesByID(studentId, sortOrder);
+            var response = await _courseService.GetAllBookMarkedCoursesById(studentId, sortOrder);
             return StatusCode(response.StatusCode, response);
         }
 
