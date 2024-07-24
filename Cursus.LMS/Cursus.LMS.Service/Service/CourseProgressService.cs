@@ -90,27 +90,134 @@ public class CourseProgressService : ICourseProgressService
         }
         catch (Exception e)
         {
-            Console.WriteLine(e);
-            throw;
+            return new ResponseDTO()
+            {
+                IsSuccess = false,
+                StatusCode = 500,
+                Result = null,
+                Message = e.Message
+            };
         }
     }
 
-    public Task<ResponseDTO> UpdateProgress(UpdateProgressDTO updateProgressDto)
+    public async Task<ResponseDTO> UpdateProgress(UpdateProgressDTO updateProgressDto)
     {
         try
         {
-            throw new NotImplementedException();
+            var studentCourse = await _unitOfWork.StudentCourseRepository
+                .GetAsync(
+                    x => x.CourseId == updateProgressDto.CourseId
+                         && x.StudentId == updateProgressDto.StudentId
+                );
+
+            if (studentCourse is null)
+            {
+                return new ResponseDTO()
+                {
+                    Message = "Student course was not found",
+                    IsSuccess = false,
+                    StatusCode = 404,
+                    Result = null
+                };
+            }
+
+            var courseProgress = await _unitOfWork.CourseProgressRepository.GetAsync
+            (
+                x => x.StudentCourseId == studentCourse.Id
+                     && x.CourseId == studentCourse.CourseId
+                     && x.SectionId == updateProgressDto.SectionId
+                     && x.DetailsId == updateProgressDto.DetailsId
+            );
+
+            if (courseProgress is null)
+            {
+                return new ResponseDTO()
+                {
+                    Message = "Course progress was not found",
+                    Result = null,
+                    IsSuccess = false,
+                    StatusCode = 404
+                };
+            }
+
+            courseProgress.IsCompleted = true;
+            courseProgress.CompletedTime = DateTime.Now;
+
+            await _unitOfWork.SaveAsync();
+
+            return new ResponseDTO()
+            {
+                Message = "Update progress successfully",
+                IsSuccess = true,
+                StatusCode = 200,
+                Result = null
+            };
+        }
+        catch (Exception e)
+        {
+            return new ResponseDTO()
+            {
+                IsSuccess = false,
+                StatusCode = 500,
+                Result = null,
+                Message = e.Message
+            };
+        }
+    }
+
+    public async Task<ResponseDTO> GetProgress(GetProgressDTO getProgressDto)
+    {
+        try
+        {
+            var studentCourse = await _unitOfWork.StudentCourseRepository
+                .GetAsync(
+                    x => x.CourseId == getProgressDto.CourseId
+                         && x.StudentId == getProgressDto.StudentId
+                );
+
+            if (studentCourse is null)
+            {
+                return new ResponseDTO()
+                {
+                    Message = "Student course was not found",
+                    IsSuccess = false,
+                    StatusCode = 404,
+                    Result = null
+                };
+            }
+
+            var courseProgress = await _unitOfWork.CourseProgressRepository.GetAsync
+            (
+                x => x.StudentCourseId == studentCourse.Id
+                     && x.CourseId == studentCourse.CourseId
+                     && x.SectionId == getProgressDto.SectionId
+                     && x.DetailsId == getProgressDto.DetailsId
+            );
+
+            if (courseProgress is null)
+            {
+                return new ResponseDTO()
+                {
+                    Message = "Course progress was not found",
+                    Result = null,
+                    IsSuccess = false,
+                    StatusCode = 404
+                };
+            }
+
+            return new ResponseDTO()
+            {
+                Result = courseProgress,
+                Message = "Get course progress successfully",
+                IsSuccess = true,
+                StatusCode = 200
+            };
         }
         catch (Exception e)
         {
             Console.WriteLine(e);
             throw;
         }
-    }
-
-    public Task<ResponseDTO> GetProgress(GetProgressDTO getProgressDto)
-    {
-        throw new NotImplementedException();
     }
 
     public Task<ResponseDTO> GetPercentage(GetPercentageDTO getPercentageDto)

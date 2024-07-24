@@ -491,9 +491,46 @@ namespace Cursus.LMS.API.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult> CreateCourseProgress([FromBody] CreateProgressDTO createProgressDto)
+        [Route("progress")]
+        public async Task<ActionResult<ResponseDTO>> CreateCourseProgress
+        (
+            [FromBody] CreateProgressDTO createProgressDto
+        )
         {
             var responseDto = await _courseProgressService.CreateProgress(createProgressDto);
+            return StatusCode(responseDto.StatusCode, responseDto);
+        }
+
+        [HttpPut]
+        [Route("progress")]
+        public async Task<ActionResult<ResponseDTO>> UpdateCourseProgress
+        (
+            [FromBody] UpdateProgressDTO updateProgressDto
+        )
+        {
+            var responseDto = await _courseProgressService.UpdateProgress(updateProgressDto);
+            return StatusCode(responseDto.StatusCode, responseDto);
+        }
+
+        [HttpGet]
+        [Route("progress")]
+        public async Task<ActionResult<ResponseDTO>> GetCourseProgress
+        (
+            [FromBody] GetProgressDTO getProgressDto
+        )
+        {
+            var responseDto = await _courseProgressService.GetProgress(getProgressDto);
+            return StatusCode(responseDto.StatusCode, responseDto);
+        }
+
+        [HttpGet]
+        [Route("progress/percentage")]
+        public async Task<ActionResult<ResponseDTO>> GetProgressPercentage
+        (
+            [FromBody] GetPercentageDTO getPercentageDto
+        )
+        {
+            var responseDto = await _courseProgressService.GetPercentage(getPercentageDto);
             return StatusCode(responseDto.StatusCode, responseDto);
         }
     }
