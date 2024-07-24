@@ -17,16 +17,18 @@ namespace Cursus.LMS.API.Controllers
         private readonly ICourseReviewService _courseReviewService;
         private readonly ICourseReportService _courseReportService;
 
+        private readonly ICourseProgressService _courseProgressService;
+
         public CourseController
         (
             ICourseService courseService,
             ICourseReviewService courseReviewService,
-            ICourseReportService courseReportService
-        )
+            ICourseReportService courseReportService, ICourseProgressService courseProgressService)
         {
             _courseService = courseService;
             _courseReviewService = courseReviewService;
             _courseReportService = courseReportService;
+            _courseProgressService = courseProgressService;
         }
 
 
@@ -486,6 +488,13 @@ namespace Cursus.LMS.API.Controllers
         {
             var response = await _courseService.DeleteBookMarkedCourse(bookmarkedId);
             return StatusCode(response.StatusCode, response);
+        }
+
+        [HttpPost]
+        public async Task<ActionResult> CreateCourseProgress([FromBody] CreateProgressDTO createProgressDto)
+        {
+            var responseDto = await _courseProgressService.CreateProgress(createProgressDto);
+            return StatusCode(responseDto.StatusCode, responseDto);
         }
     }
 }

@@ -14,5 +14,5 @@ public class CourseProgress
     public Guid SectionId { get; set; }
     public Guid DetailsId { get; set; }
     public bool IsCompleted { get; set; }
-    public DateTime CompletedTime { get; set; }
+    public DateTime? CompletedTime { get; set; }
 }
