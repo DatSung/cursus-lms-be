@@ -220,8 +220,49 @@ public class CourseProgressService : ICourseProgressService
         }
     }
 
-    public Task<ResponseDTO> GetPercentage(GetPercentageDTO getPercentageDto)
+    public async Task<ResponseDTO> GetPercentage(GetPercentageDTO getPercentageDto)
     {
-        throw new NotImplementedException();
+        try
+        {
+            var studentCourse = await _unitOfWork.StudentCourseRepository.GetAsync
+            (
+                x => x.StudentId == getPercentageDto.StudentId
+                     && x.CourseId == getPercentageDto.CourseId
+            );
+
+            if (studentCourse is null)
+            {
+                return new ResponseDTO()
+                {
+                    Message = "Student course was not found",
+                    IsSuccess = false,
+                    StatusCode = 404,
+                    Result = null
+                };
+            }
+
+            var courseProgress = await _unitOfWork.CourseProgressRepository
+                .GetAllAsync(x => x.StudentCourseId == studentCourse.Id);
+
+            var percentage = (courseProgress.Count(x => x.IsCompleted) * 100) / courseProgress.Count();
+
+            return new ResponseDTO()
+            {
+                Message = "Get percentage successfully",
+                IsSuccess = true,
+                StatusCode = 200,
+                Result = percentage
+            };
+        }
+        catch (Exception e)
+        {
+            return new ResponseDTO()
+            {
+                Message = e.Message,
+                IsSuccess = false,
+                StatusCode = 500,
+                Result = null
+            };
+        }
     }
 }

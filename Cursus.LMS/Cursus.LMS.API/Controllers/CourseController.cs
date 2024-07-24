@@ -516,7 +516,7 @@ namespace Cursus.LMS.API.Controllers
         [Route("progress")]
         public async Task<ActionResult<ResponseDTO>> GetCourseProgress
         (
-            [FromBody] GetProgressDTO getProgressDto
+            [FromQuery] GetProgressDTO getProgressDto
         )
         {
             var responseDto = await _courseProgressService.GetProgress(getProgressDto);
@@ -527,7 +527,7 @@ namespace Cursus.LMS.API.Controllers
         [Route("progress/percentage")]
         public async Task<ActionResult<ResponseDTO>> GetProgressPercentage
         (
-            [FromBody] GetPercentageDTO getPercentageDto
+            [FromQuery] GetPercentageDTO getPercentageDto
         )
         {
             var responseDto = await _courseProgressService.GetPercentage(getPercentageDto);
