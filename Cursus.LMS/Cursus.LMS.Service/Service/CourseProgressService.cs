@@ -24,6 +24,31 @@ public class CourseProgressService : ICourseProgressService
             var studentCourse =
                 await _unitOfWork.StudentCourseRepository.GetAsync(x => x.Id == createProgressDto.StudentCourseId);
 
+            if (studentCourse is null)
+            {
+                return new ResponseDTO()
+                {
+                    Message = "Student course was not found",
+                    IsSuccess = false,
+                    StatusCode = 404,
+                    Result = null
+                };
+            }
+
+            var courseProgress = await _unitOfWork.CourseProgressRepository
+                .GetAsync(x => x.StudentCourseId == studentCourse.Id);
+
+            if (courseProgress is not null)
+            {
+                return new ResponseDTO()
+                {
+                    Message = "Course progress has been existed",
+                    IsSuccess = false,
+                    StatusCode = 400,
+                    Result = null
+                };
+            }
+
             var courseVersionId = _unitOfWork.CourseRepository
                 .GetAsync(x => x.Id == studentCourse.CourseId)
                 .GetAwaiter()
