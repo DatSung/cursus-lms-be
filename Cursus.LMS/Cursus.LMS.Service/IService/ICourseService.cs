@@ -1,4 +1,4 @@
-﻿using System.Security.Claims;
+using System.Security.Claims;
 using Cursus.LMS.Model.DTO;
 
 namespace Cursus.LMS.Service.IService;
@@ -57,5 +57,32 @@ public interface ICourseService
         EnrollCourseDTO enrollCourseDto
     );
 
+    Task<ResponseDTO> GetTopPurchasedCourses
+    (
+        int? year,
+        int? month,
+        int? quarter,
+        int top,
+        int pageNumber,
+        int pageSize,
+        string? byCategoryName
+    );
+
+    Task<ResponseDTO> GetLeastPurchasedCourses
+    (
+        int? year,
+        int? month,
+        int? quarter,
+        int top,
+        int pageNumber,
+        int pageSize,
+        string? byCategoryName
+    );
+
     Task<ResponseDTO> SuggestCourse(Guid studentId);
+    Task<ResponseDTO> UpsertCourseTotal(UpsertCourseTotalDTO upsertCourseTotalDto);
+    Task<ResponseDTO> GetAllBookMarkedCoursesById(Guid studentId, string sortOrder = "desc");
+    Task<ResponseDTO> CreateBookMarkedCourse(ClaimsPrincipal User, CreateCourseBookmarkDTO createCourseBookmarkDto);
+    Task<ResponseDTO> DeleteBookMarkedCourse(Guid id);
+
 }

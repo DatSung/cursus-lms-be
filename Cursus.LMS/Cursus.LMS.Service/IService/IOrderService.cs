@@ -10,6 +10,17 @@ public interface IOrderService
         ClaimsPrincipal User
     );
 
+    Task<ResponseDTO> GetOrders
+    (
+        ClaimsPrincipal User,
+        Guid? studentId,
+        string? filterOn,
+        string? filterQuery,
+        string? sortBy,
+        bool? isAscending,
+        int pageNumber = 1,
+        int pageSize = 5
+    );
 
     Task<ResponseDTO> GetOrder
     (

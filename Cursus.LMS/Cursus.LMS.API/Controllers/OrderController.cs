@@ -26,6 +26,34 @@ namespace Cursus.LMS.API.Controllers
         }
 
         [HttpGet]
+        [Authorize]
+        public async Task<ActionResult<ResponseDTO>> GetOrders
+        (
+            [FromQuery] Guid? studentId,
+            [FromQuery] string? filterOn,
+            [FromQuery] string? filterQuery,
+            [FromQuery] string? sortBy,
+            [FromQuery] bool? isAscending,
+            [FromQuery] int pageNumber = 1,
+            [FromQuery] int pageSize = 5
+        )
+        {
+            var responseDto = await _orderService.GetOrders
+            (
+                User,
+                studentId,
+                filterOn,
+                filterQuery,
+                sortBy,
+                isAscending,
+                pageNumber,
+                pageSize
+            );
+
+            return StatusCode(responseDto.StatusCode, responseDto);
+        }
+
+        [HttpGet]
         [Route("{orderHeaderId:guid}")]
         [Authorize]
         public async Task<ActionResult<ResponseDTO>> GetOrder([FromRoute] Guid orderHeaderId)
@@ -35,7 +63,7 @@ namespace Cursus.LMS.API.Controllers
         }
 
         [HttpPost]
-        [Route("pay-with-stripe")]
+        [Route("stripe/checkout")]
         [Authorize]
         public async Task<ActionResult<ResponseDTO>> PayWithStripe
         (
@@ -47,7 +75,7 @@ namespace Cursus.LMS.API.Controllers
         }
 
         [HttpPost]
-        [Route("validate-with-stripe")]
+        [Route("stripe/validate")]
         [Authorize]
         public async Task<ActionResult<ResponseDTO>> ValidateWithStripe
         (
@@ -59,7 +87,7 @@ namespace Cursus.LMS.API.Controllers
         }
 
         [HttpPut]
-        [Route("confirm-order/{orderHeaderId:guid}")]
+        [Route("confirm/{orderHeaderId:guid}")]
         [Authorize(Roles = StaticUserRoles.Admin)]
         public async Task<ActionResult<ResponseDTO>> ConfirmOrder([FromRoute] Guid orderHeaderId)
         {

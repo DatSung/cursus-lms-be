@@ -5,8 +5,10 @@ namespace Cursus.LMS.Service.IService;
 
 public interface IPaymentService
 {
-    Task<ResponseDTO> UpdateAvailableBalanceByOrderId(Guid orderHeaderId);
     Task<ResponseDTO> CreateStripeConnectedAccount(CreateStripeConnectedAccountDTO createStripeConnectedAccountDto);
     Task<ResponseDTO> CreateStripeTransfer(CreateStripeTransferDTO createStripeTransferDto);
     Task<ResponseDTO> AddStripeCard(AddStripeCardDTO addStripeCardDto);
+    Task<ResponseDTO> CreateStripePayout(ClaimsPrincipal User, CreateStripePayoutDTO createStripePayoutDto);
+    Task<ResponseDTO> GetLeastInstructorsByPayout(int topN,int? filterYear,int? filterMonth,int? filterQuarter);
+    Task<ResponseDTO> GetTopInstructorsByPayout(int topN, int? filterYear, int? filterMonth, int? filterQuarter);
 }

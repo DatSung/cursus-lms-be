@@ -31,7 +31,7 @@ namespace Cursus.LMS.API.Controllers
         /// </summary>
         /// <returns>ResponseDTO</returns>
         [HttpPost]
-        [Route("sign-up-student")]
+        [Route("student/sign-up")]
         public async Task<ActionResult<ResponseDTO>> SignUpStudent([FromBody] RegisterStudentDTO registerStudentDTO)
         {
             if (!ModelState.IsValid)
@@ -67,7 +67,7 @@ namespace Cursus.LMS.API.Controllers
         /// </summary>
         /// <returns>ResponseDTO</returns>
         [HttpPost]
-        [Route("sign-up-instructor")]
+        [Route("instructor/sign-up")]
         public async Task<ActionResult<ResponseDTO>> SignUpInstructor(
             [FromBody] SignUpInstructorDTO signUpInstructorDto)
         {
@@ -81,7 +81,7 @@ namespace Cursus.LMS.API.Controllers
         /// <param name="file"></param>
         /// <returns></returns>
         [HttpPost]
-        [Route("upload-instructor-degree")]
+        [Route("instructor/degree")]
         [Authorize]
         public async Task<ActionResult<ResponseDTO>> UploadInstructorDegree(DegreeUploadDTO degreeUploadDto)
         {
@@ -94,7 +94,7 @@ namespace Cursus.LMS.API.Controllers
         /// </summary>
         /// <returns></returns>
         [HttpGet]
-        [Route("get-instructor-degree")]
+        [Route("instructor/degree")]
         [Authorize]
         public async Task<IActionResult> GetInstructorDegree([FromQuery] bool Download = false)
         {
@@ -119,7 +119,7 @@ namespace Cursus.LMS.API.Controllers
         /// <param name="Download"></param>
         /// <returns></returns>
         [HttpGet]
-        [Route("display-instructor-degree/{userId}")]
+        [Route("instructor/degree/display/{userId}")]
         public async Task<IActionResult> DisplayInstructorDegree([FromRoute] string userId,
             [FromQuery] bool Download = false)
         {
@@ -143,7 +143,7 @@ namespace Cursus.LMS.API.Controllers
         /// <param name="file"></param>
         /// <returns></returns>
         [HttpPost]
-        [Route("upload-user-avatar")]
+        [Route("user/avatar")]
         [Authorize]
         public async Task<ActionResult<ResponseDTO>> UploadUserAvatar(AvatarUploadDTO avatarUploadDto)
         {
@@ -156,7 +156,7 @@ namespace Cursus.LMS.API.Controllers
         /// </summary>
         /// <returns></returns>
         [HttpGet]
-        [Route("get-user-avatar")]
+        [Route("user/avatar")]
         [Authorize]
         public async Task<IActionResult> GetUserAvatar()
         {
@@ -174,7 +174,7 @@ namespace Cursus.LMS.API.Controllers
         /// </summary>
         /// <returns></returns>
         [HttpGet]
-        [Route("display-user-avatar/{userId}")]
+        [Route("user/avatar/display/{userId}")]
         public async Task<IActionResult> DisplayUserAvatar([FromRoute] string userId)
         {
             var stream = await _authService.DisplayUserAvatar(userId);
@@ -317,7 +317,7 @@ namespace Cursus.LMS.API.Controllers
 
 
         [HttpPost]
-        [Route("complete-student-profile")]
+        [Route("student/profile")]
         [Authorize]
         public async Task<ActionResult<ResponseDTO>> CompleteStudentProfile(
             CompleteStudentProfileDTO completeStudentProfileDto)
@@ -327,7 +327,7 @@ namespace Cursus.LMS.API.Controllers
         }
 
         [HttpPost]
-        [Route("complete-instructor-profile")]
+        [Route("instructor/profile")]
         [Authorize]
         public async Task<ActionResult<ResponseDTO>> CompleteInstructorProfile(
             CompleteInstructorProfileDTO completeInstructorProfileDto)
@@ -337,7 +337,7 @@ namespace Cursus.LMS.API.Controllers
         }
 
         [HttpPost]
-        [Route("sign-in-by-google")]
+        [Route("google/sign-in")]
         public async Task<ActionResult<ResponseDTO>> SignInByGoogle(SignInByGoogleDTO signInByGoogleDto)
         {
             var response = await _authService.SignInByGoogle(signInByGoogleDto);
@@ -345,7 +345,7 @@ namespace Cursus.LMS.API.Controllers
         }
 
         [HttpGet]
-        [Route("get-user-info")]
+        [Route("user/info")]
         public async Task<ActionResult<ResponseDTO>> GetUserInfo()
         {
             var response = await _authService.GetUserInfo(User);
@@ -353,7 +353,7 @@ namespace Cursus.LMS.API.Controllers
         }
 
         [HttpPut]
-        [Route("update-student-profile")]
+        [Route("student/profile")]
         public async Task<ActionResult<ResponseDTO>> UpdateStudent([FromBody] UpdateStudentProfileDTO studentDTO)
         {
             var responseDto = await _authService.UpdateStudent(studentDTO,User);
@@ -361,7 +361,7 @@ namespace Cursus.LMS.API.Controllers
         }
 
         [HttpPut]
-        [Route("update-instructor-profile")]
+        [Route("instructor/profile")]
         public async Task<ActionResult<ResponseDTO>> UpdateInstructor([FromBody] UpdateIntructorProfileDTO intructorDTO)
         {
             var responseDto = await _authService.UpdateInstructor(intructorDTO, User);

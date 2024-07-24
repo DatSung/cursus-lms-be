@@ -25,6 +25,7 @@ public class BalanceService : IBalanceService
                 {
                     Currency = "usd",
                     UserId = upsertBalanceDto.UserId,
+                    TotalBalance = upsertBalanceDto.TotalBalance,
                     AvailableBalance = upsertBalanceDto.AvailableBalance,
                     PayoutBalance = upsertBalanceDto.PayoutBalance,
                     UpdatedTime = DateTime.UtcNow
@@ -42,6 +43,7 @@ public class BalanceService : IBalanceService
                 };
             }
 
+            balance.TotalBalance += upsertBalanceDto.TotalBalance;
             balance.AvailableBalance += upsertBalanceDto.AvailableBalance;
             balance.PayoutBalance += upsertBalanceDto.PayoutBalance;
             balance.UpdatedTime = DateTime.UtcNow;

@@ -37,7 +37,7 @@ namespace Cursus.LMS.API.Controllers
         }
 
         [HttpDelete]
-        [Route("{cartDetailsId:Guid}")]
+        [Route("details/{detailsId:Guid}")]
         public async Task<ActionResult<ResponseDTO>> RemoveFromCart([FromRoute] Guid cartDetailsId)
         {
             var responseDto = await _cartService.RemoveFromCart
@@ -49,7 +49,7 @@ namespace Cursus.LMS.API.Controllers
         }
 
         [HttpPost]
-        [Route("checkout-with-stripe")]
+        [Route("stripe/checkout")]
         public async Task<ActionResult<ResponseDTO>> CheckoutWithStripe()
         {
             var responseDto = await _cartService.Checkout(User);
