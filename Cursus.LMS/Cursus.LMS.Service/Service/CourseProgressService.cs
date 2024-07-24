@@ -21,8 +21,11 @@ public class CourseProgressService : ICourseProgressService
     {
         try
         {
+            StudentCourse studentCourse =
+                await _unitOfWork.StudentCourseRepository.GetAsync(x => x.Id == createProgressDto.StudentCourseId);
+
             var courseVersionId = _unitOfWork.CourseRepository
-                .GetAsync(x => x.Id == createProgressDto.CourseId)
+                .GetAsync(x => x.Id == studentCourse.CourseId)
                 .GetAwaiter()
                 .GetResult()!
                 .CourseVersionId;
@@ -41,7 +44,7 @@ public class CourseProgressService : ICourseProgressService
             var coursesProgresses = rootSectionsDetails.Select(x => new CourseProgress()
             {
                 Id = Guid.NewGuid(),
-                CourseId = createProgressDto.CourseId,
+                CourseId = studentCourse.CourseId,
                 CompletedTime = null,
                 DetailsId = x.Id,
                 IsCompleted = false,
