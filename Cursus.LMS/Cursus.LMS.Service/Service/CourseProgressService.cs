@@ -21,7 +21,7 @@ public class CourseProgressService : ICourseProgressService
     {
         try
         {
-            StudentCourse studentCourse =
+            var studentCourse =
                 await _unitOfWork.StudentCourseRepository.GetAsync(x => x.Id == createProgressDto.StudentCourseId);
 
             var courseVersionId = _unitOfWork.CourseRepository
@@ -49,7 +49,7 @@ public class CourseProgressService : ICourseProgressService
                 DetailsId = x.Id,
                 IsCompleted = false,
                 SectionId = x.CourseSectionVersionId,
-                StudentCourseId = createProgressDto.StudentCourseId,
+                StudentCourseId = studentCourse.Id,
             });
 
             await _unitOfWork.CourseProgressRepository.AddRangeAsync(coursesProgresses);
