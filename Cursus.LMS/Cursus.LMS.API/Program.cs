@@ -21,7 +21,7 @@ builder.Services.AddHttpClient();
 
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
 {
-    options.UseSqlServer(builder.Configuration.GetConnectionString(StaticConnectionString.SQLDB_DefaultConnection));
+    options.UseSqlServer(builder.Configuration.GetConnectionString(StaticConnectionString.SQLDB_AzureConnection));
 });
 
 // Set time token
@@ -64,7 +64,7 @@ builder.Services.AddSignalR();
 
 builder.Services.AddCors(options =>
 {
-    var origin = builder.Configuration["AllowOrigin:FrontEnd"];
+    var origin = builder.Configuration["AllowOrigin:FrontEndFirebase"];
     options.AddPolicy("AllowSpecificOrigin",
         builder => builder
             .WithOrigins(origin)
