@@ -30,7 +30,7 @@ public class StripeService : IStripeService
                 {
                     PriceData = new SessionLineItemPriceDataOptions()
                     {
-                        UnitAmount = (long)(orderDetail.CoursePrice * 100),
+                        UnitAmount = (long)((orderDetail.CoursePrice * 100) * (1.1)),
                         Currency = "usd",
                         ProductData = new SessionLineItemPriceDataProductDataOptions()
                         {
