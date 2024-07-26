@@ -15,17 +15,18 @@ public class CourseService : ICourseService
     private readonly IUnitOfWork _unitOfWork;
     private readonly IMapper _mapper;
     private readonly IStudentCourseService _studentCourseService;
+    private readonly ICourseProgressService _courseProgressService;
 
     public CourseService
     (
         IUnitOfWork unitOfWork,
         IMapper mapper,
-        IStudentCourseService studentCourseService
-    )
+        IStudentCourseService studentCourseService, ICourseProgressService courseProgressService)
     {
         _unitOfWork = unitOfWork;
         _mapper = mapper;
         _studentCourseService = studentCourseService;
+        _courseProgressService = courseProgressService;
     }
 
     public async Task<ResponseDTO> CreateFrameCourse(ClaimsPrincipal User, Guid courseVersionId)
@@ -168,41 +169,44 @@ public class CourseService : ICourseService
                 switch (filterOn.Trim().ToLower())
                 {
                     case "title":
-                        {
-                            courseVersions = courseVersions.Where(x =>
-                                x.Title.Contains(filterQuery, StringComparison.CurrentCultureIgnoreCase)).ToList();
-                            break;
-                        }
+                    {
+                        courseVersions = courseVersions.Where(x =>
+                            x.Title.Contains(filterQuery, StringComparison.CurrentCultureIgnoreCase)).ToList();
+                        break;
+                    }
                     case "code":
-                        {
-                            courseVersions = courseVersions.Where(x =>
-                                x.Code.Contains(filterQuery, StringComparison.CurrentCultureIgnoreCase)).ToList();
-                            break;
-                        }
+                    {
+                        courseVersions = courseVersions.Where(x =>
+                            x.Code.Contains(filterQuery, StringComparison.CurrentCultureIgnoreCase)).ToList();
+                        break;
+                    }
                     case "description":
-                        {
-                            courseVersions = courseVersions.Where(x =>
-                                x.Description.Contains(filterQuery, StringComparison.CurrentCultureIgnoreCase)).ToList();
-                            break;
-                        }
+                    {
+                        courseVersions = courseVersions.Where(x =>
+                            x.Description.Contains(filterQuery, StringComparison.CurrentCultureIgnoreCase)).ToList();
+                        break;
+                    }
                     case "category":
-                        {
-                            courseVersions = courseVersions.Where(x =>
-                                x.Category != null && x.Category.Name.Contains(filterQuery, StringComparison.CurrentCultureIgnoreCase)).ToList(); 
-                            break;
-                        }
+                    {
+                        courseVersions = courseVersions.Where(x =>
+                            x.Category != null &&
+                            x.Category.Name.Contains(filterQuery, StringComparison.CurrentCultureIgnoreCase)).ToList();
+                        break;
+                    }
                     case "instructor":
-                        {
-                            courseVersions = courseVersions.Where(x =>
-                                x.Course.Instructor != null && x.Course.Instructor.ApplicationUser.FullName.Contains(filterQuery, StringComparison.CurrentCultureIgnoreCase)).ToList();
-                            break;
-                        }
+                    {
+                        courseVersions = courseVersions.Where(x =>
+                            x.Course.Instructor != null &&
+                            x.Course.Instructor.ApplicationUser.FullName.Contains(filterQuery,
+                                StringComparison.CurrentCultureIgnoreCase)).ToList();
+                        break;
+                    }
                     case "status":
-                        {
-                            courseVersions = courseVersions.Where(x =>
-                                x.CurrentStatus == int.Parse(filterQuery.Trim())).ToList();
-                            break;
-                        }
+                    {
+                        courseVersions = courseVersions.Where(x =>
+                            x.CurrentStatus == int.Parse(filterQuery.Trim())).ToList();
+                        break;
+                    }
                 }
             }
 
@@ -223,37 +227,37 @@ public class CourseService : ICourseService
                 switch (sortBy.Trim().ToLower())
                 {
                     case "title":
-                        {
-                            courseVersions = isAscending == true
-                                ? [.. courseVersions.OrderBy(x => x.Title)]
-                                : [.. courseVersions.OrderByDescending(x => x.Title)];
-                            break;
-                        }
+                    {
+                        courseVersions = isAscending == true
+                            ? [.. courseVersions.OrderBy(x => x.Title)]
+                            : [.. courseVersions.OrderByDescending(x => x.Title)];
+                        break;
+                    }
                     case "code":
-                        {
-                            courseVersions = isAscending == true
-                                ? [.. courseVersions.OrderBy(x => x.Code)]
-                                : [.. courseVersions.OrderByDescending(x => x.Code)];
-                            break;
-                        }
+                    {
+                        courseVersions = isAscending == true
+                            ? [.. courseVersions.OrderBy(x => x.Code)]
+                            : [.. courseVersions.OrderByDescending(x => x.Code)];
+                        break;
+                    }
                     case "description":
-                        {
-                            courseVersions = isAscending == true
-                                ? [.. courseVersions.OrderBy(x => x.Description)]
-                                : [.. courseVersions.OrderByDescending(x => x.Description)];
-                            break;
-                        }
+                    {
+                        courseVersions = isAscending == true
+                            ? [.. courseVersions.OrderBy(x => x.Description)]
+                            : [.. courseVersions.OrderByDescending(x => x.Description)];
+                        break;
+                    }
                     case "price":
-                        {
-                            courseVersions = isAscending == true
-                                ? [.. courseVersions.OrderBy(x => x.Price)]
-                                : [.. courseVersions.OrderByDescending(x => x.Price)];
-                            break;
-                        }
+                    {
+                        courseVersions = isAscending == true
+                            ? [.. courseVersions.OrderBy(x => x.Price)]
+                            : [.. courseVersions.OrderByDescending(x => x.Price)];
+                        break;
+                    }
                     default:
-                        {
-                            break;
-                        }
+                    {
+                        break;
+                    }
                 }
             }
 
@@ -723,6 +727,14 @@ public class CourseService : ICourseService
                 }
             );
 
+            await _courseProgressService.CreateProgress
+            (
+                new CreateProgressDTO()
+                {
+                    StudentCourseId = studentCourse.Id
+                }
+            );
+
             return new ResponseDTO()
             {
                 Message = "Enroll course successfully",
@@ -913,7 +925,8 @@ public class CourseService : ICourseService
             }
 
             // Lấy danh sách CourseBookmark của Student
-            var courseBookmarksQuery = _unitOfWork.CourseBookmarkRepository.GetAllAsync( cb => cb.StudentId == studentId);
+            var courseBookmarksQuery =
+                _unitOfWork.CourseBookmarkRepository.GetAllAsync(cb => cb.StudentId == studentId);
 
             var courseBookmarks = (await courseBookmarksQuery).ToList();
 
@@ -951,12 +964,14 @@ public class CourseService : ICourseService
         }
     }
 
-    public async Task<ResponseDTO> CreateBookMarkedCourse(ClaimsPrincipal User, CreateCourseBookmarkDTO createCourseBookmarkDTO)
+    public async Task<ResponseDTO> CreateBookMarkedCourse(ClaimsPrincipal User,
+        CreateCourseBookmarkDTO createCourseBookmarkDTO)
     {
         try
         {
             //Check if studentId is valid
-            var id = await _unitOfWork.StudentRepository.GetAsync(i => i.StudentId == createCourseBookmarkDTO.StudentId);
+            var id = await _unitOfWork.StudentRepository.GetAsync(i =>
+                i.StudentId == createCourseBookmarkDTO.StudentId);
             if (id == null)
             {
                 return new ResponseDTO()
@@ -967,8 +982,10 @@ public class CourseService : ICourseService
                     Result = null
                 };
             }
+
             //Check CourseId is already bookmarked
-            var course = await _unitOfWork.CourseBookmarkRepository.GetAsync( c => c.CourseId == createCourseBookmarkDTO.CourseId && c.StudentId == createCourseBookmarkDTO.StudentId);
+            var course = await _unitOfWork.CourseBookmarkRepository.GetAsync(c =>
+                c.CourseId == createCourseBookmarkDTO.CourseId && c.StudentId == createCourseBookmarkDTO.StudentId);
             if (course != null)
             {
                 return new ResponseDTO()
@@ -979,6 +996,7 @@ public class CourseService : ICourseService
                     Result = null
                 };
             }
+
             //Create new bookmarked course
             var courseBookmark = new CourseBookmark()
             {
