@@ -107,6 +107,20 @@ public class CartService : ICartService
                 };
             }
 
+            var studentCourse =
+                await _unitOfWork.StudentCourseRepository.GetAsync(x =>
+                    x.StudentId == student.StudentId && x.CourseId == course.Id);
+            if (studentCourse is not null)
+            {
+                return new ResponseDTO()
+                {
+                    Message = "You own this course already",
+                    Result = null,
+                    IsSuccess = false,
+                    StatusCode = 400
+                };
+            }
+
             var courseVersion = await _unitOfWork.CourseVersionRepository.GetAsync(x => x.Id == course.CourseVersionId);
             if (courseVersion is null)
             {
