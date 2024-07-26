@@ -2,7 +2,6 @@ using System.Security.Claims;
 using Cursus.LMS.Model.Domain;
 using Cursus.LMS.Model.DTO;
 using Cursus.LMS.Service.IService;
-using Cursus.LMS.Service.Service;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -15,7 +14,6 @@ namespace Cursus.LMS.API.Controllers
     {
         private readonly IEmailService _emailService;
         private readonly IAuthService _authService;
-        private ResponseDTO responseDto = new ResponseDTO();
         private readonly UserManager<ApplicationUser> _userManager;
 
         public AuthController(IEmailService emailService, IAuthService authService,
@@ -34,6 +32,7 @@ namespace Cursus.LMS.API.Controllers
         [Route("student/sign-up")]
         public async Task<ActionResult<ResponseDTO>> SignUpStudent([FromBody] RegisterStudentDTO registerStudentDTO)
         {
+            var responseDto = new ResponseDTO();
             if (!ModelState.IsValid)
             {
                 responseDto.IsSuccess = false;
@@ -287,7 +286,7 @@ namespace Cursus.LMS.API.Controllers
         public async Task<ActionResult<ResponseDTO>> SignIn([FromBody] SignDTO signDto)
         {
             var responseDto = await _authService.SignIn(signDto);
-            return StatusCode(this.responseDto.StatusCode, responseDto);
+            return StatusCode(responseDto.StatusCode, responseDto);
         }
 
 
@@ -304,7 +303,7 @@ namespace Cursus.LMS.API.Controllers
         public async Task<ActionResult<ResponseDTO>> CheckEmailExist([FromBody] string email)
         {
             var responseDto = await _authService.CheckEmailExist(email);
-            return StatusCode(this.responseDto.StatusCode, responseDto);
+            return StatusCode(responseDto.StatusCode, responseDto);
         }
 
         [HttpPost]
@@ -312,7 +311,7 @@ namespace Cursus.LMS.API.Controllers
         public async Task<ActionResult<ResponseDTO>> CheckPhoneNumberExist([FromBody] string phoneNumber)
         {
             var responseDto = await _authService.CheckPhoneNumberExist(phoneNumber);
-            return StatusCode(this.responseDto.StatusCode, responseDto);
+            return StatusCode(responseDto.StatusCode, responseDto);
         }
 
 
@@ -323,7 +322,7 @@ namespace Cursus.LMS.API.Controllers
             CompleteStudentProfileDTO completeStudentProfileDto)
         {
             var responseDto = await _authService.CompleteStudentProfile(User, completeStudentProfileDto);
-            return StatusCode(this.responseDto.StatusCode, responseDto);
+            return StatusCode(responseDto.StatusCode, responseDto);
         }
 
         [HttpPost]
@@ -354,19 +353,35 @@ namespace Cursus.LMS.API.Controllers
 
         [HttpPut]
         [Route("student/profile")]
-        public async Task<ActionResult<ResponseDTO>> UpdateStudent([FromBody] UpdateStudentProfileDTO studentDTO)
+        public async Task<ActionResult<ResponseDTO>> UpdateStudent([FromBody] UpdateStudentProfileDTO studentDto)
         {
-            var responseDto = await _authService.UpdateStudent(studentDTO,User);
+            var responseDto = await _authService.UpdateStudent(studentDto, User);
             return StatusCode(responseDto.StatusCode, responseDto);
         }
 
         [HttpPut]
         [Route("instructor/profile")]
-        public async Task<ActionResult<ResponseDTO>> UpdateInstructor([FromBody] UpdateIntructorProfileDTO intructorDTO)
+        public async Task<ActionResult<ResponseDTO>> UpdateInstructor(
+            [FromBody] UpdateIntructorProfileDTO instructorDto)
         {
-            var responseDto = await _authService.UpdateInstructor(intructorDTO, User);
+            var responseDto = await _authService.UpdateInstructor(instructorDto, User);
             return StatusCode(responseDto.StatusCode, responseDto);
         }
 
+        [HttpPost]
+        [Route("lock")]
+        public async Task<ActionResult<ResponseDTO>> LockUser([FromBody] LockUserDTO lockUserDto)
+        {
+            var responseDto = await _authService.LockUser(lockUserDto);
+            return StatusCode(responseDto.StatusCode, responseDto);
+        }
+
+        [HttpPost]
+        [Route("unlock")]
+        public async Task<ActionResult<ResponseDTO>> UnlockUser([FromBody] LockUserDTO lockUserDto)
+        {
+            var responseDto = await _authService.UnlockUser(lockUserDto);
+            return StatusCode(responseDto.StatusCode, responseDto);
+        }
     }
 }

@@ -14,8 +14,6 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using FirebaseAdmin.Auth;
 using Newtonsoft.Json.Linq;
-using Cursus.LMS.DataAccess.Repository;
-using DocumentFormat.OpenXml.Spreadsheet;
 
 namespace Cursus.LMS.Service.Service;
 
@@ -1686,7 +1684,7 @@ public class AuthService : IAuthService
             studentToUpdate.ApplicationUser.Gender = updateStudentDTO.Gender;
             studentToUpdate.ApplicationUser.FullName = updateStudentDTO.FullName;
             studentToUpdate.ApplicationUser.Country = updateStudentDTO.Country;
-            
+
 
             // Update payment card information if provided
             if (!string.IsNullOrWhiteSpace(updateStudentDTO.CardNumber) &&
@@ -1735,6 +1733,7 @@ public class AuthService : IAuthService
             };
         }
     }
+
     /// <summary>
     /// 
     /// </summary>
@@ -1777,7 +1776,7 @@ public class AuthService : IAuthService
 
             // Update related ApplicationUser fields
             intructorToUpdate.ApplicationUser.Address = updateIntructorDTO.Address;
-            intructorToUpdate.ApplicationUser.BirthDate = updateIntructorDTO.BirthDate;            
+            intructorToUpdate.ApplicationUser.BirthDate = updateIntructorDTO.BirthDate;
             intructorToUpdate.ApplicationUser.Gender = updateIntructorDTO.Gender;
             intructorToUpdate.ApplicationUser.FullName = updateIntructorDTO.FullName;
             intructorToUpdate.ApplicationUser.Country = updateIntructorDTO.Country;
@@ -1831,4 +1830,123 @@ public class AuthService : IAuthService
         }
     }
 
+    public async Task<ResponseDTO> LockUser(LockUserDTO lockUserDto)
+    {
+        try
+        {
+            var user = await _userManager.FindByIdAsync(lockUserDto.UserId);
+
+
+            if (user is null)
+            {
+                return new ResponseDTO()
+                {
+                    Message = "User was not found",
+                    IsSuccess = false,
+                    StatusCode = 404,
+                    Result = null
+                };
+            }
+
+            var userRole = await _userManager.GetRolesAsync(user);
+
+            if (userRole.Contains(StaticUserRoles.Admin))
+            {
+                return new ResponseDTO()
+                {
+                    Message = "Lock user was failed",
+                    IsSuccess = false,
+                    StatusCode = 400,
+                    Result = null
+                };
+            }
+
+            user.LockoutEnabled = true;
+            user.LockoutEnd = DateTimeOffset.MaxValue;
+
+            var result = await _userManager.UpdateAsync(user);
+
+            if (!result.Succeeded)
+            {
+                return new ResponseDTO()
+                {
+                    Message = "Lock user was failed",
+                    IsSuccess = false,
+                    StatusCode = 400,
+                    Result = null
+                };
+            }
+
+            return new ResponseDTO()
+            {
+                Message = "Lock user successfully",
+                IsSuccess = true,
+                StatusCode = 200,
+                Result = null
+            };
+        }
+        catch (Exception e)
+        {
+            return new ResponseDTO()
+            {
+                Message = e.Message,
+                IsSuccess = false,
+                StatusCode = 500,
+                Result = null
+            };
+        }
+    }
+
+    public async Task<ResponseDTO> UnlockUser(LockUserDTO lockUserDto)
+    {
+        try
+        {
+            var user = await _userManager.FindByIdAsync(lockUserDto.UserId);
+
+            if (user is null)
+            {
+                return new ResponseDTO()
+                {
+                    Message = "User was not found",
+                    IsSuccess = false,
+                    StatusCode = 404,
+                    Result = null
+                };
+            }
+
+            user.LockoutEnabled = false;
+            user.LockoutEnd = null;
+
+            var result = await _userManager.UpdateAsync(user);
+
+            if (!result.Succeeded)
+            {
+                return new ResponseDTO()
+                {
+                    Message = "Unlock user was failed",
+                    IsSuccess = false,
+                    StatusCode = 400,
+                    Result = null
+                };
+            }
+
+            return new ResponseDTO()
+            {
+                Message = "Unlock user successfully",
+                IsSuccess = true,
+                StatusCode = 200,
+                Result = null
+            };
+        }
+        catch (Exception e)
+        {
+            return new ResponseDTO()
+            {
+                Message = e.Message,
+                IsSuccess = false,
+                StatusCode = 500,
+                Result = null
+            };
+        }
+    }
 }
