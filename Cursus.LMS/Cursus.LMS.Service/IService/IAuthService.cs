@@ -29,4 +29,6 @@ public interface IAuthService
     Task<DegreeResponseDTO> DisplayInstructorDegree(string userId);
     Task<ResponseDTO> UpdateStudent(UpdateStudentProfileDTO updateStudentDto, ClaimsPrincipal User);
     Task<ResponseDTO> UpdateInstructor(UpdateIntructorProfileDTO updateIntructorDto, ClaimsPrincipal User);
+    Task<ResponseDTO> LockUser(LockUserDTO lockUserDto);
+    Task<ResponseDTO> UnlockUser(LockUserDTO lockUserDto);
 }
