@@ -122,36 +122,13 @@ public class CourseService : ICourseService
     {
         try
         {
-            if (string.IsNullOrEmpty(instructorId.ToString()))
-            {
-                var userId = User.Claims.FirstOrDefault(x => x.Type == ClaimTypes.NameIdentifier)?.Value;
-                var instructor = await _unitOfWork.InstructorRepository.GetAsync
-                (
-                    filter: x => x.UserId == userId
-                );
-
-                if (instructor is null)
-                {
-                    return new ResponseDTO()
-                    {
-                        Message = "Courses was not found",
-                        IsSuccess = false,
-                        StatusCode = 404,
-                        Result = null
-                    };
-                }
-
-                instructorId = instructor.InstructorId;
-            }
-
             var courses = new List<Course>();
             if (string.IsNullOrEmpty(instructorId.ToString()))
             {
                 courses = _unitOfWork.CourseRepository
                     .GetAllAsync
                     (
-                        filter: x => x.Status == 1,
-                        includeProperties: "Course,Category,Level"
+                        filter: x => x.Status == 1
                     )
                     .GetAwaiter()
                     .GetResult()
