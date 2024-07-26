@@ -30,7 +30,22 @@ vD:\FPT\Semester 6\Project_Cursus\Backend_Cursus\Cursus.LMS\Cursus.LMS.Utility\V
 
 R c
   . 2
- & /¥
+ & /´
+jD:\FPT\Semester 6\Project_Cursus\Backend_Cursus\Cursus.LMS\Cursus.LMS.Utility\Constants\StaticUserRoles.cs
+
+ #
+
+ 
+
+ 
+
+ "
+
+		 '
+
+
+
+ $Í
 gD:\FPT\Semester 6\Project_Cursus\Backend_Cursus\Cursus.LMS\Cursus.LMS.Utility\Constants\StaticStatus.cs
 
   
@@ -41,21 +56,40 @@ gD:\FPT\Semester 6\Project_Cursus\Backend_Cursus\Cursus.LMS\Cursus.LMS.Utility\C
 
  "
 
-		 $ˆ
+		 $
+
+ 
+
+  
+
+ 
+
+ "
+
+ !
+
+ &
+
+ (
+
+ '
+
+ %
+
+  
+
+ !
+
+ !
+
+ 
+
+ !ˆ
 nD:\FPT\Semester 6\Project_Cursus\Backend_Cursus\Cursus.LMS\Cursus.LMS.Utility\Constants\StaticLoginProvider.cs
 
  '
 
- œ
-jD:\FPT\Semester 6\Project_Cursus\Backend_Cursus\Cursus.LMS\Cursus.LMS.Utility\Constants\StaticUserRoles.cs
-
- #
-
- 
-
- 
-
- "¢
+ ¢
 pD:\FPT\Semester 6\Project_Cursus\Backend_Cursus\Cursus.LMS\Cursus.LMS.Utility\Constants\StaticFirebaseFolders.cs
 
  )
@@ -64,16 +98,7 @@ pD:\FPT\Semester 6\Project_Cursus\Backend_Cursus\Cursus.LMS\Cursus.LMS.Utility\C
 
  )
 
- ‹
-eD:\FPT\Semester 6\Project_Cursus\Backend_Cursus\Cursus.LMS\Cursus.LMS.Utility\Constants\StaticEnum.cs
-
- 
-
- 
-
-
-
- Å
+ Å
 oD:\FPT\Semester 6\Project_Cursus\Backend_Cursus\Cursus.LMS\Cursus.LMS.Utility\Constants\StaticFileExtensions.cs
 
  (
@@ -90,7 +115,20 @@ oD:\FPT\Semester 6\Project_Cursus\Backend_Cursus\Cursus.LMS\Cursus.LMS.Utility\C
 
 
 
- Ê
+ ¯
+eD:\FPT\Semester 6\Project_Cursus\Backend_Cursus\Cursus.LMS\Cursus.LMS.Utility\Constants\StaticEnum.cs
+
+ 
+
+ 
+
+ 
+
+ 
+
+ !
+
+!! %Ê
 tD:\FPT\Semester 6\Project_Cursus\Backend_Cursus\Cursus.LMS\Cursus.LMS.Utility\Constants\StaticCourseVersionStatus.cs
 
  &
