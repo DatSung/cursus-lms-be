@@ -9,6 +9,8 @@ namespace Cursus.LMS.Model.DTO
     public class UserInfoDTO
     {
         public string Id { get; set; }
+        public Guid? StudentId { get; set; }
+        public Guid? InstructorId { get; set; }
         public string UserName { get; set; }
         public string FullName { get; set; }
         public string Gender { get; set; }

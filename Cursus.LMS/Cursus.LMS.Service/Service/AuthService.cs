@@ -1441,13 +1441,21 @@ public class AuthService : IAuthService
             userInfo.Roles = roles;
             userInfo.isAccepted = true;
 
+            
             if (roles.Contains(StaticUserRoles.Instructor))
             {
                 var instructor = await _unitOfWork.InstructorRepository.GetAsync(x => x.UserId == user.Id);
-                userInfo.isUploadDegree = instructor.DegreeImageUrl != null ? true : false;
-                userInfo.isAccepted = instructor.IsAccepted;
+                userInfo.isUploadDegree = instructor?.DegreeImageUrl != null ? true : false;
+                userInfo.isAccepted = instructor?.IsAccepted;
+                userInfo.InstructorId = instructor?.InstructorId;
             }
 
+            if (roles.Contains(StaticUserRoles.Student))
+            {
+                var student = await _unitOfWork.StudentRepository.GetByUserId(userId);
+                userInfo.StudentId = student?.StudentId;
+            }
+            
             return new ResponseDTO()
             {
                 Message = "Get user info successfully",
