@@ -257,7 +257,7 @@ public class SectionDetailsVersionService : ISectionDetailsVersionService
 
             var sectionDetail = new SectionDetailsVersion
             {
-                CourseSectionVersionId = createSectionDetailsVersionDto?.courseSectionVersionId,
+                CourseSectionVersionId = createSectionDetailsVersionDto.courseSectionVersionId,
                 Name = createSectionDetailsVersionDto?.name,
             };
 

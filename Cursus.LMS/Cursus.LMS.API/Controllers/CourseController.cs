@@ -17,16 +17,18 @@ namespace Cursus.LMS.API.Controllers
         private readonly ICourseReviewService _courseReviewService;
         private readonly ICourseReportService _courseReportService;
 
+        private readonly ICourseProgressService _courseProgressService;
+
         public CourseController
         (
             ICourseService courseService,
             ICourseReviewService courseReviewService,
-            ICourseReportService courseReportService
-        )
+            ICourseReportService courseReportService, ICourseProgressService courseProgressService)
         {
             _courseService = courseService;
             _courseReviewService = courseReviewService;
             _courseReportService = courseReportService;
+            _courseProgressService = courseProgressService;
         }
 
 
@@ -486,6 +488,50 @@ namespace Cursus.LMS.API.Controllers
         {
             var response = await _courseService.DeleteBookMarkedCourse(bookmarkedId);
             return StatusCode(response.StatusCode, response);
+        }
+
+        [HttpPost]
+        [Route("progress")]
+        public async Task<ActionResult<ResponseDTO>> CreateCourseProgress
+        (
+            [FromBody] CreateProgressDTO createProgressDto
+        )
+        {
+            var responseDto = await _courseProgressService.CreateProgress(createProgressDto);
+            return StatusCode(responseDto.StatusCode, responseDto);
+        }
+
+        [HttpPut]
+        [Route("progress")]
+        public async Task<ActionResult<ResponseDTO>> UpdateCourseProgress
+        (
+            [FromBody] UpdateProgressDTO updateProgressDto
+        )
+        {
+            var responseDto = await _courseProgressService.UpdateProgress(updateProgressDto);
+            return StatusCode(responseDto.StatusCode, responseDto);
+        }
+
+        [HttpGet]
+        [Route("progress")]
+        public async Task<ActionResult<ResponseDTO>> GetCourseProgress
+        (
+            [FromQuery] GetProgressDTO getProgressDto
+        )
+        {
+            var responseDto = await _courseProgressService.GetProgress(getProgressDto);
+            return StatusCode(responseDto.StatusCode, responseDto);
+        }
+
+        [HttpGet]
+        [Route("progress/percentage")]
+        public async Task<ActionResult<ResponseDTO>> GetProgressPercentage
+        (
+            [FromQuery] GetPercentageDTO getPercentageDto
+        )
+        {
+            var responseDto = await _courseProgressService.GetPercentage(getPercentageDto);
+            return StatusCode(responseDto.StatusCode, responseDto);
         }
     }
 }

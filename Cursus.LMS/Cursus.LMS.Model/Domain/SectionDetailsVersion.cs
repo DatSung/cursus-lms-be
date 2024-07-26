@@ -7,7 +7,7 @@ namespace Cursus.LMS.Model.Domain
     {
         [Key] public Guid Id { get; set; }
 
-        public Guid? CourseSectionVersionId { get; set; }
+        public Guid CourseSectionVersionId { get; set; }
         [ForeignKey("CourseSectionVersionId")] public CourseSectionVersion? CourseSectionVersions { get; set; }
 
         public string? Name { get; set; }
