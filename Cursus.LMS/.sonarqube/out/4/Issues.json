@@ -12,6 +12,132 @@
       },
       "results": [
         {
+          "ruleId": "CS8604",
+          "level": "warning",
+          "message": "Possible null reference argument for parameter 's' in 'byte[] Encoding.GetBytes(string s)'.",
+          "locations": [
+            {
+              "resultFile": {
+                "uri": "file:///D:/FPT/Semester%206/Project_Cursus/Backend_Cursus/Cursus.LMS/Cursus.LMS.API/Extentions/WebApplicationBuilderExtensions.cs",
+                "region": {
+                  "startLine": 26,
+                  "startColumn": 84,
+                  "endLine": 26,
+                  "endColumn": 119
+                }
+              }
+            }
+          ],
+          "properties": {
+            "warningLevel": 1
+          }
+        },
+        {
+          "ruleId": "CS8604",
+          "level": "warning",
+          "message": "Possible null reference argument for parameter 'userId' in 'Task<ResponseDTO> IStudentsService.ExportStudents(string userId, int month, int year)'.",
+          "locations": [
+            {
+              "resultFile": {
+                "uri": "file:///D:/FPT/Semester%206/Project_Cursus/Backend_Cursus/Cursus.LMS/Cursus.LMS.API/Controllers/StudentController.cs",
+                "region": {
+                  "startLine": 139,
+                  "startColumn": 79,
+                  "endLine": 139,
+                  "endColumn": 85
+                }
+              }
+            }
+          ],
+          "properties": {
+            "warningLevel": 1
+          }
+        },
+        {
+          "ruleId": "CS1998",
+          "level": "warning",
+          "message": "This async method lacks 'await' operators and will run synchronously. Consider using the 'await' operator to await non-blocking API calls, or 'await Task.Run(...)' to do CPU-bound work on a background thread.",
+          "locations": [
+            {
+              "resultFile": {
+                "uri": "file:///D:/FPT/Semester%206/Project_Cursus/Backend_Cursus/Cursus.LMS/Cursus.LMS.API/Controllers/StudentController.cs",
+                "region": {
+                  "startLine": 132,
+                  "startColumn": 54,
+                  "endLine": 132,
+                  "endColumn": 67
+                }
+              }
+            }
+          ],
+          "properties": {
+            "warningLevel": 1
+          }
+        },
+        {
+          "ruleId": "CS8603",
+          "level": "warning",
+          "message": "Possible null reference return.",
+          "locations": [
+            {
+              "resultFile": {
+                "uri": "file:///D:/FPT/Semester%206/Project_Cursus/Backend_Cursus/Cursus.LMS/Cursus.LMS.API/Controllers/CourseVersionController.cs",
+                "region": {
+                  "startLine": 167,
+                  "startColumn": 24,
+                  "endLine": 167,
+                  "endColumn": 28
+                }
+              }
+            }
+          ],
+          "properties": {
+            "warningLevel": 1
+          }
+        },
+        {
+          "ruleId": "CS8604",
+          "level": "warning",
+          "message": "Possible null reference argument for parameter 'contentType' in 'FileStreamResult ControllerBase.File(Stream fileStream, string contentType, string? fileDownloadName)'.",
+          "locations": [
+            {
+              "resultFile": {
+                "uri": "file:///D:/FPT/Semester%206/Project_Cursus/Backend_Cursus/Cursus.LMS/Cursus.LMS.API/Controllers/AuthController.cs",
+                "region": {
+                  "startLine": 109,
+                  "startColumn": 55,
+                  "endLine": 109,
+                  "endColumn": 84
+                }
+              }
+            }
+          ],
+          "properties": {
+            "warningLevel": 1
+          }
+        },
+        {
+          "ruleId": "CS8604",
+          "level": "warning",
+          "message": "Possible null reference argument for parameter 'contentType' in 'FileStreamResult ControllerBase.File(Stream fileStream, string contentType)'.",
+          "locations": [
+            {
+              "resultFile": {
+                "uri": "file:///D:/FPT/Semester%206/Project_Cursus/Backend_Cursus/Cursus.LMS/Cursus.LMS.API/Controllers/AuthController.cs",
+                "region": {
+                  "startLine": 112,
+                  "startColumn": 51,
+                  "endLine": 112,
+                  "endColumn": 80
+                }
+              }
+            }
+          ],
+          "properties": {
+            "warningLevel": 1
+          }
+        },
+        {
           "ruleId": "CS8600",
           "level": "warning",
           "message": "Converting null literal or possible null value to non-nullable type.",
@@ -54,108 +180,24 @@
           }
         },
         {
-          "ruleId": "CS8604",
+          "ruleId": "CS0618",
           "level": "warning",
-          "message": "Possible null reference argument for parameter 's' in 'byte[] Encoding.GetBytes(string s)'.",
+          "message": "'ApplicationInsightsExtensions.AddApplicationInsightsTelemetry(IServiceCollection, string)' is obsolete: 'InstrumentationKey based global ingestion is being deprecated. Use the AddApplicationInsightsTelemetry() overload which accepts Action<ApplicationInsightsServiceOptions> and set ApplicationInsightsServiceOptions.ConnectionString. See https://github.com/microsoft/ApplicationInsights-dotnet/issues/2560 for more details.'",
           "locations": [
             {
               "resultFile": {
-                "uri": "file:///D:/FPT/Semester%206/Project_Cursus/Backend_Cursus/Cursus.LMS/Cursus.LMS.API/Extentions/WebApplicationBuilderExtensions.cs",
+                "uri": "file:///D:/FPT/Semester%206/Project_Cursus/Backend_Cursus/Cursus.LMS/Cursus.LMS.API/Program.cs",
                 "region": {
-                  "startLine": 26,
-                  "startColumn": 84,
-                  "endLine": 26,
-                  "endColumn": 119
+                  "startLine": 77,
+                  "startColumn": 1,
+                  "endLine": 77,
+                  "endColumn": 114
                 }
               }
             }
           ],
           "properties": {
-            "warningLevel": 1
-          }
-        },
-        {
-          "ruleId": "CS8604",
-          "level": "warning",
-          "message": "Possible null reference argument for parameter 'contentType' in 'FileStreamResult ControllerBase.File(Stream fileStream, string contentType, string? fileDownloadName)'.",
-          "locations": [
-            {
-              "resultFile": {
-                "uri": "file:///D:/FPT/Semester%206/Project_Cursus/Backend_Cursus/Cursus.LMS/Cursus.LMS.API/Controllers/AuthController.cs",
-                "region": {
-                  "startLine": 108,
-                  "startColumn": 55,
-                  "endLine": 108,
-                  "endColumn": 84
-                }
-              }
-            }
-          ],
-          "properties": {
-            "warningLevel": 1
-          }
-        },
-        {
-          "ruleId": "CS8604",
-          "level": "warning",
-          "message": "Possible null reference argument for parameter 'contentType' in 'FileStreamResult ControllerBase.File(Stream fileStream, string contentType)'.",
-          "locations": [
-            {
-              "resultFile": {
-                "uri": "file:///D:/FPT/Semester%206/Project_Cursus/Backend_Cursus/Cursus.LMS/Cursus.LMS.API/Controllers/AuthController.cs",
-                "region": {
-                  "startLine": 111,
-                  "startColumn": 51,
-                  "endLine": 111,
-                  "endColumn": 80
-                }
-              }
-            }
-          ],
-          "properties": {
-            "warningLevel": 1
-          }
-        },
-        {
-          "ruleId": "CS8604",
-          "level": "warning",
-          "message": "Possible null reference argument for parameter 'contentType' in 'FileStreamResult ControllerBase.File(Stream fileStream, string contentType, string? fileDownloadName)'.",
-          "locations": [
-            {
-              "resultFile": {
-                "uri": "file:///D:/FPT/Semester%206/Project_Cursus/Backend_Cursus/Cursus.LMS/Cursus.LMS.API/Controllers/AuthController.cs",
-                "region": {
-                  "startLine": 133,
-                  "startColumn": 55,
-                  "endLine": 133,
-                  "endColumn": 84
-                }
-              }
-            }
-          ],
-          "properties": {
-            "warningLevel": 1
-          }
-        },
-        {
-          "ruleId": "CS8604",
-          "level": "warning",
-          "message": "Possible null reference argument for parameter 'contentType' in 'FileStreamResult ControllerBase.File(Stream fileStream, string contentType)'.",
-          "locations": [
-            {
-              "resultFile": {
-                "uri": "file:///D:/FPT/Semester%206/Project_Cursus/Backend_Cursus/Cursus.LMS/Cursus.LMS.API/Controllers/AuthController.cs",
-                "region": {
-                  "startLine": 136,
-                  "startColumn": 51,
-                  "endLine": 136,
-                  "endColumn": 80
-                }
-              }
-            }
-          ],
-          "properties": {
-            "warningLevel": 1
+            "warningLevel": 2
           }
         },
         {
@@ -167,31 +209,10 @@
               "resultFile": {
                 "uri": "file:///D:/FPT/Semester%206/Project_Cursus/Backend_Cursus/Cursus.LMS/Cursus.LMS.API/Program.cs",
                 "region": {
-                  "startLine": 69,
+                  "startLine": 70,
                   "startColumn": 26,
-                  "endLine": 69,
+                  "endLine": 70,
                   "endColumn": 32
-                }
-              }
-            }
-          ],
-          "properties": {
-            "warningLevel": 1
-          }
-        },
-        {
-          "ruleId": "CS8603",
-          "level": "warning",
-          "message": "Possible null reference return.",
-          "locations": [
-            {
-              "resultFile": {
-                "uri": "file:///D:/FPT/Semester%206/Project_Cursus/Backend_Cursus/Cursus.LMS/Cursus.LMS.API/Controllers/CourseVersionController.cs",
-                "region": {
-                  "startLine": 167,
-                  "startColumn": 24,
-                  "endLine": 167,
-                  "endColumn": 28
                 }
               }
             }
@@ -203,16 +224,16 @@
         {
           "ruleId": "CS8604",
           "level": "warning",
-          "message": "Possible null reference argument for parameter 'userId' in 'Task<ResponseDTO> IInstructorService.ExportInstructors(string userId, int month, int year)'.",
+          "message": "Possible null reference argument for parameter 'contentType' in 'FileStreamResult ControllerBase.File(Stream fileStream, string contentType, string? fileDownloadName)'.",
           "locations": [
             {
               "resultFile": {
-                "uri": "file:///D:/FPT/Semester%206/Project_Cursus/Backend_Cursus/Cursus.LMS/Cursus.LMS.API/Controllers/InstructorController.cs",
+                "uri": "file:///D:/FPT/Semester%206/Project_Cursus/Backend_Cursus/Cursus.LMS/Cursus.LMS.API/Controllers/AuthController.cs",
                 "region": {
-                  "startLine": 156,
-                  "startColumn": 84,
-                  "endLine": 156,
-                  "endColumn": 90
+                  "startLine": 134,
+                  "startColumn": 55,
+                  "endLine": 134,
+                  "endColumn": 84
                 }
               }
             }
@@ -222,18 +243,39 @@
           }
         },
         {
-          "ruleId": "CS1998",
+          "ruleId": "CS8604",
           "level": "warning",
-          "message": "This async method lacks 'await' operators and will run synchronously. Consider using the 'await' operator to await non-blocking API calls, or 'await Task.Run(...)' to do CPU-bound work on a background thread.",
+          "message": "Possible null reference argument for parameter 'contentType' in 'FileStreamResult ControllerBase.File(Stream fileStream, string contentType)'.",
           "locations": [
             {
               "resultFile": {
-                "uri": "file:///D:/FPT/Semester%206/Project_Cursus/Backend_Cursus/Cursus.LMS/Cursus.LMS.API/Controllers/InstructorController.cs",
+                "uri": "file:///D:/FPT/Semester%206/Project_Cursus/Backend_Cursus/Cursus.LMS/Cursus.LMS.API/Controllers/AuthController.cs",
                 "region": {
-                  "startLine": 149,
-                  "startColumn": 54,
-                  "endLine": 149,
-                  "endColumn": 70
+                  "startLine": 137,
+                  "startColumn": 51,
+                  "endLine": 137,
+                  "endColumn": 80
+                }
+              }
+            }
+          ],
+          "properties": {
+            "warningLevel": 1
+          }
+        },
+        {
+          "ruleId": "CS8604",
+          "level": "warning",
+          "message": "Possible null reference argument for parameter 'contentType' in 'FileStreamResult ControllerBase.File(Stream fileStream, string contentType, string? fileDownloadName)'.",
+          "locations": [
+            {
+              "resultFile": {
+                "uri": "file:///D:/FPT/Semester%206/Project_Cursus/Backend_Cursus/Cursus.LMS/Cursus.LMS.API/Controllers/CourseVersionController.cs",
+                "region": {
+                  "startLine": 434,
+                  "startColumn": 52,
+                  "endLine": 434,
+                  "endColumn": 82
                 }
               }
             }
@@ -251,9 +293,9 @@
               "resultFile": {
                 "uri": "file:///D:/FPT/Semester%206/Project_Cursus/Backend_Cursus/Cursus.LMS/Cursus.LMS.API/Controllers/AuthController.cs",
                 "region": {
-                  "startLine": 222,
+                  "startLine": 223,
                   "startColumn": 17,
-                  "endLine": 222,
+                  "endLine": 223,
                   "endColumn": 21
                 }
               }
@@ -272,9 +314,9 @@
               "resultFile": {
                 "uri": "file:///D:/FPT/Semester%206/Project_Cursus/Backend_Cursus/Cursus.LMS/Cursus.LMS.API/Controllers/AuthController.cs",
                 "region": {
-                  "startLine": 238,
+                  "startLine": 239,
                   "startColumn": 66,
-                  "endLine": 238,
+                  "endLine": 239,
                   "endColumn": 76
                 }
               }
@@ -293,9 +335,9 @@
               "resultFile": {
                 "uri": "file:///D:/FPT/Semester%206/Project_Cursus/Backend_Cursus/Cursus.LMS/Cursus.LMS.API/Controllers/AuthController.cs",
                 "region": {
-                  "startLine": 266,
+                  "startLine": 267,
                   "startColumn": 62,
-                  "endLine": 266,
+                  "endLine": 267,
                   "endColumn": 68
                 }
               }
@@ -308,16 +350,100 @@
         {
           "ruleId": "CS8604",
           "level": "warning",
-          "message": "Possible null reference argument for parameter 'contentType' in 'FileStreamResult ControllerBase.File(Stream fileStream, string contentType, string? fileDownloadName)'.",
+          "message": "Possible null reference argument for parameter 'userId' in 'Task<ResponseDTO> IInstructorService.ExportInstructors(string userId, int month, int year)'.",
           "locations": [
             {
               "resultFile": {
-                "uri": "file:///D:/FPT/Semester%206/Project_Cursus/Backend_Cursus/Cursus.LMS/Cursus.LMS.API/Controllers/CourseVersionController.cs",
+                "uri": "file:///D:/FPT/Semester%206/Project_Cursus/Backend_Cursus/Cursus.LMS/Cursus.LMS.API/Controllers/InstructorController.cs",
                 "region": {
-                  "startLine": 435,
-                  "startColumn": 52,
-                  "endLine": 435,
-                  "endColumn": 82
+                  "startLine": 160,
+                  "startColumn": 84,
+                  "endLine": 160,
+                  "endColumn": 90
+                }
+              }
+            }
+          ],
+          "properties": {
+            "warningLevel": 1
+          }
+        },
+        {
+          "ruleId": "CS1998",
+          "level": "warning",
+          "message": "This async method lacks 'await' operators and will run synchronously. Consider using the 'await' operator to await non-blocking API calls, or 'await Task.Run(...)' to do CPU-bound work on a background thread.",
+          "locations": [
+            {
+              "resultFile": {
+                "uri": "file:///D:/FPT/Semester%206/Project_Cursus/Backend_Cursus/Cursus.LMS/Cursus.LMS.API/Controllers/InstructorController.cs",
+                "region": {
+                  "startLine": 153,
+                  "startColumn": 54,
+                  "endLine": 153,
+                  "endColumn": 70
+                }
+              }
+            }
+          ],
+          "properties": {
+            "warningLevel": 1
+          }
+        },
+        {
+          "ruleId": "S125",
+          "level": "warning",
+          "message": "Remove this commented out code.",
+          "locations": [
+            {
+              "resultFile": {
+                "uri": "file:///D:/FPT/Semester%206/Project_Cursus/Backend_Cursus/Cursus.LMS/Cursus.LMS.API/Controllers/EmailTemplateController.cs",
+                "region": {
+                  "startLine": 35,
+                  "startColumn": 13,
+                  "endLine": 35,
+                  "endColumn": 93
+                }
+              }
+            }
+          ],
+          "properties": {
+            "warningLevel": 1
+          }
+        },
+        {
+          "ruleId": "S125",
+          "level": "warning",
+          "message": "Remove this commented out code.",
+          "locations": [
+            {
+              "resultFile": {
+                "uri": "file:///D:/FPT/Semester%206/Project_Cursus/Backend_Cursus/Cursus.LMS/Cursus.LMS.API/Controllers/EmailTemplateController.cs",
+                "region": {
+                  "startLine": 145,
+                  "startColumn": 9,
+                  "endLine": 145,
+                  "endColumn": 13
+                }
+              }
+            }
+          ],
+          "properties": {
+            "warningLevel": 1
+          }
+        },
+        {
+          "ruleId": "S125",
+          "level": "warning",
+          "message": "Remove this commented out code.",
+          "locations": [
+            {
+              "resultFile": {
+                "uri": "file:///D:/FPT/Semester%206/Project_Cursus/Backend_Cursus/Cursus.LMS/Cursus.LMS.API/Controllers/PaymentController.cs",
+                "region": {
+                  "startLine": 103,
+                  "startColumn": 9,
+                  "endLine": 103,
+                  "endColumn": 13
                 }
               }
             }
@@ -338,7 +464,7 @@
                   "startLine": 10,
                   "startColumn": 27,
                   "endLine": 10,
-                  "endColumn": 137
+                  "endColumn": 140
                 }
               }
             }
@@ -411,132 +537,6 @@
           }
         },
         {
-          "ruleId": "S125",
-          "level": "warning",
-          "message": "Remove this commented out code.",
-          "locations": [
-            {
-              "resultFile": {
-                "uri": "file:///D:/FPT/Semester%206/Project_Cursus/Backend_Cursus/Cursus.LMS/Cursus.LMS.API/Controllers/AuthController.cs",
-                "region": {
-                  "startLine": 300,
-                  "startColumn": 9,
-                  "endLine": 300,
-                  "endColumn": 13
-                }
-              }
-            }
-          ],
-          "properties": {
-            "warningLevel": 1
-          }
-        },
-        {
-          "ruleId": "S2933",
-          "level": "warning",
-          "message": "Make '_courseService' 'readonly'.",
-          "locations": [
-            {
-              "resultFile": {
-                "uri": "file:///D:/FPT/Semester%206/Project_Cursus/Backend_Cursus/Cursus.LMS/Cursus.LMS.API/Controllers/CourseController.cs",
-                "region": {
-                  "startLine": 12,
-                  "startColumn": 32,
-                  "endLine": 12,
-                  "endColumn": 46
-                }
-              }
-            }
-          ],
-          "properties": {
-            "warningLevel": 1
-          }
-        },
-        {
-          "ruleId": "S125",
-          "level": "warning",
-          "message": "Remove this commented out code.",
-          "locations": [
-            {
-              "resultFile": {
-                "uri": "file:///D:/FPT/Semester%206/Project_Cursus/Backend_Cursus/Cursus.LMS/Cursus.LMS.API/Controllers/EmailTemplateController.cs",
-                "region": {
-                  "startLine": 35,
-                  "startColumn": 13,
-                  "endLine": 35,
-                  "endColumn": 93
-                }
-              }
-            }
-          ],
-          "properties": {
-            "warningLevel": 1
-          }
-        },
-        {
-          "ruleId": "S4487",
-          "level": "warning",
-          "message": "Remove this unread private field '_firebaseService' or refactor the code to use its value.",
-          "locations": [
-            {
-              "resultFile": {
-                "uri": "file:///D:/FPT/Semester%206/Project_Cursus/Backend_Cursus/Cursus.LMS/Cursus.LMS.API/Controllers/TestController.cs",
-                "region": {
-                  "startLine": 18,
-                  "startColumn": 43,
-                  "endLine": 18,
-                  "endColumn": 59
-                }
-              }
-            }
-          ],
-          "properties": {
-            "warningLevel": 1
-          }
-        },
-        {
-          "ruleId": "S4487",
-          "level": "warning",
-          "message": "Remove this unread private field '_authService' or refactor the code to use its value.",
-          "locations": [
-            {
-              "resultFile": {
-                "uri": "file:///D:/FPT/Semester%206/Project_Cursus/Backend_Cursus/Cursus.LMS/Cursus.LMS.API/Controllers/TestController.cs",
-                "region": {
-                  "startLine": 19,
-                  "startColumn": 39,
-                  "endLine": 19,
-                  "endColumn": 51
-                }
-              }
-            }
-          ],
-          "properties": {
-            "warningLevel": 1
-          }
-        },
-        {
-          "ruleId": "S4487",
-          "level": "warning",
-          "message": "Remove this unread private field '_tokenService' or refactor the code to use its value.",
-          "locations": [
-            {
-              "resultFile": {
-                "uri": "file:///D:/FPT/Semester%206/Project_Cursus/Backend_Cursus/Cursus.LMS/Cursus.LMS.API/Controllers/TestController.cs",
-                "region": {
-                  "startLine": 20,
-                  "startColumn": 40,
-                  "endLine": 20,
-                  "endColumn": 53
-                }
-              }
-            }
-          ],
-          "properties": {
-            "warningLevel": 1
-          }
-        },
-        {
           "ruleId": "S2933",
           "level": "warning",
           "message": "Make 'responseDto' 'readonly'.",
@@ -545,9 +545,9 @@
               "resultFile": {
                 "uri": "file:///D:/FPT/Semester%206/Project_Cursus/Backend_Cursus/Cursus.LMS/Cursus.LMS.API/Controllers/AuthController.cs",
                 "region": {
-                  "startLine": 17,
+                  "startLine": 18,
                   "startColumn": 29,
-                  "endLine": 17,
+                  "endLine": 18,
                   "endColumn": 40
                 }
               }
@@ -566,31 +566,10 @@
               "resultFile": {
                 "uri": "file:///D:/FPT/Semester%206/Project_Cursus/Backend_Cursus/Cursus.LMS/Cursus.LMS.API/Controllers/AuthController.cs",
                 "region": {
-                  "startLine": 15,
+                  "startLine": 16,
                   "startColumn": 40,
-                  "endLine": 15,
+                  "endLine": 16,
                   "endColumn": 53
-                }
-              }
-            }
-          ],
-          "properties": {
-            "warningLevel": 1
-          }
-        },
-        {
-          "ruleId": "S107",
-          "level": "warning",
-          "message": "Method has 9 parameters, which is greater than the 7 authorized.",
-          "locations": [
-            {
-              "resultFile": {
-                "uri": "file:///D:/FPT/Semester%206/Project_Cursus/Backend_Cursus/Cursus.LMS/Cursus.LMS.API/Controllers/CourseController.cs",
-                "region": {
-                  "startLine": 21,
-                  "startColumn": 9,
-                  "endLine": 31,
-                  "endColumn": 10
                 }
               }
             }
@@ -608,9 +587,9 @@
               "resultFile": {
                 "uri": "file:///D:/FPT/Semester%206/Project_Cursus/Backend_Cursus/Cursus.LMS/Cursus.LMS.API/Controllers/AuthController.cs",
                 "region": {
-                  "startLine": 103,
+                  "startLine": 104,
                   "startColumn": 33,
-                  "endLine": 103,
+                  "endLine": 104,
                   "endColumn": 62
                 }
               }
@@ -621,9 +600,9 @@
               "physicalLocation": {
                 "uri": "file:///D:/FPT/Semester%206/Project_Cursus/Backend_Cursus/Cursus.LMS/Cursus.LMS.API/Controllers/AuthController.cs",
                 "region": {
-                  "startLine": 128,
+                  "startLine": 129,
                   "startColumn": 33,
-                  "endLine": 128,
+                  "endLine": 129,
                   "endColumn": 62
                 }
               }
@@ -632,9 +611,9 @@
               "physicalLocation": {
                 "uri": "file:///D:/FPT/Semester%206/Project_Cursus/Backend_Cursus/Cursus.LMS/Cursus.LMS.API/Controllers/AuthController.cs",
                 "region": {
-                  "startLine": 165,
+                  "startLine": 166,
                   "startColumn": 33,
-                  "endLine": 165,
+                  "endLine": 166,
                   "endColumn": 62
                 }
               }
@@ -643,9 +622,9 @@
               "physicalLocation": {
                 "uri": "file:///D:/FPT/Semester%206/Project_Cursus/Backend_Cursus/Cursus.LMS/Cursus.LMS.API/Controllers/AuthController.cs",
                 "region": {
-                  "startLine": 182,
+                  "startLine": 183,
                   "startColumn": 33,
-                  "endLine": 182,
+                  "endLine": 183,
                   "endColumn": 62
                 }
               }
@@ -658,6 +637,88 @@
               "1": null,
               "2": null
             }
+          }
+        },
+        {
+          "ruleId": "S1192",
+          "level": "warning",
+          "message": "Define a constant instead of using this literal 'Invalid data' 4 times.",
+          "locations": [
+            {
+              "resultFile": {
+                "uri": "file:///D:/FPT/Semester%206/Project_Cursus/Backend_Cursus/Cursus.LMS/Cursus.LMS.API/Controllers/CourseController.cs",
+                "region": {
+                  "startLine": 150,
+                  "startColumn": 31,
+                  "endLine": 150,
+                  "endColumn": 45
+                }
+              }
+            }
+          ],
+          "relatedLocations": [
+            {
+              "physicalLocation": {
+                "uri": "file:///D:/FPT/Semester%206/Project_Cursus/Backend_Cursus/Cursus.LMS/Cursus.LMS.API/Controllers/CourseController.cs",
+                "region": {
+                  "startLine": 184,
+                  "startColumn": 31,
+                  "endLine": 184,
+                  "endColumn": 45
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "uri": "file:///D:/FPT/Semester%206/Project_Cursus/Backend_Cursus/Cursus.LMS/Cursus.LMS.API/Controllers/CourseController.cs",
+                "region": {
+                  "startLine": 313,
+                  "startColumn": 31,
+                  "endLine": 313,
+                  "endColumn": 45
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "uri": "file:///D:/FPT/Semester%206/Project_Cursus/Backend_Cursus/Cursus.LMS/Cursus.LMS.API/Controllers/CourseController.cs",
+                "region": {
+                  "startLine": 347,
+                  "startColumn": 31,
+                  "endLine": 347,
+                  "endColumn": 45
+                }
+              }
+            }
+          ],
+          "properties": {
+            "warningLevel": 1,
+            "customProperties": {
+              "0": null,
+              "1": null,
+              "2": null
+            }
+          }
+        },
+        {
+          "ruleId": "S107",
+          "level": "warning",
+          "message": "Method has 9 parameters, which is greater than the 7 authorized.",
+          "locations": [
+            {
+              "resultFile": {
+                "uri": "file:///D:/FPT/Semester%206/Project_Cursus/Backend_Cursus/Cursus.LMS/Cursus.LMS.API/Controllers/CourseController.cs",
+                "region": {
+                  "startLine": 35,
+                  "startColumn": 9,
+                  "endLine": 45,
+                  "endColumn": 10
+                }
+              }
+            }
+          ],
+          "properties": {
+            "warningLevel": 1
           }
         },
         {
@@ -693,39 +754,6 @@
               "physicalLocation": {
                 "uri": "file:///D:/FPT/Semester%206/Project_Cursus/Backend_Cursus/Cursus.LMS/Cursus.LMS.API/Controllers/EmailTemplateController.cs",
                 "region": {
-                  "startLine": 165,
-                  "startColumn": 54,
-                  "endLine": 165,
-                  "endColumn": 97
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "uri": "file:///D:/FPT/Semester%206/Project_Cursus/Backend_Cursus/Cursus.LMS/Cursus.LMS.API/Controllers/EmailTemplateController.cs",
-                "region": {
-                  "startLine": 144,
-                  "startColumn": 54,
-                  "endLine": 144,
-                  "endColumn": 85
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "uri": "file:///D:/FPT/Semester%206/Project_Cursus/Backend_Cursus/Cursus.LMS/Cursus.LMS.API/Controllers/EmailTemplateController.cs",
-                "region": {
-                  "startLine": 185,
-                  "startColumn": 54,
-                  "endLine": 185,
-                  "endColumn": 96
-                }
-              }
-            },
-            {
-              "physicalLocation": {
-                "uri": "file:///D:/FPT/Semester%206/Project_Cursus/Backend_Cursus/Cursus.LMS/Cursus.LMS.API/Controllers/EmailTemplateController.cs",
-                "region": {
                   "startLine": 47,
                   "startColumn": 54,
                   "endLine": 47,
@@ -749,54 +777,94 @@
             "warningLevel": 1,
             "customProperties": {
               "0": "May belong to responsibility #1.",
+              "1": "May belong to responsibility #2.",
+              "2": "May belong to responsibility #2."
+            }
+          }
+        },
+        {
+          "ruleId": "S6960",
+          "level": "warning",
+          "message": "This controller has multiple responsibilities and could be split into 2 smaller controllers.",
+          "locations": [
+            {
+              "resultFile": {
+                "uri": "file:///D:/FPT/Semester%206/Project_Cursus/Backend_Cursus/Cursus.LMS/Cursus.LMS.API/Controllers/PaymentController.cs",
+                "region": {
+                  "startLine": 13,
+                  "startColumn": 18,
+                  "endLine": 13,
+                  "endColumn": 35
+                }
+              }
+            }
+          ],
+          "relatedLocations": [
+            {
+              "physicalLocation": {
+                "uri": "file:///D:/FPT/Semester%206/Project_Cursus/Backend_Cursus/Cursus.LMS/Cursus.LMS.API/Controllers/PaymentController.cs",
+                "region": {
+                  "startLine": 84,
+                  "startColumn": 54,
+                  "endLine": 84,
+                  "endColumn": 67
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "uri": "file:///D:/FPT/Semester%206/Project_Cursus/Backend_Cursus/Cursus.LMS/Cursus.LMS.API/Controllers/PaymentController.cs",
+                "region": {
+                  "startLine": 54,
+                  "startColumn": 54,
+                  "endLine": 54,
+                  "endColumn": 82
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "uri": "file:///D:/FPT/Semester%206/Project_Cursus/Backend_Cursus/Cursus.LMS/Cursus.LMS.API/Controllers/PaymentController.cs",
+                "region": {
+                  "startLine": 76,
+                  "startColumn": 54,
+                  "endLine": 76,
+                  "endColumn": 72
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "uri": "file:///D:/FPT/Semester%206/Project_Cursus/Backend_Cursus/Cursus.LMS/Cursus.LMS.API/Controllers/PaymentController.cs",
+                "region": {
+                  "startLine": 65,
+                  "startColumn": 54,
+                  "endLine": 65,
+                  "endColumn": 74
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "uri": "file:///D:/FPT/Semester%206/Project_Cursus/Backend_Cursus/Cursus.LMS/Cursus.LMS.API/Controllers/PaymentController.cs",
+                "region": {
+                  "startLine": 26,
+                  "startColumn": 54,
+                  "endLine": 26,
+                  "endColumn": 75
+                }
+              }
+            }
+          ],
+          "properties": {
+            "warningLevel": 1,
+            "customProperties": {
+              "0": "May belong to responsibility #1.",
               "1": "May belong to responsibility #1.",
               "2": "May belong to responsibility #1.",
               "3": "May belong to responsibility #1.",
-              "4": "May belong to responsibility #2.",
-              "5": "May belong to responsibility #2."
+              "4": "May belong to responsibility #2."
             }
-          }
-        },
-        {
-          "ruleId": "S1117",
-          "level": "warning",
-          "message": "Rename 'responseDto' which hides the field with the same name.",
-          "locations": [
-            {
-              "resultFile": {
-                "uri": "file:///D:/FPT/Semester%206/Project_Cursus/Backend_Cursus/Cursus.LMS/Cursus.LMS.API/Controllers/AuthController.cs",
-                "region": {
-                  "startLine": 238,
-                  "startColumn": 17,
-                  "endLine": 238,
-                  "endColumn": 28
-                }
-              }
-            }
-          ],
-          "properties": {
-            "warningLevel": 1
-          }
-        },
-        {
-          "ruleId": "S1117",
-          "level": "warning",
-          "message": "Rename 'responseDto' which hides the field with the same name.",
-          "locations": [
-            {
-              "resultFile": {
-                "uri": "file:///D:/FPT/Semester%206/Project_Cursus/Backend_Cursus/Cursus.LMS/Cursus.LMS.API/Controllers/AuthController.cs",
-                "region": {
-                  "startLine": 250,
-                  "startColumn": 17,
-                  "endLine": 250,
-                  "endColumn": 28
-                }
-              }
-            }
-          ],
-          "properties": {
-            "warningLevel": 1
           }
         },
         {
@@ -808,9 +876,9 @@
               "resultFile": {
                 "uri": "file:///D:/FPT/Semester%206/Project_Cursus/Backend_Cursus/Cursus.LMS/Cursus.LMS.API/Program.cs",
                 "region": {
-                  "startLine": 102,
+                  "startLine": 108,
                   "startColumn": 1,
-                  "endLine": 102,
+                  "endLine": 108,
                   "endColumn": 10
                 }
               }
@@ -821,6 +889,295 @@
           }
         },
         {
+          "ruleId": "S6960",
+          "level": "warning",
+          "message": "This controller has multiple responsibilities and could be split into 3 smaller controllers.",
+          "locations": [
+            {
+              "resultFile": {
+                "uri": "file:///D:/FPT/Semester%206/Project_Cursus/Backend_Cursus/Cursus.LMS/Cursus.LMS.API/Controllers/CourseController.cs",
+                "region": {
+                  "startLine": 14,
+                  "startColumn": 18,
+                  "endLine": 14,
+                  "endColumn": 34
+                }
+              }
+            }
+          ],
+          "relatedLocations": [
+            {
+              "physicalLocation": {
+                "uri": "file:///D:/FPT/Semester%206/Project_Cursus/Backend_Cursus/Cursus.LMS/Cursus.LMS.API/Controllers/CourseController.cs",
+                "region": {
+                  "startLine": 306,
+                  "startColumn": 54,
+                  "endLine": 306,
+                  "endColumn": 72
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "uri": "file:///D:/FPT/Semester%206/Project_Cursus/Backend_Cursus/Cursus.LMS/Cursus.LMS.API/Controllers/CourseController.cs",
+                "region": {
+                  "startLine": 374,
+                  "startColumn": 54,
+                  "endLine": 374,
+                  "endColumn": 72
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "uri": "file:///D:/FPT/Semester%206/Project_Cursus/Backend_Cursus/Cursus.LMS/Cursus.LMS.API/Controllers/CourseController.cs",
+                "region": {
+                  "startLine": 284,
+                  "startColumn": 54,
+                  "endLine": 284,
+                  "endColumn": 69
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "uri": "file:///D:/FPT/Semester%206/Project_Cursus/Backend_Cursus/Cursus.LMS/Cursus.LMS.API/Controllers/CourseController.cs",
+                "region": {
+                  "startLine": 257,
+                  "startColumn": 54,
+                  "endLine": 257,
+                  "endColumn": 70
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "uri": "file:///D:/FPT/Semester%206/Project_Cursus/Backend_Cursus/Cursus.LMS/Cursus.LMS.API/Controllers/CourseController.cs",
+                "region": {
+                  "startLine": 340,
+                  "startColumn": 54,
+                  "endLine": 340,
+                  "endColumn": 72
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "uri": "file:///D:/FPT/Semester%206/Project_Cursus/Backend_Cursus/Cursus.LMS/Cursus.LMS.API/Controllers/CourseController.cs",
+                "region": {
+                  "startLine": 143,
+                  "startColumn": 54,
+                  "endLine": 143,
+                  "endColumn": 72
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "uri": "file:///D:/FPT/Semester%206/Project_Cursus/Backend_Cursus/Cursus.LMS/Cursus.LMS.API/Controllers/CourseController.cs",
+                "region": {
+                  "startLine": 211,
+                  "startColumn": 54,
+                  "endLine": 211,
+                  "endColumn": 72
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "uri": "file:///D:/FPT/Semester%206/Project_Cursus/Backend_Cursus/Cursus.LMS/Cursus.LMS.API/Controllers/CourseController.cs",
+                "region": {
+                  "startLine": 121,
+                  "startColumn": 54,
+                  "endLine": 121,
+                  "endColumn": 69
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "uri": "file:///D:/FPT/Semester%206/Project_Cursus/Backend_Cursus/Cursus.LMS/Cursus.LMS.API/Controllers/CourseController.cs",
+                "region": {
+                  "startLine": 93,
+                  "startColumn": 54,
+                  "endLine": 93,
+                  "endColumn": 70
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "uri": "file:///D:/FPT/Semester%206/Project_Cursus/Backend_Cursus/Cursus.LMS/Cursus.LMS.API/Controllers/CourseController.cs",
+                "region": {
+                  "startLine": 234,
+                  "startColumn": 54,
+                  "endLine": 234,
+                  "endColumn": 70
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "uri": "file:///D:/FPT/Semester%206/Project_Cursus/Backend_Cursus/Cursus.LMS/Cursus.LMS.API/Controllers/CourseController.cs",
+                "region": {
+                  "startLine": 177,
+                  "startColumn": 54,
+                  "endLine": 177,
+                  "endColumn": 72
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "uri": "file:///D:/FPT/Semester%206/Project_Cursus/Backend_Cursus/Cursus.LMS/Cursus.LMS.API/Controllers/CourseController.cs",
+                "region": {
+                  "startLine": 74,
+                  "startColumn": 54,
+                  "endLine": 74,
+                  "endColumn": 68
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "uri": "file:///D:/FPT/Semester%206/Project_Cursus/Backend_Cursus/Cursus.LMS/Cursus.LMS.API/Controllers/CourseController.cs",
+                "region": {
+                  "startLine": 477,
+                  "startColumn": 41,
+                  "endLine": 477,
+                  "endColumn": 63
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "uri": "file:///D:/FPT/Semester%206/Project_Cursus/Backend_Cursus/Cursus.LMS/Cursus.LMS.API/Controllers/CourseController.cs",
+                "region": {
+                  "startLine": 83,
+                  "startColumn": 54,
+                  "endLine": 83,
+                  "endColumn": 70
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "uri": "file:///D:/FPT/Semester%206/Project_Cursus/Backend_Cursus/Cursus.LMS/Cursus.LMS.API/Controllers/CourseController.cs",
+                "region": {
+                  "startLine": 485,
+                  "startColumn": 41,
+                  "endLine": 485,
+                  "endColumn": 63
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "uri": "file:///D:/FPT/Semester%206/Project_Cursus/Backend_Cursus/Cursus.LMS/Cursus.LMS.API/Controllers/CourseController.cs",
+                "region": {
+                  "startLine": 450,
+                  "startColumn": 54,
+                  "endLine": 450,
+                  "endColumn": 66
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "uri": "file:///D:/FPT/Semester%206/Project_Cursus/Backend_Cursus/Cursus.LMS/Cursus.LMS.API/Controllers/CourseController.cs",
+                "region": {
+                  "startLine": 465,
+                  "startColumn": 42,
+                  "endLine": 465,
+                  "endColumn": 69
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "uri": "file:///D:/FPT/Semester%206/Project_Cursus/Backend_Cursus/Cursus.LMS/Cursus.LMS.API/Controllers/CourseController.cs",
+                "region": {
+                  "startLine": 65,
+                  "startColumn": 54,
+                  "endLine": 65,
+                  "endColumn": 63
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "uri": "file:///D:/FPT/Semester%206/Project_Cursus/Backend_Cursus/Cursus.LMS/Cursus.LMS.API/Controllers/CourseController.cs",
+                "region": {
+                  "startLine": 34,
+                  "startColumn": 54,
+                  "endLine": 34,
+                  "endColumn": 64
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "uri": "file:///D:/FPT/Semester%206/Project_Cursus/Backend_Cursus/Cursus.LMS/Cursus.LMS.API/Controllers/CourseController.cs",
+                "region": {
+                  "startLine": 423,
+                  "startColumn": 54,
+                  "endLine": 423,
+                  "endColumn": 78
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "uri": "file:///D:/FPT/Semester%206/Project_Cursus/Backend_Cursus/Cursus.LMS/Cursus.LMS.API/Controllers/CourseController.cs",
+                "region": {
+                  "startLine": 396,
+                  "startColumn": 54,
+                  "endLine": 396,
+                  "endColumn": 76
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "uri": "file:///D:/FPT/Semester%206/Project_Cursus/Backend_Cursus/Cursus.LMS/Cursus.LMS.API/Controllers/CourseController.cs",
+                "region": {
+                  "startLine": 458,
+                  "startColumn": 41,
+                  "endLine": 458,
+                  "endColumn": 55
+                }
+              }
+            }
+          ],
+          "properties": {
+            "warningLevel": 1,
+            "customProperties": {
+              "0": "May belong to responsibility #1.",
+              "1": "May belong to responsibility #1.",
+              "10": "May belong to responsibility #2.",
+              "11": "May belong to responsibility #3.",
+              "12": "May belong to responsibility #3.",
+              "13": "May belong to responsibility #3.",
+              "14": "May belong to responsibility #3.",
+              "15": "May belong to responsibility #3.",
+              "16": "May belong to responsibility #3.",
+              "17": "May belong to responsibility #3.",
+              "18": "May belong to responsibility #3.",
+              "19": "May belong to responsibility #3.",
+              "2": "May belong to responsibility #1.",
+              "20": "May belong to responsibility #3.",
+              "21": "May belong to responsibility #3.",
+              "3": "May belong to responsibility #1.",
+              "4": "May belong to responsibility #1.",
+              "5": "May belong to responsibility #2.",
+              "6": "May belong to responsibility #2.",
+              "7": "May belong to responsibility #2.",
+              "8": "May belong to responsibility #2.",
+              "9": "May belong to responsibility #2."
+            }
+          }
+        },
+        {
           "ruleId": "S1117",
           "level": "warning",
           "message": "Rename 'responseDto' which hides the field with the same name.",
@@ -829,9 +1186,9 @@
               "resultFile": {
                 "uri": "file:///D:/FPT/Semester%206/Project_Cursus/Backend_Cursus/Cursus.LMS/Cursus.LMS.API/Controllers/AuthController.cs",
                 "region": {
-                  "startLine": 288,
+                  "startLine": 251,
                   "startColumn": 17,
-                  "endLine": 288,
+                  "endLine": 251,
                   "endColumn": 28
                 }
               }
@@ -850,9 +1207,9 @@
               "resultFile": {
                 "uri": "file:///D:/FPT/Semester%206/Project_Cursus/Backend_Cursus/Cursus.LMS/Cursus.LMS.API/Controllers/AuthController.cs",
                 "region": {
-                  "startLine": 316,
+                  "startLine": 239,
                   "startColumn": 17,
-                  "endLine": 316,
+                  "endLine": 239,
                   "endColumn": 28
                 }
               }
@@ -871,72 +1228,9 @@
               "resultFile": {
                 "uri": "file:///D:/FPT/Semester%206/Project_Cursus/Backend_Cursus/Cursus.LMS/Cursus.LMS.API/Controllers/AuthController.cs",
                 "region": {
-                  "startLine": 324,
+                  "startLine": 289,
                   "startColumn": 17,
-                  "endLine": 324,
-                  "endColumn": 28
-                }
-              }
-            }
-          ],
-          "properties": {
-            "warningLevel": 1
-          }
-        },
-        {
-          "ruleId": "S1117",
-          "level": "warning",
-          "message": "Rename 'responseDto' which hides the field with the same name.",
-          "locations": [
-            {
-              "resultFile": {
-                "uri": "file:///D:/FPT/Semester%206/Project_Cursus/Backend_Cursus/Cursus.LMS/Cursus.LMS.API/Controllers/AuthController.cs",
-                "region": {
-                  "startLine": 332,
-                  "startColumn": 17,
-                  "endLine": 332,
-                  "endColumn": 28
-                }
-              }
-            }
-          ],
-          "properties": {
-            "warningLevel": 1
-          }
-        },
-        {
-          "ruleId": "S1117",
-          "level": "warning",
-          "message": "Rename 'responseDto' which hides the field with the same name.",
-          "locations": [
-            {
-              "resultFile": {
-                "uri": "file:///D:/FPT/Semester%206/Project_Cursus/Backend_Cursus/Cursus.LMS/Cursus.LMS.API/Controllers/AuthController.cs",
-                "region": {
-                  "startLine": 343,
-                  "startColumn": 17,
-                  "endLine": 343,
-                  "endColumn": 28
-                }
-              }
-            }
-          ],
-          "properties": {
-            "warningLevel": 1
-          }
-        },
-        {
-          "ruleId": "S1117",
-          "level": "warning",
-          "message": "Rename 'responseDto' which hides the field with the same name.",
-          "locations": [
-            {
-              "resultFile": {
-                "uri": "file:///D:/FPT/Semester%206/Project_Cursus/Backend_Cursus/Cursus.LMS/Cursus.LMS.API/Controllers/AuthController.cs",
-                "region": {
-                  "startLine": 353,
-                  "startColumn": 17,
-                  "endLine": 353,
+                  "endLine": 289,
                   "endColumn": 28
                 }
               }
@@ -968,9 +1262,9 @@
               "physicalLocation": {
                 "uri": "file:///D:/FPT/Semester%206/Project_Cursus/Backend_Cursus/Cursus.LMS/Cursus.LMS.API/Controllers/CourseVersionController.cs",
                 "region": {
-                  "startLine": 288,
+                  "startLine": 287,
                   "startColumn": 54,
-                  "endLine": 288,
+                  "endLine": 287,
                   "endColumn": 73
                 }
               }
@@ -979,9 +1273,9 @@
               "physicalLocation": {
                 "uri": "file:///D:/FPT/Semester%206/Project_Cursus/Backend_Cursus/Cursus.LMS/Cursus.LMS.API/Controllers/CourseVersionController.cs",
                 "region": {
-                  "startLine": 311,
+                  "startLine": 310,
                   "startColumn": 54,
-                  "endLine": 311,
+                  "endLine": 310,
                   "endColumn": 73
                 }
               }
@@ -990,9 +1284,9 @@
               "physicalLocation": {
                 "uri": "file:///D:/FPT/Semester%206/Project_Cursus/Backend_Cursus/Cursus.LMS/Cursus.LMS.API/Controllers/CourseVersionController.cs",
                 "region": {
-                  "startLine": 300,
+                  "startLine": 299,
                   "startColumn": 54,
-                  "endLine": 300,
+                  "endLine": 299,
                   "endColumn": 71
                 }
               }
@@ -1001,9 +1295,9 @@
               "physicalLocation": {
                 "uri": "file:///D:/FPT/Semester%206/Project_Cursus/Backend_Cursus/Cursus.LMS/Cursus.LMS.API/Controllers/CourseVersionController.cs",
                 "region": {
-                  "startLine": 279,
+                  "startLine": 278,
                   "startColumn": 54,
-                  "endLine": 279,
+                  "endLine": 278,
                   "endColumn": 70
                 }
               }
@@ -1012,9 +1306,9 @@
               "physicalLocation": {
                 "uri": "file:///D:/FPT/Semester%206/Project_Cursus/Backend_Cursus/Cursus.LMS/Cursus.LMS.API/Controllers/CourseVersionController.cs",
                 "region": {
-                  "startLine": 251,
+                  "startLine": 250,
                   "startColumn": 54,
-                  "endLine": 251,
+                  "endLine": 250,
                   "endColumn": 71
                 }
               }
@@ -1210,9 +1504,9 @@
               "physicalLocation": {
                 "uri": "file:///D:/FPT/Semester%206/Project_Cursus/Backend_Cursus/Cursus.LMS/Cursus.LMS.API/Controllers/CourseVersionController.cs",
                 "region": {
-                  "startLine": 363,
+                  "startLine": 362,
                   "startColumn": 54,
-                  "endLine": 363,
+                  "endLine": 362,
                   "endColumn": 81
                 }
               }
@@ -1221,9 +1515,9 @@
               "physicalLocation": {
                 "uri": "file:///D:/FPT/Semester%206/Project_Cursus/Backend_Cursus/Cursus.LMS/Cursus.LMS.API/Controllers/CourseVersionController.cs",
                 "region": {
-                  "startLine": 410,
+                  "startLine": 409,
                   "startColumn": 42,
-                  "endLine": 410,
+                  "endLine": 409,
                   "endColumn": 77
                 }
               }
@@ -1232,9 +1526,9 @@
               "physicalLocation": {
                 "uri": "file:///D:/FPT/Semester%206/Project_Cursus/Backend_Cursus/Cursus.LMS/Cursus.LMS.API/Controllers/CourseVersionController.cs",
                 "region": {
-                  "startLine": 373,
+                  "startLine": 372,
                   "startColumn": 54,
-                  "endLine": 373,
+                  "endLine": 372,
                   "endColumn": 79
                 }
               }
@@ -1243,9 +1537,9 @@
               "physicalLocation": {
                 "uri": "file:///D:/FPT/Semester%206/Project_Cursus/Backend_Cursus/Cursus.LMS/Cursus.LMS.API/Controllers/CourseVersionController.cs",
                 "region": {
-                  "startLine": 354,
+                  "startLine": 353,
                   "startColumn": 54,
-                  "endLine": 354,
+                  "endLine": 353,
                   "endColumn": 79
                 }
               }
@@ -1254,9 +1548,9 @@
               "physicalLocation": {
                 "uri": "file:///D:/FPT/Semester%206/Project_Cursus/Backend_Cursus/Cursus.LMS/Cursus.LMS.API/Controllers/CourseVersionController.cs",
                 "region": {
-                  "startLine": 327,
+                  "startLine": 326,
                   "startColumn": 54,
-                  "endLine": 327,
+                  "endLine": 326,
                   "endColumn": 80
                 }
               }
@@ -1265,9 +1559,9 @@
               "physicalLocation": {
                 "uri": "file:///D:/FPT/Semester%206/Project_Cursus/Backend_Cursus/Cursus.LMS/Cursus.LMS.API/Controllers/CourseVersionController.cs",
                 "region": {
-                  "startLine": 383,
+                  "startLine": 382,
                   "startColumn": 54,
-                  "endLine": 383,
+                  "endLine": 382,
                   "endColumn": 81
                 }
               }
@@ -1276,9 +1570,9 @@
               "physicalLocation": {
                 "uri": "file:///D:/FPT/Semester%206/Project_Cursus/Backend_Cursus/Cursus.LMS/Cursus.LMS.API/Controllers/CourseVersionController.cs",
                 "region": {
-                  "startLine": 392,
+                  "startLine": 391,
                   "startColumn": 54,
-                  "endLine": 392,
+                  "endLine": 391,
                   "endColumn": 88
                 }
               }
@@ -1318,9 +1612,424 @@
               "9": "May belong to responsibility #2."
             }
           }
+        },
+        {
+          "ruleId": "S1117",
+          "level": "warning",
+          "message": "Rename 'responseDto' which hides the field with the same name.",
+          "locations": [
+            {
+              "resultFile": {
+                "uri": "file:///D:/FPT/Semester%206/Project_Cursus/Backend_Cursus/Cursus.LMS/Cursus.LMS.API/Controllers/AuthController.cs",
+                "region": {
+                  "startLine": 298,
+                  "startColumn": 17,
+                  "endLine": 298,
+                  "endColumn": 28
+                }
+              }
+            }
+          ],
+          "properties": {
+            "warningLevel": 1
+          }
+        },
+        {
+          "ruleId": "S1117",
+          "level": "warning",
+          "message": "Rename 'responseDto' which hides the field with the same name.",
+          "locations": [
+            {
+              "resultFile": {
+                "uri": "file:///D:/FPT/Semester%206/Project_Cursus/Backend_Cursus/Cursus.LMS/Cursus.LMS.API/Controllers/AuthController.cs",
+                "region": {
+                  "startLine": 306,
+                  "startColumn": 17,
+                  "endLine": 306,
+                  "endColumn": 28
+                }
+              }
+            }
+          ],
+          "properties": {
+            "warningLevel": 1
+          }
+        },
+        {
+          "ruleId": "S1117",
+          "level": "warning",
+          "message": "Rename 'responseDto' which hides the field with the same name.",
+          "locations": [
+            {
+              "resultFile": {
+                "uri": "file:///D:/FPT/Semester%206/Project_Cursus/Backend_Cursus/Cursus.LMS/Cursus.LMS.API/Controllers/AuthController.cs",
+                "region": {
+                  "startLine": 325,
+                  "startColumn": 17,
+                  "endLine": 325,
+                  "endColumn": 28
+                }
+              }
+            }
+          ],
+          "properties": {
+            "warningLevel": 1
+          }
+        },
+        {
+          "ruleId": "S1117",
+          "level": "warning",
+          "message": "Rename 'responseDto' which hides the field with the same name.",
+          "locations": [
+            {
+              "resultFile": {
+                "uri": "file:///D:/FPT/Semester%206/Project_Cursus/Backend_Cursus/Cursus.LMS/Cursus.LMS.API/Controllers/AuthController.cs",
+                "region": {
+                  "startLine": 335,
+                  "startColumn": 17,
+                  "endLine": 335,
+                  "endColumn": 28
+                }
+              }
+            }
+          ],
+          "properties": {
+            "warningLevel": 1
+          }
+        },
+        {
+          "ruleId": "S1117",
+          "level": "warning",
+          "message": "Rename 'responseDto' which hides the field with the same name.",
+          "locations": [
+            {
+              "resultFile": {
+                "uri": "file:///D:/FPT/Semester%206/Project_Cursus/Backend_Cursus/Cursus.LMS/Cursus.LMS.API/Controllers/AuthController.cs",
+                "region": {
+                  "startLine": 314,
+                  "startColumn": 17,
+                  "endLine": 314,
+                  "endColumn": 28
+                }
+              }
+            }
+          ],
+          "properties": {
+            "warningLevel": 1
+          }
+        },
+        {
+          "ruleId": "S6960",
+          "level": "warning",
+          "message": "This controller has multiple responsibilities and could be split into 2 smaller controllers.",
+          "locations": [
+            {
+              "resultFile": {
+                "uri": "file:///D:/FPT/Semester%206/Project_Cursus/Backend_Cursus/Cursus.LMS/Cursus.LMS.API/Controllers/InstructorController.cs",
+                "region": {
+                  "startLine": 13,
+                  "startColumn": 18,
+                  "endLine": 13,
+                  "endColumn": 38
+                }
+              }
+            }
+          ],
+          "relatedLocations": [
+            {
+              "physicalLocation": {
+                "uri": "file:///D:/FPT/Semester%206/Project_Cursus/Backend_Cursus/Cursus.LMS/Cursus.LMS.API/Controllers/InstructorController.cs",
+                "region": {
+                  "startLine": 89,
+                  "startColumn": 54,
+                  "endLine": 89,
+                  "endColumn": 70
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "uri": "file:///D:/FPT/Semester%206/Project_Cursus/Backend_Cursus/Cursus.LMS/Cursus.LMS.API/Controllers/InstructorController.cs",
+                "region": {
+                  "startLine": 121,
+                  "startColumn": 54,
+                  "endLine": 121,
+                  "endColumn": 77
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "uri": "file:///D:/FPT/Semester%206/Project_Cursus/Backend_Cursus/Cursus.LMS/Cursus.LMS.API/Controllers/InstructorController.cs",
+                "region": {
+                  "startLine": 141,
+                  "startColumn": 54,
+                  "endLine": 141,
+                  "endColumn": 77
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "uri": "file:///D:/FPT/Semester%206/Project_Cursus/Backend_Cursus/Cursus.LMS/Cursus.LMS.API/Controllers/InstructorController.cs",
+                "region": {
+                  "startLine": 166,
+                  "startColumn": 63,
+                  "endLine": 166,
+                  "endColumn": 81
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "uri": "file:///D:/FPT/Semester%206/Project_Cursus/Backend_Cursus/Cursus.LMS/Cursus.LMS.API/Controllers/InstructorController.cs",
+                "region": {
+                  "startLine": 25,
+                  "startColumn": 54,
+                  "endLine": 25,
+                  "endColumn": 70
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "uri": "file:///D:/FPT/Semester%206/Project_Cursus/Backend_Cursus/Cursus.LMS/Cursus.LMS.API/Controllers/InstructorController.cs",
+                "region": {
+                  "startLine": 108,
+                  "startColumn": 54,
+                  "endLine": 108,
+                  "endColumn": 77
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "uri": "file:///D:/FPT/Semester%206/Project_Cursus/Backend_Cursus/Cursus.LMS/Cursus.LMS.API/Controllers/InstructorController.cs",
+                "region": {
+                  "startLine": 42,
+                  "startColumn": 54,
+                  "endLine": 42,
+                  "endColumn": 71
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "uri": "file:///D:/FPT/Semester%206/Project_Cursus/Backend_Cursus/Cursus.LMS/Cursus.LMS.API/Controllers/InstructorController.cs",
+                "region": {
+                  "startLine": 50,
+                  "startColumn": 54,
+                  "endLine": 50,
+                  "endColumn": 83
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "uri": "file:///D:/FPT/Semester%206/Project_Cursus/Backend_Cursus/Cursus.LMS/Cursus.LMS.API/Controllers/InstructorController.cs",
+                "region": {
+                  "startLine": 66,
+                  "startColumn": 54,
+                  "endLine": 66,
+                  "endColumn": 87
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "uri": "file:///D:/FPT/Semester%206/Project_Cursus/Backend_Cursus/Cursus.LMS/Cursus.LMS.API/Controllers/InstructorController.cs",
+                "region": {
+                  "startLine": 74,
+                  "startColumn": 54,
+                  "endLine": 74,
+                  "endColumn": 87
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "uri": "file:///D:/FPT/Semester%206/Project_Cursus/Backend_Cursus/Cursus.LMS/Cursus.LMS.API/Controllers/InstructorController.cs",
+                "region": {
+                  "startLine": 58,
+                  "startColumn": 54,
+                  "endLine": 58,
+                  "endColumn": 82
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "uri": "file:///D:/FPT/Semester%206/Project_Cursus/Backend_Cursus/Cursus.LMS/Cursus.LMS.API/Controllers/InstructorController.cs",
+                "region": {
+                  "startLine": 97,
+                  "startColumn": 54,
+                  "endLine": 97,
+                  "endColumn": 70
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "uri": "file:///D:/FPT/Semester%206/Project_Cursus/Backend_Cursus/Cursus.LMS/Cursus.LMS.API/Controllers/InstructorController.cs",
+                "region": {
+                  "startLine": 81,
+                  "startColumn": 54,
+                  "endLine": 81,
+                  "endColumn": 74
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "uri": "file:///D:/FPT/Semester%206/Project_Cursus/Backend_Cursus/Cursus.LMS/Cursus.LMS.API/Controllers/InstructorController.cs",
+                "region": {
+                  "startLine": 131,
+                  "startColumn": 54,
+                  "endLine": 131,
+                  "endColumn": 77
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "uri": "file:///D:/FPT/Semester%206/Project_Cursus/Backend_Cursus/Cursus.LMS/Cursus.LMS.API/Controllers/InstructorController.cs",
+                "region": {
+                  "startLine": 207,
+                  "startColumn": 54,
+                  "endLine": 207,
+                  "endColumn": 81
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "uri": "file:///D:/FPT/Semester%206/Project_Cursus/Backend_Cursus/Cursus.LMS/Cursus.LMS.API/Controllers/InstructorController.cs",
+                "region": {
+                  "startLine": 186,
+                  "startColumn": 54,
+                  "endLine": 186,
+                  "endColumn": 79
+                }
+              }
+            }
+          ],
+          "properties": {
+            "warningLevel": 1,
+            "customProperties": {
+              "0": "May belong to responsibility #1.",
+              "1": "May belong to responsibility #1.",
+              "10": "May belong to responsibility #1.",
+              "11": "May belong to responsibility #1.",
+              "12": "May belong to responsibility #1.",
+              "13": "May belong to responsibility #1.",
+              "14": "May belong to responsibility #2.",
+              "15": "May belong to responsibility #2.",
+              "2": "May belong to responsibility #1.",
+              "3": "May belong to responsibility #1.",
+              "4": "May belong to responsibility #1.",
+              "5": "May belong to responsibility #1.",
+              "6": "May belong to responsibility #1.",
+              "7": "May belong to responsibility #1.",
+              "8": "May belong to responsibility #1.",
+              "9": "May belong to responsibility #1."
+            }
+          }
+        },
+        {
+          "ruleId": "S1117",
+          "level": "warning",
+          "message": "Rename 'responseDto' which hides the field with the same name.",
+          "locations": [
+            {
+              "resultFile": {
+                "uri": "file:///D:/FPT/Semester%206/Project_Cursus/Backend_Cursus/Cursus.LMS/Cursus.LMS.API/Controllers/AuthController.cs",
+                "region": {
+                  "startLine": 367,
+                  "startColumn": 17,
+                  "endLine": 367,
+                  "endColumn": 28
+                }
+              }
+            }
+          ],
+          "properties": {
+            "warningLevel": 1
+          }
+        },
+        {
+          "ruleId": "S1117",
+          "level": "warning",
+          "message": "Rename 'responseDto' which hides the field with the same name.",
+          "locations": [
+            {
+              "resultFile": {
+                "uri": "file:///D:/FPT/Semester%206/Project_Cursus/Backend_Cursus/Cursus.LMS/Cursus.LMS.API/Controllers/AuthController.cs",
+                "region": {
+                  "startLine": 359,
+                  "startColumn": 17,
+                  "endLine": 359,
+                  "endColumn": 28
+                }
+              }
+            }
+          ],
+          "properties": {
+            "warningLevel": 1
+          }
+        },
+        {
+          "ruleId": "ASP0018",
+          "level": "note",
+          "message": "Unused route parameter 'detailsId'",
+          "locations": [
+            {
+              "resultFile": {
+                "uri": "file:///D:/FPT/Semester%206/Project_Cursus/Backend_Cursus/Cursus.LMS/Cursus.LMS.API/Controllers/CartController.cs",
+                "region": {
+                  "startLine": 40,
+                  "startColumn": 25,
+                  "endLine": 40,
+                  "endColumn": 41
+                }
+              }
+            }
+          ],
+          "properties": {
+            "warningLevel": 1,
+            "customProperties": {
+              "RouteParameterInsertIndex": "-1",
+              "RouteParameterIsOptional": "False",
+              "RouteParameterName": "detailsId",
+              "RouteParameterPolicy": ":Guid"
+            }
+          }
         }
       ],
       "rules": {
+        "ASP0018": {
+          "id": "ASP0018",
+          "shortDescription": "Unused route parameter",
+          "defaultLevel": "note",
+          "helpUri": "https://aka.ms/aspnet/analyzers",
+          "properties": {
+            "category": "Usage",
+            "isEnabledByDefault": true
+          }
+        },
+        "CS0618": {
+          "id": "CS0618",
+          "shortDescription": "Type or member is obsolete",
+          "defaultLevel": "warning",
+          "helpUri": "https://msdn.microsoft.com/query/roslyn.query?appId=roslyn&k=k(CS0618)",
+          "properties": {
+            "category": "Compiler",
+            "isEnabledByDefault": true,
+            "tags": [
+              "Compiler",
+              "Telemetry"
+            ]
+          }
+        },
         "CS1998": {
           "id": "CS1998",
           "shortDescription": "Async method lacks 'await' operators and will run synchronously",

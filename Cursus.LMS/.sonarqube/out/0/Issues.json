@@ -39,12 +39,12 @@
           "locations": [
             {
               "resultFile": {
-                "uri": "file:///D:/FPT/Semester%206/Project_Cursus/Backend_Cursus/Cursus.LMS/Cursus.LMS.Utility/Constants/StaticCourseStatus.cs",
+                "uri": "file:///D:/FPT/Semester%206/Project_Cursus/Backend_Cursus/Cursus.LMS/Cursus.LMS.Utility/Constants/StaticCourseVersionStatus.cs",
                 "region": {
                   "startLine": 3,
                   "startColumn": 14,
                   "endLine": 3,
-                  "endColumn": 32
+                  "endColumn": 39
                 }
               }
             }
@@ -60,12 +60,12 @@
           "locations": [
             {
               "resultFile": {
-                "uri": "file:///D:/FPT/Semester%206/Project_Cursus/Backend_Cursus/Cursus.LMS/Cursus.LMS.Utility/Constants/StaticCourseVersionStatus.cs",
+                "uri": "file:///D:/FPT/Semester%206/Project_Cursus/Backend_Cursus/Cursus.LMS/Cursus.LMS.Utility/Constants/StaticCourseStatus.cs",
                 "region": {
                   "startLine": 3,
                   "startColumn": 14,
                   "endLine": 3,
-                  "endColumn": 39
+                  "endColumn": 32
                 }
               }
             }
@@ -102,27 +102,6 @@
           "locations": [
             {
               "resultFile": {
-                "uri": "file:///D:/FPT/Semester%206/Project_Cursus/Backend_Cursus/Cursus.LMS/Cursus.LMS.Utility/ValidationAttribute/AllowedExtensions.cs",
-                "region": {
-                  "startLine": 6,
-                  "startColumn": 14,
-                  "endLine": 6,
-                  "endColumn": 31
-                }
-              }
-            }
-          ],
-          "properties": {
-            "warningLevel": 1
-          }
-        },
-        {
-          "ruleId": "S3376",
-          "level": "warning",
-          "message": "Make this class name end with 'Attribute'.",
-          "locations": [
-            {
-              "resultFile": {
                 "uri": "file:///D:/FPT/Semester%206/Project_Cursus/Backend_Cursus/Cursus.LMS/Cursus.LMS.Utility/ValidationAttribute/MaxFileSize.cs",
                 "region": {
                   "startLine": 6,
@@ -138,18 +117,18 @@
           }
         },
         {
-          "ruleId": "S6444",
+          "ruleId": "S3376",
           "level": "warning",
-          "message": "Pass a timeout to limit the execution time.",
+          "message": "Make this class name end with 'Attribute'.",
           "locations": [
             {
               "resultFile": {
-                "uri": "file:///D:/FPT/Semester%206/Project_Cursus/Backend_Cursus/Cursus.LMS/Cursus.LMS.Utility/ValidationAttribute/Password.cs",
+                "uri": "file:///D:/FPT/Semester%206/Project_Cursus/Backend_Cursus/Cursus.LMS/Cursus.LMS.Utility/ValidationAttribute/AllowedExtensions.cs",
                 "region": {
-                  "startLine": 17,
-                  "startColumn": 20,
-                  "endLine": 17,
-                  "endColumn": 119
+                  "startLine": 6,
+                  "startColumn": 14,
+                  "endLine": 6,
+                  "endColumn": 31
                 }
               }
             }
@@ -193,6 +172,27 @@
             "customProperties": {
               "0": null
             }
+          }
+        },
+        {
+          "ruleId": "S6444",
+          "level": "warning",
+          "message": "Pass a timeout to limit the execution time.",
+          "locations": [
+            {
+              "resultFile": {
+                "uri": "file:///D:/FPT/Semester%206/Project_Cursus/Backend_Cursus/Cursus.LMS/Cursus.LMS.Utility/ValidationAttribute/Password.cs",
+                "region": {
+                  "startLine": 17,
+                  "startColumn": 20,
+                  "endLine": 17,
+                  "endColumn": 119
+                }
+              }
+            }
+          ],
+          "properties": {
+            "warningLevel": 1
           }
         },
         {

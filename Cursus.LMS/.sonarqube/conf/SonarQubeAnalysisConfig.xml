@@ -134,8 +134,8 @@
     <Property Name="sonar.auth.gitlab.url">https://gitlab.com</Property>
     <Property Name="sonaranalyzer-vbnet.pluginKey">vbnet</Property>
     <Property Name="sonar.updatecenter.url">https://downloads.sonarsource.com/sonarqube/update/update-center.properties</Property>
-    <Property Name="sonar.core.startTime">7/12/2024 6:08:07 PM</Property>
     <Property Name="sonar.core.id">147B411E-AZCmoQUYIZNWWSCKRaNS</Property>
+    <Property Name="sonar.core.startTime">7/25/2024 4:27:32 PM</Property>
   </ServerSettings>
   <LocalSettings>
     <Property Name="sonar.host.url">http://localhost:9000</Property>
@@ -148,20 +148,20 @@
       <AnalyzerPlugins>
         <AnalyzerPlugin Key="csharp" Version="9.27.0.93347" StaticResourceName="SonarAnalyzer-9.27.0.93347.zip">
           <AssemblyPaths>
-            <Path>C:\Users\trant\AppData\Local\Temp\.sonarqube\resources\0\Google.Protobuf.dll</Path>
-            <Path>C:\Users\trant\AppData\Local\Temp\.sonarqube\resources\0\SonarAnalyzer.CFG.dll</Path>
-            <Path>C:\Users\trant\AppData\Local\Temp\.sonarqube\resources\0\SonarAnalyzer.CSharp.dll</Path>
-            <Path>C:\Users\trant\AppData\Local\Temp\.sonarqube\resources\0\SonarAnalyzer.dll</Path>
-            <Path>C:\Users\trant\AppData\Local\Temp\.sonarqube\resources\0\THIRD-PARTY-NOTICES.txt</Path>
+            <Path>C:\Users\trant\AppData\Local\Temp\.sonarqube\resources\2\Google.Protobuf.dll</Path>
+            <Path>C:\Users\trant\AppData\Local\Temp\.sonarqube\resources\2\SonarAnalyzer.CFG.dll</Path>
+            <Path>C:\Users\trant\AppData\Local\Temp\.sonarqube\resources\2\SonarAnalyzer.CSharp.dll</Path>
+            <Path>C:\Users\trant\AppData\Local\Temp\.sonarqube\resources\2\SonarAnalyzer.dll</Path>
+            <Path>C:\Users\trant\AppData\Local\Temp\.sonarqube\resources\2\THIRD-PARTY-NOTICES.txt</Path>
           </AssemblyPaths>
         </AnalyzerPlugin>
         <AnalyzerPlugin Key="vbnet" Version="9.27.0.93347" StaticResourceName="SonarAnalyzer-9.27.0.93347.zip">
           <AssemblyPaths>
-            <Path>C:\Users\trant\AppData\Local\Temp\.sonarqube\resources\1\Google.Protobuf.dll</Path>
-            <Path>C:\Users\trant\AppData\Local\Temp\.sonarqube\resources\1\SonarAnalyzer.CFG.dll</Path>
-            <Path>C:\Users\trant\AppData\Local\Temp\.sonarqube\resources\1\SonarAnalyzer.dll</Path>
-            <Path>C:\Users\trant\AppData\Local\Temp\.sonarqube\resources\1\SonarAnalyzer.VisualBasic.dll</Path>
-            <Path>C:\Users\trant\AppData\Local\Temp\.sonarqube\resources\1\THIRD-PARTY-NOTICES.txt</Path>
+            <Path>C:\Users\trant\AppData\Local\Temp\.sonarqube\resources\3\Google.Protobuf.dll</Path>
+            <Path>C:\Users\trant\AppData\Local\Temp\.sonarqube\resources\3\SonarAnalyzer.CFG.dll</Path>
+            <Path>C:\Users\trant\AppData\Local\Temp\.sonarqube\resources\3\SonarAnalyzer.dll</Path>
+            <Path>C:\Users\trant\AppData\Local\Temp\.sonarqube\resources\3\SonarAnalyzer.VisualBasic.dll</Path>
+            <Path>C:\Users\trant\AppData\Local\Temp\.sonarqube\resources\3\THIRD-PARTY-NOTICES.txt</Path>
           </AssemblyPaths>
         </AnalyzerPlugin>
       </AnalyzerPlugins>
@@ -176,20 +176,20 @@
       <AnalyzerPlugins>
         <AnalyzerPlugin Key="csharp" Version="9.27.0.93347" StaticResourceName="SonarAnalyzer-9.27.0.93347.zip">
           <AssemblyPaths>
-            <Path>C:\Users\trant\AppData\Local\Temp\.sonarqube\resources\0\Google.Protobuf.dll</Path>
-            <Path>C:\Users\trant\AppData\Local\Temp\.sonarqube\resources\0\SonarAnalyzer.CFG.dll</Path>
-            <Path>C:\Users\trant\AppData\Local\Temp\.sonarqube\resources\0\SonarAnalyzer.CSharp.dll</Path>
-            <Path>C:\Users\trant\AppData\Local\Temp\.sonarqube\resources\0\SonarAnalyzer.dll</Path>
-            <Path>C:\Users\trant\AppData\Local\Temp\.sonarqube\resources\0\THIRD-PARTY-NOTICES.txt</Path>
+            <Path>C:\Users\trant\AppData\Local\Temp\.sonarqube\resources\2\Google.Protobuf.dll</Path>
+            <Path>C:\Users\trant\AppData\Local\Temp\.sonarqube\resources\2\SonarAnalyzer.CFG.dll</Path>
+            <Path>C:\Users\trant\AppData\Local\Temp\.sonarqube\resources\2\SonarAnalyzer.CSharp.dll</Path>
+            <Path>C:\Users\trant\AppData\Local\Temp\.sonarqube\resources\2\SonarAnalyzer.dll</Path>
+            <Path>C:\Users\trant\AppData\Local\Temp\.sonarqube\resources\2\THIRD-PARTY-NOTICES.txt</Path>
           </AssemblyPaths>
         </AnalyzerPlugin>
         <AnalyzerPlugin Key="vbnet" Version="9.27.0.93347" StaticResourceName="SonarAnalyzer-9.27.0.93347.zip">
           <AssemblyPaths>
-            <Path>C:\Users\trant\AppData\Local\Temp\.sonarqube\resources\1\Google.Protobuf.dll</Path>
-            <Path>C:\Users\trant\AppData\Local\Temp\.sonarqube\resources\1\SonarAnalyzer.CFG.dll</Path>
-            <Path>C:\Users\trant\AppData\Local\Temp\.sonarqube\resources\1\SonarAnalyzer.dll</Path>
-            <Path>C:\Users\trant\AppData\Local\Temp\.sonarqube\resources\1\SonarAnalyzer.VisualBasic.dll</Path>
-            <Path>C:\Users\trant\AppData\Local\Temp\.sonarqube\resources\1\THIRD-PARTY-NOTICES.txt</Path>
+            <Path>C:\Users\trant\AppData\Local\Temp\.sonarqube\resources\3\Google.Protobuf.dll</Path>
+            <Path>C:\Users\trant\AppData\Local\Temp\.sonarqube\resources\3\SonarAnalyzer.CFG.dll</Path>
+            <Path>C:\Users\trant\AppData\Local\Temp\.sonarqube\resources\3\SonarAnalyzer.dll</Path>
+            <Path>C:\Users\trant\AppData\Local\Temp\.sonarqube\resources\3\SonarAnalyzer.VisualBasic.dll</Path>
+            <Path>C:\Users\trant\AppData\Local\Temp\.sonarqube\resources\3\THIRD-PARTY-NOTICES.txt</Path>
           </AssemblyPaths>
         </AnalyzerPlugin>
       </AnalyzerPlugins>

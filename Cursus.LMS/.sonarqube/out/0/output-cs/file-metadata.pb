@@ -8,9 +8,9 @@ vD:\FPT\Semester 6\Project_Cursus\Backend_Cursus\Cursus.LMS\Cursus.LMS.Utility\V
 jD:\FPT\Semester 6\Project_Cursus\Backend_Cursus\Cursus.LMS\Cursus.LMS.Utility\Constants\StaticUserRoles.csutf-8p
 gD:\FPT\Semester 6\Project_Cursus\Backend_Cursus\Cursus.LMS\Cursus.LMS.Utility\Constants\StaticStatus.csutf-8w
 nD:\FPT\Semester 6\Project_Cursus\Backend_Cursus\Cursus.LMS\Cursus.LMS.Utility\Constants\StaticLoginProvider.csutf-8y
-pD:\FPT\Semester 6\Project_Cursus\Backend_Cursus\Cursus.LMS\Cursus.LMS.Utility\Constants\StaticFirebaseFolders.csutf-8n
-eD:\FPT\Semester 6\Project_Cursus\Backend_Cursus\Cursus.LMS\Cursus.LMS.Utility\Constants\StaticEnum.csutf-8x
-oD:\FPT\Semester 6\Project_Cursus\Backend_Cursus\Cursus.LMS\Cursus.LMS.Utility\Constants\StaticFileExtensions.csutf-8}
+pD:\FPT\Semester 6\Project_Cursus\Backend_Cursus\Cursus.LMS\Cursus.LMS.Utility\Constants\StaticFirebaseFolders.csutf-8x
+oD:\FPT\Semester 6\Project_Cursus\Backend_Cursus\Cursus.LMS\Cursus.LMS.Utility\Constants\StaticFileExtensions.csutf-8n
+eD:\FPT\Semester 6\Project_Cursus\Backend_Cursus\Cursus.LMS\Cursus.LMS.Utility\Constants\StaticEnum.csutf-8}
 tD:\FPT\Semester 6\Project_Cursus\Backend_Cursus\Cursus.LMS\Cursus.LMS.Utility\Constants\StaticCourseVersionStatus.csutf-8v
 mD:\FPT\Semester 6\Project_Cursus\Backend_Cursus\Cursus.LMS\Cursus.LMS.Utility\Constants\StaticCourseStatus.csutf-8z
 qD:\FPT\Semester 6\Project_Cursus\Backend_Cursus\Cursus.LMS\Cursus.LMS.Utility\Constants\StaticConnectionString.csutf-8
