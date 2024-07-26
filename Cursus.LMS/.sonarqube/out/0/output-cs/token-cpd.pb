@@ -315,7 +315,7 @@ extensions  
 Success  '
 ;' (
 } 
-} ˇ
+} å
 jD:\FPT\Semester 6\Project_Cursus\Backend_Cursus\Cursus.LMS\Cursus.LMS.Utility\Constants\StaticUserRoles.cs
 	namespace 	
 Cursus
@@ -356,8 +356,38 @@ jD:\FPT\Semester 6\Project_Cursus\Backend_Cursus\Cursus.LMS\Cursus.LMS.Utility\C
 Instructor "
 =# $
 $str% 1
-;1 2
-}		 ‡
+;1 2
+public		 
+
+const		 
+string		 
+AdminInstructor		 '
+=		( )
+$str		* =
+;		= >
+public
+
+ 
+
+const
+
+ 
+string
+
+ 
+AdminStudent
+
+ $
+=
+
+% &
+$str
+
+' 7
+;
+
+7 8
+} ≤
 gD:\FPT\Semester 6\Project_Cursus\Backend_Cursus\Cursus.LMS\Cursus.LMS.Utility\Constants\StaticStatus.cs
 	namespace 	
 Cursus
@@ -403,8 +433,106 @@ gD:\FPT\Semester 6\Project_Cursus\Backend_Cursus\Cursus.LMS\Cursus.LMS.Utility\C
 ;		( )
 }
 
- 
-} Ö
+ 
+public 
+
+static 
+class 
+Order 
+{ 
+public 
+const 
+int 
+Pending  
+=! "
+$num# $
+;$ %
+public 
+const 
+int 
+Paid 
+= 
+$num  !
+;! "
+public 
+const 
+int 
+	Confirmed "
+=# $
+$num% &
+;& '
+public 
+const 
+int 
+Rejected !
+=" #
+$num$ %
+;% &
+public 
+const 
+int 
+PendingRefund &
+=' (
+$num) *
+;* +
+public 
+const 
+int 
+ConfirmedRefund (
+=) *
+$num+ ,
+;, -
+public 
+const 
+int 
+RejectedRefund '
+=( )
+$num* +
+;+ ,
+} 
+public 
+
+static 
+class 
+StudentCourse %
+{ 
+public 
+const 
+int 
+Pending  
+=! "
+$num# $
+;$ %
+public 
+const 
+int 
+Enrolled !
+=" #
+$num$ %
+;% &
+public 
+const 
+int 
+Learning !
+=" #
+$num$ %
+;% &
+public 
+const 
+int 
+Ended 
+=  
+$num! "
+;" #
+public 
+const 
+int 
+Canceled !
+=" #
+$num$ %
+;% &
+} 
+} Ö
 nD:\FPT\Semester 6\Project_Cursus\Backend_Cursus\Cursus.LMS\Cursus.LMS.Utility\Constants\StaticLoginProvider.cs
 	namespace 	
 Cursus
@@ -470,54 +598,7 @@ pD:\FPT\Semester 6\Project_Cursus\Backend_Cursus\Cursus.LMS\Cursus.LMS.Utility\C
 =  
 $str! )
 ;) *
-} Ó
-eD:\FPT\Semester 6\Project_Cursus\Backend_Cursus\Cursus.LMS\Cursus.LMS.Utility\Constants\StaticEnum.cs
-	namespace 	
-Cursus
- 
-. 
-LMS 
-. 
-Utility 
-. 
-	Constants &
-;& '
-public 
-static 
-class 
-
-StaticEnum 
-{ 
-public 
-
-enum 
-ContentType 
-{ 
-Json 
-, 
-MultipartFormData 
-, 
-}		 
-public
-
- 
-
-enum
-
- 
-ApiType
-
- 
-{ 
-GET 
-, 
-POST 
-, 
-PUT 
-, 
-DELETE 
-} 
-} Ò
+} Ò
 oD:\FPT\Semester 6\Project_Cursus\Backend_Cursus\Cursus.LMS\Cursus.LMS.Utility\Constants\StaticFileExtensions.cs
 	namespace 	
 Cursus
@@ -596,7 +677,80 @@ oD:\FPT\Semester 6\Project_Cursus\Backend_Cursus\Cursus.LMS\Cursus.LMS.Utility\C
 ;
 
 g h
-} Î
+} ù
+
+eD:\FPT\Semester 6\Project_Cursus\Backend_Cursus\Cursus.LMS\Cursus.LMS.Utility\Constants\StaticEnum.cs
+	namespace 	
+Cursus
+ 
+. 
+LMS 
+. 
+Utility 
+. 
+	Constants &
+;& '
+public 
+static 
+class 
+
+StaticEnum 
+{ 
+public 
+
+enum 
+ContentType 
+{ 
+Json 
+, 
+MultipartFormData 
+, 
+}		 
+public 
+
+enum 
+ApiType 
+{ 
+GET 
+, 
+POST 
+, 
+PUT 
+, 
+DELETE 
+} 
+public 
+
+enum 
+TransactionType 
+{ 
+Purchase 
+, 
+Payout 
+, 
+Income 
+} 
+public 
+
+enum 
+StripeAccountType !
+{ 
+express 
+, 
+standard 
+, 
+custom 
+} 
+public!! 
+
+enum!! !
+StripeAccountLinkType!! %
+{"" 
+account_onboarding## 
+,## 
+account_update$$ 
+}%% 
+}&& Î
 tD:\FPT\Semester 6\Project_Cursus\Backend_Cursus\Cursus.LMS\Cursus.LMS.Utility\Constants\StaticCourseVersionStatus.cs
 	namespace 	
 Cursus
@@ -674,47 +828,7 @@ tD:\FPT\Semester 6\Project_Cursus\Backend_Cursus\Cursus.LMS\Cursus.LMS.Utility\C
 ;
 
   !
-} Ì
-mD:\FPT\Semester 6\Project_Cursus\Backend_Cursus\Cursus.LMS\Cursus.LMS.Utility\Constants\StaticCourseStatus.cs
-	namespace 	
-Cursus
- 
-. 
-LMS 
-. 
-Utility 
-. 
-	Constants &
-;& '
-public 
-class 
-StaticCourseStatus 
-{ 
-public 
-
-const 
-int 
-Pending 
-= 
-$num  
-;  !
-public 
-
-const 
-int 
-	Activated 
-=  
-$num! "
-;" #
-public 
-
-const 
-int 
-Deactivated  
-=! "
-$num# $
-;$ %
-} π
+} π
 qD:\FPT\Semester 6\Project_Cursus\Backend_Cursus\Cursus.LMS\Cursus.LMS.Utility\Constants\StaticConnectionString.cs
 	namespace 	
 Cursus
@@ -755,4 +869,44 @@ qD:\FPT\Semester 6\Project_Cursus\Backend_Cursus\Cursus.LMS\Cursus.LMS.Utility\C
 =/ 0
 $str1 C
 ;C D
-}		 
+}		 Ì
+mD:\FPT\Semester 6\Project_Cursus\Backend_Cursus\Cursus.LMS\Cursus.LMS.Utility\Constants\StaticCourseStatus.cs
+	namespace 	
+Cursus
+ 
+. 
+LMS 
+. 
+Utility 
+. 
+	Constants &
+;& '
+public 
+class 
+StaticCourseStatus 
+{ 
+public 
+
+const 
+int 
+Pending 
+= 
+$num  
+;  !
+public 
+
+const 
+int 
+	Activated 
+=  
+$num! "
+;" #
+public 
+
+const 
+int 
+Deactivated  
+=! "
+$num# $
+;$ %
+} 
