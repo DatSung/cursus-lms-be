@@ -2,5 +2,5 @@ projectKey=Backend_-_Cursus_LMS_Backend_-_Cursus_LMS_ff9c791c-099a-4109-9f12-b96
 serverUrl=http://localhost:9000
 serverVersion=10.6.0.92116
 dashboardUrl=http://localhost:9000/dashboard?id=Backend_-_Cursus_LMS_Backend_-_Cursus_LMS_ff9c791c-099a-4109-9f12-b96f7ff8d109
-ceTaskId=a20be5b0-20e5-4a7f-b38f-75f0e500b9e0
-ceTaskUrl=http://localhost:9000/api/ce/task?id=a20be5b0-20e5-4a7f-b38f-75f0e500b9e0
+ceTaskId=319eb1bd-8fb4-4012-b307-17dad31f05ee
+ceTaskUrl=http://localhost:9000/api/ce/task?id=319eb1bd-8fb4-4012-b307-17dad31f05ee
