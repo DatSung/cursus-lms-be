@@ -747,9 +747,6 @@ public class CourseService : ICourseService
                 }
             );
 
-            course.TotalStudent += 1;
-            await _unitOfWork.SaveAsync();
-
             return new ResponseDTO()
             {
                 Message = "Enroll course successfully",
