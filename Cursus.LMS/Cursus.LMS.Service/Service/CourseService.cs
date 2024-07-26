@@ -694,6 +694,18 @@ public class CourseService : ICourseService
                 x => x.StudentId == enrollCourseDto.studentId && x.CourseId == enrollCourseDto.courseId
             );
 
+            var course = await _unitOfWork.CourseRepository.GetAsync(x => x.Id == enrollCourseDto.courseId);
+            if (course is null)
+            {
+                return new ResponseDTO()
+                {
+                    Message = "Course was not found",
+                    IsSuccess = false,
+                    StatusCode = 404,
+                    Result = null
+                };
+            }
+
             if (studentCourse is null)
             {
                 return new ResponseDTO()
@@ -734,6 +746,9 @@ public class CourseService : ICourseService
                     StudentCourseId = studentCourse.Id
                 }
             );
+
+            course.TotalStudent += 1;
+            await _unitOfWork.SaveAsync();
 
             return new ResponseDTO()
             {
