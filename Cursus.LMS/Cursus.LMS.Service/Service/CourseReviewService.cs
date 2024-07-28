@@ -285,6 +285,15 @@ namespace Cursus.LMS.Service.Service
                 _unitOfWork.CourseReviewRepository.Update(courseReview);
                 await _unitOfWork.SaveAsync();
 
+                await _courseService.UpsertCourseTotal
+                (
+                    new UpsertCourseTotalDTO()
+                    {
+                        CourseId = courseReview.CourseId,
+                        UpdateTotalRate = true
+                    }
+                );
+
                 return new ResponseDTO
                 {
                     Message = "Course review updated successfully",
