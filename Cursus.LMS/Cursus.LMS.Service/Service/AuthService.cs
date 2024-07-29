@@ -4,7 +4,6 @@ using Cursus.LMS.Model.Domain;
 using Cursus.LMS.Model.DTO;
 using Cursus.LMS.Service.IService;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
 using System.Security.Claims;
 using System.Text;
@@ -1806,6 +1805,220 @@ public class AuthService : IAuthService
                 StatusCode = 500,
                 Result = null
             };
+        }
+    }
+
+    public async Task SendClearEmail(int fromMonth)
+    {
+        try
+        {
+            var fromDate = DateTime.UtcNow.AddMonths(-fromMonth);
+            var users = _userManager.Users
+                .Where(user => user.LastLoginTime <= fromDate || user.LastLoginTime == null)
+                .ToList();
+
+            var admins = await _userManager.GetUsersInRoleAsync(StaticUserRoles.Admin);
+
+            foreach (var admin in admins)
+            {
+                users.Remove(admin);
+            }
+
+            if (users.IsNullOrEmpty())
+            {
+                return;
+            }
+
+            var studentCourses = await _unitOfWork.StudentCourseRepository.GetAllAsync();
+            var courses = await _unitOfWork.CourseRepository.GetAllAsync();
+
+            foreach (var studentCourse in studentCourses)
+            {
+                var student = await _unitOfWork.StudentRepository
+                    .GetAsync(x => x.StudentId == studentCourse.StudentId);
+                var user = await _userManagerRepository.FindByIdAsync(student.UserId);
+                users.Remove(user);
+            }
+
+            foreach (var course in courses)
+            {
+                var instructor = await _unitOfWork.InstructorRepository
+                    .GetAsync(x => x.InstructorId == course.InstructorId);
+                var user = await _userManagerRepository.FindByIdAsync(instructor.UserId);
+                users.Remove(user);
+            }
+
+            foreach (var user in users)
+            {
+                if (user.Email is null) continue;
+                var result = await _emailService.SendEmailRemindDeleteAccount(user.Email);
+                if (result)
+                {
+                    user.SendClearEmail = true;
+                }
+            }
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+        }
+    }
+
+    public async Task ClearUser()
+    {
+        try
+        {
+            var users = _userManager.Users.Where(user => user.SendClearEmail == true).ToList();
+
+            var students = new List<Student>();
+            var ordersHeaders = new List<OrderHeader>();
+            var ordersDetails = new List<OrderDetails>();
+            var ordersStatus = new List<OrderStatus>();
+            var cartsHeaders = new List<CartHeader>();
+            var cartsDetails = new List<CartDetails>();
+            var studentsComments = new List<StudentComment>();
+            var coursesBookmarked = new List<CourseBookmark>();
+
+            var instructors = new List<Instructor>();
+            var instructorsComments = new List<InstructorComment>();
+            var instructorsRatings = new List<InstructorRating>();
+
+            foreach (var user in users)
+            {
+                await _emailService.SendEmailDeleteAccount(user.Email);
+                var role = await _userManager.GetRolesAsync(user);
+
+                if (role.Contains(StaticUserRoles.Instructor))
+                {
+                    var instructor = await _unitOfWork.InstructorRepository.GetAsync(x => x.UserId == user.Id);
+
+                    // Get instructorComment
+                    var instructorComment = await _unitOfWork.InstructorCommentRepository
+                        .GetAllAsync(x => x.InstructorId == instructor.InstructorId);
+
+                    // Get instructorRatting
+                    var instructorRating = await _unitOfWork.InstructorRatingRepository
+                        .GetAllAsync(x => x.InstructorId == instructor.InstructorId);
+
+                    instructors.Add(instructor);
+                    instructorsComments.AddRange(instructorComment);
+                    instructorsRatings.AddRange(instructorRating);
+                }
+
+                if (role.Contains(StaticUserRoles.Student))
+                {
+                    var student = await _unitOfWork.StudentRepository.GetAsync(x => x.UserId == user.Id);
+                    students.Add(student);
+
+
+                    // Get orderHeader and orderDetails
+                    var orderHeaders =
+                        await _unitOfWork.OrderHeaderRepository.GetAllAsync(x => x.StudentId == student.StudentId);
+                    foreach (var orderHeader in orderHeaders)
+                    {
+                        var orderDetails =
+                            await _unitOfWork.OrderDetailsRepository.GetAllAsync(x =>
+                                x.OrderHeaderId == orderHeader.Id);
+                        var orderStatus =
+                            await _unitOfWork.OrderStatusRepository.GetAllAsync(x => x.OrderHeaderId == orderHeader.Id);
+                        ordersDetails.AddRange(orderDetails);
+                        ordersStatus.AddRange(orderStatus);
+                    }
+
+                    ordersHeaders.AddRange(orderHeaders);
+
+                    //Get courseBookmarked
+                    var courseBookmarks =
+                        await _unitOfWork.CourseBookmarkRepository.GetAllAsync(x => x.StudentId == student.StudentId);
+                    coursesBookmarked.AddRange(courseBookmarks);
+
+                    //Get studentComments
+                    var studentComments =
+                        await _unitOfWork.StudentCommentRepository.GetAllAsync(x => x.StudentId == student.StudentId);
+                    studentsComments.AddRange(studentComments);
+
+                    //Get cartHeader and cartDetails
+                    var cartHeaders =
+                        await _unitOfWork.CartHeaderRepository.GetAllAsync(x => x.StudentId == student.StudentId);
+                    foreach (var cartHeader in cartHeaders)
+                    {
+                        var cartDetails =
+                            await _unitOfWork.CartDetailsRepository.GetAllAsync(x => x.CartHeaderId == cartHeader.Id);
+                        cartsDetails.AddRange(cartDetails);
+                    }
+
+                    cartsHeaders.AddRange(cartHeaders);
+                }
+            }
+
+            _unitOfWork.InstructorCommentRepository.RemoveRange(instructorsComments);
+            _unitOfWork.InstructorRatingRepository.RemoveRange(instructorsRatings);
+
+            _unitOfWork.StudentCommentRepository.RemoveRange(studentsComments);
+            _unitOfWork.CourseBookmarkRepository.RemoveRange(coursesBookmarked);
+            _unitOfWork.CartDetailsRepository.RemoveRange(cartsDetails);
+            _unitOfWork.CartHeaderRepository.RemoveRange(cartsHeaders);
+            _unitOfWork.OrderStatusRepository.RemoveRange(ordersStatus);
+            _unitOfWork.OrderDetailsRepository.RemoveRange(ordersDetails);
+            _unitOfWork.OrderHeaderRepository.RemoveRange(ordersHeaders);
+
+            _unitOfWork.InstructorRepository.RemoveRange(instructors);
+            _unitOfWork.StudentRepository.RemoveRange(students);
+
+            foreach (var user in users)
+            {
+                await DeleteUserAndRelatedDataAsync(user);
+            }
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+        }
+    }
+
+    private async Task DeleteUserAndRelatedDataAsync(ApplicationUser user)
+    {
+        var roles = await _userManager.GetRolesAsync(user);
+        if (roles.Any())
+        {
+            await _userManager.RemoveFromRolesAsync(user, roles);
+        }
+
+
+        var claims = await _userManager.GetClaimsAsync(user);
+        if (claims.Any())
+        {
+            foreach (var claim in claims)
+            {
+                await _userManager.RemoveClaimAsync(user, claim);
+            }
+        }
+
+
+        var logins = await _userManager.GetLoginsAsync(user);
+        if (logins.Any())
+        {
+            foreach (var login in logins)
+            {
+                await _userManager.RemoveLoginAsync(user, login.LoginProvider, login.ProviderKey);
+            }
+        }
+
+
+        var tokens = await _userManager.GetAuthenticationTokenAsync(user, "provider", "name");
+        if (tokens != null)
+        {
+            await _userManager.RemoveAuthenticationTokenAsync(user, "provider", "name");
+        }
+
+
+        var result = await _userManager.DeleteAsync(user);
+        if (!result.Succeeded)
+        {
+            foreach (var error in result.Errors)
+            {
+                Console.WriteLine($"Error deleting user: {error.Description}");
+            }
         }
     }
 }

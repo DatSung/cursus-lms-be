@@ -14,4 +14,5 @@ public class ApplicationUser : IdentityUser
     public DateTime? UpdateTime { get; set; }
     public DateTime? CreateTime { get; set; } = DateTime.UtcNow;
     public DateTime? LastLoginTime { get; set; } = null;
+    public bool SendClearEmail { get; set; } = false;
 }
