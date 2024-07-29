@@ -32,7 +32,8 @@ public class AuthService : IAuthService
     private static readonly ConcurrentDictionary<string, (int Count, DateTime LastRequest)> ResetPasswordAttempts =
         new();
 
-    public AuthService(
+    public AuthService
+    (
         IUserManagerRepository userManagerRepository,
         UserManager<ApplicationUser> userManager,
         RoleManager<IdentityRole> roleManager,
@@ -579,6 +580,8 @@ public class AuthService : IAuthService
             var refreshToken = await _tokenService.GenerateJwtRefreshTokenAsync(user);
             await _tokenService.StoreRefreshToken(user.Id, refreshToken);
 
+            user.LastLoginTime = DateTime.UtcNow;
+            
             return new ResponseDTO()
             {
                 Result = new SignResponseDTO()
