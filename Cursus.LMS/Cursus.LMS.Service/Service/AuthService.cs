@@ -576,12 +576,23 @@ public class AuthService : IAuthService
                 };
             }
 
+            if (user.LockoutEnabled)
+            {
+                return new ResponseDTO()
+                {
+                    Message = "User has been locked",
+                    IsSuccess = false,
+                    StatusCode = 403,
+                    Result = null
+                };
+            }
+
             var accessToken = await _tokenService.GenerateJwtAccessTokenAsync(user);
             var refreshToken = await _tokenService.GenerateJwtRefreshTokenAsync(user);
             await _tokenService.StoreRefreshToken(user.Id, refreshToken);
 
             user.LastLoginTime = DateTime.UtcNow;
-            
+
             return new ResponseDTO()
             {
                 Result = new SignResponseDTO()
@@ -1461,6 +1472,17 @@ public class AuthService : IAuthService
                     .FirstOrDefault(x => x.LoginProvider == StaticLoginProvider.Google);
             }
 
+            if (user.LockoutEnabled)
+            {
+                return new ResponseDTO()
+                {
+                    Message = "User has been locked",
+                    IsSuccess = false,
+                    StatusCode = 403,
+                    Result = null
+                };
+            }
+
             if (user is not null && userLoginInfo is null)
             {
                 return new ResponseDTO()
@@ -1499,7 +1521,7 @@ public class AuthService : IAuthService
             await _tokenService.StoreRefreshToken(user.Id, refreshToken);
 
             user.LastLoginTime = DateTime.UtcNow;
-            
+
             return new ResponseDTO()
             {
                 Result = new SignResponseDTO()
