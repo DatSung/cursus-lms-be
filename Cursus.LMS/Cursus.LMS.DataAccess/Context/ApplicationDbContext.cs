@@ -35,7 +35,6 @@ public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
     public DbSet<OrderHeader> OrderHeaders { get; set; }
     public DbSet<Student> Students { get; set; }
     public DbSet<StudentCourse> StudentCourses { get; set; }
-    public DbSet<PaymentCard> PaymentCards { get; set; }
     public DbSet<InstructorComment> InstructorComments { get; set; }
     public DbSet<InstructorRating> InstructorRatings { get; set; }
     public DbSet<EmailTemplate> EmailTemplates { get; set; }

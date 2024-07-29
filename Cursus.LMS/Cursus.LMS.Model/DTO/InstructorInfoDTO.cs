@@ -18,8 +18,5 @@ public class InstructorInfoDTO
     public string? Industry { get; set; }
     public string? Introduction { get; set; }
     public string? TaxNumber { get; set; }
-    public string? CardNumber { get; set; }
-    public string? CardName { get; set; }
-    public string? CardProvider { get; set; }
     public bool? IsAccepted { get; set; }
 }

@@ -19,8 +19,5 @@ namespace Cursus.LMS.Model.DTO
         public string? AvatarUrl { get; set; }
         public string? Country { get; set; }
         public string? Address { get; set; }
-        public string? CardNumber { get; set; }
-        public string? CardName { get; set; }
-        public string? CardProvider { get; set; }
     }
 }

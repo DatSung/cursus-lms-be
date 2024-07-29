@@ -17,7 +17,6 @@ namespace Cursus.LMS.DataAccess.Repository
         public IEmailTemplateRepository EmailTemplateRepository { get; }
         public IUserManagerRepository UserManagerRepository { get; }
         public IInstructorCommentRepository InstructorCommentRepository { get; }
-        public IPaymentCardRepository PaymentCardRepository { get; set; }
         public ICourseRepository CourseRepository { get; set; }
         public IInstructorRatingRepository InstructorRatingRepository { get; set; }
         public ICourseVersionRepository CourseVersionRepository { get; }
@@ -46,7 +45,6 @@ namespace Cursus.LMS.DataAccess.Repository
             _context = context;
             StudentRepository = new StudentRepository(_context);
             InstructorRepository = new InstructorRepository(_context);
-            PaymentCardRepository = new PaymentCardRepository(_context);
             CategoryRepository = new CategoryRepository(_context);
             EmailTemplateRepository = new EmailTemplateRepository(_context);
             UserManagerRepository = new UserManagerRepository(userManager);

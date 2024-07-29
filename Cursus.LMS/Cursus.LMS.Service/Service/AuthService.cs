@@ -23,7 +23,6 @@ public class AuthService : IAuthService
     private readonly IUnitOfWork _unitOfWork;
     private readonly UserManager<ApplicationUser> _userManager;
     private readonly RoleManager<IdentityRole> _roleManager;
-    private readonly IConfiguration _configuration;
     private readonly ITokenService _tokenService;
     private readonly IMapper _mapper;
     private readonly IEmailService _emailService;
@@ -37,29 +36,23 @@ public class AuthService : IAuthService
         IUserManagerRepository userManagerRepository,
         UserManager<ApplicationUser> userManager,
         RoleManager<IdentityRole> roleManager,
-        IConfiguration configuration,
         IMapper mapper,
         IEmailService emailService,
         IFirebaseService firebaseService,
         IHttpContextAccessor httpContextAccessor,
-        ITokenService tokenService, IUnitOfWork unitOfWork)
+        ITokenService tokenService,
+        IUnitOfWork unitOfWork
+    )
     {
         _userManagerRepository = userManagerRepository;
         _userManager = userManager;
         _roleManager = roleManager;
-        _configuration = configuration;
         _mapper = mapper;
         _emailService = emailService;
         _firebaseService = firebaseService;
         _httpContextAccessor = httpContextAccessor;
         _tokenService = tokenService;
         _unitOfWork = unitOfWork;
-    }
-
-    public AuthService(UserManager<ApplicationUser> object1, RoleManager<IdentityRole> object2, IConfiguration object3,
-        IMapper object4, IEmailService object5, IFirebaseService object6, IHttpContextAccessor object7,
-        ITokenService object9, IUnitOfWork object10)
-    {
     }
 
     public async Task<ResponseDTO> SignUpStudent(RegisterStudentDTO registerStudentDTO)
@@ -88,19 +81,6 @@ public class AuthService : IAuthService
                     Result = registerStudentDTO,
                     IsSuccess = false,
                     StatusCode = 400
-                };
-            }
-
-            var isCardExist =
-                await _unitOfWork.PaymentCardRepository.CardNumberExistsAsync(registerStudentDTO.CardNumber);
-            if (isCardExist is not null)
-            {
-                return new ResponseDTO()
-                {
-                    Message = "Card number is using by another user",
-                    StatusCode = 400,
-                    Result = registerStudentDTO,
-                    IsSuccess = false
                 };
             }
 
@@ -144,15 +124,6 @@ public class AuthService : IAuthService
                 University = registerStudentDTO.University
             };
 
-            PaymentCard paymentCard = new PaymentCard()
-            {
-                CardName = registerStudentDTO.CardName,
-                CardNumber = registerStudentDTO.CardNumber,
-                CardProvider = registerStudentDTO.CardProvider,
-                UserId = user.Id
-            };
-
-
             var isRoleExist = await _roleManager.RoleExistsAsync(StaticUserRoles.Student);
 
             // Check if role !exist to create new role 
@@ -182,19 +153,6 @@ public class AuthService : IAuthService
                 return new ResponseDTO()
                 {
                     Message = "Failed to add student",
-                    IsSuccess = false,
-                    StatusCode = 500,
-                    Result = registerStudentDTO
-                };
-            }
-
-            // Create new Payment relate with ApplicationUser
-            var isPaymentAdd = await _unitOfWork.PaymentCardRepository.AddAsync(paymentCard);
-            if (isPaymentAdd == null)
-            {
-                return new ResponseDTO()
-                {
-                    Message = "Failed to add payment card",
                     IsSuccess = false,
                     StatusCode = 500,
                     Result = registerStudentDTO
@@ -273,18 +231,6 @@ public class AuthService : IAuthService
                 };
             }
 
-            var isCardExist =
-                await _unitOfWork.PaymentCardRepository.GetAsync(x => x.CardNumber == signUpInstructorDto.CardNumber);
-            if (isCardExist is not null)
-            {
-                return new ResponseDTO
-                {
-                    IsSuccess = false,
-                    StatusCode = 400,
-                    Message = "Card number is using by another user",
-                    Result = null
-                };
-            }
 
             // Create new instance of ApplicationUser
             ApplicationUser newUser = new ApplicationUser()
@@ -336,14 +282,6 @@ public class AuthService : IAuthService
                 IsAccepted = null
             };
 
-            // Create instance of payment card
-            PaymentCard paymentCard = new PaymentCard()
-            {
-                CardName = signUpInstructorDto.CardName,
-                CardNumber = signUpInstructorDto.CardNumber,
-                CardProvider = signUpInstructorDto.CardProvider,
-                UserId = user.Id
-            };
 
             // Get role instructor in database
             var isRoleExist = await _roleManager.RoleExistsAsync(StaticUserRoles.Instructor);
@@ -359,9 +297,6 @@ public class AuthService : IAuthService
 
             // Create new Instructor relate with ApplicationUser
             await _unitOfWork.InstructorRepository.AddAsync(instructor);
-
-            // Create card for instructor
-            await _unitOfWork.PaymentCardRepository.AddAsync(paymentCard);
 
             // Save change to database
             await _unitOfWork.SaveAsync();
@@ -1198,21 +1133,6 @@ public class AuthService : IAuthService
                 };
             }
 
-            // Check if card number is exist in payment card mean that user can not user that card number
-            var isCardExist =
-                await _unitOfWork.PaymentCardRepository.GetAsync(x =>
-                    x.CardNumber == studentProfileDto.CardNumber && x.UserId != user.Id);
-            if (isCardExist is not null)
-            {
-                return new ResponseDTO()
-                {
-                    Message = "Card number is using by another user",
-                    StatusCode = 400,
-                    Result = studentProfileDto,
-                    IsSuccess = false
-                };
-            }
-
             user.BirthDate = studentProfileDto.BirthDate;
             user.PhoneNumber = studentProfileDto.PhoneNumber;
             user.Address = studentProfileDto.Address;
@@ -1232,21 +1152,6 @@ public class AuthService : IAuthService
             else
             {
                 student.University = studentProfileDto.University;
-            }
-
-            var paymentCard =
-                await _unitOfWork.PaymentCardRepository.GetAsync(x =>
-                    x.CardNumber == studentProfileDto.CardNumber && x.UserId == user.Id);
-            if (paymentCard is null)
-            {
-                paymentCard = new PaymentCard()
-                {
-                    CardName = studentProfileDto.CardName,
-                    CardNumber = studentProfileDto.CardNumber,
-                    CardProvider = studentProfileDto.CardProvider,
-                    UserId = user.Id
-                };
-                await _unitOfWork.PaymentCardRepository.AddAsync(paymentCard);
             }
 
             var isRoleExist = await _roleManager.RoleExistsAsync(StaticUserRoles.Student);
@@ -1326,21 +1231,6 @@ public class AuthService : IAuthService
                 };
             }
 
-            // Check if card number is exist in payment card mean that user can not user that card number
-            var isCardExist =
-                await _unitOfWork.PaymentCardRepository.GetAsync(x =>
-                    x.CardNumber == instructorProfileDto.CardNumber && x.UserId != user.Id);
-            if (isCardExist is not null)
-            {
-                return new ResponseDTO()
-                {
-                    Message = "Card number is using by another user",
-                    StatusCode = 400,
-                    Result = instructorProfileDto,
-                    IsSuccess = false
-                };
-            }
-
             user.BirthDate = instructorProfileDto.BirthDate;
             user.PhoneNumber = instructorProfileDto.PhoneNumber;
             user.Address = instructorProfileDto.Address;
@@ -1366,21 +1256,6 @@ public class AuthService : IAuthService
             {
                 instructor.Introduction = instructorProfileDto.Introduction;
                 instructor.Industry = instructorProfileDto.Industry;
-            }
-
-            var paymentCard =
-                await _unitOfWork.PaymentCardRepository.GetAsync(x =>
-                    x.CardNumber == instructorProfileDto.CardNumber && x.UserId == user.Id);
-            if (paymentCard is null)
-            {
-                paymentCard = new PaymentCard()
-                {
-                    CardName = instructorProfileDto.CardName,
-                    CardNumber = instructorProfileDto.CardNumber,
-                    CardProvider = instructorProfileDto.CardProvider,
-                    UserId = user.Id
-                };
-                await _unitOfWork.PaymentCardRepository.AddAsync(paymentCard);
             }
 
             var isRoleExist = await _roleManager.RoleExistsAsync(StaticUserRoles.Instructor);
@@ -1441,7 +1316,7 @@ public class AuthService : IAuthService
             userInfo.Roles = roles;
             userInfo.isAccepted = true;
 
-            
+
             if (roles.Contains(StaticUserRoles.Instructor))
             {
                 var instructor = await _unitOfWork.InstructorRepository.GetAsync(x => x.UserId == user.Id);
@@ -1455,7 +1330,7 @@ public class AuthService : IAuthService
                 var student = await _unitOfWork.StudentRepository.GetByUserId(userId);
                 userInfo.StudentId = student?.StudentId;
             }
-            
+
             return new ResponseDTO()
             {
                 Message = "Get user info successfully",
@@ -1693,32 +1568,6 @@ public class AuthService : IAuthService
             studentToUpdate.ApplicationUser.FullName = updateStudentDTO.FullName;
             studentToUpdate.ApplicationUser.Country = updateStudentDTO.Country;
 
-
-            // Update payment card information if provided
-            if (!string.IsNullOrWhiteSpace(updateStudentDTO.CardNumber) &&
-                !string.IsNullOrWhiteSpace(updateStudentDTO.CardName) &&
-                !string.IsNullOrWhiteSpace(updateStudentDTO.CardProvider))
-            {
-                // Delete old payment card if it exists
-                var existingCard = await _unitOfWork.PaymentCardRepository.GetCardByUserId(studentToUpdate.UserId);
-                if (existingCard != null)
-                {
-                    _unitOfWork.PaymentCardRepository.Delete(existingCard);
-                    await _unitOfWork.SaveAsync();
-                }
-
-                // Add new payment card information
-                PaymentCard newPaymentCard = new PaymentCard()
-                {
-                    CardName = updateStudentDTO.CardName,
-                    CardNumber = updateStudentDTO.CardNumber,
-                    CardProvider = updateStudentDTO.CardProvider,
-                    UserId = studentToUpdate.UserId
-                };
-                await _unitOfWork.PaymentCardRepository.AddAsync(newPaymentCard);
-            }
-
-
             _unitOfWork.StudentRepository.Update(studentToUpdate);
             await _unitOfWork.SaveAsync();
 
@@ -1790,37 +1639,12 @@ public class AuthService : IAuthService
             intructorToUpdate.ApplicationUser.Country = updateIntructorDTO.Country;
             intructorToUpdate.ApplicationUser.TaxNumber = updateIntructorDTO.TaxNumber;
 
-            // Update payment card information if provided
-            if (!string.IsNullOrWhiteSpace(updateIntructorDTO.CardNumber) &&
-                !string.IsNullOrWhiteSpace(updateIntructorDTO.CardName) &&
-                !string.IsNullOrWhiteSpace(updateIntructorDTO.CardProvider))
-            {
-                // Delete old payment card if it exists
-                var existingCard = await _unitOfWork.PaymentCardRepository.GetCardByUserId(intructorToUpdate.UserId);
-                if (existingCard != null)
-                {
-                    _unitOfWork.PaymentCardRepository.Delete(existingCard);
-                    await _unitOfWork.SaveAsync();
-                }
-
-                // Add new payment card information
-                PaymentCard newPaymentCard = new PaymentCard()
-                {
-                    CardName = updateIntructorDTO.CardName,
-                    CardNumber = updateIntructorDTO.CardNumber,
-                    CardProvider = updateIntructorDTO.CardProvider,
-                    UserId = intructorToUpdate.UserId
-                };
-                await _unitOfWork.PaymentCardRepository.AddAsync(newPaymentCard);
-            }
-
-
             _unitOfWork.InstructorRepository.Update(intructorToUpdate);
             await _unitOfWork.SaveAsync();
 
             return new ResponseDTO
             {
-                Message = "Intructor updated successfully",
+                Message = "Updated instructor successfully",
                 Result = null,
                 IsSuccess = true,
                 StatusCode = 200
