@@ -1498,6 +1498,8 @@ public class AuthService : IAuthService
             var refreshToken = await _tokenService.GenerateJwtRefreshTokenAsync(user);
             await _tokenService.StoreRefreshToken(user.Id, refreshToken);
 
+            user.LastLoginTime = DateTime.UtcNow;
+            
             return new ResponseDTO()
             {
                 Result = new SignResponseDTO()
