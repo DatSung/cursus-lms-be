@@ -178,7 +178,7 @@ public class OrderService : IOrderService
         {
             var orders = await _unitOfWork.OrderHeaderRepository.GetAllAsync();
             var userId = User.Claims.FirstOrDefault(x => x.Type == ClaimTypes.NameIdentifier)?.Value;
-            
+
             if (studentId is not null)
             {
                 orders = orders.Where(x => x.StudentId == studentId);
@@ -308,17 +308,15 @@ public class OrderService : IOrderService
                     OrdersDetails = orderDetails
                 }
             );
-            var result = (CreateStripeSessionDTO)responseDto.Result!;
+            var result = (ResponseStripeSessionDTO)responseDto.Result!;
 
-            payWithStripeDto.StripeSessionUrl = result.StripeSessionUrl;
-            orderHeader.StripeSessionId = result.StripeSessionId;
             _unitOfWork.OrderHeaderRepository.Update(orderHeader);
             await _unitOfWork.SaveAsync();
 
             return new ResponseDTO()
             {
                 Message = "Create payment with stripe successfully",
-                Result = payWithStripeDto,
+                Result = result,
                 StatusCode = 200,
                 IsSuccess = true
             };

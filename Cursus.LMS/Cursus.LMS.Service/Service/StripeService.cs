@@ -45,12 +45,16 @@ public class StripeService : IStripeService
             var service = new SessionService();
             var session = await service.CreateAsync(options);
 
-            createStripeSessionDto.StripeSessionId = session.Id;
-            createStripeSessionDto.StripeSessionUrl = session.Url;
+            var response = new ResponseStripeSessionDTO()
+            {
+                StripeSessionId = session.Id,
+                StripeSessionUrl = session.Url
+            };
+
 
             return new ResponseDTO()
             {
-                Result = createStripeSessionDto,
+                Result = response,
                 Message = "Create stripe session successfully",
                 IsSuccess = true,
                 StatusCode = 200
