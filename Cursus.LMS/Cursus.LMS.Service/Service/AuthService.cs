@@ -591,6 +591,8 @@ public class AuthService : IAuthService
             await _tokenService.StoreRefreshToken(user.Id, refreshToken);
 
             user.LastLoginTime = DateTime.UtcNow;
+            user.SendClearEmail = false;
+            await _userManager.UpdateAsync(user);
 
             return new ResponseDTO()
             {
@@ -1520,6 +1522,8 @@ public class AuthService : IAuthService
             await _tokenService.StoreRefreshToken(user.Id, refreshToken);
 
             user.LastLoginTime = DateTime.UtcNow;
+            user.SendClearEmail = false;
+            await _userManager.UpdateAsync(user);
 
             return new ResponseDTO()
             {
@@ -1858,7 +1862,6 @@ public class AuthService : IAuthService
                     await _userManager.UpdateAsync(user);
                 }
             }
-            
         }
         catch (Exception e)
         {
