@@ -20,6 +20,9 @@ public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
 
         ApplicationDbContextSeed.SeedAdminAccount(modelBuilder);
         ApplicationDbContextSeed.SeedEmailTemplate(modelBuilder);
+        ApplicationDbContextSeed.SeedCompany(modelBuilder);
+        ApplicationDbContextSeed.SeedPrivacy(modelBuilder);
+        ApplicationDbContextSeed.SeedTermOfUse(modelBuilder);
     }
 
     public DbSet<ApplicationUser> ApplicationUsers { get; set; }
