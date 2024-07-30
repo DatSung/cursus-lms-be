@@ -1855,8 +1855,10 @@ public class AuthService : IAuthService
                 if (result)
                 {
                     user.SendClearEmail = true;
+                    await _userManager.UpdateAsync(user);
                 }
             }
+            
         }
         catch (Exception e)
         {
