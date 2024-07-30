@@ -28,6 +28,7 @@ namespace Cursus.LMS.API.Controllers
         #region Course Version
 
         [HttpGet]
+        [Authorize]
         public async Task<ActionResult<ResponseDTO>> GetCourseVersions
         (
             [FromQuery] Guid? courseId,
@@ -56,6 +57,7 @@ namespace Cursus.LMS.API.Controllers
 
         [HttpGet]
         [Route("{courseId:guid}")]
+        [Authorize]
         public async Task<ActionResult<ResponseDTO>> GetCourseVersion([FromRoute] Guid courseId)
         {
             var responseDto = await _courseVersionService.GetCourseVersion(User, courseId);
@@ -88,6 +90,7 @@ namespace Cursus.LMS.API.Controllers
 
         [HttpPut]
         [Route("edit")]
+        [Authorize(Roles = StaticUserRoles.Instructor)]
         public async Task<ActionResult<ResponseDTO>> EditCourseVersion
         (
             [FromBody] EditCourseVersionDTO editCourseVersionDto)
@@ -98,6 +101,7 @@ namespace Cursus.LMS.API.Controllers
 
         [HttpDelete]
         [Route("remove/{courseId:guid}")]
+        [Authorize(Roles = StaticUserRoles.Instructor)]
         public async Task<ActionResult<ResponseDTO>> RemoveCourseVersion([FromRoute] Guid courseId)
         {
             var responseDto = await _courseVersionService.RemoveCourseVersion(User, courseId);
@@ -106,6 +110,7 @@ namespace Cursus.LMS.API.Controllers
 
         [HttpPost]
         [Route("accept/{courseId:guid}")]
+        [Authorize(Roles = StaticUserRoles.Admin)]
         public async Task<ActionResult<ResponseDTO>> AcceptCourseVersion([FromRoute] Guid courseId)
         {
             var responseDto = await _courseVersionService.AcceptCourseVersion(User, courseId);
@@ -114,6 +119,7 @@ namespace Cursus.LMS.API.Controllers
 
         [HttpPost]
         [Route("reject/{courseId:guid}")]
+        [Authorize(Roles = StaticUserRoles.Admin)]
         public async Task<ActionResult<ResponseDTO>> RejectCourseVersion([FromRoute] Guid courseId)
         {
             var responseDto = await _courseVersionService.RejectCourseVersion(User, courseId);
@@ -122,6 +128,7 @@ namespace Cursus.LMS.API.Controllers
 
         [HttpPost]
         [Route("submit/{courseId:guid}")]
+        [Authorize(Roles = StaticUserRoles.Instructor)]
         public async Task<ActionResult<ResponseDTO>> SubmitCourseVersion([FromRoute] Guid courseId)
         {
             var responseDto = await _courseVersionService.SubmitCourseVersion(User, courseId);
@@ -130,6 +137,7 @@ namespace Cursus.LMS.API.Controllers
 
         [HttpPost]
         [Route("merge/{courseId:guid}")]
+        [Authorize(Roles = StaticUserRoles.Instructor)]
         public async Task<ActionResult<ResponseDTO>> MergeCourseVersion([FromRoute] Guid courseId)
         {
             var responseDto = await _courseVersionService.MergeCourseVersion(User, courseId);
@@ -138,6 +146,7 @@ namespace Cursus.LMS.API.Controllers
 
         [HttpPost]
         [Route("background/{courseVersionId:guid}")]
+        [Authorize(Roles = StaticUserRoles.Instructor)]
         public async Task<ActionResult<ResponseDTO>> UploadCourseVersionBackground
         (
             [FromRoute] Guid courseVersionId,
@@ -177,6 +186,7 @@ namespace Cursus.LMS.API.Controllers
 
         [HttpGet]
         [Route("comment/")]
+        [Authorize(Roles = StaticUserRoles.AdminInstructor)]
         public async Task<ActionResult<ResponseDTO>> GetCourseVersionsComments
         (
             [FromQuery] [Required] Guid courseVersionId,
@@ -203,6 +213,7 @@ namespace Cursus.LMS.API.Controllers
 
         [HttpGet]
         [Route("comment/{commentId:guid}")]
+        [Authorize(Roles = StaticUserRoles.AdminInstructor)]
         public async Task<ActionResult<ResponseDTO>> GetCourseVersionComment([FromRoute] Guid commentId)
         {
             var responseDto = await _courseVersionService.GetCourseVersionComment(User, commentId);
@@ -211,6 +222,7 @@ namespace Cursus.LMS.API.Controllers
 
         [HttpPost]
         [Route("comment")]
+        [Authorize(Roles = StaticUserRoles.Admin)]
         public async Task<ActionResult<ResponseDTO>> CreateCourseVersionComment
         (
             CreateCourseVersionCommentsDTO createCourseVersionCommentsDto
@@ -223,6 +235,7 @@ namespace Cursus.LMS.API.Controllers
 
         [HttpPut]
         [Route("comment")]
+        [Authorize(Roles = StaticUserRoles.Admin)]
         public async Task<ActionResult<ResponseDTO>> EditCourseVersionComment
         (
             EditCourseVersionCommentsDTO editCourseVersionCommentsDto
@@ -234,6 +247,7 @@ namespace Cursus.LMS.API.Controllers
 
         [HttpDelete]
         [Route("comment/{commentId:guid}")]
+        [Authorize(Roles = StaticUserRoles.Admin)]
         public async Task<ActionResult<ResponseDTO>> RemoveCourseVersionComment(
             [FromRoute] Guid commentId)
         {
@@ -248,6 +262,7 @@ namespace Cursus.LMS.API.Controllers
 
         [HttpGet]
         [Route("section")]
+        [Authorize]
         public async Task<ActionResult<ResponseDTO>> GetCourseSections
         (
             [FromQuery] [Required] Guid? courseVersionId,
@@ -276,6 +291,7 @@ namespace Cursus.LMS.API.Controllers
 
         [HttpGet]
         [Route("section/{sectionId:guid}")]
+        [Authorize]
         public async Task<ActionResult<ResponseDTO>> GetCourseSection([FromRoute] Guid sectionId)
         {
             var responseDto = await _courseSectionVersionService.GetCourseSection(User, sectionId);
@@ -297,6 +313,7 @@ namespace Cursus.LMS.API.Controllers
 
         [HttpPut]
         [Route("section")]
+        [Authorize(Roles = StaticUserRoles.Instructor)]
         public async Task<ActionResult<ResponseDTO>> EditCourseSection
         (
             EditCourseSectionVersionDTO createCourseSectionVersionDto
@@ -308,6 +325,7 @@ namespace Cursus.LMS.API.Controllers
 
         [HttpDelete]
         [Route("section/{sectionId}")]
+        [Authorize(Roles = StaticUserRoles.Instructor)]
         public async Task<ActionResult<ResponseDTO>> DeleteCourseSection
         (
             [FromRoute] Guid sectionId
@@ -324,6 +342,7 @@ namespace Cursus.LMS.API.Controllers
 
         [HttpGet]
         [Route("section/details")]
+        [Authorize]
         public async Task<ActionResult<ResponseDTO>> GetSectionsDetailsVersions
         (
             [FromQuery] Guid? courseSectionId,
@@ -351,6 +370,7 @@ namespace Cursus.LMS.API.Controllers
 
         [HttpGet]
         [Route("section/details/{detailsId:guid}")]
+        [Authorize]
         public async Task<ActionResult<ResponseDTO>> GetSectionsDetailsVersion([FromRoute] Guid detailsId)
         {
             var responseDto = await _sectionDetailsVersionService.GetSectionDetailsVersion(User, detailsId);
@@ -370,6 +390,7 @@ namespace Cursus.LMS.API.Controllers
 
         [HttpPut]
         [Route("section/details")]
+        [Authorize(Roles = StaticUserRoles.Instructor)]
         public async Task<ActionResult<ResponseDTO>> EditSectionDetailsVersion(
             [FromBody] EditSectionDetailsVersionDTO editSectionDetailsVersionDto)
         {
@@ -380,6 +401,7 @@ namespace Cursus.LMS.API.Controllers
 
         [HttpDelete]
         [Route("section/details/{detailsId:guid}")]
+        [Authorize(Roles = StaticUserRoles.Instructor)]
         public async Task<ActionResult<ResponseDTO>> RemoveSectionDetailsVersion([FromRoute] Guid detailsId)
         {
             var responseDto =
@@ -389,6 +411,7 @@ namespace Cursus.LMS.API.Controllers
 
         [HttpPost]
         [Route("section/details/content/{detailsId:guid}")]
+        [Authorize(Roles = StaticUserRoles.Instructor)]
         public async Task<ActionResult<ResponseDTO>> UploadSectionDetailsVersionContent
         (
             [FromRoute] Guid detailsId,
@@ -407,6 +430,7 @@ namespace Cursus.LMS.API.Controllers
 
         [HttpGet]
         [Route("section/details/content/")]
+        [Authorize]
         public async Task<IActionResult> DisplaySectionDetailsVersionContent
         (
             [FromQuery] Guid sectionDetailsVersionId,
@@ -426,8 +450,7 @@ namespace Cursus.LMS.API.Controllers
                 return NotFound("Content was not found");
             }
 
-            if (contentResponseDto.ContentType == StaticFileExtensions.Mov ||
-                contentResponseDto.ContentType == StaticFileExtensions.Mp4)
+            if (contentResponseDto.ContentType is StaticFileExtensions.Mov or StaticFileExtensions.Mp4)
             {
                 return File(contentResponseDto.Stream, contentResponseDto.ContentType);
             }
