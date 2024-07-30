@@ -32,6 +32,9 @@ public interface IUnitOfWork
     ITransactionRepository TransactionRepository { get; }
     ICourseBookmarkRepository CourseBookmarkRepository { get; }
     ICourseProgressRepository CourseProgressRepository { get; }
+    ITermOfUseRepository TermOfUseRepository { get; }
+    ICompanyRepository CompanyRepository { get; }
+    IPrivacyRepository PrivacyRepository { get; }
 
     Task<int> SaveAsync();
 }

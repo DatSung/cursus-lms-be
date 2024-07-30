@@ -39,6 +39,9 @@ namespace Cursus.LMS.DataAccess.Repository
         public ITransactionRepository TransactionRepository { get; }
         public ICourseBookmarkRepository CourseBookmarkRepository { get; }
         public ICourseProgressRepository CourseProgressRepository { get; }
+        public ITermOfUseRepository TermOfUseRepository { get; }
+        public ICompanyRepository CompanyRepository { get; }
+        public IPrivacyRepository PrivacyRepository { get; }
 
         public UnitOfWork(ApplicationDbContext context, UserManager<ApplicationUser> userManager)
         {
@@ -71,6 +74,9 @@ namespace Cursus.LMS.DataAccess.Repository
             TransactionRepository = new TransactionRepository(_context);
             CourseBookmarkRepository = new CourseBookmarkRepository(_context);
             CourseProgressRepository = new CourseProgressRepository(_context);
+            TermOfUseRepository = new TermOfUseRepository(_context);
+            CompanyRepository = new CompanyRepository(_context);
+            PrivacyRepository = new PrivacyRepository(_context);
         }
 
         public async Task<int> SaveAsync()
