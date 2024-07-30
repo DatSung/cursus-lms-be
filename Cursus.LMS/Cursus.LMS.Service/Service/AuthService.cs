@@ -1983,8 +1983,7 @@ public class AuthService : IAuthService
         {
             await _userManager.RemoveFromRolesAsync(user, roles);
         }
-
-
+        
         var claims = await _userManager.GetClaimsAsync(user);
         if (claims.Any())
         {
@@ -1993,8 +1992,7 @@ public class AuthService : IAuthService
                 await _userManager.RemoveClaimAsync(user, claim);
             }
         }
-
-
+        
         var logins = await _userManager.GetLoginsAsync(user);
         if (logins.Any())
         {
@@ -2003,14 +2001,12 @@ public class AuthService : IAuthService
                 await _userManager.RemoveLoginAsync(user, login.LoginProvider, login.ProviderKey);
             }
         }
-
-
+        
         var tokens = await _userManager.GetAuthenticationTokenAsync(user, "provider", "name");
         if (tokens != null)
         {
             await _userManager.RemoveAuthenticationTokenAsync(user, "provider", "name");
         }
-
 
         var result = await _userManager.DeleteAsync(user);
         if (!result.Succeeded)

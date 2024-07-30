@@ -1,6 +1,7 @@
 using Cursus.LMS.API.Extentions;
 using Cursus.LMS.DataAccess.Context;
 using Cursus.LMS.Service.Hubs;
+using Cursus.LMS.Service.IService;
 using Cursus.LMS.Service.Mappings;
 using Cursus.LMS.Utility.Constants;
 using Hangfire;
@@ -97,6 +98,9 @@ app.UseCors("AllowSpecificOrigin");
 app.UseHangfireDashboard();
 
 app.MapHangfireDashboard("/hangfire");
+
+RecurringJob.AddOrUpdate<IAuthService>(job => job.SendClearEmail(3), "0 0 1 */3 *");
+RecurringJob.AddOrUpdate<IAuthService>(job => job.ClearUser(), "0 0 1 */4 *");
 
 app.UseHttpsRedirection();
 
