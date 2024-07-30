@@ -17,7 +17,6 @@ namespace Cursus.LMS.DataAccess.Repository
         public IEmailTemplateRepository EmailTemplateRepository { get; }
         public IUserManagerRepository UserManagerRepository { get; }
         public IInstructorCommentRepository InstructorCommentRepository { get; }
-        public IPaymentCardRepository PaymentCardRepository { get; set; }
         public ICourseRepository CourseRepository { get; set; }
         public IInstructorRatingRepository InstructorRatingRepository { get; set; }
         public ICourseVersionRepository CourseVersionRepository { get; }
@@ -40,13 +39,15 @@ namespace Cursus.LMS.DataAccess.Repository
         public ITransactionRepository TransactionRepository { get; }
         public ICourseBookmarkRepository CourseBookmarkRepository { get; }
         public ICourseProgressRepository CourseProgressRepository { get; }
+        public ITermOfUseRepository TermOfUseRepository { get; }
+        public ICompanyRepository CompanyRepository { get; }
+        public IPrivacyRepository PrivacyRepository { get; }
 
         public UnitOfWork(ApplicationDbContext context, UserManager<ApplicationUser> userManager)
         {
             _context = context;
             StudentRepository = new StudentRepository(_context);
             InstructorRepository = new InstructorRepository(_context);
-            PaymentCardRepository = new PaymentCardRepository(_context);
             CategoryRepository = new CategoryRepository(_context);
             EmailTemplateRepository = new EmailTemplateRepository(_context);
             UserManagerRepository = new UserManagerRepository(userManager);
@@ -73,6 +74,9 @@ namespace Cursus.LMS.DataAccess.Repository
             TransactionRepository = new TransactionRepository(_context);
             CourseBookmarkRepository = new CourseBookmarkRepository(_context);
             CourseProgressRepository = new CourseProgressRepository(_context);
+            TermOfUseRepository = new TermOfUseRepository(_context);
+            CompanyRepository = new CompanyRepository(_context);
+            PrivacyRepository = new PrivacyRepository(_context);
         }
 
         public async Task<int> SaveAsync()

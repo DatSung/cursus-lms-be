@@ -31,4 +31,6 @@ public interface IAuthService
     Task<ResponseDTO> UpdateInstructor(UpdateIntructorProfileDTO updateIntructorDto, ClaimsPrincipal User);
     Task<ResponseDTO> LockUser(LockUserDTO lockUserDto);
     Task<ResponseDTO> UnlockUser(LockUserDTO lockUserDto);
+    Task SendClearEmail(int fromMonth);
+    Task ClearUser();
 }

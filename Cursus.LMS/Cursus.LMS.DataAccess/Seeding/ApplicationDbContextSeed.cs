@@ -230,28 +230,28 @@ public static class ApplicationDbContextSeed
                 UpdateTime = DateTime.Now,
                 Status = 1
             },
-             new
-             {
-                 Id = Guid.NewGuid(),
-                 TemplateName = "StudentCompleteCourse",
-                 SenderName = "Cursus Team",
-                 SenderEmail = "cursusservicetts@gmail.com",
-                 Category = "Course completed",
-                 SubjectLine = "Congratulations on completing the course!",
-                 PreHeaderText = "Hello!",
-                 PersonalizationTags = "{FirstName}, {LastName}",
-                 BodyContent =
+            new
+            {
+                Id = Guid.NewGuid(),
+                TemplateName = "StudentCompleteCourse",
+                SenderName = "Cursus Team",
+                SenderEmail = "cursusservicetts@gmail.com",
+                Category = "Course completed",
+                SubjectLine = "Congratulations on completing the course!",
+                PreHeaderText = "Hello!",
+                PersonalizationTags = "{FirstName}, {LastName}",
+                BodyContent =
                     "Dear [UserFullName],<br><br>Your account will be deleted after 14 days.",
-                 FooterContent = "<p>Contact us at cursusservicetts@gmail.com</p>",
-                 CallToAction = "<a href=\"https://cursuslms.xyz/user/sign-in\">Login</a>",
-                 Language = "English",
-                 RecipientType = "Customer",
-                 CreateBy = "System",
-                 CreateTime = DateTime.Now,
-                 UpdateBy = "Admin",
-                 UpdateTime = DateTime.Now,
-                 Status = 1
-             },
+                FooterContent = "<p>Contact us at cursusservicetts@gmail.com</p>",
+                CallToAction = "<a href=\"https://cursuslms.xyz/user/sign-in\">Login</a>",
+                Language = "English",
+                RecipientType = "Customer",
+                CreateBy = "System",
+                CreateTime = DateTime.Now,
+                UpdateBy = "Admin",
+                UpdateTime = DateTime.Now,
+                Status = 1
+            },
             new
             {
                 Id = Guid.NewGuid(),
@@ -387,5 +387,55 @@ public static class ApplicationDbContextSeed
             RoleId = adminRoleId,
             UserId = adminUserId
         });
+    }
+
+    public static void SeedCompany(ModelBuilder modelBuilder)
+    {
+        modelBuilder.Entity<Company>().HasData(
+            new Company
+            {
+                Id = Guid.NewGuid(),
+                Name = "ABC Corp",
+                Address = "123 Main St",
+                City = "Hometown",
+                State = "State",
+                Country = "Country",
+                PostalCode = "12345",
+                Phone = "123-456-7890",
+                Email = "contact@abccorp.com",
+                Website = "http://www.abccorp.com",
+                FoundedDate = new DateTime(2000, 1, 1),
+                LogoUrl = "http://www.abccorp.com/logo.png",
+                Description = "ABC Corp is a leading company in XYZ industry."
+            }
+        );
+    }
+
+    public static void SeedPrivacy(ModelBuilder modelBuilder)
+    {
+        modelBuilder.Entity<Privacy>().HasData(
+            new Privacy()
+            {
+                Id = Guid.NewGuid(),
+                Title = "Privacy",
+                Content = "These are the privacy for our service.",
+                LastUpdated = DateTime.UtcNow,
+                IsActive = true
+            }
+        );
+    }
+
+    public static void SeedTermOfUse(ModelBuilder modelBuilder)
+    {
+        modelBuilder.Entity<TermOfUse>().HasData(
+            new TermOfUse
+            {
+                Id = Guid.NewGuid(),
+                Title = "Terms of Use",
+                Content = "These are the terms of use for our service.",
+                LastUpdated = DateTime.UtcNow,
+                IsActive = true
+            }
+        );
     }
 }

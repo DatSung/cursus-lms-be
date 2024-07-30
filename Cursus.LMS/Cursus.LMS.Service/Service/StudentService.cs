@@ -185,8 +185,6 @@ namespace Cursus.LMS.Service.Service
                         };
                     }
 
-                    var paymentCard = await _unitOfWork.PaymentCardRepository.GetCardByUserId(student.UserId);
-
                     StudentFullInfoDTO studentFullInfoDto = new StudentFullInfoDTO()
                     {
                         StudentId = student.StudentId,
@@ -200,9 +198,6 @@ namespace Cursus.LMS.Service.Service
                         Country = student.ApplicationUser.Country,
                         Gender = student.ApplicationUser.Gender,
                         PhoneNumber = student.ApplicationUser.PhoneNumber,
-                        CardName = paymentCard?.CardName,
-                        CardNumber = paymentCard?.CardNumber,
-                        CardProvider = paymentCard?.CardProvider
                     };
 
                     return new ResponseDTO()

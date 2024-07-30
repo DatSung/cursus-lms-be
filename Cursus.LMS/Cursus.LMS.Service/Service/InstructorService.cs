@@ -170,8 +170,6 @@ public class InstructorService : IInstructorService
                 };
             }
 
-            var paymentCard = await _unitOfWork.PaymentCardRepository.GetCardByUserId(instructor.UserId);
-
             InstructorInfoDTO instructorInfoDto = new InstructorInfoDTO()
             {
                 InstructorId = instructor.InstructorId,
@@ -188,9 +186,6 @@ public class InstructorService : IInstructorService
                 Industry = instructor.Industry,
                 Introduction = instructor.Introduction,
                 TaxNumber = instructor.ApplicationUser.TaxNumber,
-                CardNumber = paymentCard?.CardNumber,
-                CardName = paymentCard?.CardName,
-                CardProvider = paymentCard?.CardProvider,
                 IsAccepted = instructor.IsAccepted
             };
 

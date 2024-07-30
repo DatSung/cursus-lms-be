@@ -8,6 +8,4 @@ public class CreateStripeConnectedAccountDTO
     public string ReturnUrl { get; set; }
     public string Email { get; set; }
     public string Country { get; set; }
-    public string? AccountId { get; set; }
-    public string? AccountLinkUrl { get; set; }
 }

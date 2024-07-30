@@ -45,12 +45,16 @@ public class StripeService : IStripeService
             var service = new SessionService();
             var session = await service.CreateAsync(options);
 
-            createStripeSessionDto.StripeSessionId = session.Id;
-            createStripeSessionDto.StripeSessionUrl = session.Url;
+            var response = new ResponseStripeSessionDTO()
+            {
+                StripeSessionId = session.Id,
+                StripeSessionUrl = session.Url
+            };
+
 
             return new ResponseDTO()
             {
-                Result = createStripeSessionDto,
+                Result = response,
                 Message = "Create stripe session successfully",
                 IsSuccess = true,
                 StatusCode = 200
@@ -127,12 +131,15 @@ public class StripeService : IStripeService
         var accountLinkService = new AccountLinkService();
         var accountLink = await accountLinkService.CreateAsync(accountLinkOptions);
 
-        createStripeConnectedAccountDto.AccountId = account.Id;
-        createStripeConnectedAccountDto.AccountLinkUrl = accountLink.Url;
+        var responseStripeConnectedAccountDto = new ResponseStripeConnectedAccountDTO()
+        {
+            AccountId = account.Id,
+            AccountLinkUrl = accountLink.Url
+        };
 
         return new ResponseDTO()
         {
-            Result = createStripeConnectedAccountDto,
+            Result = responseStripeConnectedAccountDto,
             IsSuccess = true,
             StatusCode = 200,
             Message = "Create stripe connected account successfully"
