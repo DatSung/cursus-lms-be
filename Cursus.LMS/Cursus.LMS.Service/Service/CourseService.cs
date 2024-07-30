@@ -124,16 +124,28 @@ public class CourseService : ICourseService
         try
         {
             var courses = new List<Course>();
+            var userRole = User.Claims.FirstOrDefault(x => x.Type == ClaimTypes.Role)?.Value;
             if (string.IsNullOrEmpty(instructorId.ToString()))
             {
-                courses = _unitOfWork.CourseRepository
-                    .GetAllAsync
-                    (
-                        filter: x => x.Status == 1
-                    )
-                    .GetAwaiter()
-                    .GetResult()
-                    .ToList();
+                if (!userRole.Contains(StaticUserRoles.AdminInstructor))
+                {
+                    courses = _unitOfWork.CourseRepository
+                        .GetAllAsync
+                        (
+                            filter: x => x.Status == 1
+                        )
+                        .GetAwaiter()
+                        .GetResult()
+                        .ToList();
+                }
+                else
+                {
+                    courses = _unitOfWork.CourseRepository
+                        .GetAllAsync()
+                        .GetAwaiter()
+                        .GetResult()
+                        .ToList();
+                }
             }
             else
             {

@@ -166,6 +166,7 @@ namespace Cursus.LMS.API.Controllers
             {
                 return null;
             }
+
             return File(responseDto, "image/png");
         }
 
@@ -242,7 +243,7 @@ namespace Cursus.LMS.API.Controllers
         }
 
         #endregion
-        
+
         #region Course Section Version
 
         [HttpGet]
