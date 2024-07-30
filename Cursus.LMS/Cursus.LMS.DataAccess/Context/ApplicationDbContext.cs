@@ -50,4 +50,7 @@ public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
     public DbSet<Transaction> Transactions { get; set; }
     public DbSet<CourseBookmark> CourseBookmarks { get; set; }
     public DbSet<CourseProgress> CourseProgresses { get; set; }
+    public DbSet<Company> Companies { get; set; }
+    public DbSet<Privacy> Privacies { get; set; }
+    public DbSet<TermOfUse> TermOfUses { get; set; }
 }
