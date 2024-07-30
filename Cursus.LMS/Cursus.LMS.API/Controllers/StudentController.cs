@@ -22,7 +22,7 @@ namespace Cursus.LMS.API.Controllers
         }
 
         [HttpGet]
-        [Authorize(Roles = StaticUserRoles.Admin)]
+        [Authorize]
         public async Task<ActionResult<ResponseDTO>> GetAllStudent
         (
             [FromQuery] string? filterOn,
@@ -41,7 +41,7 @@ namespace Cursus.LMS.API.Controllers
 
         [HttpGet]
         [Route("{studentId:guid}")]
-        [Authorize(Roles = StaticUserRoles.Admin)]
+        [Authorize]
         public async Task<ActionResult<ResponseDTO>> GetStudentById([FromRoute] Guid studentId)
         {
             var responseDto = await _studentsService.GetById(studentId);
@@ -49,7 +49,7 @@ namespace Cursus.LMS.API.Controllers
         }
 
         [HttpPut]
-        [Authorize(Roles = StaticUserRoles.Admin)]
+        [Authorize(Roles = StaticUserRoles.AdminStudent)]
         public async Task<ActionResult<ResponseDTO>> UpdateStudent([FromBody] UpdateStudentDTO updateStudentDTO)
         {
             var responseDto = await _studentsService.UpdateById(updateStudentDTO);

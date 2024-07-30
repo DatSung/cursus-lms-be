@@ -541,14 +541,13 @@ public class SectionDetailsVersionService : ISectionDetailsVersionService
 
     public async Task<ContentResponseDTO> DisplaySectionDetailsVersionContent
     (
-        ClaimsPrincipal User,
         Guid sectionDetailsVersionId,
+        string userId,
         string type
     )
     {
         try
         {
-            var userId = User.Claims.FirstOrDefault(x => x.Type == ClaimTypes.NameIdentifier)?.Value;
             var user = await _userManager.FindByIdAsync(userId);
 
             if (sectionDetailsVersionId.ToString().IsNullOrEmpty())

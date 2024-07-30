@@ -23,6 +23,7 @@ namespace Cursus.LMS.API.Controllers
 
         [HttpGet]
         [Route("transaction")]
+        [Authorize(Roles = StaticUserRoles.AdminInstructor)]
         public async Task<ActionResult<ResponseDTO>> GetTransactionHistory
         (
             [FromQuery] string? userId,
@@ -51,6 +52,7 @@ namespace Cursus.LMS.API.Controllers
 
         [HttpPost]
         [Route("stripe/account")]
+        [Authorize(Roles = StaticUserRoles.Instructor)]
         public async Task<ActionResult<ResponseDTO>> CreateStripeConnectedAccount
         (
             CreateStripeConnectedAccountDTO createStripeConnectedAccountDto
@@ -62,6 +64,7 @@ namespace Cursus.LMS.API.Controllers
 
         [HttpPost]
         [Route("stripe/transfer")]
+        [Authorize(Roles = StaticUserRoles.Admin)]
         public async Task<ActionResult<ResponseDTO>> CreateStripeTransfer
         (
             CreateStripeTransferDTO createStripeTransferDto)
@@ -81,6 +84,7 @@ namespace Cursus.LMS.API.Controllers
 
         [HttpPost]
         [Route("stripe/card")]
+        [Authorize(Roles = StaticUserRoles.Instructor)]
         public async Task<ActionResult<ResponseDTO>> AddStripeCard
         (
             AddStripeCardDTO addStripeCardDto
@@ -89,47 +93,5 @@ namespace Cursus.LMS.API.Controllers
             var responseDto = await _paymentService.AddStripeCard(addStripeCardDto);
             return StatusCode(responseDto.StatusCode, responseDto);
         }
-
-        // [HttpGet]
-        // [Route("get-top-Instructors-Payout")]
-        // [Authorize(Roles = StaticUserRoles.Admin)]
-        // public async Task<ActionResult<ResponseDTO>> GetTopInstructorsByPayout
-        // (
-        //     [FromQuery] int topN,
-        //     [FromQuery] int? filterYear,
-        //     [FromQuery] int? filterMonth,
-        //     [FromQuery] int? filterQuarter
-        // )
-        // {
-        //     var responseDto = await _paymentService.GetTopInstructorsByPayout
-        //         (
-        //             topN,
-        //             filterYear,
-        //             filterMonth,
-        //             filterQuarter
-        //         );
-        //     return StatusCode(responseDto.StatusCode, responseDto);
-        // }
-        //
-        // [HttpGet]
-        // [Route("get-least-Instructors-Payout")]
-        // [Authorize(Roles = StaticUserRoles.Admin)]
-        // public async Task<ActionResult<ResponseDTO>> GetLeastInstructorsByPayout
-        // (
-        //     [FromQuery] int topN,
-        //     [FromQuery] int? filterYear,
-        //     [FromQuery] int? filterMonth,
-        //     [FromQuery] int? filterQuarter
-        // )
-        // {
-        //     var responseDto = await _paymentService.GetLeastInstructorsByPayout
-        //         (
-        //             topN,
-        //             filterYear,
-        //             filterMonth,
-        //             filterQuarter
-        //         );
-        //     return StatusCode(responseDto.StatusCode, responseDto);
-        // }
     }
 }

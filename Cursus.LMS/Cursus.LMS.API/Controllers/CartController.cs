@@ -8,7 +8,7 @@ namespace Cursus.LMS.API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    [Authorize(Roles = StaticUserRoles.AdminStudent)]
+    [Authorize(Roles = StaticUserRoles.Student)]
     public class CartController : ControllerBase
     {
         private readonly ICartService _cartService;
@@ -46,14 +46,6 @@ namespace Cursus.LMS.API.Controllers
                 User,
                 cartDetailsId
             );
-            return StatusCode(responseDto.StatusCode, responseDto);
-        }
-
-        [HttpPost]
-        [Route("stripe/checkout")]
-        public async Task<ActionResult<ResponseDTO>> CheckoutWithStripe()
-        {
-            var responseDto = await _cartService.Checkout(User);
             return StatusCode(responseDto.StatusCode, responseDto);
         }
     }

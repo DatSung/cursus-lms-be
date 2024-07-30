@@ -63,6 +63,7 @@ namespace Cursus.LMS.API.Controllers
 
         [HttpGet]
         [Route("money/earned/total/{instructorId:guid}")]
+        [Authorize(Roles = StaticUserRoles.AdminInstructor)]
         public async Task<ActionResult<ResponseDTO>> GetTotalEarnedMoneyInstructorById([FromRoute] Guid instructorId)
         {
             var responseDto = await _instructorService.GetInstructorEarnedMoney(instructorId);
@@ -71,6 +72,7 @@ namespace Cursus.LMS.API.Controllers
 
         [HttpGet]
         [Route("money/payout/total/{instructorId:guid}")]
+        [Authorize(Roles = StaticUserRoles.AdminInstructor)]
         public async Task<ActionResult<ResponseDTO>> GetTotalPayoutMoneyInstructorById([FromRoute] Guid instructorId)
         {
             var responseDto = await _instructorService.GetInstructorPayoutMoney(instructorId);
@@ -78,6 +80,7 @@ namespace Cursus.LMS.API.Controllers
         }
 
         [HttpPut]
+        [Authorize(Roles = StaticUserRoles.AdminInstructor)]
         public async Task<ActionResult<ResponseDTO>> UpdateInstructorById([FromBody] UpdateInstructorDTO instructorDto)
         {
             var responseDto = await _instructorService.UpdateById(instructorDto);
@@ -86,6 +89,7 @@ namespace Cursus.LMS.API.Controllers
 
         [HttpPost]
         [Route("accept/{instructorId:guid}")]
+        [Authorize(Roles = StaticUserRoles.Admin)]
         public async Task<ActionResult<ResponseDTO>> AcceptInstructor([FromRoute] Guid instructorId)
         {
             var responseDto = await _instructorService.AcceptInstructor(User, instructorId);
@@ -94,6 +98,7 @@ namespace Cursus.LMS.API.Controllers
 
         [HttpPost]
         [Route("reject/{instructorId:guid}")]
+        [Authorize(Roles = StaticUserRoles.Admin)]
         public async Task<ActionResult<ResponseDTO>> RejectInstructor([FromRoute] Guid instructorId)
         {
             var responseDto = await _instructorService.RejectInstructor(User, instructorId);
@@ -105,6 +110,7 @@ namespace Cursus.LMS.API.Controllers
 
         [HttpGet]
         [Route("comment/{instructorId:guid}")]
+        [Authorize(Roles = StaticUserRoles.AdminInstructor)]
         public async Task<ActionResult<ResponseDTO>> GetAllInstructorComment
         (
             [FromRoute] Guid instructorId,
@@ -118,6 +124,7 @@ namespace Cursus.LMS.API.Controllers
 
         [HttpPost]
         [Route("comment/")]
+        [Authorize(Roles = StaticUserRoles.Admin)]
         public async Task<ActionResult<ResponseDTO>> CreateInstructorComment
         (
             CreateInstructorCommentDTO createInstructorComment)
@@ -128,6 +135,7 @@ namespace Cursus.LMS.API.Controllers
 
         [HttpPut]
         [Route("comment/")]
+        [Authorize(Roles = StaticUserRoles.Admin)]
         public async Task<ActionResult<ResponseDTO>> UpdateInstructorComment
         (
             UpdateInstructorCommentDTO updateInstructorComment)
@@ -138,6 +146,7 @@ namespace Cursus.LMS.API.Controllers
 
         [HttpDelete]
         [Route("comment/{commentId:guid}")]
+        [Authorize(Roles = StaticUserRoles.Admin)]
         public async Task<ActionResult<ResponseDTO>> DeleteInstructorComment
         (
             [FromRoute] Guid commentId
@@ -150,6 +159,7 @@ namespace Cursus.LMS.API.Controllers
 
         [HttpPost]
         [Route("export/{month:int}/{year:int}")]
+        [Authorize(Roles = StaticUserRoles.Admin)]
         public async Task<ActionResult<ResponseDTO>> ExportInstructor
         (
             [FromRoute] int month,
@@ -163,6 +173,7 @@ namespace Cursus.LMS.API.Controllers
 
         [HttpGet]
         [Route("download/{fileName}")]
+        [Authorize(Roles = StaticUserRoles.Admin)]
         public async Task<ActionResult<ClosedXMLResponseDTO>> DownloadInstructor
         (
             [FromRoute] string fileName

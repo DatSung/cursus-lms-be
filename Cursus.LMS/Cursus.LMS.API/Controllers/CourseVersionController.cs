@@ -430,18 +430,18 @@ namespace Cursus.LMS.API.Controllers
 
         [HttpGet]
         [Route("section/details/content/")]
-        [Authorize]
         public async Task<IActionResult> DisplaySectionDetailsVersionContent
         (
             [FromQuery] Guid sectionDetailsVersionId,
+            [FromQuery] string userId,
             [FromQuery] string type
         )
         {
             var contentResponseDto =
                 await _sectionDetailsVersionService.DisplaySectionDetailsVersionContent
                 (
-                    User,
                     sectionDetailsVersionId,
+                    userId,
                     type
                 );
 
