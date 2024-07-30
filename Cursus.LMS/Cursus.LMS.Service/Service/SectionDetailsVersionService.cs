@@ -10,6 +10,7 @@ using Cursus.LMS.Utility.Constants;
 using DocumentFormat.OpenXml.Spreadsheet;
 using DocumentFormat.OpenXml.Wordprocessing;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.IdentityModel.Tokens;
 
 namespace Cursus.LMS.Service.Service;
@@ -19,12 +20,15 @@ public class SectionDetailsVersionService : ISectionDetailsVersionService
     private readonly IUnitOfWork _unitOfWork;
     private readonly IMapper _mapper;
     private readonly IFirebaseService _firebaseService;
+    private readonly UserManager<ApplicationUser> _userManager;
 
-    public SectionDetailsVersionService(IUnitOfWork unitOfWork, IMapper mapper, IFirebaseService firebaseService)
+    public SectionDetailsVersionService(IUnitOfWork unitOfWork, IMapper mapper, IFirebaseService firebaseService,
+        UserManager<ApplicationUser> userManager)
     {
         _unitOfWork = unitOfWork;
         _mapper = mapper;
         _firebaseService = firebaseService;
+        _userManager = userManager;
     }
 
     public async Task<ResponseDTO> CloneSectionsDetailsVersion
