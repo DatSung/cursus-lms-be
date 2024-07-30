@@ -1,5 +1,6 @@
 using Cursus.LMS.Model.DTO;
 using Cursus.LMS.Service.IService;
+using Cursus.LMS.Utility.Constants;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -76,6 +77,7 @@ namespace Cursus.LMS.API.Controllers
 
 
         [HttpPost]
+        [Authorize(Roles = StaticUserRoles.Admin)]
         public async Task<ActionResult<ResponseDTO>> Create(CreateCategoryDTO createCategoryDto)
         {
             var responeDto = await _categoryService.CreateCategory(User, createCategoryDto);
@@ -83,6 +85,7 @@ namespace Cursus.LMS.API.Controllers
         }
 
         [HttpPut]
+        [Authorize(Roles = StaticUserRoles.Admin)]
         public async Task<ActionResult<ResponseDTO>> Update([FromBody] UpdateCategoryDTO updateCategoryDto)
         {
             var responeDto = await _categoryService.Update(User, updateCategoryDto);
@@ -91,6 +94,7 @@ namespace Cursus.LMS.API.Controllers
 
         [HttpDelete]
         [Route("{id:guid}")]
+        [Authorize(Roles = StaticUserRoles.Admin)]
         public async Task<ActionResult<ResponseDTO>> Delete([FromRoute] Guid id)
         {
             var responeDto = await _categoryService.Delete(User, id);
