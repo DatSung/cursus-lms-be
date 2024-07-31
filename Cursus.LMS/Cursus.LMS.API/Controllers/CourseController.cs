@@ -530,7 +530,7 @@ namespace Cursus.LMS.API.Controllers
         }
 
         [HttpGet]
-        [Route("courses/best-suggestions")]
+        [Route("courses/suggest/best")]
         public async Task<ActionResult<ResponseDTO>> GetBestCoursesSuggestion()
         {
             var responseDto = await _courseService.GetBestCoursesSuggestion();
@@ -538,7 +538,7 @@ namespace Cursus.LMS.API.Controllers
         }
 
         [HttpGet]
-        [Route("categories/top-trending")]
+        [Route("courses/trending/top")]
         public async Task<ActionResult<ResponseDTO>> GetTopCoursesByTrendingCategories()
         {
             var responseDto = await _courseService.GetTopCoursesByTrendingCategories();
@@ -546,7 +546,7 @@ namespace Cursus.LMS.API.Controllers
         }
 
         [HttpGet]
-        [Route("categories/top-rate")]
+        [Route("courses/rate/top")]
         public async Task<ActionResult<ResponseDTO>> GetTopRatedCourses()
         {
             var responseDto = await _courseService.GetTopRatedCourses();

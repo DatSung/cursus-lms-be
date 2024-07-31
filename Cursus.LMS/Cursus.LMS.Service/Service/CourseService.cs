@@ -1188,7 +1188,7 @@ public class CourseService : ICourseService
             // Get the top trending categories
             var trendingCategories = await GetTopTrendingCategories();
 
-            var topCoursesByCategory = new List<Course>();
+            var coursesByCategory = new Dictionary<string, List<Course>>();
 
             foreach (var category in trendingCategories)
             {
@@ -1203,22 +1203,23 @@ public class CourseService : ICourseService
                     .ToList();
 
                 // Get courses for these course versions
-                var coursesInCategory = await _unitOfWork.CourseRepository.GetAllAsync(
-                    filter: c => courseVersionIds.Contains(c.CourseVersionId.GetValueOrDefault())
+                // Get all courses
+                var allCourses = await _unitOfWork.CourseRepository.GetAllAsync(
+                    filter: c => c.TotalStudent.HasValue
                 );
 
                 // Filter courses by total students and take the top 10
-                var topCoursesInCategory = coursesInCategory
+                var topCoursesInCategory = allCourses
                     .OrderByDescending(c => c.TotalStudent.GetValueOrDefault())
                     .Take(10)
                     .ToList();
 
-                topCoursesByCategory.AddRange(topCoursesInCategory);
+                coursesByCategory[category.Name] = topCoursesInCategory;
             }
 
             return new ResponseDTO
             {
-                Result = topCoursesByCategory,
+                Result = coursesByCategory,
                 Message = "Get top courses by trending categories successfully",
                 IsSuccess = true,
                 StatusCode = 200
