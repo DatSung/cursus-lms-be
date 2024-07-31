@@ -85,4 +85,9 @@ public interface ICourseService
     Task<ResponseDTO> CreateBookMarkedCourse(ClaimsPrincipal User, CreateCourseBookmarkDTO createCourseBookmarkDto);
     Task<ResponseDTO> DeleteBookMarkedCourse(Guid id);
 
+    Task<ResponseDTO> GetBestCoursesSuggestion();
+    Task<ResponseDTO> GetTopCoursesByTrendingCategories();
+    Task<ResponseDTO> GetTopRatedCourses();
+    
+
 }

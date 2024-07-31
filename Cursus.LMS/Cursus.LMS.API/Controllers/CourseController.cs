@@ -528,5 +528,29 @@ namespace Cursus.LMS.API.Controllers
             var responseDto = await _courseProgressService.GetPercentage(getPercentageDto);
             return StatusCode(responseDto.StatusCode, responseDto);
         }
+
+        [HttpGet]
+        [Route("courses/best-suggestions")]
+        public async Task<ActionResult<ResponseDTO>> GetBestCoursesSuggestion()
+        {
+            var responseDto = await _courseService.GetBestCoursesSuggestion();
+            return StatusCode(responseDto.StatusCode, responseDto);
+        }
+
+        [HttpGet]
+        [Route("categories/top-trending")]
+        public async Task<ActionResult<ResponseDTO>> GetTopCoursesByTrendingCategories()
+        {
+            var responseDto = await _courseService.GetTopCoursesByTrendingCategories();
+            return StatusCode(responseDto.StatusCode, responseDto);
+        }
+
+        [HttpGet]
+        [Route("categories/top-rate")]
+        public async Task<ActionResult<ResponseDTO>> GetTopRatedCourses()
+        {
+            var responseDto = await _courseService.GetTopRatedCourses();
+            return StatusCode(responseDto.StatusCode, responseDto);
+        }
     }
 }
