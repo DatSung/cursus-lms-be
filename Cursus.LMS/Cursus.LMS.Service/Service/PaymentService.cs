@@ -91,11 +91,15 @@ public class PaymentService : IPaymentService
 
     public async Task<ResponseDTO> CreateStripeConnectedAccount
     (
-        CreateStripeConnectedAccountDTO createStripeConnectedAccountDto)
+        ClaimsPrincipal User,
+        CreateStripeConnectedAccountDTO createStripeConnectedAccountDto
+    )
     {
         try
         {
-            var user = await _unitOfWork.UserManagerRepository.FindByEmailAsync(createStripeConnectedAccountDto.Email);
+            var userId = User.Claims.FirstOrDefault(x => x.Type == ClaimTypes.NameIdentifier)?.Value;
+            var user = await _unitOfWork.UserManagerRepository.FindByIdAsync(userId);
+            
             var instructor = await _unitOfWork.InstructorRepository.GetAsync(x => x.UserId == user.Id);
 
             if (instructor is null)
@@ -108,6 +112,19 @@ public class PaymentService : IPaymentService
                     Result = null
                 };
             }
+
+            if (!instructor.StripeAccountId.IsNullOrEmpty())
+            {
+                return new ResponseDTO()
+                {
+                    Message = "Instructor already has a stripe account",
+                    IsSuccess = false,
+                    StatusCode = 400,
+                    Result = null
+                };
+            }
+
+            createStripeConnectedAccountDto.Email = user.Email;
 
             var responseDto = await _stripeService.CreateConnectedAccount(createStripeConnectedAccountDto);
 
@@ -195,7 +212,7 @@ public class PaymentService : IPaymentService
         try
         {
             var userId = User.Claims.FirstOrDefault(x => x.Type == ClaimTypes.NameIdentifier)?.Value;
-            
+
             if (userId is null)
             {
                 return new ResponseDTO()

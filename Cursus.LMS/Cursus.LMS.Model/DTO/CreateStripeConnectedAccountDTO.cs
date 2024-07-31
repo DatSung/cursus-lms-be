@@ -1,4 +1,5 @@
-﻿using Cursus.LMS.Utility.Constants;
+﻿using System.Text.Json.Serialization;
+using Cursus.LMS.Utility.Constants;
 
 namespace Cursus.LMS.Model.DTO;
 
@@ -6,6 +7,6 @@ public class CreateStripeConnectedAccountDTO
 {
     public string RefreshUrl { get; set; }
     public string ReturnUrl { get; set; }
-    public string Email { get; set; }
-    public string Country { get; set; }
+    [JsonIgnore] public string? Email { get; set; }
+    [JsonIgnore] public string? Country { get; set; }
 }

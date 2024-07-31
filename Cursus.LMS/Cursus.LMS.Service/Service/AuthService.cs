@@ -97,7 +97,8 @@ public class AuthService : IAuthService
                 PhoneNumber = registerStudentDTO.PhoneNumber,
                 UpdateTime = DateTime.Now,
                 AvatarUrl = "",
-                TaxNumber = ""
+                TaxNumber = "",
+                LockoutEnabled = false
             };
 
             // Create new user to database
@@ -244,7 +245,8 @@ public class AuthService : IAuthService
                 Country = signUpInstructorDto.Country,
                 PhoneNumber = signUpInstructorDto.PhoneNumber,
                 TaxNumber = signUpInstructorDto.TaxNumber,
-                UpdateTime = DateTime.Now
+                UpdateTime = DateTime.Now,
+                LockoutEnabled = false
             };
 
             // Create new user to database
@@ -575,7 +577,7 @@ public class AuthService : IAuthService
                 };
             }
 
-            if (user.LockoutEnabled)
+            if (user.LockoutEnd is not null)
             {
                 return new ResponseDTO()
                 {
@@ -1473,7 +1475,7 @@ public class AuthService : IAuthService
                     .FirstOrDefault(x => x.LoginProvider == StaticLoginProvider.Google);
             }
 
-            if (user.LockoutEnabled)
+            if (user.LockoutEnd is not null)
             {
                 return new ResponseDTO()
                 {
@@ -1723,7 +1725,6 @@ public class AuthService : IAuthService
                 };
             }
 
-            user.LockoutEnabled = true;
             user.LockoutEnd = DateTimeOffset.MaxValue;
 
             var result = await _userManager.UpdateAsync(user);
@@ -1776,7 +1777,6 @@ public class AuthService : IAuthService
                 };
             }
 
-            user.LockoutEnabled = false;
             user.LockoutEnd = null;
 
             var result = await _userManager.UpdateAsync(user);

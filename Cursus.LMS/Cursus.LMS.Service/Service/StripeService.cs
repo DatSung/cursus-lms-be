@@ -105,7 +105,6 @@ public class StripeService : IStripeService
         {
             Type = StaticEnum.StripeAccountType.express.ToString(),
             Email = createStripeConnectedAccountDto.Email,
-            Country = createStripeConnectedAccountDto.Country,
 
             Capabilities = new AccountCapabilitiesOptions
             {
