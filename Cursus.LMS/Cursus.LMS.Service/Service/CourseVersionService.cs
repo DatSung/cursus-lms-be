@@ -246,6 +246,42 @@ public class CourseVersionService : ICourseVersionService
     {
         try
         {
+            var userId = User.Claims.FirstOrDefault(x => x.Type == ClaimTypes.NameIdentifier)?.Value;
+            var instructor = await _unitOfWork.InstructorRepository.GetAsync(x => x.UserId == userId);
+
+            if (instructor is null)
+            {
+                return new ResponseDTO()
+                {
+                    Message = "Instructor was not found",
+                    IsSuccess = false,
+                    StatusCode = 404,
+                    Result = null
+                };
+            }
+
+            if (instructor.IsAccepted is false or null)
+            {
+                return new ResponseDTO()
+                {
+                    Message = "Instructor was not allow to create course",
+                    IsSuccess = false,
+                    StatusCode = 403,
+                    Result = null
+                };
+            }
+
+            if (instructor.StripeAccountId.IsNullOrEmpty())
+            {
+                return new ResponseDTO()
+                {
+                    Message = "Instructor need to create stripe account",
+                    IsSuccess = false,
+                    StatusCode = 400,
+                    Result = null
+                };
+            }
+
             var courseVersionId = Guid.NewGuid();
             var response = await _courseService.CreateFrameCourse(User, courseVersionId);
             if (response.IsSuccess == false)

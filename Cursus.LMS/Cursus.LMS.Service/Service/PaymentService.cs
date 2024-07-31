@@ -99,7 +99,7 @@ public class PaymentService : IPaymentService
         {
             var userId = User.Claims.FirstOrDefault(x => x.Type == ClaimTypes.NameIdentifier)?.Value;
             var user = await _unitOfWork.UserManagerRepository.FindByIdAsync(userId);
-            
+
             var instructor = await _unitOfWork.InstructorRepository.GetAsync(x => x.UserId == user.Id);
 
             if (instructor is null)
@@ -110,6 +110,17 @@ public class PaymentService : IPaymentService
                     IsSuccess = false,
                     StatusCode = 404,
                     Result = null
+                };
+            }
+
+            if (instructor.IsAccepted is false or null)
+            {
+                return new ResponseDTO()
+                {
+                    IsSuccess = false,
+                    StatusCode = 403,
+                    Result = null,
+                    Message = "Instructor was not allow to create stripe account"
                 };
             }
 

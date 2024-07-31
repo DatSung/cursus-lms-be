@@ -8,5 +8,4 @@ public class CreateStripeConnectedAccountDTO
     public string RefreshUrl { get; set; }
     public string ReturnUrl { get; set; }
     [JsonIgnore] public string? Email { get; set; }
-    [JsonIgnore] public string? Country { get; set; }
 }
