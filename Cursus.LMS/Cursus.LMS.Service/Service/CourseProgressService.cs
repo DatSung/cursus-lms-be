@@ -1,20 +1,23 @@
-﻿using Cursus.LMS.DataAccess.IRepository;
+﻿using System.Security.Claims;
+using Cursus.LMS.DataAccess.IRepository;
 using Cursus.LMS.Model.Domain;
 using Cursus.LMS.Model.DTO;
 using Cursus.LMS.Service.IService;
+using Cursus.LMS.Utility.Constants;
 
 namespace Cursus.LMS.Service.Service;
 
 public class CourseProgressService : ICourseProgressService
 {
     private readonly IUnitOfWork _unitOfWork;
+    private readonly IStudentCourseService _studentCourseService;
 
     public CourseProgressService
     (
-        IUnitOfWork unitOfWork
-    )
+        IUnitOfWork unitOfWork, IStudentCourseService studentCourseService)
     {
         _unitOfWork = unitOfWork;
+        _studentCourseService = studentCourseService;
     }
 
     public async Task<ResponseDTO> CreateProgress(CreateProgressDTO createProgressDto)
@@ -100,12 +103,13 @@ public class CourseProgressService : ICourseProgressService
         }
     }
 
-    public async Task<ResponseDTO> UpdateProgress(UpdateProgressDTO updateProgressDto)
+    public async Task<ResponseDTO> UpdateProgress(ClaimsPrincipal User, UpdateProgressDTO updateProgressDto)
     {
         try
         {
             var studentCourse = await _unitOfWork.StudentCourseRepository
-                .GetAsync(
+                .GetAsync
+                (
                     x => x.CourseId == updateProgressDto.CourseId
                          && x.StudentId == updateProgressDto.StudentId
                 );
@@ -145,6 +149,8 @@ public class CourseProgressService : ICourseProgressService
 
             await _unitOfWork.SaveAsync();
 
+            await CheckFinishCourse(User, studentCourse.StudentId, studentCourse.CourseId);
+            
             return new ResponseDTO()
             {
                 Message = "Update progress successfully",
@@ -263,6 +269,34 @@ public class CourseProgressService : ICourseProgressService
                 StatusCode = 500,
                 Result = null
             };
+        }
+    }
+
+    private async Task CheckFinishCourse(ClaimsPrincipal User, Guid studentId, Guid courseId)
+    {
+        try
+        {
+            var courseProgress = await _unitOfWork.CourseProgressRepository.GetAllAsync(x => x.CourseId == courseId);
+            var isCourseCompleted = courseProgress.Any(x => x.IsCompleted is false && false);
+
+            if (isCourseCompleted)
+            {
+                await _studentCourseService.UpdateStudentCourse
+                (
+                    User,
+                    new UpdateStudentCourseDTO()
+                    {
+                        CourseId = courseId,
+                        StudentId = studentId,
+                        Status = StaticStatus.StudentCourse.Ended
+                    }
+                );
+            }
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            throw;
         }
     }
 }

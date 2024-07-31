@@ -501,7 +501,7 @@ namespace Cursus.LMS.API.Controllers
             [FromBody] UpdateProgressDTO updateProgressDto
         )
         {
-            var responseDto = await _courseProgressService.UpdateProgress(updateProgressDto);
+            var responseDto = await _courseProgressService.UpdateProgress(User, updateProgressDto);
             return StatusCode(responseDto.StatusCode, responseDto);
         }
 
