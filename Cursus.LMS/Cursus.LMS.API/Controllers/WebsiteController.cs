@@ -24,88 +24,100 @@ namespace Cursus.LMS.API.Controllers
             _privacyService = privacyService;
         }
 
-        [HttpGet]
-        [Route("company")]
+        #region Company
+
+        [HttpGet("company")]
         public async Task<ActionResult<ResponseDTO>> GetCompany()
         {
-            return null;
+            var responseDto = await _companyService.GetCompany();
+            return StatusCode(responseDto.StatusCode, responseDto);
         }
 
-        [HttpPut]
-        [Route("company")]
-        public async Task<ActionResult<ResponseDTO>> UpdateCompany()
+        [HttpPut("company")]
+        public async Task<ActionResult<ResponseDTO>> UpdateCompany([FromBody] UpdateCompanyDTO companyDto)
         {
-            return null;
+            var responseDto = await _companyService.UpdateCompany(companyDto);
+            return StatusCode(responseDto.StatusCode, responseDto);
         }
 
-        [HttpGet]
-        [Route("privacy")]
+        #endregion
+
+        #region Privacy
+
+        [HttpGet("privacy")]
         public async Task<ActionResult<ResponseDTO>> GetPrivacies()
         {
-            return null;
+            var responseDto = await _privacyService.GetPrivacies();
+            return StatusCode(responseDto.StatusCode, responseDto);
         }
 
-        [HttpGet]
-        [Route("privacy/{id:guid}")]
+        [HttpGet("privacy/{id:guid}")]
         public async Task<ActionResult<ResponseDTO>> GetPrivacy(Guid id)
         {
-            return null;
+            var responseDto = await _privacyService.GetPrivacy(id);
+            return StatusCode(responseDto.StatusCode, responseDto);
         }
 
-        [HttpPost]
-        [Route("privacy")]
-        public async Task<ActionResult<ResponseDTO>> CreatePrivacy()
+        [HttpPost("privacy")]
+        public async Task<ActionResult<ResponseDTO>> CreatePrivacy([FromBody] CreatePrivacyDTO privacyDto)
         {
-            return null;
+            var responseDto = await _privacyService.CreatePrivacy(privacyDto);
+            return StatusCode(responseDto.StatusCode, responseDto);
         }
 
-        [HttpPut]
-        [Route("privacy")]
-        public async Task<ActionResult<ResponseDTO>> UpdatePrivacy()
+        [HttpPut("privacy")]
+        public async Task<ActionResult<ResponseDTO>> UpdatePrivacy([FromBody] UpdatePrivacyDTO privacyDto)
         {
-            return null;
+            var responseDto = await _privacyService.UpdatePrivacy(privacyDto);
+            return StatusCode(responseDto.StatusCode, responseDto);
         }
 
-        [HttpDelete]
-        [Route("privacy/{id:guid}")]
+        [HttpDelete("privacy/{id:guid}")]
         public async Task<ActionResult<ResponseDTO>> DeletePrivacy(Guid id)
         {
-            return null;
+            var responseDto = await _privacyService.DeletePrivacy(id);
+            return StatusCode(responseDto.StatusCode, responseDto);
         }
 
-        [HttpGet]
-        [Route("term-of-use")]
+        #endregion
+
+        #region TermOfUse
+
+        [HttpGet("term-of-use")]
         public async Task<ActionResult<ResponseDTO>> GetTermOfUses()
         {
-            return null;
+            var responseDto = await _termOfUseService.GetTermOfUses();
+            return StatusCode(responseDto.StatusCode, responseDto);
         }
 
-        [HttpGet]
-        [Route("term-of-use/{id:guid}")]
+        [HttpGet("term-of-use/{id:guid}")]
         public async Task<ActionResult<ResponseDTO>> GetTermOfUse(Guid id)
         {
-            return null;
+            var responseDto = await _termOfUseService.GetTermOfUse(id);
+            return StatusCode(responseDto.StatusCode, responseDto);
         }
 
-        [HttpPost]
-        [Route("term-of-use")]
-        public async Task<ActionResult<ResponseDTO>> CreateTermOfUse()
+        [HttpPost("term-of-use")]
+        public async Task<ActionResult<ResponseDTO>> CreateTermOfUse([FromBody] CreateTermOfUseDTO termOfUseDto)
         {
-            return null;
+            var responseDto = await _termOfUseService.CreateTermOfUse(termOfUseDto);
+            return StatusCode(responseDto.StatusCode, responseDto);
         }
 
-        [HttpPut]
-        [Route("term-of-use")]
-        public async Task<ActionResult<ResponseDTO>> UpdateTermOfUse()
+        [HttpPut("term-of-use")]
+        public async Task<ActionResult<ResponseDTO>> UpdateTermOfUse([FromBody] UpdateTermOfUseDTO termOfUseDto)
         {
-            return null;
+            var responseDto = await _termOfUseService.UpdateTermOfUse(termOfUseDto);
+            return StatusCode(responseDto.StatusCode, responseDto);
         }
 
-        [HttpDelete]
-        [Route("term-of-use/{id:guid}")]
+        [HttpDelete("term-of-use/{id:guid}")]
         public async Task<ActionResult<ResponseDTO>> DeleteTermOfUse(Guid id)
         {
-            return null;
+            var responseDto = await _termOfUseService.DeleteTermOfUse(id);
+            return StatusCode(responseDto.StatusCode, responseDto);
         }
+
+        #endregion
     }
 }
