@@ -58,7 +58,7 @@ namespace Cursus.LMS.API.Controllers
             CreateStripeConnectedAccountDTO createStripeConnectedAccountDto
         )
         {
-            var responseDto = await _paymentService.CreateStripeConnectedAccount(createStripeConnectedAccountDto);
+            var responseDto = await _paymentService.CreateStripeConnectedAccount(User, createStripeConnectedAccountDto);
             return StatusCode(responseDto.StatusCode, responseDto);
         }
 

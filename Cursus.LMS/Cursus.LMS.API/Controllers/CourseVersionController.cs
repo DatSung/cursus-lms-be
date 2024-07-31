@@ -181,7 +181,6 @@ namespace Cursus.LMS.API.Controllers
 
         #endregion
 
-
         #region Course Version Comment
 
         [HttpGet]

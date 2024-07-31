@@ -2,6 +2,7 @@ using System.Security.Claims;
 using Cursus.LMS.Model.Domain;
 using Cursus.LMS.Model.DTO;
 using Cursus.LMS.Service.IService;
+using Cursus.LMS.Utility.Constants;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -370,6 +371,7 @@ namespace Cursus.LMS.API.Controllers
 
         [HttpPost]
         [Route("lock")]
+        [Authorize(Roles = StaticUserRoles.Admin)]
         public async Task<ActionResult<ResponseDTO>> LockUser([FromBody] LockUserDTO lockUserDto)
         {
             var responseDto = await _authService.LockUser(lockUserDto);
@@ -378,6 +380,7 @@ namespace Cursus.LMS.API.Controllers
 
         [HttpPost]
         [Route("unlock")]
+        [Authorize(Roles = StaticUserRoles.Admin)]
         public async Task<ActionResult<ResponseDTO>> UnlockUser([FromBody] LockUserDTO lockUserDto)
         {
             var responseDto = await _authService.UnlockUser(lockUserDto);
