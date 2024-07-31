@@ -162,7 +162,7 @@ public class OrderService : IOrderService
         }
     }
 
-    public Task<ResponseDTO> GetOrders
+    public async Task<ResponseDTO> GetOrders
     (
         ClaimsPrincipal User,
         Guid? studentId,
@@ -174,7 +174,35 @@ public class OrderService : IOrderService
         int pageSize = 5
     )
     {
-        throw new NotImplementedException();
+        try
+        {
+            var orders = await _unitOfWork.OrderHeaderRepository.GetAllAsync();
+            var userId = User.Claims.FirstOrDefault(x => x.Type == ClaimTypes.NameIdentifier)?.Value;
+
+            if (studentId is not null)
+            {
+                orders = orders.Where(x => x.StudentId == studentId);
+            }
+
+
+            return new ResponseDTO()
+            {
+                Message = "Get orders successfully",
+                IsSuccess = true,
+                StatusCode = 200,
+                Result = orders
+            };
+        }
+        catch (Exception e)
+        {
+            return new ResponseDTO()
+            {
+                Message = e.Message,
+                IsSuccess = false,
+                StatusCode = 500,
+                Result = null
+            };
+        }
     }
 
     public async Task<ResponseDTO> GetOrder
@@ -280,17 +308,15 @@ public class OrderService : IOrderService
                     OrdersDetails = orderDetails
                 }
             );
-            var result = (CreateStripeSessionDTO)responseDto.Result!;
+            var result = (ResponseStripeSessionDTO)responseDto.Result!;
 
-            payWithStripeDto.StripeSessionUrl = result.StripeSessionUrl;
-            orderHeader.StripeSessionId = result.StripeSessionId;
             _unitOfWork.OrderHeaderRepository.Update(orderHeader);
             await _unitOfWork.SaveAsync();
 
             return new ResponseDTO()
             {
                 Message = "Create payment with stripe successfully",
-                Result = payWithStripeDto,
+                Result = result,
                 StatusCode = 200,
                 IsSuccess = true
             };

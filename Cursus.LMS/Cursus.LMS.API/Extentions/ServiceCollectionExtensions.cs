@@ -69,9 +69,15 @@ public static class ServiceCollectionExtensions
         // Registering IBalanceService its implementation BalanceService
         services.AddScoped<IBalanceService, BalanceService>();
         // Registering IPaymentService its implementation PaymentService
-        services.AddScoped<IPaymentService, PaymentService>(); 
+        services.AddScoped<IPaymentService, PaymentService>();
         // Registering ICourseProgressService its implementation CourseProgressService
-        services.AddScoped<ICourseProgressService, CourseProgressService>(); 
+        services.AddScoped<ICourseProgressService, CourseProgressService>();
+        // Registering ICompanyService its implementation CompanyService
+        services.AddScoped<ICompanyService, CompanyService>();
+        // Registering ITermOfUseService its implementation TermOfUseService
+        services.AddScoped<ITermOfUseService, TermOfUseService>();
+        // Registering IPrivacyService its implementation PrivacyService
+        services.AddScoped<IPrivacyService, PrivacyService>();
 
         // Register the Identity services with default configuration
         services.AddIdentity<ApplicationUser, IdentityRole>()

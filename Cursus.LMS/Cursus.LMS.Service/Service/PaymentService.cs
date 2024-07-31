@@ -91,11 +91,15 @@ public class PaymentService : IPaymentService
 
     public async Task<ResponseDTO> CreateStripeConnectedAccount
     (
-        CreateStripeConnectedAccountDTO createStripeConnectedAccountDto)
+        ClaimsPrincipal User,
+        CreateStripeConnectedAccountDTO createStripeConnectedAccountDto
+    )
     {
         try
         {
-            var user = await _unitOfWork.UserManagerRepository.FindByEmailAsync(createStripeConnectedAccountDto.Email);
+            var userId = User.Claims.FirstOrDefault(x => x.Type == ClaimTypes.NameIdentifier)?.Value;
+            var user = await _unitOfWork.UserManagerRepository.FindByIdAsync(userId);
+
             var instructor = await _unitOfWork.InstructorRepository.GetAsync(x => x.UserId == user.Id);
 
             if (instructor is null)
@@ -109,6 +113,30 @@ public class PaymentService : IPaymentService
                 };
             }
 
+            if (instructor.IsAccepted is false or null)
+            {
+                return new ResponseDTO()
+                {
+                    IsSuccess = false,
+                    StatusCode = 403,
+                    Result = null,
+                    Message = "Instructor was not allow to create stripe account"
+                };
+            }
+
+            if (!instructor.StripeAccountId.IsNullOrEmpty())
+            {
+                return new ResponseDTO()
+                {
+                    Message = "Instructor already has a stripe account",
+                    IsSuccess = false,
+                    StatusCode = 400,
+                    Result = null
+                };
+            }
+
+            createStripeConnectedAccountDto.Email = user.Email;
+
             var responseDto = await _stripeService.CreateConnectedAccount(createStripeConnectedAccountDto);
 
             if (responseDto.StatusCode == 500)
@@ -116,7 +144,7 @@ public class PaymentService : IPaymentService
                 return responseDto;
             }
 
-            var result = (CreateStripeConnectedAccountDTO)responseDto.Result!;
+            var result = (ResponseStripeConnectedAccountDTO)responseDto.Result!;
             instructor.StripeAccountId = result.AccountId;
             await _unitOfWork.SaveAsync();
 
@@ -133,17 +161,6 @@ public class PaymentService : IPaymentService
     {
         try
         {
-            if (createStripeTransferDto.UserId is null && createStripeTransferDto.ConnectedAccountId is null)
-            {
-                return new ResponseDTO()
-                {
-                    Message = "User was not found",
-                    IsSuccess = false,
-                    StatusCode = 404,
-                    Result = createStripeTransferDto
-                };
-            }
-
             var instructor =
                 await _unitOfWork.InstructorRepository.GetAsync(x => x.UserId == createStripeTransferDto.UserId);
 
@@ -207,34 +224,32 @@ public class PaymentService : IPaymentService
         {
             var userId = User.Claims.FirstOrDefault(x => x.Type == ClaimTypes.NameIdentifier)?.Value;
 
-            if (createStripePayoutDto.ConnectedAccountId.IsNullOrEmpty())
+            if (userId is null)
             {
-                if (userId is null)
+                return new ResponseDTO()
                 {
-                    return new ResponseDTO()
-                    {
-                        Message = "User was not found",
-                        IsSuccess = false,
-                        StatusCode = 404,
-                        Result = createStripePayoutDto
-                    };
-                }
-
-                var instructor = await _unitOfWork.InstructorRepository.GetAsync(x => x.UserId == userId);
-
-                if (instructor is null)
-                {
-                    return new ResponseDTO()
-                    {
-                        Message = "Instructor was not found",
-                        IsSuccess = false,
-                        StatusCode = 404,
-                        Result = createStripePayoutDto
-                    };
-                }
-
-                createStripePayoutDto.ConnectedAccountId = instructor?.StripeAccountId;
+                    Message = "User was not found",
+                    IsSuccess = false,
+                    StatusCode = 404,
+                    Result = createStripePayoutDto
+                };
             }
+
+            var instructor = await _unitOfWork.InstructorRepository.GetAsync(x => x.UserId == userId);
+
+            if (instructor is null)
+            {
+                return new ResponseDTO()
+                {
+                    Message = "Instructor was not found",
+                    IsSuccess = false,
+                    StatusCode = 404,
+                    Result = createStripePayoutDto
+                };
+            }
+
+            createStripePayoutDto.ConnectedAccountId = instructor?.StripeAccountId;
+
 
             var responseDto = await _stripeService.CreatePayout(createStripePayoutDto);
 
@@ -273,6 +288,7 @@ public class PaymentService : IPaymentService
             throw;
         }
     }
+
     public async Task<ResponseDTO> GetTopInstructorsByPayout
     (
         int topN = 5,
@@ -334,7 +350,7 @@ public class PaymentService : IPaymentService
                     TotalPayout = group.Sum(x => x.Amount)
                 })
                 .OrderByDescending(x => x.TotalPayout)
-                .Take(topN) 
+                .Take(topN)
                 .ToList();
 
             return new ResponseDTO()
@@ -358,11 +374,11 @@ public class PaymentService : IPaymentService
     }
 
     public async Task<ResponseDTO> GetLeastInstructorsByPayout(
-    int topN = 5, 
-    int? filterYear = null,
-    int? filterMonth = null,
-    int? filterQuarter = null
-)
+        int topN = 5,
+        int? filterYear = null,
+        int? filterMonth = null,
+        int? filterQuarter = null
+    )
     {
         try
         {
@@ -416,8 +432,8 @@ public class PaymentService : IPaymentService
                     FullName = group.First().ApplicationUser.FullName,
                     TotalPayout = group.Sum(x => x.Amount)
                 })
-                .OrderBy(x => x.TotalPayout) 
-                .Take(topN) 
+                .OrderBy(x => x.TotalPayout)
+                .Take(topN)
                 .ToList();
 
             return new ResponseDTO()
@@ -439,8 +455,4 @@ public class PaymentService : IPaymentService
             };
         }
     }
-
-
-
-
 }

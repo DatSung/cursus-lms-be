@@ -16,7 +16,6 @@ namespace Cursus.LMS.API.Controllers
         private readonly ICourseService _courseService;
         private readonly ICourseReviewService _courseReviewService;
         private readonly ICourseReportService _courseReportService;
-
         private readonly ICourseProgressService _courseProgressService;
 
         public CourseController
@@ -175,7 +174,7 @@ namespace Cursus.LMS.API.Controllers
 
         [HttpPut]
         [Route("review")]
-        [Authorize]
+        [Authorize(Roles = StaticUserRoles.Student)]
         public async Task<ActionResult<ResponseDTO>> UpdateCourseReview(
             [FromBody] UpdateCourseReviewDTO updateCourseReviewDto)
         {
@@ -338,7 +337,7 @@ namespace Cursus.LMS.API.Controllers
 
         [HttpPut]
         [Route("report")]
-        [Authorize]
+        [Authorize(Roles = StaticUserRoles.Student)]
         public async Task<ActionResult<ResponseDTO>> UpdateCourseReport(
             [FromBody] UpdateCourseReportDTO updateCourseReportDTO)
         {
@@ -372,7 +371,7 @@ namespace Cursus.LMS.API.Controllers
 
         [HttpDelete]
         [Route("report/{reportId:guid}")]
-        [Authorize]
+        [Authorize(Roles = StaticUserRoles.AdminStudent)]
         public async Task<ActionResult<ResponseDTO>> DeleteCourseReport([FromRoute] Guid reportId)
         {
             try
@@ -448,7 +447,7 @@ namespace Cursus.LMS.API.Controllers
 
         [HttpPost]
         [Route("enroll")]
-        [Authorize(Roles = StaticUserRoles.Admin)]
+        [Authorize(Roles = StaticUserRoles.Student)]
         public async Task<ActionResult<ResponseDTO>> EnrollCourse([FromBody] EnrollCourseDTO enrollCourseDto)
         {
             var responseDto = await _courseService.EnrollCourse(User, enrollCourseDto);
@@ -457,6 +456,7 @@ namespace Cursus.LMS.API.Controllers
 
         [HttpGet]
         [Route("suggest/{studentId:guid}")]
+        [Authorize(Roles = StaticUserRoles.Student)]
         public async Task<ActionResult> SuggestCourses([FromRoute] Guid studentId)
         {
             var response = await _courseService.SuggestCourse(studentId);
@@ -464,6 +464,7 @@ namespace Cursus.LMS.API.Controllers
         }
 
         [HttpGet("bookmarked/{studentId:guid}")]
+        [Authorize(Roles = StaticUserRoles.Student)]
         public async Task<IActionResult> GetAllBookMarkedCoursesById
         (
             [FromRoute] Guid studentId,
@@ -476,6 +477,7 @@ namespace Cursus.LMS.API.Controllers
 
         [HttpPost]
         [Route("bookmarked")]
+        [Authorize(Roles = StaticUserRoles.Student)]
         public async Task<ActionResult> CreateBookMarkedCourse(CreateCourseBookmarkDTO createCourseBookmarkDto)
         {
             var response = await _courseService.CreateBookMarkedCourse(User, createCourseBookmarkDto);
@@ -484,25 +486,16 @@ namespace Cursus.LMS.API.Controllers
 
         [HttpDelete]
         [Route("bookmarked/{bookmarkedId:guid}")]
+        [Authorize(Roles = StaticUserRoles.Student)]
         public async Task<ActionResult> DeleteBookMarkedCourse([FromRoute] Guid bookmarkedId)
         {
             var response = await _courseService.DeleteBookMarkedCourse(bookmarkedId);
             return StatusCode(response.StatusCode, response);
         }
 
-        [HttpPost]
-        [Route("progress")]
-        public async Task<ActionResult<ResponseDTO>> CreateCourseProgress
-        (
-            [FromBody] CreateProgressDTO createProgressDto
-        )
-        {
-            var responseDto = await _courseProgressService.CreateProgress(createProgressDto);
-            return StatusCode(responseDto.StatusCode, responseDto);
-        }
-
         [HttpPut]
         [Route("progress")]
+        [Authorize(Roles = StaticUserRoles.Student)]
         public async Task<ActionResult<ResponseDTO>> UpdateCourseProgress
         (
             [FromBody] UpdateProgressDTO updateProgressDto
@@ -514,6 +507,7 @@ namespace Cursus.LMS.API.Controllers
 
         [HttpGet]
         [Route("progress")]
+        [Authorize(Roles = StaticUserRoles.Student)]
         public async Task<ActionResult<ResponseDTO>> GetCourseProgress
         (
             [FromQuery] GetProgressDTO getProgressDto
@@ -525,12 +519,37 @@ namespace Cursus.LMS.API.Controllers
 
         [HttpGet]
         [Route("progress/percentage")]
+        [Authorize(Roles = StaticUserRoles.Student)]
         public async Task<ActionResult<ResponseDTO>> GetProgressPercentage
         (
             [FromQuery] GetPercentageDTO getPercentageDto
         )
         {
             var responseDto = await _courseProgressService.GetPercentage(getPercentageDto);
+            return StatusCode(responseDto.StatusCode, responseDto);
+        }
+
+        [HttpGet]
+        [Route("courses/suggest/best")]
+        public async Task<ActionResult<ResponseDTO>> GetBestCoursesSuggestion()
+        {
+            var responseDto = await _courseService.GetBestCoursesSuggestion();
+            return StatusCode(responseDto.StatusCode, responseDto);
+        }
+
+        [HttpGet]
+        [Route("courses/trending/top")]
+        public async Task<ActionResult<ResponseDTO>> GetTopCoursesByTrendingCategories()
+        {
+            var responseDto = await _courseService.GetTopCoursesByTrendingCategories();
+            return StatusCode(responseDto.StatusCode, responseDto);
+        }
+
+        [HttpGet]
+        [Route("courses/rate/top")]
+        public async Task<ActionResult<ResponseDTO>> GetTopRatedCourses()
+        {
+            var responseDto = await _courseService.GetTopRatedCourses();
             return StatusCode(responseDto.StatusCode, responseDto);
         }
     }

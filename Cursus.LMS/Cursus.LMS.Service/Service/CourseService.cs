@@ -1,4 +1,5 @@
-﻿using System.Security.Claims;
+﻿using System.Linq;
+using System.Security.Claims;
 using AutoMapper;
 using Cursus.LMS.DataAccess.IRepository;
 using Cursus.LMS.Model.Domain;
@@ -15,17 +16,18 @@ public class CourseService : ICourseService
     private readonly IUnitOfWork _unitOfWork;
     private readonly IMapper _mapper;
     private readonly IStudentCourseService _studentCourseService;
+    private readonly ICourseProgressService _courseProgressService;
 
     public CourseService
     (
         IUnitOfWork unitOfWork,
         IMapper mapper,
-        IStudentCourseService studentCourseService
-    )
+        IStudentCourseService studentCourseService, ICourseProgressService courseProgressService)
     {
         _unitOfWork = unitOfWork;
         _mapper = mapper;
         _studentCourseService = studentCourseService;
+        _courseProgressService = courseProgressService;
     }
 
     public async Task<ResponseDTO> CreateFrameCourse(ClaimsPrincipal User, Guid courseVersionId)
@@ -122,40 +124,29 @@ public class CourseService : ICourseService
     {
         try
         {
-            if (string.IsNullOrEmpty(instructorId.ToString()))
-            {
-                var userId = User.Claims.FirstOrDefault(x => x.Type == ClaimTypes.NameIdentifier)?.Value;
-                var instructor = await _unitOfWork.InstructorRepository.GetAsync
-                (
-                    filter: x => x.UserId == userId
-                );
-
-                if (instructor is null)
-                {
-                    return new ResponseDTO()
-                    {
-                        Message = "Courses was not found",
-                        IsSuccess = false,
-                        StatusCode = 404,
-                        Result = null
-                    };
-                }
-
-                instructorId = instructor.InstructorId;
-            }
-
             var courses = new List<Course>();
+            var userRole = User.Claims.FirstOrDefault(x => x.Type == ClaimTypes.Role)?.Value;
             if (string.IsNullOrEmpty(instructorId.ToString()))
             {
-                courses = _unitOfWork.CourseRepository
-                    .GetAllAsync
-                    (
-                        filter: x => x.Status == 1,
-                        includeProperties: "Course,Category,Level"
-                    )
-                    .GetAwaiter()
-                    .GetResult()
-                    .ToList();
+                if (!userRole.Contains(StaticUserRoles.AdminInstructor))
+                {
+                    courses = _unitOfWork.CourseRepository
+                        .GetAllAsync
+                        (
+                            filter: x => x.Status == 1
+                        )
+                        .GetAwaiter()
+                        .GetResult()
+                        .ToList();
+                }
+                else
+                {
+                    courses = _unitOfWork.CourseRepository
+                        .GetAllAsync()
+                        .GetAwaiter()
+                        .GetResult()
+                        .ToList();
+                }
             }
             else
             {
@@ -191,41 +182,44 @@ public class CourseService : ICourseService
                 switch (filterOn.Trim().ToLower())
                 {
                     case "title":
-                        {
-                            courseVersions = courseVersions.Where(x =>
-                                x.Title.Contains(filterQuery, StringComparison.CurrentCultureIgnoreCase)).ToList();
-                            break;
-                        }
+                    {
+                        courseVersions = courseVersions.Where(x =>
+                            x.Title.Contains(filterQuery, StringComparison.CurrentCultureIgnoreCase)).ToList();
+                        break;
+                    }
                     case "code":
-                        {
-                            courseVersions = courseVersions.Where(x =>
-                                x.Code.Contains(filterQuery, StringComparison.CurrentCultureIgnoreCase)).ToList();
-                            break;
-                        }
+                    {
+                        courseVersions = courseVersions.Where(x =>
+                            x.Code.Contains(filterQuery, StringComparison.CurrentCultureIgnoreCase)).ToList();
+                        break;
+                    }
                     case "description":
-                        {
-                            courseVersions = courseVersions.Where(x =>
-                                x.Description.Contains(filterQuery, StringComparison.CurrentCultureIgnoreCase)).ToList();
-                            break;
-                        }
+                    {
+                        courseVersions = courseVersions.Where(x =>
+                            x.Description.Contains(filterQuery, StringComparison.CurrentCultureIgnoreCase)).ToList();
+                        break;
+                    }
                     case "category":
-                        {
-                            courseVersions = courseVersions.Where(x =>
-                                x.Category != null && x.Category.Name.Contains(filterQuery, StringComparison.CurrentCultureIgnoreCase)).ToList(); 
-                            break;
-                        }
+                    {
+                        courseVersions = courseVersions.Where(x =>
+                            x.Category != null &&
+                            x.Category.Name.Contains(filterQuery, StringComparison.CurrentCultureIgnoreCase)).ToList();
+                        break;
+                    }
                     case "instructor":
-                        {
-                            courseVersions = courseVersions.Where(x =>
-                                x.Course.Instructor != null && x.Course.Instructor.ApplicationUser.FullName.Contains(filterQuery, StringComparison.CurrentCultureIgnoreCase)).ToList();
-                            break;
-                        }
+                    {
+                        courseVersions = courseVersions.Where(x =>
+                            x.Course.Instructor != null &&
+                            x.Course.Instructor.ApplicationUser.FullName.Contains(filterQuery,
+                                StringComparison.CurrentCultureIgnoreCase)).ToList();
+                        break;
+                    }
                     case "status":
-                        {
-                            courseVersions = courseVersions.Where(x =>
-                                x.CurrentStatus == int.Parse(filterQuery.Trim())).ToList();
-                            break;
-                        }
+                    {
+                        courseVersions = courseVersions.Where(x =>
+                            x.CurrentStatus == int.Parse(filterQuery.Trim())).ToList();
+                        break;
+                    }
                 }
             }
 
@@ -246,37 +240,37 @@ public class CourseService : ICourseService
                 switch (sortBy.Trim().ToLower())
                 {
                     case "title":
-                        {
-                            courseVersions = isAscending == true
-                                ? [.. courseVersions.OrderBy(x => x.Title)]
-                                : [.. courseVersions.OrderByDescending(x => x.Title)];
-                            break;
-                        }
+                    {
+                        courseVersions = isAscending == true
+                            ? [.. courseVersions.OrderBy(x => x.Title)]
+                            : [.. courseVersions.OrderByDescending(x => x.Title)];
+                        break;
+                    }
                     case "code":
-                        {
-                            courseVersions = isAscending == true
-                                ? [.. courseVersions.OrderBy(x => x.Code)]
-                                : [.. courseVersions.OrderByDescending(x => x.Code)];
-                            break;
-                        }
+                    {
+                        courseVersions = isAscending == true
+                            ? [.. courseVersions.OrderBy(x => x.Code)]
+                            : [.. courseVersions.OrderByDescending(x => x.Code)];
+                        break;
+                    }
                     case "description":
-                        {
-                            courseVersions = isAscending == true
-                                ? [.. courseVersions.OrderBy(x => x.Description)]
-                                : [.. courseVersions.OrderByDescending(x => x.Description)];
-                            break;
-                        }
+                    {
+                        courseVersions = isAscending == true
+                            ? [.. courseVersions.OrderBy(x => x.Description)]
+                            : [.. courseVersions.OrderByDescending(x => x.Description)];
+                        break;
+                    }
                     case "price":
-                        {
-                            courseVersions = isAscending == true
-                                ? [.. courseVersions.OrderBy(x => x.Price)]
-                                : [.. courseVersions.OrderByDescending(x => x.Price)];
-                            break;
-                        }
+                    {
+                        courseVersions = isAscending == true
+                            ? [.. courseVersions.OrderBy(x => x.Price)]
+                            : [.. courseVersions.OrderByDescending(x => x.Price)];
+                        break;
+                    }
                     default:
-                        {
-                            break;
-                        }
+                    {
+                        break;
+                    }
                 }
             }
 
@@ -313,37 +307,36 @@ public class CourseService : ICourseService
     }
 
     public async Task<ResponseDTO> GetTopPurchasedCourses(
-        int? year = null,
-        int? month = null,
-        int? quarter = null,
-        int top = 5,
-        int pageNumber = 1,
-        int pageSize = 5,
-        string? byCategoryName = null
-    )
+     int? year = null,
+     int? month = null,
+     int? quarter = null,
+     int top = 5,
+     int pageNumber = 1,
+     int pageSize = 5,
+     string? byCategoryName = null
+ )
     {
         try
         {
-            // Lấy danh sách StudentCourse ban đầu
-            var studentCoursesQuery = _unitOfWork.StudentCourseRepository.GetAllAsync(
-                sc => sc.CreatedTime.HasValue,
-                includeProperties: "Course"
+            // Lấy danh sách khóa học ban đầu
+            var coursesQuery = _unitOfWork.CourseRepository.GetAllAsync(
+                c => c.Status == 1 // Lọc các khóa học có trạng thái hoạt động
             );
 
-            var studentCourses = (await studentCoursesQuery).ToList();
+            var courses = (await coursesQuery).ToList();
 
             // Áp dụng bộ lọc theo thời gian
             if (year.HasValue)
             {
-                studentCourses = studentCourses
-                    .Where(sc => sc.CreatedTime.Value.Year == year.Value)
+                courses = courses
+                    .Where(c => c.CreatedTime.HasValue && c.CreatedTime.Value.Year == year.Value)
                     .ToList();
             }
 
             if (month.HasValue)
             {
-                studentCourses = studentCourses
-                    .Where(sc => sc.CreatedTime.Value.Month == month.Value)
+                courses = courses
+                    .Where(c => c.CreatedTime.HasValue && c.CreatedTime.Value.Month == month.Value)
                     .ToList();
             }
 
@@ -351,14 +344,16 @@ public class CourseService : ICourseService
             {
                 int startMonth = (quarter.Value - 1) * 3 + 1;
                 int endMonth = startMonth + 2;
-                studentCourses = studentCourses
-                    .Where(sc => sc.CreatedTime.Value.Month >= startMonth && sc.CreatedTime.Value.Month <= endMonth)
+                courses = courses
+                    .Where(c => c.CreatedTime.HasValue &&
+                                c.CreatedTime.Value.Month >= startMonth &&
+                                c.CreatedTime.Value.Month <= endMonth)
                     .ToList();
             }
 
-            // Lấy danh sách CourseVersionId từ studentCourses
-            var courseVersionIds = studentCourses
-                .Select(sc => sc.Course.CourseVersionId)
+            // Lấy danh sách CourseVersionId từ courses
+            var courseVersionIds = courses
+                .Select(c => c.CourseVersionId)
                 .Distinct()
                 .ToList();
 
@@ -377,24 +372,35 @@ public class CourseService : ICourseService
                     .ToList();
             }
 
-            // Lọc lại danh sách studentCourses dựa trên CourseVersion
-            studentCourses = studentCourses
-                .Where(sc => courseVersions.Any(cv => cv.Id == sc.Course.CourseVersionId))
+            // Lọc lại danh sách courses dựa trên CourseVersion
+            courses = courses
+                .Where(c => courseVersions.Any(cv => cv.Id == c.CourseVersionId))
                 .ToList();
 
-            // Sắp xếp danh sách theo thứ tự giảm dần
-            studentCourses = studentCourses.OrderByDescending(sc => sc.CreatedTime).ToList();
+            // Sắp xếp danh sách theo số lượng sinh viên giảm dần
+            courses = courses.OrderByDescending(c => c.TotalStudent).ToList();
 
             // Áp dụng phân trang và giới hạn top
             int skip = (pageNumber - 1) * pageSize;
-            studentCourses = studentCourses
+            courses = courses
                 .Skip(skip)
                 .Take(pageSize > top ? top : pageSize)
                 .ToList();
 
+            // Chuyển đổi sang DTO
+            var courseDtos = courses.Select(c => new GetTopPurchasedCoursesDTO
+            {
+                Id = c.Id,
+                Title = courseVersions.FirstOrDefault(cv => cv.Id == c.CourseVersionId)?.Title,
+                Code = c.Code,
+                Description = courseVersions.FirstOrDefault(cv => cv.Id == c.CourseVersionId)?.Description,
+                TotalStudent = c.TotalStudent ?? 0,
+                CategoryName = courseVersions.FirstOrDefault(cv => cv.Id == c.CourseVersionId)?.Category?.Name
+            }).ToList();
+
             return new ResponseDTO
             {
-                Result = studentCourses,
+                Result = courseDtos,
                 Message = "Get top purchased courses successfully",
                 IsSuccess = true,
                 StatusCode = 200
@@ -413,38 +419,38 @@ public class CourseService : ICourseService
     }
 
 
+
     public async Task<ResponseDTO> GetLeastPurchasedCourses(
-        int? year = null,
-        int? month = null,
-        int? quarter = null,
-        int top = 5,
-        int pageNumber = 1,
-        int pageSize = 5,
-        string? byCategoryName = null
-    )
+    int? year = null,
+    int? month = null,
+    int? quarter = null,
+    int top = 5,
+    int pageNumber = 1,
+    int pageSize = 5,
+    string? byCategoryName = null
+)
     {
         try
         {
-            // Lấy danh sách StudentCourse ban đầu
-            var studentCoursesQuery = _unitOfWork.StudentCourseRepository.GetAllAsync(
-                sc => sc.CreatedTime.HasValue,
-                includeProperties: "Course"
+            // Lấy danh sách khóa học ban đầu
+            var coursesQuery = _unitOfWork.CourseRepository.GetAllAsync(
+                c => c.Status == 1 // Lọc các khóa học có trạng thái hoạt động
             );
 
-            var studentCourses = (await studentCoursesQuery).ToList();
+            var courses = (await coursesQuery).ToList();
 
             // Áp dụng bộ lọc theo thời gian
             if (year.HasValue)
             {
-                studentCourses = studentCourses
-                    .Where(sc => sc.CreatedTime.Value.Year == year.Value)
+                courses = courses
+                    .Where(c => c.CreatedTime.HasValue && c.CreatedTime.Value.Year == year.Value)
                     .ToList();
             }
 
             if (month.HasValue)
             {
-                studentCourses = studentCourses
-                    .Where(sc => sc.CreatedTime.Value.Month == month.Value)
+                courses = courses
+                    .Where(c => c.CreatedTime.HasValue && c.CreatedTime.Value.Month == month.Value)
                     .ToList();
             }
 
@@ -452,14 +458,16 @@ public class CourseService : ICourseService
             {
                 int startMonth = (quarter.Value - 1) * 3 + 1;
                 int endMonth = startMonth + 2;
-                studentCourses = studentCourses
-                    .Where(sc => sc.CreatedTime.Value.Month >= startMonth && sc.CreatedTime.Value.Month <= endMonth)
+                courses = courses
+                    .Where(c => c.CreatedTime.HasValue &&
+                                c.CreatedTime.Value.Month >= startMonth &&
+                                c.CreatedTime.Value.Month <= endMonth)
                     .ToList();
             }
 
-            // Lấy danh sách CourseVersionId từ studentCourses
-            var courseVersionIds = studentCourses
-                .Select(sc => sc.Course.CourseVersionId)
+            // Lấy danh sách CourseVersionId từ courses
+            var courseVersionIds = courses
+                .Select(c => c.CourseVersionId)
                 .Distinct()
                 .ToList();
 
@@ -478,38 +486,35 @@ public class CourseService : ICourseService
                     .ToList();
             }
 
-            // Lọc lại danh sách studentCourses dựa trên CourseVersion
-            studentCourses = studentCourses
-                .Where(sc => courseVersions.Any(cv => cv.Id == sc.Course.CourseVersionId))
+            // Lọc lại danh sách courses dựa trên CourseVersion
+            courses = courses
+                .Where(c => courseVersions.Any(cv => cv.Id == c.CourseVersionId))
                 .ToList();
 
-            // Đếm số lần mua của mỗi khóa học
-            var coursePurchaseCounts = studentCourses
-                .GroupBy(sc => sc.Course.CourseVersionId)
-                .Select(g => new
-                {
-                    CourseVersionId = g.Key,
-                    PurchaseCount = g.Count()
-                })
-                .OrderBy(g => g.PurchaseCount) // Sắp xếp theo số lượng mua ít nhất
-                .Take(top)
-                .ToList();
+            // Sắp xếp danh sách theo số lượng sinh viên tăng dần
+            courses = courses.OrderBy(c => c.TotalStudent).ToList();
 
-            // Lấy lại danh sách studentCourses dựa trên khóa học ít được mua nhất
-            var leastPurchasedCourses = studentCourses
-                .Where(sc => coursePurchaseCounts.Any(cpc => cpc.CourseVersionId == sc.Course.CourseVersionId))
-                .ToList();
-
-            // Áp dụng phân trang
+            // Áp dụng phân trang và giới hạn top
             int skip = (pageNumber - 1) * pageSize;
-            leastPurchasedCourses = leastPurchasedCourses
+            courses = courses
                 .Skip(skip)
-                .Take(pageSize)
+                .Take(pageSize > top ? top : pageSize)
                 .ToList();
+
+            // Chuyển đổi sang DTO
+            var courseDtos = courses.Select(c => new GetTopPurchasedCoursesDTO
+            {
+                Id = c.Id,
+                Title = courseVersions.FirstOrDefault(cv => cv.Id == c.CourseVersionId)?.Title,
+                Code = c.Code,
+                Description = courseVersions.FirstOrDefault(cv => cv.Id == c.CourseVersionId)?.Description,
+                TotalStudent = c.TotalStudent ?? 0,
+                CategoryName = courseVersions.FirstOrDefault(cv => cv.Id == c.CourseVersionId)?.Category?.Name
+            }).ToList();
 
             return new ResponseDTO
             {
-                Result = leastPurchasedCourses,
+                Result = courseDtos,
                 Message = "Get least purchased courses successfully",
                 IsSuccess = true,
                 StatusCode = 200
@@ -526,6 +531,7 @@ public class CourseService : ICourseService
             };
         }
     }
+
 
 
     public async Task<ResponseDTO> GetCourse(ClaimsPrincipal User, Guid courseId)
@@ -713,6 +719,18 @@ public class CourseService : ICourseService
                 x => x.StudentId == enrollCourseDto.studentId && x.CourseId == enrollCourseDto.courseId
             );
 
+            var course = await _unitOfWork.CourseRepository.GetAsync(x => x.Id == enrollCourseDto.courseId);
+            if (course is null)
+            {
+                return new ResponseDTO()
+                {
+                    Message = "Course was not found",
+                    IsSuccess = false,
+                    StatusCode = 404,
+                    Result = null
+                };
+            }
+
             if (studentCourse is null)
             {
                 return new ResponseDTO()
@@ -743,6 +761,14 @@ public class CourseService : ICourseService
                     Status = StaticStatus.StudentCourse.Enrolled,
                     CourseId = enrollCourseDto.courseId,
                     StudentId = enrollCourseDto.studentId
+                }
+            );
+
+            await _courseProgressService.CreateProgress
+            (
+                new CreateProgressDTO()
+                {
+                    StudentCourseId = studentCourse.Id
                 }
             );
 
@@ -936,7 +962,8 @@ public class CourseService : ICourseService
             }
 
             // Lấy danh sách CourseBookmark của Student
-            var courseBookmarksQuery = _unitOfWork.CourseBookmarkRepository.GetAllAsync( cb => cb.StudentId == studentId);
+            var courseBookmarksQuery =
+                _unitOfWork.CourseBookmarkRepository.GetAllAsync(cb => cb.StudentId == studentId);
 
             var courseBookmarks = (await courseBookmarksQuery).ToList();
 
@@ -974,12 +1001,14 @@ public class CourseService : ICourseService
         }
     }
 
-    public async Task<ResponseDTO> CreateBookMarkedCourse(ClaimsPrincipal User, CreateCourseBookmarkDTO createCourseBookmarkDTO)
+    public async Task<ResponseDTO> CreateBookMarkedCourse(ClaimsPrincipal User,
+        CreateCourseBookmarkDTO createCourseBookmarkDTO)
     {
         try
         {
             //Check if studentId is valid
-            var id = await _unitOfWork.StudentRepository.GetAsync(i => i.StudentId == createCourseBookmarkDTO.StudentId);
+            var id = await _unitOfWork.StudentRepository.GetAsync(i =>
+                i.StudentId == createCourseBookmarkDTO.StudentId);
             if (id == null)
             {
                 return new ResponseDTO()
@@ -990,8 +1019,10 @@ public class CourseService : ICourseService
                     Result = null
                 };
             }
+
             //Check CourseId is already bookmarked
-            var course = await _unitOfWork.CourseBookmarkRepository.GetAsync( c => c.CourseId == createCourseBookmarkDTO.CourseId && c.StudentId == createCourseBookmarkDTO.StudentId);
+            var course = await _unitOfWork.CourseBookmarkRepository.GetAsync(c =>
+                c.CourseId == createCourseBookmarkDTO.CourseId && c.StudentId == createCourseBookmarkDTO.StudentId);
             if (course != null)
             {
                 return new ResponseDTO()
@@ -1002,6 +1033,7 @@ public class CourseService : ICourseService
                     Result = null
                 };
             }
+
             //Create new bookmarked course
             var courseBookmark = new CourseBookmark()
             {
@@ -1070,4 +1102,176 @@ public class CourseService : ICourseService
             };
         }
     }
+
+
+
+    public async Task<ResponseDTO> GetBestCoursesSuggestion()
+    {
+        try
+        {
+            // Get all courses and sort by TotalStudent in descending order
+            var courses = await _unitOfWork.CourseRepository.GetAllAsync();
+
+            var bestCourses = courses
+                .OrderByDescending(c => c.TotalStudent)
+                .Take(10)
+                .ToList();
+
+            return new ResponseDTO
+            {
+                Result = bestCourses,
+                Message = "Get best courses suggestion successfully",
+                IsSuccess = true,
+                StatusCode = 200
+            };
+        }
+        catch (Exception ex)
+        {
+            return new ResponseDTO
+            {
+                Message = ex.Message,
+                IsSuccess = false,
+                StatusCode = 500,
+                Result = null
+            };
+        }
+    }
+
+    public async Task<List<Category>> GetTopTrendingCategories()
+    {
+        try
+        {
+            // Get all courses
+            var courses = await _unitOfWork.CourseRepository.GetAllAsync(
+                filter: x => x.TotalStudent.HasValue
+            );
+
+            // Get all course versions including their categories
+            var courseVersionIds = courses.Select(c => c.CourseVersionId).Distinct();
+            var courseVersions = await _unitOfWork.CourseVersionRepository.GetAllAsync(
+                filter: cv => courseVersionIds.Contains(cv.Id),
+                includeProperties: "Category"
+            );
+
+            // Aggregate total students per category
+            var categoryStudentCounts = courseVersions
+                .GroupBy(cv => cv.CategoryId)
+                .Select(g => new
+                {
+                    CategoryId = g.Key,
+                    TotalStudents = courses
+                        .Where(c => c.CourseVersionId.HasValue && g.Select(cv => cv.Id).Contains(c.CourseVersionId.Value))
+                        .Sum(c => c.TotalStudent.GetValueOrDefault())
+                })
+                .OrderByDescending(x => x.TotalStudents)
+                .Take(3)
+                .ToList();
+
+            // Get the categories
+            var categoryIds = categoryStudentCounts.Select(x => x.CategoryId).ToList();
+            var categories = await _unitOfWork.CategoryRepository.GetAllAsync(
+                filter: c => categoryIds.Contains(c.Id)
+            );
+
+            return categories.ToList();
+        }
+        catch (Exception ex)
+        {
+            // Handle exception (logging, rethrowing, etc.)
+            throw new Exception("An error occurred while getting trending categories.", ex);
+        }
+    }
+    public async Task<ResponseDTO> GetTopCoursesByTrendingCategories()
+    {
+        try
+        {
+            // Get the top trending categories
+            var trendingCategories = await GetTopTrendingCategories();
+
+            var coursesByCategory = new Dictionary<string, List<Course>>();
+
+            foreach (var category in trendingCategories)
+            {
+                // Get course versions for the current trending category
+                var courseVersionsInCategory = await _unitOfWork.CourseVersionRepository.GetAllAsync(
+                    filter: cv => cv.CategoryId == category.Id
+                );
+
+                var courseVersionIds = courseVersionsInCategory
+                    .Select(cv => cv.Id)
+                    .Distinct()
+                    .ToList();
+
+                // Get courses for these course versions
+                // Get all courses
+                var allCourses = await _unitOfWork.CourseRepository.GetAllAsync(
+                    filter: c => c.TotalStudent.HasValue
+                );
+
+                // Filter courses by total students and take the top 10
+                var topCoursesInCategory = allCourses
+                    .OrderByDescending(c => c.TotalStudent.GetValueOrDefault())
+                    .Take(10)
+                    .ToList();
+
+                coursesByCategory[category.Name] = topCoursesInCategory;
+            }
+
+            return new ResponseDTO
+            {
+                Result = coursesByCategory,
+                Message = "Get top courses by trending categories successfully",
+                IsSuccess = true,
+                StatusCode = 200
+            };
+        }
+        catch (Exception ex)
+        {
+            return new ResponseDTO
+            {
+                Message = ex.Message,
+                IsSuccess = false,
+                StatusCode = 500,
+                Result = null
+            };
+        }
+    }
+    public async Task<ResponseDTO> GetTopRatedCourses()
+    {
+        try
+        {
+            // Fetch all courses
+            var courses = await _unitOfWork.CourseRepository.GetAllAsync(
+                filter: c => c.TotalRate.HasValue
+            );
+
+            // Sort courses by TotalRate in descending order and take the top 10
+            var topRatedCourses = courses
+                .OrderByDescending(c => c.TotalRate.GetValueOrDefault())
+                .Take(10)
+                .ToList();
+
+            return new ResponseDTO
+            {
+                Result = topRatedCourses,
+                Message = "Get top rated courses successfully",
+                IsSuccess = true,
+                StatusCode = 200
+            };
+        }
+        catch (Exception ex)
+        {
+            return new ResponseDTO
+            {
+                Message = ex.Message,
+                IsSuccess = false,
+                StatusCode = 500,
+                Result = null
+            };
+        }
+    }
+
+
+
+
 }

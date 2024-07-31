@@ -11,7 +11,6 @@ public interface IUnitOfWork
     IUserManagerRepository UserManagerRepository { get; }
     IInstructorCommentRepository InstructorCommentRepository { get; }
     ICourseRepository CourseRepository { get; }
-    IPaymentCardRepository PaymentCardRepository { get; }
     IInstructorRatingRepository InstructorRatingRepository { get; }
     ICourseVersionRepository CourseVersionRepository { get; }
     ICourseSectionVersionRepository CourseSectionVersionRepository { get; }
@@ -33,6 +32,9 @@ public interface IUnitOfWork
     ITransactionRepository TransactionRepository { get; }
     ICourseBookmarkRepository CourseBookmarkRepository { get; }
     ICourseProgressRepository CourseProgressRepository { get; }
+    ITermOfUseRepository TermOfUseRepository { get; }
+    ICompanyRepository CompanyRepository { get; }
+    IPrivacyRepository PrivacyRepository { get; }
 
     Task<int> SaveAsync();
 }

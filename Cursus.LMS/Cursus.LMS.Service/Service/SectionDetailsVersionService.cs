@@ -10,6 +10,7 @@ using Cursus.LMS.Utility.Constants;
 using DocumentFormat.OpenXml.Spreadsheet;
 using DocumentFormat.OpenXml.Wordprocessing;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.IdentityModel.Tokens;
 
 namespace Cursus.LMS.Service.Service;
@@ -19,12 +20,15 @@ public class SectionDetailsVersionService : ISectionDetailsVersionService
     private readonly IUnitOfWork _unitOfWork;
     private readonly IMapper _mapper;
     private readonly IFirebaseService _firebaseService;
+    private readonly UserManager<ApplicationUser> _userManager;
 
-    public SectionDetailsVersionService(IUnitOfWork unitOfWork, IMapper mapper, IFirebaseService firebaseService)
+    public SectionDetailsVersionService(IUnitOfWork unitOfWork, IMapper mapper, IFirebaseService firebaseService,
+        UserManager<ApplicationUser> userManager)
     {
         _unitOfWork = unitOfWork;
         _mapper = mapper;
         _firebaseService = firebaseService;
+        _userManager = userManager;
     }
 
     public async Task<ResponseDTO> CloneSectionsDetailsVersion
@@ -537,13 +541,15 @@ public class SectionDetailsVersionService : ISectionDetailsVersionService
 
     public async Task<ContentResponseDTO> DisplaySectionDetailsVersionContent
     (
-        ClaimsPrincipal User,
         Guid sectionDetailsVersionId,
+        string userId,
         string type
     )
     {
         try
         {
+            var user = await _userManager.FindByIdAsync(userId);
+
             if (sectionDetailsVersionId.ToString().IsNullOrEmpty())
             {
                 throw new Exception("Section details was not found!");
@@ -560,6 +566,41 @@ public class SectionDetailsVersionService : ISectionDetailsVersionService
             if (sectionDetailVersion is null)
             {
                 throw new Exception("Section details was not found!");
+            }
+
+            var courseVersionId = _unitOfWork.CourseSectionVersionRepository
+                .GetAsync(x => x.Id == sectionDetailVersion.CourseSectionVersionId)
+                .GetAwaiter()
+                .GetResult()!
+                .CourseVersionId;
+
+            var courseId = _unitOfWork.CourseVersionRepository
+                .GetAsync(x => x.Id == courseVersionId)
+                .GetAwaiter()
+                .GetResult()!
+                .CourseId;
+
+            var role = await _userManager.GetRolesAsync(user);
+            if (role.Contains(StaticUserRoles.Student))
+            {
+                var student = await _unitOfWork.StudentRepository.GetAsync(x => x.UserId == userId);
+                var studentCourse = await _unitOfWork.StudentCourseRepository
+                    .GetAsync(x => x.CourseId == courseId && x.StudentId == student.StudentId);
+                if (studentCourse is null)
+                {
+                    throw new Exception("Student does not own this course");
+                }
+            }
+
+            if (role.Contains(StaticUserRoles.Instructor))
+            {
+                var instructor = await _unitOfWork.InstructorRepository.GetAsync(x => x.UserId == userId);
+                var course = await _unitOfWork.CourseRepository.GetAsync(x => x.Id == courseId);
+
+                if (course?.InstructorId != instructor?.InstructorId)
+                {
+                    throw new Exception("Instructor does not own this course");
+                }
             }
 
             var stream = new MemoryStream();

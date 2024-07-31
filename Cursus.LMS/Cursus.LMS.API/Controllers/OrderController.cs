@@ -18,7 +18,7 @@ namespace Cursus.LMS.API.Controllers
         }
 
         [HttpPost]
-        [Authorize]
+        [Authorize(Roles = StaticUserRoles.Student)]
         public async Task<ActionResult<ResponseDTO>> CreateOrder()
         {
             var responseDto = await _orderService.CreateOrder(User);
@@ -64,7 +64,7 @@ namespace Cursus.LMS.API.Controllers
 
         [HttpPost]
         [Route("stripe/checkout")]
-        [Authorize]
+        [Authorize(Roles = StaticUserRoles.Student)]
         public async Task<ActionResult<ResponseDTO>> PayWithStripe
         (
             [FromBody] PayWithStripeDTO payWithStripeDto
@@ -76,7 +76,7 @@ namespace Cursus.LMS.API.Controllers
 
         [HttpPost]
         [Route("stripe/validate")]
-        [Authorize]
+        [Authorize(Roles = StaticUserRoles.AdminStudent)]
         public async Task<ActionResult<ResponseDTO>> ValidateWithStripe
         (
             [FromBody] ValidateWithStripeDTO validateWithStripeDto
