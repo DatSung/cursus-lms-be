@@ -277,7 +277,7 @@ public class CourseProgressService : ICourseProgressService
         try
         {
             var courseProgress = await _unitOfWork.CourseProgressRepository.GetAllAsync(x => x.CourseId == courseId);
-            var isCourseCompleted = courseProgress.Any(x => x.IsCompleted is false && false);
+            var isCourseCompleted = courseProgress.Any(x => x.IsCompleted is false);
 
             if (isCourseCompleted)
             {
