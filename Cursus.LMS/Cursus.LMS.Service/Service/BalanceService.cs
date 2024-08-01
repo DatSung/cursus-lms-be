@@ -1,4 +1,5 @@
-﻿using Cursus.LMS.DataAccess.IRepository;
+﻿using System.Security.Claims;
+using Cursus.LMS.DataAccess.IRepository;
 using Cursus.LMS.Model.Domain;
 using Cursus.LMS.Model.DTO;
 using Cursus.LMS.Service.IService;
@@ -12,6 +13,11 @@ public class BalanceService : IBalanceService
     public BalanceService(IUnitOfWork unitOfWork)
     {
         _unitOfWork = unitOfWork;
+    }
+
+    public Task<ResponseDTO> GetBalance(ClaimsPrincipal User, string? userId)
+    {
+        throw new NotImplementedException();
     }
 
     public async Task<ResponseDTO> UpsertBalance(UpsertBalanceDTO upsertBalanceDto)

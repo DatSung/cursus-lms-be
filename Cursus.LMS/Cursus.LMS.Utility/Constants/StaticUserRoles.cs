@@ -8,4 +8,5 @@ public static class StaticUserRoles
 
     public const string AdminInstructor = "ADMIN, INSTRUCTOR";
     public const string AdminStudent = "ADMIN, STUDENT";
+    public const string StudentInstructor = "STUDENT, INSTRUCTOR";
 }
