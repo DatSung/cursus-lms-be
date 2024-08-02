@@ -874,7 +874,7 @@ namespace Cursus.LMS.Service.Service
                         };
                     }
                 }
-                
+
                 var courses = await _unitOfWork.StudentCourseRepository.GetAllAsync(
                     c => c.StudentId == studentId,
                     includeProperties: "Course.Instructor.ApplicationUser"
