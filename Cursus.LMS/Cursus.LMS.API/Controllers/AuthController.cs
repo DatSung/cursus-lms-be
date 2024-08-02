@@ -233,7 +233,7 @@ namespace Cursus.LMS.API.Controllers
             var token = await _userManager.GenerateEmailConfirmationTokenAsync(user);
 
             var confirmationLink =
-                $"https://cursus-edu.web.app/user/sign-in/verify-email?userId={user.Id}&token={Uri.EscapeDataString(token)}";
+                $"https://cursuslms.xyz/user/sign-in/verify-email?userId={user.Id}&token={Uri.EscapeDataString(token)}";
 
             var responseDto = await _authService.SendVerifyEmail(user.Email, confirmationLink);
 
