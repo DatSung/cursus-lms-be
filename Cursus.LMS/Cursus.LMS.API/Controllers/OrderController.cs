@@ -11,10 +11,12 @@ namespace Cursus.LMS.API.Controllers
     public class OrderController : ControllerBase
     {
         private readonly IOrderService _orderService;
+        private readonly IOrderStatusService _orderStatusService;
 
-        public OrderController(IOrderService orderService)
+        public OrderController(IOrderService orderService, IOrderStatusService orderStatusService)
         {
             _orderService = orderService;
+            _orderStatusService = orderStatusService;
         }
 
         [HttpPost]
@@ -26,7 +28,7 @@ namespace Cursus.LMS.API.Controllers
         }
 
         [HttpGet]
-        [Authorize]
+        [Authorize(Roles = StaticUserRoles.AdminStudent)]
         public async Task<ActionResult<ResponseDTO>> GetOrders
         (
             [FromQuery] Guid? studentId,
@@ -59,6 +61,15 @@ namespace Cursus.LMS.API.Controllers
         public async Task<ActionResult<ResponseDTO>> GetOrder([FromRoute] Guid orderHeaderId)
         {
             var responseDto = await _orderService.GetOrder(User, orderHeaderId);
+            return StatusCode(responseDto.StatusCode, responseDto);
+        }
+
+        [HttpGet]
+        [Route("status/{orderHeaderId:guid}")]
+        [Authorize(Roles = StaticUserRoles.AdminStudent)]
+        public async Task<ActionResult<ResponseDTO>> GetOrderStatus([FromRoute] Guid orderHeaderId)
+        {
+            var responseDto = await _orderStatusService.GetOrdersStatus(orderHeaderId);
             return StatusCode(responseDto.StatusCode, responseDto);
         }
 
