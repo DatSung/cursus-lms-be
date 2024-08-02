@@ -291,19 +291,6 @@ public class OrderService : IOrderService
         }
     }
 
-    public Task<ResponseDTO> GetOrderStatus(Guid orderHeaderId)
-    {
-        try
-        {
-            throw new NotImplementedException();
-        }
-        catch (Exception e)
-        {
-            Console.WriteLine(e);
-            throw;
-        }
-    }
-
     public async Task<ResponseDTO> GetOrder
     (
         ClaimsPrincipal User,

@@ -22,8 +22,6 @@ public interface IOrderService
         int pageSize = 5
     );
 
-    Task<ResponseDTO> GetOrderStatus(Guid orderHeaderId);
-
     Task<ResponseDTO> GetOrder
     (
         ClaimsPrincipal User,
