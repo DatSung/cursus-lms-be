@@ -64,6 +64,7 @@ namespace Cursus.LMS.API.Controllers
         }
 
         [HttpPut]
+        [Authorize(Roles = StaticUserRoles.Admin)]
         public async Task<ActionResult<ResponseDTO>> UpdateLevel
         (
             [FromBody] UpdateLevelDTO updateLevelDto
@@ -75,6 +76,7 @@ namespace Cursus.LMS.API.Controllers
 
         [HttpDelete]
         [Route("{levelId:guid}")]
+        [Authorize(Roles = StaticUserRoles.Admin)]
         public async Task<ActionResult<ResponseDTO>> DeleteLevel
         (
             [FromRoute] Guid levelId
