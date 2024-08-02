@@ -14,19 +14,20 @@ public class PaymentService : IPaymentService
     private readonly IBalanceService _balanceService;
     private readonly ITransactionService _transactionService;
     private readonly IStripeService _stripeService;
+    private readonly IEmailService _emailService;
 
     public PaymentService
     (
         IUnitOfWork unitOfWork,
         IBalanceService balanceService,
         ITransactionService transactionService,
-        IStripeService stripeService
-    )
+        IStripeService stripeService, IEmailService emailService)
     {
         _unitOfWork = unitOfWork;
         _balanceService = balanceService;
         _transactionService = transactionService;
         _stripeService = stripeService;
+        _emailService = emailService;
     }
 
     public async Task<ResponseDTO> UpdateAvailableBalanceByOrderId(Guid orderHeaderId)
@@ -280,6 +281,18 @@ public class PaymentService : IPaymentService
                     UserId = userId
                 }
             );
+
+            var userEmail = _unitOfWork.UserManagerRepository.FindByIdAsync(userId).GetAwaiter().GetResult().Email;
+            if (userEmail != null)
+            {
+                await _emailService.SendEmailToInstructorAfterPayout
+                (
+                    userEmail,
+                    createStripePayoutDto.Amount,
+                    DateTime.Now
+                );
+            }
+
             return responseDto;
         }
         catch (Exception e)
