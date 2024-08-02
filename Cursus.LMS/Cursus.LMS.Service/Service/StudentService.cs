@@ -845,25 +845,28 @@ namespace Cursus.LMS.Service.Service
             }
         }
 
-        public async Task<ResponseDTO> GetAllCourseByStudentId(ClaimsPrincipal User, Guid? studentId)
+        public async Task<ResponseDTO> GetAllCourseByStudentId(ClaimsPrincipal User,
+            CourseByStudentDTO courseByStudentDTO)
         {
             try
             {
-                var role = User.Claims.FirstOrDefault(x => x.Type == ClaimTypes.Role)!.Value;
+                Guid? studentId = null;
+                var role = User.Claims.FirstOrDefault(x => x.Type == ClaimTypes.Role)?.Value;
 
-                if (role.Contains(StaticUserRoles.Student))
+                if (role != null && role.Contains(StaticUserRoles.Student))
                 {
-                    var userId = User.Claims.FirstOrDefault(x => x.Type == ClaimTypes.NameIdentifier)!.Value;
-                    studentId = _unitOfWork.StudentRepository
-                        .GetAsync(i => i.UserId == userId)
-                        .GetAwaiter()
-                        .GetResult()!
-                        .StudentId;
+                    var userId = User.Claims.FirstOrDefault(x => x.Type == ClaimTypes.NameIdentifier)?.Value;
+                    var student = await _unitOfWork.StudentRepository.GetAsync(i => i.UserId == userId);
+
+                    if (student != null)
+                    {
+                        studentId = student.StudentId;
+                    }
                 }
 
-                if (role.Contains(StaticUserRoles.Admin))
+                if (role != null && role.Contains(StaticUserRoles.Admin))
                 {
-                    if (studentId is null)
+                    if (studentId == null)
                     {
                         return new ResponseDTO()
                         {
@@ -874,46 +877,44 @@ namespace Cursus.LMS.Service.Service
                         };
                     }
                 }
-                
+                else if (studentId == null)
+                {
+                    return new ResponseDTO()
+                    {
+                        Message = "Student ID is required",
+                        IsSuccess = false,
+                        StatusCode = 400,
+                        Result = null
+                    };
+                }
+
                 var courses = await _unitOfWork.StudentCourseRepository.GetAllAsync(
                     c => c.StudentId == studentId,
                     includeProperties: "Course.Instructor.ApplicationUser"
                 );
 
-                if (courses == null)
+                if (courses == null || !courses.Any())
                 {
                     return new ResponseDTO()
                     {
-                        Message = "courses Invalid",
+                        Message = "Student don't have any courses",
                         Result = null,
                         IsSuccess = false,
-                        StatusCode = 400
+                        StatusCode = 404
                     };
                 }
 
-                var listCourses = courses.Select(cs => new
+                var listCourses = courses.Select(cs => new CourseByStudentDTO
                 {
-                    cs.Id,
-                    cs.StudentId,
-                    cs.CourseId,
-                    cs.CertificateImgUrl,
-                    cs.CreatedTime,
-                    cs.UpdatedBy,
-                    cs.UpdatedTime,
-                    cs.Status,
+                    CourseId = cs.Id,
+                    StudentId = cs.StudentId,
+                    CourseVersionId = cs.CourseId,
+                    CertificateImgUrl = cs.CertificateImgUrl,
+                    CreatedTime = cs.CreatedTime,
+                    UpdatedTime = cs.UpdatedTime,
+                    Status = cs.Status,
                     InstructorName = cs.Course.Instructor.ApplicationUser.FullName
                 }).ToList();
-
-                if (!listCourses.Any())
-                {
-                    return new ResponseDTO()
-                    {
-                        Message = "Student has not enrolled in any courses",
-                        Result = null,
-                        IsSuccess = false,
-                        StatusCode = 400
-                    };
-                }
 
                 return new ResponseDTO()
                 {
@@ -935,4 +936,5 @@ namespace Cursus.LMS.Service.Service
             }
         }
     }
+
 }
