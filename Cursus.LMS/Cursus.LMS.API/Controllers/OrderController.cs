@@ -26,7 +26,7 @@ namespace Cursus.LMS.API.Controllers
         }
 
         [HttpGet]
-        [Authorize]
+        [Authorize(Roles = StaticUserRoles.AdminStudent)]
         public async Task<ActionResult<ResponseDTO>> GetOrders
         (
             [FromQuery] Guid? studentId,
@@ -59,6 +59,15 @@ namespace Cursus.LMS.API.Controllers
         public async Task<ActionResult<ResponseDTO>> GetOrder([FromRoute] Guid orderHeaderId)
         {
             var responseDto = await _orderService.GetOrder(User, orderHeaderId);
+            return StatusCode(responseDto.StatusCode, responseDto);
+        }
+
+        [HttpGet]
+        [Route("status")]
+        [Authorize(Roles = StaticUserRoles.AdminStudent)]
+        public async Task<ActionResult<ResponseDTO>> GetOrderStatus([FromRoute] Guid orderHeaderId)
+        {
+            var responseDto = await _orderService.GetOrderStatus(orderHeaderId);
             return StatusCode(responseDto.StatusCode, responseDto);
         }
 

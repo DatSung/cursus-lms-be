@@ -1,4 +1,5 @@
-﻿using System.Security.Claims;
+﻿using System.Globalization;
+using System.Security.Claims;
 using AutoMapper;
 using Cursus.LMS.DataAccess.IRepository;
 using Cursus.LMS.Model.Domain;
@@ -6,8 +7,6 @@ using Cursus.LMS.Model.DTO;
 using Cursus.LMS.Service.IService;
 using Cursus.LMS.Utility.Constants;
 using Microsoft.IdentityModel.Tokens;
-using Stripe;
-using Stripe.Checkout;
 using Exception = System.Exception;
 
 namespace Cursus.LMS.Service.Service;
@@ -218,6 +217,58 @@ public class OrderService : IOrderService
                 }
             }
 
+            // Filter Query
+            if (!string.IsNullOrEmpty(filterOn) && !string.IsNullOrEmpty(filterQuery))
+            {
+                switch (filterOn.Trim().ToLower())
+                {
+                    case "price":
+                    {
+                        orders = orders.Where
+                        (
+                            x => x.OrderPrice.ToString(CultureInfo.InvariantCulture).Contains(filterQuery,
+                                StringComparison.CurrentCultureIgnoreCase)).ToList();
+                        break;
+                    }
+                    default:
+                    {
+                        break;
+                    }
+                }
+            }
+
+            if (!string.IsNullOrEmpty(sortBy))
+            {
+                switch (sortBy.Trim().ToLower())
+                {
+                    case "price":
+                    {
+                        orders = isAscending == true
+                            ? [.. orders.OrderBy(x => x.OrderPrice)]
+                            : [.. orders.OrderByDescending(x => x.OrderPrice)];
+                        break;
+                    }
+                    case "time":
+                    {
+                        orders = isAscending == true
+                            ? [.. orders.OrderBy(x => x.CreatedTime)]
+                            : [.. orders.OrderByDescending(x => x.CreatedTime)];
+                        break;
+                    }
+                    default:
+                    {
+                        break;
+                    }
+                }
+            }
+
+            // Pagination
+            if (pageNumber > 0 && pageSize > 0)
+            {
+                var skipResult = (pageNumber - 1) * pageSize;
+                orders = orders.Skip(skipResult).Take(pageSize).ToList();
+            }
+
             var getOrderHeaderDto = _mapper.Map<List<GetOrderHeaderDTO>>(orders);
 
             return new ResponseDTO()
@@ -237,6 +288,19 @@ public class OrderService : IOrderService
                 StatusCode = 500,
                 Result = null
             };
+        }
+    }
+
+    public Task<ResponseDTO> GetOrderStatus(Guid orderHeaderId)
+    {
+        try
+        {
+            throw new NotImplementedException();
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            throw;
         }
     }
 
@@ -346,7 +410,7 @@ public class OrderService : IOrderService
             var result = (ResponseStripeSessionDTO)responseDto.Result!;
 
             orderHeader.StripeSessionId = result.StripeSessionId;
-            
+
             _unitOfWork.OrderHeaderRepository.Update(orderHeader);
             await _unitOfWork.SaveAsync();
 
@@ -452,7 +516,7 @@ public class OrderService : IOrderService
             );
 
             await _unitOfWork.SaveAsync();
-            
+
             return new ResponseDTO()
             {
                 Message = "Validate payment with stripe successfully",
