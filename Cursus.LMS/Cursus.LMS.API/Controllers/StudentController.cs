@@ -169,14 +169,17 @@ namespace Cursus.LMS.API.Controllers
         [HttpGet]
         [Route("course")]
         [Authorize(Roles = StaticUserRoles.AdminStudent)]
-        public async Task<ActionResult<ResponseDTO>> GetAllCoursesByStudentId
-        (
-            [FromQuery] Guid? studentId
-        )
+        public async Task<ActionResult<ResponseDTO>> GetAllCoursesByStudentId([FromQuery] Guid studentId)
         {
-            var responseDto = await _studentsService.GetAllCourseByStudentId(User, studentId);
+            var courseByStudentDTO = new CourseByStudentDTO
+            {
+                StudentId = studentId
+            };
+            var responseDto = await _studentsService.GetAllCourseByStudentId(User, courseByStudentDTO);
+    
             return StatusCode(responseDto.StatusCode, responseDto);
         }
+
 
         [HttpGet]
         [Route("course/enroll/total/{studentId:guid}")]
