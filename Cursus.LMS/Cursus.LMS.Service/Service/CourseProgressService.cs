@@ -11,13 +11,15 @@ public class CourseProgressService : ICourseProgressService
 {
     private readonly IUnitOfWork _unitOfWork;
     private readonly IStudentCourseService _studentCourseService;
+    private readonly IEmailService _emailService;
 
     public CourseProgressService
     (
-        IUnitOfWork unitOfWork, IStudentCourseService studentCourseService)
+        IUnitOfWork unitOfWork, IStudentCourseService studentCourseService, IEmailService emailService)
     {
         _unitOfWork = unitOfWork;
         _studentCourseService = studentCourseService;
+        _emailService = emailService;
     }
 
     public async Task<ResponseDTO> CreateProgress(CreateProgressDTO createProgressDto)
@@ -150,7 +152,7 @@ public class CourseProgressService : ICourseProgressService
             await _unitOfWork.SaveAsync();
 
             await CheckFinishCourse(User, studentCourse.StudentId, studentCourse.CourseId);
-            
+
             return new ResponseDTO()
             {
                 Message = "Update progress successfully",
@@ -291,6 +293,15 @@ public class CourseProgressService : ICourseProgressService
                         Status = StaticStatus.StudentCourse.Ended
                     }
                 );
+
+                var userId = _unitOfWork.StudentRepository.GetAsync(x => x.StudentId == studentId).GetAwaiter()
+                    .GetResult()!.UserId;
+                var userEmail = _unitOfWork.UserManagerRepository.FindByIdAsync(userId).GetAwaiter().GetResult().Email;
+
+                if (userEmail != null)
+                {
+                    await _emailService.SendEmailForStudentAboutCompleteCourse(userEmail);
+                }
             }
         }
         catch (Exception e)
