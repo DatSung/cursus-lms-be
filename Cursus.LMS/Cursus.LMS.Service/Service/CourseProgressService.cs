@@ -290,7 +290,7 @@ public class CourseProgressService : ICourseProgressService
                     {
                         CourseId = courseId,
                         StudentId = studentId,
-                        Status = StaticStatus.StudentCourse.Ended
+                        Status = StaticStatus.StudentCourse.Completed
                     }
                 );
 
