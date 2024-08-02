@@ -176,21 +176,56 @@ public class OrderService : IOrderService
     {
         try
         {
-            var orders = await _unitOfWork.OrderHeaderRepository.GetAllAsync();
-            var userId = User.Claims.FirstOrDefault(x => x.Type == ClaimTypes.NameIdentifier)?.Value;
+            var userId = User.Claims.FirstOrDefault(x => x.Type == ClaimTypes.NameIdentifier)!.Value;
+            var role = User.Claims.FirstOrDefault(x => x.Type == ClaimTypes.Role)!.Value;
+            var orders = new List<OrderHeader>();
 
-            if (studentId is not null)
+            if (role.Contains(StaticUserRoles.Student))
             {
-                orders = orders.Where(x => x.StudentId == studentId);
+                studentId = _unitOfWork.StudentRepository
+                    .GetByUserId(userId)
+                    .GetAwaiter()
+                    .GetResult()!
+                    .StudentId;
+                orders = _unitOfWork.OrderHeaderRepository
+                    .GetAllAsync()
+                    .GetAwaiter()
+                    .GetResult()
+                    .ToList();
             }
 
+            if (role.Contains(StaticUserRoles.Admin))
+            {
+                if (studentId is null)
+                {
+                    orders = _unitOfWork.OrderHeaderRepository
+                        .GetAllAsync()
+                        .GetAwaiter()
+                        .GetResult()
+                        .ToList();
+                }
+                else
+                {
+                    studentId = _unitOfWork.StudentRepository
+                        .GetByUserId(userId)
+                        .GetAwaiter()
+                        .GetResult()!
+                        .StudentId;
+                    orders = _unitOfWork.OrderHeaderRepository
+                        .GetAllAsync(x => x.StudentId == studentId)
+                        .GetAwaiter()
+                        .GetResult().ToList();
+                }
+            }
+
+            var getOrderHeaderDto = _mapper.Map<List<GetOrderHeaderDTO>>(orders);
 
             return new ResponseDTO()
             {
                 Message = "Get orders successfully",
                 IsSuccess = true,
                 StatusCode = 200,
-                Result = orders
+                Result = getOrderHeaderDto
             };
         }
         catch (Exception e)
