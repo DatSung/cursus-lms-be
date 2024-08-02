@@ -12,14 +12,39 @@ public class BalanceService : IBalanceService
 {
     private readonly IUnitOfWork _unitOfWork;
     private readonly IMapper _mapper;
+    private readonly IStripeService _stripeService;
 
-    public BalanceService(IUnitOfWork unitOfWork, IMapper mapper)
+    public BalanceService(IUnitOfWork unitOfWork, IMapper mapper, IStripeService stripeService)
     {
         _unitOfWork = unitOfWork;
         _mapper = mapper;
+        _stripeService = stripeService;
     }
 
-    public async Task<ResponseDTO> GetBalance(ClaimsPrincipal User, string? userId)
+    public async Task<ResponseDTO> GetSystemBalance(ClaimsPrincipal User)
+    {
+        try
+        {
+            var responseDto = await _stripeService.GetStripeBalance();
+            var result = (Stripe.Balance)responseDto.Result!;
+            return new ResponseDTO()
+            {
+                Result = new
+                {
+                    AvailableBalance = result.Available,
+                    PendingBalance = result.Pending,
+                    ConnectReserved = result.ConnectReserved
+                }
+            };
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            throw;
+        }
+    }
+
+    public async Task<ResponseDTO> GetInstructorBalance(ClaimsPrincipal User, string? userId)
     {
         try
         {

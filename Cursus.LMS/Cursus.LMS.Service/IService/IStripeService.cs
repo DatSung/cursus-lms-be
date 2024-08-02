@@ -33,4 +33,6 @@ public interface IStripeService
     (
         CreateStripePayoutDTO createStripePayoutDto
     );
+
+    Task<ResponseDTO> GetStripeBalance();
 }
