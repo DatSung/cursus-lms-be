@@ -110,7 +110,7 @@ public class AuthService : IAuthService
                 // Return result internal service error
                 return new ResponseDTO()
                 {
-                    Message = createUserResult.Errors.ToString(),
+                    Message = "Create user failed",
                     IsSuccess = false,
                     StatusCode = 400,
                     Result = registerStudentDTO

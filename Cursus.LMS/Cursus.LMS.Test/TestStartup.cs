@@ -1,17 +1,15 @@
 ﻿using Cursus.LMS.API;
 using Cursus.LMS.DataAccess.Context;
-using Cursus.LMS.Service.Hubs;
+using Cursus.LMS.Model.Domain;
+using Cursus.LMS.Service.Mappings;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.AspNetCore.Identity;
-using Cursus.LMS.Model.Domain;
-using Cursus.LMS.Service.Mappings;
-using Cursus.LMS.Service.IService;
-using Cursus.LMS.Service.Service;
+using System;
+using System.Linq;
 
 namespace Cursus.LMS.Test
 {
@@ -27,61 +25,29 @@ namespace Cursus.LMS.Test
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
-            services.AddHttpContextAccessor();
-            services.AddHttpClient();
 
+            // Use InMemory Database for testing
             services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseInMemoryDatabase("TestDatabase"));
 
-            services.Configure<DataProtectionTokenProviderOptions>(options =>
-                options.TokenLifespan = TimeSpan.FromMinutes(15));
-
+            // Register other services needed for testing
             services.AddAutoMapper(typeof(AutoMapperProfile));
 
-            // Add your services here directly
-            services.AddScoped<ICourseService, CourseService>();
-            services.AddScoped<ICourseReviewService, CourseReviewService>();
-            services.AddScoped<ICourseReportService, CourseReportService>();
-            services.AddScoped<ICourseProgressService, CourseProgressService>();
-
-            services.AddEndpointsApiExplorer();
-            services.AddSwaggerGen();
-            services.AddSignalR();
-
-            services.AddCors(options =>
-            {
-                var originDefault = Configuration["AllowOrigin:FrontEnd"];
-                options.AddPolicy("AllowSpecificOrigin",
-                    builder => builder
-                        .WithOrigins(originDefault)
-                        .AllowAnyHeader()
-                        .AllowAnyMethod()
-                        .AllowCredentials());
-            });
-
-            services.AddIdentity<ApplicationUser, IdentityRole>()
-                .AddEntityFrameworkStores<ApplicationDbContext>()
-                .AddDefaultTokenProviders();
+            // Register additional services or replace existing ones if necessary
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             if (env.IsDevelopment())
             {
-                app.UseSwagger();
-                app.UseSwaggerUI();
+                app.UseDeveloperExceptionPage();
             }
 
-            app.UseCors("AllowSpecificOrigin");
-            app.UseHttpsRedirection();
-            app.UseAuthentication();
-            app.UseAuthorization();
-
             app.UseRouting();
+
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
-                endpoints.MapHub<NotificationHub>("/hubs/notification").RequireAuthorization();
             });
         }
     }
