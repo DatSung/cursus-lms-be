@@ -58,7 +58,7 @@ public class CourseService : ICourseService
                 return new ResponseDTO()
                 {
                     Message = "Permission to create course was not found",
-                    IsSuccess = true,
+                    IsSuccess = false,
                     StatusCode = 403,
                     Result = null
                 };
@@ -1146,11 +1146,15 @@ public class CourseService : ICourseService
                 filter: x => x.TotalStudent.HasValue
             );
 
-            // Get all course versions including their categories
-            var courseVersionIds = courses.Select(c => c.CourseVersionId).Distinct();
+            if (courses == null || !courses.Any()) 
+            { 
+                return new List<Category>();
+            }
+
+                // Get all course versions including their categories
+                var courseVersionIds = courses.Select(c => c.CourseVersionId).Distinct();
             var courseVersions = await _unitOfWork.CourseVersionRepository.GetAllAsync(
-                filter: cv => courseVersionIds.Contains(cv.Id),
-                includeProperties: "Category"
+                filter: cv => courseVersionIds.Contains(cv.Id)
             );
 
             // Aggregate total students per category
@@ -1167,6 +1171,12 @@ public class CourseService : ICourseService
                 .Take(3)
                 .ToList();
 
+            if (!categoryStudentCounts.Any())
+            {
+                // No category student counts found, return an empty list
+                return new List<Category>();
+            }
+
             // Get the categories
             var categoryIds = categoryStudentCounts.Select(x => x.CategoryId).ToList();
             var categories = await _unitOfWork.CategoryRepository.GetAllAsync(
@@ -1181,6 +1191,7 @@ public class CourseService : ICourseService
             throw new Exception("An error occurred while getting trending categories.", ex);
         }
     }
+
     public async Task<ResponseDTO> GetTopCoursesByTrendingCategories()
     {
         try
