@@ -813,8 +813,6 @@ public class CourseService : ICourseService
             //Lấy danh sách các khóa học mà student đã mua
             var courses = await _unitOfWork.StudentCourseRepository.GetAllAsync
                 (c => c.StudentId == studentId && c.Status == 0 || c.Status == 1 || c.Status == 3);
-            var coursesEnroll = courses.Select(c => c.CourseId).Distinct().ToList();
-
             if (courses == null || !courses.Any())
             {
                 return new ResponseDTO()
@@ -825,6 +823,9 @@ public class CourseService : ICourseService
                     Result = null
                 };
             }
+            var coursesEnroll = courses.Select(c => c.CourseId).Distinct().ToList();
+
+            
 
             //tạo danh sách gợi ý khóa học
             var suggestCourse = new List<Course>();
@@ -876,7 +877,7 @@ public class CourseService : ICourseService
                 Message = e.Message,
                 StatusCode = 500,
                 Result = null,
-                IsSuccess = true
+                IsSuccess = false
             };
         }
     }
