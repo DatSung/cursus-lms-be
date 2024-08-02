@@ -4,6 +4,7 @@ D:\FPT\Semester 6\Project_Cursus\Backend_Cursus\Cursus.LMS\Cursus.LMS.Model\Doma
 D:\FPT\Semester 6\Project_Cursus\Backend_Cursus\Cursus.LMS\Cursus.LMS.Model\Domain\CartDetails.cs
 D:\FPT\Semester 6\Project_Cursus\Backend_Cursus\Cursus.LMS\Cursus.LMS.Model\Domain\CartHeader.cs
 D:\FPT\Semester 6\Project_Cursus\Backend_Cursus\Cursus.LMS\Cursus.LMS.Model\Domain\Category.cs
+D:\FPT\Semester 6\Project_Cursus\Backend_Cursus\Cursus.LMS\Cursus.LMS.Model\Domain\Company.cs
 D:\FPT\Semester 6\Project_Cursus\Backend_Cursus\Cursus.LMS\Cursus.LMS.Model\Domain\Course.cs
 D:\FPT\Semester 6\Project_Cursus\Backend_Cursus\Cursus.LMS\Cursus.LMS.Model\Domain\CourseBookmark.cs
 D:\FPT\Semester 6\Project_Cursus\Backend_Cursus\Cursus.LMS\Cursus.LMS.Model\Domain\CourseProgress.cs
@@ -21,13 +22,14 @@ D:\FPT\Semester 6\Project_Cursus\Backend_Cursus\Cursus.LMS\Cursus.LMS.Model\Doma
 D:\FPT\Semester 6\Project_Cursus\Backend_Cursus\Cursus.LMS\Cursus.LMS.Model\Domain\OrderDetails.cs
 D:\FPT\Semester 6\Project_Cursus\Backend_Cursus\Cursus.LMS\Cursus.LMS.Model\Domain\OrderHeader.cs
 D:\FPT\Semester 6\Project_Cursus\Backend_Cursus\Cursus.LMS\Cursus.LMS.Model\Domain\OrderStatus.cs
-D:\FPT\Semester 6\Project_Cursus\Backend_Cursus\Cursus.LMS\Cursus.LMS.Model\Domain\PaymentCard.cs
+D:\FPT\Semester 6\Project_Cursus\Backend_Cursus\Cursus.LMS\Cursus.LMS.Model\Domain\Privacy.cs
 D:\FPT\Semester 6\Project_Cursus\Backend_Cursus\Cursus.LMS\Cursus.LMS.Model\Domain\SectionDetailsVersion.cs
 D:\FPT\Semester 6\Project_Cursus\Backend_Cursus\Cursus.LMS\Cursus.LMS.Model\Domain\StateEntity.cs
 D:\FPT\Semester 6\Project_Cursus\Backend_Cursus\Cursus.LMS\Cursus.LMS.Model\Domain\Student.cs
 D:\FPT\Semester 6\Project_Cursus\Backend_Cursus\Cursus.LMS\Cursus.LMS.Model\Domain\StudentComment.cs
 D:\FPT\Semester 6\Project_Cursus\Backend_Cursus\Cursus.LMS\Cursus.LMS.Model\Domain\StudentCourse.cs
 D:\FPT\Semester 6\Project_Cursus\Backend_Cursus\Cursus.LMS\Cursus.LMS.Model\Domain\StudentCourseStatus.cs
+D:\FPT\Semester 6\Project_Cursus\Backend_Cursus\Cursus.LMS\Cursus.LMS.Model\Domain\TermOfUse.cs
 D:\FPT\Semester 6\Project_Cursus\Backend_Cursus\Cursus.LMS\Cursus.LMS.Model\Domain\Transaction.cs
 D:\FPT\Semester 6\Project_Cursus\Backend_Cursus\Cursus.LMS\Cursus.LMS.Model\DTO\AddStripeCardDTO.cs
 D:\FPT\Semester 6\Project_Cursus\Backend_Cursus\Cursus.LMS\Cursus.LMS.Model\DTO\AddToCartDTO.cs
@@ -59,6 +61,8 @@ D:\FPT\Semester 6\Project_Cursus\Backend_Cursus\Cursus.LMS\Cursus.LMS.Model\DTO\
 D:\FPT\Semester 6\Project_Cursus\Backend_Cursus\Cursus.LMS\Cursus.LMS.Model\DTO\CreateLevelDTO.cs
 D:\FPT\Semester 6\Project_Cursus\Backend_Cursus\Cursus.LMS\Cursus.LMS.Model\DTO\CreateNewCourseAndVersionDTO.cs
 D:\FPT\Semester 6\Project_Cursus\Backend_Cursus\Cursus.LMS\Cursus.LMS.Model\DTO\CreateOrderStatusDTO.cs
+D:\FPT\Semester 6\Project_Cursus\Backend_Cursus\Cursus.LMS\Cursus.LMS.Model\DTO\CreatePrivacyDTO.cs
+D:\FPT\Semester 6\Project_Cursus\Backend_Cursus\Cursus.LMS\Cursus.LMS.Model\DTO\CreateProgressDTO.cs
 D:\FPT\Semester 6\Project_Cursus\Backend_Cursus\Cursus.LMS\Cursus.LMS.Model\DTO\CreateSectionDetailsVersionDTO.cs
 D:\FPT\Semester 6\Project_Cursus\Backend_Cursus\Cursus.LMS\Cursus.LMS.Model\DTO\CreateStripeConnectedAccountDTO.cs
 D:\FPT\Semester 6\Project_Cursus\Backend_Cursus\Cursus.LMS\Cursus.LMS.Model\DTO\CreateStripePayoutDTO.cs
@@ -66,6 +70,7 @@ D:\FPT\Semester 6\Project_Cursus\Backend_Cursus\Cursus.LMS\Cursus.LMS.Model\DTO\
 D:\FPT\Semester 6\Project_Cursus\Backend_Cursus\Cursus.LMS\Cursus.LMS.Model\DTO\CreateStripeTransferDTO.cs
 D:\FPT\Semester 6\Project_Cursus\Backend_Cursus\Cursus.LMS\Cursus.LMS.Model\DTO\CreateStudentCommentDTO.cs
 D:\FPT\Semester 6\Project_Cursus\Backend_Cursus\Cursus.LMS\Cursus.LMS.Model\DTO\CreateStudentCourseStatusDTO.cs
+D:\FPT\Semester 6\Project_Cursus\Backend_Cursus\Cursus.LMS\Cursus.LMS.Model\DTO\CreateTermOfUseDTO.cs
 D:\FPT\Semester 6\Project_Cursus\Backend_Cursus\Cursus.LMS\Cursus.LMS.Model\DTO\CreateTransactionDTO.cs
 D:\FPT\Semester 6\Project_Cursus\Backend_Cursus\Cursus.LMS\Cursus.LMS.Model\DTO\DegreeResponseDTO.cs
 D:\FPT\Semester 6\Project_Cursus\Backend_Cursus\Cursus.LMS\Cursus.LMS.Model\DTO\DegreeUploadDTO.cs
@@ -90,7 +95,10 @@ D:\FPT\Semester 6\Project_Cursus\Backend_Cursus\Cursus.LMS\Cursus.LMS.Model\DTO\
 D:\FPT\Semester 6\Project_Cursus\Backend_Cursus\Cursus.LMS\Cursus.LMS.Model\DTO\GetLevelDTO.cs
 D:\FPT\Semester 6\Project_Cursus\Backend_Cursus\Cursus.LMS\Cursus.LMS.Model\DTO\GetOrderDetailsDTO.cs
 D:\FPT\Semester 6\Project_Cursus\Backend_Cursus\Cursus.LMS\Cursus.LMS.Model\DTO\GetOrderHeaderDTO.cs
+D:\FPT\Semester 6\Project_Cursus\Backend_Cursus\Cursus.LMS\Cursus.LMS.Model\DTO\GetPercentageDTO.cs
+D:\FPT\Semester 6\Project_Cursus\Backend_Cursus\Cursus.LMS\Cursus.LMS.Model\DTO\GetProgressDTO.cs
 D:\FPT\Semester 6\Project_Cursus\Backend_Cursus\Cursus.LMS\Cursus.LMS.Model\DTO\GetSectionDetailDTO.cs
+D:\FPT\Semester 6\Project_Cursus\Backend_Cursus\Cursus.LMS\Cursus.LMS.Model\DTO\GetTopPurchasedCoursesDTO.cs
 D:\FPT\Semester 6\Project_Cursus\Backend_Cursus\Cursus.LMS\Cursus.LMS.Model\DTO\GetTransactionDTO.cs
 D:\FPT\Semester 6\Project_Cursus\Backend_Cursus\Cursus.LMS\Cursus.LMS.Model\DTO\InstructorAvgCount.cs
 D:\FPT\Semester 6\Project_Cursus\Backend_Cursus\Cursus.LMS\Cursus.LMS.Model\DTO\InstructorInfoDTO.cs
@@ -99,6 +107,7 @@ D:\FPT\Semester 6\Project_Cursus\Backend_Cursus\Cursus.LMS\Cursus.LMS.Model\DTO\
 D:\FPT\Semester 6\Project_Cursus\Backend_Cursus\Cursus.LMS\Cursus.LMS.Model\DTO\InstructorSignInByGoogleDTO.cs
 D:\FPT\Semester 6\Project_Cursus\Backend_Cursus\Cursus.LMS\Cursus.LMS.Model\DTO\InstructorTotalCount.cs
 D:\FPT\Semester 6\Project_Cursus\Backend_Cursus\Cursus.LMS\Cursus.LMS.Model\DTO\JwtTokenDTO.cs
+D:\FPT\Semester 6\Project_Cursus\Backend_Cursus\Cursus.LMS\Cursus.LMS.Model\DTO\LockUserDTO.cs
 D:\FPT\Semester 6\Project_Cursus\Backend_Cursus\Cursus.LMS\Cursus.LMS.Model\DTO\PayWithStripeDTO.cs
 D:\FPT\Semester 6\Project_Cursus\Backend_Cursus\Cursus.LMS\Cursus.LMS.Model\DTO\RegisterStudentDTO.cs
 D:\FPT\Semester 6\Project_Cursus\Backend_Cursus\Cursus.LMS\Cursus.LMS.Model\DTO\RemoveCourseSectionVersionDTO.cs
@@ -106,6 +115,8 @@ D:\FPT\Semester 6\Project_Cursus\Backend_Cursus\Cursus.LMS\Cursus.LMS.Model\DTO\
 D:\FPT\Semester 6\Project_Cursus\Backend_Cursus\Cursus.LMS\Cursus.LMS.Model\DTO\RequestDTO.cs
 D:\FPT\Semester 6\Project_Cursus\Backend_Cursus\Cursus.LMS\Cursus.LMS.Model\DTO\ResetPasswordDTO.cs
 D:\FPT\Semester 6\Project_Cursus\Backend_Cursus\Cursus.LMS\Cursus.LMS.Model\DTO\ResponseDTO.cs
+D:\FPT\Semester 6\Project_Cursus\Backend_Cursus\Cursus.LMS\Cursus.LMS.Model\DTO\ResponseStripeConnectedAccountDTO.cs
+D:\FPT\Semester 6\Project_Cursus\Backend_Cursus\Cursus.LMS\Cursus.LMS.Model\DTO\ResponseStripeSessionDTO.cs
 D:\FPT\Semester 6\Project_Cursus\Backend_Cursus\Cursus.LMS\Cursus.LMS.Model\DTO\SendVerifyEmailDTO.cs
 D:\FPT\Semester 6\Project_Cursus\Backend_Cursus\Cursus.LMS\Cursus.LMS.Model\DTO\SignDTO.cs
 D:\FPT\Semester 6\Project_Cursus\Backend_Cursus\Cursus.LMS\Cursus.LMS.Model\DTO\SignInByGoogleDTO.cs
@@ -116,6 +127,7 @@ D:\FPT\Semester 6\Project_Cursus\Backend_Cursus\Cursus.LMS\Cursus.LMS.Model\DTO\
 D:\FPT\Semester 6\Project_Cursus\Backend_Cursus\Cursus.LMS\Cursus.LMS.Model\DTO\StudentSignInByGoogleDTO.cs
 D:\FPT\Semester 6\Project_Cursus\Backend_Cursus\Cursus.LMS\Cursus.LMS.Model\DTO\StudentTotalCountDTO.cs
 D:\FPT\Semester 6\Project_Cursus\Backend_Cursus\Cursus.LMS\Cursus.LMS.Model\DTO\UpdateCategoryDTO.cs
+D:\FPT\Semester 6\Project_Cursus\Backend_Cursus\Cursus.LMS\Cursus.LMS.Model\DTO\UpdateCompanyDTO.cs
 D:\FPT\Semester 6\Project_Cursus\Backend_Cursus\Cursus.LMS\Cursus.LMS.Model\DTO\UpdateCourseReportDTO.cs
 D:\FPT\Semester 6\Project_Cursus\Backend_Cursus\Cursus.LMS\Cursus.LMS.Model\DTO\UpdateCourseReviewDTO.cs
 D:\FPT\Semester 6\Project_Cursus\Backend_Cursus\Cursus.LMS\Cursus.LMS.Model\DTO\UpdateEmailTemplateDTO.cs
@@ -123,10 +135,13 @@ D:\FPT\Semester 6\Project_Cursus\Backend_Cursus\Cursus.LMS\Cursus.LMS.Model\DTO\
 D:\FPT\Semester 6\Project_Cursus\Backend_Cursus\Cursus.LMS\Cursus.LMS.Model\DTO\UpdateInstructorDTO.cs
 D:\FPT\Semester 6\Project_Cursus\Backend_Cursus\Cursus.LMS\Cursus.LMS.Model\DTO\UpdateIntructorProfileDTO.cs
 D:\FPT\Semester 6\Project_Cursus\Backend_Cursus\Cursus.LMS\Cursus.LMS.Model\DTO\UpdateLevelDTO.cs
+D:\FPT\Semester 6\Project_Cursus\Backend_Cursus\Cursus.LMS\Cursus.LMS.Model\DTO\UpdatePrivacyDTO.cs
+D:\FPT\Semester 6\Project_Cursus\Backend_Cursus\Cursus.LMS\Cursus.LMS.Model\DTO\UpdateProgressDTO.cs
 D:\FPT\Semester 6\Project_Cursus\Backend_Cursus\Cursus.LMS\Cursus.LMS.Model\DTO\UpdateStudentCommentDTO.cs
 D:\FPT\Semester 6\Project_Cursus\Backend_Cursus\Cursus.LMS\Cursus.LMS.Model\DTO\UpdateStudentCourseDTO.cs
 D:\FPT\Semester 6\Project_Cursus\Backend_Cursus\Cursus.LMS\Cursus.LMS.Model\DTO\UpdateStudentDTO.cs
 D:\FPT\Semester 6\Project_Cursus\Backend_Cursus\Cursus.LMS\Cursus.LMS.Model\DTO\UpdateStudentProfileDTO.cs
+D:\FPT\Semester 6\Project_Cursus\Backend_Cursus\Cursus.LMS\Cursus.LMS.Model\DTO\UpdateTermOfUseDTO.cs
 D:\FPT\Semester 6\Project_Cursus\Backend_Cursus\Cursus.LMS\Cursus.LMS.Model\DTO\UploadCourseVersionBackgroundImg.cs
 D:\FPT\Semester 6\Project_Cursus\Backend_Cursus\Cursus.LMS\Cursus.LMS.Model\DTO\UploadSectionDetailsVersionContentDTO.cs
 D:\FPT\Semester 6\Project_Cursus\Backend_Cursus\Cursus.LMS\Cursus.LMS.Model\DTO\UpsertBalanceDTO.cs
