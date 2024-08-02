@@ -307,14 +307,14 @@ public class CourseService : ICourseService
     }
 
     public async Task<ResponseDTO> GetTopPurchasedCourses(
-     int? year = null,
-     int? month = null,
-     int? quarter = null,
-     int top = 5,
-     int pageNumber = 1,
-     int pageSize = 5,
-     string? byCategoryName = null
- )
+        int? year = null,
+        int? month = null,
+        int? quarter = null,
+        int top = 5,
+        int pageNumber = 1,
+        int pageSize = 5,
+        string? byCategoryName = null
+    )
     {
         try
         {
@@ -419,16 +419,15 @@ public class CourseService : ICourseService
     }
 
 
-
     public async Task<ResponseDTO> GetLeastPurchasedCourses(
-    int? year = null,
-    int? month = null,
-    int? quarter = null,
-    int top = 5,
-    int pageNumber = 1,
-    int pageSize = 5,
-    string? byCategoryName = null
-)
+        int? year = null,
+        int? month = null,
+        int? quarter = null,
+        int top = 5,
+        int pageNumber = 1,
+        int pageSize = 5,
+        string? byCategoryName = null
+    )
     {
         try
         {
@@ -531,7 +530,6 @@ public class CourseService : ICourseService
             };
         }
     }
-
 
 
     public async Task<ResponseDTO> GetCourse(ClaimsPrincipal User, Guid courseId)
@@ -639,6 +637,19 @@ public class CourseService : ICourseService
                     StatusCode = 404,
                     Result = null,
                     Message = "Course was not found"
+                };
+            }
+
+            var courseVersion = await _unitOfWork.CourseVersionRepository.GetAsync(x => x.Id == course.CourseVersionId);
+
+            if (!courseVersion!.CurrentStatus.Equals(StaticCourseVersionStatus.Merged))
+            {
+                return new ResponseDTO()
+                {
+                    IsSuccess = false,
+                    StatusCode = 400,
+                    Result = null,
+                    Message = "Course was not allow to sell"
                 };
             }
 
@@ -1104,7 +1115,6 @@ public class CourseService : ICourseService
     }
 
 
-
     public async Task<ResponseDTO> GetBestCoursesSuggestion()
     {
         try
@@ -1160,7 +1170,8 @@ public class CourseService : ICourseService
                 {
                     CategoryId = g.Key,
                     TotalStudents = courses
-                        .Where(c => c.CourseVersionId.HasValue && g.Select(cv => cv.Id).Contains(c.CourseVersionId.Value))
+                        .Where(c => c.CourseVersionId.HasValue &&
+                                    g.Select(cv => cv.Id).Contains(c.CourseVersionId.Value))
                         .Sum(c => c.TotalStudent.GetValueOrDefault())
                 })
                 .OrderByDescending(x => x.TotalStudents)
@@ -1181,6 +1192,7 @@ public class CourseService : ICourseService
             throw new Exception("An error occurred while getting trending categories.", ex);
         }
     }
+
     public async Task<ResponseDTO> GetTopCoursesByTrendingCategories()
     {
         try
@@ -1236,6 +1248,7 @@ public class CourseService : ICourseService
             };
         }
     }
+
     public async Task<ResponseDTO> GetTopRatedCourses()
     {
         try
@@ -1270,8 +1283,4 @@ public class CourseService : ICourseService
             };
         }
     }
-
-
-
-
 }
