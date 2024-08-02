@@ -237,4 +237,31 @@ public class StripeService : IStripeService
             };
         }
     }
+
+    public async Task<ResponseDTO> GetStripeBalance()
+    {
+        try
+        {
+            var balanceService = new Stripe.BalanceService();
+            var balance = await balanceService.GetAsync();
+
+            return new ResponseDTO()
+            {
+                Message = "Get stripe balance successfully",
+                IsSuccess = true,
+                StatusCode = 200,
+                Result = balance
+            };
+        }
+        catch (Exception e)
+        {
+            return new ResponseDTO()
+            {
+                Result = null,
+                IsSuccess = true,
+                StatusCode = 500,
+                Message = e.Message
+            };
+        }
+    }
 }

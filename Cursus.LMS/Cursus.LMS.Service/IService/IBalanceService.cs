@@ -5,6 +5,7 @@ namespace Cursus.LMS.Service.IService;
 
 public interface IBalanceService
 {
-    Task<ResponseDTO> GetBalance(ClaimsPrincipal User, string? userId);
+    Task<ResponseDTO> GetSystemBalance(ClaimsPrincipal User);
+    Task<ResponseDTO> GetInstructorBalance(ClaimsPrincipal User, string? userId);
     Task<ResponseDTO> UpsertBalance(UpsertBalanceDTO upsertBalanceDto);
 }

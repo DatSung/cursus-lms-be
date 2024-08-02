@@ -1,4 +1,4 @@
-﻿using AutoMapper;
+using AutoMapper;
 using Cursus.LMS.DataAccess.IRepository;
 using Cursus.LMS.Model.Domain;
 using Cursus.LMS.Model.DTO;
@@ -876,16 +876,6 @@ namespace Cursus.LMS.Service.Service
                             Result = null
                         };
                     }
-                }
-                else if (studentId == null)
-                {
-                    return new ResponseDTO()
-                    {
-                        Message = "Student ID is required",
-                        IsSuccess = false,
-                        StatusCode = 400,
-                        Result = null
-                    };
                 }
 
                 var courses = await _unitOfWork.StudentCourseRepository.GetAllAsync(
