@@ -345,6 +345,8 @@ public class OrderService : IOrderService
             );
             var result = (ResponseStripeSessionDTO)responseDto.Result!;
 
+            orderHeader.StripeSessionId = result.StripeSessionId;
+            
             _unitOfWork.OrderHeaderRepository.Update(orderHeader);
             await _unitOfWork.SaveAsync();
 
@@ -449,6 +451,8 @@ public class OrderService : IOrderService
                 }
             );
 
+            await _unitOfWork.SaveAsync();
+            
             return new ResponseDTO()
             {
                 Message = "Validate payment with stripe successfully",
@@ -500,7 +504,7 @@ public class OrderService : IOrderService
                 };
             }
 
-            orderHeader.Status = StaticStatus.Order.Pending;
+            orderHeader.Status = StaticStatus.Order.Confirmed;
             _unitOfWork.OrderHeaderRepository.Update(orderHeader);
             await _unitOfWork.SaveAsync();
 
@@ -509,7 +513,7 @@ public class OrderService : IOrderService
                 User,
                 new CreateOrderStatusDTO()
                 {
-                    Status = StaticStatus.Order.Pending,
+                    Status = StaticStatus.Order.Confirmed,
                     OrderHeaderId = orderHeader.Id,
                 }
             );
