@@ -1,11 +1,14 @@
 using Cursus.LMS.Model.DTO;
 using Cursus.LMS.Service.IService;
+using Cursus.LMS.Utility.Constants;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Cursus.LMS.API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize(Roles = StaticUserRoles.Admin)]
     public class WebsiteController : ControllerBase
     {
         private readonly ICompanyService _companyService;
