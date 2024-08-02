@@ -78,7 +78,7 @@ builder.Services.AddCors(options =>
 });
 
 // Add Application Insights Telemetry
-builder.Services.AddApplicationInsightsTelemetry(builder.Configuration["ApplicationInsights:InstrumentationKey"]);
+builder.Services.AddApplicationInsightsTelemetry(builder.Configuration["ApplicationInsights:ConnectionString"]);
 
 var app = builder.Build();
 
