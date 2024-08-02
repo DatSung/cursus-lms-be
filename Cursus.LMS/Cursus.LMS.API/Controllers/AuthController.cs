@@ -2,6 +2,7 @@ using System.Security.Claims;
 using Cursus.LMS.Model.Domain;
 using Cursus.LMS.Model.DTO;
 using Cursus.LMS.Service.IService;
+using Cursus.LMS.Utility.Constants;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -14,17 +15,14 @@ namespace Cursus.LMS.API.Controllers
     {
         private readonly IEmailService _emailService;
         private readonly IAuthService _authService;
-        private readonly IEmailSender _emailSender;
-        private ResponseDTO responseDto = new ResponseDTO();
         private readonly UserManager<ApplicationUser> _userManager;
 
         public AuthController(IEmailService emailService, IAuthService authService,
-            UserManager<ApplicationUser> userManager, IEmailSender emailSender)
+            UserManager<ApplicationUser> userManager)
         {
             _emailService = emailService;
             _authService = authService;
             _userManager = userManager;
-            _emailSender = emailSender;
         }
 
         /// <summary>
@@ -32,9 +30,10 @@ namespace Cursus.LMS.API.Controllers
         /// </summary>
         /// <returns>ResponseDTO</returns>
         [HttpPost]
-        [Route("sign-up-student")]
+        [Route("student/sign-up")]
         public async Task<ActionResult<ResponseDTO>> SignUpStudent([FromBody] RegisterStudentDTO registerStudentDTO)
         {
+            var responseDto = new ResponseDTO();
             if (!ModelState.IsValid)
             {
                 responseDto.IsSuccess = false;
@@ -68,7 +67,7 @@ namespace Cursus.LMS.API.Controllers
         /// </summary>
         /// <returns>ResponseDTO</returns>
         [HttpPost]
-        [Route("sign-up-instructor")]
+        [Route("instructor/sign-up")]
         public async Task<ActionResult<ResponseDTO>> SignUpInstructor(
             [FromBody] SignUpInstructorDTO signUpInstructorDto)
         {
@@ -82,7 +81,7 @@ namespace Cursus.LMS.API.Controllers
         /// <param name="file"></param>
         /// <returns></returns>
         [HttpPost]
-        [Route("upload-instructor-degree")]
+        [Route("instructor/degree")]
         [Authorize]
         public async Task<ActionResult<ResponseDTO>> UploadInstructorDegree(DegreeUploadDTO degreeUploadDto)
         {
@@ -95,7 +94,7 @@ namespace Cursus.LMS.API.Controllers
         /// </summary>
         /// <returns></returns>
         [HttpGet]
-        [Route("get-instructor-degree")]
+        [Route("instructor/degree")]
         [Authorize]
         public async Task<IActionResult> GetInstructorDegree([FromQuery] bool Download = false)
         {
@@ -120,7 +119,7 @@ namespace Cursus.LMS.API.Controllers
         /// <param name="Download"></param>
         /// <returns></returns>
         [HttpGet]
-        [Route("display-instructor-degree/{userId}")]
+        [Route("instructor/degree/display/{userId}")]
         public async Task<IActionResult> DisplayInstructorDegree([FromRoute] string userId,
             [FromQuery] bool Download = false)
         {
@@ -144,7 +143,7 @@ namespace Cursus.LMS.API.Controllers
         /// <param name="file"></param>
         /// <returns></returns>
         [HttpPost]
-        [Route("upload-user-avatar")]
+        [Route("user/avatar")]
         [Authorize]
         public async Task<ActionResult<ResponseDTO>> UploadUserAvatar(AvatarUploadDTO avatarUploadDto)
         {
@@ -157,7 +156,7 @@ namespace Cursus.LMS.API.Controllers
         /// </summary>
         /// <returns></returns>
         [HttpGet]
-        [Route("get-user-avatar")]
+        [Route("user/avatar")]
         [Authorize]
         public async Task<IActionResult> GetUserAvatar()
         {
@@ -175,7 +174,7 @@ namespace Cursus.LMS.API.Controllers
         /// </summary>
         /// <returns></returns>
         [HttpGet]
-        [Route("display-user-avatar/{userId}")]
+        [Route("user/avatar/display/{userId}")]
         public async Task<IActionResult> DisplayUserAvatar([FromRoute] string userId)
         {
             var stream = await _authService.DisplayUserAvatar(userId);
@@ -235,7 +234,7 @@ namespace Cursus.LMS.API.Controllers
             var token = await _userManager.GenerateEmailConfirmationTokenAsync(user);
 
             var confirmationLink =
-                $"http://localhost:30475/user/sign-in/verify-email?userId={user.Id}&token={Uri.EscapeDataString(token)}";
+                $"https://cursuslms.xyz/user/sign-in/verify-email?userId={user.Id}&token={Uri.EscapeDataString(token)}";
 
             var responseDto = await _authService.SendVerifyEmail(user.Email, confirmationLink);
 
@@ -288,28 +287,9 @@ namespace Cursus.LMS.API.Controllers
         public async Task<ActionResult<ResponseDTO>> SignIn([FromBody] SignDTO signDto)
         {
             var responseDto = await _authService.SignIn(signDto);
-            return StatusCode(this.responseDto.StatusCode, responseDto);
+            return StatusCode(responseDto.StatusCode, responseDto);
         }
 
-        // // <summary>
-        // /// This API for case student sign in by google.
-        // /// </summary>
-        // /// <returns></returns>
-        // [HttpPost]
-        // [Route("student-signin-by-google")]
-        // public async Task<ActionResult<SignResponseDTO>> StudentSignInByGoogle(
-        //     [FromBody] StudentSignInByGoogleDTO studentSignInByGoogleDto)
-        // {
-        //     return await _authService.StudentSignInByGoogle(studentSignInByGoogleDto);
-        // }
-        //
-        // [HttpPost]
-        // [Route("instructor-signin-by-google")]
-        // public async Task<ActionResult<SignResponseDTO>> InstructorSignInByGoogle(
-        //     [FromBody] InstructorSignInByGoogleDTO instructorSignInByGoogleDto)
-        // {
-        //     return await _authService.InstructorSignInByGoogle(instructorSignInByGoogleDto);
-        // }
 
         [HttpPost]
         [Route("refresh")]
@@ -324,7 +304,7 @@ namespace Cursus.LMS.API.Controllers
         public async Task<ActionResult<ResponseDTO>> CheckEmailExist([FromBody] string email)
         {
             var responseDto = await _authService.CheckEmailExist(email);
-            return StatusCode(this.responseDto.StatusCode, responseDto);
+            return StatusCode(responseDto.StatusCode, responseDto);
         }
 
         [HttpPost]
@@ -332,22 +312,22 @@ namespace Cursus.LMS.API.Controllers
         public async Task<ActionResult<ResponseDTO>> CheckPhoneNumberExist([FromBody] string phoneNumber)
         {
             var responseDto = await _authService.CheckPhoneNumberExist(phoneNumber);
-            return StatusCode(this.responseDto.StatusCode, responseDto);
+            return StatusCode(responseDto.StatusCode, responseDto);
         }
 
 
         [HttpPost]
-        [Route("complete-student-profile")]
+        [Route("student/profile")]
         [Authorize]
         public async Task<ActionResult<ResponseDTO>> CompleteStudentProfile(
             CompleteStudentProfileDTO completeStudentProfileDto)
         {
             var responseDto = await _authService.CompleteStudentProfile(User, completeStudentProfileDto);
-            return StatusCode(this.responseDto.StatusCode, responseDto);
+            return StatusCode(responseDto.StatusCode, responseDto);
         }
 
         [HttpPost]
-        [Route("complete-instructor-profile")]
+        [Route("instructor/profile")]
         [Authorize]
         public async Task<ActionResult<ResponseDTO>> CompleteInstructorProfile(
             CompleteInstructorProfileDTO completeInstructorProfileDto)
@@ -357,7 +337,7 @@ namespace Cursus.LMS.API.Controllers
         }
 
         [HttpPost]
-        [Route("sign-in-by-google")]
+        [Route("google/sign-in")]
         public async Task<ActionResult<ResponseDTO>> SignInByGoogle(SignInByGoogleDTO signInByGoogleDto)
         {
             var response = await _authService.SignInByGoogle(signInByGoogleDto);
@@ -365,11 +345,46 @@ namespace Cursus.LMS.API.Controllers
         }
 
         [HttpGet]
-        [Route("get-user-info")]
+        [Route("user/info")]
         public async Task<ActionResult<ResponseDTO>> GetUserInfo()
         {
             var response = await _authService.GetUserInfo(User);
             return StatusCode(response.StatusCode, response);
+        }
+
+        [HttpPut]
+        [Route("student/profile")]
+        public async Task<ActionResult<ResponseDTO>> UpdateStudent([FromBody] UpdateStudentProfileDTO studentDto)
+        {
+            var responseDto = await _authService.UpdateStudent(studentDto, User);
+            return StatusCode(responseDto.StatusCode, responseDto);
+        }
+
+        [HttpPut]
+        [Route("instructor/profile")]
+        public async Task<ActionResult<ResponseDTO>> UpdateInstructor(
+            [FromBody] UpdateIntructorProfileDTO instructorDto)
+        {
+            var responseDto = await _authService.UpdateInstructor(instructorDto, User);
+            return StatusCode(responseDto.StatusCode, responseDto);
+        }
+
+        [HttpPost]
+        [Route("lock")]
+        [Authorize(Roles = StaticUserRoles.Admin)]
+        public async Task<ActionResult<ResponseDTO>> LockUser([FromBody] LockUserDTO lockUserDto)
+        {
+            var responseDto = await _authService.LockUser(lockUserDto);
+            return StatusCode(responseDto.StatusCode, responseDto);
+        }
+
+        [HttpPost]
+        [Route("unlock")]
+        [Authorize(Roles = StaticUserRoles.Admin)]
+        public async Task<ActionResult<ResponseDTO>> UnlockUser([FromBody] LockUserDTO lockUserDto)
+        {
+            var responseDto = await _authService.UnlockUser(lockUserDto);
+            return StatusCode(responseDto.StatusCode, responseDto);
         }
     }
 }

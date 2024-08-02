@@ -12,7 +12,7 @@ public interface IAuthService
     Task<ResponseDTO> UploadUserAvatar(IFormFile file, ClaimsPrincipal user);
     Task<DegreeResponseDTO> GetInstructorDegree(ClaimsPrincipal user);
     Task<MemoryStream> GetUserAvatar(ClaimsPrincipal user);
-    Task<ResponseDTO> SignIn(SignDTO signDTO);
+    Task<ResponseDTO> SignIn(SignDTO signDto);
     Task<ResponseDTO> ForgotPassword(ForgotPasswordDTO forgotPasswordDto);
     Task<ResponseDTO> Refresh(string token);
     Task<ResponseDTO> ResetPassword(string resetPasswordDto, string token, string password);
@@ -27,4 +27,10 @@ public interface IAuthService
     Task<ResponseDTO> GetUserInfo(ClaimsPrincipal User);
     Task<MemoryStream> DisplayUserAvatar(string userId);
     Task<DegreeResponseDTO> DisplayInstructorDegree(string userId);
+    Task<ResponseDTO> UpdateStudent(UpdateStudentProfileDTO updateStudentDto, ClaimsPrincipal User);
+    Task<ResponseDTO> UpdateInstructor(UpdateIntructorProfileDTO updateIntructorDto, ClaimsPrincipal User);
+    Task<ResponseDTO> LockUser(LockUserDTO lockUserDto);
+    Task<ResponseDTO> UnlockUser(LockUserDTO lockUserDto);
+    Task SendClearEmail(int fromMonth);
+    Task ClearUser();
 }

@@ -24,7 +24,6 @@ public interface ICourseVersionService
     (
         ClaimsPrincipal User,
         Guid? courseId,
-        Guid? instructorId,
         string? filterOn,
         string? filterQuery,
         string? sortBy,
@@ -57,8 +56,8 @@ public interface ICourseVersionService
         ClaimsPrincipal User,
         CreateNewCourseAndVersionDTO createNewCourseAndVersionDto
     );
-    
-    
+
+
     /// <summary>
     /// Clone new course version from exist course version
     /// </summary>
@@ -71,25 +70,58 @@ public interface ICourseVersionService
         CloneCourseVersionDTO cloneCourseVersionDto
     );
 
-    Task<ResponseDTO> RemoveCourseVersion(ClaimsPrincipal User);
-    Task<ResponseDTO> EditCourseVersion(ClaimsPrincipal User);
-    Task<ResponseDTO> AcceptCourseVersion(ClaimsPrincipal User);
-    Task<ResponseDTO> RejectCourseVersion(ClaimsPrincipal User);
-    Task<ResponseDTO> SubmitCourseVersion(ClaimsPrincipal User);
+    Task<ResponseDTO> RemoveCourseVersion(ClaimsPrincipal User, Guid courseVersionId);
+    Task<ResponseDTO> EditCourseVersion(ClaimsPrincipal User, EditCourseVersionDTO editCourseVersionDto);
+    Task<ResponseDTO> AcceptCourseVersion(ClaimsPrincipal User, Guid courseVersionId);
+    Task<ResponseDTO> RejectCourseVersion(ClaimsPrincipal User, Guid courseVersionId);
+    Task<ResponseDTO> SubmitCourseVersion(ClaimsPrincipal User, Guid courseVersionId);
+    Task<ResponseDTO> MergeCourseVersion(ClaimsPrincipal User, Guid courseVersionId);
 
     Task<ResponseDTO> GetCourseVersionsComments
     (
         ClaimsPrincipal User,
-        Guid? courseVersionCommentId,
         Guid? courseVersionId,
         string? filterOn,
         string? filterQuery,
         string? sortBy,
         int pageNumber,
         int pageSize
-     );
-    Task<ResponseDTO> GetCourseVersionComment(ClaimsPrincipal User, Guid courseVersionCommentId);
-    Task<ResponseDTO> CreateCourseVersionComment(ClaimsPrincipal User, CreateCourseVersionCommentsDTO createCourseVersionCommentsDTO);
-    Task<ResponseDTO> EditCourseVersionComment(ClaimsPrincipal User, EditCourseVersionCommentsDTO editCourseVersionCommentsDTO);
-    Task<ResponseDTO> RemoveCourseVersionComment(ClaimsPrincipal User, RemoveCourseVersionCommentDTO removeCourseVersionCommentDTO);
+    );
+
+    Task<ResponseDTO> GetCourseVersionComment
+    (
+        ClaimsPrincipal User,
+        Guid courseVersionCommentId
+    );
+
+    Task<ResponseDTO> CreateCourseVersionComment
+    (
+        ClaimsPrincipal User,
+        CreateCourseVersionCommentsDTO createCourseVersionCommentsDTO
+    );
+
+    Task<ResponseDTO> EditCourseVersionComment
+    (
+        ClaimsPrincipal User,
+        EditCourseVersionCommentsDTO editCourseVersionCommentsDTO
+    );
+
+    Task<ResponseDTO> RemoveCourseVersionComment
+    (
+        ClaimsPrincipal User,
+        Guid commentId
+    );
+
+    Task<ResponseDTO> UploadCourseVersionBackgroundImg
+    (
+        ClaimsPrincipal User,
+        Guid courseVersionId,
+        UploadCourseVersionBackgroundImg uploadCourseVersionBackgroundImg
+    );
+    
+    Task<MemoryStream> DisplayCourseVersionBackgroundImg
+    (
+        ClaimsPrincipal User,
+        Guid courseVersionId
+    );
 }

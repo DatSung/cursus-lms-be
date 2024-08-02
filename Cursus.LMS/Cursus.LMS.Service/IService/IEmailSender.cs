@@ -2,7 +2,8 @@
 
 public interface IEmailSender
 {
-    Task<bool> SendEmailForInstructorApproval(string toMail, string token);
-    Task<bool> SendVerifyEmail(string toMail, string confirmationLink);
-    
+    Task SendSubmittedCourseEmailForAdmins();
+    Task SendRejectedCourseEmailForInstructor(Guid courseVersionId);
+    Task SendAcceptedCourseEmailForInstructor(Guid courseVersionId);
+    Task SendDeactivatedCourseEmailForStudents(Guid courseId);
 }

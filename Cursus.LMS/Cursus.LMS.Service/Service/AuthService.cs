@@ -4,7 +4,6 @@ using Cursus.LMS.Model.Domain;
 using Cursus.LMS.Model.DTO;
 using Cursus.LMS.Service.IService;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
 using System.Security.Claims;
 using System.Text;
@@ -14,7 +13,6 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using FirebaseAdmin.Auth;
 using Newtonsoft.Json.Linq;
-using Cursus.LMS.DataAccess.Repository;
 
 namespace Cursus.LMS.Service.Service;
 
@@ -24,46 +22,37 @@ public class AuthService : IAuthService
     private readonly IUnitOfWork _unitOfWork;
     private readonly UserManager<ApplicationUser> _userManager;
     private readonly RoleManager<IdentityRole> _roleManager;
-    private readonly IConfiguration _configuration;
     private readonly ITokenService _tokenService;
     private readonly IMapper _mapper;
     private readonly IEmailService _emailService;
-    private readonly IEmailSender _emailSender;
     private readonly IFirebaseService _firebaseService;
     private readonly IHttpContextAccessor _httpContextAccessor;
 
     private static readonly ConcurrentDictionary<string, (int Count, DateTime LastRequest)> ResetPasswordAttempts =
         new();
 
-    public AuthService(
+    public AuthService
+    (
         IUserManagerRepository userManagerRepository,
         UserManager<ApplicationUser> userManager,
         RoleManager<IdentityRole> roleManager,
-        IConfiguration configuration,
         IMapper mapper,
         IEmailService emailService,
         IFirebaseService firebaseService,
         IHttpContextAccessor httpContextAccessor,
-        IEmailSender emailSender,
-        ITokenService tokenService, IUnitOfWork unitOfWork)
+        ITokenService tokenService,
+        IUnitOfWork unitOfWork
+    )
     {
         _userManagerRepository = userManagerRepository;
         _userManager = userManager;
         _roleManager = roleManager;
-        _configuration = configuration;
         _mapper = mapper;
         _emailService = emailService;
         _firebaseService = firebaseService;
         _httpContextAccessor = httpContextAccessor;
-        _emailSender = emailSender;
         _tokenService = tokenService;
         _unitOfWork = unitOfWork;
-    }
-
-    public AuthService(UserManager<ApplicationUser> object1, RoleManager<IdentityRole> object2, IConfiguration object3,
-        IMapper object4, IEmailService object5, IFirebaseService object6, IHttpContextAccessor object7,
-        IEmailSender object8, ITokenService object9, IUnitOfWork object10)
-    {
     }
 
     public async Task<ResponseDTO> SignUpStudent(RegisterStudentDTO registerStudentDTO)
@@ -95,19 +84,6 @@ public class AuthService : IAuthService
                 };
             }
 
-            var isCardExist =
-                await _unitOfWork.PaymentCardRepository.CardNumberExistsAsync(registerStudentDTO.CardNumber);
-            if (isCardExist is not null)
-            {
-                return new ResponseDTO()
-                {
-                    Message = "Card number is using by another user",
-                    StatusCode = 400,
-                    Result = registerStudentDTO,
-                    IsSuccess = false
-                };
-            }
-
             // Create new instance of ApplicationUser
             ApplicationUser newUser = new ApplicationUser()
             {
@@ -121,7 +97,8 @@ public class AuthService : IAuthService
                 PhoneNumber = registerStudentDTO.PhoneNumber,
                 UpdateTime = DateTime.Now,
                 AvatarUrl = "",
-                TaxNumber = ""
+                TaxNumber = "",
+                LockoutEnabled = false
             };
 
             // Create new user to database
@@ -147,15 +124,6 @@ public class AuthService : IAuthService
                 UserId = user.Id,
                 University = registerStudentDTO.University
             };
-
-            PaymentCard paymentCard = new PaymentCard()
-            {
-                CardName = registerStudentDTO.CardName,
-                CardNumber = registerStudentDTO.CardNumber,
-                CardProvider = registerStudentDTO.CardProvider,
-                UserId = user.Id
-            };
-
 
             var isRoleExist = await _roleManager.RoleExistsAsync(StaticUserRoles.Student);
 
@@ -186,19 +154,6 @@ public class AuthService : IAuthService
                 return new ResponseDTO()
                 {
                     Message = "Failed to add student",
-                    IsSuccess = false,
-                    StatusCode = 500,
-                    Result = registerStudentDTO
-                };
-            }
-
-            // Create new Payment relate with ApplicationUser
-            var isPaymentAdd = await _unitOfWork.PaymentCardRepository.AddAsync(paymentCard);
-            if (isPaymentAdd == null)
-            {
-                return new ResponseDTO()
-                {
-                    Message = "Failed to add payment card",
                     IsSuccess = false,
                     StatusCode = 500,
                     Result = registerStudentDTO
@@ -277,18 +232,6 @@ public class AuthService : IAuthService
                 };
             }
 
-            var isCardExist =
-                await _unitOfWork.PaymentCardRepository.GetAsync(x => x.CardNumber == signUpInstructorDto.CardNumber);
-            if (isCardExist is not null)
-            {
-                return new ResponseDTO
-                {
-                    IsSuccess = false,
-                    StatusCode = 400,
-                    Message = "Card number is using by another user",
-                    Result = null
-                };
-            }
 
             // Create new instance of ApplicationUser
             ApplicationUser newUser = new ApplicationUser()
@@ -302,7 +245,8 @@ public class AuthService : IAuthService
                 Country = signUpInstructorDto.Country,
                 PhoneNumber = signUpInstructorDto.PhoneNumber,
                 TaxNumber = signUpInstructorDto.TaxNumber,
-                UpdateTime = DateTime.Now
+                UpdateTime = DateTime.Now,
+                LockoutEnabled = false
             };
 
             // Create new user to database
@@ -340,14 +284,6 @@ public class AuthService : IAuthService
                 IsAccepted = null
             };
 
-            // Create instance of payment card
-            PaymentCard paymentCard = new PaymentCard()
-            {
-                CardName = signUpInstructorDto.CardName,
-                CardNumber = signUpInstructorDto.CardNumber,
-                CardProvider = signUpInstructorDto.CardProvider,
-                UserId = user.Id
-            };
 
             // Get role instructor in database
             var isRoleExist = await _roleManager.RoleExistsAsync(StaticUserRoles.Instructor);
@@ -363,9 +299,6 @@ public class AuthService : IAuthService
 
             // Create new Instructor relate with ApplicationUser
             await _unitOfWork.InstructorRepository.AddAsync(instructor);
-
-            // Create card for instructor
-            await _unitOfWork.PaymentCardRepository.AddAsync(paymentCard);
 
             // Save change to database
             await _unitOfWork.SaveAsync();
@@ -604,14 +537,14 @@ public class AuthService : IAuthService
 
 
     //Sign In bằng email và password trả về role tương ứng
-    public async Task<ResponseDTO> SignIn(SignDTO signDTO)
+    public async Task<ResponseDTO> SignIn(SignDTO signDto)
     {
         try
         {
-            var user = await _userManager.FindByEmailAsync(signDTO.Email);
+            var user = await _userManager.FindByEmailAsync(signDto.Email);
             if (user == null)
             {
-                new ResponseDTO()
+                return new ResponseDTO()
                 {
                     Message = "User does not exist!",
                     Result = null,
@@ -620,7 +553,7 @@ public class AuthService : IAuthService
                 };
             }
 
-            var isPasswordCorrect = await _userManager.CheckPasswordAsync(user, signDTO.Password);
+            var isPasswordCorrect = await _userManager.CheckPasswordAsync(user, signDto.Password);
 
             if (!isPasswordCorrect)
             {
@@ -644,9 +577,24 @@ public class AuthService : IAuthService
                 };
             }
 
+            if (user.LockoutEnd is not null)
+            {
+                return new ResponseDTO()
+                {
+                    Message = "User has been locked",
+                    IsSuccess = false,
+                    StatusCode = 403,
+                    Result = null
+                };
+            }
+
             var accessToken = await _tokenService.GenerateJwtAccessTokenAsync(user);
             var refreshToken = await _tokenService.GenerateJwtRefreshTokenAsync(user);
             await _tokenService.StoreRefreshToken(user.Id, refreshToken);
+
+            user.LastLoginTime = DateTime.UtcNow;
+            user.SendClearEmail = false;
+            await _userManager.UpdateAsync(user);
 
             return new ResponseDTO()
             {
@@ -1034,7 +982,7 @@ public class AuthService : IAuthService
     {
         try
         {
-            await _emailSender.SendVerifyEmail(email, confirmationLink);
+            await _emailService.SendVerifyEmail(email, confirmationLink);
             return new()
             {
                 Message = "Send verify email successfully",
@@ -1202,21 +1150,6 @@ public class AuthService : IAuthService
                 };
             }
 
-            // Check if card number is exist in payment card mean that user can not user that card number
-            var isCardExist =
-                await _unitOfWork.PaymentCardRepository.GetAsync(x =>
-                    x.CardNumber == studentProfileDto.CardNumber && x.UserId != user.Id);
-            if (isCardExist is not null)
-            {
-                return new ResponseDTO()
-                {
-                    Message = "Card number is using by another user",
-                    StatusCode = 400,
-                    Result = studentProfileDto,
-                    IsSuccess = false
-                };
-            }
-
             user.BirthDate = studentProfileDto.BirthDate;
             user.PhoneNumber = studentProfileDto.PhoneNumber;
             user.Address = studentProfileDto.Address;
@@ -1236,21 +1169,6 @@ public class AuthService : IAuthService
             else
             {
                 student.University = studentProfileDto.University;
-            }
-
-            var paymentCard =
-                await _unitOfWork.PaymentCardRepository.GetAsync(x =>
-                    x.CardNumber == studentProfileDto.CardNumber && x.UserId == user.Id);
-            if (paymentCard is null)
-            {
-                paymentCard = new PaymentCard()
-                {
-                    CardName = studentProfileDto.CardName,
-                    CardNumber = studentProfileDto.CardNumber,
-                    CardProvider = studentProfileDto.CardProvider,
-                    UserId = user.Id
-                };
-                await _unitOfWork.PaymentCardRepository.AddAsync(paymentCard);
             }
 
             var isRoleExist = await _roleManager.RoleExistsAsync(StaticUserRoles.Student);
@@ -1330,21 +1248,6 @@ public class AuthService : IAuthService
                 };
             }
 
-            // Check if card number is exist in payment card mean that user can not user that card number
-            var isCardExist =
-                await _unitOfWork.PaymentCardRepository.GetAsync(x =>
-                    x.CardNumber == instructorProfileDto.CardNumber && x.UserId != user.Id);
-            if (isCardExist is not null)
-            {
-                return new ResponseDTO()
-                {
-                    Message = "Card number is using by another user",
-                    StatusCode = 400,
-                    Result = instructorProfileDto,
-                    IsSuccess = false
-                };
-            }
-
             user.BirthDate = instructorProfileDto.BirthDate;
             user.PhoneNumber = instructorProfileDto.PhoneNumber;
             user.Address = instructorProfileDto.Address;
@@ -1370,21 +1273,6 @@ public class AuthService : IAuthService
             {
                 instructor.Introduction = instructorProfileDto.Introduction;
                 instructor.Industry = instructorProfileDto.Industry;
-            }
-
-            var paymentCard =
-                await _unitOfWork.PaymentCardRepository.GetAsync(x =>
-                    x.CardNumber == instructorProfileDto.CardNumber && x.UserId == user.Id);
-            if (paymentCard is null)
-            {
-                paymentCard = new PaymentCard()
-                {
-                    CardName = instructorProfileDto.CardName,
-                    CardNumber = instructorProfileDto.CardNumber,
-                    CardProvider = instructorProfileDto.CardProvider,
-                    UserId = user.Id
-                };
-                await _unitOfWork.PaymentCardRepository.AddAsync(paymentCard);
             }
 
             var isRoleExist = await _roleManager.RoleExistsAsync(StaticUserRoles.Instructor);
@@ -1445,11 +1333,19 @@ public class AuthService : IAuthService
             userInfo.Roles = roles;
             userInfo.isAccepted = true;
 
+
             if (roles.Contains(StaticUserRoles.Instructor))
             {
                 var instructor = await _unitOfWork.InstructorRepository.GetAsync(x => x.UserId == user.Id);
-                userInfo.isUploadDegree = instructor.DegreeImageUrl != null ? true : false;
-                userInfo.isAccepted = instructor.IsAccepted;
+                userInfo.isUploadDegree = instructor?.DegreeImageUrl != null ? true : false;
+                userInfo.isAccepted = instructor?.IsAccepted;
+                userInfo.InstructorId = instructor?.InstructorId;
+            }
+
+            if (roles.Contains(StaticUserRoles.Student))
+            {
+                var student = await _unitOfWork.StudentRepository.GetByUserId(userId);
+                userInfo.StudentId = student?.StudentId;
             }
 
             return new ResponseDTO()
@@ -1579,6 +1475,17 @@ public class AuthService : IAuthService
                     .FirstOrDefault(x => x.LoginProvider == StaticLoginProvider.Google);
             }
 
+            if (user.LockoutEnd is not null)
+            {
+                return new ResponseDTO()
+                {
+                    Message = "User has been locked",
+                    IsSuccess = false,
+                    StatusCode = 403,
+                    Result = null
+                };
+            }
+
             if (user is not null && userLoginInfo is null)
             {
                 return new ResponseDTO()
@@ -1616,6 +1523,10 @@ public class AuthService : IAuthService
             var refreshToken = await _tokenService.GenerateJwtRefreshTokenAsync(user);
             await _tokenService.StoreRefreshToken(user.Id, refreshToken);
 
+            user.LastLoginTime = DateTime.UtcNow;
+            user.SendClearEmail = false;
+            await _userManager.UpdateAsync(user);
+
             return new ResponseDTO()
             {
                 Result = new SignResponseDTO()
@@ -1641,6 +1552,474 @@ public class AuthService : IAuthService
                 IsSuccess = false,
                 StatusCode = 500
             };
+        }
+    }
+
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="updateStudentDto"></param>
+    /// <returns></returns>
+    public async Task<ResponseDTO> UpdateStudent(UpdateStudentProfileDTO updateStudentDTO, ClaimsPrincipal User)
+    {
+        try
+        {
+            var userId = User.Claims.FirstOrDefault(x => x.Type == ClaimTypes.NameIdentifier)?.Value;
+
+            if (userId is null)
+            {
+                return new ResponseDTO
+                {
+                    Message = "User not found",
+                    Result = null,
+                    IsSuccess = false,
+                    StatusCode = 404
+                };
+            }
+
+            var studentToUpdate = await _unitOfWork.StudentRepository.GetByUserId(userId);
+
+            if (studentToUpdate == null)
+            {
+                return new ResponseDTO
+                {
+                    Message = "Student not found",
+                    Result = null,
+                    IsSuccess = false,
+                    StatusCode = 404
+                };
+            }
+
+            // Update student-specific fields
+            studentToUpdate.University = updateStudentDTO.University;
+
+            // Update related ApplicationUser fields
+            studentToUpdate.ApplicationUser.Address = updateStudentDTO.Address;
+            studentToUpdate.ApplicationUser.BirthDate = updateStudentDTO.BirthDate;
+            studentToUpdate.ApplicationUser.Gender = updateStudentDTO.Gender;
+            studentToUpdate.ApplicationUser.FullName = updateStudentDTO.FullName;
+            studentToUpdate.ApplicationUser.Country = updateStudentDTO.Country;
+
+            _unitOfWork.StudentRepository.Update(studentToUpdate);
+            await _unitOfWork.SaveAsync();
+
+            return new ResponseDTO
+            {
+                Message = "Student updated successfully",
+                Result = null,
+                IsSuccess = true,
+                StatusCode = 200
+            };
+        }
+        catch (Exception e)
+        {
+            return new ResponseDTO
+            {
+                Message = e.Message,
+                Result = null,
+                IsSuccess = false,
+                StatusCode = 500
+            };
+        }
+    }
+
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="updateStudentDto"></param>
+    /// <returns></returns>
+    public async Task<ResponseDTO> UpdateInstructor(UpdateIntructorProfileDTO updateIntructorDTO, ClaimsPrincipal User)
+    {
+        try
+        {
+            var userId = User.Claims.FirstOrDefault(x => x.Type == ClaimTypes.NameIdentifier)?.Value;
+
+            if (userId is null)
+            {
+                return new ResponseDTO
+                {
+                    Message = "User not found",
+                    Result = null,
+                    IsSuccess = false,
+                    StatusCode = 404
+                };
+            }
+
+            var intructorToUpdate = await _unitOfWork.InstructorRepository.GetByUserId(userId);
+
+            if (intructorToUpdate == null)
+            {
+                return new ResponseDTO
+                {
+                    Message = "Intructor not found",
+                    Result = null,
+                    IsSuccess = false,
+                    StatusCode = 404
+                };
+            }
+
+            // Update student-specific fields
+            intructorToUpdate.Degree = updateIntructorDTO.Degree;
+            intructorToUpdate.Industry = updateIntructorDTO.Industry;
+            intructorToUpdate.Introduction = updateIntructorDTO.Introduction;
+
+            // Update related ApplicationUser fields
+            intructorToUpdate.ApplicationUser.Address = updateIntructorDTO.Address;
+            intructorToUpdate.ApplicationUser.BirthDate = updateIntructorDTO.BirthDate;
+            intructorToUpdate.ApplicationUser.Gender = updateIntructorDTO.Gender;
+            intructorToUpdate.ApplicationUser.FullName = updateIntructorDTO.FullName;
+            intructorToUpdate.ApplicationUser.Country = updateIntructorDTO.Country;
+            intructorToUpdate.ApplicationUser.TaxNumber = updateIntructorDTO.TaxNumber;
+
+            _unitOfWork.InstructorRepository.Update(intructorToUpdate);
+            await _unitOfWork.SaveAsync();
+
+            return new ResponseDTO
+            {
+                Message = "Updated instructor successfully",
+                Result = null,
+                IsSuccess = true,
+                StatusCode = 200
+            };
+        }
+        catch (Exception e)
+        {
+            return new ResponseDTO
+            {
+                Message = e.Message,
+                Result = null,
+                IsSuccess = false,
+                StatusCode = 500
+            };
+        }
+    }
+
+    public async Task<ResponseDTO> LockUser(LockUserDTO lockUserDto)
+    {
+        try
+        {
+            var user = await _userManager.FindByIdAsync(lockUserDto.UserId);
+
+
+            if (user is null)
+            {
+                return new ResponseDTO()
+                {
+                    Message = "User was not found",
+                    IsSuccess = false,
+                    StatusCode = 404,
+                    Result = null
+                };
+            }
+
+            var userRole = await _userManager.GetRolesAsync(user);
+
+            if (userRole.Contains(StaticUserRoles.Admin))
+            {
+                return new ResponseDTO()
+                {
+                    Message = "Lock user was failed",
+                    IsSuccess = false,
+                    StatusCode = 400,
+                    Result = null
+                };
+            }
+
+            user.LockoutEnd = DateTimeOffset.MaxValue;
+
+            var result = await _userManager.UpdateAsync(user);
+
+            if (!result.Succeeded)
+            {
+                return new ResponseDTO()
+                {
+                    Message = "Lock user was failed",
+                    IsSuccess = false,
+                    StatusCode = 400,
+                    Result = null
+                };
+            }
+
+            return new ResponseDTO()
+            {
+                Message = "Lock user successfully",
+                IsSuccess = true,
+                StatusCode = 200,
+                Result = null
+            };
+        }
+        catch (Exception e)
+        {
+            return new ResponseDTO()
+            {
+                Message = e.Message,
+                IsSuccess = false,
+                StatusCode = 500,
+                Result = null
+            };
+        }
+    }
+
+    public async Task<ResponseDTO> UnlockUser(LockUserDTO lockUserDto)
+    {
+        try
+        {
+            var user = await _userManager.FindByIdAsync(lockUserDto.UserId);
+
+            if (user is null)
+            {
+                return new ResponseDTO()
+                {
+                    Message = "User was not found",
+                    IsSuccess = false,
+                    StatusCode = 404,
+                    Result = null
+                };
+            }
+
+            user.LockoutEnd = null;
+
+            var result = await _userManager.UpdateAsync(user);
+
+            if (!result.Succeeded)
+            {
+                return new ResponseDTO()
+                {
+                    Message = "Unlock user was failed",
+                    IsSuccess = false,
+                    StatusCode = 400,
+                    Result = null
+                };
+            }
+
+            return new ResponseDTO()
+            {
+                Message = "Unlock user successfully",
+                IsSuccess = true,
+                StatusCode = 200,
+                Result = null
+            };
+        }
+        catch (Exception e)
+        {
+            return new ResponseDTO()
+            {
+                Message = e.Message,
+                IsSuccess = false,
+                StatusCode = 500,
+                Result = null
+            };
+        }
+    }
+
+    public async Task SendClearEmail(int fromMonth)
+    {
+        try
+        {
+            var fromDate = DateTime.UtcNow.AddMonths(-fromMonth);
+            var users = _userManager.Users
+                .Where(user => user.LastLoginTime <= fromDate || user.LastLoginTime == null)
+                .ToList();
+
+            var admins = await _userManager.GetUsersInRoleAsync(StaticUserRoles.Admin);
+
+            foreach (var admin in admins)
+            {
+                users.Remove(admin);
+            }
+
+            if (users.IsNullOrEmpty())
+            {
+                return;
+            }
+
+            var studentCourses = await _unitOfWork.StudentCourseRepository.GetAllAsync();
+            var courses = await _unitOfWork.CourseRepository.GetAllAsync();
+
+            foreach (var studentCourse in studentCourses)
+            {
+                var student = await _unitOfWork.StudentRepository
+                    .GetAsync(x => x.StudentId == studentCourse.StudentId);
+                var user = await _userManagerRepository.FindByIdAsync(student.UserId);
+                users.Remove(user);
+            }
+
+            foreach (var course in courses)
+            {
+                var instructor = await _unitOfWork.InstructorRepository
+                    .GetAsync(x => x.InstructorId == course.InstructorId);
+                var user = await _userManagerRepository.FindByIdAsync(instructor.UserId);
+                users.Remove(user);
+            }
+
+            foreach (var user in users)
+            {
+                if (user.Email is null) continue;
+                var result = await _emailService.SendEmailRemindDeleteAccount(user.Email);
+                if (result)
+                {
+                    user.SendClearEmail = true;
+                    await _userManager.UpdateAsync(user);
+                }
+            }
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+        }
+    }
+
+    public async Task ClearUser()
+    {
+        try
+        {
+            var users = _userManager.Users.Where(user => user.SendClearEmail == true).ToList();
+
+            var students = new List<Student>();
+            var ordersHeaders = new List<OrderHeader>();
+            var ordersDetails = new List<OrderDetails>();
+            var ordersStatus = new List<OrderStatus>();
+            var cartsHeaders = new List<CartHeader>();
+            var cartsDetails = new List<CartDetails>();
+            var studentsComments = new List<StudentComment>();
+            var coursesBookmarked = new List<CourseBookmark>();
+
+            var instructors = new List<Instructor>();
+            var instructorsComments = new List<InstructorComment>();
+            var instructorsRatings = new List<InstructorRating>();
+
+            foreach (var user in users)
+            {
+                await _emailService.SendEmailDeleteAccount(user.Email);
+                var role = await _userManager.GetRolesAsync(user);
+
+                if (role.Contains(StaticUserRoles.Instructor))
+                {
+                    var instructor = await _unitOfWork.InstructorRepository.GetAsync(x => x.UserId == user.Id);
+
+                    // Get instructorComment
+                    var instructorComment = await _unitOfWork.InstructorCommentRepository
+                        .GetAllAsync(x => x.InstructorId == instructor.InstructorId);
+
+                    // Get instructorRatting
+                    var instructorRating = await _unitOfWork.InstructorRatingRepository
+                        .GetAllAsync(x => x.InstructorId == instructor.InstructorId);
+
+                    instructors.Add(instructor);
+                    instructorsComments.AddRange(instructorComment);
+                    instructorsRatings.AddRange(instructorRating);
+                }
+
+                if (role.Contains(StaticUserRoles.Student))
+                {
+                    var student = await _unitOfWork.StudentRepository.GetAsync(x => x.UserId == user.Id);
+                    students.Add(student);
+
+
+                    // Get orderHeader and orderDetails
+                    var orderHeaders =
+                        await _unitOfWork.OrderHeaderRepository.GetAllAsync(x => x.StudentId == student.StudentId);
+                    foreach (var orderHeader in orderHeaders)
+                    {
+                        var orderDetails =
+                            await _unitOfWork.OrderDetailsRepository.GetAllAsync(x =>
+                                x.OrderHeaderId == orderHeader.Id);
+                        var orderStatus =
+                            await _unitOfWork.OrderStatusRepository.GetAllAsync(x => x.OrderHeaderId == orderHeader.Id);
+                        ordersDetails.AddRange(orderDetails);
+                        ordersStatus.AddRange(orderStatus);
+                    }
+
+                    ordersHeaders.AddRange(orderHeaders);
+
+                    //Get courseBookmarked
+                    var courseBookmarks =
+                        await _unitOfWork.CourseBookmarkRepository.GetAllAsync(x => x.StudentId == student.StudentId);
+                    coursesBookmarked.AddRange(courseBookmarks);
+
+                    //Get studentComments
+                    var studentComments =
+                        await _unitOfWork.StudentCommentRepository.GetAllAsync(x => x.StudentId == student.StudentId);
+                    studentsComments.AddRange(studentComments);
+
+                    //Get cartHeader and cartDetails
+                    var cartHeaders =
+                        await _unitOfWork.CartHeaderRepository.GetAllAsync(x => x.StudentId == student.StudentId);
+                    foreach (var cartHeader in cartHeaders)
+                    {
+                        var cartDetails =
+                            await _unitOfWork.CartDetailsRepository.GetAllAsync(x => x.CartHeaderId == cartHeader.Id);
+                        cartsDetails.AddRange(cartDetails);
+                    }
+
+                    cartsHeaders.AddRange(cartHeaders);
+                }
+            }
+
+            _unitOfWork.InstructorCommentRepository.RemoveRange(instructorsComments);
+            _unitOfWork.InstructorRatingRepository.RemoveRange(instructorsRatings);
+
+            _unitOfWork.StudentCommentRepository.RemoveRange(studentsComments);
+            _unitOfWork.CourseBookmarkRepository.RemoveRange(coursesBookmarked);
+            _unitOfWork.CartDetailsRepository.RemoveRange(cartsDetails);
+            _unitOfWork.CartHeaderRepository.RemoveRange(cartsHeaders);
+            _unitOfWork.OrderStatusRepository.RemoveRange(ordersStatus);
+            _unitOfWork.OrderDetailsRepository.RemoveRange(ordersDetails);
+            _unitOfWork.OrderHeaderRepository.RemoveRange(ordersHeaders);
+
+            _unitOfWork.InstructorRepository.RemoveRange(instructors);
+            _unitOfWork.StudentRepository.RemoveRange(students);
+
+            foreach (var user in users)
+            {
+                await DeleteUserAndRelatedDataAsync(user);
+            }
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+        }
+    }
+
+    private async Task DeleteUserAndRelatedDataAsync(ApplicationUser user)
+    {
+        var roles = await _userManager.GetRolesAsync(user);
+        if (roles.Any())
+        {
+            await _userManager.RemoveFromRolesAsync(user, roles);
+        }
+
+        var claims = await _userManager.GetClaimsAsync(user);
+        if (claims.Any())
+        {
+            foreach (var claim in claims)
+            {
+                await _userManager.RemoveClaimAsync(user, claim);
+            }
+        }
+
+        var logins = await _userManager.GetLoginsAsync(user);
+        if (logins.Any())
+        {
+            foreach (var login in logins)
+            {
+                await _userManager.RemoveLoginAsync(user, login.LoginProvider, login.ProviderKey);
+            }
+        }
+
+        var tokens = await _userManager.GetAuthenticationTokenAsync(user, "provider", "name");
+        if (tokens != null)
+        {
+            await _userManager.RemoveAuthenticationTokenAsync(user, "provider", "name");
+        }
+
+        var result = await _userManager.DeleteAsync(user);
+        if (!result.Succeeded)
+        {
+            foreach (var error in result.Errors)
+            {
+                Console.WriteLine($"Error deleting user: {error.Description}");
+            }
         }
     }
 }

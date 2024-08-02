@@ -41,7 +41,4 @@ public class SignUpInstructorDTO
     [Required] public string Industry { get; set; }
     [Required] public string Introduction { get; set; }
     [Required] public string TaxNumber { get; set; }
-    [Required] public string CardNumber { get; set; }
-    [Required] public string CardName { get; set; }
-    [Required] public string CardProvider { get; set; }
 }

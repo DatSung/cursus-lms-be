@@ -12,4 +12,5 @@ public interface ISectionDetailsVersionRepository : IRepository<SectionDetailsVe
         Guid courseSectionVersionId,
         bool? asNoTracking
     );
+    Task<SectionDetailsVersion?> GetSectionDetailsVersionById(Guid detailsId);
 }

@@ -1,0 +1,32 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: cursus-lms-api
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: cursus-lms-api
+  template:
+    metadata:
+      labels:
+        app: cursus-lms-api
+    spec:
+      containers:
+      - name: cursus-lms-api
+        image: cursuscontainer.azurecr.io/cursus-lms-api:latest
+        ports:
+        - containerPort: 8080
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: cursus-lms-api-service
+spec:
+  selector:
+    app: cursus-lms-api
+  ports:
+  - protocol: TCP
+    port: 80
+    targetPort: 8080
+  type: LoadBalancer

@@ -1,5 +1,4 @@
-﻿using System.Security.Claims;
-using Cursus.LMS.Model.Domain;
+using System.Security.Claims;
 using Cursus.LMS.Model.DTO;
 
 namespace Cursus.LMS.Service.IService;
@@ -12,19 +11,83 @@ public interface ICourseService
     /// </summary>
     /// <param name="User"></param>
     /// <returns></returns>
-    Task<ResponseDTO> CreateFrameCourse(ClaimsPrincipal User);
+    Task<ResponseDTO> CreateFrameCourse(ClaimsPrincipal User, Guid courseVersionId);
 
-
-    /// <summary>
-    /// This method for admin.
-    /// This method will merge the CourseVersion to Course
-    /// </summary>
-    /// <param name="User"></param>
-    /// <param name="courseVersion"></param>
-    /// <returns></returns>
-    Task<ResponseDTO> MergeCourseFromCourseVersion
+    Task<ResponseDTO> GetCourses
     (
         ClaimsPrincipal User,
-        Guid courseVersionId
+        Guid? instructorId,
+        string? filterOn,
+        string? filterQuery,
+        double? fromPrice,
+        double? toPrice,
+        string? sortBy,
+        bool? isAscending,
+        int pageNumber,
+        int pageSize
     );
+
+    Task<ResponseDTO> GetCourse
+    (
+        ClaimsPrincipal User,
+        Guid courseId
+    );
+
+    Task<ResponseDTO> GetCourseInfo
+    (
+        ClaimsPrincipal User,
+        Guid courseId
+    );
+
+    Task<ResponseDTO> ActivateCourse
+    (
+        ClaimsPrincipal User,
+        Guid courseId
+    );
+
+    Task<ResponseDTO> DeactivateCourse
+    (
+        ClaimsPrincipal User,
+        Guid courseId
+    );
+
+    Task<ResponseDTO> EnrollCourse
+    (
+        ClaimsPrincipal User,
+        EnrollCourseDTO enrollCourseDto
+    );
+
+    Task<ResponseDTO> GetTopPurchasedCourses
+    (
+        int? year,
+        int? month,
+        int? quarter,
+        int top,
+        int pageNumber,
+        int pageSize,
+        string? byCategoryName
+    );
+
+    Task<ResponseDTO> GetLeastPurchasedCourses
+    (
+        int? year,
+        int? month,
+        int? quarter,
+        int top,
+        int pageNumber,
+        int pageSize,
+        string? byCategoryName
+    );
+
+    Task<ResponseDTO> SuggestCourse(Guid studentId);
+    Task<ResponseDTO> UpsertCourseTotal(UpsertCourseTotalDTO upsertCourseTotalDto);
+    Task<ResponseDTO> GetAllBookMarkedCoursesById(Guid studentId, string sortOrder = "desc");
+    Task<ResponseDTO> CreateBookMarkedCourse(ClaimsPrincipal User, CreateCourseBookmarkDTO createCourseBookmarkDto);
+    Task<ResponseDTO> DeleteBookMarkedCourse(Guid id);
+
+    Task<ResponseDTO> GetBestCoursesSuggestion();
+    Task<ResponseDTO> GetTopCoursesByTrendingCategories();
+    Task<ResponseDTO> GetTopRatedCourses();
+    
+
 }

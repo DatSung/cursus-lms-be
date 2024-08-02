@@ -1,5 +1,6 @@
 using Cursus.LMS.Model.DTO;
 using Cursus.LMS.Service.IService;
+using Cursus.LMS.Utility.Constants;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -40,8 +41,8 @@ namespace Cursus.LMS.API.Controllers
             [FromQuery] string? filterQuery,
             [FromQuery] string? sortBy,
             [FromQuery] bool? isAscending,
-            [FromQuery] int pageNumber = 1,
-            [FromQuery] int pageSize = 10
+            [FromQuery] int pageNumber = 0,
+            [FromQuery] int pageSize = 0
         )
         {
             var responseDto = await _categoryService.Search(User, filterOn, filterQuery, sortBy, isAscending,
@@ -50,7 +51,7 @@ namespace Cursus.LMS.API.Controllers
         }
 
         [HttpGet]
-        [Route("get-sub-category/{id:guid}")]
+        [Route("sub/{id:guid}")]
         public async Task<ActionResult<ResponseDTO>> GetSubCategory([FromRoute] Guid id)
         {
             var responseDto = await _categoryService.GetSubCategory(id);
@@ -58,7 +59,7 @@ namespace Cursus.LMS.API.Controllers
         }
 
         [HttpGet]
-        [Route("get-parent-category/{id:guid}")]
+        [Route("parent/{id:guid}")]
         public async Task<ActionResult<ResponseDTO>> GetParentCategory([FromRoute] Guid id)
         {
             var responseDto = await _categoryService.GetParentCategory(id);
@@ -76,6 +77,7 @@ namespace Cursus.LMS.API.Controllers
 
 
         [HttpPost]
+        [Authorize(Roles = StaticUserRoles.Admin)]
         public async Task<ActionResult<ResponseDTO>> Create(CreateCategoryDTO createCategoryDto)
         {
             var responeDto = await _categoryService.CreateCategory(User, createCategoryDto);
@@ -83,6 +85,7 @@ namespace Cursus.LMS.API.Controllers
         }
 
         [HttpPut]
+        [Authorize(Roles = StaticUserRoles.Admin)]
         public async Task<ActionResult<ResponseDTO>> Update([FromBody] UpdateCategoryDTO updateCategoryDto)
         {
             var responeDto = await _categoryService.Update(User, updateCategoryDto);
@@ -91,6 +94,7 @@ namespace Cursus.LMS.API.Controllers
 
         [HttpDelete]
         [Route("{id:guid}")]
+        [Authorize(Roles = StaticUserRoles.Admin)]
         public async Task<ActionResult<ResponseDTO>> Delete([FromRoute] Guid id)
         {
             var responeDto = await _categoryService.Delete(User, id);

@@ -23,10 +23,8 @@ public class AuthServiceTests
     private readonly Mock<IEmailService> _emailServiceMock;
     private readonly Mock<IFirebaseService> _firebaseServiceMock;
     private readonly Mock<IHttpContextAccessor> _httpContextAccessorMock;
-    private readonly Mock<IEmailSender> _emailSenderMock;
     private readonly Mock<ITokenService> _tokenServiceMock;
     private readonly Mock<IUnitOfWork> _unitOfWorkMock;
-    private readonly Mock<IPaymentCardRepository> _paymentCardRepositoryMock;
     private readonly AuthService _authService;
     private readonly RegisterStudentDTO registerStudentDTO;
 
@@ -42,23 +40,17 @@ public class AuthServiceTests
         _emailServiceMock = new Mock<IEmailService>();
         _firebaseServiceMock = new Mock<IFirebaseService>();
         _httpContextAccessorMock = new Mock<IHttpContextAccessor>();
-        _emailSenderMock = new Mock<IEmailSender>();
         _tokenServiceMock = new Mock<ITokenService>();
         _unitOfWorkMock = new Mock<IUnitOfWork>();
-        _paymentCardRepositoryMock = new Mock<IPaymentCardRepository>();
-
-        _unitOfWorkMock.SetupGet(x => x.PaymentCardRepository).Returns(_paymentCardRepositoryMock.Object);
 
         _authService = new AuthService(
             _userManagerRepositoryMock.Object,
             _userManagerMock.Object,
             _roleManagerMock.Object,
-            _configurationMock.Object,
             _mapperMock.Object,
             _emailServiceMock.Object,
             _firebaseServiceMock.Object,
             _httpContextAccessorMock.Object,
-            _emailSenderMock.Object,
             _tokenServiceMock.Object,
             _unitOfWorkMock.Object);
 
@@ -66,7 +58,6 @@ public class AuthServiceTests
         {
             Email = "test@example.com",
             PhoneNumber = "1234567890",
-            CardNumber = "1234567890123456",
             Password = "Password123!",
             Address = "123 Main St",
             BirthDate = DateTime.Now.AddYears(-20),
@@ -74,8 +65,6 @@ public class AuthServiceTests
             Gender = "Male",
             Country = "Country",
             University = "University",
-            CardName = "John Doe",
-            CardProvider = "Visa"
         };
     }
 
@@ -91,7 +80,6 @@ public class AuthServiceTests
         {
             Email = "test@example.com",
             PhoneNumber = "1234567890",
-            CardNumber = "1234567890123456"
         };
         _userManagerRepositoryMock.Setup(x => x.FindByEmailAsync(It.IsAny<string>())).ReturnsAsync(new ApplicationUser());
 
@@ -111,7 +99,6 @@ public class AuthServiceTests
         {
             Email = "test@example.com",
             PhoneNumber = "1234567890",
-            CardNumber = "1234567890123456"
         };
         _userManagerRepositoryMock.Setup(x => x.FindByEmailAsync(It.IsAny<string>())).ReturnsAsync((ApplicationUser)null);
         _userManagerRepositoryMock.Setup(x => x.CheckIfPhoneNumberExistsAsync(It.IsAny<string>())).ReturnsAsync(true);
@@ -132,11 +119,9 @@ public class AuthServiceTests
         {
             Email = "test@example.com",
             PhoneNumber = "1234567890",
-            CardNumber = "1234567890123456"
         };
         _userManagerRepositoryMock.Setup(x => x.FindByEmailAsync(It.IsAny<string>())).ReturnsAsync((ApplicationUser)null);
         _userManagerRepositoryMock.Setup(x => x.CheckIfPhoneNumberExistsAsync(It.IsAny<string>())).ReturnsAsync(false);
-        _unitOfWorkMock.Setup(x => x.PaymentCardRepository.CardNumberExistsAsync(It.IsAny<string>())).ReturnsAsync(new PaymentCard());
 
         // Act
         var result = await _authService.SignUpStudent(registerStudentDTO);
@@ -153,7 +138,6 @@ public class AuthServiceTests
         {
             Email = "test@example.com",
             PhoneNumber = "1234567890",
-            CardNumber = "1234567890123456",
             Password = "Password123!",
             Address = "123 Main St",
             BirthDate = DateTime.Now.AddYears(-20),
@@ -161,12 +145,9 @@ public class AuthServiceTests
             Gender = "Male",
             Country = "Country",
             University = "University",
-            CardName = "John Doe",
-            CardProvider = "Visa"
         }; // Fill with necessary data
         _userManagerRepositoryMock.Setup(repo => repo.FindByEmailAsync(registerStudentDTO.Email)).ReturnsAsync((ApplicationUser)null);
         _userManagerRepositoryMock.Setup(repo => repo.CheckIfPhoneNumberExistsAsync(registerStudentDTO.PhoneNumber)).ReturnsAsync(false);
-        _unitOfWorkMock.Setup(uow => uow.PaymentCardRepository.CardNumberExistsAsync(registerStudentDTO.CardNumber)).ReturnsAsync((PaymentCard)null);
         _userManagerRepositoryMock.Setup(repo => repo.FindByPhoneAsync(registerStudentDTO.PhoneNumber)).ReturnsAsync( new ApplicationUser());
         _userManagerRepositoryMock.Setup(repo => repo.CreateAsync(It.IsAny<ApplicationUser>(), It.IsAny<string>())).ReturnsAsync(IdentityResult.Success);
         _roleManagerMock.Setup(repo => repo.RoleExistsAsync(StaticUserRoles.Student)).ReturnsAsync(false);
@@ -189,7 +170,6 @@ public class AuthServiceTests
         {
             Email = "test@example.com",
             PhoneNumber = "1234567890",
-            CardNumber = "1234567890123456",
             Password = "Password123!",
             Address = "123 Main St",
             BirthDate = DateTime.Now.AddYears(-20),
@@ -197,12 +177,9 @@ public class AuthServiceTests
             Gender = "Male",
             Country = "Country",
             University = "University",
-            CardName = "John Doe",
-            CardProvider = "Visa"
         }; // Fill with necessary data
         _userManagerRepositoryMock.Setup(repo => repo.FindByEmailAsync(registerStudentDTO.Email)).ReturnsAsync((ApplicationUser)null);
         _userManagerRepositoryMock.Setup(repo => repo.CheckIfPhoneNumberExistsAsync(registerStudentDTO.PhoneNumber)).ReturnsAsync(false);
-        _unitOfWorkMock.Setup(uow => uow.PaymentCardRepository.CardNumberExistsAsync(registerStudentDTO.CardNumber)).ReturnsAsync((PaymentCard)null);
         _userManagerRepositoryMock.Setup(repo => repo.FindByPhoneAsync(registerStudentDTO.PhoneNumber)).ReturnsAsync(new ApplicationUser());
         _userManagerRepositoryMock.Setup(repo => repo.CreateAsync(It.IsAny<ApplicationUser>(), It.IsAny<string>())).ReturnsAsync(IdentityResult.Success);
         _roleManagerMock.Setup(repo => repo.RoleExistsAsync(StaticUserRoles.Student)).ReturnsAsync(false);
@@ -225,7 +202,6 @@ public class AuthServiceTests
         {
             Email = "test@example.com",
             PhoneNumber = "1234567890",
-            CardNumber = "1234567890123456",
             Password = "Password123!",
             Address = "123 Main St",
             BirthDate = DateTime.Now.AddYears(-20),
@@ -233,18 +209,14 @@ public class AuthServiceTests
             Gender = "Male",
             Country = "Country",
             University = "University",
-            CardName = "John Doe",
-            CardProvider = "Visa"
         }; // Fill with necessary data
         _userManagerRepositoryMock.Setup(repo => repo.FindByEmailAsync(registerStudentDTO.Email)).ReturnsAsync((ApplicationUser)null);
         _userManagerRepositoryMock.Setup(repo => repo.CheckIfPhoneNumberExistsAsync(registerStudentDTO.PhoneNumber)).ReturnsAsync(false);
-        _unitOfWorkMock.Setup(uow => uow.PaymentCardRepository.CardNumberExistsAsync(registerStudentDTO.CardNumber)).ReturnsAsync((PaymentCard)null);
         _userManagerRepositoryMock.Setup(repo => repo.FindByPhoneAsync(registerStudentDTO.PhoneNumber)).ReturnsAsync(new ApplicationUser());
         _userManagerRepositoryMock.Setup(repo => repo.CreateAsync(It.IsAny<ApplicationUser>(), It.IsAny<string>())).ReturnsAsync(IdentityResult.Success);
         _roleManagerMock.Setup(repo => repo.RoleExistsAsync(StaticUserRoles.Student)).ReturnsAsync(false);
         _userManagerRepositoryMock.Setup(repo => repo.AddToRoleAsync(It.IsAny<ApplicationUser>(), It.IsAny<string>())).ReturnsAsync(IdentityResult.Success);
         _unitOfWorkMock.Setup(uow => uow.StudentRepository.AddAsync(It.IsAny<Student>())).ReturnsAsync(new Student());
-        _unitOfWorkMock.Setup(x => x.PaymentCardRepository.AddAsync(It.IsAny<PaymentCard>())).ReturnsAsync((PaymentCard)null);
 
         // Act
         var result = await _authService.SignUpStudent(registerStudentDTO);
@@ -262,7 +234,6 @@ public class AuthServiceTests
         {
             Email = "test@example.com",
             PhoneNumber = "1234567890",
-            CardNumber = "1234567890123456",
             Password = "Password123!",
             Address = "123 Main St",
             BirthDate = DateTime.Now.AddYears(-20),
@@ -270,18 +241,14 @@ public class AuthServiceTests
             Gender = "Male",
             Country = "Country",
             University = "University",
-            CardName = "John Doe",
-            CardProvider = "Visa"
         }; // Fill with necessary data
         _userManagerRepositoryMock.Setup(repo => repo.FindByEmailAsync(registerStudentDTO.Email)).ReturnsAsync((ApplicationUser)null);
         _userManagerRepositoryMock.Setup(repo => repo.CheckIfPhoneNumberExistsAsync(registerStudentDTO.PhoneNumber)).ReturnsAsync(false);
-        _unitOfWorkMock.Setup(uow => uow.PaymentCardRepository.CardNumberExistsAsync(registerStudentDTO.CardNumber)).ReturnsAsync((PaymentCard)null);
         _userManagerRepositoryMock.Setup(repo => repo.FindByPhoneAsync(registerStudentDTO.PhoneNumber)).ReturnsAsync(new ApplicationUser());
         _userManagerRepositoryMock.Setup(repo => repo.CreateAsync(It.IsAny<ApplicationUser>(), It.IsAny<string>())).ReturnsAsync(IdentityResult.Success);
         _roleManagerMock.Setup(repo => repo.RoleExistsAsync(StaticUserRoles.Student)).ReturnsAsync(false);
         _userManagerRepositoryMock.Setup(repo => repo.AddToRoleAsync(It.IsAny<ApplicationUser>(), It.IsAny<string>())).ReturnsAsync(IdentityResult.Success);
         _unitOfWorkMock.Setup(uow => uow.StudentRepository.AddAsync(It.IsAny<Student>())).ReturnsAsync(new Student());
-        _unitOfWorkMock.Setup(x => x.PaymentCardRepository.AddAsync(It.IsAny<PaymentCard>())).ReturnsAsync(new PaymentCard());
         _unitOfWorkMock.Setup(x => x.SaveAsync()).ReturnsAsync(0);
 
         // Act
@@ -303,7 +270,6 @@ public class AuthServiceTests
         {
             Email = "test@example.com",
             PhoneNumber = "1234567890",
-            CardNumber = "1234567890123456",
             Password = "Password123!",
             Address = "123 Main St",
             BirthDate = DateTime.Now.AddYears(-20),
@@ -311,18 +277,14 @@ public class AuthServiceTests
             Gender = "Male",
             Country = "Country",
             University = "University",
-            CardName = "John Doe",
-            CardProvider = "Visa"
         }; // Fill with necessary data
         _userManagerRepositoryMock.Setup(repo => repo.FindByEmailAsync(registerStudentDTO.Email)).ReturnsAsync((ApplicationUser)null);
         _userManagerRepositoryMock.Setup(repo => repo.CheckIfPhoneNumberExistsAsync(registerStudentDTO.PhoneNumber)).ReturnsAsync(false);
-        _unitOfWorkMock.Setup(uow => uow.PaymentCardRepository.CardNumberExistsAsync(registerStudentDTO.CardNumber)).ReturnsAsync((PaymentCard)null);
         _userManagerRepositoryMock.Setup(repo => repo.FindByPhoneAsync(registerStudentDTO.PhoneNumber)).ReturnsAsync(new ApplicationUser());
         _userManagerRepositoryMock.Setup(repo => repo.CreateAsync(It.IsAny<ApplicationUser>(), It.IsAny<string>())).ReturnsAsync(IdentityResult.Success);
         _roleManagerMock.Setup(repo => repo.RoleExistsAsync(StaticUserRoles.Student)).ReturnsAsync(false);
         _userManagerRepositoryMock.Setup(repo => repo.AddToRoleAsync(It.IsAny<ApplicationUser>(), It.IsAny<string>())).ReturnsAsync(IdentityResult.Success);
         _unitOfWorkMock.Setup(uow => uow.StudentRepository.AddAsync(It.IsAny<Student>())).ReturnsAsync(new Student());
-        _unitOfWorkMock.Setup(x => x.PaymentCardRepository.AddAsync(It.IsAny<PaymentCard>())).ReturnsAsync(new PaymentCard());
         _unitOfWorkMock.Setup(x => x.SaveAsync()).ReturnsAsync(1); // Mock the SaveAsync method
 
         // Act

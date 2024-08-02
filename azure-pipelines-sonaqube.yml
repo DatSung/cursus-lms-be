@@ -1,0 +1,29 @@
+trigger:
+- develop # or the name of your main branch
+- feature/*
+
+steps:
+ # Checkout the repository 
+- checkout: self
+
+ # Disable shallow fetch
+  fetchDepth: 0
+
+# Prepare Analysis Configuration task
+- task: SonarQubePrepare@6
+  inputs:
+    SonarQube: 'SonarQube'
+    scannerMode: 'MSBuild'
+    projectKey: 'Backend_-_Cursus_LMS_Backend_-_Cursus_LMS_abd10ebb-5e96-40d3-849d-1f843512aca5'
+
+# Dotnet build task
+- task: DotNetCoreCLI@2
+  displayName: 'dotnet build'
+
+# Run Code Analysis task
+- task: SonarQubeAnalyze@6
+
+# Publish Quality Gate Result task
+- task: SonarQubePublish@6
+  inputs:
+    pollingTimeoutSec: '300'

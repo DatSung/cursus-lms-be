@@ -39,4 +39,9 @@ public class SectionDetailsVersionRepository : Repository<SectionDetailsVersion>
                 .Where(x => x.CourseSectionVersionId == courseSectionVersionId)
                 .ToListAsync();
     }
+
+    public async Task<SectionDetailsVersion?> GetSectionDetailsVersionById(Guid detailsId)
+    {
+        return await _context.SectionDetailsVersions.FirstOrDefaultAsync(x => x.Id == detailsId);
+    }
 }

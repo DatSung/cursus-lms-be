@@ -1,4 +1,16 @@
 ﻿<wpf:ResourceDictionary xml:space="preserve" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:s="clr-namespace:System;assembly=mscorlib" xmlns:ss="urn:shemas-jetbrains-com:settings-storage-xaml" xmlns:wpf="http://schemas.microsoft.com/winfx/2006/xaml/presentation">
+	<s:String x:Key="/Default/Environment/AssemblyExplorer/XmlDocument/@EntryValue">&lt;AssemblyExplorer&gt;&#xD;
+  &lt;Assembly Path="C:\Users\trant\.nuget\packages\firebaseadmin\3.0.0\lib\net6.0\FirebaseAdmin.dll" /&gt;&#xD;
+  &lt;Assembly Path="C:\Users\trant\.nuget\packages\microsoft.entityframeworkcore\8.0.6\lib\net8.0\Microsoft.EntityFrameworkCore.dll" /&gt;&#xD;
+&lt;/AssemblyExplorer&gt;</s:String>
+	<s:String x:Key="/Default/Environment/Highlighting/HighlightingSourceSnapshotLocation/@EntryValue">C:\Users\uinic\AppData\Local\JetBrains\Rider2024.1\resharper-host\temp\Rider\vAny\CoverageData\_Cursus.LMS.-859042042\Snapshot\snapshot.utdcvr</s:String>
+	
+	
+	
+	
+	
+	
+	
 	
 	
 	

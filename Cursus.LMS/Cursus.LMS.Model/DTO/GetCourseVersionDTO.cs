@@ -1,4 +1,6 @@
-﻿namespace Cursus.LMS.Model.DTO;
+﻿using Cursus.LMS.Utility.Constants;
+
+namespace Cursus.LMS.Model.DTO;
 
 public class GetCourseVersionDTO
 {
@@ -12,7 +14,49 @@ public class GetCourseVersionDTO
     public double? OldPrice { get; set; }
     public string? CourseImgUrl { get; set; }
     public Guid? InstructorId { get; set; }
+    public string? InstructorEmail { get; set; }
     public Guid? CategoryId { get; set; }
+    public string? CategoryName { get; set; }
     public Guid? LevelId { get; set; }
+    public string? LevelName { get; set; }
+    public string? Version { get; set; }
     public int? CurrentStatus { get; set; }
+
+    public string CurrentStatusDescription
+    {
+        get
+        {
+            switch (CurrentStatus)
+            {
+                case StaticCourseVersionStatus.New:
+                {
+                    return "New";
+                }
+                case StaticCourseVersionStatus.Submitted:
+                {
+                    return "Submitted";
+                }
+                case StaticCourseVersionStatus.Accepted:
+                {
+                    return "Accepted";
+                }
+                case StaticCourseVersionStatus.Rejected:
+                {
+                    return "Rejected";
+                }
+                case StaticCourseVersionStatus.Merged:
+                {
+                    return "Merged";
+                }
+                case StaticCourseVersionStatus.Removed:
+                {
+                    return "Removed";
+                }
+                default:
+                {
+                    return "New";
+                }
+            }
+        }
+    }
 }

@@ -1,11 +1,13 @@
 using Cursus.LMS.API.Extentions;
 using Cursus.LMS.DataAccess.Context;
 using Cursus.LMS.Service.Hubs;
+using Cursus.LMS.Service.IService;
 using Cursus.LMS.Service.Mappings;
 using Cursus.LMS.Utility.Constants;
 using Hangfire;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using Stripe;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -63,21 +65,34 @@ builder.Services.AddSignalR();
 
 builder.Services.AddCors(options =>
 {
-    var origin = builder.Configuration["AllowOrigin:FrontEnd"];
+    var originDefault = builder.Configuration["AllowOrigin:FrontEnd"];
+    var originFirebase = builder.Configuration["AllowOrigin:FrontEndFirebase"];
+    var originVercel = builder.Configuration["AllowOrigin:FrontEndVercel"];
+    var originK8S = builder.Configuration["AllowOrigin:FrontEndK8S"];
     options.AddPolicy("AllowSpecificOrigin",
         builder => builder
-            .WithOrigins(origin)
+            .WithOrigins(originDefault, originFirebase, originVercel, originK8S)
             .AllowAnyHeader()
             .AllowAnyMethod()
             .AllowCredentials());
 });
 
+// Add Application Insights Telemetry
+builder.Services.AddApplicationInsightsTelemetry(builder.Configuration["ApplicationInsights:InstrumentationKey"]);
+
 var app = builder.Build();
 
 ApplyMigration();
 
+StripeConfiguration.ApiKey = builder.Configuration.GetSection("Stripe:SecretKey").Get<string>();
+
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
+{
+    app.UseSwagger();
+    app.UseSwaggerUI();
+}
+else
 {
     app.UseSwagger();
     app.UseSwaggerUI();
@@ -88,6 +103,9 @@ app.UseCors("AllowSpecificOrigin");
 app.UseHangfireDashboard();
 
 app.MapHangfireDashboard("/hangfire");
+
+RecurringJob.AddOrUpdate<IAuthService>(job => job.SendClearEmail(3), "0 0 1 */3 *");
+RecurringJob.AddOrUpdate<IAuthService>(job => job.ClearUser(), "0 0 1 */4 *");
 
 app.UseHttpsRedirection();
 

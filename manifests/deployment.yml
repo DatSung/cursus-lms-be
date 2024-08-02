@@ -1,0 +1,19 @@
+apiVersion : apps/v1
+kind: Deployment
+metadata:
+  name: backendcursuslms 
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: backendcursuslms
+  template:
+    metadata:
+      labels:
+        app: backendcursuslms 
+    spec:
+      containers:
+        - name: backendcursuslms 
+          image: cursuscontainer.azurecr.io/backendcursuslms
+          ports:
+          - containerPort: 8080
