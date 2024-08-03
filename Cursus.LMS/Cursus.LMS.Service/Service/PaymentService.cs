@@ -251,8 +251,12 @@ public class PaymentService : IPaymentService
 
             createStripePayoutDto.ConnectedAccountId = instructor?.StripeAccountId;
 
-
             var responseDto = await _stripeService.CreatePayout(createStripePayoutDto);
+
+            if (responseDto.StatusCode == 500)
+            {
+                return responseDto;
+            }
 
             var payout = (Payout)responseDto.Result!;
 
@@ -297,8 +301,13 @@ public class PaymentService : IPaymentService
         }
         catch (Exception e)
         {
-            Console.WriteLine(e);
-            throw;
+            return new ResponseDTO()
+            {
+                Message = e.Message,
+                StatusCode = 500,
+                Result = null,
+                IsSuccess = false
+            };
         }
     }
 
