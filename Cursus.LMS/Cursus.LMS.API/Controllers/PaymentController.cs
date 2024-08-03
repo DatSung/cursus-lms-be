@@ -28,11 +28,20 @@ namespace Cursus.LMS.API.Controllers
         }
 
         [HttpGet]
-        [Route("balance")]
-        [Authorize(Roles = StaticUserRoles.AdminInstructor)]
-        public async Task<ActionResult<ResponseDTO>> GetBalance([FromQuery] string? userId)
+        [Route("system/balance")]
+        [Authorize(Roles = StaticUserRoles.Admin)]
+        public async Task<ActionResult<ResponseDTO>> GetSystemBalance()
         {
-            var responseDto = await _balanceService.GetBalance(User, userId);
+            var responseDto = await _balanceService.GetSystemBalance(User);
+            return StatusCode(responseDto.StatusCode, responseDto);
+        }
+
+        [HttpGet]
+        [Route("instructor/balance")]
+        [Authorize(Roles = StaticUserRoles.AdminInstructor)]
+        public async Task<ActionResult<ResponseDTO>> GetInstructorBalance([FromQuery] string? userId)
+        {
+            var responseDto = await _balanceService.GetInstructorBalance(User, userId);
             return StatusCode(responseDto.StatusCode, responseDto);
         }
 

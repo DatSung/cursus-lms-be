@@ -162,5 +162,7 @@ public class AutoMapperProfile : Profile
         CreateMap<TermOfUse, UpdateTermOfUseDTO>().ReverseMap();
 
         CreateMap<Balance, GetBalanceDTO>().ReverseMap();
+
+        CreateMap<OrderStatus, GetOrdersStatusDTO>().ReverseMap();
     }
 }

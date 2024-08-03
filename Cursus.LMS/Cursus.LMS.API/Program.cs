@@ -22,7 +22,7 @@ builder.Services.AddHttpClient();
 
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
 {
-    options.UseSqlServer(builder.Configuration.GetConnectionString(StaticConnectionString.SQLDB_DefaultConnection));
+    options.UseSqlServer(builder.Configuration.GetConnectionString(StaticConnectionString.SQLDB_AzureConnection));
 });
 
 // Set time token
@@ -86,8 +86,22 @@ ApplyMigration();
 
 StripeConfiguration.ApiKey = builder.Configuration.GetSection("Stripe:SecretKey").Get<string>();
 
+<<<<<<< HEAD
 app.UseSwagger();
 app.UseSwaggerUI();
+=======
+// Configure the HTTP request pipeline.
+if (app.Environment.IsDevelopment())
+{
+    app.UseSwagger();
+    app.UseSwaggerUI();
+}
+else
+{
+    app.UseSwagger();
+    app.UseSwaggerUI();
+}
+>>>>>>> 7ae0bae1daff32c2bbb8a5542928e1742e254e0d
 
 app.UseCors("AllowSpecificOrigin");
 

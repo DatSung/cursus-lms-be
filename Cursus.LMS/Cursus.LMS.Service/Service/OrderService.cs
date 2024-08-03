@@ -1,4 +1,5 @@
-﻿using System.Security.Claims;
+﻿using System.Globalization;
+using System.Security.Claims;
 using AutoMapper;
 using Cursus.LMS.DataAccess.IRepository;
 using Cursus.LMS.Model.Domain;
@@ -6,8 +7,6 @@ using Cursus.LMS.Model.DTO;
 using Cursus.LMS.Service.IService;
 using Cursus.LMS.Utility.Constants;
 using Microsoft.IdentityModel.Tokens;
-using Stripe;
-using Stripe.Checkout;
 using Exception = System.Exception;
 
 namespace Cursus.LMS.Service.Service;
@@ -176,21 +175,108 @@ public class OrderService : IOrderService
     {
         try
         {
-            var orders = await _unitOfWork.OrderHeaderRepository.GetAllAsync();
-            var userId = User.Claims.FirstOrDefault(x => x.Type == ClaimTypes.NameIdentifier)?.Value;
+            var userId = User.Claims.FirstOrDefault(x => x.Type == ClaimTypes.NameIdentifier)!.Value;
+            var role = User.Claims.FirstOrDefault(x => x.Type == ClaimTypes.Role)!.Value;
+            var orders = new List<OrderHeader>();
 
-            if (studentId is not null)
+            if (role.Contains(StaticUserRoles.Student))
             {
-                orders = orders.Where(x => x.StudentId == studentId);
+                studentId = _unitOfWork.StudentRepository
+                    .GetByUserId(userId)
+                    .GetAwaiter()
+                    .GetResult()!
+                    .StudentId;
+                orders = _unitOfWork.OrderHeaderRepository
+                    .GetAllAsync()
+                    .GetAwaiter()
+                    .GetResult()
+                    .ToList();
             }
 
+            if (role.Contains(StaticUserRoles.Admin))
+            {
+                if (studentId is null)
+                {
+                    orders = _unitOfWork.OrderHeaderRepository
+                        .GetAllAsync()
+                        .GetAwaiter()
+                        .GetResult()
+                        .ToList();
+                }
+                else
+                {
+                    studentId = _unitOfWork.StudentRepository
+                        .GetByUserId(userId)
+                        .GetAwaiter()
+                        .GetResult()!
+                        .StudentId;
+                    orders = _unitOfWork.OrderHeaderRepository
+                        .GetAllAsync(x => x.StudentId == studentId)
+                        .GetAwaiter()
+                        .GetResult().ToList();
+                }
+            }
+
+            // Filter Query
+            if (!string.IsNullOrEmpty(filterOn) && !string.IsNullOrEmpty(filterQuery))
+            {
+                switch (filterOn.Trim().ToLower())
+                {
+                    case "price":
+                    {
+                        orders = orders.Where
+                        (
+                            x => x.OrderPrice.ToString(CultureInfo.InvariantCulture).Contains(filterQuery,
+                                StringComparison.CurrentCultureIgnoreCase)).ToList();
+                        break;
+                    }
+                    default:
+                    {
+                        break;
+                    }
+                }
+            }
+
+            if (!string.IsNullOrEmpty(sortBy))
+            {
+                switch (sortBy.Trim().ToLower())
+                {
+                    case "price":
+                    {
+                        orders = isAscending == true
+                            ? [.. orders.OrderBy(x => x.OrderPrice)]
+                            : [.. orders.OrderByDescending(x => x.OrderPrice)];
+                        break;
+                    }
+                    case "time":
+                    {
+                        orders = isAscending == true
+                            ? [.. orders.OrderBy(x => x.CreatedTime)]
+                            : [.. orders.OrderByDescending(x => x.CreatedTime)];
+                        break;
+                    }
+                    default:
+                    {
+                        break;
+                    }
+                }
+            }
+
+            // Pagination
+            if (pageNumber > 0 && pageSize > 0)
+            {
+                var skipResult = (pageNumber - 1) * pageSize;
+                orders = orders.Skip(skipResult).Take(pageSize).ToList();
+            }
+
+            var getOrderHeaderDto = _mapper.Map<List<GetOrderHeaderDTO>>(orders);
 
             return new ResponseDTO()
             {
                 Message = "Get orders successfully",
                 IsSuccess = true,
                 StatusCode = 200,
-                Result = orders
+                Result = getOrderHeaderDto
             };
         }
         catch (Exception e)
@@ -310,6 +396,8 @@ public class OrderService : IOrderService
             );
             var result = (ResponseStripeSessionDTO)responseDto.Result!;
 
+            orderHeader.StripeSessionId = result.StripeSessionId;
+
             _unitOfWork.OrderHeaderRepository.Update(orderHeader);
             await _unitOfWork.SaveAsync();
 
@@ -414,6 +502,8 @@ public class OrderService : IOrderService
                 }
             );
 
+            await _unitOfWork.SaveAsync();
+
             return new ResponseDTO()
             {
                 Message = "Validate payment with stripe successfully",
@@ -465,7 +555,7 @@ public class OrderService : IOrderService
                 };
             }
 
-            orderHeader.Status = StaticStatus.Order.Pending;
+            orderHeader.Status = StaticStatus.Order.Confirmed;
             _unitOfWork.OrderHeaderRepository.Update(orderHeader);
             await _unitOfWork.SaveAsync();
 
@@ -474,7 +564,7 @@ public class OrderService : IOrderService
                 User,
                 new CreateOrderStatusDTO()
                 {
-                    Status = StaticStatus.Order.Pending,
+                    Status = StaticStatus.Order.Confirmed,
                     OrderHeaderId = orderHeader.Id,
                 }
             );

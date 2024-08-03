@@ -26,7 +26,7 @@ namespace Cursus.LMS.Service.IService
         Task<ResponseDTO> ActivateStudent(ClaimsPrincipal User, Guid studentId);
         Task<ResponseDTO> DeactivateStudent(ClaimsPrincipal User, Guid studentId);
         Task<ResponseDTO> GetStudentTotalCourses(Guid studentId);
-        Task<ResponseDTO> GetAllCourseByStudentId(Guid studentId);
+        Task<ResponseDTO> GetAllCourseByStudentId(ClaimsPrincipal User ,CourseByStudentDTO courseByStudentDTO);
         Task<ResponseDTO> GetAllCourseStudentEnrolled(Guid studentId);
         Task<ResponseDTO> GetAllStudentComment(Guid studentId, int pageNumber, int pageSize);
         Task<ResponseDTO> CreateStudentComment(ClaimsPrincipal User, CreateStudentCommentDTO createStudentCommentDTO);

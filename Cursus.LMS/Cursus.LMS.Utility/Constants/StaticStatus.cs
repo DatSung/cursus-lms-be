@@ -25,7 +25,7 @@ public static class StaticStatus
         public const int Pending = 0;
         public const int Enrolled = 1;
         public const int Learning = 2;
-        public const int Ended = 3;
+        public const int Completed = 3;
         public const int Canceled = 4;
     }
 }
