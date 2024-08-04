@@ -758,7 +758,7 @@ public class CourseService : ICourseService
                 };
             }
 
-            if (studentCourse.Status != StaticStatus.StudentCourse.Pending)
+            if (studentCourse.Status != StaticStatus.StudentCourse.Confirmed)
             {
                 return new ResponseDTO()
                 {
