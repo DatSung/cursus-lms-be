@@ -1288,4 +1288,90 @@ public class CourseService : ICourseService
             };
         }
     }
+
+    public async Task<ResponseDTO> GetCourseRateTotal(Guid courseId)
+    {
+        try
+        {
+            // Fetch all courses
+            var course = await _unitOfWork.CourseRepository.GetAsync(
+                filter: c => c.Id == courseId
+            );
+
+            if (course is null)
+            {
+                return new ResponseDTO()
+                {
+                    Message = "Course was not found",
+                    IsSuccess = false,
+                    StatusCode = 404,
+                    Result = null
+                };
+            }
+
+            return new ResponseDTO
+            {
+                Result = new
+                {
+                    Rate = course.TotalRate
+                },
+                Message = "Get course total rate successfully",
+                IsSuccess = true,
+                StatusCode = 200
+            };
+        }
+        catch (Exception ex)
+        {
+            return new ResponseDTO
+            {
+                Message = ex.Message,
+                IsSuccess = false,
+                StatusCode = 500,
+                Result = null
+            };
+        }
+    }
+
+    public async Task<ResponseDTO> GetCourseSlotTotal(Guid courseId)
+    {
+        try
+        {
+            // Fetch all courses
+            var course = await _unitOfWork.CourseRepository.GetAsync(
+                filter: c => c.Id == courseId
+            );
+
+            if (course is null)
+            {
+                return new ResponseDTO()
+                {
+                    Message = "Course was not found",
+                    IsSuccess = false,
+                    StatusCode = 404,
+                    Result = null
+                };
+            }
+
+            return new ResponseDTO
+            {
+                Result = new
+                {
+                    Slot = course.TotalStudent
+                },
+                Message = "Get course total slot successfully",
+                IsSuccess = true,
+                StatusCode = 200
+            };
+        }
+        catch (Exception ex)
+        {
+            return new ResponseDTO
+            {
+                Message = ex.Message,
+                IsSuccess = false,
+                StatusCode = 500,
+                Result = null
+            };
+        }
+    }
 }

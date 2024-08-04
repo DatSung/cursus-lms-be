@@ -84,10 +84,9 @@ public interface ICourseService
     Task<ResponseDTO> GetAllBookMarkedCoursesById(Guid studentId, string sortOrder = "desc");
     Task<ResponseDTO> CreateBookMarkedCourse(ClaimsPrincipal User, CreateCourseBookmarkDTO createCourseBookmarkDto);
     Task<ResponseDTO> DeleteBookMarkedCourse(Guid id);
-
     Task<ResponseDTO> GetBestCoursesSuggestion();
     Task<ResponseDTO> GetTopCoursesByTrendingCategories();
     Task<ResponseDTO> GetTopRatedCourses();
-    
-
+    Task<ResponseDTO> GetCourseRateTotal(Guid courseId);
+    Task<ResponseDTO> GetCourseSlotTotal(Guid courseId);
 }
