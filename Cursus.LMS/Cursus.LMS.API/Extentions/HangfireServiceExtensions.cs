@@ -12,7 +12,7 @@ public static class HangfireServiceExtensions
             .UseSimpleAssemblyNameTypeSerializer()
             .UseRecommendedSerializerSettings()
             .UseSqlServerStorage(
-                builder.Configuration.GetConnectionString(StaticConnectionString.SQLDB_LocalDefaultConnection))
+                builder.Configuration.GetConnectionString(StaticConnectionString.SQLDB_DefaultConnection))
         );
 
         builder.Services.AddHangfireServer();
