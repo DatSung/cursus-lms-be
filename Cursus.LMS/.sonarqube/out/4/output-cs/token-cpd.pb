@@ -1,422 +1,495 @@
-ë:
+—D
 TD:\FPT\Semester 6\Project_Cursus\Backend_Cursus\Cursus.LMS\Cursus.LMS.API\Program.cs
-var 
-builder 
-= 
-WebApplication 
-. 
-CreateBuilder *
-(* +
-args+ /
-)/ 0
-;0 1
-builder 
-. 
-Services 
-. 
-AddControllers 
-(  
-)  !
-;! "
-builder 
-. 
-Services 
-. "
-AddHttpContextAccessor '
-(' (
-)( )
-;) *
-builder 
-. 
-Services 
-. 
-AddHttpClient 
-( 
-)  
-;  !
-builder 
-. 
-Services 
-. 
-AddDbContext 
-<  
-ApplicationDbContext 2
->2 3
-(3 4
-options4 ;
-=>< >
-{ 
-options 
-. 
-UseSqlServer 
-( 
-builder  
-.  !
-Configuration! .
-.. /
-GetConnectionString/ B
-(B C"
-StaticConnectionStringC Y
-.Y Z#
-SQLDB_DefaultConnectionZ q
-)q r
-)r s
-;s t
-} 
-) 
-; 
-builder 
-. 
-Services 
-. 
-	Configure 
-< .
-"DataProtectionTokenProviderOptions =
->= >
-(> ?
-options? F
-=>G I
-options 
-. 
-TokenLifespan 
-= 
-TimeSpan $
-.$ %
-FromMinutes% 0
-(0 1
-$num1 3
-)3 4
-)4 5
-;5 6
-builder   
-.   
-Services   
-.   
-AddAutoMapper   
-(   
-typeof   %
-(  % &
-AutoMapperProfile  & 7
-)  7 8
-)  8 9
-;  9 :
-builder$$ 
-.$$ 
-Services$$ 
-.$$ 
-RegisterServices$$ !
-($$! "
-)$$" #
-;$$# $
-builder(( 
-.(( 
-Services(( 
-.(( 
-AddFirebaseServices(( $
-((($ %
-)((% &
-;((& '
-builder,, 
-.,, 
-AddRedisCache,, 
-(,, 
-),, 
-;,, 
-builder00 
-.00 
-AddHangfireServices00 
-(00 
-)00 
-;00 
-builder22 
-.22 
-Services22 
-.22 #
-AddEndpointsApiExplorer22 (
-(22( )
-)22) *
-;22* +
-builder66 
-.66  
-AddAppAuthentication66 
-(66 
-)66 
-;66 
-builder88 
-.88 
-Services88 
-.88 
-AddAuthorization88 !
-(88! "
-)88" #
-;88# $
-builder<< 
-.<< 
-AddSwaggerGen<< 
-(<< 
-)<< 
-;<< 
-builder?? 
-.?? 
-Services?? 
-.?? 
+var 
+builder 
+= 
+WebApplication 
+. 
+CreateBuilder *
+(* +
+args+ /
+)/ 0
+;0 1
+builder 
+. 
+Services 
+. 
+AddControllers 
+(  
+)  !
+;! "
+builder 
+. 
+Services 
+. "
+AddHttpContextAccessor '
+(' (
+)( )
+;) *
+builder 
+. 
+Services 
+. 
+AddHttpClient 
+( 
+)  
+;  !
+builder 
+. 
+Services 
+. 
+AddDbContext 
+<  
+ApplicationDbContext 2
+>2 3
+(3 4
+options4 ;
+=>< >
+{ 
+options 
+. 
+UseSqlServer 
+( 
+builder  
+.  !
+Configuration! .
+.. /
+GetConnectionString/ B
+(B C"
+StaticConnectionStringC Y
+.Y Z#
+SQLDB_DefaultConnectionZ q
+)q r
+)r s
+;s t
+} 
+) 
+; 
+builder 
+. 
+Services 
+. 
+	Configure 
+< .
+"DataProtectionTokenProviderOptions =
+>= >
+(> ?
+options? F
+=>G I
+options 
+. 
+TokenLifespan 
+= 
+TimeSpan $
+.$ %
+FromMinutes% 0
+(0 1
+$num1 3
+)3 4
+)4 5
+;5 6
+builder!! 
+.!! 
+Services!! 
+.!! 
+AddAutoMapper!! 
+(!! 
+typeof!! %
+(!!% &
+AutoMapperProfile!!& 7
+)!!7 8
+)!!8 9
+;!!9 :
+builder%% 
+.%% 
+Services%% 
+.%% 
+RegisterServices%% !
+(%%! "
+)%%" #
+;%%# $
+builder)) 
+.)) 
+Services)) 
+.)) 
+AddFirebaseServices)) $
+())$ %
+)))% &
+;))& '
+builder-- 
+.-- 
+AddRedisCache-- 
+(-- 
+)-- 
+;-- 
+builder11 
+.11 
+AddHangfireServices11 
+(11 
+)11 
+;11 
+builder33 
+.33 
+Services33 
+.33 #
+AddEndpointsApiExplorer33 (
+(33( )
+)33) *
+;33* +
+builder77 
+.77  
+AddAppAuthentication77 
+(77 
+)77 
+;77 
+builder99 
+.99 
+Services99 
+.99 
+AddAuthorization99 !
+(99! "
+)99" #
+;99# $
+builder== 
+.== 
+AddSwaggerGen== 
+(== 
+)== 
+;== 
+builder@@ 
+.@@ 
+Services@@ 
+.@@ 
 
-AddSignalR?? 
-(?? 
-)?? 
-;?? 
-builderAA 
-.AA 
-ServicesAA 
-.AA 
-AddCorsAA 
-(AA 
-optionsAA  
-=>AA! #
-{BB 
-varCC 
-originCC 
-=CC 
-builderCC 
-.CC 
-ConfigurationCC &
-[CC& '
-$strCC' =
-]CC= >
-;CC> ?
-optionsDD 
-.DD 
-	AddPolicyDD 
-(DD 
-$strDD +
-,DD+ ,
-builderEE 
-=>EE 
-builderEE 
-.FF 
-WithOriginsFF 
-(FF 
-originFF 
-)FF  
-.GG 
-AllowAnyHeaderGG 
-(GG 
-)GG 
-.HH 
-AllowAnyMethodHH 
-(HH 
-)HH 
-.II 
-AllowCredentialsII 
-(II 
-)II 
-)II  
-;II  !
-}JJ 
-)JJ 
-;JJ 
-builderMM 
-.MM 
-ServicesMM 
-.MM +
-AddApplicationInsightsTelemetryMM 0
-(MM0 1
-builderMM1 8
-.MM8 9
-ConfigurationMM9 F
-[MMF G
-$strMMG o
-]MMo p
-)MMp q
-;MMq r
-varOO 
-appOO 
-=OO 	
-builderOO
+AddSignalR@@ 
+(@@ 
+)@@ 
+;@@ 
+builderBB 
+.BB 
+ServicesBB 
+.BB 
+AddCorsBB 
+(BB 
+optionsBB  
+=>BB! #
+{CC 
+varDD 
+originDefaultDD 
+=DD 
+builderDD 
+.DD  
+ConfigurationDD  -
+[DD- .
+$strDD. D
+]DDD E
+;DDE F
+varEE 
+originFirebaseEE 
+=EE 
+builderEE  
+.EE  !
+ConfigurationEE! .
+[EE. /
+$strEE/ M
+]EEM N
+;EEN O
+varFF 
+originVercelFF 
+=FF 
+builderFF 
+.FF 
+ConfigurationFF ,
+[FF, -
+$strFF- I
+]FFI J
+;FFJ K
+varGG 
+	originK8SGG 
+=GG 
+builderGG 
+.GG 
+ConfigurationGG )
+[GG) *
+$strGG* C
+]GGC D
+;GGD E
+optionsHH 
+.HH 
+	AddPolicyHH 
+(HH 
+$strHH +
+,HH+ ,
+builderII 
+=>II 
+builderII 
+.JJ 
+WithOriginsJJ 
+(JJ 
+originDefaultJJ &
+,JJ& '
+originFirebaseJJ( 6
+,JJ6 7
+originVercelJJ8 D
+,JJD E
+	originK8SJJF O
+)JJO P
+.KK 
+AllowAnyHeaderKK 
+(KK 
+)KK 
+.LL 
+AllowAnyMethodLL 
+(LL 
+)LL 
+.MM 
+AllowCredentialsMM 
+(MM 
+)MM 
+)MM  
+;MM  !
+}NN 
+)NN 
+;NN 
+builderQQ 
+.QQ 
+ServicesQQ 
+.QQ +
+AddApplicationInsightsTelemetryQQ 0
+(QQ0 1
+builderQQ1 8
+.QQ8 9
+ConfigurationQQ9 F
+[QQF G
+$strQQG o
+]QQo p
+)QQp q
+;QQq r
+varSS 
+appSS 
+=SS 	
+builderSS
  
-.OO 
-BuildOO 
-(OO 
-)OO 
-;OO 
-ApplyMigrationQQ 
-(QQ 
-)QQ 
-;QQ 
-StripeConfigurationSS 
-.SS 
-ApiKeySS 
-=SS 
-builderSS $
-.SS$ %
-ConfigurationSS% 2
-.SS2 3
+.SS 
+BuildSS 
+(SS 
+)SS 
+;SS 
+ApplyMigrationUU 
+(UU 
+)UU 
+;UU 
+StripeConfigurationWW 
+.WW 
+ApiKeyWW 
+=WW 
+builderWW $
+.WW$ %
+ConfigurationWW% 2
+.WW2 3
 
-GetSectionSS3 =
-(SS= >
-$strSS> P
-)SSP Q
-.SSQ R
-GetSSR U
-<SSU V
-stringSSV \
->SS\ ]
-(SS] ^
-)SS^ _
-;SS_ `
-ifVV 
-(VV 
-appVV 
-.VV 
-EnvironmentVV 
-.VV 
-IsDevelopmentVV !
-(VV! "
-)VV" #
-)VV# $
-{WW 
-appXX 
-.XX 
+GetSectionWW3 =
+(WW= >
+$strWW> P
+)WWP Q
+.WWQ R
+GetWWR U
+<WWU V
+stringWWV \
+>WW\ ]
+(WW] ^
+)WW^ _
+;WW_ `
+ifZZ 
+(ZZ 
+appZZ 
+.ZZ 
+EnvironmentZZ 
+.ZZ 
+IsDevelopmentZZ !
+(ZZ! "
+)ZZ" #
+)ZZ# $
+{[[ 
+app\\ 
+.\\ 
 
-UseSwaggerXX 
-(XX 
-)XX 
-;XX 
-appYY 
-.YY 
-UseSwaggerUIYY 
-(YY 
-)YY 
-;YY 
-}ZZ 
-app\\ 
-.\\ 
-UseCors\\ 
-(\\ 
-$str\\ !
-)\\! "
-;\\" #
-app^^ 
-.^^  
-UseHangfireDashboard^^ 
-(^^ 
-)^^ 
-;^^ 
+UseSwagger\\ 
+(\\ 
+)\\ 
+;\\ 
+app]] 
+.]] 
+UseSwaggerUI]] 
+(]] 
+)]] 
+;]] 
+}^^ 
 app`` 
-.``  
-MapHangfireDashboard`` 
-(`` 
-$str`` $
-)``$ %
-;``% &
+.`` 
+UseCors`` 
+(`` 
+$str`` !
+)``! "
+;``" #
 appbb 
-.bb 
-UseHttpsRedirectionbb 
-(bb 
-)bb 
-;bb 
+.bb  
+UseHangfireDashboardbb 
+(bb 
+)bb 
+;bb 
 appdd 
-.dd 
-UseAuthenticationdd 
-(dd 
-)dd 
-;dd 
-appff 
-.ff 
-UseAuthorizationff 
-(ff 
-)ff 
-;ff 
-apphh 
-.hh 
-MapControllershh 
-(hh 
-)hh 
-;hh 
-appjj 
-.jj 
-MapHubjj 
+.dd  
+MapHangfireDashboarddd 
+(dd 
+$strdd $
+)dd$ %
+;dd% &
+RecurringJobff 
+.ff 
+AddOrUpdateff 
+<ff 
+IAuthServiceff %
+>ff% &
+(ff& '
+jobff' *
+=>ff+ -
+jobff. 1
+.ff1 2
+SendClearEmailff2 @
+(ff@ A
+$numffA B
+)ffB C
+,ffC D
+$strffE R
+)ffR S
+;ffS T
+RecurringJobgg 
+.gg 
+AddOrUpdategg 
+<gg 
+IAuthServicegg %
+>gg% &
+(gg& '
+jobgg' *
+=>gg+ -
+jobgg. 1
+.gg1 2
+	ClearUsergg2 ;
+(gg; <
+)gg< =
+,gg= >
+$strgg? L
+)ggL M
+;ggM N
+appii 
+.ii 
+UseHttpsRedirectionii 
+(ii 
+)ii 
+;ii 
+appkk 
+.kk 
+UseAuthenticationkk 
+(kk 
+)kk 
+;kk 
+appmm 
+.mm 
+UseAuthorizationmm 
+(mm 
+)mm 
+;mm 
+appoo 
+.oo 
+MapControllersoo 
+(oo 
+)oo 
+;oo 
+appqq 
+.qq 
+MapHubqq 
 
-<jj
+<qq
  
-NotificationHubjj 
->jj 
-(jj 
-$strjj 0
-)jj0 1
-.jj1 2 
-RequireAuthorizationjj2 F
-(jjF G
-)jjG H
-;jjH I
-appll 
-.ll 
-Runll 
-(ll 
-)ll 	
-;ll	 
+NotificationHubqq 
+>qq 
+(qq 
+$strqq 0
+)qq0 1
+.qq1 2 
+RequireAuthorizationqq2 F
+(qqF G
+)qqG H
+;qqH I
+appss 
+.ss 
+Runss 
+(ss 
+)ss 	
+;ss	 
 
-voidnn 
-ApplyMigrationnn 
-(nn 
-)nn 
-{oo 
-usingpp 	
-(pp
+voiduu 
+ApplyMigrationuu 
+(uu 
+)uu 
+{vv 
+usingww 	
+(ww
  
-varpp 
-scopepp 
-=pp 
-apppp 
-.pp 
-Servicespp #
-.pp# $
-CreateScopepp$ /
-(pp/ 0
-)pp0 1
-)pp1 2
-{qq 
-varrr 
-contextrr 
-=rr 
-scoperr 
-.rr 
-ServiceProviderrr +
-.rr+ ,
-GetRequiredServicerr, >
-<rr> ? 
-ApplicationDbContextrr? S
->rrS T
-(rrT U
-)rrU V
-;rrV W
-iftt 
+varww 
+scopeww 
+=ww 
+appww 
+.ww 
+Servicesww #
+.ww# $
+CreateScopeww$ /
+(ww/ 0
+)ww0 1
+)ww1 2
+{xx 
+varyy 
+contextyy 
+=yy 
+scopeyy 
+.yy 
+ServiceProvideryy +
+.yy+ ,
+GetRequiredServiceyy, >
+<yy> ? 
+ApplicationDbContextyy? S
+>yyS T
+(yyT U
+)yyU V
+;yyV W
+if{{ 
 
-(tt 
-contexttt 
-.tt 
-Databasett 
-.tt  
-GetPendingMigrationstt 1
-(tt1 2
-)tt2 3
-.tt3 4
-Anytt4 7
-(tt7 8
-)tt8 9
-)tt9 :
-{uu 	
-contextvv 
-.vv 
-Databasevv 
-.vv 
-Migratevv $
-(vv$ %
-)vv% &
-;vv& '
-}ww 	
-}xx 
-}yy √*
+({{ 
+context{{ 
+.{{ 
+Database{{ 
+.{{  
+GetPendingMigrations{{ 1
+({{1 2
+){{2 3
+.{{3 4
+Any{{4 7
+({{7 8
+){{8 9
+){{9 :
+{|| 	
+context}} 
+.}} 
+Database}} 
+.}} 
+Migrate}} $
+(}}$ %
+)}}% &
+;}}& '
+}~~ 	
+} 
+}ÄÄ √*
 wD:\FPT\Semester 6\Project_Cursus\Backend_Cursus\Cursus.LMS\Cursus.LMS.API\Extentions\WebApplicationBuilderExtensions.cs
 	namespace 	
 Cursus
@@ -708,7 +781,7 @@ Extentions #
 builder@@ 
 ;@@ 
 }AA 
-}BB ‡8
+}BB Æ?
 sD:\FPT\Semester 6\Project_Cursus\Backend_Cursus\Cursus.LMS\Cursus.LMS.API\Extentions\ServiceCollectionExtensions.cs
 	namespace		 	
 Cursus		
@@ -1057,33 +1130,77 @@ UnitOfWork( 2
 (HH; <
 )HH< =
 ;HH= >
-servicesKK 
-.KK 
-AddIdentityKK 
-<KK 
-ApplicationUserKK ,
-,KK, -
-IdentityRoleKK. :
->KK: ;
-(KK; <
-)KK< =
-.LL $
-AddEntityFrameworkStoresLL %
-<LL% & 
-ApplicationDbContextLL& :
+servicesJJ 
+.JJ 
+	AddScopedJJ 
+<JJ "
+ICourseProgressServiceJJ 1
+,JJ1 2!
+CourseProgressServiceJJ3 H
+>JJH I
+(JJI J
+)JJJ K
+;JJK L
+servicesLL 
+.LL 
+	AddScopedLL 
+<LL 
+ICompanyServiceLL *
+,LL* +
+CompanyServiceLL, :
 >LL: ;
 (LL; <
 )LL< =
-.MM $
-AddDefaultTokenProvidersMM %
-(MM% &
-)MM& '
-;MM' (
-returnPP 
-servicesPP 
-;PP 
-}QQ 
-}RR ⁄
+;LL= >
+servicesNN 
+.NN 
+	AddScopedNN 
+<NN 
+ITermOfUseServiceNN ,
+,NN, -
+TermOfUseServiceNN. >
+>NN> ?
+(NN? @
+)NN@ A
+;NNA B
+servicesPP 
+.PP 
+	AddScopedPP 
+<PP 
+IPrivacyServicePP *
+,PP* +
+PrivacyServicePP, :
+>PP: ;
+(PP; <
+)PP< =
+;PP= >
+servicesSS 
+.SS 
+AddIdentitySS 
+<SS 
+ApplicationUserSS ,
+,SS, -
+IdentityRoleSS. :
+>SS: ;
+(SS; <
+)SS< =
+.TT $
+AddEntityFrameworkStoresTT %
+<TT% & 
+ApplicationDbContextTT& :
+>TT: ;
+(TT; <
+)TT< =
+.UU $
+AddDefaultTokenProvidersUU %
+(UU% &
+)UU& '
+;UU' (
+returnXX 
+servicesXX 
+;XX 
+}YY 
+}ZZ ⁄
 
 nD:\FPT\Semester 6\Project_Cursus\Backend_Cursus\Cursus.LMS\Cursus.LMS.API\Extentions\RedisServiceExtensions.cs
 	namespace 	
@@ -1361,295 +1478,369 @@ Credential 
 services 
 ; 
 } 
-} ∂7
-jD:\FPT\Semester 6\Project_Cursus\Backend_Cursus\Cursus.LMS\Cursus.LMS.API\Controllers\PaymentController.cs
-	namespace		 	
-Cursus		
+} ıW
+jD:\FPT\Semester 6\Project_Cursus\Backend_Cursus\Cursus.LMS\Cursus.LMS.API\Controllers\WebsiteController.cs
+	namespace 	
+Cursus
  
-.		 
-LMS		 
-.		 
-API		 
-.		 
-Controllers		 $
-{
-
- 
-[ 
-Route 
+. 
+LMS 
+. 
+API 
+. 
+Controllers $
+{ 
+[ 
+Route 
 
-(
+(
  
-$str 
-) 
-] 
-[ 
-ApiController 
-] 
-public 
+$str 
+) 
+] 
+[ 
+ApiController 
+] 
+public		 
 
-class 
-PaymentController "
-:# $
-ControllerBase% 3
-{ 
-private 
-readonly 
-IPaymentService (
-_paymentService) 8
-;8 9
-private 
-readonly 
-ITransactionService ,
-_transactionService- @
-;@ A
-public 
-PaymentController  
-(  !
-IPaymentService! 0
-paymentService1 ?
-,? @
-ITransactionServiceA T
-transactionServiceU g
-)g h
-{ 	
-_paymentService 
-= 
-paymentService ,
-;, -
-_transactionService 
-=  !
-transactionService" 4
-;4 5
-} 	
-[ 	
-HttpGet	 
-] 
-[ 	
-Route	 
-( 
-$str 
-) 
-] 
-public 
-async 
-Task 
-< 
-ActionResult &
-<& '
-ResponseDTO' 2
->2 3
->3 4!
-GetTransactionHistory5 J
-( 	
-[ 
-	FromQuery 
-] 
-string 
-? 
-userId  &
-,& '
-[ 
-	FromQuery 
-] 
-string 
-? 
-filterOn  (
-,( )
-[ 
-	FromQuery 
-] 
-string 
-? 
-filterQuery  +
-,+ ,
-[ 
-	FromQuery 
-] 
-string 
-? 
-sortBy  &
-,& '
-[   
-	FromQuery   
-]   
-bool   
-?   
-isAscending   )
-,  ) *
-[!! 
-	FromQuery!! 
-]!! 
-int!! 
+class		 
+WebsiteController		 "
+:		# $
+ControllerBase		% 3
+{
+
+ 
+private 
+readonly 
+ICompanyService (
+_companyService) 8
+;8 9
+private 
+readonly 
+ITermOfUseService *
+_termOfUseService+ <
+;< =
+private 
+readonly 
+IPrivacyService (
+_privacyService) 8
+;8 9
+public 
+WebsiteController  
+( 	
+ICompanyService 
+companyService *
+,* +
+ITermOfUseService 
+termOfUseService .
+,. /
+IPrivacyService 
+privacyService *
+) 	
+{ 	
+_companyService 
+= 
+companyService ,
+;, -
+_termOfUseService 
+= 
+termOfUseService  0
+;0 1
+_privacyService 
+= 
+privacyService ,
+;, -
+} 	
+[ 	
+HttpGet	 
+( 
+$str 
+) 
+] 
+public 
+async 
+Task 
+< 
+ActionResult &
+<& '
+ResponseDTO' 2
+>2 3
+>3 4
 
-pageNumber!! &
-=!!' (
-$num!!) *
-,!!* +
-["" 
-	FromQuery"" 
-]"" 
-int"" 
-pageSize"" $
-=""% &
-$num""' (
-)## 	
-{$$ 	
-var%% 
-responseDto%% 
-=%% 
-await%% #
-_transactionService%%$ 7
-.%%7 8
-GetTransactions%%8 G
-(&& 
-User'' 
-,'' 
-userId(( 
-,(( 
-filterOn)) 
-,)) 
-filterQuery** 
-,** 
-sortBy++ 
-,++ 
-isAscending,, 
-,,, 
+GetCompany5 ?
+(? @
+)@ A
+{ 	
+var   
+responseDto   
+=   
+await   #
+_companyService  $ 3
+.  3 4
 
-pageNumber-- 
-,-- 
-pageSize.. 
-)// 
-;// 
-return00 
+GetCompany  4 >
+(  > ?
+)  ? @
+;  @ A
+return!! 
 
-StatusCode00 
-(00 
-responseDto00 )
-.00) *
+StatusCode!! 
+(!! 
+responseDto!! )
+.!!) *
 
-StatusCode00* 4
-,004 5
-responseDto006 A
-)00A B
-;00B C
-}11 	
-[44 	
-HttpPost44	 
-]44 
-[55 	
-Route55	 
-(55 
-$str55 
-)55  
-]55  !
-public66 
-async66 
-Task66 
-<66 
-ActionResult66 &
-<66& '
-ResponseDTO66' 2
->662 3
->663 4(
-CreateStripeConnectedAccount665 Q
-(77 	+
-CreateStripeConnectedAccountDTO88 ++
-createStripeConnectedAccountDto88, K
-)99 	
-{:: 	
-var;; 
-responseDto;; 
-=;; 
-await;; #
-_paymentService;;$ 3
-.;;3 4(
-CreateStripeConnectedAccount;;4 P
-(;;P Q+
-createStripeConnectedAccountDto;;Q p
-);;p q
-;;;q r
-return<< 
+StatusCode!!* 4
+,!!4 5
+responseDto!!6 A
+)!!A B
+;!!B C
+}"" 	
+[$$ 	
+HttpPut$$	 
+($$ 
+$str$$ 
+)$$ 
+]$$ 
+public%% 
+async%% 
+Task%% 
+<%% 
+ActionResult%% &
+<%%& '
+ResponseDTO%%' 2
+>%%2 3
+>%%3 4
+UpdateCompany%%5 B
+(%%B C
+[%%C D
+FromBody%%D L
+]%%L M
+UpdateCompanyDTO%%N ^
 
-StatusCode<< 
-(<< 
-responseDto<< )
-.<<) *
+companyDto%%_ i
+)%%i j
+{&& 	
+var'' 
+responseDto'' 
+='' 
+await'' #
+_companyService''$ 3
+.''3 4
+UpdateCompany''4 A
+(''A B
 
-StatusCode<<* 4
-,<<4 5
-responseDto<<6 A
-)<<A B
-;<<B C
-}== 	
-[?? 	
-HttpPost??	 
-]?? 
-[@@ 	
-Route@@	 
-(@@ 
-$str@@  
-)@@  !
-]@@! "
-publicAA 
-asyncAA 
-TaskAA 
-<AA 
-ActionResultAA &
-<AA& '
-ResponseDTOAA' 2
->AA2 3
->AA3 4 
-CreateStripeTransferAA5 I
-(BB 	#
-CreateStripeTransferDTOCC ##
-createStripeTransferDtoCC$ ;
-)CC; <
-{DD 	
-varEE 
-responseDtoEE 
-=EE 
-awaitEE #
-_paymentServiceEE$ 3
-.EE3 4 
-CreateStripeTransferEE4 H
-(EEH I#
-createStripeTransferDtoEEI `
-)EE` a
-;EEa b
-returnFF 
+companyDto''B L
+)''L M
+;''M N
+return(( 
 
-StatusCodeFF 
-(FF 
-responseDtoFF )
-.FF) *
+StatusCode(( 
+((( 
+responseDto(( )
+.(() *
 
-StatusCodeFF* 4
-,FF4 5
-responseDtoFF6 A
-)FFA B
-;FFB C
-}GG 	
-[II 	
-HttpPostII	 
-]II 
-[JJ 	
-RouteJJ	 
-(JJ 
-$strJJ 
-)JJ 
-]JJ  
-[KK 	
-	AuthorizeKK	 
-(KK 
-RolesKK 
-=KK 
-StaticUserRolesKK *
-.KK* +
+StatusCode((* 4
+,((4 5
+responseDto((6 A
+)((A B
+;((B C
+})) 	
+[// 	
+HttpGet//	 
+(// 
+$str// 
+)// 
+]// 
+public00 
+async00 
+Task00 
+<00 
+ActionResult00 &
+<00& '
+ResponseDTO00' 2
+>002 3
+>003 4
+GetPrivacies005 A
+(00A B
+)00B C
+{11 	
+var22 
+responseDto22 
+=22 
+await22 #
+_privacyService22$ 3
+.223 4
+GetPrivacies224 @
+(22@ A
+)22A B
+;22B C
+return33 
 
-InstructorKK+ 5
-)KK5 6
-]KK6 7
+StatusCode33 
+(33 
+responseDto33 )
+.33) *
+
+StatusCode33* 4
+,334 5
+responseDto336 A
+)33A B
+;33B C
+}44 	
+[66 	
+HttpGet66	 
+(66 
+$str66 $
+)66$ %
+]66% &
+public77 
+async77 
+Task77 
+<77 
+ActionResult77 &
+<77& '
+ResponseDTO77' 2
+>772 3
+>773 4
+
+GetPrivacy775 ?
+(77? @
+Guid77@ D
+id77E G
+)77G H
+{88 	
+var99 
+responseDto99 
+=99 
+await99 #
+_privacyService99$ 3
+.993 4
+
+GetPrivacy994 >
+(99> ?
+id99? A
+)99A B
+;99B C
+return:: 
+
+StatusCode:: 
+(:: 
+responseDto:: )
+.::) *
+
+StatusCode::* 4
+,::4 5
+responseDto::6 A
+)::A B
+;::B C
+};; 	
+[== 	
+HttpPost==	 
+(== 
+$str== 
+)== 
+]== 
+public>> 
+async>> 
+Task>> 
+<>> 
+ActionResult>> &
+<>>& '
+ResponseDTO>>' 2
+>>>2 3
+>>>3 4
+CreatePrivacy>>5 B
+(>>B C
+[>>C D
+FromBody>>D L
+]>>L M
+CreatePrivacyDTO>>N ^
+
+privacyDto>>_ i
+)>>i j
+{?? 	
+var@@ 
+responseDto@@ 
+=@@ 
+await@@ #
+_privacyService@@$ 3
+.@@3 4
+CreatePrivacy@@4 A
+(@@A B
+
+privacyDto@@B L
+)@@L M
+;@@M N
+returnAA 
+
+StatusCodeAA 
+(AA 
+responseDtoAA )
+.AA) *
+
+StatusCodeAA* 4
+,AA4 5
+responseDtoAA6 A
+)AAA B
+;AAB C
+}BB 	
+[DD 	
+HttpPutDD	 
+(DD 
+$strDD 
+)DD 
+]DD 
+publicEE 
+asyncEE 
+TaskEE 
+<EE 
+ActionResultEE &
+<EE& '
+ResponseDTOEE' 2
+>EE2 3
+>EE3 4
+UpdatePrivacyEE5 B
+(EEB C
+[EEC D
+FromBodyEED L
+]EEL M
+UpdatePrivacyDTOEEN ^
+
+privacyDtoEE_ i
+)EEi j
+{FF 	
+varGG 
+responseDtoGG 
+=GG 
+awaitGG #
+_privacyServiceGG$ 3
+.GG3 4
+UpdatePrivacyGG4 A
+(GGA B
+
+privacyDtoGGB L
+)GGL M
+;GGM N
+returnHH 
+
+StatusCodeHH 
+(HH 
+responseDtoHH )
+.HH) *
+
+StatusCodeHH* 4
+,HH4 5
+responseDtoHH6 A
+)HHA B
+;HHB C
+}II 	
+[KK 	
+
+HttpDeleteKK	 
+(KK 
+$strKK '
+)KK' (
+]KK( )
 publicLL 
 asyncLL 
 TaskLL 
@@ -1658,26 +1849,24 @@ InstructorKK+ 5
 <LL& '
 ResponseDTOLL' 2
 >LL2 3
->LL3 4
-CreateStripePayoutLL5 G
-(LLG H!
-CreateStripePayoutDTOLLH ]!
-createStripePayoutDtoLL^ s
-)LLs t
+>LL3 4
+DeletePrivacyLL5 B
+(LLB C
+GuidLLC G
+idLLH J
+)LLJ K
 {MM 	
 varNN 
 responseDtoNN 
 =NN 
 awaitNN #
-_paymentServiceNN$ 3
-.NN3 4
-CreateStripePayoutNN4 F
-(NNF G
-UserNNG K
-,NNK L!
-createStripePayoutDtoNNM b
-)NNb c
-;NNc d
+_privacyServiceNN$ 3
+.NN3 4
+DeletePrivacyNN4 A
+(NNA B
+idNNB D
+)NND E
+;NNE F
 returnOO 
 
 StatusCodeOO 
@@ -1691,41 +1880,35 @@ StatusCodeOO* 4
 )OOA B
 ;OOB C
 }PP 	
-[RR 	
-HttpPostRR	 
-]RR 
-[SS 	
-RouteSS	 
-(SS 
-$strSS 
-)SS 
-]SS 
-publicTT 
-asyncTT 
-TaskTT 
-<TT 
-ActionResultTT &
-<TT& '
-ResponseDTOTT' 2
->TT2 3
->TT3 4
-AddStripeCardTT5 B
-(UU 	
-AddStripeCardDTOVV 
-addStripeCardDtoVV -
-)WW 	
+[VV 	
+HttpGetVV	 
+(VV 
+$strVV 
+)VV 
+]VV  
+publicWW 
+asyncWW 
+TaskWW 
+<WW 
+ActionResultWW &
+<WW& '
+ResponseDTOWW' 2
+>WW2 3
+>WW3 4
+GetTermOfUsesWW5 B
+(WWB C
+)WWC D
 {XX 	
 varYY 
 responseDtoYY 
 =YY 
-awaitYY #
-_paymentServiceYY$ 3
-.YY3 4
-AddStripeCardYY4 A
-(YYA B
-addStripeCardDtoYYB R
-)YYR S
-;YYS T
+awaitYY #
+_termOfUseServiceYY$ 5
+.YY5 6
+GetTermOfUsesYY6 C
+(YYC D
+)YYD E
+;YYE F
 returnZZ 
 
 StatusCodeZZ 
@@ -1738,10 +1921,196 @@ StatusCodeZZ* 4
 responseDtoZZ6 A
 )ZZA B
 ;ZZB C
-}[[ 	
-}
-ÜÜ 
-}áá “ü
+}[[ 	
+[]] 	
+HttpGet]]	 
+(]] 
+$str]] (
+)]]( )
+]]]) *
+public^^ 
+async^^ 
+Task^^ 
+<^^ 
+ActionResult^^ &
+<^^& '
+ResponseDTO^^' 2
+>^^2 3
+>^^3 4
+GetTermOfUse^^5 A
+(^^A B
+Guid^^B F
+id^^G I
+)^^I J
+{__ 	
+var`` 
+responseDto`` 
+=`` 
+await`` #
+_termOfUseService``$ 5
+.``5 6
+GetTermOfUse``6 B
+(``B C
+id``C E
+)``E F
+;``F G
+returnaa 
+
+StatusCodeaa 
+(aa 
+responseDtoaa )
+.aa) *
+
+StatusCodeaa* 4
+,aa4 5
+responseDtoaa6 A
+)aaA B
+;aaB C
+}bb 	
+[dd 	
+HttpPostdd	 
+(dd 
+$strdd 
+)dd  
+]dd  !
+publicee 
+asyncee 
+Taskee 
+<ee 
+ActionResultee &
+<ee& '
+ResponseDTOee' 2
+>ee2 3
+>ee3 4
+CreateTermOfUseee5 D
+(eeD E
+[eeE F
+FromBodyeeF N
+]eeN O
+CreateTermOfUseDTOeeP b
+termOfUseDtoeec o
+)eeo p
+{ff 	
+vargg 
+responseDtogg 
+=gg 
+awaitgg #
+_termOfUseServicegg$ 5
+.gg5 6
+CreateTermOfUsegg6 E
+(ggE F
+termOfUseDtoggF R
+)ggR S
+;ggS T
+returnhh 
+
+StatusCodehh 
+(hh 
+responseDtohh )
+.hh) *
+
+StatusCodehh* 4
+,hh4 5
+responseDtohh6 A
+)hhA B
+;hhB C
+}ii 	
+[kk 	
+HttpPutkk	 
+(kk 
+$strkk 
+)kk 
+]kk  
+publicll 
+asyncll 
+Taskll 
+<ll 
+ActionResultll &
+<ll& '
+ResponseDTOll' 2
+>ll2 3
+>ll3 4
+UpdateTermOfUsell5 D
+(llD E
+[llE F
+FromBodyllF N
+]llN O
+UpdateTermOfUseDTOllP b
+termOfUseDtollc o
+)llo p
+{mm 	
+varnn 
+responseDtonn 
+=nn 
+awaitnn #
+_termOfUseServicenn$ 5
+.nn5 6
+UpdateTermOfUsenn6 E
+(nnE F
+termOfUseDtonnF R
+)nnR S
+;nnS T
+returnoo 
+
+StatusCodeoo 
+(oo 
+responseDtooo )
+.oo) *
+
+StatusCodeoo* 4
+,oo4 5
+responseDtooo6 A
+)ooA B
+;ooB C
+}pp 	
+[rr 	
+
+HttpDeleterr	 
+(rr 
+$strrr +
+)rr+ ,
+]rr, -
+publicss 
+asyncss 
+Taskss 
+<ss 
+ActionResultss &
+<ss& '
+ResponseDTOss' 2
+>ss2 3
+>ss3 4
+DeleteTermOfUsess5 D
+(ssD E
+GuidssE I
+idssJ L
+)ssL M
+{tt 	
+varuu 
+responseDtouu 
+=uu 
+awaituu #
+_termOfUseServiceuu$ 5
+.uu5 6
+DeleteTermOfUseuu6 E
+(uuE F
+iduuF H
+)uuH I
+;uuI J
+returnvv 
+
+StatusCodevv 
+(vv 
+responseDtovv )
+.vv) *
+
+StatusCodevv* 4
+,vv4 5
+responseDtovv6 A
+)vvA B
+;vvB C
+}ww 	
+}zz 
+}{{ €ù
 jD:\FPT\Semester 6\Project_Cursus\Backend_Cursus\Cursus.LMS\Cursus.LMS.API\Controllers\StudentController.cs
 	namespace 	
 Cursus
@@ -1793,14 +2162,7 @@ jD:\FPT\Semester 6\Project_Cursus\Backend_Cursus\Cursus.LMS\Cursus.LMS.API\Contr
 ] 
 [ 	
 	Authorize	 
-( 
-Roles 
-= 
-StaticUserRoles *
-.* +
-Admin+ 0
-)0 1
-]1 2
+] 
 public 
 async 
 Task 
@@ -1906,14 +2268,7 @@ StatusCode''* 4
 ]++" #
 [,, 	
 	Authorize,,	 
-(,, 
-Roles,, 
-=,, 
-StaticUserRoles,, *
-.,,* +
-Admin,,+ 0
-),,0 1
-],,1 2
+],, 
 public-- 
 async-- 
 Task-- 
@@ -1965,10 +2320,10 @@ StatusCode00* 4
 Roles44 
 =44 
 StaticUserRoles44 *
-.44* +
-Admin44+ 0
-)440 1
-]441 2
+.44* +
+AdminStudent44+ 7
+)447 8
+]448 9
 public55 
 async55 
 Task55 
@@ -3187,7 +3542,430 @@ StatusCode
 ππ 	
 }
 ∫∫ 
-}ªª —<
+}ªª ∑=
+jD:\FPT\Semester 6\Project_Cursus\Backend_Cursus\Cursus.LMS\Cursus.LMS.API\Controllers\PaymentController.cs
+	namespace		 	
+Cursus		
+ 
+.		 
+LMS		 
+.		 
+API		 
+.		 
+Controllers		 $
+{
+
+ 
+[ 
+Route 
+
+(
+ 
+$str 
+) 
+] 
+[ 
+ApiController 
+] 
+public 
+
+class 
+PaymentController "
+:# $
+ControllerBase% 3
+{ 
+private 
+readonly 
+IPaymentService (
+_paymentService) 8
+;8 9
+private 
+readonly 
+ITransactionService ,
+_transactionService- @
+;@ A
+public 
+PaymentController  
+(  !
+IPaymentService! 0
+paymentService1 ?
+,? @
+ITransactionServiceA T
+transactionServiceU g
+)g h
+{ 	
+_paymentService 
+= 
+paymentService ,
+;, -
+_transactionService 
+=  !
+transactionService" 4
+;4 5
+} 	
+[ 	
+HttpGet	 
+] 
+[ 	
+Route	 
+( 
+$str 
+) 
+] 
+[ 	
+	Authorize	 
+( 
+Roles 
+= 
+StaticUserRoles *
+.* +
+AdminInstructor+ :
+): ;
+]; <
+public 
+async 
+Task 
+< 
+ActionResult &
+<& '
+ResponseDTO' 2
+>2 3
+>3 4!
+GetTransactionHistory5 J
+( 	
+[ 
+	FromQuery 
+] 
+string 
+? 
+userId  &
+,& '
+[ 
+	FromQuery 
+] 
+string 
+? 
+filterOn  (
+,( )
+[ 
+	FromQuery 
+] 
+string 
+? 
+filterQuery  +
+,+ ,
+[   
+	FromQuery   
+]   
+string   
+?   
+sortBy    &
+,  & '
+[!! 
+	FromQuery!! 
+]!! 
+bool!! 
+?!! 
+isAscending!! )
+,!!) *
+["" 
+	FromQuery"" 
+]"" 
+int"" 
+
+pageNumber"" &
+=""' (
+$num"") *
+,""* +
+[## 
+	FromQuery## 
+]## 
+int## 
+pageSize## $
+=##% &
+$num##' (
+)$$ 	
+{%% 	
+var&& 
+responseDto&& 
+=&& 
+await&& #
+_transactionService&&$ 7
+.&&7 8
+GetTransactions&&8 G
+('' 
+User(( 
+,(( 
+userId)) 
+,)) 
+filterOn** 
+,** 
+filterQuery++ 
+,++ 
+sortBy,, 
+,,, 
+isAscending-- 
+,-- 
+
+pageNumber.. 
+,.. 
+pageSize// 
+)00 
+;00 
+return11 
+
+StatusCode11 
+(11 
+responseDto11 )
+.11) *
+
+StatusCode11* 4
+,114 5
+responseDto116 A
+)11A B
+;11B C
+}22 	
+[55 	
+HttpPost55	 
+]55 
+[66 	
+Route66	 
+(66 
+$str66 
+)66  
+]66  !
+[77 	
+	Authorize77	 
+(77 
+Roles77 
+=77 
+StaticUserRoles77 *
+.77* +
+
+Instructor77+ 5
+)775 6
+]776 7
+public88 
+async88 
+Task88 
+<88 
+ActionResult88 &
+<88& '
+ResponseDTO88' 2
+>882 3
+>883 4(
+CreateStripeConnectedAccount885 Q
+(99 	+
+CreateStripeConnectedAccountDTO:: ++
+createStripeConnectedAccountDto::, K
+);; 	
+{<< 	
+var== 
+responseDto== 
+=== 
+await== #
+_paymentService==$ 3
+.==3 4(
+CreateStripeConnectedAccount==4 P
+(==P Q
+User==Q U
+,==U V+
+createStripeConnectedAccountDto==W v
+)==v w
+;==w x
+return>> 
+
+StatusCode>> 
+(>> 
+responseDto>> )
+.>>) *
+
+StatusCode>>* 4
+,>>4 5
+responseDto>>6 A
+)>>A B
+;>>B C
+}?? 	
+[AA 	
+HttpPostAA	 
+]AA 
+[BB 	
+RouteBB	 
+(BB 
+$strBB  
+)BB  !
+]BB! "
+[CC 	
+	AuthorizeCC	 
+(CC 
+RolesCC 
+=CC 
+StaticUserRolesCC *
+.CC* +
+AdminCC+ 0
+)CC0 1
+]CC1 2
+publicDD 
+asyncDD 
+TaskDD 
+<DD 
+ActionResultDD &
+<DD& '
+ResponseDTODD' 2
+>DD2 3
+>DD3 4 
+CreateStripeTransferDD5 I
+(EE 	#
+CreateStripeTransferDTOFF ##
+createStripeTransferDtoFF$ ;
+)FF; <
+{GG 	
+varHH 
+responseDtoHH 
+=HH 
+awaitHH #
+_paymentServiceHH$ 3
+.HH3 4 
+CreateStripeTransferHH4 H
+(HHH I#
+createStripeTransferDtoHHI `
+)HH` a
+;HHa b
+returnII 
+
+StatusCodeII 
+(II 
+responseDtoII )
+.II) *
+
+StatusCodeII* 4
+,II4 5
+responseDtoII6 A
+)IIA B
+;IIB C
+}JJ 	
+[LL 	
+HttpPostLL	 
+]LL 
+[MM 	
+RouteMM	 
+(MM 
+$strMM 
+)MM 
+]MM  
+[NN 	
+	AuthorizeNN	 
+(NN 
+RolesNN 
+=NN 
+StaticUserRolesNN *
+.NN* +
+
+InstructorNN+ 5
+)NN5 6
+]NN6 7
+publicOO 
+asyncOO 
+TaskOO 
+<OO 
+ActionResultOO &
+<OO& '
+ResponseDTOOO' 2
+>OO2 3
+>OO3 4
+CreateStripePayoutOO5 G
+(OOG H!
+CreateStripePayoutDTOOOH ]!
+createStripePayoutDtoOO^ s
+)OOs t
+{PP 	
+varQQ 
+responseDtoQQ 
+=QQ 
+awaitQQ #
+_paymentServiceQQ$ 3
+.QQ3 4
+CreateStripePayoutQQ4 F
+(QQF G
+UserQQG K
+,QQK L!
+createStripePayoutDtoQQM b
+)QQb c
+;QQc d
+returnRR 
+
+StatusCodeRR 
+(RR 
+responseDtoRR )
+.RR) *
+
+StatusCodeRR* 4
+,RR4 5
+responseDtoRR6 A
+)RRA B
+;RRB C
+}SS 	
+[UU 	
+HttpPostUU	 
+]UU 
+[VV 	
+RouteVV	 
+(VV 
+$strVV 
+)VV 
+]VV 
+[WW 	
+	AuthorizeWW	 
+(WW 
+RolesWW 
+=WW 
+StaticUserRolesWW *
+.WW* +
+
+InstructorWW+ 5
+)WW5 6
+]WW6 7
+publicXX 
+asyncXX 
+TaskXX 
+<XX 
+ActionResultXX &
+<XX& '
+ResponseDTOXX' 2
+>XX2 3
+>XX3 4
+AddStripeCardXX5 B
+(YY 	
+AddStripeCardDTOZZ 
+addStripeCardDtoZZ -
+)[[ 	
+{\\ 	
+var]] 
+responseDto]] 
+=]] 
+await]] #
+_paymentService]]$ 3
+.]]3 4
+AddStripeCard]]4 A
+(]]A B
+addStripeCardDto]]B R
+)]]R S
+;]]S T
+return^^ 
+
+StatusCode^^ 
+(^^ 
+responseDto^^ )
+.^^) *
+
+StatusCode^^* 4
+,^^4 5
+responseDto^^6 A
+)^^A B
+;^^B C
+}__ 	
+}`` 
+}aa Ÿ?
 hD:\FPT\Semester 6\Project_Cursus\Backend_Cursus\Cursus.LMS\Cursus.LMS.API\Controllers\OrderController.cs
 	namespace 	
 Cursus
@@ -3245,7 +4023,14 @@ hD:\FPT\Semester 6\Project_Cursus\Backend_Cursus\Cursus.LMS\Cursus.LMS.API\Contr
 ] 
 [ 	
 	Authorize	 
-] 
+( 
+Roles 
+= 
+StaticUserRoles *
+.* +
+Student+ 2
+)2 3
+]3 4
 public 
 async 
 Task 
@@ -3459,7 +4244,14 @@ StatusCode>>* 4
 ]BB! "
 [CC 	
 	AuthorizeCC	 
-]CC 
+(CC 
+RolesCC 
+=CC 
+StaticUserRolesCC *
+.CC* +
+StudentCC+ 2
+)CC2 3
+]CC3 4
 publicDD 
 asyncDD 
 TaskDD 
@@ -3515,7 +4307,14 @@ StatusCodeJJ* 4
 ]NN! "
 [OO 	
 	AuthorizeOO	 
-]OO 
+(OO 
+RolesOO 
+=OO 
+StaticUserRolesOO *
+.OO* +
+AdminStudentOO+ 7
+)OO7 8
+]OO8 9
 publicPP 
 asyncPP 
 TaskPP 
@@ -3626,363 +4425,367 @@ StatusCode__* 4
 }aa 
 }bb ﬂ1
 hD:\FPT\Semester 6\Project_Cursus\Backend_Cursus\Cursus.LMS\Cursus.LMS.API\Controllers\LevelController.cs
-	namespace		 	
-Cursus		
+	namespace 	
+Cursus
  
-.		 
-LMS		 
-.		 
-API		 
-.		 
-Controllers		 $
-{
-
- 
-[ 
-Route 
+. 
+LMS 
+. 
+API 
+. 
+Controllers $
+{ 
+[		 
+Route		 
 
-(
+(		
  
-$str 
-) 
-] 
-[ 
-ApiController 
-] 
-public 
+$str		 
+)		 
+]		 
+[
+
+ 
+ApiController
+
+ 
+]
+
+ 
+public 
 
-class 
-LevelController  
-:! "
-ControllerBase# 1
-{ 
-private 
-readonly 
-ILevelService &
-_levelService' 4
-;4 5
-public 
-LevelController 
-( 
-ILevelService ,
-levelService- 9
-)9 :
-{ 	
-_levelService 
-= 
-levelService (
-;( )
-} 	
-[ 	
-HttpGet	 
-] 
-public 
-async 
-Task 
-< 
-ActionResult &
-<& '
-ResponseDTO' 2
->2 3
->3 4
-	GetLevels5 >
-( 	
+class 
+LevelController  
+:! "
+ControllerBase# 1
+{ 
+private 
+readonly 
+ILevelService &
+_levelService' 4
+;4 5
+public 
+LevelController 
+( 
+ILevelService ,
+levelService- 9
+)9 :
+{ 	
+_levelService 
+= 
+levelService (
+;( )
+} 	
+[ 	
+HttpGet	 
+] 
+public 
+async 
+Task 
+< 
+ActionResult &
+<& '
+ResponseDTO' 2
+>2 3
+>3 4
+	GetLevels5 >
+( 	
+[ 
+	FromQuery 
+] 
+string 
+? 
+filterOn  (
+,( )
+[ 
+	FromQuery 
+] 
+string 
+? 
+filterQuery  +
+,+ ,
 [ 
 	FromQuery 
 ] 
 string 
-? 
-filterOn  (
-,( )
+? 
+sortBy  &
+,& '
 [ 
 	FromQuery 
-] 
-string 
-? 
-filterQuery  +
-,+ ,
+] 
+bool 
+? 
+isAscending )
+,) *
 [ 
 	FromQuery 
-] 
-string 
-? 
-sortBy  &
-,& '
+] 
+int 
+
+pageNumber &
+=' (
+$num) *
+,* +
 [ 
 	FromQuery 
-] 
-bool 
-? 
-isAscending )
-,) *
-[ 
-	FromQuery 
-] 
-int 
+] 
+int 
+pageSize $
+=% &
+$num' (
+) 	
+{ 	
+var 
+responseDto 
+= 
+await #
+_levelService$ 1
+.1 2
+	GetLevels2 ;
+(   
+User!! 
+,!! 
+filterOn"" 
+,"" 
+filterQuery## 
+,## 
+sortBy$$ 
+,$$ 
+isAscending%% 
+,%% 
 
-pageNumber &
-=' (
-$num) *
-,* +
-[ 
-	FromQuery 
-] 
-int 
-pageSize $
-=% &
-$num' (
-) 	
-{   	
-var!! 
-responseDto!! 
-=!! 
-await!! #
-_levelService!!$ 1
-.!!1 2
-	GetLevels!!2 ;
-("" 
-User## 
-,## 
-filterOn$$ 
-,$$ 
-filterQuery%% 
-,%% 
-sortBy&& 
-,&& 
-isAscending'' 
-,'' 
+pageNumber&& 
+,&& 
+pageSize'' 
+)(( 
+;(( 
+return)) 
 
-pageNumber(( 
-,(( 
-pageSize)) 
-)** 
-;** 
-return++ 
+StatusCode)) 
+()) 
+responseDto)) )
+.))) *
 
-StatusCode++ 
-(++ 
-responseDto++ )
-.++) *
+StatusCode))* 4
+,))4 5
+responseDto))6 A
+)))A B
+;))B C
+}** 	
+[,, 	
+HttpGet,,	 
+],, 
+[-- 	
+Route--	 
+(-- 
+$str-- 
+)--  
+]--  !
+public.. 
+async.. 
+Task.. 
+<.. 
+ActionResult.. &
+<..& '
+ResponseDTO..' 2
+>..2 3
+>..3 4
+GetLevel..5 =
+(// 	
+[00 
+	FromRoute00 
+]00 
+Guid00 
+levelId00 $
+)11 	
+{22 	
+var33 
+responseDto33 
+=33 
+await33 #
+_levelService33$ 1
+.331 2
+GetLevel332 :
+(33: ;
+User33; ?
+,33? @
+levelId33A H
+)33H I
+;33I J
+return44 
 
-StatusCode++* 4
-,++4 5
-responseDto++6 A
-)++A B
-;++B C
-},, 	
-[.. 	
-HttpGet..	 
-].. 
-[// 	
-Route//	 
-(// 
-$str// 
-)//  
-]//  !
-public00 
-async00 
-Task00 
-<00 
-ActionResult00 &
-<00& '
-ResponseDTO00' 2
->002 3
->003 4
-GetLevel005 =
-(11 	
-[22 
-	FromRoute22 
-]22 
-Guid22 
-levelId22 $
-)33 	
-{44 	
-var55 
-responseDto55 
-=55 
-await55 #
-_levelService55$ 1
-.551 2
-GetLevel552 :
-(55: ;
-User55; ?
-,55? @
-levelId55A H
-)55H I
-;55I J
-return66 
+StatusCode44 
+(44 
+responseDto44 )
+.44) *
 
-StatusCode66 
-(66 
-responseDto66 )
-.66) *
+StatusCode44* 4
+,444 5
+responseDto446 A
+)44A B
+;44B C
+}55 	
+[77 	
+HttpPost77	 
+]77 
+[88 	
+	Authorize88	 
+(88 
+Roles88 
+=88 
+StaticUserRoles88 *
+.88* +
+Admin88+ 0
+)880 1
+]881 2
+public99 
+async99 
+Task99 
+<99 
+ActionResult99 &
+<99& '
+ResponseDTO99' 2
+>992 3
+>993 4
+CreateLevel995 @
+(:: 	
+[;; 
+FromBody;; 
+];; 
+CreateLevelDTO;; %
+createLevelDto;;& 4
+)<< 	
+{== 	
+var>> 
+responseDto>> 
+=>> 
+await>> #
+_levelService>>$ 1
+.>>1 2
+CreateLevel>>2 =
+(>>= >
+User>>> B
+,>>B C
+createLevelDto>>D R
+)>>R S
+;>>S T
+return?? 
 
-StatusCode66* 4
-,664 5
-responseDto666 A
-)66A B
-;66B C
-}77 	
-[99 	
-HttpPost99	 
-]99 
-[:: 	
-	Authorize::	 
-(:: 
-Roles:: 
-=:: 
-StaticUserRoles:: *
-.::* +
-Admin::+ 0
-)::0 1
-]::1 2
-public;; 
-async;; 
-Task;; 
-<;; 
-ActionResult;; &
-<;;& '
-ResponseDTO;;' 2
->;;2 3
->;;3 4
-CreateLevel;;5 @
-(<< 	
-[== 
-FromBody== 
-]== 
-CreateLevelDTO== %
-createLevelDto==& 4
-)>> 	
-{?? 	
-var@@ 
-responseDto@@ 
-=@@ 
-await@@ #
-_levelService@@$ 1
-.@@1 2
-CreateLevel@@2 =
-(@@= >
-User@@> B
-,@@B C
-createLevelDto@@D R
-)@@R S
-;@@S T
-returnAA 
+StatusCode?? 
+(?? 
+responseDto?? )
+.??) *
 
-StatusCodeAA 
-(AA 
-responseDtoAA )
-.AA) *
+StatusCode??* 4
+,??4 5
+responseDto??6 A
+)??A B
+;??B C
+}@@ 	
+[BB 	
+HttpPutBB	 
+]BB 
+publicCC 
+asyncCC 
+TaskCC 
+<CC 
+ActionResultCC &
+<CC& '
+ResponseDTOCC' 2
+>CC2 3
+>CC3 4
+UpdateLevelCC5 @
+(DD 	
+[EE 
+FromBodyEE 
+]EE 
+UpdateLevelDTOEE %
+updateLevelDtoEE& 4
+)FF 	
+{GG 	
+varHH 
+responseDtoHH 
+=HH 
+awaitHH #
+_levelServiceHH$ 1
+.HH1 2
+UpdateLevelHH2 =
+(HH= >
+UserHH> B
+,HHB C
+updateLevelDtoHHD R
+)HHR S
+;HHS T
+returnII 
 
-StatusCodeAA* 4
-,AA4 5
-responseDtoAA6 A
-)AAA B
-;AAB C
-}BB 	
-[DD 	
-HttpPutDD	 
-]DD 
-publicEE 
-asyncEE 
-TaskEE 
-<EE 
-ActionResultEE &
-<EE& '
-ResponseDTOEE' 2
->EE2 3
->EE3 4
-UpdateLevelEE5 @
-(FF 	
-[GG 
-FromBodyGG 
-]GG 
-UpdateLevelDTOGG %
-updateLevelDtoGG& 4
-)HH 	
-{II 	
-varJJ 
-responseDtoJJ 
-=JJ 
-awaitJJ #
-_levelServiceJJ$ 1
-.JJ1 2
-UpdateLevelJJ2 =
-(JJ= >
-UserJJ> B
-,JJB C
-updateLevelDtoJJD R
-)JJR S
-;JJS T
-returnKK 
+StatusCodeII 
+(II 
+responseDtoII )
+.II) *
 
-StatusCodeKK 
-(KK 
-responseDtoKK )
-.KK) *
+StatusCodeII* 4
+,II4 5
+responseDtoII6 A
+)IIA B
+;IIB C
+}JJ 	
+[LL 	
 
-StatusCodeKK* 4
-,KK4 5
-responseDtoKK6 A
-)KKA B
-;KKB C
-}LL 	
-[NN 	
+HttpDeleteLL	 
+]LL 
+[MM 	
+RouteMM	 
+(MM 
+$strMM 
+)MM  
+]MM  !
+publicNN 
+asyncNN 
+TaskNN 
+<NN 
+ActionResultNN &
+<NN& '
+ResponseDTONN' 2
+>NN2 3
+>NN3 4
+DeleteLevelNN5 @
+(OO 	
+[PP 
+	FromRoutePP 
+]PP 
+GuidPP 
+levelIdPP $
+)QQ 	
+{RR 	
+varSS 
+responseDtoSS 
+=SS 
+awaitSS #
+_levelServiceSS$ 1
+.SS1 2
+DeleteLevelSS2 =
+(SS= >
+UserSS> B
+,SSB C
+levelIdSSD K
+)SSK L
+;SSL M
+returnTT 
 
-HttpDeleteNN	 
-]NN 
-[OO 	
-RouteOO	 
-(OO 
-$strOO 
-)OO  
-]OO  !
-publicPP 
-asyncPP 
-TaskPP 
-<PP 
-ActionResultPP &
-<PP& '
-ResponseDTOPP' 2
->PP2 3
->PP3 4
-DeleteLevelPP5 @
-(QQ 	
-[RR 
-	FromRouteRR 
-]RR 
-GuidRR 
-levelIdRR $
-)SS 	
-{TT 	
-varUU 
-responseDtoUU 
-=UU 
-awaitUU #
-_levelServiceUU$ 1
-.UU1 2
-DeleteLevelUU2 =
-(UU= >
-UserUU> B
-,UUB C
-levelIdUUD K
-)UUK L
-;UUL M
-returnVV 
+StatusCodeTT 
+(TT 
+responseDtoTT )
+.TT) *
 
-StatusCodeVV 
-(VV 
-responseDtoVV )
-.VV) *
-
-StatusCodeVV* 4
-,VV4 5
-responseDtoVV6 A
-)VVA B
-;VVB C
-}WW 	
-}XX 
-}YY Æ®
+StatusCodeTT* 4
+,TT4 5
+responseDtoTT6 A
+)TTA B
+;TTB C
+}UU 	
+}VV 
+}WW ∞π
 mD:\FPT\Semester 6\Project_Cursus\Backend_Cursus\Cursus.LMS\Cursus.LMS.API\Controllers\InstructorController.cs
 	namespace		 	
 Cursus		
@@ -4301,1256 +5104,2014 @@ StatusCode==* 4
 (AA 
 $strAA 7
 )AA7 8
-]AA8 9
-publicBB 
-asyncBB 
-TaskBB 
-<BB 
-ActionResultBB &
-<BB& '
-ResponseDTOBB' 2
->BB2 3
->BB3 4-
-!GetTotalEarnedMoneyInstructorByIdBB5 V
-(BBV W
-[BBW X
-	FromRouteBBX a
-]BBa b
-GuidBBc g
-instructorIdBBh t
-)BBt u
-{CC 	
-varDD 
-responseDtoDD 
-=DD 
-awaitDD #
-_instructorServiceDD$ 6
-.DD6 7$
-GetInstructorEarnedMoneyDD7 O
-(DDO P
-instructorIdDDP \
-)DD\ ]
-;DD] ^
-returnEE 
+]AA8 9
+[BB 	
+	AuthorizeBB	 
+(BB 
+RolesBB 
+=BB 
+StaticUserRolesBB *
+.BB* +
+AdminInstructorBB+ :
+)BB: ;
+]BB; <
+publicCC 
+asyncCC 
+TaskCC 
+<CC 
+ActionResultCC &
+<CC& '
+ResponseDTOCC' 2
+>CC2 3
+>CC3 4-
+!GetTotalEarnedMoneyInstructorByIdCC5 V
+(CCV W
+[CCW X
+	FromRouteCCX a
+]CCa b
+GuidCCc g
+instructorIdCCh t
+)CCt u
+{DD 	
+varEE 
+responseDtoEE 
+=EE 
+awaitEE #
+_instructorServiceEE$ 6
+.EE6 7$
+GetInstructorEarnedMoneyEE7 O
+(EEO P
+instructorIdEEP \
+)EE\ ]
+;EE] ^
+returnFF 
 
-StatusCodeEE 
-(EE 
-responseDtoEE )
-.EE) *
+StatusCodeFF 
+(FF 
+responseDtoFF )
+.FF) *
 
-StatusCodeEE* 4
-,EE4 5
-responseDtoEE6 A
-)EEA B
-;EEB C
-}FF 	
-[HH 	
-HttpGetHH	 
-]HH 
-[II 	
-RouteII	 
-(II 
-$strII 7
-)II7 8
-]II8 9
-publicJJ 
-asyncJJ 
-TaskJJ 
-<JJ 
-ActionResultJJ &
-<JJ& '
-ResponseDTOJJ' 2
->JJ2 3
->JJ3 4-
-!GetTotalPayoutMoneyInstructorByIdJJ5 V
-(JJV W
-[JJW X
-	FromRouteJJX a
-]JJa b
-GuidJJc g
-instructorIdJJh t
-)JJt u
-{KK 	
-varLL 
-responseDtoLL 
-=LL 
-awaitLL #
-_instructorServiceLL$ 6
-.LL6 7$
-GetInstructorPayoutMoneyLL7 O
-(LLO P
-instructorIdLLP \
-)LL\ ]
-;LL] ^
-returnMM 
+StatusCodeFF* 4
+,FF4 5
+responseDtoFF6 A
+)FFA B
+;FFB C
+}GG 	
+[II 	
+HttpGetII	 
+]II 
+[JJ 	
+RouteJJ	 
+(JJ 
+$strJJ 7
+)JJ7 8
+]JJ8 9
+[KK 	
+	AuthorizeKK	 
+(KK 
+RolesKK 
+=KK 
+StaticUserRolesKK *
+.KK* +
+AdminInstructorKK+ :
+)KK: ;
+]KK; <
+publicLL 
+asyncLL 
+TaskLL 
+<LL 
+ActionResultLL &
+<LL& '
+ResponseDTOLL' 2
+>LL2 3
+>LL3 4-
+!GetTotalPayoutMoneyInstructorByIdLL5 V
+(LLV W
+[LLW X
+	FromRouteLLX a
+]LLa b
+GuidLLc g
+instructorIdLLh t
+)LLt u
+{MM 	
+varNN 
+responseDtoNN 
+=NN 
+awaitNN #
+_instructorServiceNN$ 6
+.NN6 7$
+GetInstructorPayoutMoneyNN7 O
+(NNO P
+instructorIdNNP \
+)NN\ ]
+;NN] ^
+returnOO 
 
-StatusCodeMM 
-(MM 
-responseDtoMM )
-.MM) *
+StatusCodeOO 
+(OO 
+responseDtoOO )
+.OO) *
 
-StatusCodeMM* 4
-,MM4 5
-responseDtoMM6 A
-)MMA B
-;MMB C
-}NN 	
-[PP 	
-HttpPutPP	 
-]PP 
-publicQQ 
-asyncQQ 
-TaskQQ 
-<QQ 
-ActionResultQQ &
-<QQ& '
-ResponseDTOQQ' 2
->QQ2 3
->QQ3 4 
-UpdateInstructorByIdQQ5 I
-(QQI J
-[QQJ K
-FromBodyQQK S
-]QQS T
-UpdateInstructorDTOQQU h
-instructorDtoQQi v
-)QQv w
-{RR 	
-varSS 
-responseDtoSS 
-=SS 
-awaitSS #
-_instructorServiceSS$ 6
-.SS6 7
+StatusCodeOO* 4
+,OO4 5
+responseDtoOO6 A
+)OOA B
+;OOB C
+}PP 	
+[RR 	
+HttpPutRR	 
+]RR 
+[SS 	
+	AuthorizeSS	 
+(SS 
+RolesSS 
+=SS 
+StaticUserRolesSS *
+.SS* +
+AdminInstructorSS+ :
+)SS: ;
+]SS; <
+publicTT 
+asyncTT 
+TaskTT 
+<TT 
+ActionResultTT &
+<TT& '
+ResponseDTOTT' 2
+>TT2 3
+>TT3 4 
+UpdateInstructorByIdTT5 I
+(TTI J
+[TTJ K
+FromBodyTTK S
+]TTS T
+UpdateInstructorDTOTTU h
+instructorDtoTTi v
+)TTv w
+{UU 	
+varVV 
+responseDtoVV 
+=VV 
+awaitVV #
+_instructorServiceVV$ 6
+.VV6 7
 
-UpdateByIdSS7 A
-(SSA B
-instructorDtoSSB O
-)SSO P
-;SSP Q
-returnTT 
+UpdateByIdVV7 A
+(VVA B
+instructorDtoVVB O
+)VVO P
+;VVP Q
+returnWW 
 
-StatusCodeTT 
-(TT 
-responseDtoTT )
-.TT) *
+StatusCodeWW 
+(WW 
+responseDtoWW )
+.WW) *
 
-StatusCodeTT* 4
-,TT4 5
-responseDtoTT6 A
-)TTA B
-;TTB C
-}UU 	
-[WW 	
-HttpPostWW	 
-]WW 
-[XX 	
-RouteXX	 
-(XX 
-$strXX +
-)XX+ ,
-]XX, -
-publicYY 
-asyncYY 
-TaskYY 
-<YY 
-ActionResultYY &
-<YY& '
-ResponseDTOYY' 2
->YY2 3
->YY3 4
-AcceptInstructorYY5 E
-(YYE F
-[YYF G
-	FromRouteYYG P
-]YYP Q
-GuidYYR V
-instructorIdYYW c
-)YYc d
-{ZZ 	
-var[[ 
-responseDto[[ 
-=[[ 
-await[[ #
-_instructorService[[$ 6
-.[[6 7
-AcceptInstructor[[7 G
-([[G H
-User[[H L
-,[[L M
-instructorId[[N Z
-)[[Z [
-;[[[ \
-return\\ 
+StatusCodeWW* 4
+,WW4 5
+responseDtoWW6 A
+)WWA B
+;WWB C
+}XX 	
+[ZZ 	
+HttpPostZZ	 
+]ZZ 
+[[[ 	
+Route[[	 
+([[ 
+$str[[ +
+)[[+ ,
+][[, -
+[\\ 	
+	Authorize\\	 
+(\\ 
+Roles\\ 
+=\\ 
+StaticUserRoles\\ *
+.\\* +
+Admin\\+ 0
+)\\0 1
+]\\1 2
+public]] 
+async]] 
+Task]] 
+<]] 
+ActionResult]] &
+<]]& '
+ResponseDTO]]' 2
+>]]2 3
+>]]3 4
+AcceptInstructor]]5 E
+(]]E F
+[]]F G
+	FromRoute]]G P
+]]]P Q
+Guid]]R V
+instructorId]]W c
+)]]c d
+{^^ 	
+var__ 
+responseDto__ 
+=__ 
+await__ #
+_instructorService__$ 6
+.__6 7
+AcceptInstructor__7 G
+(__G H
+User__H L
+,__L M
+instructorId__N Z
+)__Z [
+;__[ \
+return`` 
 
-StatusCode\\ 
-(\\ 
-responseDto\\ )
-.\\) *
+StatusCode`` 
+(`` 
+responseDto`` )
+.``) *
 
-StatusCode\\* 4
-,\\4 5
-responseDto\\6 A
-)\\A B
-;\\B C
-}]] 	
-[__ 	
-HttpPost__	 
-]__ 
-[`` 	
-Route``	 
-(`` 
-$str`` +
-)``+ ,
-]``, -
-publicaa 
-asyncaa 
-Taskaa 
-<aa 
-ActionResultaa &
-<aa& '
-ResponseDTOaa' 2
->aa2 3
->aa3 4
-RejectInstructoraa5 E
-(aaE F
-[aaF G
-	FromRouteaaG P
-]aaP Q
-GuidaaR V
-instructorIdaaW c
-)aac d
-{bb 	
-varcc 
-responseDtocc 
-=cc 
-awaitcc #
-_instructorServicecc$ 6
-.cc6 7
-RejectInstructorcc7 G
-(ccG H
-UserccH L
-,ccL M
-instructorIdccN Z
-)ccZ [
-;cc[ \
-returndd 
+StatusCode``* 4
+,``4 5
+responseDto``6 A
+)``A B
+;``B C
+}aa 	
+[cc 	
+HttpPostcc	 
+]cc 
+[dd 	
+Routedd	 
+(dd 
+$strdd +
+)dd+ ,
+]dd, -
+[ee 	
+	Authorizeee	 
+(ee 
+Rolesee 
+=ee 
+StaticUserRolesee *
+.ee* +
+Adminee+ 0
+)ee0 1
+]ee1 2
+publicff 
+asyncff 
+Taskff 
+<ff 
+ActionResultff &
+<ff& '
+ResponseDTOff' 2
+>ff2 3
+>ff3 4
+RejectInstructorff5 E
+(ffE F
+[ffF G
+	FromRouteffG P
+]ffP Q
+GuidffR V
+instructorIdffW c
+)ffc d
+{gg 	
+varhh 
+responseDtohh 
+=hh 
+awaithh #
+_instructorServicehh$ 6
+.hh6 7
+RejectInstructorhh7 G
+(hhG H
+UserhhH L
+,hhL M
+instructorIdhhN Z
+)hhZ [
+;hh[ \
+returnii 
 
-StatusCodedd 
-(dd 
-responseDtodd )
-.dd) *
+StatusCodeii 
+(ii 
+responseDtoii )
+.ii) *
 
-StatusCodedd* 4
-,dd4 5
-responseDtodd6 A
-)ddA B
-;ddB C
-}ee 	
-[jj 	
-HttpGetjj	 
-]jj 
-[kk 	
-Routekk	 
-(kk 
-$strkk ,
-)kk, -
-]kk- .
-publicll 
-asyncll 
-Taskll 
-<ll 
-ActionResultll &
-<ll& '
-ResponseDTOll' 2
->ll2 3
->ll3 4#
-GetAllInstructorCommentll5 L
-(mm 	
-[nn 
-	FromRoutenn 
-]nn 
-Guidnn 
-instructorIdnn )
-,nn) *
-[oo 
-	FromQueryoo 
-]oo 
-intoo 
+StatusCodeii* 4
+,ii4 5
+responseDtoii6 A
+)iiA B
+;iiB C
+}jj 	
+[oo 	
+HttpGetoo	 
+]oo 
+[pp 	
+Routepp	 
+(pp 
+$strpp ,
+)pp, -
+]pp- .
+[qq 	
+	Authorizeqq	 
+(qq 
+Rolesqq 
+=qq 
+StaticUserRolesqq *
+.qq* +
+AdminInstructorqq+ :
+)qq: ;
+]qq; <
+publicrr 
+asyncrr 
+Taskrr 
+<rr 
+ActionResultrr &
+<rr& '
+ResponseDTOrr' 2
+>rr2 3
+>rr3 4#
+GetAllInstructorCommentrr5 L
+(ss 	
+[tt 
+	FromRoutett 
+]tt 
+Guidtt 
+instructorIdtt )
+,tt) *
+[uu 
+	FromQueryuu 
+]uu 
+intuu 
 
-pageNumberoo &
-=oo' (
-$numoo) *
-,oo* +
-[pp 
-	FromQuerypp 
-]pp 
-intpp 
-pageSizepp $
-=pp% &
-$numpp' )
-)qq 	
-{rr 	
-varss 
-responseDtoss 
-=ss 
-awaitss #
-_instructorServicess$ 6
-.ss6 7#
-GetAllInstructorCommentss7 N
-(ssN O
-instructorIdssO [
-,ss[ \
+pageNumberuu &
+=uu' (
+$numuu) *
+,uu* +
+[vv 
+	FromQueryvv 
+]vv 
+intvv 
+pageSizevv $
+=vv% &
+$numvv' )
+)ww 	
+{xx 	
+varyy 
+responseDtoyy 
+=yy 
+awaityy #
+_instructorServiceyy$ 6
+.yy6 7#
+GetAllInstructorCommentyy7 N
+(yyN O
+instructorIdyyO [
+,yy[ \
 
-pageNumberss] g
-,ssg h
-pageSizessi q
-)ssq r
-;ssr s
-returntt 
+pageNumberyy] g
+,yyg h
+pageSizeyyi q
+)yyq r
+;yyr s
+returnzz 
 
-StatusCodett 
-(tt 
-responseDtott )
-.tt) *
+StatusCodezz 
+(zz 
+responseDtozz )
+.zz) *
 
-StatusCodett* 4
-,tt4 5
-responseDtott6 A
-)ttA B
-;ttB C
-}uu 	
-[ww 	
-HttpPostww	 
-]ww 
-[xx 	
-Routexx	 
-(xx 
-$strxx 
-)xx 
-]xx 
-publicyy 
-asyncyy 
-Taskyy 
-<yy 
-ActionResultyy &
-<yy& '
-ResponseDTOyy' 2
->yy2 3
->yy3 4#
-CreateInstructorCommentyy5 L
-(zz 	&
-CreateInstructorCommentDTO{{ &#
-createInstructorComment{{' >
-){{> ?
-{|| 	
-var}} 
-responseDto}} 
-=}} 
-await}} #
-_instructorService}}$ 6
-.}}6 7#
-CreateInstructorComment}}7 N
-(}}N O
-User}}O S
-,}}S T#
-createInstructorComment}}U l
-)}}l m
-;}}m n
-return~~ 
-
-StatusCode~~ 
-(~~ 
-responseDto~~ )
-.~~) *
-
-StatusCode~~* 4
-,~~4 5
-responseDto~~6 A
-)~~A B
-;~~B C
-} 	
-[
-ÅÅ 	
-HttpPut
-ÅÅ	 
-]
-ÅÅ 
-[
-ÇÇ 	
-Route
-ÇÇ	 
-(
-ÇÇ 
-$str
-ÇÇ 
-)
-ÇÇ 
-]
-ÇÇ 
+StatusCodezz* 4
+,zz4 5
+responseDtozz6 A
+)zzA B
+;zzB C
+}{{ 	
+[}} 	
+HttpPost}}	 
+]}} 
+[~~ 	
+Route~~	 
+(~~ 
+$str~~ 
+)~~ 
+]~~ 
+[ 	
+	Authorize	 
+( 
+Roles 
+= 
+StaticUserRoles *
+.* +
+Admin+ 0
+)0 1
+]1 2
 public
-ÉÉ 
+ÄÄ 
 async
-ÉÉ 
+ÄÄ 
 Task
-ÉÉ 
+ÄÄ 
 <
-ÉÉ 
+ÄÄ 
 ActionResult
-ÉÉ &
+ÄÄ &
 <
-ÉÉ& '
+ÄÄ& '
 ResponseDTO
-ÉÉ' 2
+ÄÄ' 2
 >
-ÉÉ2 3
+ÄÄ2 3
 >
-ÉÉ3 4%
-UpdateInstructorComment
-ÉÉ5 L
+ÄÄ3 4%
+CreateInstructorComment
+ÄÄ5 L
 (
-ÑÑ 	(
-UpdateInstructorCommentDTO
-ÖÖ &%
-updateInstructorComment
-ÖÖ' >
+ÅÅ 	(
+CreateInstructorCommentDTO
+ÇÇ &%
+createInstructorComment
+ÇÇ' >
 )
-ÖÖ> ?
+ÇÇ> ?
 {
-ÜÜ 	
+ÉÉ 	
 var
-áá 
+ÑÑ 
 responseDto
-áá 
+ÑÑ 
 =
-áá 
+ÑÑ 
 await
-áá # 
+ÑÑ # 
 _instructorService
-áá$ 6
+ÑÑ$ 6
 .
-áá6 7%
-UpdateInstructorComment
-áá7 N
+ÑÑ6 7%
+CreateInstructorComment
+ÑÑ7 N
 (
-ááN O
+ÑÑN O
 User
-ááO S
+ÑÑO S
 ,
-ááS T%
-updateInstructorComment
-ááU l
+ÑÑS T%
+createInstructorComment
+ÑÑU l
 )
-áál m
+ÑÑl m
 ;
-áám n
+ÑÑm n
 return
-àà 
+ÖÖ 
 
 StatusCode
-àà 
+ÖÖ 
 (
-àà 
+ÖÖ 
 responseDto
-àà )
+ÖÖ )
 .
-àà) *
+ÖÖ) *
 
 StatusCode
-àà* 4
+ÖÖ* 4
 ,
-àà4 5
+ÖÖ4 5
 responseDto
-àà6 A
+ÖÖ6 A
 )
-ààA B
+ÖÖA B
 ;
-ààB C
+ÖÖB C
 }
-ââ 	
+ÜÜ 	
 [
-ãã 	
+àà 	
+HttpPut
+àà	 
+]
+àà 
+[
+ââ 	
+Route
+ââ	 
+(
+ââ 
+$str
+ââ 
+)
+ââ 
+]
+ââ 
+[
+ää 	
+	Authorize
+ää	 
+(
+ää 
+Roles
+ää 
+=
+ää 
+StaticUserRoles
+ää *
+.
+ää* +
+Admin
+ää+ 0
+)
+ää0 1
+]
+ää1 2
+public
+ãã 
+async
+ãã 
+Task
+ãã 
+<
+ãã 
+ActionResult
+ãã &
+<
+ãã& '
+ResponseDTO
+ãã' 2
+>
+ãã2 3
+>
+ãã3 4%
+UpdateInstructorComment
+ãã5 L
+(
+åå 	(
+UpdateInstructorCommentDTO
+çç &%
+updateInstructorComment
+çç' >
+)
+çç> ?
+{
+éé 	
+var
+èè 
+responseDto
+èè 
+=
+èè 
+await
+èè # 
+_instructorService
+èè$ 6
+.
+èè6 7%
+UpdateInstructorComment
+èè7 N
+(
+èèN O
+User
+èèO S
+,
+èèS T%
+updateInstructorComment
+èèU l
+)
+èèl m
+;
+èèm n
+return
+êê 
+
+StatusCode
+êê 
+(
+êê 
+responseDto
+êê )
+.
+êê) *
+
+StatusCode
+êê* 4
+,
+êê4 5
+responseDto
+êê6 A
+)
+êêA B
+;
+êêB C
+}
+ëë 	
+[
+ìì 	
 
 HttpDelete
-ãã	 
+ìì	 
 ]
-ãã 
+ìì 
 [
-åå 	
+îî 	
 Route
-åå	 
+îî	 
 (
-åå 
+îî 
 $str
-åå )
+îî )
 )
-åå) *
+îî) *
 ]
-åå* +
-public
-çç 
-async
-çç 
-Task
-çç 
-<
-çç 
-ActionResult
-çç &
-<
-çç& '
-ResponseDTO
-çç' 2
->
-çç2 3
->
-çç3 4%
-DeleteInstructorComment
-çç5 L
-(
-éé 	
+îî* +
 [
-èè 
-	FromRoute
-èè 
+ïï 	
+	Authorize
+ïï	 
+(
+ïï 
+Roles
+ïï 
+=
+ïï 
+StaticUserRoles
+ïï *
+.
+ïï* +
+Admin
+ïï+ 0
+)
+ïï0 1
 ]
-èè 
+ïï1 2
+public
+ññ 
+async
+ññ 
+Task
+ññ 
+<
+ññ 
+ActionResult
+ññ &
+<
+ññ& '
+ResponseDTO
+ññ' 2
+>
+ññ2 3
+>
+ññ3 4%
+DeleteInstructorComment
+ññ5 L
+(
+óó 	
+[
+òò 
+	FromRoute
+òò 
+]
+òò 
 Guid
-èè 
+òò 
 	commentId
-èè &
+òò &
 )
-êê 	
+ôô 	
 {
-íí 	
+õõ 	
 var
-ìì 
+úú 
 responseDto
-ìì 
+úú 
 =
-ìì 
+úú 
 await
-ìì # 
+úú # 
 _instructorService
-ìì$ 6
+úú$ 6
 .
-ìì6 7%
+úú6 7%
 DeleteInstructorComment
-ìì7 N
+úú7 N
 (
-ììN O
+úúN O
 	commentId
-ììO X
+úúO X
 )
-ììX Y
+úúX Y
 ;
-ììY Z
+úúY Z
 return
-îî 
+ùù 
 
 StatusCode
-îî 
+ùù 
 (
-îî 
+ùù 
 responseDto
-îî )
+ùù )
 .
-îî) *
+ùù) *
 
 StatusCode
-îî* 4
+ùù* 4
 ,
-îî4 5
+ùù4 5
 responseDto
-îî6 A
+ùù6 A
 )
-îîA B
+ùùA B
 ;
-îîB C
+ùùB C
 }
-ïï 	
+ûû 	
 [
-óó 	
+†† 	
 HttpPost
-óó	 
+††	 
 ]
-óó 
+†† 
 [
-òò 	
+°° 	
 Route
-òò	 
+°°	 
 (
-òò 
+°° 
 $str
-òò .
+°° .
 )
-òò. /
+°°. /
 ]
-òò/ 0
-public
-ôô 
-async
-ôô 
-Task
-ôô 
-<
-ôô 
-ActionResult
-ôô &
-<
-ôô& '
-ResponseDTO
-ôô' 2
->
-ôô2 3
->
-ôô3 4
-ExportInstructor
-ôô5 E
+°°/ 0
+[
+¢¢ 	
+	Authorize
+¢¢	 
 (
-öö 	
-[
-õõ 
-	FromRoute
-õõ 
-]
-õõ 
-int
-õõ 
-month
-õõ !
-,
-õõ! "
-[
-úú 
-	FromRoute
-úú 
-]
-úú 
-int
-úú 
-year
-úú  
-)
-ùù 	
-{
-ûû 	
-var
-üü 
-userId
-üü 
+¢¢ 
+Roles
+¢¢ 
 =
-üü 
-User
-üü 
+¢¢ 
+StaticUserRoles
+¢¢ *
 .
-üü 
-Claims
-üü $
-.
-üü$ %
-FirstOrDefault
-üü% 3
+¢¢* +
+Admin
+¢¢+ 0
+)
+¢¢0 1
+]
+¢¢1 2
+public
+££ 
+async
+££ 
+Task
+££ 
+<
+££ 
+ActionResult
+££ &
+<
+££& '
+ResponseDTO
+££' 2
+>
+££2 3
+>
+££3 4
+ExportInstructor
+££5 E
 (
-üü3 4
-x
-üü4 5
-=>
-üü6 8
-x
-üü9 :
+§§ 	
+[
+•• 
+	FromRoute
+•• 
+]
+•• 
+int
+•• 
+month
+•• !
+,
+••! "
+[
+¶¶ 
+	FromRoute
+¶¶ 
+]
+¶¶ 
+int
+¶¶ 
+year
+¶¶  
+)
+ßß 	
+{
+®® 	
+var
+©© 
+userId
+©© 
+=
+©© 
+User
+©© 
 .
-üü: ;
+©© 
+Claims
+©© $
+.
+©©$ %
+FirstOrDefault
+©©% 3
+(
+©©3 4
+x
+©©4 5
+=>
+©©6 8
+x
+©©9 :
+.
+©©: ;
 Type
-üü; ?
+©©; ?
 ==
-üü@ B
+©©@ B
 
 ClaimTypes
-üüC M
+©©C M
 .
-üüM N
+©©M N
 NameIdentifier
-üüN \
+©©N \
 )
-üü\ ]
+©©\ ]
 ?
-üü] ^
+©©] ^
 .
-üü^ _
+©©^ _
 Value
-üü_ d
+©©_ d
 ;
-üüd e
+©©d e
 BackgroundJob
-†† 
+™™ 
 .
-†† 
+™™ 
 Enqueue
-†† !
+™™ !
 <
-††! " 
+™™! " 
 IInstructorService
-††" 4
+™™" 4
 >
-††4 5
+™™4 5
 (
-††5 6
+™™5 6
 job
-††6 9
+™™6 9
 =>
-††: <
+™™: <
 job
-††= @
+™™= @
 .
-††@ A
+™™@ A
 ExportInstructors
-††A R
+™™A R
 (
-††R S
+™™R S
 userId
-††S Y
+™™S Y
 ,
-††Y Z
+™™Y Z
 month
-††[ `
+™™[ `
 ,
-††` a
+™™` a
 year
-††b f
+™™b f
 )
-††f g
+™™f g
 )
-††g h
+™™g h
 ;
-††h i
+™™h i
 return
-°° 
+´´ 
 Ok
-°° 
+´´ 
 (
-°° 
+´´ 
 )
-°° 
+´´ 
 ;
-°° 
+´´ 
 }
-¢¢ 	
+¨¨ 	
 [
-§§ 	
+ÆÆ 	
 HttpGet
-§§	 
+ÆÆ	 
 ]
-§§ 
+ÆÆ 
 [
-•• 	
+ØØ 	
 Route
-••	 
+ØØ	 
 (
-•• 
+ØØ 
 $str
-•• $
+ØØ $
 )
-••$ %
+ØØ$ %
 ]
-••% &
+ØØ% &
+[
+∞∞ 	
+	Authorize
+∞∞	 
+(
+∞∞ 
+Roles
+∞∞ 
+=
+∞∞ 
+StaticUserRoles
+∞∞ *
+.
+∞∞* +
+Admin
+∞∞+ 0
+)
+∞∞0 1
+]
+∞∞1 2
 public
-¶¶ 
+±± 
 async
-¶¶ 
+±± 
 Task
-¶¶ 
+±± 
 <
-¶¶ 
+±± 
 ActionResult
-¶¶ &
+±± &
 <
-¶¶& '"
+±±& '"
 ClosedXMLResponseDTO
-¶¶' ;
+±±' ;
 >
-¶¶; <
+±±; <
 >
-¶¶< = 
+±±< = 
 DownloadInstructor
-¶¶> P
+±±> P
 (
-ßß 	
+≤≤ 	
 [
-®® 
+≥≥ 
 	FromRoute
-®® 
+≥≥ 
 ]
-®® 
+≥≥ 
 string
-®® 
+≥≥ 
 fileName
-®® '
+≥≥ '
 )
-©© 	
+¥¥ 	
 {
-™™ 	
+µµ 	
 var
-´´ "
+∂∂ "
 closedXmlResponseDto
-´´ $
+∂∂ $
 =
-´´% &
+∂∂% &
 await
-´´' , 
+∂∂' , 
 _instructorService
-´´- ?
+∂∂- ?
 .
-´´? @!
+∂∂? @!
 DownloadInstructors
-´´@ S
+∂∂@ S
 (
-´´S T
+∂∂S T
 fileName
-´´T \
+∂∂T \
 )
-´´\ ]
+∂∂\ ]
 ;
-´´] ^
+∂∂] ^
 var
-¨¨ 
+∑∑ 
 stream
-¨¨ 
+∑∑ 
 =
-¨¨ "
+∑∑ "
 closedXmlResponseDto
-¨¨ -
+∑∑ -
 .
-¨¨- .
+∑∑- .
 Stream
-¨¨. 4
+∑∑. 4
 ;
-¨¨4 5
+∑∑4 5
 var
-≠≠ 
+∏∏ 
 contentType
-≠≠ 
+∏∏ 
 =
-≠≠ "
+∏∏ "
 closedXmlResponseDto
-≠≠ 2
+∏∏ 2
 .
-≠≠2 3
+∏∏2 3
 ContentType
-≠≠3 >
+∏∏3 >
 ;
-≠≠> ?
+∏∏> ?
 if
-ØØ 
+∫∫ 
 (
-ØØ 
+∫∫ 
 stream
-ØØ 
+∫∫ 
 is
-ØØ 
+∫∫ 
 null
-ØØ 
+∫∫ 
 ||
-ØØ !
+∫∫ !
 contentType
-ØØ" -
+∫∫" -
 is
-ØØ. 0
+∫∫. 0
 null
-ØØ1 5
+∫∫1 5
 )
-ØØ5 6
+∫∫5 6
 {
-∞∞ 
+ªª 
 return
-±± 
+ºº 
 NotFound
-±± 
+ºº 
 (
-±±  
+ºº  
 )
-±±  !
-;
-±±! "
-}
-≤≤ 
-return
-¥¥ 
-File
-¥¥ 
-(
-¥¥ 
-stream
-¥¥ 
-,
-¥¥ 
-contentType
-¥¥  +
-,
-¥¥+ ,
-fileName
-¥¥- 5
-)
-¥¥5 6
-;
-¥¥6 7
-}
-µµ 	
-[
-∑∑ 	
-HttpGet
-∑∑	 
-]
-∑∑ 
-[
-∏∏ 	
-Route
-∏∏	 
-(
-∏∏ 
-$str
-∏∏ 
-)
-∏∏ 
-]
-∏∏ 
-[
-ππ 	
-	Authorize
-ππ	 
-(
-ππ 
-Roles
-ππ 
-=
-ππ 
-StaticUserRoles
-ππ *
-.
-ππ* +
-Admin
-ππ+ 0
-)
-ππ0 1
-]
-ππ1 2
-public
-∫∫ 
-async
-∫∫ 
-Task
-∫∫ 
-<
-∫∫ 
-ActionResult
-∫∫ &
-<
-∫∫& '
-ResponseDTO
-∫∫' 2
->
-∫∫2 3
->
-∫∫3 4'
-GetTopInstructorsByPayout
-∫∫5 N
-(
-ªª 	
-[
-ºº 
-	FromQuery
-ºº 
-]
-ºº 
-int
-ºº 
-topN
-ºº  
-,
 ºº  !
-[
-ΩΩ 
-	FromQuery
-ΩΩ 
-]
-ΩΩ 
-int
-ΩΩ 
-?
-ΩΩ 
-
-filterYear
-ΩΩ '
+;
+ºº! "
+}
+ΩΩ 
+return
+øø 
+File
+øø 
+(
+øø 
+stream
+øø 
 ,
-ΩΩ' (
-[
-ææ 
-	FromQuery
-ææ 
-]
-ææ 
-int
-ææ 
-?
-ææ 
-filterMonth
-ææ (
+øø 
+contentType
+øø  +
 ,
-ææ( )
-[
-øø 
-	FromQuery
-øø 
-]
-øø 
-int
-øø 
-?
-øø 
-filterQuarter
-øø *
+øø+ ,
+fileName
+øø- 5
 )
+øø5 6
+;
+øø6 7
+}
 ¿¿ 	
-{
-¡¡ 	
-var
-¬¬ 
-responseDto
-¬¬ 
-=
-¬¬ 
-await
-¬¬ #
-_paymentService
-¬¬$ 3
-.
-¬¬3 4'
-GetTopInstructorsByPayout
-¬¬4 M
-(
-√√ 
-topN
-ƒƒ 
-,
-ƒƒ 
-
-filterYear
-≈≈ 
-,
-≈≈ 
-filterMonth
-∆∆ 
-,
-∆∆ 
-filterQuarter
-«« 
-)
-»» 
-;
-»» 
-return
-…… 
-
-StatusCode
-…… 
-(
-…… 
-responseDto
-…… )
-.
-……) *
-
-StatusCode
-……* 4
-,
-……4 5
-responseDto
-……6 A
-)
-……A B
-;
-……B C
-}
-   	
 [
-ÃÃ 	
+¬¬ 	
 HttpGet
-ÃÃ	 
+¬¬	 
 ]
-ÃÃ 
+¬¬ 
 [
-ÕÕ 	
+√√ 	
 Route
-ÕÕ	 
+√√	 
 (
-ÕÕ 
+√√ 
 $str
-ÕÕ 
+√√ 
 )
-ÕÕ 
+√√ 
 ]
-ÕÕ 
+√√ 
 [
-ŒŒ 	
+ƒƒ 	
 	Authorize
-ŒŒ	 
+ƒƒ	 
 (
-ŒŒ 
+ƒƒ 
 Roles
-ŒŒ 
+ƒƒ 
 =
-ŒŒ 
+ƒƒ 
 StaticUserRoles
-ŒŒ *
+ƒƒ *
 .
-ŒŒ* +
+ƒƒ* +
 Admin
-ŒŒ+ 0
+ƒƒ+ 0
 )
-ŒŒ0 1
+ƒƒ0 1
 ]
-ŒŒ1 2
+ƒƒ1 2
 public
-œœ 
+≈≈ 
 async
-œœ 
+≈≈ 
 Task
-œœ 
+≈≈ 
 <
-œœ 
+≈≈ 
 ActionResult
-œœ &
+≈≈ &
 <
-œœ& '
+≈≈& '
 ResponseDTO
-œœ' 2
+≈≈' 2
 >
-œœ2 3
+≈≈2 3
 >
-œœ3 4)
-GetLeastInstructorsByPayout
-œœ5 P
+≈≈3 4'
+GetTopInstructorsByPayout
+≈≈5 N
 (
-–– 	
+∆∆ 	
 [
-—— 
+«« 
 	FromQuery
-—— 
+«« 
 ]
-—— 
+«« 
 int
-—— 
+«« 
 topN
-——  
+««  
 ,
-——  !
+««  !
 [
-““ 
+»» 
 	FromQuery
-““ 
+»» 
 ]
-““ 
+»» 
 int
-““ 
+»» 
 ?
-““ 
+»» 
 
 filterYear
-““ '
+»» '
 ,
-““' (
+»»' (
 [
-”” 
+…… 
 	FromQuery
-”” 
+…… 
 ]
-”” 
+…… 
 int
-”” 
+…… 
 ?
-”” 
+…… 
 filterMonth
-”” (
+…… (
 ,
-””( )
+……( )
 [
-‘‘ 
+   
 	FromQuery
-‘‘ 
+   
 ]
-‘‘ 
+   
 int
-‘‘ 
+   
 ?
-‘‘ 
+   
 filterQuarter
-‘‘ *
+   *
 )
-’’ 	
+ÀÀ 	
 {
-÷÷ 	
+ÃÃ 	
 var
-◊◊ 
+ÕÕ 
 responseDto
-◊◊ 
+ÕÕ 
 =
-◊◊ 
+ÕÕ 
 await
-◊◊ #
+ÕÕ #
 _paymentService
-◊◊$ 3
+ÕÕ$ 3
 .
-◊◊3 4)
-GetLeastInstructorsByPayout
-◊◊4 O
+ÕÕ3 4'
+GetTopInstructorsByPayout
+ÕÕ4 M
 (
-ÿÿ 
+ŒŒ 
 topN
-ŸŸ 
+œœ 
 ,
-ŸŸ 
+œœ 
 
 filterYear
-⁄⁄ 
+–– 
 ,
-⁄⁄ 
+–– 
 filterMonth
-€€ 
+—— 
 ,
-€€ 
+—— 
 filterQuarter
-‹‹ 
+““ 
 )
-›› 
+”” 
 ;
-›› 
+”” 
 return
-ﬁﬁ 
+‘‘ 
 
 StatusCode
-ﬁﬁ 
+‘‘ 
 (
-ﬁﬁ 
+‘‘ 
 responseDto
-ﬁﬁ )
+‘‘ )
 .
-ﬁﬁ) *
+‘‘) *
 
 StatusCode
-ﬁﬁ* 4
+‘‘* 4
 ,
-ﬁﬁ4 5
+‘‘4 5
 responseDto
-ﬁﬁ6 A
+‘‘6 A
 )
-ﬁﬁA B
+‘‘A B
 ;
-ﬁﬁB C
+‘‘B C
 }
-ﬂﬂ 	
+’’ 	
+[
+◊◊ 	
+HttpGet
+◊◊	 
+]
+◊◊ 
+[
+ÿÿ 	
+Route
+ÿÿ	 
+(
+ÿÿ 
+$str
+ÿÿ 
+)
+ÿÿ 
+]
+ÿÿ 
+[
+ŸŸ 	
+	Authorize
+ŸŸ	 
+(
+ŸŸ 
+Roles
+ŸŸ 
+=
+ŸŸ 
+StaticUserRoles
+ŸŸ *
+.
+ŸŸ* +
+Admin
+ŸŸ+ 0
+)
+ŸŸ0 1
+]
+ŸŸ1 2
+public
+⁄⁄ 
+async
+⁄⁄ 
+Task
+⁄⁄ 
+<
+⁄⁄ 
+ActionResult
+⁄⁄ &
+<
+⁄⁄& '
+ResponseDTO
+⁄⁄' 2
+>
+⁄⁄2 3
+>
+⁄⁄3 4)
+GetLeastInstructorsByPayout
+⁄⁄5 P
+(
+€€ 	
+[
+‹‹ 
+	FromQuery
+‹‹ 
+]
+‹‹ 
+int
+‹‹ 
+topN
+‹‹  
+,
+‹‹  !
+[
+›› 
+	FromQuery
+›› 
+]
+›› 
+int
+›› 
+?
+›› 
+
+filterYear
+›› '
+,
+››' (
+[
+ﬁﬁ 
+	FromQuery
+ﬁﬁ 
+]
+ﬁﬁ 
+int
+ﬁﬁ 
+?
+ﬁﬁ 
+filterMonth
+ﬁﬁ (
+,
+ﬁﬁ( )
+[
+ﬂﬂ 
+	FromQuery
+ﬂﬂ 
+]
+ﬂﬂ 
+int
+ﬂﬂ 
+?
+ﬂﬂ 
+filterQuarter
+ﬂﬂ *
+)
+‡‡ 	
+{
+·· 	
+var
+‚‚ 
+responseDto
+‚‚ 
+=
+‚‚ 
+await
+‚‚ #
+_paymentService
+‚‚$ 3
+.
+‚‚3 4)
+GetLeastInstructorsByPayout
+‚‚4 O
+(
+„„ 
+topN
+‰‰ 
+,
+‰‰ 
+
+filterYear
+ÂÂ 
+,
+ÂÂ 
+filterMonth
+ÊÊ 
+,
+ÊÊ 
+filterQuarter
+ÁÁ 
+)
+ËË 
+;
+ËË 
+return
+ÈÈ 
+
+StatusCode
+ÈÈ 
+(
+ÈÈ 
+responseDto
+ÈÈ )
+.
+ÈÈ) *
+
+StatusCode
+ÈÈ* 4
+,
+ÈÈ4 5
+responseDto
+ÈÈ6 A
+)
+ÈÈA B
+;
+ÈÈB C
 }
-‡‡ 
-}·· œØ
+ÍÍ 	
+}
+ÎÎ 
+}ÏÏ ±M
+pD:\FPT\Semester 6\Project_Cursus\Backend_Cursus\Cursus.LMS\Cursus.LMS.API\Controllers\EmailTemplateController.cs
+	namespace 	
+Cursus
+ 
+. 
+LMS 
+. 
+API 
+. 
+Controllers $
+{		 
+[
+
+ 
+Route
+
+ 
+
+(
+
+
+ 
+$str
+
+ 
+)
+
+ 
+]
+
+ 
+[ 
+ApiController 
+] 
+[ 
+	Authorize 
+( 
+Roles 
+= 
+StaticUserRoles &
+.& '
+Admin' ,
+), -
+]- .
+public 
+
+class #
+EmailTemplateController (
+:) *
+ControllerBase+ 9
+{ 
+private 
+readonly 
+IUnitOfWork $
+_unitOfWork% 0
+;0 1
+private 
+readonly 
+IEmailService &
+_emailService' 4
+;4 5
+public #
+EmailTemplateController &
+(& '
+IUnitOfWork' 2
+
+unitOfWork3 =
+,= >
+IEmailService? L
+emailServiceM Y
+)Y Z
+{ 	
+_unitOfWork 
+= 
+
+unitOfWork $
+;$ %
+_emailService 
+= 
+emailService (
+;( )
+} 	
+[ 	
+HttpGet	 
+] 
+public 
+async 
+Task 
+< 
+ActionResult &
+<& '
+ResponseDTO' 2
+>2 3
+>3 4 
+GetAllEmailTemplates5 I
+(I J
+[ 
+	FromQuery 
+] 
+string 
+? 
+filterOn  (
+,( )
+[ 
+	FromQuery 
+] 
+string 
+? 
+filterQuery  +
+,+ ,
+[   
+	FromQuery   
+]   
+string   
+?   
+sortBy    &
+,  & '
+[!! 
+	FromQuery!! 
+]!! 
+bool!! 
+?!! 
+isAscending!! )
+,!!) *
+["" 
+	FromQuery"" 
+]"" 
+int"" 
+
+pageNumber"" &
+=""' (
+$num"") *
+,""* +
+[## 
+	FromQuery## 
+]## 
+int## 
+pageSize## $
+=##% &
+$num##' )
+)##) *
+{$$ 	
+var&& 
+responseDto&& 
+=&& 
+await'' 
+_emailService'' #
+.''# $
+GetAll''$ *
+(''* +
+User''+ /
+,''/ 0
+filterOn''1 9
+,''9 :
+filterQuery''; F
+,''F G
+sortBy''H N
+,''N O
+isAscending''P [
+,''[ \
+
+pageNumber''] g
+,''g h
+pageSize''i q
+)''q r
+;''r s
+return(( 
+
+StatusCode(( 
+((( 
+responseDto(( )
+.(() *
+
+StatusCode((* 4
+,((4 5
+responseDto((6 A
+)((A B
+;((B C
+})) 	
+[00 	
+HttpGet00	 
+(00 
+$str00 
+)00 
+]00 
+public11 
+async11 
+Task11 
+<11 
+ActionResult11 &
+<11& '
+ResponseDTO11' 2
+>112 3
+>113 4 
+GetEmailTemplateById115 I
+(11I J
+Guid11J N
+id11O Q
+)11Q R
+{22 	
+var33 
+emailTemplate33 
+=33 
+await33  %
+_unitOfWork33& 1
+.331 2#
+EmailTemplateRepository332 I
+.33I J
+GetAsync33J R
+(33R S
+x33S T
+=>33U W
+x33X Y
+.33Y Z
+Id33Z \
+==33] _
+id33` b
+)33b c
+;33c d
+if44 
+(44 
+emailTemplate44 
+==44  
+null44! %
+)44% &
+{55 
+return66 
+NotFound66 
+(66  
+new66  #
+ResponseDTO66$ /
+{77 
+	IsSuccess88 
+=88 
+false88  %
+,88% &
+Message99 
+=99 
+$str99 <
+}:: 
+):: 
+;:: 
+};; 
+return== 
+Ok== 
+(== 
+new== 
+ResponseDTO== %
+{>> 
+Result?? 
+=?? 
+emailTemplate?? &
+,??& '
+	IsSuccess@@ 
+=@@ 
+true@@  
+,@@  !
+MessageAA 
+=AA 
+$strAA ;
+}BB 
+)BB 
+;BB 
+}CC 	
+[KK 	
+HttpPutKK	 
+(KK 
+$strKK 
+)KK 
+]KK 
+publicLL 
+asyncLL 
+TaskLL 
+<LL 
+ActionResultLL &
+<LL& '
+ResponseDTOLL' 2
+>LL2 3
+>LL3 4
+UpdateEmailTemplateLL5 H
+(LLH I
+GuidLLI M
+idLLN P
+,LLP Q"
+UpdateEmailTemplateDTOMM ""
+updateEmailTemplateDTOMM# 9
+)MM9 :
+{NN 	
+varOO 
+emailTemplateOO 
+=OO 
+awaitOO  %
+_unitOfWorkOO& 1
+.OO1 2#
+EmailTemplateRepositoryOO2 I
+.OOI J
+GetAsyncOOJ R
+(OOR S
+xOOS T
+=>OOU W
+xOOX Y
+.OOY Z
+IdOOZ \
+==OO] _
+idOO` b
+)OOb c
+;OOc d
+ifQQ 
+(QQ 
+emailTemplateQQ 
+==QQ  
+nullQQ! %
+)QQ% &
+{RR 
+returnSS 
+NotFoundSS 
+(SS  
+newSS  #
+ResponseDTOSS$ /
+{TT 
+	IsSuccessUU 
+=UU 
+falseUU  %
+,UU% &
+MessageVV 
+=VV 
+$strVV <
+}WW 
+)WW 
+;WW 
+}XX 
+emailTemplate[[ 
+.[[ 
+TemplateName[[ &
+=[[' ("
+updateEmailTemplateDTO[[) ?
+.[[? @
+TemplateName[[@ L
+;[[L M
+emailTemplate\\ 
+.\\ 
+
+SenderName\\ $
+=\\% &"
+updateEmailTemplateDTO\\' =
+.\\= >
+
+SenderName\\> H
+;\\H I
+emailTemplate]] 
+.]] 
+SenderEmail]] %
+=]]& '"
+updateEmailTemplateDTO]]( >
+.]]> ?
+SenderEmail]]? J
+;]]J K
+emailTemplate^^ 
+.^^ 
+Category^^ "
+=^^# $"
+updateEmailTemplateDTO^^% ;
+.^^; <
+Category^^< D
+;^^D E
+emailTemplate__ 
+.__ 
+SubjectLine__ %
+=__& '"
+updateEmailTemplateDTO__( >
+.__> ?
+SubjectLine__? J
+;__J K
+emailTemplate`` 
+.`` 
+PreHeaderText`` '
+=``( )"
+updateEmailTemplateDTO``* @
+.``@ A
+PreHeaderText``A N
+;``N O
+emailTemplateaa 
+.aa 
+PersonalizationTagsaa -
+=aa. /"
+updateEmailTemplateDTOaa0 F
+.aaF G
+PersonalizationTagsaaG Z
+;aaZ [
+emailTemplatebb 
+.bb 
+BodyContentbb %
+=bb& '"
+updateEmailTemplateDTObb( >
+.bb> ?
+BodyContentbb? J
+;bbJ K
+emailTemplatecc 
+.cc 
+FooterContentcc '
+=cc( )"
+updateEmailTemplateDTOcc* @
+.cc@ A
+FooterContentccA N
+;ccN O
+emailTemplatedd 
+.dd 
+CallToActiondd &
+=dd' ("
+updateEmailTemplateDTOdd) ?
+.dd? @
+CallToActiondd@ L
+;ddL M
+emailTemplateee 
+.ee 
+Languageee "
+=ee# $"
+updateEmailTemplateDTOee% ;
+.ee; <
+Languageee< D
+;eeD E
+emailTemplateff 
+.ff 
+RecipientTypeff '
+=ff( )"
+updateEmailTemplateDTOff* @
+.ff@ A
+RecipientTypeffA N
+;ffN O
+_unitOfWorkhh 
+.hh #
+EmailTemplateRepositoryhh /
+.hh/ 0
+Updatehh0 6
+(hh6 7
+emailTemplatehh7 D
+)hhD E
+;hhE F
+awaitii 
+_unitOfWorkii 
+.ii 
+	SaveAsyncii '
+(ii' (
+)ii( )
+;ii) *
+returnkk 
+Okkk 
+(kk 
+newkk 
+ResponseDTOkk %
+{ll 
+Resultmm 
+=mm 
+emailTemplatemm &
+,mm& '
+	IsSuccessnn 
+=nn 
+truenn  
+,nn  !
+Messageoo 
+=oo 
+$stroo >
+}pp 
+)pp 
+;pp 
+}qq 	
+[xx 	
+
+HttpDeletexx	 
+(xx 
+$strxx 
+)xx  
+]xx  !
+publicyy 
+ActionResultyy 
+<yy 
+ResponseDTOyy '
+>yy' (
+DeleteEmailTemplateyy) <
+(yy< =
+Guidyy= A
+idyyB D
+)yyD E
+{zz 	
+return{{ 
+
+BadRequest{{ 
+({{ 
+new{{ !
+ResponseDTO{{" -
+{|| 
+	IsSuccess}} 
+=}} 
+false}} !
+,}}! "
+Message~~ 
+=~~ 
+$str~~ C
+} 
+) 
+; 
+}
+ÄÄ 	
+[
+áá 	
+HttpPost
+áá	 
+]
+áá 
+public
+àà 
+ActionResult
+àà 
+<
+àà 
+ResponseDTO
+àà '
+>
+àà' (!
+CreateEmailTemplate
+àà) <
+(
+àà< =$
+CreateEmailTemplateDTO
+àà= S$
+createEmailTemplateDTO
+ààT j
+)
+ààj k
+{
+ââ 	
+return
+ää 
+
+BadRequest
+ää 
+(
+ää 
+new
+ää !
+ResponseDTO
+ää" -
+{
+ãã 
+	IsSuccess
+åå 
+=
+åå 
+false
+åå !
+,
+åå! "
+Message
+çç 
+=
+çç 
+$str
+çç B
+}
+éé 
+)
+éé 
+;
+éé 
+}
+èè 	
+}
+ÕÕ 
+}ŒŒ ÕÕ
 pD:\FPT\Semester 6\Project_Cursus\Backend_Cursus\Cursus.LMS\Cursus.LMS.API\Controllers\CourseVersionController.cs
 	namespace		 	
 Cursus		
@@ -5625,687 +7186,713 @@ pD:\FPT\Semester 6\Project_Cursus\Backend_Cursus\Cursus.LMS\Cursus.LMS.API\Contr
 } 	
 [ 	
 HttpGet	 
-] 
-public 
-async 
-Task 
-< 
-ActionResult &
-<& '
-ResponseDTO' 2
->2 3
->3 4
-GetCourseVersions5 F
-(   	
-[!! 
-	FromQuery!! 
-]!! 
-Guid!! 
-?!! 
-courseId!! &
-,!!& '
+] 
+[ 	
+	Authorize	 
+] 
+public   
+async   
+Task   
+<   
+ActionResult   &
+<  & '
+ResponseDTO  ' 2
+>  2 3
+>  3 4
+GetCourseVersions  5 F
+(!! 	
 ["" 
 	FromQuery"" 
-]"" 
-string"" 
-?"" 
-filterOn""  (
-,""( )
+]"" 
+Guid"" 
+?"" 
+courseId"" &
+,""& '
 [## 
 	FromQuery## 
 ]## 
 string## 
-?## 
-filterQuery##  +
-,##+ ,
+?## 
+filterOn##  (
+,##( )
 [$$ 
 	FromQuery$$ 
 ]$$ 
 string$$ 
-?$$ 
-sortBy$$  &
-,$$& '
+?$$ 
+filterQuery$$  +
+,$$+ ,
 [%% 
 	FromQuery%% 
-]%% 
-bool%% 
-?%% 
-isAscending%% )
-,%%) *
+]%% 
+string%% 
+?%% 
+sortBy%%  &
+,%%& '
 [&& 
 	FromQuery&& 
-]&& 
-int&& 
-
-pageNumber&& &
-=&&' (
-$num&&) *
-,&&* +
+]&& 
+bool&& 
+?&& 
+isAscending&& )
+,&&) *
 ['' 
 	FromQuery'' 
 ]'' 
-int'' 
-pageSize'' $
-=''% &
-$num''' (
-)(( 	
-{)) 	
-var** 
-responseDto** 
-=** 
-await** #!
-_courseVersionService**$ 9
-.**9 :
-GetCourseVersions**: K
-(++ 
-User,, 
-,,, 
-courseId-- 
-,-- 
-filterOn.. 
-,.. 
-filterQuery// 
-,// 
-sortBy00 
-,00 
-isAscending11 
-,11 
+int'' 
 
-pageNumber22 
-,22 
-pageSize33 
-)44 
-;44 
-return66 
+pageNumber'' &
+=''' (
+$num'') *
+,''* +
+[(( 
+	FromQuery(( 
+](( 
+int(( 
+pageSize(( $
+=((% &
+$num((' (
+))) 	
+{** 	
+var++ 
+responseDto++ 
+=++ 
+await++ #!
+_courseVersionService++$ 9
+.++9 :
+GetCourseVersions++: K
+(,, 
+User-- 
+,-- 
+courseId.. 
+,.. 
+filterOn// 
+,// 
+filterQuery00 
+,00 
+sortBy11 
+,11 
+isAscending22 
+,22 
 
-StatusCode66 
-(66 
-responseDto66 )
-.66) *
+pageNumber33 
+,33 
+pageSize44 
+)55 
+;55 
+return77 
 
-StatusCode66* 4
-,664 5
-responseDto666 A
-)66A B
-;66B C
-}77 	
-[99 	
-HttpGet99	 
-]99 
-[:: 	
-Route::	 
-(:: 
-$str::  
-)::  !
-]::! "
-public;; 
-async;; 
-Task;; 
-<;; 
-ActionResult;; &
-<;;& '
-ResponseDTO;;' 2
->;;2 3
->;;3 4
-GetCourseVersion;;5 E
-(;;E F
-[;;F G
-	FromRoute;;G P
-];;P Q
-Guid;;R V
-courseId;;W _
-);;_ `
-{<< 	
-var== 
-responseDto== 
-=== 
-await== #!
-_courseVersionService==$ 9
-.==9 :
-GetCourseVersion==: J
-(==J K
-User==K O
-,==O P
-courseId==Q Y
-)==Y Z
-;==Z [
-return>> 
+StatusCode77 
+(77 
+responseDto77 )
+.77) *
 
-StatusCode>> 
-(>> 
-responseDto>> )
-.>>) *
+StatusCode77* 4
+,774 5
+responseDto776 A
+)77A B
+;77B C
+}88 	
+[:: 	
+HttpGet::	 
+]:: 
+[;; 	
+Route;;	 
+(;; 
+$str;;  
+);;  !
+];;! "
+[<< 	
+	Authorize<<	 
+]<< 
+public== 
+async== 
+Task== 
+<== 
+ActionResult== &
+<==& '
+ResponseDTO==' 2
+>==2 3
+>==3 4
+GetCourseVersion==5 E
+(==E F
+[==F G
+	FromRoute==G P
+]==P Q
+Guid==R V
+courseId==W _
+)==_ `
+{>> 	
+var?? 
+responseDto?? 
+=?? 
+await?? #!
+_courseVersionService??$ 9
+.??9 :
+GetCourseVersion??: J
+(??J K
+User??K O
+,??O P
+courseId??Q Y
+)??Y Z
+;??Z [
+return@@ 
 
-StatusCode>>* 4
-,>>4 5
-responseDto>>6 A
-)>>A B
-;>>B C
-}?? 	
-[AA 	
-HttpPostAA	 
-]AA 
-[BB 	
-RouteBB	 
-(BB 
-$strBB 
-)BB 
-]BB 
-[CC 	
-	AuthorizeCC	 
-(CC 
-RolesCC 
-=CC 
-StaticUserRolesCC *
-.CC* +
+StatusCode@@ 
+(@@ 
+responseDto@@ )
+.@@) *
 
-InstructorCC+ 5
-)CC5 6
-]CC6 7
-publicDD 
-asyncDD 
-TaskDD 
-<DD 
-ActionResultDD &
-<DD& '
-ResponseDTODD' 2
->DD2 3
->DD3 4"
-CreateCourseAndVersionDD5 K
-(EE 	(
-CreateNewCourseAndVersionDTOFF ((
-createNewCourseAndVersionDtoFF) E
-)GG 	
-{HH 	
-varII 
-responseDtoII 
-=II 
-awaitII #!
-_courseVersionServiceII$ 9
-.II9 :"
-CreateCourseAndVersionII: P
-(IIP Q
-UserIIQ U
-,IIU V(
-createNewCourseAndVersionDtoIIW s
-)IIs t
-;IIt u
-returnJJ 
+StatusCode@@* 4
+,@@4 5
+responseDto@@6 A
+)@@A B
+;@@B C
+}AA 	
+[CC 	
+HttpPostCC	 
+]CC 
+[DD 	
+RouteDD	 
+(DD 
+$strDD 
+)DD 
+]DD 
+[EE 	
+	AuthorizeEE	 
+(EE 
+RolesEE 
+=EE 
+StaticUserRolesEE *
+.EE* +
 
-StatusCodeJJ 
-(JJ 
-responseDtoJJ )
-.JJ) *
+InstructorEE+ 5
+)EE5 6
+]EE6 7
+publicFF 
+asyncFF 
+TaskFF 
+<FF 
+ActionResultFF &
+<FF& '
+ResponseDTOFF' 2
+>FF2 3
+>FF3 4"
+CreateCourseAndVersionFF5 K
+(GG 	(
+CreateNewCourseAndVersionDTOHH ((
+createNewCourseAndVersionDtoHH) E
+)II 	
+{JJ 	
+varKK 
+responseDtoKK 
+=KK 
+awaitKK #!
+_courseVersionServiceKK$ 9
+.KK9 :"
+CreateCourseAndVersionKK: P
+(KKP Q
+UserKKQ U
+,KKU V(
+createNewCourseAndVersionDtoKKW s
+)KKs t
+;KKt u
+returnLL 
 
-StatusCodeJJ* 4
-,JJ4 5
-responseDtoJJ6 A
-)JJA B
-;JJB C
-}KK 	
-[MM 	
-HttpPostMM	 
-]MM 
-[NN 	
-RouteNN	 
-(NN 
-$strNN 
-)NN 
-]NN 
-[OO 	
-	AuthorizeOO	 
-(OO 
-RolesOO 
-=OO 
-StaticUserRolesOO *
-.OO* +
+StatusCodeLL 
+(LL 
+responseDtoLL )
+.LL) *
 
-InstructorOO+ 5
-)OO5 6
-]OO6 7
-publicPP 
-asyncPP 
-TaskPP 
-<PP 
-ActionResultPP &
-<PP& '
-ResponseDTOPP' 2
->PP2 3
->PP3 4
-CloneCourseVersionPP5 G
-(QQ 	
-[RR 
-FromBodyRR 
-]RR !
-CloneCourseVersionDTORR ,!
-cloneCourseVersionDtoRR- B
-)SS 	
-{TT 	
-varUU 
-responseDtoUU 
-=UU 
-awaitUU #!
-_courseVersionServiceUU$ 9
-.UU9 :
-CloneCourseVersionUU: L
-(UUL M
-UserUUM Q
-,UUQ R!
-cloneCourseVersionDtoUUS h
-)UUh i
-;UUi j
-returnVV 
+StatusCodeLL* 4
+,LL4 5
+responseDtoLL6 A
+)LLA B
+;LLB C
+}MM 	
+[OO 	
+HttpPostOO	 
+]OO 
+[PP 	
+RoutePP	 
+(PP 
+$strPP 
+)PP 
+]PP 
+[QQ 	
+	AuthorizeQQ	 
+(QQ 
+RolesQQ 
+=QQ 
+StaticUserRolesQQ *
+.QQ* +
 
-StatusCodeVV 
-(VV 
-responseDtoVV )
-.VV) *
+InstructorQQ+ 5
+)QQ5 6
+]QQ6 7
+publicRR 
+asyncRR 
+TaskRR 
+<RR 
+ActionResultRR &
+<RR& '
+ResponseDTORR' 2
+>RR2 3
+>RR3 4
+CloneCourseVersionRR5 G
+(SS 	
+[TT 
+FromBodyTT 
+]TT !
+CloneCourseVersionDTOTT ,!
+cloneCourseVersionDtoTT- B
+)UU 	
+{VV 	
+varWW 
+responseDtoWW 
+=WW 
+awaitWW #!
+_courseVersionServiceWW$ 9
+.WW9 :
+CloneCourseVersionWW: L
+(WWL M
+UserWWM Q
+,WWQ R!
+cloneCourseVersionDtoWWS h
+)WWh i
+;WWi j
+returnXX 
 
-StatusCodeVV* 4
-,VV4 5
-responseDtoVV6 A
-)VVA B
-;VVB C
-}WW 	
-[YY 	
-HttpPutYY	 
-]YY 
-[ZZ 	
-RouteZZ	 
-(ZZ 
-$strZZ 
-)ZZ 
-]ZZ 
-public[[ 
-async[[ 
-Task[[ 
-<[[ 
-ActionResult[[ &
-<[[& '
-ResponseDTO[[' 2
->[[2 3
->[[3 4
-EditCourseVersion[[5 F
-(\\ 	
-[]] 
-FromBody]] 
-]]]  
-EditCourseVersionDTO]] + 
-editCourseVersionDto]], @
-)]]@ A
-{^^ 	
-var__ 
-responseDto__ 
-=__ 
-await__ #!
-_courseVersionService__$ 9
-.__9 :
-EditCourseVersion__: K
-(__K L
-User__L P
-,__P Q 
-editCourseVersionDto__R f
-)__f g
-;__g h
-return`` 
+StatusCodeXX 
+(XX 
+responseDtoXX )
+.XX) *
 
-StatusCode`` 
-(`` 
-responseDto`` )
-.``) *
+StatusCodeXX* 4
+,XX4 5
+responseDtoXX6 A
+)XXA B
+;XXB C
+}YY 	
+[[[ 	
+HttpPut[[	 
+][[ 
+[\\ 	
+Route\\	 
+(\\ 
+$str\\ 
+)\\ 
+]\\ 
+[]] 	
+	Authorize]]	 
+(]] 
+Roles]] 
+=]] 
+StaticUserRoles]] *
+.]]* +
 
-StatusCode``* 4
-,``4 5
-responseDto``6 A
-)``A B
-;``B C
-}aa 	
-[cc 	
+Instructor]]+ 5
+)]]5 6
+]]]6 7
+public^^ 
+async^^ 
+Task^^ 
+<^^ 
+ActionResult^^ &
+<^^& '
+ResponseDTO^^' 2
+>^^2 3
+>^^3 4
+EditCourseVersion^^5 F
+(__ 	
+[`` 
+FromBody`` 
+]``  
+EditCourseVersionDTO`` + 
+editCourseVersionDto``, @
+)``@ A
+{aa 	
+varbb 
+responseDtobb 
+=bb 
+awaitbb #!
+_courseVersionServicebb$ 9
+.bb9 :
+EditCourseVersionbb: K
+(bbK L
+UserbbL P
+,bbP Q 
+editCourseVersionDtobbR f
+)bbf g
+;bbg h
+returncc 
 
-HttpDeletecc	 
-]cc 
-[dd 	
-Routedd	 
-(dd 
-$strdd '
-)dd' (
-]dd( )
-publicee 
-asyncee 
-Taskee 
-<ee 
-ActionResultee &
-<ee& '
-ResponseDTOee' 2
->ee2 3
->ee3 4
-RemoveCourseVersionee5 H
-(eeH I
-[eeI J
-	FromRouteeeJ S
-]eeS T
-GuideeU Y
-courseIdeeZ b
-)eeb c
-{ff 	
-vargg 
-responseDtogg 
-=gg 
-awaitgg #!
-_courseVersionServicegg$ 9
-.gg9 :
-RemoveCourseVersiongg: M
-(ggM N
-UserggN R
-,ggR S
-courseIdggT \
-)gg\ ]
-;gg] ^
-returnhh 
+StatusCodecc 
+(cc 
+responseDtocc )
+.cc) *
 
-StatusCodehh 
-(hh 
-responseDtohh )
-.hh) *
+StatusCodecc* 4
+,cc4 5
+responseDtocc6 A
+)ccA B
+;ccB C
+}dd 	
+[ff 	
 
-StatusCodehh* 4
-,hh4 5
-responseDtohh6 A
-)hhA B
-;hhB C
-}ii 	
-[kk 	
-HttpPostkk	 
-]kk 
-[ll 	
-Routell	 
-(ll 
-$strll '
-)ll' (
-]ll( )
-publicmm 
-asyncmm 
-Taskmm 
-<mm 
-ActionResultmm &
-<mm& '
-ResponseDTOmm' 2
->mm2 3
->mm3 4
-AcceptCourseVersionmm5 H
-(mmH I
-[mmI J
-	FromRoutemmJ S
-]mmS T
-GuidmmU Y
-courseIdmmZ b
-)mmb c
-{nn 	
-varoo 
-responseDtooo 
-=oo 
-awaitoo #!
-_courseVersionServiceoo$ 9
-.oo9 :
-AcceptCourseVersionoo: M
-(ooM N
-UserooN R
-,ooR S
-courseIdooT \
-)oo\ ]
-;oo] ^
-returnpp 
+HttpDeleteff	 
+]ff 
+[gg 	
+Routegg	 
+(gg 
+$strgg '
+)gg' (
+]gg( )
+[hh 	
+	Authorizehh	 
+(hh 
+Roleshh 
+=hh 
+StaticUserRoleshh *
+.hh* +
 
-StatusCodepp 
-(pp 
-responseDtopp )
-.pp) *
+Instructorhh+ 5
+)hh5 6
+]hh6 7
+publicii 
+asyncii 
+Taskii 
+<ii 
+ActionResultii &
+<ii& '
+ResponseDTOii' 2
+>ii2 3
+>ii3 4
+RemoveCourseVersionii5 H
+(iiH I
+[iiI J
+	FromRouteiiJ S
+]iiS T
+GuidiiU Y
+courseIdiiZ b
+)iib c
+{jj 	
+varkk 
+responseDtokk 
+=kk 
+awaitkk #!
+_courseVersionServicekk$ 9
+.kk9 :
+RemoveCourseVersionkk: M
+(kkM N
+UserkkN R
+,kkR S
+courseIdkkT \
+)kk\ ]
+;kk] ^
+returnll 
 
-StatusCodepp* 4
-,pp4 5
-responseDtopp6 A
-)ppA B
-;ppB C
-}qq 	
-[ss 	
-HttpPostss	 
-]ss 
-[tt 	
-Routett	 
-(tt 
-$strtt '
-)tt' (
-]tt( )
-publicuu 
-asyncuu 
-Taskuu 
-<uu 
-ActionResultuu &
-<uu& '
-ResponseDTOuu' 2
->uu2 3
->uu3 4
-RejectCourseVersionuu5 H
-(uuH I
-[uuI J
-	FromRouteuuJ S
-]uuS T
-GuiduuU Y
-courseIduuZ b
-)uub c
-{vv 	
-varww 
-responseDtoww 
-=ww 
-awaitww #!
-_courseVersionServiceww$ 9
-.ww9 :
-RejectCourseVersionww: M
-(wwM N
-UserwwN R
-,wwR S
-courseIdwwT \
-)ww\ ]
-;ww] ^
-returnxx 
+StatusCodell 
+(ll 
+responseDtoll )
+.ll) *
 
-StatusCodexx 
-(xx 
-responseDtoxx )
-.xx) *
+StatusCodell* 4
+,ll4 5
+responseDtoll6 A
+)llA B
+;llB C
+}mm 	
+[oo 	
+HttpPostoo	 
+]oo 
+[pp 	
+Routepp	 
+(pp 
+$strpp '
+)pp' (
+]pp( )
+[qq 	
+	Authorizeqq	 
+(qq 
+Rolesqq 
+=qq 
+StaticUserRolesqq *
+.qq* +
+Adminqq+ 0
+)qq0 1
+]qq1 2
+publicrr 
+asyncrr 
+Taskrr 
+<rr 
+ActionResultrr &
+<rr& '
+ResponseDTOrr' 2
+>rr2 3
+>rr3 4
+AcceptCourseVersionrr5 H
+(rrH I
+[rrI J
+	FromRouterrJ S
+]rrS T
+GuidrrU Y
+courseIdrrZ b
+)rrb c
+{ss 	
+vartt 
+responseDtott 
+=tt 
+awaittt #!
+_courseVersionServicett$ 9
+.tt9 :
+AcceptCourseVersiontt: M
+(ttM N
+UserttN R
+,ttR S
+courseIdttT \
+)tt\ ]
+;tt] ^
+returnuu 
 
-StatusCodexx* 4
-,xx4 5
-responseDtoxx6 A
-)xxA B
-;xxB C
-}yy 	
-[{{ 	
-HttpPost{{	 
-]{{ 
-[|| 	
-Route||	 
-(|| 
-$str|| '
-)||' (
-]||( )
-public}} 
-async}} 
-Task}} 
-<}} 
-ActionResult}} &
-<}}& '
-ResponseDTO}}' 2
->}}2 3
->}}3 4
-SubmitCourseVersion}}5 H
-(}}H I
-[}}I J
-	FromRoute}}J S
-]}}S T
-Guid}}U Y
-courseId}}Z b
-)}}b c
-{~~ 	
-var 
-responseDto 
-= 
-await #!
-_courseVersionService$ 9
-.9 :
-SubmitCourseVersion: M
-(M N
-UserN R
-,R S
-courseIdT \
-)\ ]
-;] ^
-return
-ÄÄ 
+StatusCodeuu 
+(uu 
+responseDtouu )
+.uu) *
 
-StatusCode
-ÄÄ 
-(
-ÄÄ 
-responseDto
-ÄÄ )
-.
-ÄÄ) *
+StatusCodeuu* 4
+,uu4 5
+responseDtouu6 A
+)uuA B
+;uuB C
+}vv 	
+[xx 	
+HttpPostxx	 
+]xx 
+[yy 	
+Routeyy	 
+(yy 
+$stryy '
+)yy' (
+]yy( )
+[zz 	
+	Authorizezz	 
+(zz 
+Roleszz 
+=zz 
+StaticUserRoleszz *
+.zz* +
+Adminzz+ 0
+)zz0 1
+]zz1 2
+public{{ 
+async{{ 
+Task{{ 
+<{{ 
+ActionResult{{ &
+<{{& '
+ResponseDTO{{' 2
+>{{2 3
+>{{3 4
+RejectCourseVersion{{5 H
+({{H I
+[{{I J
+	FromRoute{{J S
+]{{S T
+Guid{{U Y
+courseId{{Z b
+){{b c
+{|| 	
+var}} 
+responseDto}} 
+=}} 
+await}} #!
+_courseVersionService}}$ 9
+.}}9 :
+RejectCourseVersion}}: M
+(}}M N
+User}}N R
+,}}R S
+courseId}}T \
+)}}\ ]
+;}}] ^
+return~~ 
 
-StatusCode
-ÄÄ* 4
-,
-ÄÄ4 5
-responseDto
-ÄÄ6 A
-)
-ÄÄA B
-;
-ÄÄB C
-}
-ÅÅ 	
+StatusCode~~ 
+(~~ 
+responseDto~~ )
+.~~) *
+
+StatusCode~~* 4
+,~~4 5
+responseDto~~6 A
+)~~A B
+;~~B C
+} 	
 [
-ÉÉ 	
+ÅÅ 	
 HttpPost
-ÉÉ	 
+ÅÅ	 
 ]
-ÉÉ 
+ÅÅ 
 [
-ÑÑ 	
+ÇÇ 	
 Route
-ÑÑ	 
+ÇÇ	 
 (
-ÑÑ 
+ÇÇ 
 $str
-ÑÑ &
+ÇÇ '
 )
-ÑÑ& '
+ÇÇ' (
 ]
-ÑÑ' (
-public
-ÖÖ 
-async
-ÖÖ 
-Task
-ÖÖ 
-<
-ÖÖ 
-ActionResult
-ÖÖ &
-<
-ÖÖ& '
-ResponseDTO
-ÖÖ' 2
->
-ÖÖ2 3
->
-ÖÖ3 4 
-MergeCourseVersion
-ÖÖ5 G
-(
-ÖÖG H
+ÇÇ( )
 [
-ÖÖH I
-	FromRoute
-ÖÖI R
-]
-ÖÖR S
-Guid
-ÖÖT X
-courseId
-ÖÖY a
-)
-ÖÖa b
-{
-ÜÜ 	
-var
-áá 
-responseDto
-áá 
+ÉÉ 	
+	Authorize
+ÉÉ	 
+(
+ÉÉ 
+Roles
+ÉÉ 
 =
-áá 
-await
-áá ##
-_courseVersionService
-áá$ 9
+ÉÉ 
+StaticUserRoles
+ÉÉ *
 .
-áá9 : 
-MergeCourseVersion
-áá: L
+ÉÉ* +
+
+Instructor
+ÉÉ+ 5
+)
+ÉÉ5 6
+]
+ÉÉ6 7
+public
+ÑÑ 
+async
+ÑÑ 
+Task
+ÑÑ 
+<
+ÑÑ 
+ActionResult
+ÑÑ &
+<
+ÑÑ& '
+ResponseDTO
+ÑÑ' 2
+>
+ÑÑ2 3
+>
+ÑÑ3 4!
+SubmitCourseVersion
+ÑÑ5 H
 (
-ááL M
-User
-ááM Q
-,
-ááQ R
+ÑÑH I
+[
+ÑÑI J
+	FromRoute
+ÑÑJ S
+]
+ÑÑS T
+Guid
+ÑÑU Y
 courseId
-ááS [
+ÑÑZ b
 )
-áá[ \
-;
-áá\ ]
-return
-àà 
-
-StatusCode
-àà 
-(
-àà 
+ÑÑb c
+{
+ÖÖ 	
+var
+ÜÜ 
 responseDto
-àà )
+ÜÜ 
+=
+ÜÜ 
+await
+ÜÜ ##
+_courseVersionService
+ÜÜ$ 9
 .
-àà) *
+ÜÜ9 :!
+SubmitCourseVersion
+ÜÜ: M
+(
+ÜÜM N
+User
+ÜÜN R
+,
+ÜÜR S
+courseId
+ÜÜT \
+)
+ÜÜ\ ]
+;
+ÜÜ] ^
+return
+áá 
 
 StatusCode
-àà* 4
-,
-àà4 5
-responseDto
-àà6 A
-)
-ààA B
-;
-ààB C
-}
-ââ 	
-[
-ãã 	
-HttpPost
-ãã	 
-]
-ãã 
-[
-åå 	
-Route
-åå	 
+áá 
 (
-åå 
-$str
-åå 2
+áá 
+responseDto
+áá )
+.
+áá) *
+
+StatusCode
+áá* 4
+,
+áá4 5
+responseDto
+áá6 A
 )
-åå2 3
+ááA B
+;
+ááB C
+}
+àà 	
+[
+ää 	
+HttpPost
+ää	 
 ]
-åå3 4
+ää 
+[
+ãã 	
+Route
+ãã	 
+(
+ãã 
+$str
+ãã &
+)
+ãã& '
+]
+ãã' (
+[
+åå 	
+	Authorize
+åå	 
+(
+åå 
+Roles
+åå 
+=
+åå 
+StaticUserRoles
+åå *
+.
+åå* +
+
+Instructor
+åå+ 5
+)
+åå5 6
+]
+åå6 7
 public
 çç 
 async
@@ -6323,555 +7910,622 @@ StatusCode
 >
 çç2 3
 >
-çç3 4+
-UploadCourseVersionBackground
-çç5 R
+çç3 4 
+MergeCourseVersion
+çç5 G
 (
-éé 	
+ççG H
 [
-èè 
+ççH I
 	FromRoute
-èè 
+ççI R
 ]
-èè 
+ççR S
 Guid
-èè 
-courseVersionId
-èè ,
-,
-èè, -.
- UploadCourseVersionBackgroundImg
-êê ,.
- uploadCourseVersionBackgroundImg
-êê- M
+ççT X
+courseId
+ççY a
 )
+çça b
+{
+éé 	
+var
+èè 
+responseDto
+èè 
+=
+èè 
+await
+èè ##
+_courseVersionService
+èè$ 9
+.
+èè9 : 
+MergeCourseVersion
+èè: L
+(
+èèL M
+User
+èèM Q
+,
+èèQ R
+courseId
+èèS [
+)
+èè[ \
+;
+èè\ ]
+return
+êê 
+
+StatusCode
+êê 
+(
+êê 
+responseDto
+êê )
+.
+êê) *
+
+StatusCode
+êê* 4
+,
+êê4 5
+responseDto
+êê6 A
+)
+êêA B
+;
+êêB C
+}
 ëë 	
-{
-íí 	
-var
-ìì 
-responseDto
-ìì 
-=
-ìì 
-await
-îî #
-_courseVersionService
-îî +
-.
-îî+ ,.
- UploadCourseVersionBackgroundImg
-îî, L
-(
-ïï 
-User
-ññ 
-,
-ññ 
-courseVersionId
-óó #
-,
-óó# $.
- uploadCourseVersionBackgroundImg
-òò 4
-)
-ôô 
-;
-ôô 
-return
-öö 
-
-StatusCode
-öö 
-(
-öö 
-responseDto
-öö )
-.
-öö) *
-
-StatusCode
-öö* 4
-,
-öö4 5
-responseDto
-öö6 A
-)
-ööA B
-;
-ööB C
-}
-õõ 	
 [
-ùù 	
-HttpGet
-ùù	 
+ìì 	
+HttpPost
+ìì	 
 ]
-ùù 
+ìì 
 [
-ûû 	
+îî 	
 Route
-ûû	 
+îî	 
 (
-ûû 
+îî 
 $str
-ûû 2
+îî 2
 )
-ûû2 3
+îî2 3
 ]
-ûû3 4
-public
-üü 
-async
-üü 
-Task
-üü 
-<
-üü 
-ActionResult
-üü &
->
-üü& ',
-DisplayCourseVersionBackground
-üü( F
-(
-†† 	
+îî3 4
 [
-°° 
-	FromRoute
-°° 
-]
-°° 
-Guid
-°° 
-courseVersionId
-°° ,
-)
-¢¢ 	
-{
-££ 	
-var
-§§ 
-responseDto
-§§ 
+ïï 	
+	Authorize
+ïï	 
+(
+ïï 
+Roles
+ïï 
 =
-§§ 
-await
-§§ ##
-_courseVersionService
-§§$ 9
+ïï 
+StaticUserRoles
+ïï *
 .
-§§9 :/
-!DisplayCourseVersionBackgroundImg
-§§: [
-(
-§§[ \
-User
-§§\ `
-,
-§§` a
-courseVersionId
-§§b q
+ïï* +
+
+Instructor
+ïï+ 5
 )
-§§q r
-;
-§§r s
-if
-•• 
-(
-•• 
-responseDto
-•• 
-is
-•• 
-null
-•• #
-)
-••# $
-{
-¶¶ 
-return
-ßß 
-null
-ßß 
-;
-ßß 
-}
-®® 
-return
-©© 
-File
-©© 
-(
-©© 
-responseDto
-©© #
-,
-©©# $
-$str
-©©% 0
-)
-©©0 1
-;
-©©1 2
-}
-™™ 	
-[
-±± 	
-HttpGet
-±±	 
+ïï5 6
 ]
-±± 
-[
-≤≤ 	
-Route
-≤≤	 
-(
-≤≤ 
-$str
-≤≤ 
-)
-≤≤ 
-]
-≤≤ 
+ïï6 7
 public
-≥≥ 
+ññ 
 async
-≥≥ 
+ññ 
 Task
-≥≥ 
+ññ 
 <
-≥≥ 
+ññ 
 ActionResult
-≥≥ &
+ññ &
 <
-≥≥& '
+ññ& '
 ResponseDTO
-≥≥' 2
+ññ' 2
 >
-≥≥2 3
+ññ2 3
 >
-≥≥3 4'
-GetCourseVersionsComments
-≥≥5 N
+ññ3 4+
+UploadCourseVersionBackground
+ññ5 R
 (
+óó 	
+[
+òò 
+	FromRoute
+òò 
+]
+òò 
+Guid
+òò 
+courseVersionId
+òò ,
+,
+òò, -.
+ UploadCourseVersionBackgroundImg
+ôô ,.
+ uploadCourseVersionBackgroundImg
+ôô- M
+)
+öö 	
+{
+õõ 	
+var
+úú 
+responseDto
+úú 
+=
+úú 
+await
+ùù #
+_courseVersionService
+ùù +
+.
+ùù+ ,.
+ UploadCourseVersionBackgroundImg
+ùù, L
+(
+ûû 
+User
+üü 
+,
+üü 
+courseVersionId
+†† #
+,
+††# $.
+ uploadCourseVersionBackgroundImg
+°° 4
+)
+¢¢ 
+;
+¢¢ 
+return
+££ 
+
+StatusCode
+££ 
+(
+££ 
+responseDto
+££ )
+.
+££) *
+
+StatusCode
+££* 4
+,
+££4 5
+responseDto
+££6 A
+)
+££A B
+;
+££B C
+}
+§§ 	
+[
+¶¶ 	
+HttpGet
+¶¶	 
+]
+¶¶ 
+[
+ßß 	
+Route
+ßß	 
+(
+ßß 
+$str
+ßß 2
+)
+ßß2 3
+]
+ßß3 4
+public
+®® 
+async
+®® 
+Task
+®® 
+<
+®® 
+ActionResult
+®® &
+>
+®®& ',
+DisplayCourseVersionBackground
+®®( F
+(
+©© 	
+[
+™™ 
+	FromRoute
+™™ 
+]
+™™ 
+Guid
+™™ 
+courseVersionId
+™™ ,
+)
+´´ 	
+{
+¨¨ 	
+var
+≠≠ 
+responseDto
+≠≠ 
+=
+≠≠ 
+await
+≠≠ ##
+_courseVersionService
+≠≠$ 9
+.
+≠≠9 :/
+!DisplayCourseVersionBackgroundImg
+≠≠: [
+(
+≠≠[ \
+User
+≠≠\ `
+,
+≠≠` a
+courseVersionId
+≠≠b q
+)
+≠≠q r
+;
+≠≠r s
+if
+ÆÆ 
+(
+ÆÆ 
+responseDto
+ÆÆ 
+is
+ÆÆ 
+null
+ÆÆ #
+)
+ÆÆ# $
+{
+ØØ 
+return
+∞∞ 
+null
+∞∞ 
+;
+∞∞ 
+}
+±± 
+return
+≥≥ 
+File
+≥≥ 
+(
+≥≥ 
+responseDto
+≥≥ #
+,
+≥≥# $
+$str
+≥≥% 0
+)
+≥≥0 1
+;
+≥≥1 2
+}
 ¥¥ 	
 [
-µµ 
-	FromQuery
-µµ 
-]
-µµ 
-[
-µµ 
-Required
-µµ !
-]
-µµ! "
-Guid
-µµ# '
-courseVersionId
-µµ( 7
-,
-µµ7 8
-[
-∂∂ 
-	FromQuery
-∂∂ 
-]
-∂∂ 
-string
-∂∂ 
-?
-∂∂ 
-filterOn
-∂∂  (
-,
-∂∂( )
-[
-∑∑ 
-	FromQuery
-∑∑ 
-]
-∑∑ 
-string
-∑∑ 
-?
-∑∑ 
-filterQuery
-∑∑  +
-,
-∑∑+ ,
-[
-∏∏ 
-	FromQuery
-∏∏ 
-]
-∏∏ 
-string
-∏∏ 
-?
-∏∏ 
-sortBy
-∏∏  &
-,
-∏∏& '
-[
-ππ 
-	FromQuery
-ππ 
-]
-ππ 
-int
-ππ 
-
-pageNumber
-ππ &
-=
-ππ' (
-$num
-ππ) *
-,
-ππ* +
-[
-∫∫ 
-	FromQuery
-∫∫ 
-]
-∫∫ 
-int
-∫∫ 
-pageSize
-∫∫ $
-=
-∫∫% &
-$num
-∫∫' )
-)
-ªª 	
-{
-ºº 	
-var
-ΩΩ 
-responseDto
-ΩΩ 
-=
-ΩΩ 
-await
-ΩΩ ##
-_courseVersionService
-ΩΩ$ 9
-.
-ΩΩ9 :'
-GetCourseVersionsComments
-ΩΩ: S
-(
-ææ 
-User
-øø 
-,
-øø 
-courseVersionId
-¿¿ 
-,
-¿¿  
-filterOn
-¡¡ 
-,
-¡¡ 
-filterQuery
-¬¬ 
-,
-¬¬ 
-sortBy
-√√ 
-,
-√√ 
-
-pageNumber
-ƒƒ 
-,
-ƒƒ 
-pageSize
-≈≈ 
-)
-∆∆ 
-;
-∆∆ 
-return
-»» 
-
-StatusCode
-»» 
-(
-»» 
-responseDto
-»» )
-.
-»») *
-
-StatusCode
-»»* 4
-,
-»»4 5
-responseDto
-»»6 A
-)
-»»A B
-;
-»»B C
-}
-…… 	
-[
-ÀÀ 	
+∫∫ 	
 HttpGet
-ÀÀ	 
+∫∫	 
 ]
-ÀÀ 
+∫∫ 
 [
-ÃÃ 	
+ªª 	
 Route
-ÃÃ	 
+ªª	 
 (
-ÃÃ 
+ªª 
 $str
-ÃÃ )
+ªª 
 )
-ÃÃ) *
+ªª 
 ]
-ÃÃ* +
-public
-ÕÕ 
-async
-ÕÕ 
-Task
-ÕÕ 
-<
-ÕÕ 
-ActionResult
-ÕÕ &
-<
-ÕÕ& '
-ResponseDTO
-ÕÕ' 2
->
-ÕÕ2 3
->
-ÕÕ3 4%
-GetCourseVersionComment
-ÕÕ5 L
-(
-ÕÕL M
+ªª 
 [
-ÕÕM N
-	FromRoute
-ÕÕN W
-]
-ÕÕW X
-Guid
-ÕÕY ]
-	commentId
-ÕÕ^ g
-)
-ÕÕg h
-{
-ŒŒ 	
-var
-œœ 
-responseDto
-œœ 
+ºº 	
+	Authorize
+ºº	 
+(
+ºº 
+Roles
+ºº 
 =
-œœ 
-await
-œœ ##
-_courseVersionService
-œœ$ 9
+ºº 
+StaticUserRoles
+ºº *
 .
-œœ9 :%
-GetCourseVersionComment
-œœ: Q
-(
-œœQ R
-User
-œœR V
-,
-œœV W
-	commentId
-œœX a
+ºº* +
+AdminInstructor
+ºº+ :
 )
-œœa b
-;
-œœb c
-return
-–– 
-
-StatusCode
-–– 
-(
-–– 
-responseDto
-–– )
-.
-––) *
-
-StatusCode
-––* 4
-,
-––4 5
-responseDto
-––6 A
-)
-––A B
-;
-––B C
-}
-—— 	
-[
-”” 	
-HttpPost
-””	 
+ºº: ;
 ]
-”” 
-[
-‘‘ 	
-Route
-‘‘	 
-(
-‘‘ 
-$str
-‘‘ 
-)
-‘‘ 
-]
-‘‘ 
+ºº; <
 public
-’’ 
+ΩΩ 
 async
-’’ 
+ΩΩ 
 Task
-’’ 
+ΩΩ 
 <
-’’ 
+ΩΩ 
 ActionResult
-’’ &
+ΩΩ &
 <
-’’& '
+ΩΩ& '
 ResponseDTO
-’’' 2
+ΩΩ' 2
 >
-’’2 3
+ΩΩ2 3
 >
-’’3 4(
-CreateCourseVersionComment
-’’5 O
+ΩΩ3 4'
+GetCourseVersionsComments
+ΩΩ5 N
 (
-÷÷ 	,
-CreateCourseVersionCommentsDTO
-◊◊ *,
-createCourseVersionCommentsDto
-◊◊+ I
+ææ 	
+[
+øø 
+	FromQuery
+øø 
+]
+øø 
+[
+øø 
+Required
+øø !
+]
+øø! "
+Guid
+øø# '
+courseVersionId
+øø( 7
+,
+øø7 8
+[
+¿¿ 
+	FromQuery
+¿¿ 
+]
+¿¿ 
+string
+¿¿ 
+?
+¿¿ 
+filterOn
+¿¿  (
+,
+¿¿( )
+[
+¡¡ 
+	FromQuery
+¡¡ 
+]
+¡¡ 
+string
+¡¡ 
+?
+¡¡ 
+filterQuery
+¡¡  +
+,
+¡¡+ ,
+[
+¬¬ 
+	FromQuery
+¬¬ 
+]
+¬¬ 
+string
+¬¬ 
+?
+¬¬ 
+sortBy
+¬¬  &
+,
+¬¬& '
+[
+√√ 
+	FromQuery
+√√ 
+]
+√√ 
+int
+√√ 
+
+pageNumber
+√√ &
+=
+√√' (
+$num
+√√) *
+,
+√√* +
+[
+ƒƒ 
+	FromQuery
+ƒƒ 
+]
+ƒƒ 
+int
+ƒƒ 
+pageSize
+ƒƒ $
+=
+ƒƒ% &
+$num
+ƒƒ' )
 )
-ÿÿ 	
+≈≈ 	
+{
+∆∆ 	
+var
+«« 
+responseDto
+«« 
+=
+«« 
+await
+«« ##
+_courseVersionService
+««$ 9
+.
+««9 :'
+GetCourseVersionsComments
+««: S
+(
+»» 
+User
+…… 
+,
+…… 
+courseVersionId
+   
+,
+    
+filterOn
+ÀÀ 
+,
+ÀÀ 
+filterQuery
+ÃÃ 
+,
+ÃÃ 
+sortBy
+ÕÕ 
+,
+ÕÕ 
+
+pageNumber
+ŒŒ 
+,
+ŒŒ 
+pageSize
+œœ 
+)
+–– 
+;
+–– 
+return
+““ 
+
+StatusCode
+““ 
+(
+““ 
+responseDto
+““ )
+.
+““) *
+
+StatusCode
+““* 4
+,
+““4 5
+responseDto
+““6 A
+)
+““A B
+;
+““B C
+}
+”” 	
+[
+’’ 	
+HttpGet
+’’	 
+]
+’’ 
+[
+÷÷ 	
+Route
+÷÷	 
+(
+÷÷ 
+$str
+÷÷ )
+)
+÷÷) *
+]
+÷÷* +
+[
+◊◊ 	
+	Authorize
+◊◊	 
+(
+◊◊ 
+Roles
+◊◊ 
+=
+◊◊ 
+StaticUserRoles
+◊◊ *
+.
+◊◊* +
+AdminInstructor
+◊◊+ :
+)
+◊◊: ;
+]
+◊◊; <
+public
+ÿÿ 
+async
+ÿÿ 
+Task
+ÿÿ 
+<
+ÿÿ 
+ActionResult
+ÿÿ &
+<
+ÿÿ& '
+ResponseDTO
+ÿÿ' 2
+>
+ÿÿ2 3
+>
+ÿÿ3 4%
+GetCourseVersionComment
+ÿÿ5 L
+(
+ÿÿL M
+[
+ÿÿM N
+	FromRoute
+ÿÿN W
+]
+ÿÿW X
+Guid
+ÿÿY ]
+	commentId
+ÿÿ^ g
+)
+ÿÿg h
 {
 ŸŸ 	
 var
@@ -6881,67 +8535,87 @@ StatusCode
 =
 ⁄⁄ 
 await
-€€ #
+⁄⁄ ##
 _courseVersionService
-€€ +
+⁄⁄$ 9
 .
-€€+ ,(
-CreateCourseVersionComment
-€€, F
+⁄⁄9 :%
+GetCourseVersionComment
+⁄⁄: Q
 (
-€€F G
+⁄⁄Q R
 User
-€€G K
+⁄⁄R V
 ,
-€€K L,
-createCourseVersionCommentsDto
-€€M k
+⁄⁄V W
+	commentId
+⁄⁄X a
 )
-€€k l
+⁄⁄a b
 ;
-€€l m
+⁄⁄b c
 return
-‹‹ 
+€€ 
 
 StatusCode
-‹‹ 
+€€ 
 (
-‹‹ 
+€€ 
 responseDto
-‹‹ )
+€€ )
 .
-‹‹) *
+€€) *
 
 StatusCode
-‹‹* 4
+€€* 4
 ,
-‹‹4 5
+€€4 5
 responseDto
-‹‹6 A
+€€6 A
 )
-‹‹A B
+€€A B
 ;
-‹‹B C
+€€B C
 }
-›› 	
+‹‹ 	
 [
-ﬂﬂ 	
-HttpPut
-ﬂﬂ	 
+ﬁﬁ 	
+HttpPost
+ﬁﬁ	 
 ]
-ﬂﬂ 
+ﬁﬁ 
 [
-‡‡ 	
+ﬂﬂ 	
 Route
-‡‡	 
+ﬂﬂ	 
 (
-‡‡ 
+ﬂﬂ 
 $str
-‡‡ 
+ﬂﬂ 
 )
-‡‡ 
+ﬂﬂ 
 ]
-‡‡ 
+ﬂﬂ 
+[
+‡‡ 	
+	Authorize
+‡‡	 
+(
+‡‡ 
+Roles
+‡‡ 
+=
+‡‡ 
+StaticUserRoles
+‡‡ *
+.
+‡‡* +
+Admin
+‡‡+ 0
+)
+‡‡0 1
+]
+‡‡1 2
 public
 ·· 
 async
@@ -6959,15 +8633,15 @@ StatusCode
 >
 ··2 3
 >
-··3 4&
-EditCourseVersionComment
-··5 M
+··3 4(
+CreateCourseVersionComment
+··5 O
 (
-‚‚ 	*
-EditCourseVersionCommentsDTO
-„„ (*
-editCourseVersionCommentsDto
-„„) E
+‚‚ 	,
+CreateCourseVersionCommentsDTO
+„„ *,
+createCourseVersionCommentsDto
+„„+ I
 )
 ‰‰ 	
 {
@@ -6979,172 +8653,206 @@ StatusCode
 =
 ÊÊ 
 await
-ÊÊ ##
+ÁÁ #
 _courseVersionService
-ÊÊ$ 9
+ÁÁ +
 .
-ÊÊ9 :&
-EditCourseVersionComment
-ÊÊ: R
+ÁÁ+ ,(
+CreateCourseVersionComment
+ÁÁ, F
 (
-ÊÊR S
+ÁÁF G
 User
-ÊÊS W
+ÁÁG K
 ,
-ÊÊW X*
-editCourseVersionCommentsDto
-ÊÊY u
+ÁÁK L,
+createCourseVersionCommentsDto
+ÁÁM k
 )
-ÊÊu v
+ÁÁk l
 ;
-ÊÊv w
+ÁÁl m
 return
-ÁÁ 
+ËË 
 
 StatusCode
-ÁÁ 
+ËË 
 (
-ÁÁ 
+ËË 
 responseDto
-ÁÁ )
+ËË )
 .
-ÁÁ) *
+ËË) *
 
 StatusCode
-ÁÁ* 4
+ËË* 4
 ,
-ÁÁ4 5
+ËË4 5
 responseDto
-ÁÁ6 A
+ËË6 A
 )
-ÁÁA B
+ËËA B
 ;
-ÁÁB C
+ËËB C
 }
-ËË 	
+ÈÈ 	
 [
-ÍÍ 	
+ÎÎ 	
+HttpPut
+ÎÎ	 
+]
+ÎÎ 
+[
+ÏÏ 	
+Route
+ÏÏ	 
+(
+ÏÏ 
+$str
+ÏÏ 
+)
+ÏÏ 
+]
+ÏÏ 
+[
+ÌÌ 	
+	Authorize
+ÌÌ	 
+(
+ÌÌ 
+Roles
+ÌÌ 
+=
+ÌÌ 
+StaticUserRoles
+ÌÌ *
+.
+ÌÌ* +
+Admin
+ÌÌ+ 0
+)
+ÌÌ0 1
+]
+ÌÌ1 2
+public
+ÓÓ 
+async
+ÓÓ 
+Task
+ÓÓ 
+<
+ÓÓ 
+ActionResult
+ÓÓ &
+<
+ÓÓ& '
+ResponseDTO
+ÓÓ' 2
+>
+ÓÓ2 3
+>
+ÓÓ3 4&
+EditCourseVersionComment
+ÓÓ5 M
+(
+ÔÔ 	*
+EditCourseVersionCommentsDTO
+ (*
+editCourseVersionCommentsDto
+) E
+)
+ÒÒ 	
+{
+ÚÚ 	
+var
+ÛÛ 
+responseDto
+ÛÛ 
+=
+ÛÛ 
+await
+ÛÛ ##
+_courseVersionService
+ÛÛ$ 9
+.
+ÛÛ9 :&
+EditCourseVersionComment
+ÛÛ: R
+(
+ÛÛR S
+User
+ÛÛS W
+,
+ÛÛW X*
+editCourseVersionCommentsDto
+ÛÛY u
+)
+ÛÛu v
+;
+ÛÛv w
+return
+ÙÙ 
+
+StatusCode
+ÙÙ 
+(
+ÙÙ 
+responseDto
+ÙÙ )
+.
+ÙÙ) *
+
+StatusCode
+ÙÙ* 4
+,
+ÙÙ4 5
+responseDto
+ÙÙ6 A
+)
+ÙÙA B
+;
+ÙÙB C
+}
+ıı 	
+[
+˜˜ 	
 
 HttpDelete
-ÍÍ	 
+˜˜	 
 ]
-ÍÍ 
+˜˜ 
 [
-ÎÎ 	
+¯¯ 	
 Route
-ÎÎ	 
+¯¯	 
 (
-ÎÎ 
+¯¯ 
 $str
-ÎÎ )
+¯¯ )
 )
-ÎÎ) *
+¯¯) *
 ]
-ÎÎ* +
-public
-ÏÏ 
-async
-ÏÏ 
-Task
-ÏÏ 
-<
-ÏÏ 
-ActionResult
-ÏÏ &
-<
-ÏÏ& '
-ResponseDTO
-ÏÏ' 2
->
-ÏÏ2 3
->
-ÏÏ3 4(
-RemoveCourseVersionComment
-ÏÏ5 O
-(
-ÏÏO P
+¯¯* +
 [
-ÌÌ 
-	FromRoute
-ÌÌ 
-]
-ÌÌ 
-Guid
-ÌÌ 
-	commentId
-ÌÌ &
-)
-ÌÌ& '
-{
-ÓÓ 	
-var
-ÔÔ 
-responseDto
-ÔÔ 
+˘˘ 	
+	Authorize
+˘˘	 
+(
+˘˘ 
+Roles
+˘˘ 
 =
-ÔÔ 
-await
- #
-_courseVersionService
- +
+˘˘ 
+StaticUserRoles
+˘˘ *
 .
-+ ,(
-RemoveCourseVersionComment
-, F
-(
-F G
-User
-G K
-,
-K L
-	commentId
-M V
+˘˘* +
+Admin
+˘˘+ 0
 )
-V W
-;
-W X
-return
-ÒÒ 
-
-StatusCode
-ÒÒ 
-(
-ÒÒ 
-responseDto
-ÒÒ )
-.
-ÒÒ) *
-
-StatusCode
-ÒÒ* 4
-,
-ÒÒ4 5
-responseDto
-ÒÒ6 A
-)
-ÒÒA B
-;
-ÒÒB C
-}
-ÚÚ 	
-[
-¯¯ 	
-HttpGet
-¯¯	 
+˘˘0 1
 ]
-¯¯ 
-[
-˘˘ 	
-Route
-˘˘	 
-(
-˘˘ 
-$str
-˘˘ 
-)
-˘˘ 
-]
-˘˘ 
+˘˘1 2
 public
 ˙˙ 
 async
@@ -7162,1044 +8870,979 @@ StatusCode
 >
 ˙˙2 3
 >
-˙˙3 4
-GetCourseSections
-˙˙5 F
+˙˙3 4(
+RemoveCourseVersionComment
+˙˙5 O
 (
-˚˚ 	
+˙˙O P
 [
-¸¸ 
-	FromQuery
-¸¸ 
-]
-¸¸ 
-[
-¸¸ 
-Required
-¸¸ !
-]
-¸¸! "
-Guid
-¸¸# '
-?
-¸¸' (
-courseVersionId
-¸¸) 8
-,
-¸¸8 9
-[
-˝˝ 
-	FromQuery
-˝˝ 
-]
-˝˝ 
-string
-˝˝ 
-?
-˝˝ 
-filterOn
-˝˝  (
-,
-˝˝( )
-[
-˛˛ 
-	FromQuery
-˛˛ 
-]
-˛˛ 
-string
-˛˛ 
-?
-˛˛ 
-filterQuery
-˛˛  +
-,
-˛˛+ ,
-[
-ˇˇ 
-	FromQuery
-ˇˇ 
-]
-ˇˇ 
-string
-ˇˇ 
-?
-ˇˇ 
-sortBy
-ˇˇ  &
-,
-ˇˇ& '
-[
-ÄÄ 
-	FromQuery
-ÄÄ 
-]
-ÄÄ 
-bool
-ÄÄ 
-?
-ÄÄ 
-isAscending
-ÄÄ )
-,
-ÄÄ) *
-[
-ÅÅ 
-	FromQuery
-ÅÅ 
-]
-ÅÅ 
-int
-ÅÅ 
-
-pageNumber
-ÅÅ &
-=
-ÅÅ' (
-$num
-ÅÅ) *
-,
-ÅÅ* +
-[
-ÇÇ 
-	FromQuery
-ÇÇ 
-]
-ÇÇ 
-int
-ÇÇ 
-pageSize
-ÇÇ $
-=
-ÇÇ% &
-$num
-ÇÇ' (
-)
-ÉÉ 	
-{
-ÑÑ 	
-var
-ÖÖ 
-responseDto
-ÖÖ 
-=
-ÖÖ 
-await
-ÖÖ #*
-_courseSectionVersionService
-ÖÖ$ @
-.
-ÖÖ@ A
-GetCourseSections
-ÖÖA R
-(
-ÜÜ 
-User
-áá 
-,
-áá 
-courseVersionId
-àà 
-,
-àà  
-filterOn
-ââ 
-,
-ââ 
-filterQuery
-ää 
-,
-ää 
-sortBy
-ãã 
-,
-ãã 
-
-pageNumber
-åå 
-,
-åå 
-pageSize
-çç 
-)
-éé 
-;
-éé 
-return
-êê 
-
-StatusCode
-êê 
-(
-êê 
-responseDto
-êê )
-.
-êê) *
-
-StatusCode
-êê* 4
-,
-êê4 5
-responseDto
-êê6 A
-)
-êêA B
-;
-êêB C
-}
-ëë 	
-[
-îî 	
-HttpGet
-îî	 
-]
-îî 
-[
-ïï 	
-Route
-ïï	 
-(
-ïï 
-$str
-ïï )
-)
-ïï) *
-]
-ïï* +
-public
-ññ 
-async
-ññ 
-Task
-ññ 
-<
-ññ 
-ActionResult
-ññ &
-<
-ññ& '
-ResponseDTO
-ññ' 2
->
-ññ2 3
->
-ññ3 4
-GetCourseSection
-ññ5 E
-(
-ññE F
-[
-ññF G
+˚˚ 
 	FromRoute
-ññG P
+˚˚ 
 ]
-ññP Q
+˚˚ 
 Guid
-ññR V
-	sectionId
-ññW `
+˚˚ 
+	commentId
+˚˚ &
 )
-ññ` a
+˚˚& '
 {
-óó 	
+¸¸ 	
 var
-òò 
+˝˝ 
 responseDto
-òò 
+˝˝ 
 =
-òò 
+˝˝ 
 await
-òò #*
-_courseSectionVersionService
-òò$ @
+˛˛ #
+_courseVersionService
+˛˛ +
 .
-òò@ A
-GetCourseSection
-òòA Q
+˛˛+ ,(
+RemoveCourseVersionComment
+˛˛, F
 (
-òòQ R
+˛˛F G
 User
-òòR V
+˛˛G K
 ,
-òòV W
-	sectionId
-òòX a
+˛˛K L
+	commentId
+˛˛M V
 )
-òòa b
+˛˛V W
 ;
-òòb c
+˛˛W X
 return
-ôô 
+ˇˇ 
 
 StatusCode
-ôô 
+ˇˇ 
 (
-ôô 
+ˇˇ 
 responseDto
-ôô )
+ˇˇ )
 .
-ôô) *
+ˇˇ) *
 
 StatusCode
-ôô* 4
+ˇˇ* 4
 ,
-ôô4 5
+ˇˇ4 5
 responseDto
-ôô6 A
+ˇˇ6 A
 )
-ôôA B
+ˇˇA B
 ;
-ôôB C
+ˇˇB C
 }
-öö 	
+ÄÄ 	
 [
-úú 	
-HttpPost
-úú	 
+ÜÜ 	
+HttpGet
+ÜÜ	 
 ]
-úú 
+ÜÜ 
 [
-ùù 	
+áá 	
 Route
-ùù	 
+áá	 
 (
-ùù 
+áá 
 $str
-ùù 
+áá 
 )
-ùù 
+áá 
 ]
-ùù 
+áá 
 [
-ûû 	
+àà 	
 	Authorize
-ûû	 
+àà	 
+]
+àà 
+public
+ââ 
+async
+ââ 
+Task
+ââ 
+<
+ââ 
+ActionResult
+ââ &
+<
+ââ& '
+ResponseDTO
+ââ' 2
+>
+ââ2 3
+>
+ââ3 4
+GetCourseSections
+ââ5 F
 (
-ûû 
-Roles
-ûû 
+ää 	
+[
+ãã 
+	FromQuery
+ãã 
+]
+ãã 
+[
+ãã 
+Required
+ãã !
+]
+ãã! "
+Guid
+ãã# '
+?
+ãã' (
+courseVersionId
+ãã) 8
+,
+ãã8 9
+[
+åå 
+	FromQuery
+åå 
+]
+åå 
+string
+åå 
+?
+åå 
+filterOn
+åå  (
+,
+åå( )
+[
+çç 
+	FromQuery
+çç 
+]
+çç 
+string
+çç 
+?
+çç 
+filterQuery
+çç  +
+,
+çç+ ,
+[
+éé 
+	FromQuery
+éé 
+]
+éé 
+string
+éé 
+?
+éé 
+sortBy
+éé  &
+,
+éé& '
+[
+èè 
+	FromQuery
+èè 
+]
+èè 
+bool
+èè 
+?
+èè 
+isAscending
+èè )
+,
+èè) *
+[
+êê 
+	FromQuery
+êê 
+]
+êê 
+int
+êê 
+
+pageNumber
+êê &
 =
-ûû 
-StaticUserRoles
-ûû *
+êê' (
+$num
+êê) *
+,
+êê* +
+[
+ëë 
+	FromQuery
+ëë 
+]
+ëë 
+int
+ëë 
+pageSize
+ëë $
+=
+ëë% &
+$num
+ëë' (
+)
+íí 	
+{
+ìì 	
+var
+îî 
+responseDto
+îî 
+=
+îî 
+await
+îî #*
+_courseSectionVersionService
+îî$ @
 .
-ûû* +
+îî@ A
+GetCourseSections
+îîA R
+(
+ïï 
+User
+ññ 
+,
+ññ 
+courseVersionId
+óó 
+,
+óó  
+filterOn
+òò 
+,
+òò 
+filterQuery
+ôô 
+,
+ôô 
+sortBy
+öö 
+,
+öö 
+
+pageNumber
+õõ 
+,
+õõ 
+pageSize
+úú 
+)
+ùù 
+;
+ùù 
+return
+üü 
+
+StatusCode
+üü 
+(
+üü 
+responseDto
+üü )
+.
+üü) *
+
+StatusCode
+üü* 4
+,
+üü4 5
+responseDto
+üü6 A
+)
+üüA B
+;
+üüB C
+}
+†† 	
+[
+££ 	
+HttpGet
+££	 
+]
+££ 
+[
+§§ 	
+Route
+§§	 
+(
+§§ 
+$str
+§§ )
+)
+§§) *
+]
+§§* +
+[
+•• 	
+	Authorize
+••	 
+]
+•• 
+public
+¶¶ 
+async
+¶¶ 
+Task
+¶¶ 
+<
+¶¶ 
+ActionResult
+¶¶ &
+<
+¶¶& '
+ResponseDTO
+¶¶' 2
+>
+¶¶2 3
+>
+¶¶3 4
+GetCourseSection
+¶¶5 E
+(
+¶¶E F
+[
+¶¶F G
+	FromRoute
+¶¶G P
+]
+¶¶P Q
+Guid
+¶¶R V
+	sectionId
+¶¶W `
+)
+¶¶` a
+{
+ßß 	
+var
+®® 
+responseDto
+®® 
+=
+®® 
+await
+®® #*
+_courseSectionVersionService
+®®$ @
+.
+®®@ A
+GetCourseSection
+®®A Q
+(
+®®Q R
+User
+®®R V
+,
+®®V W
+	sectionId
+®®X a
+)
+®®a b
+;
+®®b c
+return
+©© 
+
+StatusCode
+©© 
+(
+©© 
+responseDto
+©© )
+.
+©©) *
+
+StatusCode
+©©* 4
+,
+©©4 5
+responseDto
+©©6 A
+)
+©©A B
+;
+©©B C
+}
+™™ 	
+[
+¨¨ 	
+HttpPost
+¨¨	 
+]
+¨¨ 
+[
+≠≠ 	
+Route
+≠≠	 
+(
+≠≠ 
+$str
+≠≠ 
+)
+≠≠ 
+]
+≠≠ 
+[
+ÆÆ 	
+	Authorize
+ÆÆ	 
+(
+ÆÆ 
+Roles
+ÆÆ 
+=
+ÆÆ 
+StaticUserRoles
+ÆÆ *
+.
+ÆÆ* +
 
 Instructor
-ûû+ 5
+ÆÆ+ 5
 )
-ûû5 6
+ÆÆ5 6
 ]
-ûû6 7
+ÆÆ6 7
 public
-üü 
+ØØ 
 async
-üü 
+ØØ 
 Task
-üü 
+ØØ 
 <
-üü 
+ØØ 
 ActionResult
-üü &
+ØØ &
 <
-üü& '
+ØØ& '
 ResponseDTO
-üü' 2
+ØØ' 2
 >
-üü2 3
+ØØ2 3
 >
-üü3 4!
+ØØ3 4!
 CreateCourseSection
-üü5 H
+ØØ5 H
 (
-†† 	+
+∞∞ 	+
 CreateCourseSectionVersionDTO
-°° )+
+±± )+
 createCourseSectionVersionDto
-°°* G
+±±* G
 )
-¢¢ 	
-{
-££ 	
-var
-§§ 
-responseDto
-§§ 
-=
-§§ 
-await
-•• *
-_courseSectionVersionService
-•• 2
-.
-••2 3!
-CreateCourseSection
-••3 F
-(
-••F G
-User
-••G K
-,
-••K L+
-createCourseSectionVersionDto
-••M j
-)
-••j k
-;
-••k l
-return
-¶¶ 
-
-StatusCode
-¶¶ 
-(
-¶¶ 
-responseDto
-¶¶ )
-.
-¶¶) *
-
-StatusCode
-¶¶* 4
-,
-¶¶4 5
-responseDto
-¶¶6 A
-)
-¶¶A B
-;
-¶¶B C
-}
-ßß 	
-[
-©© 	
-HttpPut
-©©	 
-]
-©© 
-[
-™™ 	
-Route
-™™	 
-(
-™™ 
-$str
-™™ 
-)
-™™ 
-]
-™™ 
-public
-´´ 
-async
-´´ 
-Task
-´´ 
-<
-´´ 
-ActionResult
-´´ &
-<
-´´& '
-ResponseDTO
-´´' 2
->
-´´2 3
->
-´´3 4
-EditCourseSection
-´´5 F
-(
-¨¨ 	)
-EditCourseSectionVersionDTO
-≠≠ '+
-createCourseSectionVersionDto
-≠≠( E
-)
-ÆÆ 	
-{
-ØØ 	
-var
-∞∞ 
-responseDto
-∞∞ 
-=
-∞∞ 
-await
-∞∞ #*
-_courseSectionVersionService
-∞∞$ @
-.
-∞∞@ A
-EditCourseSection
-∞∞A R
-(
-∞∞R S
-User
-∞∞S W
-,
-∞∞W X+
-createCourseSectionVersionDto
-∞∞Y v
-)
-∞∞v w
-;
-∞∞w x
-return
-±± 
-
-StatusCode
-±± 
-(
-±± 
-responseDto
-±± )
-.
-±±) *
-
-StatusCode
-±±* 4
-,
-±±4 5
-responseDto
-±±6 A
-)
-±±A B
-;
-±±B C
-}
 ≤≤ 	
-[
-¥¥ 	
-
-HttpDelete
-¥¥	 
-]
-¥¥ 
-[
-µµ 	
-Route
-µµ	 
+{
+≥≥ 	
+var
+¥¥ 
+responseDto
+¥¥ 
+=
+¥¥ 
+await
+µµ *
+_courseSectionVersionService
+µµ 2
+.
+µµ2 3!
+CreateCourseSection
+µµ3 F
 (
-µµ 
-$str
-µµ $
+µµF G
+User
+µµG K
+,
+µµK L+
+createCourseSectionVersionDto
+µµM j
 )
-µµ$ %
-]
-µµ% &
-public
-∂∂ 
-async
-∂∂ 
-Task
-∂∂ 
-<
-∂∂ 
-ActionResult
-∂∂ &
-<
-∂∂& '
-ResponseDTO
-∂∂' 2
->
-∂∂2 3
->
-∂∂3 4!
-DeleteCourseSection
-∂∂5 H
+µµj k
+;
+µµk l
+return
+∂∂ 
+
+StatusCode
+∂∂ 
 (
+∂∂ 
+responseDto
+∂∂ )
+.
+∂∂) *
+
+StatusCode
+∂∂* 4
+,
+∂∂4 5
+responseDto
+∂∂6 A
+)
+∂∂A B
+;
+∂∂B C
+}
 ∑∑ 	
 [
-∏∏ 
-	FromRoute
-∏∏ 
+ππ 	
+HttpPut
+ππ	 
 ]
-∏∏ 
-Guid
-∏∏ 
-	sectionId
-∏∏ &
-)
-ππ 	
-{
-∫∫ 	
-var
-ªª 
-responseDto
-ªª 
-=
-ªª 
-await
-ºº *
-_courseSectionVersionService
-ºº 2
-.
-ºº2 3!
-RemoveCourseSection
-ºº3 F
-(
-ººF G
-User
-ººG K
-,
-ººK L
-	sectionId
-ººM V
-)
-ººV W
-;
-ººW X
-return
-ΩΩ 
-
-StatusCode
-ΩΩ 
-(
-ΩΩ 
-responseDto
-ΩΩ )
-.
-ΩΩ) *
-
-StatusCode
-ΩΩ* 4
-,
-ΩΩ4 5
-responseDto
-ΩΩ6 A
-)
-ΩΩA B
-;
-ΩΩB C
-}
-ææ 	
+ππ 
 [
-ƒƒ 	
-HttpGet
-ƒƒ	 
-]
-ƒƒ 
-[
-≈≈ 	
+∫∫ 	
 Route
-≈≈	 
+∫∫	 
 (
-≈≈ 
+∫∫ 
 $str
-≈≈  
+∫∫ 
 )
-≈≈  !
+∫∫ 
 ]
-≈≈! "
-public
-∆∆ 
-async
-∆∆ 
-Task
-∆∆ 
-<
-∆∆ 
-ActionResult
-∆∆ &
-<
-∆∆& '
-ResponseDTO
-∆∆' 2
->
-∆∆2 3
->
-∆∆3 4(
-GetSectionsDetailsVersions
-∆∆5 O
-(
-«« 	
+∫∫ 
 [
-»» 
-	FromQuery
-»» 
-]
-»» 
-Guid
-»» 
-?
-»» 
-courseSectionId
-»» -
-,
-»»- .
-[
-…… 
-	FromQuery
-…… 
-]
-…… 
-string
-…… 
-?
-…… 
-filterOn
-……  (
-,
-……( )
-[
-   
-	FromQuery
-   
-]
-   
-string
-   
-?
-   
-filterQuery
-    +
-,
-  + ,
-[
-ÀÀ 
-	FromQuery
-ÀÀ 
-]
-ÀÀ 
-string
-ÀÀ 
-?
-ÀÀ 
-sortBy
-ÀÀ  &
-,
-ÀÀ& '
-[
-ÃÃ 
-	FromQuery
-ÃÃ 
-]
-ÃÃ 
-bool
-ÃÃ 
-?
-ÃÃ 
-isAscending
-ÃÃ )
-,
-ÃÃ) *
-[
-ÕÕ 
-	FromQuery
-ÕÕ 
-]
-ÕÕ 
-int
-ÕÕ 
-
-pageNumber
-ÕÕ &
-=
-ÕÕ' (
-$num
-ÕÕ) *
-,
-ÕÕ* +
-[
-ŒŒ 
-	FromQuery
-ŒŒ 
-]
-ŒŒ 
-int
-ŒŒ 
-pageSize
-ŒŒ $
-=
-ŒŒ% &
-$num
-ŒŒ' (
-)
-œœ 	
-{
-–– 	
-var
-—— 
-responseDto
-—— 
-=
-—— 
-await
-—— #+
-_sectionDetailsVersionService
-——$ A
-.
-——A B(
-GetSectionsDetailsVersions
-——B \
-(
-““ 
-User
-”” 
-,
-”” 
-courseSectionId
-‘‘ 
-,
-‘‘  
-filterOn
-’’ 
-,
-’’ 
-filterQuery
-÷÷ 
-,
-÷÷ 
-sortBy
-◊◊ 
-,
-◊◊ 
-isAscending
-ÿÿ 
-,
-ÿÿ 
-
-pageNumber
-ŸŸ 
-,
-ŸŸ 
-pageSize
-⁄⁄ 
-)
-€€ 
-;
-€€ 
-return
-‹‹ 
-
-StatusCode
-‹‹ 
-(
-‹‹ 
-responseDto
-‹‹ )
-.
-‹‹) *
-
-StatusCode
-‹‹* 4
-,
-‹‹4 5
-responseDto
-‹‹6 A
-)
-‹‹A B
-;
-‹‹B C
-}
-›› 	
-[
-ﬂﬂ 	
-HttpGet
-ﬂﬂ	 
-]
-ﬂﬂ 
-[
-‡‡ 	
-Route
-‡‡	 
-(
-‡‡ 
-$str
-‡‡ 1
-)
-‡‡1 2
-]
-‡‡2 3
-public
-·· 
-async
-·· 
-Task
-·· 
-<
-·· 
-ActionResult
-·· &
-<
-··& '
-ResponseDTO
-··' 2
->
-··2 3
->
-··3 4'
-GetSectionsDetailsVersion
-··5 N
-(
-··N O
-[
-··O P
-	FromRoute
-··P Y
-]
-··Y Z
-Guid
-··[ _
-	detailsId
-··` i
-)
-··i j
-{
-‚‚ 	
-var
-„„ 
-responseDto
-„„ 
-=
-„„ 
-await
-„„ #+
-_sectionDetailsVersionService
-„„$ A
-.
-„„A B&
-GetSectionDetailsVersion
-„„B Z
-(
-„„Z [
-User
-„„[ _
-,
-„„_ `
-	detailsId
-„„a j
-)
-„„j k
-;
-„„k l
-return
-‰‰ 
-
-StatusCode
-‰‰ 
-(
-‰‰ 
-responseDto
-‰‰ )
-.
-‰‰) *
-
-StatusCode
-‰‰* 4
-,
-‰‰4 5
-responseDto
-‰‰6 A
-)
-‰‰A B
-;
-‰‰B C
-}
-ÂÂ 	
-[
-ÁÁ 	
-HttpPost
-ÁÁ	 
-]
-ÁÁ 
-[
-ËË 	
-Route
-ËË	 
-(
-ËË 
-$str
-ËË  
-)
-ËË  !
-]
-ËË! "
-[
-ÈÈ 	
+ªª 	
 	Authorize
-ÈÈ	 
+ªª	 
 (
-ÈÈ 
+ªª 
 Roles
-ÈÈ 
+ªª 
 =
-ÈÈ 
+ªª 
 StaticUserRoles
-ÈÈ *
+ªª *
 .
-ÈÈ* +
+ªª* +
 
 Instructor
-ÈÈ+ 5
+ªª+ 5
 )
-ÈÈ5 6
+ªª5 6
 ]
-ÈÈ6 7
+ªª6 7
 public
-ÍÍ 
+ºº 
 async
-ÍÍ 
+ºº 
 Task
-ÍÍ 
+ºº 
 <
-ÍÍ 
+ºº 
 ActionResult
-ÍÍ &
+ºº &
 <
-ÍÍ& '
+ºº& '
 ResponseDTO
-ÍÍ' 2
+ºº' 2
 >
-ÍÍ2 3
+ºº2 3
 >
-ÍÍ3 4)
-CreateSectionDetailsVersion
-ÍÍ5 P
+ºº3 4
+EditCourseSection
+ºº5 F
 (
-ÍÍP Q
-[
-ÎÎ 
-FromBody
-ÎÎ 
-]
-ÎÎ ,
-CreateSectionDetailsVersionDTO
-ÎÎ 5,
-createSectionDetailsVersionDto
-ÎÎ6 T
+ΩΩ 	)
+EditCourseSectionVersionDTO
+ææ '+
+createCourseSectionVersionDto
+ææ( E
 )
-ÎÎT U
+øø 	
 {
-ÏÏ 	
+¿¿ 	
 var
-ÌÌ 
+¡¡ 
 responseDto
-ÌÌ 
+¡¡ 
 =
-ÌÌ 
+¡¡ 
 await
-ÓÓ +
-_sectionDetailsVersionService
-ÓÓ 3
+¡¡ #*
+_courseSectionVersionService
+¡¡$ @
 .
-ÓÓ3 4)
-CreateSectionDetailsVersion
-ÓÓ4 O
+¡¡@ A
+EditCourseSection
+¡¡A R
 (
-ÓÓO P
+¡¡R S
 User
-ÓÓP T
+¡¡S W
 ,
-ÓÓT U,
-createSectionDetailsVersionDto
-ÓÓV t
+¡¡W X+
+createCourseSectionVersionDto
+¡¡Y v
 )
-ÓÓt u
+¡¡v w
 ;
-ÓÓu v
+¡¡w x
+return
+¬¬ 
+
+StatusCode
+¬¬ 
+(
+¬¬ 
+responseDto
+¬¬ )
+.
+¬¬) *
+
+StatusCode
+¬¬* 4
+,
+¬¬4 5
+responseDto
+¬¬6 A
+)
+¬¬A B
+;
+¬¬B C
+}
+√√ 	
+[
+≈≈ 	
+
+HttpDelete
+≈≈	 
+]
+≈≈ 
+[
+∆∆ 	
+Route
+∆∆	 
+(
+∆∆ 
+$str
+∆∆ $
+)
+∆∆$ %
+]
+∆∆% &
+[
+«« 	
+	Authorize
+««	 
+(
+«« 
+Roles
+«« 
+=
+«« 
+StaticUserRoles
+«« *
+.
+««* +
+
+Instructor
+««+ 5
+)
+««5 6
+]
+««6 7
+public
+»» 
+async
+»» 
+Task
+»» 
+<
+»» 
+ActionResult
+»» &
+<
+»»& '
+ResponseDTO
+»»' 2
+>
+»»2 3
+>
+»»3 4!
+DeleteCourseSection
+»»5 H
+(
+…… 	
+[
+   
+	FromRoute
+   
+]
+   
+Guid
+   
+	sectionId
+   &
+)
+ÀÀ 	
+{
+ÃÃ 	
+var
+ÕÕ 
+responseDto
+ÕÕ 
+=
+ÕÕ 
+await
+ŒŒ *
+_courseSectionVersionService
+ŒŒ 2
+.
+ŒŒ2 3!
+RemoveCourseSection
+ŒŒ3 F
+(
+ŒŒF G
+User
+ŒŒG K
+,
+ŒŒK L
+	sectionId
+ŒŒM V
+)
+ŒŒV W
+;
+ŒŒW X
+return
+œœ 
+
+StatusCode
+œœ 
+(
+œœ 
+responseDto
+œœ )
+.
+œœ) *
+
+StatusCode
+œœ* 4
+,
+œœ4 5
+responseDto
+œœ6 A
+)
+œœA B
+;
+œœB C
+}
+–– 	
+[
+÷÷ 	
+HttpGet
+÷÷	 
+]
+÷÷ 
+[
+◊◊ 	
+Route
+◊◊	 
+(
+◊◊ 
+$str
+◊◊  
+)
+◊◊  !
+]
+◊◊! "
+[
+ÿÿ 	
+	Authorize
+ÿÿ	 
+]
+ÿÿ 
+public
+ŸŸ 
+async
+ŸŸ 
+Task
+ŸŸ 
+<
+ŸŸ 
+ActionResult
+ŸŸ &
+<
+ŸŸ& '
+ResponseDTO
+ŸŸ' 2
+>
+ŸŸ2 3
+>
+ŸŸ3 4(
+GetSectionsDetailsVersions
+ŸŸ5 O
+(
+⁄⁄ 	
+[
+€€ 
+	FromQuery
+€€ 
+]
+€€ 
+Guid
+€€ 
+?
+€€ 
+courseSectionId
+€€ -
+,
+€€- .
+[
+‹‹ 
+	FromQuery
+‹‹ 
+]
+‹‹ 
+string
+‹‹ 
+?
+‹‹ 
+filterOn
+‹‹  (
+,
+‹‹( )
+[
+›› 
+	FromQuery
+›› 
+]
+›› 
+string
+›› 
+?
+›› 
+filterQuery
+››  +
+,
+››+ ,
+[
+ﬁﬁ 
+	FromQuery
+ﬁﬁ 
+]
+ﬁﬁ 
+string
+ﬁﬁ 
+?
+ﬁﬁ 
+sortBy
+ﬁﬁ  &
+,
+ﬁﬁ& '
+[
+ﬂﬂ 
+	FromQuery
+ﬂﬂ 
+]
+ﬂﬂ 
+bool
+ﬂﬂ 
+?
+ﬂﬂ 
+isAscending
+ﬂﬂ )
+,
+ﬂﬂ) *
+[
+‡‡ 
+	FromQuery
+‡‡ 
+]
+‡‡ 
+int
+‡‡ 
+
+pageNumber
+‡‡ &
+=
+‡‡' (
+$num
+‡‡) *
+,
+‡‡* +
+[
+·· 
+	FromQuery
+·· 
+]
+·· 
+int
+·· 
+pageSize
+·· $
+=
+··% &
+$num
+··' (
+)
+‚‚ 	
+{
+„„ 	
+var
+‰‰ 
+responseDto
+‰‰ 
+=
+‰‰ 
+await
+‰‰ #+
+_sectionDetailsVersionService
+‰‰$ A
+.
+‰‰A B(
+GetSectionsDetailsVersions
+‰‰B \
+(
+ÂÂ 
+User
+ÊÊ 
+,
+ÊÊ 
+courseSectionId
+ÁÁ 
+,
+ÁÁ  
+filterOn
+ËË 
+,
+ËË 
+filterQuery
+ÈÈ 
+,
+ÈÈ 
+sortBy
+ÍÍ 
+,
+ÍÍ 
+isAscending
+ÎÎ 
+,
+ÎÎ 
+
+pageNumber
+ÏÏ 
+,
+ÏÏ 
+pageSize
+ÌÌ 
+)
+ÓÓ 
+;
+ÓÓ 
 return
 ÔÔ 
 
@@ -8226,7 +9869,7 @@ StatusCode
  	
 [
 ÚÚ 	
-HttpPut
+HttpGet
 ÚÚ	 
 ]
 ÚÚ 
@@ -8237,45 +9880,51 @@ StatusCode
 (
 ÛÛ 
 $str
-ÛÛ  
+ÛÛ 1
 )
-ÛÛ  !
+ÛÛ1 2
 ]
-ÛÛ! "
-public
-ÙÙ 
-async
-ÙÙ 
-Task
-ÙÙ 
-<
-ÙÙ 
-ActionResult
-ÙÙ &
-<
-ÙÙ& '
-ResponseDTO
-ÙÙ' 2
->
-ÙÙ2 3
->
-ÙÙ3 4'
-EditSectionDetailsVersion
-ÙÙ5 N
-(
-ÙÙN O
+ÛÛ2 3
 [
-ıı 
-FromBody
-ıı 
+ÙÙ 	
+	Authorize
+ÙÙ	 
 ]
-ıı *
-EditSectionDetailsVersionDTO
-ıı 3*
-editSectionDetailsVersionDto
-ıı4 P
+ÙÙ 
+public
+ıı 
+async
+ıı 
+Task
+ıı 
+<
+ıı 
+ActionResult
+ıı &
+<
+ıı& '
+ResponseDTO
+ıı' 2
+>
+ıı2 3
+>
+ıı3 4'
+GetSectionsDetailsVersion
+ıı5 N
+(
+ııN O
+[
+ııO P
+	FromRoute
+ııP Y
+]
+ııY Z
+Guid
+ıı[ _
+	detailsId
+ıı` i
 )
-ııP Q
+ııi j
 {
 ˆˆ 	
 var
@@ -8285,68 +9934,88 @@ StatusCode
 =
 ˜˜ 
 await
-¯¯ +
+˜˜ #+
 _sectionDetailsVersionService
-¯¯ 3
+˜˜$ A
 .
-¯¯3 4'
-EditSectionDetailsVersion
-¯¯4 M
+˜˜A B&
+GetSectionDetailsVersion
+˜˜B Z
 (
-¯¯M N
+˜˜Z [
 User
-¯¯N R
+˜˜[ _
 ,
-¯¯R S*
-editSectionDetailsVersionDto
-¯¯T p
+˜˜_ `
+	detailsId
+˜˜a j
 )
-¯¯p q
+˜˜j k
 ;
-¯¯q r
+˜˜k l
 return
-˘˘ 
+¯¯ 
 
 StatusCode
-˘˘ 
+¯¯ 
 (
-˘˘ 
+¯¯ 
 responseDto
-˘˘ )
+¯¯ )
 .
-˘˘) *
+¯¯) *
 
 StatusCode
-˘˘* 4
+¯¯* 4
 ,
-˘˘4 5
+¯¯4 5
 responseDto
-˘˘6 A
+¯¯6 A
 )
-˘˘A B
+¯¯A B
 ;
-˘˘B C
+¯¯B C
 }
-˙˙ 	
+˘˘ 	
 [
-¸¸ 	
-
-HttpDelete
-¸¸	 
+˚˚ 	
+HttpPost
+˚˚	 
 ]
-¸¸ 
+˚˚ 
 [
-˝˝ 	
+¸¸ 	
 Route
-˝˝	 
+¸¸	 
 (
-˝˝ 
+¸¸ 
 $str
-˝˝ 1
+¸¸  
 )
-˝˝1 2
+¸¸  !
 ]
-˝˝2 3
+¸¸! "
+[
+˝˝ 	
+	Authorize
+˝˝	 
+(
+˝˝ 
+Roles
+˝˝ 
+=
+˝˝ 
+StaticUserRoles
+˝˝ *
+.
+˝˝* +
+
+Instructor
+˝˝+ 5
+)
+˝˝5 6
+]
+˝˝6 7
 public
 ˛˛ 
 async
@@ -8365,411 +10034,687 @@ HttpDelete
 ˛˛2 3
 >
 ˛˛3 4)
-RemoveSectionDetailsVersion
+CreateSectionDetailsVersion
 ˛˛5 P
 (
 ˛˛P Q
 [
-˛˛Q R
-	FromRoute
-˛˛R [
+ˇˇ 
+FromBody
+ˇˇ 
 ]
-˛˛[ \
-Guid
-˛˛] a
-	detailsId
-˛˛b k
+ˇˇ ,
+CreateSectionDetailsVersionDTO
+ˇˇ 5,
+createSectionDetailsVersionDto
+ˇˇ6 T
 )
-˛˛k l
+ˇˇT U
 {
-ˇˇ 	
+ÄÄ 	
 var
-ÄÄ 
+ÅÅ 
 responseDto
-ÄÄ 
+ÅÅ 
 =
-ÄÄ 
+ÅÅ 
 await
-ÅÅ +
+ÇÇ +
 _sectionDetailsVersionService
-ÅÅ 3
+ÇÇ 3
 .
-ÅÅ3 4)
-RemoveSectionDetailsVersion
-ÅÅ4 O
+ÇÇ3 4)
+CreateSectionDetailsVersion
+ÇÇ4 O
 (
-ÅÅO P
+ÇÇO P
 User
-ÅÅP T
+ÇÇP T
 ,
-ÅÅT U
-	detailsId
-ÅÅV _
+ÇÇT U,
+createSectionDetailsVersionDto
+ÇÇV t
 )
-ÅÅ_ `
+ÇÇt u
 ;
-ÅÅ` a
+ÇÇu v
 return
-ÇÇ 
+ÉÉ 
 
 StatusCode
-ÇÇ 
+ÉÉ 
 (
-ÇÇ 
+ÉÉ 
 responseDto
-ÇÇ )
+ÉÉ )
 .
-ÇÇ) *
+ÉÉ) *
 
 StatusCode
-ÇÇ* 4
+ÉÉ* 4
 ,
-ÇÇ4 5
+ÉÉ4 5
 responseDto
-ÇÇ6 A
+ÉÉ6 A
 )
-ÇÇA B
+ÉÉA B
 ;
-ÇÇB C
+ÉÉB C
 }
-ÉÉ 	
+ÑÑ 	
 [
-ÖÖ 	
-HttpPost
-ÖÖ	 
+ÜÜ 	
+HttpPut
+ÜÜ	 
 ]
-ÖÖ 
+ÜÜ 
 [
-ÜÜ 	
+áá 	
 Route
-ÜÜ	 
+áá	 
 (
-ÜÜ 
+áá 
 $str
-ÜÜ 9
+áá  
 )
-ÜÜ9 :
+áá  !
 ]
-ÜÜ: ;
+áá! "
+[
+àà 	
+	Authorize
+àà	 
+(
+àà 
+Roles
+àà 
+=
+àà 
+StaticUserRoles
+àà *
+.
+àà* +
+
+Instructor
+àà+ 5
+)
+àà5 6
+]
+àà6 7
 public
-áá 
+ââ 
 async
-áá 
+ââ 
 Task
-áá 
+ââ 
 <
-áá 
+ââ 
 ActionResult
-áá &
+ââ &
 <
-áá& '
+ââ& '
 ResponseDTO
-áá' 2
+ââ' 2
 >
-áá2 3
+ââ2 3
 >
-áá3 40
-"UploadSectionDetailsVersionContent
-áá5 W
+ââ3 4'
+EditSectionDetailsVersion
+ââ5 N
 (
-àà 	
+ââN O
 [
-ââ 
-	FromRoute
-ââ 
+ää 
+FromBody
+ää 
 ]
-ââ 
-Guid
-ââ 
-	detailsId
-ââ &
-,
-ââ& '3
-%UploadSectionDetailsVersionContentDTO
-ää 13
-%uploadSectionDetailsVersionContentDto
-ää2 W
+ää *
+EditSectionDetailsVersionDTO
+ää 3*
+editSectionDetailsVersionDto
+ää4 P
 )
-ãã 	
+ääP Q
 {
-åå 	
+ãã 	
 var
-çç 
+åå 
 responseDto
-çç 
+åå 
 =
-çç 
+åå 
 await
-éé +
+çç +
 _sectionDetailsVersionService
-éé 3
+çç 3
 .
-éé3 40
-"UploadSectionDetailsVersionContent
-éé4 V
+çç3 4'
+EditSectionDetailsVersion
+çç4 M
 (
-èè 
+ççM N
 User
-êê 
+ççN R
 ,
-êê 
-	detailsId
-ëë 
-,
-ëë 3
-%uploadSectionDetailsVersionContentDto
-íí 9
+ççR S*
+editSectionDetailsVersionDto
+ççT p
 )
-ìì 
+ççp q
 ;
-ìì 
+ççq r
 return
-îî 
+éé 
 
 StatusCode
-îî 
+éé 
 (
-îî 
+éé 
 responseDto
-îî )
+éé )
 .
-îî) *
+éé) *
 
 StatusCode
-îî* 4
+éé* 4
 ,
-îî4 5
+éé4 5
 responseDto
-îî6 A
+éé6 A
 )
-îîA B
+ééA B
 ;
-îîB C
+ééB C
 }
-ïï 	
+èè 	
 [
-óó 	
-HttpGet
-óó	 
+ëë 	
+
+HttpDelete
+ëë	 
 ]
-óó 
+ëë 
 [
-òò 	
+íí 	
 Route
-òò	 
+íí	 
 (
-òò 
+íí 
 $str
-òò )
+íí 1
 )
-òò) *
+íí1 2
 ]
-òò* +
-public
-ôô 
-async
-ôô 
-Task
-ôô 
-<
-ôô 
-IActionResult
-ôô '
->
-ôô' (1
-#DisplaySectionDetailsVersionContent
-ôô) L
+íí2 3
+[
+ìì 	
+	Authorize
+ìì	 
 (
-öö 	
-[
-õõ 
-	FromQuery
-õõ 
-]
-õõ 
-Guid
-õõ %
-sectionDetailsVersionId
-õõ 4
-,
-õõ4 5
-[
-úú 
-	FromQuery
-úú 
-]
-úú 
-string
-úú 
-type
-úú #
-)
-ùù 	
-{
-ûû 	
-var
-üü  
-contentResponseDto
-üü "
+ìì 
+Roles
+ìì 
 =
-üü# $
+ìì 
+StaticUserRoles
+ìì *
+.
+ìì* +
+
+Instructor
+ìì+ 5
+)
+ìì5 6
+]
+ìì6 7
+public
+îî 
+async
+îî 
+Task
+îî 
+<
+îî 
+ActionResult
+îî &
+<
+îî& '
+ResponseDTO
+îî' 2
+>
+îî2 3
+>
+îî3 4)
+RemoveSectionDetailsVersion
+îî5 P
+(
+îîP Q
+[
+îîQ R
+	FromRoute
+îîR [
+]
+îî[ \
+Guid
+îî] a
+	detailsId
+îîb k
+)
+îîk l
+{
+ïï 	
+var
+ññ 
+responseDto
+ññ 
+=
+ññ 
 await
-†† +
+óó +
 _sectionDetailsVersionService
-†† 3
+óó 3
 .
-††3 41
-#DisplaySectionDetailsVersionContent
-††4 W
+óó3 4)
+RemoveSectionDetailsVersion
+óó4 O
 (
-°° 
+óóO P
 User
-¢¢ 
+óóP T
 ,
-¢¢ %
-sectionDetailsVersionId
-££ +
-,
-££+ ,
-type
-§§ 
+óóT U
+	detailsId
+óóV _
 )
-•• 
+óó_ `
 ;
-•• 
-if
-ßß 
-(
-ßß  
-contentResponseDto
-ßß "
-.
-ßß" #
-Stream
-ßß# )
-is
-ßß* ,
-null
-ßß- 1
-)
-ßß1 2
-{
-®® 
+óó` a
 return
-©© 
-NotFound
-©© 
+òò 
+
+StatusCode
+òò 
 (
-©©  
+òò 
+responseDto
+òò )
+.
+òò) *
+
+StatusCode
+òò* 4
+,
+òò4 5
+responseDto
+òò6 A
+)
+òòA B
+;
+òòB C
+}
+ôô 	
+[
+õõ 	
+HttpPost
+õõ	 
+]
+õõ 
+[
+úú 	
+Route
+úú	 
+(
+úú 
 $str
-©©  7
+úú 9
 )
-©©7 8
-;
-©©8 9
-}
-™™ 
-if
-¨¨ 
+úú9 :
+]
+úú: ;
+[
+ùù 	
+	Authorize
+ùù	 
 (
-¨¨  
-contentResponseDto
-¨¨ "
+ùù 
+Roles
+ùù 
+=
+ùù 
+StaticUserRoles
+ùù *
 .
-¨¨" #
-ContentType
-¨¨# .
-==
-¨¨/ 1"
-StaticFileExtensions
-¨¨2 F
-.
-¨¨F G
-Mov
-¨¨G J
-||
-¨¨K M 
-contentResponseDto
-≠≠ "
-.
-≠≠" #
-ContentType
-≠≠# .
-==
-≠≠/ 1"
-StaticFileExtensions
-≠≠2 F
-.
-≠≠F G
-Mp4
-≠≠G J
+ùù* +
+
+Instructor
+ùù+ 5
 )
-≠≠J K
+ùù5 6
+]
+ùù6 7
+public
+ûû 
+async
+ûû 
+Task
+ûû 
+<
+ûû 
+ActionResult
+ûû &
+<
+ûû& '
+ResponseDTO
+ûû' 2
+>
+ûû2 3
+>
+ûû3 40
+"UploadSectionDetailsVersionContent
+ûû5 W
+(
+üü 	
+[
+†† 
+	FromRoute
+†† 
+]
+†† 
+Guid
+†† 
+	detailsId
+†† &
+,
+††& '3
+%UploadSectionDetailsVersionContentDTO
+°° 13
+%uploadSectionDetailsVersionContentDto
+°°2 W
+)
+¢¢ 	
 {
-ÆÆ 
-return
-ØØ 
-File
-ØØ 
+££ 	
+var
+§§ 
+responseDto
+§§ 
+=
+§§ 
+await
+•• +
+_sectionDetailsVersionService
+•• 3
+.
+••3 40
+"UploadSectionDetailsVersionContent
+••4 V
 (
-ØØ  
-contentResponseDto
-ØØ .
-.
-ØØ. /
-Stream
-ØØ/ 5
+¶¶ 
+User
+ßß 
 ,
-ØØ5 6 
-contentResponseDto
-ØØ7 I
-.
-ØØI J
-ContentType
-ØØJ U
+ßß 
+	detailsId
+®® 
+,
+®® 3
+%uploadSectionDetailsVersionContentDto
+©© 9
 )
-ØØU V
+™™ 
 ;
-ØØV W
-}
-∞∞ 
+™™ 
 return
-≤≤ 
-File
-≤≤ 
+´´ 
+
+StatusCode
+´´ 
 (
-≤≤  
-contentResponseDto
-≤≤ *
+´´ 
+responseDto
+´´ )
 .
-≤≤* +
+´´) *
+
+StatusCode
+´´* 4
+,
+´´4 5
+responseDto
+´´6 A
+)
+´´A B
+;
+´´B C
+}
+¨¨ 	
+[
+ÆÆ 	
+HttpGet
+ÆÆ	 
+]
+ÆÆ 
+[
+ØØ 	
+Route
+ØØ	 
+(
+ØØ 
+$str
+ØØ )
+)
+ØØ) *
+]
+ØØ* +
+public
+∞∞ 
+async
+∞∞ 
+Task
+∞∞ 
+<
+∞∞ 
+IActionResult
+∞∞ '
+>
+∞∞' (1
+#DisplaySectionDetailsVersionContent
+∞∞) L
+(
+±± 	
+[
+≤≤ 
+	FromQuery
+≤≤ 
+]
+≤≤ 
+Guid
+≤≤ %
+sectionDetailsVersionId
+≤≤ 4
+,
+≤≤4 5
+[
+≥≥ 
+	FromQuery
+≥≥ 
+]
+≥≥ 
+string
+≥≥ 
+userId
+≥≥ %
+,
+≥≥% &
+[
+¥¥ 
+	FromQuery
+¥¥ 
+]
+¥¥ 
+string
+¥¥ 
+type
+¥¥ #
+)
+µµ 	
+{
+∂∂ 	
+var
+∑∑  
+contentResponseDto
+∑∑ "
+=
+∑∑# $
+await
+∏∏ +
+_sectionDetailsVersionService
+∏∏ 3
+.
+∏∏3 41
+#DisplaySectionDetailsVersionContent
+∏∏4 W
+(
+ππ %
+sectionDetailsVersionId
+∫∫ +
+,
+∫∫+ ,
+userId
+ªª 
+,
+ªª 
+type
+ºº 
+)
+ΩΩ 
+;
+ΩΩ 
+if
+øø 
+(
+øø  
+contentResponseDto
+øø "
+.
+øø" #
 Stream
-≤≤+ 1
-,
-≤≤1 2 
+øø# )
+is
+øø* ,
+null
+øø- 1
+)
+øø1 2
+{
+¿¿ 
+return
+¡¡ 
+NotFound
+¡¡ 
+(
+¡¡  
+$str
+¡¡  7
+)
+¡¡7 8
+;
+¡¡8 9
+}
+¬¬ 
+if
+ƒƒ 
+(
+ƒƒ  
 contentResponseDto
-≤≤3 E
+ƒƒ "
 .
-≤≤E F
+ƒƒ" #
 ContentType
-≤≤F Q
-,
-≤≤Q R 
-contentResponseDto
-≤≤S e
+ƒƒ# .
+is
+ƒƒ/ 1"
+StaticFileExtensions
+ƒƒ2 F
 .
-≤≤e f
+ƒƒF G
+Mov
+ƒƒG J
+or
+ƒƒK M"
+StaticFileExtensions
+ƒƒN b
+.
+ƒƒb c
+Mp4
+ƒƒc f
+)
+ƒƒf g
+{
+≈≈ 
+return
+∆∆ 
+File
+∆∆ 
+(
+∆∆  
+contentResponseDto
+∆∆ .
+.
+∆∆. /
+Stream
+∆∆/ 5
+,
+∆∆5 6 
+contentResponseDto
+∆∆7 I
+.
+∆∆I J
+ContentType
+∆∆J U
+)
+∆∆U V
+;
+∆∆V W
+}
+«« 
+return
+…… 
+File
+…… 
+(
+……  
+contentResponseDto
+…… *
+.
+……* +
+Stream
+……+ 1
+,
+……1 2 
+contentResponseDto
+……3 E
+.
+……E F
+ContentType
+……F Q
+,
+……Q R 
+contentResponseDto
+……S e
+.
+……e f
 FileName
-≤≤f n
+……f n
 )
-≤≤n o
+……n o
 ;
-≤≤o p
+……o p
 }
-≥≥ 	
+   	
 }
-∂∂ 
-}∑∑ ∫ª
+ÕÕ 
+}ŒŒ Ë˘
 iD:\FPT\Semester 6\Project_Cursus\Backend_Cursus\Cursus.LMS\Cursus.LMS.API\Controllers\CourseController.cs
 	namespace
 
@@ -8829,19 +10774,27 @@ iD:\FPT\Semester 6\Project_Cursus\Backend_Cursus\Cursus.LMS\Cursus.LMS.API\Contr
 readonly  
 ICourseReportService - 
 _courseReportService. B
-;B C
-public 
-CourseController 
-( 	
-ICourseService 
-courseService (
-,( ) 
-ICourseReviewService  
-courseReviewService! 4
-,4 5 
-ICourseReportService  
-courseReportService! 4
-) 	
+;B C
+private 
+readonly "
+ICourseProgressService /"
+_courseProgressService0 F
+;F G
+public 
+CourseController 
+( 	
+ICourseService 
+courseService (
+,( ) 
+ICourseReviewService  
+courseReviewService! 4
+,4 5 
+ICourseReportService  
+courseReportService! 4
+,4 5"
+ICourseProgressService6 L!
+courseProgressServiceM b
+)b c
 { 	
 _courseService 
 = 
@@ -8854,1542 +10807,1547 @@ iD:\FPT\Semester 6\Project_Cursus\Backend_Cursus\Cursus.LMS\Cursus.LMS.API\Contr
 _courseReportService  
 =! "
 courseReportService# 6
-;6 7
-} 	
-[!! 	
-HttpGet!!	 
-]!! 
-public"" 
-async"" 
-Task"" 
-<"" 
-ActionResult"" &
-<""& '
-ResponseDTO""' 2
->""2 3
->""3 4
+;6 7"
+_courseProgressService "
+=# $!
+courseProgressService% :
+;: ;
+} 	
+["" 	
+HttpGet""	 
+]"" 
+public## 
+async## 
+Task## 
+<## 
+ActionResult## &
+<##& '
+ResponseDTO##' 2
+>##2 3
+>##3 4
 
-GetCourses""5 ?
-(## 	
-[$$ 
-	FromQuery$$ 
-]$$ 
-Guid$$ 
-?$$ 
-instructorId$$ *
-,$$* +
+GetCourses##5 ?
+($$ 	
 [%% 
 	FromQuery%% 
-]%% 
-string%% 
-?%% 
-filterOn%%  (
-,%%( )
+]%% 
+Guid%% 
+?%% 
+instructorId%% *
+,%%* +
 [&& 
 	FromQuery&& 
 ]&& 
 string&& 
-?&& 
-filterQuery&&  +
-,&&+ ,
+?&& 
+filterOn&&  (
+,&&( )
 ['' 
 	FromQuery'' 
 ]'' 
 string'' 
-?'' 
-sortBy''  &
-,''& '
+?'' 
+filterQuery''  +
+,''+ ,
 [(( 
 	FromQuery(( 
-](( 
-bool(( 
-?(( 
-isAscending(( )
-,(() *
+](( 
+string(( 
+?(( 
+sortBy((  &
+,((& '
 [)) 
 	FromQuery)) 
-])) 
-double)) 
-?)) 
-	fromPrice))  )
+])) 
+bool)) 
+?)) 
+isAscending)) )
 ,))) *
 [** 
 	FromQuery** 
 ]** 
 double** 
-?** 
-toPrice**  '
-,**' (
+?** 
+	fromPrice**  )
+,**) *
 [++ 
 	FromQuery++ 
-]++ 
-int++ 
-
-pageNumber++ &
-=++' (
-$num++) *
-,++* +
+]++ 
+double++ 
+?++ 
+toPrice++  '
+,++' (
 [,, 
 	FromQuery,, 
 ],, 
-int,, 
-pageSize,, $
-=,,% &
-$num,,' (
-)-- 	
-{.. 	
-var// 
-responseDto// 
-=// 
-await// #
-_courseService//$ 2
-.//2 3
+int,, 
 
-GetCourses//3 =
-(00 
-User11 
-,11 
-instructorId22 
-,22 
-filterOn33 
-,33 
-filterQuery44 
-,44 
-	fromPrice55 
-,55 
-toPrice66 
-,66 
-sortBy77 
-,77 
-isAscending88 
-,88 
+pageNumber,, &
+=,,' (
+$num,,) *
+,,,* +
+[-- 
+	FromQuery-- 
+]-- 
+int-- 
+pageSize-- $
+=--% &
+$num--' (
+).. 	
+{// 	
+var00 
+responseDto00 
+=00 
+await00 #
+_courseService00$ 2
+.002 3
 
-pageNumber99 
-,99 
-pageSize:: 
-);; 
-;;; 
-return<< 
+GetCourses003 =
+(11 
+User22 
+,22 
+instructorId33 
+,33 
+filterOn44 
+,44 
+filterQuery55 
+,55 
+	fromPrice66 
+,66 
+toPrice77 
+,77 
+sortBy88 
+,88 
+isAscending99 
+,99 
 
-StatusCode<< 
-(<< 
-responseDto<< )
-.<<) *
+pageNumber:: 
+,:: 
+pageSize;; 
+)<< 
+;<< 
+return== 
 
-StatusCode<<* 4
-,<<4 5
-responseDto<<6 A
-)<<A B
-;<<B C
-}== 	
-[?? 	
-HttpGet??	 
-]?? 
-[@@ 	
-Route@@	 
-(@@ 
-$str@@  
-)@@  !
-]@@! "
-publicAA 
-asyncAA 
-TaskAA 
-<AA 
-ActionResultAA &
-<AA& '
-ResponseDTOAA' 2
->AA2 3
->AA3 4
-	GetCourseAA5 >
-(AA> ?
-[AA? @
-	FromRouteAA@ I
-]AAI J
-GuidAAK O
-courseIdAAP X
-)AAX Y
-{BB 	
-varCC 
-responseDtoCC 
-=CC 
-awaitCC #
-_courseServiceCC$ 2
-.CC2 3
-	GetCourseCC3 <
-(CC< =
-UserCC= A
-,CCA B
-courseIdCCC K
-)CCK L
-;CCL M
-returnDD 
+StatusCode== 
+(== 
+responseDto== )
+.==) *
 
-StatusCodeDD 
-(DD 
-responseDtoDD )
-.DD) *
+StatusCode==* 4
+,==4 5
+responseDto==6 A
+)==A B
+;==B C
+}>> 	
+[@@ 	
+HttpGet@@	 
+]@@ 
+[AA 	
+RouteAA	 
+(AA 
+$strAA  
+)AA  !
+]AA! "
+publicBB 
+asyncBB 
+TaskBB 
+<BB 
+ActionResultBB &
+<BB& '
+ResponseDTOBB' 2
+>BB2 3
+>BB3 4
+	GetCourseBB5 >
+(BB> ?
+[BB? @
+	FromRouteBB@ I
+]BBI J
+GuidBBK O
+courseIdBBP X
+)BBX Y
+{CC 	
+varDD 
+responseDtoDD 
+=DD 
+awaitDD #
+_courseServiceDD$ 2
+.DD2 3
+	GetCourseDD3 <
+(DD< =
+UserDD= A
+,DDA B
+courseIdDDC K
+)DDK L
+;DDL M
+returnEE 
 
-StatusCodeDD* 4
-,DD4 5
-responseDtoDD6 A
-)DDA B
-;DDB C
-}EE 	
-[GG 	
-HttpPostGG	 
-]GG 
-[HH 	
-RouteHH	 
-(HH 
-$strHH )
-)HH) *
-]HH* +
-[II 	
-	AuthorizeII	 
-(II 
-RolesII 
-=II 
-StaticUserRolesII *
-.II* +
-AdminInstructorII+ :
-)II: ;
-]II; <
-publicJJ 
-asyncJJ 
-TaskJJ 
-<JJ 
-ActionResultJJ &
-<JJ& '
-ResponseDTOJJ' 2
->JJ2 3
->JJ3 4
-ActivateCourseJJ5 C
-(JJC D
-[JJD E
-	FromRouteJJE N
-]JJN O
-GuidJJP T
-courseIdJJU ]
-)JJ] ^
-{KK 	
-varLL 
-responseDtoLL 
-=LL 
-awaitLL #
-_courseServiceLL$ 2
-.LL2 3
-ActivateCourseLL3 A
-(LLA B
-UserLLB F
-,LLF G
-courseIdLLH P
-)LLP Q
-;LLQ R
-returnMM 
+StatusCodeEE 
+(EE 
+responseDtoEE )
+.EE) *
 
-StatusCodeMM 
-(MM 
-responseDtoMM )
-.MM) *
+StatusCodeEE* 4
+,EE4 5
+responseDtoEE6 A
+)EEA B
+;EEB C
+}FF 	
+[HH 	
+HttpPostHH	 
+]HH 
+[II 	
+RouteII	 
+(II 
+$strII )
+)II) *
+]II* +
+[JJ 	
+	AuthorizeJJ	 
+(JJ 
+RolesJJ 
+=JJ 
+StaticUserRolesJJ *
+.JJ* +
+AdminInstructorJJ+ :
+)JJ: ;
+]JJ; <
+publicKK 
+asyncKK 
+TaskKK 
+<KK 
+ActionResultKK &
+<KK& '
+ResponseDTOKK' 2
+>KK2 3
+>KK3 4
+ActivateCourseKK5 C
+(KKC D
+[KKD E
+	FromRouteKKE N
+]KKN O
+GuidKKP T
+courseIdKKU ]
+)KK] ^
+{LL 	
+varMM 
+responseDtoMM 
+=MM 
+awaitMM #
+_courseServiceMM$ 2
+.MM2 3
+ActivateCourseMM3 A
+(MMA B
+UserMMB F
+,MMF G
+courseIdMMH P
+)MMP Q
+;MMQ R
+returnNN 
 
-StatusCodeMM* 4
-,MM4 5
-responseDtoMM6 A
-)MMA B
-;MMB C
-}NN 	
-[PP 	
-HttpPostPP	 
-]PP 
-[QQ 	
-RouteQQ	 
-(QQ 
-$strQQ +
-)QQ+ ,
-]QQ, -
-[RR 	
-	AuthorizeRR	 
-(RR 
-RolesRR 
-=RR 
-StaticUserRolesRR *
-.RR* +
-AdminInstructorRR+ :
-)RR: ;
-]RR; <
-publicSS 
-asyncSS 
-TaskSS 
-<SS 
-ActionResultSS &
-<SS& '
-ResponseDTOSS' 2
->SS2 3
->SS3 4
-DeactivateCourseSS5 E
-(SSE F
-[SSF G
-	FromRouteSSG P
-]SSP Q
-GuidSSR V
-courseIdSSW _
-)SS_ `
-{TT 	
-varUU 
-responseDtoUU 
-=UU 
-awaitUU #
-_courseServiceUU$ 2
-.UU2 3
-DeactivateCourseUU3 C
-(UUC D
-UserUUD H
-,UUH I
-courseIdUUJ R
-)UUR S
-;UUS T
-returnVV 
+StatusCodeNN 
+(NN 
+responseDtoNN )
+.NN) *
 
-StatusCodeVV 
-(VV 
-responseDtoVV )
-.VV) *
+StatusCodeNN* 4
+,NN4 5
+responseDtoNN6 A
+)NNA B
+;NNB C
+}OO 	
+[QQ 	
+HttpPostQQ	 
+]QQ 
+[RR 	
+RouteRR	 
+(RR 
+$strRR +
+)RR+ ,
+]RR, -
+[SS 	
+	AuthorizeSS	 
+(SS 
+RolesSS 
+=SS 
+StaticUserRolesSS *
+.SS* +
+AdminInstructorSS+ :
+)SS: ;
+]SS; <
+publicTT 
+asyncTT 
+TaskTT 
+<TT 
+ActionResultTT &
+<TT& '
+ResponseDTOTT' 2
+>TT2 3
+>TT3 4
+DeactivateCourseTT5 E
+(TTE F
+[TTF G
+	FromRouteTTG P
+]TTP Q
+GuidTTR V
+courseIdTTW _
+)TT_ `
+{UU 	
+varVV 
+responseDtoVV 
+=VV 
+awaitVV #
+_courseServiceVV$ 2
+.VV2 3
+DeactivateCourseVV3 C
+(VVC D
+UserVVD H
+,VVH I
+courseIdVVJ R
+)VVR S
+;VVS T
+returnWW 
 
-StatusCodeVV* 4
-,VV4 5
-responseDtoVV6 A
-)VVA B
-;VVB C
-}WW 	
-[ZZ 	
-HttpGetZZ	 
-]ZZ 
-[[[ 	
-Route[[	 
-([[ 
-$str[[ 
-)[[ 
-][[ 
-[\\ 	
-	Authorize\\	 
-]\\ 
-public]] 
-async]] 
-Task]] 
-<]] 
-ActionResult]] &
-<]]& '
-ResponseDTO]]' 2
->]]2 3
->]]3 4
-GetCourseReviews]]5 E
-(^^ 	
-[__ 
-	FromQuery__ 
-]__ 
-Guid__ 
-?__ 
-courseId__ &
-,__& '
+StatusCodeWW 
+(WW 
+responseDtoWW )
+.WW) *
+
+StatusCodeWW* 4
+,WW4 5
+responseDtoWW6 A
+)WWA B
+;WWB C
+}XX 	
+[[[ 	
+HttpGet[[	 
+][[ 
+[\\ 	
+Route\\	 
+(\\ 
+$str\\ 
+)\\ 
+]\\ 
+[]] 	
+	Authorize]]	 
+]]] 
+public^^ 
+async^^ 
+Task^^ 
+<^^ 
+ActionResult^^ &
+<^^& '
+ResponseDTO^^' 2
+>^^2 3
+>^^3 4
+GetCourseReviews^^5 E
+(__ 	
 [`` 
 	FromQuery`` 
-]`` 
-string`` 
-?`` 
-filterOn``  (
-,``( )
+]`` 
+Guid`` 
+?`` 
+courseId`` &
+,``& '
 [aa 
 	FromQueryaa 
 ]aa 
 stringaa 
-?aa 
-filterQueryaa  +
-,aa+ ,
+?aa 
+filterOnaa  (
+,aa( )
 [bb 
 	FromQuerybb 
 ]bb 
 stringbb 
-?bb 
-sortBybb  &
-,bb& '
+?bb 
+filterQuerybb  +
+,bb+ ,
 [cc 
 	FromQuerycc 
-]cc 
-boolcc 
-?cc 
-isAscendingcc )
-,cc) *
+]cc 
+stringcc 
+?cc 
+sortBycc  &
+,cc& '
 [dd 
 	FromQuerydd 
-]dd 
-intdd 
-
-pageNumberdd &
-=dd' (
-$numdd) *
-,dd* +
+]dd 
+booldd 
+?dd 
+isAscendingdd )
+,dd) *
 [ee 
 	FromQueryee 
 ]ee 
-intee 
-pageSizeee $
-=ee% &
-$numee' (
-)ff 	
-{gg 	
-varhh 
-responseDtohh 
-=hh 
-awaithh # 
-_courseReviewServicehh$ 8
-.hh8 9
-GetCourseReviewshh9 I
-(hhI J
-Userii 
-,ii 
-courseIdjj 
-,jj 
-filterOnkk 
-,kk 
-filterQueryll 
-,ll 
-sortBymm 
-,mm 
-isAscendingnn 
-,nn 
+intee 
 
-pageNumberoo 
-,oo 
-pageSizepp 
-)qq 
-;qq 
-returnss 
+pageNumberee &
+=ee' (
+$numee) *
+,ee* +
+[ff 
+	FromQueryff 
+]ff 
+intff 
+pageSizeff $
+=ff% &
+$numff' (
+)gg 	
+{hh 	
+varii 
+responseDtoii 
+=ii 
+awaitii # 
+_courseReviewServiceii$ 8
+.ii8 9
+GetCourseReviewsii9 I
+(iiI J
+Userjj 
+,jj 
+courseIdkk 
+,kk 
+filterOnll 
+,ll 
+filterQuerymm 
+,mm 
+sortBynn 
+,nn 
+isAscendingoo 
+,oo 
 
-StatusCodess 
-(ss 
-responseDtoss )
-.ss) *
+pageNumberpp 
+,pp 
+pageSizeqq 
+)rr 
+;rr 
+returntt 
 
-StatusCodess* 4
-,ss4 5
-responseDtoss6 A
-)ssA B
-;ssB C
-}tt 	
-[vv 	
-HttpGetvv	 
-]vv 
-[ww 	
-Routeww	 
-(ww 
-$strww '
-)ww' (
-]ww( )
-[xx 	
-	Authorizexx	 
-]xx 
-publicyy 
-asyncyy 
-Taskyy 
-<yy 
-ActionResultyy &
-<yy& '
-ResponseDTOyy' 2
->yy2 3
->yy3 4
-GetCourseReviewyy5 D
-(yyD E
-[yyE F
-	FromRouteyyF O
-]yyO P
-GuidyyQ U
-reviewIdyyV ^
-)yy^ _
-{zz 	
-try{{ 
-{|| 
-var}} 
-responseDto}} 
-=}}  !
-await}}" ' 
-_courseReviewService}}( <
-.}}< =
-GetCourseReviewById}}= P
-(}}P Q
-reviewId}}Q Y
-)}}Y Z
-;}}Z [
-return~~ 
+StatusCodett 
+(tt 
+responseDtott )
+.tt) *
 
-StatusCode~~ !
-(~~! "
-responseDto~~" -
-.~~- .
+StatusCodett* 4
+,tt4 5
+responseDtott6 A
+)ttA B
+;ttB C
+}uu 	
+[ww 	
+HttpGetww	 
+]ww 
+[xx 	
+Routexx	 
+(xx 
+$strxx '
+)xx' (
+]xx( )
+[yy 	
+	Authorizeyy	 
+]yy 
+publiczz 
+asynczz 
+Taskzz 
+<zz 
+ActionResultzz &
+<zz& '
+ResponseDTOzz' 2
+>zz2 3
+>zz3 4
+GetCourseReviewzz5 D
+(zzD E
+[zzE F
+	FromRoutezzF O
+]zzO P
+GuidzzQ U
+reviewIdzzV ^
+)zz^ _
+{{{ 	
+try|| 
+{}} 
+var~~ 
+responseDto~~ 
+=~~  !
+await~~" ' 
+_courseReviewService~~( <
+.~~< =
+GetCourseReviewById~~= P
+(~~P Q
+reviewId~~Q Y
+)~~Y Z
+;~~Z [
+return 
 
-StatusCode~~. 8
-,~~8 9
-responseDto~~: E
-)~~E F
-;~~F G
-} 
+StatusCode !
+(! "
+responseDto" -
+.- .
+
+StatusCode. 8
+,8 9
+responseDto: E
+)E F
+;F G
+}
+ÄÄ 
 catch
-ÄÄ 
+ÅÅ 
 (
-ÄÄ 
+ÅÅ 
 	Exception
-ÄÄ 
+ÅÅ 
 ex
-ÄÄ 
+ÅÅ 
 )
-ÄÄ  
+ÅÅ  
 {
-ÅÅ 
+ÇÇ 
 return
-ÇÇ 
+ÉÉ 
 
 StatusCode
-ÇÇ !
+ÉÉ !
 (
-ÇÇ! "
+ÉÉ! "
 $num
-ÇÇ" %
+ÉÉ" %
 ,
-ÇÇ% &
+ÉÉ% &
 new
-ÇÇ' *
+ÉÉ' *
 ResponseDTO
-ÇÇ+ 6
+ÉÉ+ 6
 {
-ÉÉ 
+ÑÑ 
 Message
-ÑÑ 
+ÖÖ 
 =
-ÑÑ 
+ÖÖ 
 ex
-ÑÑ  
+ÖÖ  
 .
-ÑÑ  !
+ÖÖ  !
 Message
-ÑÑ! (
+ÖÖ! (
 ,
-ÑÑ( )
+ÖÖ( )
 Result
-ÖÖ 
+ÜÜ 
 =
-ÖÖ 
+ÜÜ 
 null
-ÖÖ !
+ÜÜ !
 ,
-ÖÖ! "
+ÜÜ! "
 	IsSuccess
-ÜÜ 
+áá 
 =
-ÜÜ 
+áá 
 false
-ÜÜ  %
+áá  %
 ,
-ÜÜ% &
+áá% &
 
 StatusCode
-áá 
+àà 
 =
-áá  
+àà  
 $num
-áá! $
+àà! $
 }
-àà 
+ââ 
 )
-àà 
+ââ 
 ;
-àà 
+ââ 
 }
-ââ 
+ää 
 }
-ää 	
+ãã 	
 [
-åå 	
+çç 	
 HttpPost
-åå	 
+çç	 
 ]
-åå 
+çç 
 [
-çç 	
+éé 	
 Route
-çç	 
+éé	 
 (
-çç 
+éé 
 $str
-çç 
+éé 
 )
-çç 
+éé 
 ]
-çç 
+éé 
 [
-éé 	
+èè 	
 	Authorize
-éé	 
+èè	 
 (
-éé 
+èè 
 Roles
-éé 
+èè 
 =
-éé 
+èè 
 StaticUserRoles
-éé *
+èè *
 .
-éé* +
+èè* +
 Student
-éé+ 2
+èè+ 2
 )
-éé2 3
-]
-éé3 4
-public
-èè 
-async
-èè 
-Task
-èè 
-<
-èè 
-ActionResult
-èè &
-<
-èè& '
-ResponseDTO
-èè' 2
->
 èè2 3
->
-èè3 4 
-CreateCourseReview
-èè5 G
-(
-èèG H
-[
-êê 
-FromBody
-êê 
 ]
-êê #
-CreateCourseReviewDTO
-êê ,#
-createCourseReviewDto
-êê- B
-)
-êêB C
-{
-ëë 	
-if
-íí 
-(
-íí 
-!
-íí 
-
-ModelState
-íí 
-.
-íí 
-IsValid
-íí #
-)
-íí# $
-{
-ìì 
-return
-îî 
-
-BadRequest
-îî !
-(
-îî! "
-new
-îî" %
-ResponseDTO
-îî& 1
-{
-ïï 
-Message
-ññ 
-=
-ññ 
-$str
-ññ ,
-,
-ññ, -
-Result
-óó 
-=
-óó 
-
-ModelState
-óó '
-,
-óó' (
-	IsSuccess
-òò 
-=
-òò 
-false
-òò  %
-,
-òò% &
-
-StatusCode
-ôô 
-=
-ôô  
-$num
-ôô! $
-}
-öö 
-)
-öö 
-;
-öö 
-}
-õõ 
-try
-ùù 
-{
-ûû 
-var
-üü 
-responseDto
-üü 
-=
-üü  !
-await
-üü" '"
-_courseReviewService
-üü( <
-.
-üü< = 
-CreateCourseReview
-üü= O
-(
-üüO P#
-createCourseReviewDto
-üüP e
-)
-üüe f
-;
-üüf g
-return
-†† 
-
-StatusCode
-†† !
-(
-††! "
-responseDto
-††" -
-.
-††- .
-
-StatusCode
-††. 8
-,
-††8 9
-responseDto
-††: E
-)
-††E F
-;
-††F G
-}
-°° 
-catch
-¢¢ 
-(
-¢¢ 
-	Exception
-¢¢ 
-ex
-¢¢ 
-)
-¢¢  
-{
-££ 
-return
-§§ 
-
-StatusCode
-§§ !
-(
-§§! "
-$num
-§§" %
-,
-§§% &
-new
-§§' *
-ResponseDTO
-§§+ 6
-{
-•• 
-Message
-¶¶ 
-=
-¶¶ 
-ex
-¶¶  
-.
-¶¶  !
-Message
-¶¶! (
-,
-¶¶( )
-Result
-ßß 
-=
-ßß 
-null
-ßß !
-,
-ßß! "
-	IsSuccess
-®® 
-=
-®® 
-false
-®®  %
-,
-®®% &
-
-StatusCode
-©© 
-=
-©©  
-$num
-©©! $
-}
-™™ 
-)
-™™ 
-;
-™™ 
-}
-´´ 
-}
-¨¨ 	
-[
-ÆÆ 	
-HttpPut
-ÆÆ	 
-]
-ÆÆ 
-[
-ØØ 	
-Route
-ØØ	 
-(
-ØØ 
-$str
-ØØ 
-)
-ØØ 
-]
-ØØ 
-[
-∞∞ 	
-	Authorize
-∞∞	 
-]
-∞∞ 
+èè3 4
 public
-±± 
+êê 
 async
-±± 
+êê 
 Task
-±± 
+êê 
 <
-±± 
+êê 
 ActionResult
-±± &
+êê &
 <
-±±& '
+êê& '
 ResponseDTO
-±±' 2
+êê' 2
 >
-±±2 3
+êê2 3
 >
-±±3 4 
-UpdateCourseReview
-±±5 G
+êê3 4 
+CreateCourseReview
+êê5 G
 (
-±±G H
+êêG H
 [
-≤≤ 
+ëë 
 FromBody
-≤≤ 
+ëë 
 ]
-≤≤ #
-UpdateCourseReviewDTO
-≤≤ ,#
-updateCourseReviewDto
-≤≤- B
+ëë #
+CreateCourseReviewDTO
+ëë ,#
+createCourseReviewDto
+ëë- B
 )
-≤≤B C
+ëëB C
 {
-≥≥ 	
+íí 	
 if
-¥¥ 
+ìì 
 (
-¥¥ 
+ìì 
 !
-¥¥ 
+ìì 
 
 ModelState
-¥¥ 
+ìì 
 .
-¥¥ 
+ìì 
 IsValid
-¥¥ #
+ìì #
 )
-¥¥# $
+ìì# $
 {
-µµ 
+îî 
 return
-∂∂ 
+ïï 
 
 BadRequest
-∂∂ !
+ïï !
 (
-∂∂! "
+ïï! "
 new
-∂∂" %
+ïï" %
 ResponseDTO
-∂∂& 1
+ïï& 1
 {
-∑∑ 
+ññ 
 Message
-∏∏ 
+óó 
 =
-∏∏ 
+óó 
 $str
-∏∏ ,
+óó ,
 ,
-∏∏, -
+óó, -
 Result
-ππ 
+òò 
 =
-ππ 
+òò 
 
 ModelState
-ππ '
+òò '
 ,
-ππ' (
+òò' (
 	IsSuccess
-∫∫ 
+ôô 
 =
-∫∫ 
+ôô 
 false
-∫∫  %
+ôô  %
 ,
-∫∫% &
+ôô% &
 
 StatusCode
-ªª 
+öö 
 =
-ªª  
+öö  
 $num
-ªª! $
+öö! $
 }
-ºº 
+õõ 
 )
-ºº 
+õõ 
 ;
-ºº 
+õõ 
 }
-ΩΩ 
+úú 
 try
-øø 
+ûû 
 {
-¿¿ 
+üü 
 var
-¡¡ 
+†† 
 responseDto
-¡¡ 
+†† 
 =
-¡¡  !
+††  !
 await
-¡¡" '"
+††" '"
 _courseReviewService
-¡¡( <
+††( <
 .
-¡¡< = 
-UpdateCourseReview
-¡¡= O
+††< = 
+CreateCourseReview
+††= O
 (
-¡¡O P
-User
-¡¡P T
-,
-¡¡T U#
-updateCourseReviewDto
-¡¡V k
+††O P#
+createCourseReviewDto
+††P e
 )
-¡¡k l
+††e f
 ;
-¡¡l m
+††f g
 return
-¬¬ 
+°° 
 
 StatusCode
-¬¬ !
+°° !
 (
-¬¬! "
+°°! "
 responseDto
-¬¬" -
+°°" -
 .
-¬¬- .
+°°- .
 
 StatusCode
-¬¬. 8
+°°. 8
 ,
-¬¬8 9
+°°8 9
 responseDto
-¬¬: E
+°°: E
 )
-¬¬E F
+°°E F
 ;
-¬¬F G
+°°F G
 }
-√√ 
+¢¢ 
 catch
-ƒƒ 
+££ 
 (
-ƒƒ 
+££ 
 	Exception
-ƒƒ 
+££ 
 ex
-ƒƒ 
+££ 
 )
-ƒƒ  
+££  
 {
-≈≈ 
+§§ 
 return
-∆∆ 
+•• 
 
 StatusCode
-∆∆ !
+•• !
 (
-∆∆! "
+••! "
 $num
-∆∆" %
+••" %
 ,
-∆∆% &
+••% &
 new
-∆∆' *
+••' *
 ResponseDTO
-∆∆+ 6
+••+ 6
 {
-«« 
+¶¶ 
 Message
-»» 
+ßß 
 =
-»» 
+ßß 
 ex
-»»  
+ßß  
 .
-»»  !
+ßß  !
 Message
-»»! (
+ßß! (
 ,
-»»( )
+ßß( )
 Result
-…… 
+®® 
 =
-…… 
+®® 
 null
-…… !
+®® !
 ,
-……! "
+®®! "
 	IsSuccess
-   
+©© 
 =
-   
+©© 
 false
-    %
+©©  %
 ,
-  % &
+©©% &
 
 StatusCode
-ÀÀ 
+™™ 
 =
-ÀÀ  
+™™  
 $num
-ÀÀ! $
+™™! $
 }
-ÃÃ 
+´´ 
 )
-ÃÃ 
+´´ 
 ;
-ÃÃ 
+´´ 
 }
-ÕÕ 
+¨¨ 
 }
-ŒŒ 	
+≠≠ 	
 [
-–– 	
+ØØ 	
+HttpPut
+ØØ	 
+]
+ØØ 
+[
+∞∞ 	
+Route
+∞∞	 
+(
+∞∞ 
+$str
+∞∞ 
+)
+∞∞ 
+]
+∞∞ 
+[
+±± 	
+	Authorize
+±±	 
+(
+±± 
+Roles
+±± 
+=
+±± 
+StaticUserRoles
+±± *
+.
+±±* +
+Student
+±±+ 2
+)
+±±2 3
+]
+±±3 4
+public
+≤≤ 
+async
+≤≤ 
+Task
+≤≤ 
+<
+≤≤ 
+ActionResult
+≤≤ &
+<
+≤≤& '
+ResponseDTO
+≤≤' 2
+>
+≤≤2 3
+>
+≤≤3 4 
+UpdateCourseReview
+≤≤5 G
+(
+≤≤G H
+[
+≥≥ 
+FromBody
+≥≥ 
+]
+≥≥ #
+UpdateCourseReviewDTO
+≥≥ ,#
+updateCourseReviewDto
+≥≥- B
+)
+≥≥B C
+{
+¥¥ 	
+if
+µµ 
+(
+µµ 
+!
+µµ 
+
+ModelState
+µµ 
+.
+µµ 
+IsValid
+µµ #
+)
+µµ# $
+{
+∂∂ 
+return
+∑∑ 
+
+BadRequest
+∑∑ !
+(
+∑∑! "
+new
+∑∑" %
+ResponseDTO
+∑∑& 1
+{
+∏∏ 
+Message
+ππ 
+=
+ππ 
+$str
+ππ ,
+,
+ππ, -
+Result
+∫∫ 
+=
+∫∫ 
+
+ModelState
+∫∫ '
+,
+∫∫' (
+	IsSuccess
+ªª 
+=
+ªª 
+false
+ªª  %
+,
+ªª% &
+
+StatusCode
+ºº 
+=
+ºº  
+$num
+ºº! $
+}
+ΩΩ 
+)
+ΩΩ 
+;
+ΩΩ 
+}
+ææ 
+try
+¿¿ 
+{
+¡¡ 
+var
+¬¬ 
+responseDto
+¬¬ 
+=
+¬¬  !
+await
+¬¬" '"
+_courseReviewService
+¬¬( <
+.
+¬¬< = 
+UpdateCourseReview
+¬¬= O
+(
+¬¬O P
+User
+¬¬P T
+,
+¬¬T U#
+updateCourseReviewDto
+¬¬V k
+)
+¬¬k l
+;
+¬¬l m
+return
+√√ 
+
+StatusCode
+√√ !
+(
+√√! "
+responseDto
+√√" -
+.
+√√- .
+
+StatusCode
+√√. 8
+,
+√√8 9
+responseDto
+√√: E
+)
+√√E F
+;
+√√F G
+}
+ƒƒ 
+catch
+≈≈ 
+(
+≈≈ 
+	Exception
+≈≈ 
+ex
+≈≈ 
+)
+≈≈  
+{
+∆∆ 
+return
+«« 
+
+StatusCode
+«« !
+(
+««! "
+$num
+««" %
+,
+««% &
+new
+««' *
+ResponseDTO
+««+ 6
+{
+»» 
+Message
+…… 
+=
+…… 
+ex
+……  
+.
+……  !
+Message
+……! (
+,
+……( )
+Result
+   
+=
+   
+null
+   !
+,
+  ! "
+	IsSuccess
+ÀÀ 
+=
+ÀÀ 
+false
+ÀÀ  %
+,
+ÀÀ% &
+
+StatusCode
+ÃÃ 
+=
+ÃÃ  
+$num
+ÃÃ! $
+}
+ÕÕ 
+)
+ÕÕ 
+;
+ÕÕ 
+}
+ŒŒ 
+}
+œœ 	
+[
+—— 	
 
 HttpDelete
-––	 
+——	 
 ]
-–– 
+—— 
 [
-—— 	
+““ 	
 Route
-——	 
+““	 
 (
-—— 
+““ 
 $str
-—— '
+““ '
 )
-——' (
+““' (
 ]
-——( )
+““( )
 [
-““ 	
+”” 	
 	Authorize
-““	 
+””	 
 ]
-““ 
+”” 
 public
-”” 
+‘‘ 
 async
-”” 
+‘‘ 
 Task
-”” 
+‘‘ 
 <
-”” 
+‘‘ 
 ActionResult
-”” &
+‘‘ &
 <
-””& '
+‘‘& '
 ResponseDTO
-””' 2
+‘‘' 2
 >
-””2 3
+‘‘2 3
 >
-””3 4 
+‘‘3 4 
 DeleteCourseReview
-””5 G
+‘‘5 G
 (
-””G H
+‘‘G H
 [
-””H I
+‘‘H I
 	FromRoute
-””I R
+‘‘I R
 ]
-””R S
+‘‘R S
 Guid
-””T X
+‘‘T X
 reviewId
-””Y a
+‘‘Y a
 )
-””a b
+‘‘a b
 {
-‘‘ 	
+’’ 	
 try
-’’ 
+÷÷ 
 {
-÷÷ 
+◊◊ 
 var
-◊◊ 
+ÿÿ 
 responseDto
-◊◊ 
+ÿÿ 
 =
-◊◊  !
+ÿÿ  !
 await
-◊◊" '"
+ÿÿ" '"
 _courseReviewService
-◊◊( <
+ÿÿ( <
 .
-◊◊< = 
+ÿÿ< = 
 DeleteCourseReview
-◊◊= O
+ÿÿ= O
 (
-◊◊O P
+ÿÿO P
 reviewId
-◊◊P X
+ÿÿP X
 )
-◊◊X Y
+ÿÿX Y
 ;
-◊◊Y Z
+ÿÿY Z
 return
-ÿÿ 
+ŸŸ 
 
 StatusCode
-ÿÿ !
+ŸŸ !
 (
-ÿÿ! "
+ŸŸ! "
 responseDto
-ÿÿ" -
+ŸŸ" -
 .
-ÿÿ- .
+ŸŸ- .
 
 StatusCode
-ÿÿ. 8
+ŸŸ. 8
 ,
-ÿÿ8 9
+ŸŸ8 9
 responseDto
-ÿÿ: E
+ŸŸ: E
 )
-ÿÿE F
+ŸŸE F
 ;
-ÿÿF G
+ŸŸF G
 }
-ŸŸ 
+⁄⁄ 
 catch
-⁄⁄ 
+€€ 
 (
-⁄⁄ 
+€€ 
 	Exception
-⁄⁄ 
+€€ 
 ex
-⁄⁄ 
+€€ 
 )
-⁄⁄  
+€€  
 {
-€€ 
+‹‹ 
 return
-‹‹ 
+›› 
 
 StatusCode
-‹‹ !
+›› !
 (
-‹‹! "
+››! "
 $num
-‹‹" %
+››" %
 ,
-‹‹% &
+››% &
 new
-‹‹' *
+››' *
 ResponseDTO
-‹‹+ 6
+››+ 6
 {
-›› 
+ﬁﬁ 
 Message
-ﬁﬁ 
+ﬂﬂ 
 =
-ﬁﬁ 
+ﬂﬂ 
 ex
-ﬁﬁ  
+ﬂﬂ  
 .
-ﬁﬁ  !
+ﬂﬂ  !
 Message
-ﬁﬁ! (
+ﬂﬂ! (
 ,
-ﬁﬁ( )
+ﬂﬂ( )
 Result
-ﬂﬂ 
+‡‡ 
 =
-ﬂﬂ 
+‡‡ 
 null
-ﬂﬂ !
+‡‡ !
 ,
-ﬂﬂ! "
+‡‡! "
 	IsSuccess
-‡‡ 
+·· 
 =
-‡‡ 
+·· 
 false
-‡‡  %
+··  %
 ,
-‡‡% &
+··% &
 
 StatusCode
-·· 
+‚‚ 
 =
-··  
+‚‚  
 $num
-··! $
+‚‚! $
 }
-‚‚ 
+„„ 
 )
-‚‚ 
+„„ 
 ;
-‚‚ 
+„„ 
 }
-„„ 
+‰‰ 
 }
-‰‰ 	
+ÂÂ 	
 [
-ÁÁ 	
+ËË 	
 HttpPut
-ÁÁ	 
+ËË	 
 ]
-ÁÁ 
+ËË 
 [
-ËË 	
+ÈÈ 	
 Route
-ËË	 
+ÈÈ	 
 (
-ËË 
+ÈÈ 
 $str
-ËË ,
+ÈÈ ,
 )
-ËË, -
+ÈÈ, -
 ]
-ËË- .
+ÈÈ- .
 [
-ÈÈ 	
+ÍÍ 	
 	Authorize
-ÈÈ	 
+ÍÍ	 
 (
-ÈÈ 
+ÍÍ 
 Roles
-ÈÈ 
+ÍÍ 
 =
-ÈÈ 
+ÍÍ 
 StaticUserRoles
-ÈÈ *
+ÍÍ *
 .
-ÈÈ* +
+ÍÍ* +
 
 Instructor
-ÈÈ+ 5
+ÍÍ+ 5
 )
-ÈÈ5 6
+ÍÍ5 6
 ]
-ÈÈ6 7
+ÍÍ6 7
 public
-ÍÍ 
+ÎÎ 
 async
-ÍÍ 
+ÎÎ 
 Task
-ÍÍ 
+ÎÎ 
 <
-ÍÍ 
+ÎÎ 
 ActionResult
-ÍÍ &
+ÎÎ &
 <
-ÍÍ& '
+ÎÎ& '
 ResponseDTO
-ÍÍ' 2
+ÎÎ' 2
 >
-ÍÍ2 3
+ÎÎ2 3
 >
-ÍÍ3 4
+ÎÎ3 4
 MarkCourseReview
-ÍÍ5 E
+ÎÎ5 E
 (
-ÍÍE F
+ÎÎE F
 [
-ÍÍF G
+ÎÎF G
 	FromRoute
-ÍÍG P
+ÎÎG P
 ]
-ÍÍP Q
+ÎÎP Q
 Guid
-ÍÍR V
+ÎÎR V
 reviewId
-ÍÍW _
+ÎÎW _
 )
-ÍÍ_ `
+ÎÎ_ `
 {
-ÎÎ 	
+ÏÏ 	
 try
-ÏÏ 
+ÌÌ 
 {
-ÌÌ 
+ÓÓ 
 var
-ÓÓ 
+ÔÔ 
 responseDto
-ÓÓ 
+ÔÔ 
 =
-ÓÓ  !
+ÔÔ  !
 await
-ÓÓ" '"
+ÔÔ" '"
 _courseReviewService
-ÓÓ( <
+ÔÔ( <
 .
-ÓÓ< =
+ÔÔ< =
 MarkCourseReview
-ÓÓ= M
+ÔÔ= M
 (
-ÓÓM N
+ÔÔM N
 reviewId
-ÓÓN V
+ÔÔN V
 )
-ÓÓV W
+ÔÔV W
 ;
-ÓÓW X
+ÔÔW X
 return
-ÔÔ 
+ 
 
 StatusCode
-ÔÔ !
+ !
 (
-ÔÔ! "
+! "
 responseDto
-ÔÔ" -
+" -
 .
-ÔÔ- .
+- .
 
 StatusCode
-ÔÔ. 8
+. 8
 ,
-ÔÔ8 9
+8 9
 responseDto
-ÔÔ: E
+: E
 )
-ÔÔE F
+E F
 ;
-ÔÔF G
+F G
 }
- 
+ÒÒ 
 catch
-ÒÒ 
+ÚÚ 
 (
-ÒÒ 
+ÚÚ 
 	Exception
-ÒÒ 
+ÚÚ 
 ex
-ÒÒ 
+ÚÚ 
 )
-ÒÒ  
+ÚÚ  
 {
-ÚÚ 
+ÛÛ 
 return
-ÛÛ 
+ÙÙ 
 
 StatusCode
-ÛÛ !
+ÙÙ !
 (
-ÛÛ! "
+ÙÙ! "
 $num
-ÛÛ" %
+ÙÙ" %
 ,
-ÛÛ% &
+ÙÙ% &
 new
-ÛÛ' *
+ÙÙ' *
 ResponseDTO
-ÛÛ+ 6
+ÙÙ+ 6
 {
-ÙÙ 
+ıı 
 Message
-ıı 
+ˆˆ 
 =
-ıı 
+ˆˆ 
 ex
-ıı  
+ˆˆ  
 .
-ıı  !
+ˆˆ  !
 Message
-ıı! (
+ˆˆ! (
 ,
-ıı( )
+ˆˆ( )
 Result
-ˆˆ 
+˜˜ 
 =
-ˆˆ 
+˜˜ 
 null
-ˆˆ !
+˜˜ !
 ,
-ˆˆ! "
+˜˜! "
 	IsSuccess
-˜˜ 
+¯¯ 
 =
-˜˜ 
+¯¯ 
 false
-˜˜  %
+¯¯  %
 ,
-˜˜% &
+¯¯% &
 
 StatusCode
-¯¯ 
+˘˘ 
 =
-¯¯  
+˘˘  
 $num
-¯¯! $
+˘˘! $
 }
-˘˘ 
+˙˙ 
 )
-˘˘ 
+˙˙ 
 ;
-˘˘ 
+˙˙ 
 }
-˙˙ 
+˚˚ 
 }
-˚˚ 	
+¸¸ 	
 [
-˛˛ 	
+ˇˇ 	
 HttpGet
-˛˛	 
+ˇˇ	 
 ]
-˛˛ 
+ˇˇ 
 [
-ˇˇ 	
+ÄÄ 	
 Route
-ˇˇ	 
+ÄÄ	 
 (
-ˇˇ 
+ÄÄ 
 $str
-ˇˇ 
+ÄÄ 
 )
-ˇˇ 
+ÄÄ 
 ]
-ˇˇ 
+ÄÄ 
 [
-ÄÄ 	
+ÅÅ 	
 	Authorize
-ÄÄ	 
+ÅÅ	 
 ]
-ÄÄ 
+ÅÅ 
 public
-ÅÅ 
+ÇÇ 
 async
-ÅÅ 
+ÇÇ 
 Task
-ÅÅ 
+ÇÇ 
 <
-ÅÅ 
+ÇÇ 
 ActionResult
-ÅÅ &
+ÇÇ &
 <
-ÅÅ& '
+ÇÇ& '
 ResponseDTO
-ÅÅ' 2
+ÇÇ' 2
 >
-ÅÅ2 3
+ÇÇ2 3
 >
-ÅÅ3 4
+ÇÇ3 4
 GetCourseReports
-ÅÅ5 E
+ÇÇ5 E
 (
-ÅÅE F
-[
-ÇÇ 
-	FromQuery
-ÇÇ 
-]
-ÇÇ 
-Guid
-ÇÇ 
-?
-ÇÇ 
-courseId
-ÇÇ &
-,
-ÇÇ& '
+ÇÇE F
 [
 ÉÉ 
 	FromQuery
 ÉÉ 
 ]
-ÉÉ 
-string
-ÉÉ 
+ÉÉ 
+Guid
+ÉÉ 
 ?
-ÉÉ 
-filterOn
-ÉÉ  (
+ÉÉ 
+courseId
+ÉÉ &
 ,
-ÉÉ( )
+ÉÉ& '
 [
 ÑÑ 
 	FromQuery
@@ -10399,11 +12357,11 @@ StatusCode
 string
 ÑÑ 
 ?
-ÑÑ 
-filterQuery
-ÑÑ  +
+ÑÑ 
+filterOn
+ÑÑ  (
 ,
-ÑÑ+ ,
+ÑÑ( )
 [
 ÖÖ 
 	FromQuery
@@ -10413,42 +12371,39 @@ StatusCode
 string
 ÖÖ 
 ?
-ÖÖ 
-sortBy
-ÖÖ  &
+ÖÖ 
+filterQuery
+ÖÖ  +
 ,
-ÖÖ& '
+ÖÖ+ ,
 [
 ÜÜ 
 	FromQuery
 ÜÜ 
 ]
-ÜÜ 
-bool
-ÜÜ 
+ÜÜ 
+string
+ÜÜ 
 ?
-ÜÜ 
-isAscending
-ÜÜ )
+ÜÜ 
+sortBy
+ÜÜ  &
 ,
-ÜÜ) *
+ÜÜ& '
 [
 áá 
 	FromQuery
 áá 
 ]
-áá 
-int
-áá 
-
-pageNumber
-áá &
-=
-áá' (
-$num
-áá) *
+áá 
+bool
+áá 
+?
+áá 
+isAscending
+áá )
 ,
-áá* +
+áá) *
 [
 àà 
 	FromQuery
@@ -10456,1061 +12411,1092 @@ pageNumber
 ]
 àà 
 int
-àà 
-pageSize
-àà $
-=
-àà% &
-$num
-àà' (
-)
-ââ 	
-{
-ää 	
-var
-ãã 
-responseDto
-ãã 
-=
-ãã 
-await
-ãã #"
-_courseReportService
-ãã$ 8
-.
-ãã8 9
-GetCourseReports
-ãã9 I
-(
-ããI J
-User
-åå 
-,
-åå 
-courseId
-çç 
-,
-çç 
-filterOn
-éé 
-,
-éé 
-filterQuery
-èè 
-,
-èè 
-sortBy
-êê 
-,
-êê 
-isAscending
-ëë 
-,
-ëë 
+àà 
 
 pageNumber
-íí 
+àà &
+=
+àà' (
+$num
+àà) *
 ,
-íí 
+àà* +
+[
+ââ 
+	FromQuery
+ââ 
+]
+ââ 
+int
+ââ 
 pageSize
-ìì 
+ââ $
+=
+ââ% &
+$num
+ââ' (
 )
-îî 
-;
-îî 
-return
-ññ 
-
-StatusCode
-ññ 
-(
-ññ 
-responseDto
-ññ )
-.
-ññ) *
-
-StatusCode
-ññ* 4
-,
-ññ4 5
-responseDto
-ññ6 A
-)
-ññA B
-;
-ññB C
-}
-óó 	
-[
-ôô 	
-HttpGet
-ôô	 
-]
-ôô 
-[
-öö 	
-Route
-öö	 
-(
-öö 
-$str
-öö '
-)
-öö' (
-]
-öö( )
-[
-õõ 	
-	Authorize
-õõ	 
-]
-õõ 
-public
-úú 
-async
-úú 
-Task
-úú 
-<
-úú 
-ActionResult
-úú &
-<
-úú& '
-ResponseDTO
-úú' 2
->
-úú2 3
->
-úú3 4
-GetCourseReport
-úú5 D
-(
-úúD E
-[
-úúE F
-	FromRoute
-úúF O
-]
-úúO P
-Guid
-úúQ U
-reportId
-úúV ^
-)
-úú^ _
+ää 	
 {
-ùù 	
-try
-ûû 
-{
-üü 
+ãã 	
 var
-†† 
+åå 
 responseDto
-†† 
+åå 
 =
-††  !
+åå 
 await
-††" '"
+åå #"
 _courseReportService
-††( <
+åå$ 8
 .
-††< =!
-GetCourseReportById
-††= P
+åå8 9
+GetCourseReports
+åå9 I
 (
-††P Q
-reportId
-††Q Y
-)
-††Y Z
-;
-††Z [
-return
-°° 
-
-StatusCode
-°° !
-(
-°°! "
-responseDto
-°°" -
-.
-°°- .
-
-StatusCode
-°°. 8
-,
-°°8 9
-responseDto
-°°: E
-)
-°°E F
-;
-°°F G
-}
-¢¢ 
-catch
-££ 
-(
-££ 
-	Exception
-££ 
-ex
-££ 
-)
-££  
-{
-§§ 
-return
-•• 
-
-StatusCode
-•• !
-(
-••! "
-$num
-••" %
-,
-••% &
-new
-••' *
-ResponseDTO
-••+ 6
-{
-¶¶ 
-Message
-ßß 
-=
-ßß 
-ex
-ßß  
-.
-ßß  !
-Message
-ßß! (
-,
-ßß( )
-Result
-®® 
-=
-®® 
-null
-®® !
-,
-®®! "
-	IsSuccess
-©© 
-=
-©© 
-false
-©©  %
-,
-©©% &
-
-StatusCode
-™™ 
-=
-™™  
-$num
-™™! $
-}
-´´ 
-)
-´´ 
-;
-´´ 
-}
-¨¨ 
-}
-≠≠ 	
-[
-ØØ 	
-HttpPost
-ØØ	 
-]
-ØØ 
-[
-∞∞ 	
-Route
-∞∞	 
-(
-∞∞ 
-$str
-∞∞ 
-)
-∞∞ 
-]
-∞∞ 
-[
-±± 	
-	Authorize
-±±	 
-(
-±± 
-Roles
-±± 
-=
-±± 
-StaticUserRoles
-±± *
-.
-±±* +
-Student
-±±+ 2
-)
-±±2 3
-]
-±±3 4
-public
-≤≤ 
-async
-≤≤ 
-Task
-≤≤ 
-<
-≤≤ 
-ActionResult
-≤≤ &
-<
-≤≤& '
-ResponseDTO
-≤≤' 2
->
-≤≤2 3
->
-≤≤3 4 
-CreateCourseReport
-≤≤5 G
-(
-≤≤G H
-[
-≥≥ 
-FromBody
-≥≥ 
-]
-≥≥ #
-CreateCourseReportDTO
-≥≥ ,#
-createCourseReportDTO
-≥≥- B
-)
-≥≥B C
-{
-¥¥ 	
-if
-µµ 
-(
-µµ 
-!
-µµ 
-
-ModelState
-µµ 
-.
-µµ 
-IsValid
-µµ #
-)
-µµ# $
-{
-∂∂ 
-return
-∑∑ 
-
-BadRequest
-∑∑ !
-(
-∑∑! "
-new
-∑∑" %
-ResponseDTO
-∑∑& 1
-{
-∏∏ 
-Message
-ππ 
-=
-ππ 
-$str
-ππ ,
-,
-ππ, -
-Result
-∫∫ 
-=
-∫∫ 
-
-ModelState
-∫∫ '
-,
-∫∫' (
-	IsSuccess
-ªª 
-=
-ªª 
-false
-ªª  %
-,
-ªª% &
-
-StatusCode
-ºº 
-=
-ºº  
-$num
-ºº! $
-}
-ΩΩ 
-)
-ΩΩ 
-;
-ΩΩ 
-}
-ææ 
-try
-¿¿ 
-{
-¡¡ 
-var
-¬¬ 
-responseDto
-¬¬ 
-=
-¬¬  !
-await
-¬¬" '"
-_courseReportService
-¬¬( <
-.
-¬¬< = 
-CreateCourseReport
-¬¬= O
-(
-¬¬O P#
-createCourseReportDTO
-¬¬P e
-)
-¬¬e f
-;
-¬¬f g
-return
-√√ 
-
-StatusCode
-√√ !
-(
-√√! "
-responseDto
-√√" -
-.
-√√- .
-
-StatusCode
-√√. 8
-,
-√√8 9
-responseDto
-√√: E
-)
-√√E F
-;
-√√F G
-}
-ƒƒ 
-catch
-≈≈ 
-(
-≈≈ 
-	Exception
-≈≈ 
-ex
-≈≈ 
-)
-≈≈  
-{
-∆∆ 
-return
-«« 
-
-StatusCode
-«« !
-(
-««! "
-$num
-««" %
-,
-««% &
-new
-««' *
-ResponseDTO
-««+ 6
-{
-»» 
-Message
-…… 
-=
-…… 
-ex
-……  
-.
-……  !
-Message
-……! (
-,
-……( )
-Result
-   
-=
-   
-null
-   !
-,
-  ! "
-	IsSuccess
-ÀÀ 
-=
-ÀÀ 
-false
-ÀÀ  %
-,
-ÀÀ% &
-
-StatusCode
-ÃÃ 
-=
-ÃÃ  
-$num
-ÃÃ! $
-}
-ÕÕ 
-)
-ÕÕ 
-;
-ÕÕ 
-}
-ŒŒ 
-}
-œœ 	
-[
-—— 	
-HttpPut
-——	 
-]
-—— 
-[
-““ 	
-Route
-““	 
-(
-““ 
-$str
-““ 
-)
-““ 
-]
-““ 
-[
-”” 	
-	Authorize
-””	 
-]
-”” 
-public
-‘‘ 
-async
-‘‘ 
-Task
-‘‘ 
-<
-‘‘ 
-ActionResult
-‘‘ &
-<
-‘‘& '
-ResponseDTO
-‘‘' 2
->
-‘‘2 3
->
-‘‘3 4 
-UpdateCourseReport
-‘‘5 G
-(
-‘‘G H
-[
-’’ 
-FromBody
-’’ 
-]
-’’ #
-UpdateCourseReportDTO
-’’ ,#
-updateCourseReportDTO
-’’- B
-)
-’’B C
-{
-÷÷ 	
-if
-◊◊ 
-(
-◊◊ 
-!
-◊◊ 
-
-ModelState
-◊◊ 
-.
-◊◊ 
-IsValid
-◊◊ #
-)
-◊◊# $
-{
-ÿÿ 
-return
-ŸŸ 
-
-BadRequest
-ŸŸ !
-(
-ŸŸ! "
-new
-ŸŸ" %
-ResponseDTO
-ŸŸ& 1
-{
-⁄⁄ 
-Message
-€€ 
-=
-€€ 
-$str
-€€ ,
-,
-€€, -
-Result
-‹‹ 
-=
-‹‹ 
-
-ModelState
-‹‹ '
-,
-‹‹' (
-	IsSuccess
-›› 
-=
-›› 
-false
-››  %
-,
-››% &
-
-StatusCode
-ﬁﬁ 
-=
-ﬁﬁ  
-$num
-ﬁﬁ! $
-}
-ﬂﬂ 
-)
-ﬂﬂ 
-;
-ﬂﬂ 
-}
-‡‡ 
-try
-‚‚ 
-{
-„„ 
-var
-‰‰ 
-responseDto
-‰‰ 
-=
-‰‰  !
-await
-‰‰" '"
-_courseReportService
-‰‰( <
-.
-‰‰< = 
-UpdateCourseReport
-‰‰= O
-(
-‰‰O P
+ååI J
 User
-‰‰P T
+çç 
 ,
-‰‰T U#
-updateCourseReportDTO
-‰‰V k
+çç 
+courseId
+éé 
+,
+éé 
+filterOn
+èè 
+,
+èè 
+filterQuery
+êê 
+,
+êê 
+sortBy
+ëë 
+,
+ëë 
+isAscending
+íí 
+,
+íí 
+
+pageNumber
+ìì 
+,
+ìì 
+pageSize
+îî 
 )
-‰‰k l
+ïï 
 ;
-‰‰l m
+ïï 
 return
-ÂÂ 
+óó 
 
 StatusCode
-ÂÂ !
+óó 
 (
-ÂÂ! "
+óó 
 responseDto
-ÂÂ" -
+óó )
 .
-ÂÂ- .
+óó) *
 
 StatusCode
-ÂÂ. 8
+óó* 4
 ,
-ÂÂ8 9
+óó4 5
 responseDto
-ÂÂ: E
+óó6 A
 )
-ÂÂE F
+óóA B
 ;
-ÂÂF G
+óóB C
 }
-ÊÊ 
-catch
-ÁÁ 
-(
-ÁÁ 
-	Exception
-ÁÁ 
-ex
-ÁÁ 
-)
-ÁÁ  
-{
-ËË 
-return
-ÈÈ 
-
-StatusCode
-ÈÈ !
-(
-ÈÈ! "
-$num
-ÈÈ" %
-,
-ÈÈ% &
-new
-ÈÈ' *
-ResponseDTO
-ÈÈ+ 6
-{
-ÍÍ 
-Message
-ÎÎ 
-=
-ÎÎ 
-ex
-ÎÎ  
-.
-ÎÎ  !
-Message
-ÎÎ! (
-,
-ÎÎ( )
-Result
-ÏÏ 
-=
-ÏÏ 
-null
-ÏÏ !
-,
-ÏÏ! "
-	IsSuccess
-ÌÌ 
-=
-ÌÌ 
-false
-ÌÌ  %
-,
-ÌÌ% &
-
-StatusCode
-ÓÓ 
-=
-ÓÓ  
-$num
-ÓÓ! $
-}
-ÔÔ 
-)
-ÔÔ 
-;
-ÔÔ 
-}
- 
-}
-ÒÒ 	
+òò 	
 [
-ÛÛ 	
+öö 	
+HttpGet
+öö	 
+]
+öö 
+[
+õõ 	
+Route
+õõ	 
+(
+õõ 
+$str
+õõ '
+)
+õõ' (
+]
+õõ( )
+[
+úú 	
+	Authorize
+úú	 
+]
+úú 
+public
+ùù 
+async
+ùù 
+Task
+ùù 
+<
+ùù 
+ActionResult
+ùù &
+<
+ùù& '
+ResponseDTO
+ùù' 2
+>
+ùù2 3
+>
+ùù3 4
+GetCourseReport
+ùù5 D
+(
+ùùD E
+[
+ùùE F
+	FromRoute
+ùùF O
+]
+ùùO P
+Guid
+ùùQ U
+reportId
+ùùV ^
+)
+ùù^ _
+{
+ûû 	
+try
+üü 
+{
+†† 
+var
+°° 
+responseDto
+°° 
+=
+°°  !
+await
+°°" '"
+_courseReportService
+°°( <
+.
+°°< =!
+GetCourseReportById
+°°= P
+(
+°°P Q
+reportId
+°°Q Y
+)
+°°Y Z
+;
+°°Z [
+return
+¢¢ 
+
+StatusCode
+¢¢ !
+(
+¢¢! "
+responseDto
+¢¢" -
+.
+¢¢- .
+
+StatusCode
+¢¢. 8
+,
+¢¢8 9
+responseDto
+¢¢: E
+)
+¢¢E F
+;
+¢¢F G
+}
+££ 
+catch
+§§ 
+(
+§§ 
+	Exception
+§§ 
+ex
+§§ 
+)
+§§  
+{
+•• 
+return
+¶¶ 
+
+StatusCode
+¶¶ !
+(
+¶¶! "
+$num
+¶¶" %
+,
+¶¶% &
+new
+¶¶' *
+ResponseDTO
+¶¶+ 6
+{
+ßß 
+Message
+®® 
+=
+®® 
+ex
+®®  
+.
+®®  !
+Message
+®®! (
+,
+®®( )
+Result
+©© 
+=
+©© 
+null
+©© !
+,
+©©! "
+	IsSuccess
+™™ 
+=
+™™ 
+false
+™™  %
+,
+™™% &
+
+StatusCode
+´´ 
+=
+´´  
+$num
+´´! $
+}
+¨¨ 
+)
+¨¨ 
+;
+¨¨ 
+}
+≠≠ 
+}
+ÆÆ 	
+[
+∞∞ 	
+HttpPost
+∞∞	 
+]
+∞∞ 
+[
+±± 	
+Route
+±±	 
+(
+±± 
+$str
+±± 
+)
+±± 
+]
+±± 
+[
+≤≤ 	
+	Authorize
+≤≤	 
+(
+≤≤ 
+Roles
+≤≤ 
+=
+≤≤ 
+StaticUserRoles
+≤≤ *
+.
+≤≤* +
+Student
+≤≤+ 2
+)
+≤≤2 3
+]
+≤≤3 4
+public
+≥≥ 
+async
+≥≥ 
+Task
+≥≥ 
+<
+≥≥ 
+ActionResult
+≥≥ &
+<
+≥≥& '
+ResponseDTO
+≥≥' 2
+>
+≥≥2 3
+>
+≥≥3 4 
+CreateCourseReport
+≥≥5 G
+(
+≥≥G H
+[
+¥¥ 
+FromBody
+¥¥ 
+]
+¥¥ #
+CreateCourseReportDTO
+¥¥ ,#
+createCourseReportDTO
+¥¥- B
+)
+¥¥B C
+{
+µµ 	
+if
+∂∂ 
+(
+∂∂ 
+!
+∂∂ 
+
+ModelState
+∂∂ 
+.
+∂∂ 
+IsValid
+∂∂ #
+)
+∂∂# $
+{
+∑∑ 
+return
+∏∏ 
+
+BadRequest
+∏∏ !
+(
+∏∏! "
+new
+∏∏" %
+ResponseDTO
+∏∏& 1
+{
+ππ 
+Message
+∫∫ 
+=
+∫∫ 
+$str
+∫∫ ,
+,
+∫∫, -
+Result
+ªª 
+=
+ªª 
+
+ModelState
+ªª '
+,
+ªª' (
+	IsSuccess
+ºº 
+=
+ºº 
+false
+ºº  %
+,
+ºº% &
+
+StatusCode
+ΩΩ 
+=
+ΩΩ  
+$num
+ΩΩ! $
+}
+ææ 
+)
+ææ 
+;
+ææ 
+}
+øø 
+try
+¡¡ 
+{
+¬¬ 
+var
+√√ 
+responseDto
+√√ 
+=
+√√  !
+await
+√√" '"
+_courseReportService
+√√( <
+.
+√√< = 
+CreateCourseReport
+√√= O
+(
+√√O P#
+createCourseReportDTO
+√√P e
+)
+√√e f
+;
+√√f g
+return
+ƒƒ 
+
+StatusCode
+ƒƒ !
+(
+ƒƒ! "
+responseDto
+ƒƒ" -
+.
+ƒƒ- .
+
+StatusCode
+ƒƒ. 8
+,
+ƒƒ8 9
+responseDto
+ƒƒ: E
+)
+ƒƒE F
+;
+ƒƒF G
+}
+≈≈ 
+catch
+∆∆ 
+(
+∆∆ 
+	Exception
+∆∆ 
+ex
+∆∆ 
+)
+∆∆  
+{
+«« 
+return
+»» 
+
+StatusCode
+»» !
+(
+»»! "
+$num
+»»" %
+,
+»»% &
+new
+»»' *
+ResponseDTO
+»»+ 6
+{
+…… 
+Message
+   
+=
+   
+ex
+    
+.
+    !
+Message
+  ! (
+,
+  ( )
+Result
+ÀÀ 
+=
+ÀÀ 
+null
+ÀÀ !
+,
+ÀÀ! "
+	IsSuccess
+ÃÃ 
+=
+ÃÃ 
+false
+ÃÃ  %
+,
+ÃÃ% &
+
+StatusCode
+ÕÕ 
+=
+ÕÕ  
+$num
+ÕÕ! $
+}
+ŒŒ 
+)
+ŒŒ 
+;
+ŒŒ 
+}
+œœ 
+}
+–– 	
+[
+““ 	
+HttpPut
+““	 
+]
+““ 
+[
+”” 	
+Route
+””	 
+(
+”” 
+$str
+”” 
+)
+”” 
+]
+”” 
+[
+‘‘ 	
+	Authorize
+‘‘	 
+(
+‘‘ 
+Roles
+‘‘ 
+=
+‘‘ 
+StaticUserRoles
+‘‘ *
+.
+‘‘* +
+Student
+‘‘+ 2
+)
+‘‘2 3
+]
+‘‘3 4
+public
+’’ 
+async
+’’ 
+Task
+’’ 
+<
+’’ 
+ActionResult
+’’ &
+<
+’’& '
+ResponseDTO
+’’' 2
+>
+’’2 3
+>
+’’3 4 
+UpdateCourseReport
+’’5 G
+(
+’’G H
+[
+÷÷ 
+FromBody
+÷÷ 
+]
+÷÷ #
+UpdateCourseReportDTO
+÷÷ ,#
+updateCourseReportDTO
+÷÷- B
+)
+÷÷B C
+{
+◊◊ 	
+if
+ÿÿ 
+(
+ÿÿ 
+!
+ÿÿ 
+
+ModelState
+ÿÿ 
+.
+ÿÿ 
+IsValid
+ÿÿ #
+)
+ÿÿ# $
+{
+ŸŸ 
+return
+⁄⁄ 
+
+BadRequest
+⁄⁄ !
+(
+⁄⁄! "
+new
+⁄⁄" %
+ResponseDTO
+⁄⁄& 1
+{
+€€ 
+Message
+‹‹ 
+=
+‹‹ 
+$str
+‹‹ ,
+,
+‹‹, -
+Result
+›› 
+=
+›› 
+
+ModelState
+›› '
+,
+››' (
+	IsSuccess
+ﬁﬁ 
+=
+ﬁﬁ 
+false
+ﬁﬁ  %
+,
+ﬁﬁ% &
+
+StatusCode
+ﬂﬂ 
+=
+ﬂﬂ  
+$num
+ﬂﬂ! $
+}
+‡‡ 
+)
+‡‡ 
+;
+‡‡ 
+}
+·· 
+try
+„„ 
+{
+‰‰ 
+var
+ÂÂ 
+responseDto
+ÂÂ 
+=
+ÂÂ  !
+await
+ÂÂ" '"
+_courseReportService
+ÂÂ( <
+.
+ÂÂ< = 
+UpdateCourseReport
+ÂÂ= O
+(
+ÂÂO P
+User
+ÂÂP T
+,
+ÂÂT U#
+updateCourseReportDTO
+ÂÂV k
+)
+ÂÂk l
+;
+ÂÂl m
+return
+ÊÊ 
+
+StatusCode
+ÊÊ !
+(
+ÊÊ! "
+responseDto
+ÊÊ" -
+.
+ÊÊ- .
+
+StatusCode
+ÊÊ. 8
+,
+ÊÊ8 9
+responseDto
+ÊÊ: E
+)
+ÊÊE F
+;
+ÊÊF G
+}
+ÁÁ 
+catch
+ËË 
+(
+ËË 
+	Exception
+ËË 
+ex
+ËË 
+)
+ËË  
+{
+ÈÈ 
+return
+ÍÍ 
+
+StatusCode
+ÍÍ !
+(
+ÍÍ! "
+$num
+ÍÍ" %
+,
+ÍÍ% &
+new
+ÍÍ' *
+ResponseDTO
+ÍÍ+ 6
+{
+ÎÎ 
+Message
+ÏÏ 
+=
+ÏÏ 
+ex
+ÏÏ  
+.
+ÏÏ  !
+Message
+ÏÏ! (
+,
+ÏÏ( )
+Result
+ÌÌ 
+=
+ÌÌ 
+null
+ÌÌ !
+,
+ÌÌ! "
+	IsSuccess
+ÓÓ 
+=
+ÓÓ 
+false
+ÓÓ  %
+,
+ÓÓ% &
+
+StatusCode
+ÔÔ 
+=
+ÔÔ  
+$num
+ÔÔ! $
+}
+ 
+)
+ 
+;
+ 
+}
+ÒÒ 
+}
+ÚÚ 	
+[
+ÙÙ 	
 
 HttpDelete
-ÛÛ	 
+ÙÙ	 
 ]
-ÛÛ 
+ÙÙ 
 [
-ÙÙ 	
+ıı 	
 Route
-ÙÙ	 
+ıı	 
 (
-ÙÙ 
+ıı 
 $str
-ÙÙ '
+ıı '
 )
-ÙÙ' (
+ıı' (
 ]
-ÙÙ( )
+ıı( )
 [
-ıı 	
+ˆˆ 	
 	Authorize
-ıı	 
-]
-ıı 
-public
-ˆˆ 
-async
-ˆˆ 
-Task
-ˆˆ 
-<
-ˆˆ 
-ActionResult
-ˆˆ &
-<
-ˆˆ& '
-ResponseDTO
-ˆˆ' 2
->
-ˆˆ2 3
->
-ˆˆ3 4 
-DeleteCourseReport
-ˆˆ5 G
+ˆˆ	 
 (
-ˆˆG H
-[
-ˆˆH I
-	FromRoute
-ˆˆI R
-]
-ˆˆR S
-Guid
-ˆˆT X
-reportId
-ˆˆY a
-)
-ˆˆa b
-{
-˜˜ 	
-try
-¯¯ 
-{
-˘˘ 
-var
-˙˙ 
-responseDto
-˙˙ 
-=
-˙˙  !
-await
-˙˙" '"
-_courseReportService
-˙˙( <
-.
-˙˙< = 
-DeleteCourseReport
-˙˙= O
-(
-˙˙O P
-reportId
-˙˙P X
-)
-˙˙X Y
-;
-˙˙Y Z
-return
-˚˚ 
-
-StatusCode
-˚˚ !
-(
-˚˚! "
-responseDto
-˚˚" -
-.
-˚˚- .
-
-StatusCode
-˚˚. 8
-,
-˚˚8 9
-responseDto
-˚˚: E
-)
-˚˚E F
-;
-˚˚F G
-}
-¸¸ 
-catch
-˝˝ 
-(
-˝˝ 
-	Exception
-˝˝ 
-ex
-˝˝ 
-)
-˝˝  
-{
-˛˛ 
-return
-ˇˇ 
-
-StatusCode
-ˇˇ !
-(
-ˇˇ! "
-$num
-ˇˇ" %
-,
-ˇˇ% &
-new
-ˇˇ' *
-ResponseDTO
-ˇˇ+ 6
-{
-ÄÄ 
-Message
-ÅÅ 
-=
-ÅÅ 
-ex
-ÅÅ  
-.
-ÅÅ  !
-Message
-ÅÅ! (
-,
-ÅÅ( )
-Result
-ÇÇ 
-=
-ÇÇ 
-null
-ÇÇ !
-,
-ÇÇ! "
-	IsSuccess
-ÉÉ 
-=
-ÉÉ 
-false
-ÉÉ  %
-,
-ÉÉ% &
-
-StatusCode
-ÑÑ 
-=
-ÑÑ  
-$num
-ÑÑ! $
-}
-ÖÖ 
-)
-ÖÖ 
-;
-ÖÖ 
-}
-ÜÜ 
-}
-áá 	
-[
-ââ 	
-HttpGet
-ââ	 
-]
-ââ 
-[
-ää 	
-Route
-ää	 
-(
-ää 
-$str
-ää 
-)
-ää 
-]
-ää  
-[
-ãã 	
-	Authorize
-ãã	 
-(
-ãã 
+ˆˆ 
 Roles
-ãã 
+ˆˆ 
 =
-ãã 
+ˆˆ 
 StaticUserRoles
-ãã *
+ˆˆ *
 .
-ãã* +
-Admin
-ãã+ 0
+ˆˆ* +
+AdminStudent
+ˆˆ+ 7
 )
-ãã0 1
+ˆˆ7 8
 ]
-ãã1 2
+ˆˆ8 9
 public
-åå 
+˜˜ 
 async
-åå 
+˜˜ 
 Task
-åå 
+˜˜ 
 <
-åå 
+˜˜ 
 ActionResult
-åå &
+˜˜ &
 <
-åå& '
+˜˜& '
 ResponseDTO
-åå' 2
+˜˜' 2
 >
-åå2 3
+˜˜2 3
 >
-åå3 4$
-GetTopPurchasedCourses
-åå5 K
+˜˜3 4 
+DeleteCourseReport
+˜˜5 G
 (
-çç 	
+˜˜G H
 [
-éé 
-	FromQuery
-éé 
+˜˜H I
+	FromRoute
+˜˜I R
 ]
-éé 
-int
-éé 
-?
-éé 
-year
-éé !
+˜˜R S
+Guid
+˜˜T X
+reportId
+˜˜Y a
+)
+˜˜a b
+{
+¯¯ 	
+try
+˘˘ 
+{
+˙˙ 
+var
+˚˚ 
+responseDto
+˚˚ 
+=
+˚˚  !
+await
+˚˚" '"
+_courseReportService
+˚˚( <
+.
+˚˚< = 
+DeleteCourseReport
+˚˚= O
+(
+˚˚O P
+reportId
+˚˚P X
+)
+˚˚X Y
+;
+˚˚Y Z
+return
+¸¸ 
+
+StatusCode
+¸¸ !
+(
+¸¸! "
+responseDto
+¸¸" -
+.
+¸¸- .
+
+StatusCode
+¸¸. 8
 ,
-éé! "
+¸¸8 9
+responseDto
+¸¸: E
+)
+¸¸E F
+;
+¸¸F G
+}
+˝˝ 
+catch
+˛˛ 
+(
+˛˛ 
+	Exception
+˛˛ 
+ex
+˛˛ 
+)
+˛˛  
+{
+ˇˇ 
+return
+ÄÄ 
+
+StatusCode
+ÄÄ !
+(
+ÄÄ! "
+$num
+ÄÄ" %
+,
+ÄÄ% &
+new
+ÄÄ' *
+ResponseDTO
+ÄÄ+ 6
+{
+ÅÅ 
+Message
+ÇÇ 
+=
+ÇÇ 
+ex
+ÇÇ  
+.
+ÇÇ  !
+Message
+ÇÇ! (
+,
+ÇÇ( )
+Result
+ÉÉ 
+=
+ÉÉ 
+null
+ÉÉ !
+,
+ÉÉ! "
+	IsSuccess
+ÑÑ 
+=
+ÑÑ 
+false
+ÑÑ  %
+,
+ÑÑ% &
+
+StatusCode
+ÖÖ 
+=
+ÖÖ  
+$num
+ÖÖ! $
+}
+ÜÜ 
+)
+ÜÜ 
+;
+ÜÜ 
+}
+áá 
+}
+àà 	
+[
+ää 	
+HttpGet
+ää	 
+]
+ää 
+[
+ãã 	
+Route
+ãã	 
+(
+ãã 
+$str
+ãã 
+)
+ãã 
+]
+ãã  
+[
+åå 	
+	Authorize
+åå	 
+(
+åå 
+Roles
+åå 
+=
+åå 
+StaticUserRoles
+åå *
+.
+åå* +
+Admin
+åå+ 0
+)
+åå0 1
+]
+åå1 2
+public
+çç 
+async
+çç 
+Task
+çç 
+<
+çç 
+ActionResult
+çç &
+<
+çç& '
+ResponseDTO
+çç' 2
+>
+çç2 3
+>
+çç3 4$
+GetTopPurchasedCourses
+çç5 K
+(
+éé 	
 [
 èè 
 	FromQuery
@@ -11520,11 +13506,11 @@ StatusCode
 int
 èè 
 ?
-èè 
-month
-èè "
+èè 
+year
+èè !
 ,
-èè" #
+èè! "
 [
 êê 
 	FromQuery
@@ -11534,11 +13520,11 @@ StatusCode
 int
 êê 
 ?
-êê 
-quarter
-êê $
+êê 
+month
+êê "
 ,
-êê$ %
+êê" #
 [
 ëë 
 	FromQuery
@@ -11546,11 +13532,13 @@ StatusCode
 ]
 ëë 
 int
-ëë 
-top
-ëë 
+ëë 
+?
+ëë 
+quarter
+ëë $
 ,
-ëë  
+ëë$ %
 [
 íí 
 	FromQuery
@@ -11558,12 +13546,11 @@ StatusCode
 ]
 íí 
 int
-íí 
-
-pageNumber
-íí &
+íí 
+top
+íí 
 ,
-íí& '
+íí  
 [
 ìì 
 	FromQuery
@@ -11571,172 +13558,171 @@ pageNumber
 ]
 ìì 
 int
-ìì 
-pageSize
-ìì $
+ìì 
+
+pageNumber
+ìì &
 ,
-ìì$ %
+ìì& '
 [
 îî 
 	FromQuery
 îî 
 ]
-îî 
+îî 
+int
+îî 
+pageSize
+îî $
+,
+îî$ %
+[
+ïï 
+	FromQuery
+ïï 
+]
+ïï 
 string
-îî 
+ïï 
 ?
-îî 
+ïï 
 byCategoryName
-îî  .
+ïï  .
 )
-ïï 	
+ññ 	
 {
-ññ 	
+óó 	
 var
-óó 
+òò 
 responseDto
-óó 
+òò 
 =
-óó 
+òò 
 await
-óó #
+òò #
 _courseService
-óó$ 2
+òò$ 2
 .
-óó2 3$
+òò2 3$
 GetTopPurchasedCourses
-óó3 I
+òò3 I
 (
-òò 
+ôô 
 year
-ôô 
+öö 
 ,
-ôô 
+öö 
 month
-öö 
+õõ 
 ,
-öö 
+õõ 
 quarter
-õõ 
+úú 
 ,
-õõ 
+úú 
 top
-úú 
+ùù 
 ,
-úú 
+ùù 
 
 pageNumber
-ùù 
+ûû 
 ,
-ùù 
+ûû 
 pageSize
-ûû 
+üü 
 ,
-ûû 
+üü 
 byCategoryName
-üü 
+†† 
 )
-†† 
+°° 
 ;
-†† 
+°° 
 return
-°° 
+¢¢ 
 
 StatusCode
-°° 
+¢¢ 
 (
-°° 
+¢¢ 
 responseDto
-°° )
+¢¢ )
 .
-°°) *
+¢¢) *
 
 StatusCode
-°°* 4
+¢¢* 4
 ,
-°°4 5
+¢¢4 5
 responseDto
-°°6 A
+¢¢6 A
 )
-°°A B
+¢¢A B
 ;
-°°B C
+¢¢B C
 }
-¢¢ 	
+££ 	
 [
-§§ 	
+•• 	
 HttpGet
-§§	 
+••	 
 ]
-§§ 
+•• 
 [
-•• 	
+¶¶ 	
 Route
-••	 
+¶¶	 
 (
-•• 
+¶¶ 
 $str
-••  
+¶¶  
 )
-••  !
+¶¶  !
 ]
-••! "
+¶¶! "
 [
-¶¶ 	
+ßß 	
 	Authorize
-¶¶	 
+ßß	 
 (
-¶¶ 
+ßß 
 Roles
-¶¶ 
+ßß 
 =
-¶¶ 
+ßß 
 StaticUserRoles
-¶¶ *
+ßß *
 .
-¶¶* +
+ßß* +
 Admin
-¶¶+ 0
+ßß+ 0
 )
-¶¶0 1
+ßß0 1
 ]
-¶¶1 2
+ßß1 2
 public
-ßß 
+®® 
 async
-ßß 
+®® 
 Task
-ßß 
+®® 
 <
-ßß 
+®® 
 ActionResult
-ßß &
+®® &
 <
-ßß& '
+®®& '
 ResponseDTO
-ßß' 2
+®®' 2
 >
-ßß2 3
+®®2 3
 >
-ßß3 4&
+®®3 4&
 GetLeastPurchasedCourses
-ßß5 M
+®®5 M
 (
-®® 	
-[
-©© 
-	FromQuery
-©© 
-]
-©© 
-int
-©© 
-?
-©© 
-year
-©© !
-,
-©©! "
+©© 	
 [
 ™™ 
 	FromQuery
@@ -11746,11 +13732,11 @@ StatusCode
 int
 ™™ 
 ?
-™™ 
-month
-™™ "
+™™ 
+year
+™™ !
 ,
-™™" #
+™™! "
 [
 ´´ 
 	FromQuery
@@ -11760,11 +13746,11 @@ StatusCode
 int
 ´´ 
 ?
-´´ 
-quarter
-´´ $
+´´ 
+month
+´´ "
 ,
-´´$ %
+´´" #
 [
 ¨¨ 
 	FromQuery
@@ -11772,11 +13758,13 @@ StatusCode
 ]
 ¨¨ 
 int
-¨¨ 
-top
-¨¨ 
+¨¨ 
+?
+¨¨ 
+quarter
+¨¨ $
 ,
-¨¨  
+¨¨$ %
 [
 ≠≠ 
 	FromQuery
@@ -11784,12 +13772,11 @@ StatusCode
 ]
 ≠≠ 
 int
-≠≠ 
-
-pageNumber
-≠≠ &
+≠≠ 
+top
+≠≠ 
 ,
-≠≠& '
+≠≠  
 [
 ÆÆ 
 	FromQuery
@@ -11797,1187 +13784,1331 @@ pageNumber
 ]
 ÆÆ 
 int
-ÆÆ 
-pageSize
-ÆÆ $
+ÆÆ 
+
+pageNumber
+ÆÆ &
 ,
-ÆÆ$ %
+ÆÆ& '
 [
 ØØ 
 	FromQuery
 ØØ 
 ]
-ØØ 
+ØØ 
+int
+ØØ 
+pageSize
+ØØ $
+,
+ØØ$ %
+[
+∞∞ 
+	FromQuery
+∞∞ 
+]
+∞∞ 
 string
-ØØ 
+∞∞ 
 ?
-ØØ 
+∞∞ 
 byCategoryName
-ØØ  .
+∞∞  .
 )
-∞∞ 	
+±± 	
 {
-±± 	
+≤≤ 	
 var
-≤≤ 
+≥≥ 
 responseDto
-≤≤ 
+≥≥ 
 =
-≤≤ 
+≥≥ 
 await
-≤≤ #
+≥≥ #
 _courseService
-≤≤$ 2
+≥≥$ 2
 .
-≤≤2 3&
+≥≥2 3&
 GetLeastPurchasedCourses
-≤≤3 K
+≥≥3 K
 (
-≥≥ 
+¥¥ 
 year
-¥¥ 
+µµ 
 ,
-¥¥ 
+µµ 
 month
-µµ 
+∂∂ 
 ,
-µµ 
+∂∂ 
 quarter
-∂∂ 
+∑∑ 
 ,
-∂∂ 
+∑∑ 
 top
-∑∑ 
+∏∏ 
 ,
-∑∑ 
+∏∏ 
 
 pageNumber
-∏∏ 
+ππ 
 ,
-∏∏ 
+ππ 
 pageSize
-ππ 
+∫∫ 
 ,
-ππ 
+∫∫ 
 byCategoryName
-∫∫ 
+ªª 
 )
-ªª 
+ºº 
 ;
-ªª 
+ºº 
 return
-ºº 
+ΩΩ 
 
 StatusCode
-ºº 
+ΩΩ 
 (
-ºº 
+ΩΩ 
 responseDto
-ºº )
+ΩΩ )
 .
-ºº) *
+ΩΩ) *
 
 StatusCode
-ºº* 4
+ΩΩ* 4
 ,
-ºº4 5
+ΩΩ4 5
 responseDto
-ºº6 A
+ΩΩ6 A
 )
-ººA B
+ΩΩA B
 ;
-ººB C
+ΩΩB C
 }
-ΩΩ 	
+ææ 	
 [
-øø 	
+¿¿ 	
 HttpPost
-øø	 
+¿¿	 
 ]
-øø 
+¿¿ 
 [
-¿¿ 	
+¡¡ 	
 Route
-¿¿	 
+¡¡	 
 (
-¿¿ 
+¡¡ 
 $str
-¿¿ 
+¡¡ 
 )
-¿¿ 
+¡¡ 
 ]
-¿¿ 
+¡¡ 
 [
-¡¡ 	
+¬¬ 	
 	Authorize
-¡¡	 
+¬¬	 
 (
-¡¡ 
+¬¬ 
 Roles
-¡¡ 
+¬¬ 
 =
-¡¡ 
+¬¬ 
 StaticUserRoles
-¡¡ *
+¬¬ *
 .
-¡¡* +
-Admin
-¡¡+ 0
+¬¬* +
+Student
+¬¬+ 2
 )
-¡¡0 1
-]
-¡¡1 2
-public
-¬¬ 
-async
-¬¬ 
-Task
-¬¬ 
-<
-¬¬ 
-ActionResult
-¬¬ &
-<
-¬¬& '
-ResponseDTO
-¬¬' 2
->
 ¬¬2 3
+]
+¬¬3 4
+public
+√√ 
+async
+√√ 
+Task
+√√ 
+<
+√√ 
+ActionResult
+√√ &
+<
+√√& '
+ResponseDTO
+√√' 2
 >
-¬¬3 4
+√√2 3
+>
+√√3 4
 EnrollCourse
-¬¬5 A
+√√5 A
 (
-¬¬A B
+√√A B
 [
-¬¬B C
+√√B C
 FromBody
-¬¬C K
+√√C K
 ]
-¬¬K L
+√√K L
 EnrollCourseDTO
-¬¬M \
+√√M \
 enrollCourseDto
-¬¬] l
+√√] l
 )
-¬¬l m
+√√l m
 {
-√√ 	
+ƒƒ 	
 var
-ƒƒ 
+≈≈ 
 responseDto
-ƒƒ 
+≈≈ 
 =
-ƒƒ 
+≈≈ 
 await
-ƒƒ #
+≈≈ #
 _courseService
-ƒƒ$ 2
+≈≈$ 2
 .
-ƒƒ2 3
+≈≈2 3
 EnrollCourse
-ƒƒ3 ?
+≈≈3 ?
 (
-ƒƒ? @
+≈≈? @
 User
-ƒƒ@ D
+≈≈@ D
 ,
-ƒƒD E
+≈≈D E
 enrollCourseDto
-ƒƒF U
+≈≈F U
 )
-ƒƒU V
+≈≈U V
 ;
-ƒƒV W
+≈≈V W
 return
-≈≈ 
+∆∆ 
 
 StatusCode
-≈≈ 
+∆∆ 
 (
-≈≈ 
+∆∆ 
 responseDto
-≈≈ )
+∆∆ )
 .
-≈≈) *
+∆∆) *
 
 StatusCode
-≈≈* 4
+∆∆* 4
 ,
-≈≈4 5
+∆∆4 5
 responseDto
-≈≈6 A
+∆∆6 A
 )
-≈≈A B
+∆∆A B
 ;
-≈≈B C
+∆∆B C
 }
-∆∆ 	
+«« 	
 [
-»» 	
+…… 	
 HttpGet
-»»	 
+……	 
 ]
-»» 
+…… 
 [
-…… 	
+   	
 Route
-……	 
+  	 
 (
-…… 
+   
 $str
-…… )
+   )
 )
-……) *
+  ) *
 ]
-……* +
+  * +
+[
+ÀÀ 	
+	Authorize
+ÀÀ	 
+(
+ÀÀ 
+Roles
+ÀÀ 
+=
+ÀÀ 
+StaticUserRoles
+ÀÀ *
+.
+ÀÀ* +
+Student
+ÀÀ+ 2
+)
+ÀÀ2 3
+]
+ÀÀ3 4
 public
-   
+ÃÃ 
 async
-   
+ÃÃ 
 Task
-   
+ÃÃ 
 <
-   
+ÃÃ 
 ActionResult
-   &
+ÃÃ &
 >
-  & '
+ÃÃ& '
 SuggestCourses
-  ( 6
+ÃÃ( 6
 (
-  6 7
+ÃÃ6 7
 [
-  7 8
+ÃÃ7 8
 	FromRoute
-  8 A
+ÃÃ8 A
 ]
-  A B
+ÃÃA B
 Guid
-  C G
+ÃÃC G
 	studentId
-  H Q
+ÃÃH Q
 )
-  Q R
+ÃÃQ R
 {
-ÀÀ 	
+ÕÕ 	
 var
-ÃÃ 
+ŒŒ 
 response
-ÃÃ 
+ŒŒ 
 =
-ÃÃ 
+ŒŒ 
 await
-ÃÃ  
+ŒŒ  
 _courseService
-ÃÃ! /
+ŒŒ! /
 .
-ÃÃ/ 0
+ŒŒ/ 0
 SuggestCourse
-ÃÃ0 =
+ŒŒ0 =
 (
-ÃÃ= >
+ŒŒ= >
 	studentId
-ÃÃ> G
+ŒŒ> G
 )
-ÃÃG H
+ŒŒG H
 ;
-ÃÃH I
+ŒŒH I
 return
-ÕÕ 
+œœ 
 
 StatusCode
-ÕÕ 
+œœ 
 (
-ÕÕ 
+œœ 
 response
-ÕÕ &
+œœ &
 .
-ÕÕ& '
+œœ& '
 
 StatusCode
-ÕÕ' 1
+œœ' 1
 ,
-ÕÕ1 2
+œœ1 2
 response
-ÕÕ3 ;
+œœ3 ;
 )
-ÕÕ; <
+œœ; <
 ;
-ÕÕ< =
+œœ< =
 }
-ŒŒ 	
+–– 	
 [
-–– 	
+““ 	
 HttpGet
-––	 
+““	 
 (
-–– 
+““ 
 $str
-–– .
+““ .
 )
-––. /
+““. /
 ]
-––/ 0
+““/ 0
+[
+”” 	
+	Authorize
+””	 
+(
+”” 
+Roles
+”” 
+=
+”” 
+StaticUserRoles
+”” *
+.
+””* +
+Student
+””+ 2
+)
+””2 3
+]
+””3 4
 public
-—— 
+‘‘ 
 async
-—— 
+‘‘ 
 Task
-—— 
+‘‘ 
 <
-—— 
+‘‘ 
 IActionResult
-—— '
+‘‘ '
 >
-——' ()
+‘‘' ()
 GetAllBookMarkedCoursesById
-——) D
+‘‘) D
 (
-““ 	
-[
-”” 
-	FromRoute
-”” 
-]
-”” 
-Guid
-”” 
-	studentId
-”” &
-,
-””& '
-[
-‘‘ 
-	FromQuery
-‘‘ 
-]
-‘‘ 
-string
-‘‘ 
-	sortOrder
-‘‘ (
-=
-‘‘) *
-$str
-‘‘+ 1
-)
 ’’ 	
-{
-÷÷ 	
-var
-◊◊ 
-response
-◊◊ 
-=
-◊◊ 
-await
-◊◊  
-_courseService
-◊◊! /
-.
-◊◊/ 0)
-GetAllBookMarkedCoursesById
-◊◊0 K
-(
-◊◊K L
+[
+÷÷ 
+	FromRoute
+÷÷ 
+]
+÷÷ 
+Guid
+÷÷ 
 	studentId
-◊◊L U
+÷÷ &
 ,
-◊◊U V
+÷÷& '
+[
+◊◊ 
+	FromQuery
+◊◊ 
+]
+◊◊ 
+string
+◊◊ 
 	sortOrder
-◊◊W `
-)
-◊◊` a
-;
-◊◊a b
-return
-ÿÿ 
-
-StatusCode
-ÿÿ 
-(
-ÿÿ 
-response
-ÿÿ &
-.
-ÿÿ& '
-
-StatusCode
-ÿÿ' 1
-,
-ÿÿ1 2
-response
-ÿÿ3 ;
-)
-ÿÿ; <
-;
-ÿÿ< =
-}
-ŸŸ 	
-[
-€€ 	
-HttpPost
-€€	 
-]
-€€ 
-[
-‹‹ 	
-Route
-‹‹	 
-(
-‹‹ 
-$str
-‹‹ 
-)
-‹‹ 
-]
-‹‹ 
-public
-›› 
-async
-›› 
-Task
-›› 
-<
-›› 
-ActionResult
-›› &
->
-››& '$
-CreateBookMarkedCourse
-››( >
-(
-››> ?%
-CreateCourseBookmarkDTO
-››? V%
-createCourseBookmarkDto
-››W n
-)
-››n o
-{
-ﬁﬁ 	
-var
-ﬂﬂ 
-response
-ﬂﬂ 
+◊◊ (
 =
-ﬂﬂ 
+◊◊) *
+$str
+◊◊+ 1
+)
+ÿÿ 	
+{
+ŸŸ 	
+var
+⁄⁄ 
+response
+⁄⁄ 
+=
+⁄⁄ 
 await
-ﬂﬂ  
+⁄⁄  
 _courseService
-ﬂﬂ! /
+⁄⁄! /
 .
-ﬂﬂ/ 0$
-CreateBookMarkedCourse
-ﬂﬂ0 F
+⁄⁄/ 0)
+GetAllBookMarkedCoursesById
+⁄⁄0 K
 (
-ﬂﬂF G
-User
-ﬂﬂG K
+⁄⁄K L
+	studentId
+⁄⁄L U
 ,
-ﬂﬂK L%
-createCourseBookmarkDto
-ﬂﬂM d
+⁄⁄U V
+	sortOrder
+⁄⁄W `
 )
-ﬂﬂd e
+⁄⁄` a
 ;
-ﬂﬂe f
+⁄⁄a b
 return
-‡‡ 
+€€ 
 
 StatusCode
-‡‡ 
+€€ 
 (
-‡‡ 
+€€ 
 response
-‡‡ &
+€€ &
 .
-‡‡& '
+€€& '
 
 StatusCode
-‡‡' 1
+€€' 1
 ,
-‡‡1 2
+€€1 2
 response
-‡‡3 ;
+€€3 ;
 )
-‡‡; <
+€€; <
 ;
-‡‡< =
+€€< =
 }
-·· 	
+‹‹ 	
 [
-„„ 	
+ﬁﬁ 	
+HttpPost
+ﬁﬁ	 
+]
+ﬁﬁ 
+[
+ﬂﬂ 	
+Route
+ﬂﬂ	 
+(
+ﬂﬂ 
+$str
+ﬂﬂ 
+)
+ﬂﬂ 
+]
+ﬂﬂ 
+[
+‡‡ 	
+	Authorize
+‡‡	 
+(
+‡‡ 
+Roles
+‡‡ 
+=
+‡‡ 
+StaticUserRoles
+‡‡ *
+.
+‡‡* +
+Student
+‡‡+ 2
+)
+‡‡2 3
+]
+‡‡3 4
+public
+·· 
+async
+·· 
+Task
+·· 
+<
+·· 
+ActionResult
+·· &
+>
+··& '$
+CreateBookMarkedCourse
+··( >
+(
+··> ?%
+CreateCourseBookmarkDTO
+··? V%
+createCourseBookmarkDto
+··W n
+)
+··n o
+{
+‚‚ 	
+var
+„„ 
+response
+„„ 
+=
+„„ 
+await
+„„  
+_courseService
+„„! /
+.
+„„/ 0$
+CreateBookMarkedCourse
+„„0 F
+(
+„„F G
+User
+„„G K
+,
+„„K L%
+createCourseBookmarkDto
+„„M d
+)
+„„d e
+;
+„„e f
+return
+‰‰ 
+
+StatusCode
+‰‰ 
+(
+‰‰ 
+response
+‰‰ &
+.
+‰‰& '
+
+StatusCode
+‰‰' 1
+,
+‰‰1 2
+response
+‰‰3 ;
+)
+‰‰; <
+;
+‰‰< =
+}
+ÂÂ 	
+[
+ÁÁ 	
 
 HttpDelete
-„„	 
+ÁÁ	 
 ]
-„„ 
+ÁÁ 
 [
-‰‰ 	
+ËË 	
 Route
-‰‰	 
+ËË	 
 (
-‰‰ 
+ËË 
 $str
-‰‰ /
+ËË /
 )
-‰‰/ 0
+ËË/ 0
 ]
-‰‰0 1
-public
-ÂÂ 
-async
-ÂÂ 
-Task
-ÂÂ 
-<
-ÂÂ 
-ActionResult
-ÂÂ &
->
-ÂÂ& '$
-DeleteBookMarkedCourse
-ÂÂ( >
-(
-ÂÂ> ?
+ËË0 1
 [
-ÂÂ? @
-	FromRoute
-ÂÂ@ I
-]
-ÂÂI J
-Guid
-ÂÂK O
-bookmarkedId
-ÂÂP \
-)
-ÂÂ\ ]
-{
-ÊÊ 	
-var
-ÁÁ 
-response
-ÁÁ 
+ÈÈ 	
+	Authorize
+ÈÈ	 
+(
+ÈÈ 
+Roles
+ÈÈ 
 =
-ÁÁ 
-await
-ÁÁ  
-_courseService
-ÁÁ! /
+ÈÈ 
+StaticUserRoles
+ÈÈ *
 .
-ÁÁ/ 0$
+ÈÈ* +
+Student
+ÈÈ+ 2
+)
+ÈÈ2 3
+]
+ÈÈ3 4
+public
+ÍÍ 
+async
+ÍÍ 
+Task
+ÍÍ 
+<
+ÍÍ 
+ActionResult
+ÍÍ &
+>
+ÍÍ& '$
 DeleteBookMarkedCourse
-ÁÁ0 F
+ÍÍ( >
 (
-ÁÁF G
+ÍÍ> ?
+[
+ÍÍ? @
+	FromRoute
+ÍÍ@ I
+]
+ÍÍI J
+Guid
+ÍÍK O
 bookmarkedId
-ÁÁG S
+ÍÍP \
 )
-ÁÁS T
-;
-ÁÁT U
-return
-ËË 
-
-StatusCode
-ËË 
-(
-ËË 
+ÍÍ\ ]
+{
+ÎÎ 	
+var
+ÏÏ 
 response
-ËË &
+ÏÏ 
+=
+ÏÏ 
+await
+ÏÏ  
+_courseService
+ÏÏ! /
 .
-ËË& '
+ÏÏ/ 0$
+DeleteBookMarkedCourse
+ÏÏ0 F
+(
+ÏÏF G
+bookmarkedId
+ÏÏG S
+)
+ÏÏS T
+;
+ÏÏT U
+return
+ÌÌ 
 
 StatusCode
-ËË' 1
-,
-ËË1 2
+ÌÌ 
+(
+ÌÌ 
 response
-ËË3 ;
+ÌÌ &
+.
+ÌÌ& '
+
+StatusCode
+ÌÌ' 1
+,
+ÌÌ1 2
+response
+ÌÌ3 ;
 )
-ËË; <
+ÌÌ; <
 ;
-ËË< =
+ÌÌ< =
 }
-ÈÈ 	
+ÓÓ 	
+[
+ 	
+HttpPut
+	 
+]
+ 
+[
+ÒÒ 	
+Route
+ÒÒ	 
+(
+ÒÒ 
+$str
+ÒÒ 
+)
+ÒÒ 
+]
+ÒÒ 
+[
+ÚÚ 	
+	Authorize
+ÚÚ	 
+(
+ÚÚ 
+Roles
+ÚÚ 
+=
+ÚÚ 
+StaticUserRoles
+ÚÚ *
+.
+ÚÚ* +
+Student
+ÚÚ+ 2
+)
+ÚÚ2 3
+]
+ÚÚ3 4
+public
+ÛÛ 
+async
+ÛÛ 
+Task
+ÛÛ 
+<
+ÛÛ 
+ActionResult
+ÛÛ &
+<
+ÛÛ& '
+ResponseDTO
+ÛÛ' 2
+>
+ÛÛ2 3
+>
+ÛÛ3 4"
+UpdateCourseProgress
+ÛÛ5 I
+(
+ÙÙ 	
+[
+ıı 
+FromBody
+ıı 
+]
+ıı 
+UpdateProgressDTO
+ıı (
+updateProgressDto
+ıı) :
+)
+ˆˆ 	
+{
+˜˜ 	
+var
+¯¯ 
+responseDto
+¯¯ 
+=
+¯¯ 
+await
+¯¯ #$
+_courseProgressService
+¯¯$ :
+.
+¯¯: ;
+UpdateProgress
+¯¯; I
+(
+¯¯I J
+updateProgressDto
+¯¯J [
+)
+¯¯[ \
+;
+¯¯\ ]
+return
+˘˘ 
+
+StatusCode
+˘˘ 
+(
+˘˘ 
+responseDto
+˘˘ )
+.
+˘˘) *
+
+StatusCode
+˘˘* 4
+,
+˘˘4 5
+responseDto
+˘˘6 A
+)
+˘˘A B
+;
+˘˘B C
 }
-ÍÍ 
-}ÎÎ ¶L
-kD:\FPT\Semester 6\Project_Cursus\Backend_Cursus\Cursus.LMS\Cursus.LMS.API\Controllers\CategoryController.cs
-	namespace 	
-Cursus
- 
-. 
-LMS 
-. 
-API 
-. 
-Controllers $
-{ 
-[ 
-Route 
-
-(
- 
-$str 
-) 
-] 
-[		 
-ApiController		 
-]		 
-public
-
- 
-
-class
-
- 
-CategoryController
-
- #
-:
-
-$ %
-ControllerBase
-
-& 4
-{ 
-private 
-readonly 
-ICategoryService )
-_categoryService* :
-;: ;
-public 
-CategoryController !
-(! "
-ICategoryService" 2
-categoryService3 B
-)B C
-{ 	
-_categoryService 
-= 
-categoryService .
-;. /
-} 	
-[ 	
-HttpGet	 
-] 
-public 
-async 
-Task 
-< 
-ActionResult &
-<& '
-ResponseDTO' 2
->2 3
->3 4
-GetAll5 ;
-( 	
-[ 
-	FromQuery 
-] 
-string 
-? 
-filterOn  (
-,( )
-[ 
-	FromQuery 
-] 
-string 
-? 
-filterQuery  +
-,+ ,
-[ 
-	FromQuery 
-] 
-string 
-? 
-sortBy  &
-,& '
-[ 
-	FromQuery 
-] 
-bool 
-? 
-isAscending )
-,) *
-[ 
-	FromQuery 
-] 
-int 
+˙˙ 	
+[
+¸¸ 	
+HttpGet
+¸¸	 
+]
+¸¸ 
+[
+˝˝ 	
+Route
+˝˝	 
+(
+˝˝ 
+$str
+˝˝ 
+)
+˝˝ 
+]
+˝˝ 
+[
+˛˛ 	
+	Authorize
+˛˛	 
+(
+˛˛ 
+Roles
+˛˛ 
+=
+˛˛ 
+StaticUserRoles
+˛˛ *
+.
+˛˛* +
+Student
+˛˛+ 2
+)
+˛˛2 3
+]
+˛˛3 4
+public
+ˇˇ 
+async
+ˇˇ 
+Task
+ˇˇ 
+<
+ˇˇ 
+ActionResult
+ˇˇ &
+<
+ˇˇ& '
+ResponseDTO
+ˇˇ' 2
+>
+ˇˇ2 3
+>
+ˇˇ3 4
+GetCourseProgress
+ˇˇ5 F
+(
+ÄÄ 	
+[
+ÅÅ 
+	FromQuery
+ÅÅ 
+]
+ÅÅ 
+GetProgressDTO
+ÅÅ &
+getProgressDto
+ÅÅ' 5
+)
+ÇÇ 	
+{
+ÉÉ 	
+var
+ÑÑ 
+responseDto
+ÑÑ 
+=
+ÑÑ 
+await
+ÑÑ #$
+_courseProgressService
+ÑÑ$ :
+.
+ÑÑ: ;
+GetProgress
+ÑÑ; F
+(
+ÑÑF G
+getProgressDto
+ÑÑG U
+)
+ÑÑU V
+;
+ÑÑV W
+return
+ÖÖ 
 
-pageNumber &
-=' (
-$num) *
-,* +
-[ 
-	FromQuery 
-] 
-int 
-pageSize $
-=% &
-$num' )
-) 	
-{ 	
-var 
-responseDto 
-= 
-await 
-_categoryService &
-.& '
-GetAll' -
-(- .
-User. 2
-,2 3
-filterOn4 <
-,< =
-filterQuery> I
-,I J
-sortByK Q
-,Q R
-isAscendingS ^
-,^ _
+StatusCode
+ÖÖ 
+(
+ÖÖ 
+responseDto
+ÖÖ )
+.
+ÖÖ) *
 
-pageNumber` j
-,j k
-pageSizel t
-)t u
-;u v
-return   
+StatusCode
+ÖÖ* 4
+,
+ÖÖ4 5
+responseDto
+ÖÖ6 A
+)
+ÖÖA B
+;
+ÖÖB C
+}
+ÜÜ 	
+[
+àà 	
+HttpGet
+àà	 
+]
+àà 
+[
+ââ 	
+Route
+ââ	 
+(
+ââ 
+$str
+ââ $
+)
+ââ$ %
+]
+ââ% &
+[
+ää 	
+	Authorize
+ää	 
+(
+ää 
+Roles
+ää 
+=
+ää 
+StaticUserRoles
+ää *
+.
+ää* +
+Student
+ää+ 2
+)
+ää2 3
+]
+ää3 4
+public
+ãã 
+async
+ãã 
+Task
+ãã 
+<
+ãã 
+ActionResult
+ãã &
+<
+ãã& '
+ResponseDTO
+ãã' 2
+>
+ãã2 3
+>
+ãã3 4#
+GetProgressPercentage
+ãã5 J
+(
+åå 	
+[
+çç 
+	FromQuery
+çç 
+]
+çç 
+GetPercentageDTO
+çç (
+getPercentageDto
+çç) 9
+)
+éé 	
+{
+èè 	
+var
+êê 
+responseDto
+êê 
+=
+êê 
+await
+êê #$
+_courseProgressService
+êê$ :
+.
+êê: ;
+GetPercentage
+êê; H
+(
+êêH I
+getPercentageDto
+êêI Y
+)
+êêY Z
+;
+êêZ [
+return
+ëë 
 
-StatusCode   
-(   
-responseDto   )
-.  ) *
+StatusCode
+ëë 
+(
+ëë 
+responseDto
+ëë )
+.
+ëë) *
 
-StatusCode  * 4
-,  4 5
-responseDto  6 A
-)  A B
-;  B C
-}!! 	
-[## 	
-HttpGet##	 
-]## 
-[$$ 	
-Route$$	 
-($$ 
-$str$$ 
-)$$ 
-]$$ 
-public%% 
-async%% 
-Task%% 
-<%% 
-ActionResult%% &
-<%%& '
-ResponseDTO%%' 2
->%%2 3
->%%3 4
-Search%%5 ;
-(&& 	
-['' 
-	FromQuery'' 
-]'' 
-string'' 
-?'' 
-filterOn''  (
-,''( )
-[(( 
-	FromQuery(( 
-](( 
-string(( 
-?(( 
-filterQuery((  +
-,((+ ,
-[)) 
-	FromQuery)) 
-])) 
-string)) 
-?)) 
-sortBy))  &
-,))& '
-[** 
-	FromQuery** 
-]** 
-bool** 
-?** 
-isAscending** )
-,**) *
-[++ 
-	FromQuery++ 
-]++ 
-int++ 
+StatusCode
+ëë* 4
+,
+ëë4 5
+responseDto
+ëë6 A
+)
+ëëA B
+;
+ëëB C
+}
+íí 	
+[
+îî 	
+HttpGet
+îî	 
+]
+îî 
+[
+ïï 	
+Route
+ïï	 
+(
+ïï 
+$str
+ïï %
+)
+ïï% &
+]
+ïï& '
+public
+ññ 
+async
+ññ 
+Task
+ññ 
+<
+ññ 
+ActionResult
+ññ &
+<
+ññ& '
+ResponseDTO
+ññ' 2
+>
+ññ2 3
+>
+ññ3 4&
+GetBestCoursesSuggestion
+ññ5 M
+(
+ññM N
+)
+ññN O
+{
+óó 	
+var
+òò 
+responseDto
+òò 
+=
+òò 
+await
+òò #
+_courseService
+òò$ 2
+.
+òò2 3&
+GetBestCoursesSuggestion
+òò3 K
+(
+òòK L
+)
+òòL M
+;
+òòM N
+return
+ôô 
 
-pageNumber++ &
-=++' (
-$num++) *
-,++* +
-[,, 
-	FromQuery,, 
-],, 
-int,, 
-pageSize,, $
-=,,% &
-$num,,' (
-)-- 	
-{.. 	
-var// 
-responseDto// 
-=// 
-await// #
-_categoryService//$ 4
-.//4 5
-Search//5 ;
-(//; <
-User//< @
-,//@ A
-filterOn//B J
-,//J K
-filterQuery//L W
-,//W X
-sortBy//Y _
-,//_ `
-isAscending//a l
-,//l m
+StatusCode
+ôô 
+(
+ôô 
+responseDto
+ôô )
+.
+ôô) *
 
-pageNumber00 
-,00 
-pageSize00 $
-)00$ %
-;00% &
-return11 
+StatusCode
+ôô* 4
+,
+ôô4 5
+responseDto
+ôô6 A
+)
+ôôA B
+;
+ôôB C
+}
+öö 	
+[
+úú 	
+HttpGet
+úú	 
+]
+úú 
+[
+ùù 	
+Route
+ùù	 
+(
+ùù 
+$str
+ùù %
+)
+ùù% &
+]
+ùù& '
+public
+ûû 
+async
+ûû 
+Task
+ûû 
+<
+ûû 
+ActionResult
+ûû &
+<
+ûû& '
+ResponseDTO
+ûû' 2
+>
+ûû2 3
+>
+ûû3 4/
+!GetTopCoursesByTrendingCategories
+ûû5 V
+(
+ûûV W
+)
+ûûW X
+{
+üü 	
+var
+†† 
+responseDto
+†† 
+=
+†† 
+await
+†† #
+_courseService
+††$ 2
+.
+††2 3/
+!GetTopCoursesByTrendingCategories
+††3 T
+(
+††T U
+)
+††U V
+;
+††V W
+return
+°° 
 
-StatusCode11 
-(11 
-responseDto11 )
-.11) *
+StatusCode
+°° 
+(
+°° 
+responseDto
+°° )
+.
+°°) *
 
-StatusCode11* 4
-,114 5
-responseDto116 A
-)11A B
-;11B C
-}22 	
-[44 	
-HttpGet44	 
-]44 
-[55 	
-Route55	 
-(55 
-$str55 
-)55 
-]55  
-public66 
-async66 
-Task66 
-<66 
-ActionResult66 &
-<66& '
-ResponseDTO66' 2
->662 3
->663 4
-GetSubCategory665 C
-(66C D
-[66D E
-	FromRoute66E N
-]66N O
-Guid66P T
-id66U W
-)66W X
-{77 	
-var88 
-responseDto88 
-=88 
-await88 #
-_categoryService88$ 4
-.884 5
-GetSubCategory885 C
-(88C D
-id88D F
-)88F G
-;88G H
-return99 
+StatusCode
+°°* 4
+,
+°°4 5
+responseDto
+°°6 A
+)
+°°A B
+;
+°°B C
+}
+¢¢ 	
+[
+§§ 	
+HttpGet
+§§	 
+]
+§§ 
+[
+•• 	
+Route
+••	 
+(
+•• 
+$str
+•• !
+)
+••! "
+]
+••" #
+public
+¶¶ 
+async
+¶¶ 
+Task
+¶¶ 
+<
+¶¶ 
+ActionResult
+¶¶ &
+<
+¶¶& '
+ResponseDTO
+¶¶' 2
+>
+¶¶2 3
+>
+¶¶3 4 
+GetTopRatedCourses
+¶¶5 G
+(
+¶¶G H
+)
+¶¶H I
+{
+ßß 	
+var
+®® 
+responseDto
+®® 
+=
+®® 
+await
+®® #
+_courseService
+®®$ 2
+.
+®®2 3 
+GetTopRatedCourses
+®®3 E
+(
+®®E F
+)
+®®F G
+;
+®®G H
+return
+©© 
 
-StatusCode99 
-(99 
-responseDto99 )
-.99) *
+StatusCode
+©© 
+(
+©© 
+responseDto
+©© )
+.
+©©) *
 
-StatusCode99* 4
-,994 5
-responseDto996 A
-)99A B
-;99B C
-}:: 	
-[<< 	
-HttpGet<<	 
-]<< 
-[== 	
-Route==	 
-(== 
-$str== !
-)==! "
-]==" #
-public>> 
-async>> 
-Task>> 
-<>> 
-ActionResult>> &
-<>>& '
-ResponseDTO>>' 2
->>>2 3
->>>3 4
-GetParentCategory>>5 F
-(>>F G
-[>>G H
-	FromRoute>>H Q
-]>>Q R
-Guid>>S W
-id>>X Z
-)>>Z [
-{?? 	
-var@@ 
-responseDto@@ 
-=@@ 
-await@@ #
-_categoryService@@$ 4
-.@@4 5
-GetParentCategory@@5 F
-(@@F G
-id@@G I
-)@@I J
-;@@J K
-returnAA 
-
-StatusCodeAA 
-(AA 
-responseDtoAA )
-.AA) *
-
-StatusCodeAA* 4
-,AA4 5
-responseDtoAA6 A
-)AAA B
-;AAB C
-}BB 	
-[DD 	
-HttpGetDD	 
-]DD 
-[EE 	
-RouteEE	 
-(EE 
-$strEE 
-)EE 
-]EE 
-[FF 	
-	AuthorizeFF	 
-]FF 
-publicGG 
-asyncGG 
-TaskGG 
-<GG 
-ActionResultGG &
-<GG& '
-ResponseDTOGG' 2
->GG2 3
->GG3 4
-GetByIdGG5 <
-(GG< =
-[GG= >
-	FromRouteGG> G
-]GGG H
-GuidGGI M
-idGGN P
-)GGP Q
-{HH 	
-varII 
-
-responeDtoII 
-=II 
-awaitII "
-_categoryServiceII# 3
-.II3 4
-GetII4 7
-(II7 8
-UserII8 <
-,II< =
-idII> @
-)II@ A
-;IIA B
-returnJJ 
-
-StatusCodeJJ 
-(JJ 
-
-responeDtoJJ (
-.JJ( )
-
-StatusCodeJJ) 3
-,JJ3 4
-
-responeDtoJJ5 ?
-)JJ? @
-;JJ@ A
-}KK 	
-[NN 	
-HttpPostNN	 
-]NN 
-publicOO 
-asyncOO 
-TaskOO 
-<OO 
-ActionResultOO &
-<OO& '
-ResponseDTOOO' 2
->OO2 3
->OO3 4
-CreateOO5 ;
-(OO; <
-CreateCategoryDTOOO< M
-createCategoryDtoOON _
-)OO_ `
-{PP 	
-varQQ 
-
-responeDtoQQ 
-=QQ 
-awaitQQ "
-_categoryServiceQQ# 3
-.QQ3 4
-CreateCategoryQQ4 B
-(QQB C
-UserQQC G
-,QQG H
-createCategoryDtoQQI Z
-)QQZ [
-;QQ[ \
-returnRR 
-
-StatusCodeRR 
-(RR 
-
-responeDtoRR (
-.RR( )
-
-StatusCodeRR) 3
-,RR3 4
-
-responeDtoRR5 ?
-)RR? @
-;RR@ A
-}SS 	
-[UU 	
-HttpPutUU	 
-]UU 
-publicVV 
-asyncVV 
-TaskVV 
-<VV 
-ActionResultVV &
-<VV& '
-ResponseDTOVV' 2
->VV2 3
->VV3 4
-UpdateVV5 ;
-(VV; <
-[VV< =
-FromBodyVV= E
-]VVE F
-UpdateCategoryDTOVVG X
-updateCategoryDtoVVY j
-)VVj k
-{WW 	
-varXX 
-
-responeDtoXX 
-=XX 
-awaitXX "
-_categoryServiceXX# 3
-.XX3 4
-UpdateXX4 :
-(XX: ;
-UserXX; ?
-,XX? @
-updateCategoryDtoXXA R
-)XXR S
-;XXS T
-returnYY 
-
-StatusCodeYY 
-(YY 
-
-responeDtoYY (
-.YY( )
-
-StatusCodeYY) 3
-,YY3 4
-
-responeDtoYY5 ?
-)YY? @
-;YY@ A
-}ZZ 	
-[\\ 	
-
-HttpDelete\\	 
-]\\ 
-[]] 	
-Route]]	 
-(]] 
-$str]] 
-)]] 
-]]] 
-public^^ 
-async^^ 
-Task^^ 
-<^^ 
-ActionResult^^ &
-<^^& '
-ResponseDTO^^' 2
->^^2 3
->^^3 4
-Delete^^5 ;
-(^^; <
-[^^< =
-	FromRoute^^= F
-]^^F G
-Guid^^H L
-id^^M O
-)^^O P
-{__ 	
-var`` 
-
-responeDto`` 
-=`` 
-await`` "
-_categoryService``# 3
-.``3 4
-Delete``4 :
-(``: ;
-User``; ?
-,``? @
-id``A C
-)``C D
-;``D E
-returnaa 
-
-StatusCodeaa 
-(aa 
-
-responeDtoaa (
-.aa( )
-
-StatusCodeaa) 3
-,aa3 4
-
-responeDtoaa5 ?
-)aa? @
-;aa@ A
-}bb 	
-}cc 
-}dd ≠"
+StatusCode
+©©* 4
+,
+©©4 5
+responseDto
+©©6 A
+)
+©©A B
+;
+©©B C
+}
+™™ 	
+}
+´´ 
+}¨¨ Â
 gD:\FPT\Semester 6\Project_Cursus\Backend_Cursus\Cursus.LMS\Cursus.LMS.API\Controllers\CartController.cs
 	namespace 	
 Cursus
@@ -13012,10 +15143,10 @@ gD:\FPT\Semester 6\Project_Cursus\Backend_Cursus\Cursus.LMS\Cursus.LMS.API\Contr
 Roles 
 = 
 StaticUserRoles &
-.& '
-AdminStudent' 3
-)3 4
-]4 5
+.& '
+Student' .
+). /
+]/ 0
 public 
 
 class 
@@ -13082,699 +15213,712 @@ StatusCode* 4
 } 	
 [ 	
 HttpPost	 
-] 
-public 
-async 
-Task 
-< 
-ActionResult &
-<& '
-ResponseDTO' 2
->2 3
->3 4
-	AddToCart5 >
-(> ?
-[? @
-FromBody@ H
-]H I
-AddToCartDTOJ V
-addToCartDtoW c
-)c d
+] 
+[ 	
+Route	 
+( 
+$str 
+) 
+] 
+public 
+async 
+Task 
+< 
+ActionResult &
+<& '
+ResponseDTO' 2
+>2 3
+>3 4
+	AddToCart5 >
+(> ?
+[? @
+FromBody@ H
+]H I
+AddToCartDTOJ V
+addToCartDtoW c
+)c d
+{ 	
+var   
+responseDto   
+=   
+await   #
+_cartService  $ 0
+.  0 1
+	AddToCart  1 :
+(!! 
+User"" 
+,"" 
+addToCartDto## 
+)$$ 
+;$$ 
+return%% 
+
+StatusCode%% 
+(%% 
+responseDto%% )
+.%%) *
+
+StatusCode%%* 4
+,%%4 5
+responseDto%%6 A
+)%%A B
+;%%B C
+}&& 	
+[(( 	
+
+HttpDelete((	 
+](( 
+[)) 	
+Route))	 
+()) 
+$str)) )
+)))) *
+]))* +
+public** 
+async** 
+Task** 
+<** 
+ActionResult** &
+<**& '
+ResponseDTO**' 2
+>**2 3
+>**3 4
+RemoveFromCart**5 C
+(**C D
+[**D E
+	FromRoute**E N
+]**N O
+Guid**P T
+cartDetailsId**U b
+)**b c
+{++ 	
+var,, 
+responseDto,, 
+=,, 
+await,, #
+_cartService,,$ 0
+.,,0 1
+RemoveFromCart,,1 ?
+(-- 
+User.. 
+,.. 
+cartDetailsId// 
+)00 
+;00 
+return11 
+
+StatusCode11 
+(11 
+responseDto11 )
+.11) *
+
+StatusCode11* 4
+,114 5
+responseDto116 A
+)11A B
+;11B C
+}22 	
+}33 
+}44 ¬P
+kD:\FPT\Semester 6\Project_Cursus\Backend_Cursus\Cursus.LMS\Cursus.LMS.API\Controllers\CategoryController.cs
+	namespace 	
+Cursus
+ 
+. 
+LMS 
+. 
+API 
+. 
+Controllers $
+{ 
+[		 
+Route		 
+
+(		
+ 
+$str		 
+)		 
+]		 
+[
+
+ 
+ApiController
+
+ 
+]
+
+ 
+public 
+
+class 
+CategoryController #
+:$ %
+ControllerBase& 4
+{ 
+private 
+readonly 
+ICategoryService )
+_categoryService* :
+;: ;
+public 
+CategoryController !
+(! "
+ICategoryService" 2
+categoryService3 B
+)B C
+{ 	
+_categoryService 
+= 
+categoryService .
+;. /
+} 	
+[ 	
+HttpGet	 
+] 
+public 
+async 
+Task 
+< 
+ActionResult &
+<& '
+ResponseDTO' 2
+>2 3
+>3 4
+GetAll5 ;
+( 	
+[ 
+	FromQuery 
+] 
+string 
+? 
+filterOn  (
+,( )
+[ 
+	FromQuery 
+] 
+string 
+? 
+filterQuery  +
+,+ ,
+[ 
+	FromQuery 
+] 
+string 
+? 
+sortBy  &
+,& '
+[ 
+	FromQuery 
+] 
+bool 
+? 
+isAscending )
+,) *
+[ 
+	FromQuery 
+] 
+int 
+
+pageNumber &
+=' (
+$num) *
+,* +
+[ 
+	FromQuery 
+] 
+int 
+pageSize $
+=% &
+$num' )
+) 	
 { 	
 var 
 responseDto 
 = 
-await #
-_cartService$ 0
-.0 1
-	AddToCart1 :
-(   
-User!! 
-,!! 
-addToCartDto"" 
-)## 
-;## 
-return$$ 
+await   
+_categoryService   &
+.  & '
+GetAll  ' -
+(  - .
+User  . 2
+,  2 3
+filterOn  4 <
+,  < =
+filterQuery  > I
+,  I J
+sortBy  K Q
+,  Q R
+isAscending  S ^
+,  ^ _
 
-StatusCode$$ 
-($$ 
-responseDto$$ )
-.$$) *
+pageNumber  ` j
+,  j k
+pageSize  l t
+)  t u
+;  u v
+return!! 
 
-StatusCode$$* 4
-,$$4 5
-responseDto$$6 A
-)$$A B
-;$$B C
-}%% 	
-['' 	
+StatusCode!! 
+(!! 
+responseDto!! )
+.!!) *
 
-HttpDelete''	 
-]'' 
-[(( 	
-Route((	 
-((( 
-$str(( )
-)(() *
-]((* +
-public)) 
-async)) 
-Task)) 
-<)) 
-ActionResult)) &
-<))& '
-ResponseDTO))' 2
->))2 3
->))3 4
-RemoveFromCart))5 C
-())C D
-[))D E
-	FromRoute))E N
-]))N O
-Guid))P T
-cartDetailsId))U b
-)))b c
-{** 	
-var++ 
-responseDto++ 
-=++ 
-await++ #
-_cartService++$ 0
-.++0 1
-RemoveFromCart++1 ?
-(,, 
-User-- 
-,-- 
-cartDetailsId.. 
-)// 
-;// 
-return00 
+StatusCode!!* 4
+,!!4 5
+responseDto!!6 A
+)!!A B
+;!!B C
+}"" 	
+[$$ 	
+HttpGet$$	 
+]$$ 
+[%% 	
+Route%%	 
+(%% 
+$str%% 
+)%% 
+]%% 
+public&& 
+async&& 
+Task&& 
+<&& 
+ActionResult&& &
+<&&& '
+ResponseDTO&&' 2
+>&&2 3
+>&&3 4
+Search&&5 ;
+('' 	
+[(( 
+	FromQuery(( 
+](( 
+string(( 
+?(( 
+filterOn((  (
+,((( )
+[)) 
+	FromQuery)) 
+])) 
+string)) 
+?)) 
+filterQuery))  +
+,))+ ,
+[** 
+	FromQuery** 
+]** 
+string** 
+?** 
+sortBy**  &
+,**& '
+[++ 
+	FromQuery++ 
+]++ 
+bool++ 
+?++ 
+isAscending++ )
+,++) *
+[,, 
+	FromQuery,, 
+],, 
+int,, 
 
-StatusCode00 
-(00 
-responseDto00 )
-.00) *
+pageNumber,, &
+=,,' (
+$num,,) *
+,,,* +
+[-- 
+	FromQuery-- 
+]-- 
+int-- 
+pageSize-- $
+=--% &
+$num--' (
+).. 	
+{// 	
+var00 
+responseDto00 
+=00 
+await00 #
+_categoryService00$ 4
+.004 5
+Search005 ;
+(00; <
+User00< @
+,00@ A
+filterOn00B J
+,00J K
+filterQuery00L W
+,00W X
+sortBy00Y _
+,00_ `
+isAscending00a l
+,00l m
 
-StatusCode00* 4
-,004 5
-responseDto006 A
-)00A B
-;00B C
-}11 	
-[33 	
-HttpPost33	 
-]33 
-[44 	
-Route44	 
-(44 
-$str44  
-)44  !
-]44! "
-public55 
-async55 
-Task55 
-<55 
-ActionResult55 &
-<55& '
-ResponseDTO55' 2
->552 3
->553 4
-CheckoutWithStripe555 G
-(55G H
-)55H I
-{66 	
-var77 
-responseDto77 
-=77 
-await77 #
-_cartService77$ 0
-.770 1
-Checkout771 9
-(779 :
-User77: >
-)77> ?
-;77? @
-return88 
+pageNumber11 
+,11 
+pageSize11 $
+)11$ %
+;11% &
+return22 
 
-StatusCode88 
-(88 
-responseDto88 )
-.88) *
+StatusCode22 
+(22 
+responseDto22 )
+.22) *
 
-StatusCode88* 4
-,884 5
-responseDto886 A
-)88A B
-;88B C
-}99 	
-}:: 
-};; ˚K
-pD:\FPT\Semester 6\Project_Cursus\Backend_Cursus\Cursus.LMS\Cursus.LMS.API\Controllers\EmailTemplateController.cs
-	namespace 	
-Cursus
- 
-. 
-LMS 
-. 
-API 
-. 
-Controllers $
-{ 
-[ 
-Route 
-
-(
- 
-$str 
-) 
-] 
-[		 
-ApiController		 
-]		 
-public 
-
-class #
-EmailTemplateController (
-:) *
-ControllerBase+ 9
-{ 
-private 
-readonly 
-IUnitOfWork $
-_unitOfWork% 0
-;0 1
-private 
-readonly 
-IEmailService &
-_emailService' 4
-;4 5
-public #
-EmailTemplateController &
-(& '
-IUnitOfWork' 2
+StatusCode22* 4
+,224 5
+responseDto226 A
+)22A B
+;22B C
+}33 	
+[55 	
+HttpGet55	 
+]55 
+[66 	
+Route66	 
+(66 
+$str66 
+)66 
+]66  
+public77 
+async77 
+Task77 
+<77 
+ActionResult77 &
+<77& '
+ResponseDTO77' 2
+>772 3
+>773 4
+GetSubCategory775 C
+(77C D
+[77D E
+	FromRoute77E N
+]77N O
+Guid77P T
+id77U W
+)77W X
+{88 	
+var99 
+responseDto99 
+=99 
+await99 #
+_categoryService99$ 4
+.994 5
+GetSubCategory995 C
+(99C D
+id99D F
+)99F G
+;99G H
+return:: 
 
-unitOfWork3 =
-,= >
-IEmailService? L
-emailServiceM Y
-)Y Z
-{ 	
-_unitOfWork 
-= 
+StatusCode:: 
+(:: 
+responseDto:: )
+.::) *
 
-unitOfWork $
-;$ %
-_emailService 
-= 
-emailService (
-;( )
-} 	
-[ 	
-HttpGet	 
-] 
-public 
-async 
-Task 
-< 
-ActionResult &
-<& '
-ResponseDTO' 2
->2 3
->3 4 
-GetAllEmailTemplates5 I
-(I J
-[ 
-	FromQuery 
-] 
-string 
-? 
-filterOn  (
-,( )
-[ 
-	FromQuery 
-] 
-string 
-? 
-filterQuery  +
-,+ ,
-[ 
-	FromQuery 
-] 
-string 
-? 
-sortBy  &
-,& '
-[ 
-	FromQuery 
-] 
-bool 
-? 
-isAscending )
-,) *
-[   
-	FromQuery   
-]   
-int   
+StatusCode::* 4
+,::4 5
+responseDto::6 A
+)::A B
+;::B C
+};; 	
+[== 	
+HttpGet==	 
+]== 
+[>> 	
+Route>>	 
+(>> 
+$str>> !
+)>>! "
+]>>" #
+public?? 
+async?? 
+Task?? 
+<?? 
+ActionResult?? &
+<??& '
+ResponseDTO??' 2
+>??2 3
+>??3 4
+GetParentCategory??5 F
+(??F G
+[??G H
+	FromRoute??H Q
+]??Q R
+Guid??S W
+id??X Z
+)??Z [
+{@@ 	
+varAA 
+responseDtoAA 
+=AA 
+awaitAA #
+_categoryServiceAA$ 4
+.AA4 5
+GetParentCategoryAA5 F
+(AAF G
+idAAG I
+)AAI J
+;AAJ K
+returnBB 
 
-pageNumber   &
-=  ' (
-$num  ) *
-,  * +
-[!! 
-	FromQuery!! 
-]!! 
-int!! 
-pageSize!! $
-=!!% &
-$num!!' )
-)!!) *
-{"" 	
-var$$ 
-responseDto$$ 
-=$$ 
-await%% 
-_emailService%% #
-.%%# $
-GetAll%%$ *
-(%%* +
-User%%+ /
-,%%/ 0
-filterOn%%1 9
-,%%9 :
-filterQuery%%; F
-,%%F G
-sortBy%%H N
-,%%N O
-isAscending%%P [
-,%%[ \
+StatusCodeBB 
+(BB 
+responseDtoBB )
+.BB) *
 
-pageNumber%%] g
-,%%g h
-pageSize%%i q
-)%%q r
-;%%r s
-return&& 
+StatusCodeBB* 4
+,BB4 5
+responseDtoBB6 A
+)BBA B
+;BBB C
+}CC 	
+[EE 	
+HttpGetEE	 
+]EE 
+[FF 	
+RouteFF	 
+(FF 
+$strFF 
+)FF 
+]FF 
+[GG 	
+	AuthorizeGG	 
+]GG 
+publicHH 
+asyncHH 
+TaskHH 
+<HH 
+ActionResultHH &
+<HH& '
+ResponseDTOHH' 2
+>HH2 3
+>HH3 4
+GetByIdHH5 <
+(HH< =
+[HH= >
+	FromRouteHH> G
+]HHG H
+GuidHHI M
+idHHN P
+)HHP Q
+{II 	
+varJJ 
 
-StatusCode&& 
-(&& 
-responseDto&& )
-.&&) *
+responeDtoJJ 
+=JJ 
+awaitJJ "
+_categoryServiceJJ# 3
+.JJ3 4
+GetJJ4 7
+(JJ7 8
+UserJJ8 <
+,JJ< =
+idJJ> @
+)JJ@ A
+;JJA B
+returnKK 
 
-StatusCode&&* 4
-,&&4 5
-responseDto&&6 A
-)&&A B
-;&&B C
-}'' 	
-[.. 	
-HttpGet..	 
-(.. 
-$str.. 
-).. 
-].. 
-public// 
-async// 
-Task// 
-<// 
-ActionResult// &
-<//& '
-ResponseDTO//' 2
->//2 3
->//3 4 
-GetEmailTemplateById//5 I
-(//I J
-Guid//J N
-id//O Q
-)//Q R
-{00 	
-var11 
-emailTemplate11 
-=11 
-await11  %
-_unitOfWork11& 1
-.111 2#
-EmailTemplateRepository112 I
-.11I J
-GetAsync11J R
-(11R S
-x11S T
-=>11U W
-x11X Y
-.11Y Z
-Id11Z \
-==11] _
-id11` b
-)11b c
-;11c d
-if22 
-(22 
-emailTemplate22 
-==22  
-null22! %
-)22% &
-{33 
-return44 
-NotFound44 
-(44  
-new44  #
-ResponseDTO44$ /
-{55 
-	IsSuccess66 
-=66 
-false66  %
-,66% &
-Message77 
-=77 
-$str77 <
-}88 
-)88 
-;88 
-}99 
-return;; 
-Ok;; 
-(;; 
-new;; 
-ResponseDTO;; %
-{<< 
-Result== 
-=== 
-emailTemplate== &
-,==& '
-	IsSuccess>> 
-=>> 
-true>>  
-,>>  !
-Message?? 
-=?? 
-$str?? ;
-}@@ 
-)@@ 
-;@@ 
-}AA 	
-[II 	
-HttpPutII	 
-(II 
-$strII 
-)II 
-]II 
-publicJJ 
-asyncJJ 
-TaskJJ 
-<JJ 
-ActionResultJJ &
-<JJ& '
-ResponseDTOJJ' 2
->JJ2 3
->JJ3 4
-UpdateEmailTemplateJJ5 H
-(JJH I
-GuidJJI M
-idJJN P
-,JJP Q"
-UpdateEmailTemplateDTOKK ""
-updateEmailTemplateDTOKK# 9
-)KK9 :
-{LL 	
-varMM 
-emailTemplateMM 
-=MM 
-awaitMM  %
-_unitOfWorkMM& 1
-.MM1 2#
-EmailTemplateRepositoryMM2 I
-.MMI J
-GetAsyncMMJ R
-(MMR S
-xMMS T
-=>MMU W
-xMMX Y
-.MMY Z
-IdMMZ \
-==MM] _
-idMM` b
-)MMb c
-;MMc d
-ifOO 
-(OO 
-emailTemplateOO 
-==OO  
-nullOO! %
-)OO% &
-{PP 
-returnQQ 
-NotFoundQQ 
-(QQ  
-newQQ  #
-ResponseDTOQQ$ /
-{RR 
-	IsSuccessSS 
-=SS 
-falseSS  %
-,SS% &
-MessageTT 
-=TT 
-$strTT <
-}UU 
-)UU 
-;UU 
-}VV 
-emailTemplateYY 
-.YY 
-TemplateNameYY &
-=YY' ("
-updateEmailTemplateDTOYY) ?
-.YY? @
-TemplateNameYY@ L
-;YYL M
-emailTemplateZZ 
-.ZZ 
+StatusCodeKK 
+(KK 
 
-SenderNameZZ $
-=ZZ% &"
-updateEmailTemplateDTOZZ' =
-.ZZ= >
+responeDtoKK (
+.KK( )
 
-SenderNameZZ> H
-;ZZH I
-emailTemplate[[ 
-.[[ 
-SenderEmail[[ %
-=[[& '"
-updateEmailTemplateDTO[[( >
-.[[> ?
-SenderEmail[[? J
-;[[J K
-emailTemplate\\ 
-.\\ 
-Category\\ "
-=\\# $"
-updateEmailTemplateDTO\\% ;
-.\\; <
-Category\\< D
-;\\D E
-emailTemplate]] 
-.]] 
-SubjectLine]] %
-=]]& '"
-updateEmailTemplateDTO]]( >
-.]]> ?
-SubjectLine]]? J
-;]]J K
-emailTemplate^^ 
-.^^ 
-PreHeaderText^^ '
-=^^( )"
-updateEmailTemplateDTO^^* @
-.^^@ A
-PreHeaderText^^A N
-;^^N O
-emailTemplate__ 
-.__ 
-PersonalizationTags__ -
-=__. /"
-updateEmailTemplateDTO__0 F
-.__F G
-PersonalizationTags__G Z
-;__Z [
-emailTemplate`` 
-.`` 
-BodyContent`` %
-=``& '"
-updateEmailTemplateDTO``( >
-.``> ?
-BodyContent``? J
-;``J K
-emailTemplateaa 
-.aa 
-FooterContentaa '
-=aa( )"
-updateEmailTemplateDTOaa* @
-.aa@ A
-FooterContentaaA N
-;aaN O
-emailTemplatebb 
-.bb 
-CallToActionbb &
-=bb' ("
-updateEmailTemplateDTObb) ?
-.bb? @
-CallToActionbb@ L
-;bbL M
-emailTemplatecc 
-.cc 
-Languagecc "
-=cc# $"
-updateEmailTemplateDTOcc% ;
-.cc; <
-Languagecc< D
-;ccD E
-emailTemplatedd 
-.dd 
-RecipientTypedd '
-=dd( )"
-updateEmailTemplateDTOdd* @
-.dd@ A
-RecipientTypeddA N
-;ddN O
-_unitOfWorkff 
-.ff #
-EmailTemplateRepositoryff /
-.ff/ 0
-Updateff0 6
-(ff6 7
-emailTemplateff7 D
-)ffD E
-;ffE F
-awaitgg 
-_unitOfWorkgg 
-.gg 
-	SaveAsyncgg '
-(gg' (
-)gg( )
-;gg) *
-returnii 
-Okii 
-(ii 
-newii 
-ResponseDTOii %
-{jj 
-Resultkk 
-=kk 
-emailTemplatekk &
-,kk& '
-	IsSuccessll 
-=ll 
-truell  
-,ll  !
-Messagemm 
-=mm 
-$strmm >
-}nn 
-)nn 
-;nn 
-}oo 	
-[vv 	
+StatusCodeKK) 3
+,KK3 4
 
-HttpDeletevv	 
-(vv 
-$strvv 
-)vv  
-]vv  !
-publicww 
-ActionResultww 
-<ww 
-ResponseDTOww '
->ww' (
-DeleteEmailTemplateww) <
-(ww< =
-Guidww= A
-idwwB D
-)wwD E
-{xx 	
-returnyy 
+responeDtoKK5 ?
+)KK? @
+;KK@ A
+}LL 	
+[OO 	
+HttpPostOO	 
+]OO 
+[PP 	
+	AuthorizePP	 
+(PP 
+RolesPP 
+=PP 
+StaticUserRolesPP *
+.PP* +
+AdminPP+ 0
+)PP0 1
+]PP1 2
+publicQQ 
+asyncQQ 
+TaskQQ 
+<QQ 
+ActionResultQQ &
+<QQ& '
+ResponseDTOQQ' 2
+>QQ2 3
+>QQ3 4
+CreateQQ5 ;
+(QQ; <
+CreateCategoryDTOQQ< M
+createCategoryDtoQQN _
+)QQ_ `
+{RR 	
+varSS 
 
-BadRequestyy 
-(yy 
-newyy !
-ResponseDTOyy" -
-{zz 
-	IsSuccess{{ 
-={{ 
-false{{ !
-,{{! "
-Message|| 
-=|| 
-$str|| C
-}}} 
-)}} 
-;}} 
-}~~ 	
-[
-ÖÖ 	
-HttpPost
-ÖÖ	 
-]
-ÖÖ 
-public
-ÜÜ 
-ActionResult
-ÜÜ 
-<
-ÜÜ 
-ResponseDTO
-ÜÜ '
->
-ÜÜ' (!
-CreateEmailTemplate
-ÜÜ) <
-(
-ÜÜ< =$
-CreateEmailTemplateDTO
-ÜÜ= S$
-createEmailTemplateDTO
-ÜÜT j
-)
-ÜÜj k
-{
-áá 	
-return
-àà 
+responeDtoSS 
+=SS 
+awaitSS "
+_categoryServiceSS# 3
+.SS3 4
+CreateCategorySS4 B
+(SSB C
+UserSSC G
+,SSG H
+createCategoryDtoSSI Z
+)SSZ [
+;SS[ \
+returnTT 
 
-BadRequest
-àà 
-(
-àà 
-new
-àà !
-ResponseDTO
-àà" -
-{
-ââ 
-	IsSuccess
-ää 
-=
-ää 
-false
-ää !
-,
-ää! "
-Message
-ãã 
-=
-ãã 
-$str
-ãã B
-}
-åå 
-)
-åå 
-;
-åå 
-}
-çç 	
-}
-ÀÀ 
-}ÃÃ üˆ
+StatusCodeTT 
+(TT 
+
+responeDtoTT (
+.TT( )
+
+StatusCodeTT) 3
+,TT3 4
+
+responeDtoTT5 ?
+)TT? @
+;TT@ A
+}UU 	
+[WW 	
+HttpPutWW	 
+]WW 
+[XX 	
+	AuthorizeXX	 
+(XX 
+RolesXX 
+=XX 
+StaticUserRolesXX *
+.XX* +
+AdminXX+ 0
+)XX0 1
+]XX1 2
+publicYY 
+asyncYY 
+TaskYY 
+<YY 
+ActionResultYY &
+<YY& '
+ResponseDTOYY' 2
+>YY2 3
+>YY3 4
+UpdateYY5 ;
+(YY; <
+[YY< =
+FromBodyYY= E
+]YYE F
+UpdateCategoryDTOYYG X
+updateCategoryDtoYYY j
+)YYj k
+{ZZ 	
+var[[ 
+
+responeDto[[ 
+=[[ 
+await[[ "
+_categoryService[[# 3
+.[[3 4
+Update[[4 :
+([[: ;
+User[[; ?
+,[[? @
+updateCategoryDto[[A R
+)[[R S
+;[[S T
+return\\ 
+
+StatusCode\\ 
+(\\ 
+
+responeDto\\ (
+.\\( )
+
+StatusCode\\) 3
+,\\3 4
+
+responeDto\\5 ?
+)\\? @
+;\\@ A
+}]] 	
+[__ 	
+
+HttpDelete__	 
+]__ 
+[`` 	
+Route``	 
+(`` 
+$str`` 
+)`` 
+]`` 
+[aa 	
+	Authorizeaa	 
+(aa 
+Rolesaa 
+=aa 
+StaticUserRolesaa *
+.aa* +
+Adminaa+ 0
+)aa0 1
+]aa1 2
+publicbb 
+asyncbb 
+Taskbb 
+<bb 
+ActionResultbb &
+<bb& '
+ResponseDTObb' 2
+>bb2 3
+>bb3 4
+Deletebb5 ;
+(bb; <
+[bb< =
+	FromRoutebb= F
+]bbF G
+GuidbbH L
+idbbM O
+)bbO P
+{cc 	
+vardd 
+
+responeDtodd 
+=dd 
+awaitdd "
+_categoryServicedd# 3
+.dd3 4
+Deletedd4 :
+(dd: ;
+Userdd; ?
+,dd? @
+idddA C
+)ddC D
+;ddD E
+returnee 
+
+StatusCodeee 
+(ee 
+
+responeDtoee (
+.ee( )
+
+StatusCodeee) 3
+,ee3 4
+
+responeDtoee5 ?
+)ee? @
+;ee@ A
+}ff 	
+}gg 
+}hh ÷á
 gD:\FPT\Semester 6\Project_Cursus\Backend_Cursus\Cursus.LMS\Cursus.LMS.API\Controllers\AuthController.cs
 	namespace
 
@@ -13830,79 +15974,78 @@ gD:\FPT\Semester 6\Project_Cursus\Backend_Cursus\Cursus.LMS\Cursus.LMS.API\Contr
 IAuthService %
 _authService& 2
 ;2 3
-private 
-ResponseDTO 
-responseDto '
-=( )
-new* -
-ResponseDTO. 9
-(9 :
-): ;
-;; <
-private 
-readonly 
-UserManager $
-<$ %
-ApplicationUser% 4
->4 5
-_userManager6 B
-;B C
-public 
-AuthController 
-( 
-IEmailService +
-emailService, 8
-,8 9
-IAuthService: F
-authServiceG R
-,R S
-UserManager 
-< 
-ApplicationUser '
->' (
-userManager) 4
-)4 5
-{ 	
-_emailService 
-= 
-emailService (
-;( )
-_authService 
+private 
+readonly 
+UserManager $
+<$ %
+ApplicationUser% 4
+>4 5
+_userManager6 B
+;B C
+public 
+AuthController 
+( 
+IEmailService +
+emailService, 8
+,8 9
+IAuthService: F
+authServiceG R
+,R S
+UserManager 
+< 
+ApplicationUser '
+>' (
+userManager) 4
+)4 5
+{ 	
+_emailService 
+= 
+emailService (
+;( )
+_authService 
+= 
+authService &
+;& '
+_userManager 
 = 
-authService &
-;& '
-_userManager 
-= 
-userManager &
-;& '
-} 	
-[!! 	
-HttpPost!!	 
-]!! 
-["" 	
-Route""	 
-("" 
-$str""  
-)""  !
-]""! "
-public## 
-async## 
-Task## 
-<## 
-ActionResult## &
-<##& '
-ResponseDTO##' 2
->##2 3
->##3 4
-SignUpStudent##5 B
-(##B C
-[##C D
-FromBody##D L
-]##L M
-RegisterStudentDTO##N `
-registerStudentDTO##a s
-)##s t
-{$$ 	
+userManager &
+;& '
+} 	
+[   	
+HttpPost  	 
+]   
+[!! 	
+Route!!	 
+(!! 
+$str!!  
+)!!  !
+]!!! "
+public"" 
+async"" 
+Task"" 
+<"" 
+ActionResult"" &
+<""& '
+ResponseDTO""' 2
+>""2 3
+>""3 4
+SignUpStudent""5 B
+(""B C
+[""C D
+FromBody""D L
+]""L M
+RegisterStudentDTO""N `
+registerStudentDTO""a s
+)""s t
+{## 	
+var$$ 
+responseDto$$ 
+=$$ 
+new$$ !
+ResponseDTO$$" -
+($$- .
+)$$. /
+;$$/ 0
 if%% 
 (%% 
 !%% 
@@ -15569,26 +17712,22 @@ BadRequest
 StatusCode
 ¢¢ 
 (
-¢¢ 
-this
-¢¢ "
-.
-¢¢" #
+¢¢ 
 responseDto
-¢¢# .
+¢¢ )
 .
-¢¢. /
+¢¢) *
 
 StatusCode
-¢¢/ 9
+¢¢* 4
 ,
-¢¢9 :
+¢¢4 5
 responseDto
-¢¢; F
+¢¢6 A
 )
-¢¢F G
+¢¢A B
 ;
-¢¢G H
+¢¢B C
 }
 ££ 	
 [
@@ -15777,26 +17916,22 @@ StatusCode
 StatusCode
 ≥≥ 
 (
-≥≥ 
-this
-≥≥ "
-.
-≥≥" #
+≥≥ 
 responseDto
-≥≥# .
+≥≥ )
 .
-≥≥. /
+≥≥) *
 
 StatusCode
-≥≥/ 9
+≥≥* 4
 ,
-≥≥9 :
+≥≥4 5
 responseDto
-≥≥; F
+≥≥6 A
 )
-≥≥F G
+≥≥A B
 ;
-≥≥G H
+≥≥B C
 }
 ¥¥ 	
 [
@@ -15881,26 +18016,22 @@ StatusCode
 StatusCode
 ªª 
 (
-ªª 
-this
-ªª "
-.
-ªª" #
+ªª 
 responseDto
-ªª# .
+ªª )
 .
-ªª. /
+ªª) *
 
 StatusCode
-ªª/ 9
+ªª* 4
 ,
-ªª9 :
+ªª4 5
 responseDto
-ªª; F
+ªª6 A
 )
-ªªF G
+ªªA B
 ;
-ªªG H
+ªªB C
 }
 ºº 	
 [
@@ -15989,26 +18120,22 @@ StatusCode
 StatusCode
 ∆∆ 
 (
-∆∆ 
-this
-∆∆ "
-.
-∆∆" #
+∆∆ 
 responseDto
-∆∆# .
+∆∆ )
 .
-∆∆. /
+∆∆) *
 
 StatusCode
-∆∆/ 9
+∆∆* 4
 ,
-∆∆9 :
+∆∆4 5
 responseDto
-∆∆; F
+∆∆6 A
 )
-∆∆F G
+∆∆A B
 ;
-∆∆G H
+∆∆B C
 }
 «« 	
 [
@@ -16348,7 +18475,7 @@ StatusCode
 UpdateStudentProfileDTO
 ÂÂN e
 
-studentDTO
+studentDto
 ÂÂf p
 )
 ÂÂp q
@@ -16371,16 +18498,16 @@ studentDTO
 (
 ÁÁ> ?
 
-studentDTO
+studentDto
 ÁÁ? I
 ,
 ÁÁI J
 User
-ÁÁJ N
+ÁÁK O
 )
-ÁÁN O
+ÁÁO P
 ;
-ÁÁO P
+ÁÁP Q
 return
 ËË 
 
@@ -16446,69 +18573,311 @@ StatusCode
 (
 ÌÌE F
 [
-ÌÌF G
+ÓÓ 
 FromBody
-ÌÌG O
+ÓÓ 
 ]
-ÌÌO P'
+ÓÓ '
 UpdateIntructorProfileDTO
-ÌÌQ j
-intructorDTO
-ÌÌk w
+ÓÓ 0
+instructorDto
+ÓÓ1 >
 )
-ÌÌw x
+ÓÓ> ?
 {
-ÓÓ 	
+ÔÔ 	
 var
-ÔÔ 
+ 
 responseDto
-ÔÔ 
+ 
 =
-ÔÔ 
+ 
 await
-ÔÔ #
+ #
 _authService
-ÔÔ$ 0
+$ 0
 .
-ÔÔ0 1
+0 1
 UpdateInstructor
-ÔÔ1 A
+1 A
 (
-ÔÔA B
-intructorDTO
-ÔÔB N
+A B
+instructorDto
+B O
 ,
-ÔÔN O
+O P
 User
-ÔÔP T
+Q U
 )
-ÔÔT U
+U V
 ;
-ÔÔU V
+V W
 return
- 
+ÒÒ 
 
 StatusCode
- 
+ÒÒ 
 (
- 
+ÒÒ 
 responseDto
- )
+ÒÒ )
 .
-) *
+ÒÒ) *
 
 StatusCode
-* 4
+ÒÒ* 4
 ,
-4 5
+ÒÒ4 5
 responseDto
-6 A
+ÒÒ6 A
 )
-A B
+ÒÒA B
 ;
-B C
+ÒÒB C
 }
-ÒÒ 	
+ÚÚ 	
+[
+ÙÙ 	
+HttpPost
+ÙÙ	 
+]
+ÙÙ 
+[
+ıı 	
+Route
+ıı	 
+(
+ıı 
+$str
+ıı 
+)
+ıı 
+]
+ıı 
+[
+ˆˆ 	
+	Authorize
+ˆˆ	 
+(
+ˆˆ 
+Roles
+ˆˆ 
+=
+ˆˆ 
+StaticUserRoles
+ˆˆ *
+.
+ˆˆ* +
+Admin
+ˆˆ+ 0
+)
+ˆˆ0 1
+]
+ˆˆ1 2
+public
+˜˜ 
+async
+˜˜ 
+Task
+˜˜ 
+<
+˜˜ 
+ActionResult
+˜˜ &
+<
+˜˜& '
+ResponseDTO
+˜˜' 2
+>
+˜˜2 3
+>
+˜˜3 4
+LockUser
+˜˜5 =
+(
+˜˜= >
+[
+˜˜> ?
+FromBody
+˜˜? G
+]
+˜˜G H
+LockUserDTO
+˜˜I T
+lockUserDto
+˜˜U `
+)
+˜˜` a
+{
+¯¯ 	
+var
+˘˘ 
+responseDto
+˘˘ 
+=
+˘˘ 
+await
+˘˘ #
+_authService
+˘˘$ 0
+.
+˘˘0 1
+LockUser
+˘˘1 9
+(
+˘˘9 :
+lockUserDto
+˘˘: E
+)
+˘˘E F
+;
+˘˘F G
+return
+˙˙ 
+
+StatusCode
+˙˙ 
+(
+˙˙ 
+responseDto
+˙˙ )
+.
+˙˙) *
+
+StatusCode
+˙˙* 4
+,
+˙˙4 5
+responseDto
+˙˙6 A
+)
+˙˙A B
+;
+˙˙B C
 }
-ÛÛ 
-}ÙÙ 
+˚˚ 	
+[
+˝˝ 	
+HttpPost
+˝˝	 
+]
+˝˝ 
+[
+˛˛ 	
+Route
+˛˛	 
+(
+˛˛ 
+$str
+˛˛ 
+)
+˛˛ 
+]
+˛˛ 
+[
+ˇˇ 	
+	Authorize
+ˇˇ	 
+(
+ˇˇ 
+Roles
+ˇˇ 
+=
+ˇˇ 
+StaticUserRoles
+ˇˇ *
+.
+ˇˇ* +
+Admin
+ˇˇ+ 0
+)
+ˇˇ0 1
+]
+ˇˇ1 2
+public
+ÄÄ 
+async
+ÄÄ 
+Task
+ÄÄ 
+<
+ÄÄ 
+ActionResult
+ÄÄ &
+<
+ÄÄ& '
+ResponseDTO
+ÄÄ' 2
+>
+ÄÄ2 3
+>
+ÄÄ3 4
+
+UnlockUser
+ÄÄ5 ?
+(
+ÄÄ? @
+[
+ÄÄ@ A
+FromBody
+ÄÄA I
+]
+ÄÄI J
+LockUserDTO
+ÄÄK V
+lockUserDto
+ÄÄW b
+)
+ÄÄb c
+{
+ÅÅ 	
+var
+ÇÇ 
+responseDto
+ÇÇ 
+=
+ÇÇ 
+await
+ÇÇ #
+_authService
+ÇÇ$ 0
+.
+ÇÇ0 1
+
+UnlockUser
+ÇÇ1 ;
+(
+ÇÇ; <
+lockUserDto
+ÇÇ< G
+)
+ÇÇG H
+;
+ÇÇH I
+return
+ÉÉ 
+
+StatusCode
+ÉÉ 
+(
+ÉÉ 
+responseDto
+ÉÉ )
+.
+ÉÉ) *
+
+StatusCode
+ÉÉ* 4
+,
+ÉÉ4 5
+responseDto
+ÉÉ6 A
+)
+ÉÉA B
+;
+ÉÉB C
+}
+ÑÑ 	
+}
+ÖÖ 
+}ÜÜ 

@@ -7,7 +7,7 @@
   <HasBeginStepCommandLineCredentials>true</HasBeginStepCommandLineCredentials>
   <SonarQubeHostUrl>http://localhost:9000</SonarQubeHostUrl>
   <SonarQubeVersion>10.6.0.92116</SonarQubeVersion>
-  <SonarProjectKey>Backend_-_Cursus_LMS_Backend_-_Cursus_LMS_ff9c791c-099a-4109-9f12-b96f7ff8d109</SonarProjectKey>
+  <SonarProjectKey>Backend---Cursus-LMS</SonarProjectKey>
   <AdditionalConfig>
     <ConfigSetting Id="BuildUri" />
     <ConfigSetting Id="TfsUri" />
@@ -135,7 +135,7 @@
     <Property Name="sonaranalyzer-vbnet.pluginKey">vbnet</Property>
     <Property Name="sonar.updatecenter.url">https://downloads.sonarsource.com/sonarqube/update/update-center.properties</Property>
     <Property Name="sonar.core.id">147B411E-AZCmoQUYIZNWWSCKRaNS</Property>
-    <Property Name="sonar.core.startTime">7/25/2024 4:27:32 PM</Property>
+    <Property Name="sonar.core.startTime">7/30/2024 6:51:35 PM</Property>
   </ServerSettings>
   <LocalSettings>
     <Property Name="sonar.host.url">http://localhost:9000</Property>

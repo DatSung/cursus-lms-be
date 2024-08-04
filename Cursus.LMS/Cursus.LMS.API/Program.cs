@@ -22,7 +22,8 @@ builder.Services.AddHttpClient();
 
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
 {
-    options.UseSqlServer(builder.Configuration.GetConnectionString(StaticConnectionString.SQLDB_DefaultConnection));
+    options.UseSqlServer(
+        builder.Configuration.GetConnectionString(StaticConnectionString.SQLDB_DefaultConnection));
 });
 
 // Set time token
@@ -78,7 +79,7 @@ builder.Services.AddCors(options =>
 });
 
 // Add Application Insights Telemetry
-builder.Services.AddApplicationInsightsTelemetry(builder.Configuration["ApplicationInsights:InstrumentationKey"]);
+builder.Services.AddApplicationInsightsTelemetry(builder.Configuration["ApplicationInsights:ConnectionString"]);
 
 var app = builder.Build();
 
