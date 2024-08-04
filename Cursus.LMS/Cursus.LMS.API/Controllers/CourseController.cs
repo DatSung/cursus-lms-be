@@ -141,8 +141,10 @@ namespace Cursus.LMS.API.Controllers
         [HttpPost]
         [Route("review")]
         [Authorize(Roles = StaticUserRoles.Student)]
-        public async Task<ActionResult<ResponseDTO>> CreateCourseReview(
-            [FromBody] CreateCourseReviewDTO createCourseReviewDto)
+        public async Task<ActionResult<ResponseDTO>> CreateCourseReview
+        (
+            [FromBody] CreateCourseReviewDTO createCourseReviewDto
+        )
         {
             if (!ModelState.IsValid)
             {
@@ -157,7 +159,7 @@ namespace Cursus.LMS.API.Controllers
 
             try
             {
-                var responseDto = await _courseReviewService.CreateCourseReview(createCourseReviewDto);
+                var responseDto = await _courseReviewService.CreateCourseReview(User, createCourseReviewDto);
                 return StatusCode(responseDto.StatusCode, responseDto);
             }
             catch (Exception ex)

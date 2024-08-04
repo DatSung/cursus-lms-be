@@ -173,10 +173,23 @@ namespace Cursus.LMS.Service.Service
             }
         }
 
-        public async Task<ResponseDTO> CreateCourseReview(CreateCourseReviewDTO createCourseReviewDTO)
+        public async Task<ResponseDTO> CreateCourseReview
+        (
+            ClaimsPrincipal User,
+            CreateCourseReviewDTO createCourseReviewDTO
+        )
         {
             try
             {
+                var userId = User.Claims.FirstOrDefault(x => x.Type == ClaimTypes.NameIdentifier)!.Value;
+                var studentId = _unitOfWork.StudentRepository
+                    .GetByUserId(userId)
+                    .GetAwaiter()
+                    .GetResult()!
+                    .StudentId;
+
+                createCourseReviewDTO.StudentId = studentId;
+
                 // Validate if the course exists
                 var course = await _unitOfWork.CourseRepository.GetById(createCourseReviewDTO.CourseId);
                 if (course == null)
@@ -199,6 +212,23 @@ namespace Cursus.LMS.Service.Service
                         Message = "Student not found",
                         IsSuccess = false,
                         StatusCode = 404,
+                        Result = null
+                    };
+                }
+
+                var studentCourse = await _unitOfWork.StudentCourseRepository
+                    .GetAsync(
+                        x => x.CourseId == createCourseReviewDTO.CourseId
+                             && x.StudentId == createCourseReviewDTO.StudentId
+                    );
+
+                if (studentCourse is null)
+                {
+                    return new ResponseDTO()
+                    {
+                        Message = "Student did not own this course",
+                        IsSuccess = false,
+                        StatusCode = 400,
                         Result = null
                     };
                 }
