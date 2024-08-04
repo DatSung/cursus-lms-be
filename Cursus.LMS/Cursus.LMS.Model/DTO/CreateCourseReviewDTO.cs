@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
+using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 
 namespace Cursus.LMS.Model.DTO
@@ -12,7 +13,7 @@ namespace Cursus.LMS.Model.DTO
         [Required]
         public Guid CourseId { get; set; }
 
-        [Required]
+        [JsonIgnore]
         public Guid StudentId { get; set; }
 
         [Required]
