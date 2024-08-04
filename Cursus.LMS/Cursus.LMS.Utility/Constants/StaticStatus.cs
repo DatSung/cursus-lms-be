@@ -23,10 +23,11 @@ public static class StaticStatus
     public static class StudentCourse
     {
         public const int Pending = 0;
-        public const int Enrolled = 1;
-        public const int Learning = 2;
-        public const int Completed = 3;
-        public const int Canceled = 4;
+        public const int Confirmed = 1;
+        public const int Enrolled = 2;
+        public const int Learning = 3;
+        public const int Completed = 4;
+        public const int Canceled = 5;
     }
     
     public static class CourseReview

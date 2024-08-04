@@ -502,6 +502,31 @@ public class OrderService : IOrderService
                 }
             );
 
+            var ordersDetails =
+                await _unitOfWork.OrderDetailsRepository.GetAllAsync(x => x.OrderHeaderId == orderHeader.Id);
+
+            foreach (var orderDetails in ordersDetails)
+            {
+                await _studentCourseService.CreateStudentCourse
+                (
+                    User,
+                    new EnrollCourseDTO()
+                    {
+                        courseId = orderDetails.CourseId,
+                        studentId = orderHeader.StudentId
+                    }
+                );
+
+                await _courseService.UpsertCourseTotal
+                (
+                    new UpsertCourseTotalDTO()
+                    {
+                        CourseId = orderDetails.CourseId,
+                        TotalEarned = orderDetails.CoursePrice
+                    }
+                );
+            }
+
             await _unitOfWork.SaveAsync();
 
             return new ResponseDTO()
@@ -574,22 +599,14 @@ public class OrderService : IOrderService
 
             foreach (var orderDetails in ordersDetails)
             {
-                await _studentCourseService.CreateStudentCourse
+                await _studentCourseService.UpdateStudentCourse
                 (
                     User,
-                    new EnrollCourseDTO()
-                    {
-                        courseId = orderDetails.CourseId,
-                        studentId = orderHeader.StudentId
-                    }
-                );
-
-                await _courseService.UpsertCourseTotal
-                (
-                    new UpsertCourseTotalDTO()
+                    new UpdateStudentCourseDTO()
                     {
                         CourseId = orderDetails.CourseId,
-                        TotalEarned = orderDetails.CoursePrice
+                        StudentId = orderHeader.StudentId,
+                        Status = StaticStatus.StudentCourse.Confirmed
                     }
                 );
             }
