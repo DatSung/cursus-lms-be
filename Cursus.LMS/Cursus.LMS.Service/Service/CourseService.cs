@@ -1,5 +1,4 @@
-﻿using System.Linq;
-using System.Security.Claims;
+﻿using System.Security.Claims;
 using AutoMapper;
 using Cursus.LMS.DataAccess.IRepository;
 using Cursus.LMS.Model.Domain;
@@ -7,7 +6,6 @@ using Cursus.LMS.Model.DTO;
 using Cursus.LMS.Service.IService;
 using Cursus.LMS.Utility.Constants;
 using Hangfire;
-using static Microsoft.ApplicationInsights.MetricDimensionNames.TelemetryContext;
 
 namespace Cursus.LMS.Service.Service;
 
@@ -124,11 +122,11 @@ public class CourseService : ICourseService
     {
         try
         {
-            var courses = new List<Course>();
+            List<Course> courses;
             var userRole = User.Claims.FirstOrDefault(x => x.Type == ClaimTypes.Role)?.Value;
             if (string.IsNullOrEmpty(instructorId.ToString()))
             {
-                if (!userRole.Contains(StaticUserRoles.AdminInstructor))
+                if (userRole != null && !userRole.Contains(StaticUserRoles.AdminInstructor))
                 {
                     courses = _unitOfWork.CourseRepository
                         .GetAllAsync
@@ -150,14 +148,35 @@ public class CourseService : ICourseService
             }
             else
             {
-                courses = _unitOfWork.CourseRepository
-                    .GetAllAsync
-                    (
-                        filter: x => x.InstructorId == instructorId
-                    )
-                    .GetAwaiter()
-                    .GetResult()
-                    .ToList();
+                if (userRole != null && !userRole.Contains(StaticUserRoles.AdminInstructor))
+                {
+                    courses = _unitOfWork.CourseRepository
+                        .GetAllAsync
+                        (
+                            filter: x => x.Status == 1 && x.InstructorId == instructorId
+                        )
+                        .GetAwaiter()
+                        .GetResult()
+                        .ToList();
+                }
+                else
+                {
+                    courses = _unitOfWork.CourseRepository
+                        .GetAllAsync
+                        (
+                            filter: x => x.InstructorId == instructorId
+                        )
+                        .GetAwaiter()
+                        .GetResult()
+                        .ToList();
+                }
+            }
+
+            // Pagination
+            if (pageNumber > 0 && pageSize > 0)
+            {
+                var skipResult = (pageNumber - 1) * pageSize;
+                courses = courses.Skip(skipResult).Take(pageSize).ToList();
             }
 
             var courseVersions = new List<CourseVersion>();
@@ -277,12 +296,6 @@ public class CourseService : ICourseService
             // Sort by highest rank (TotalStudent) after all other sorting and filtering
             courseVersions = courseVersions.OrderByDescending(cv => cv.Course.TotalStudent).ToList();
 
-            // Pagination
-            if (pageNumber > 0 && pageSize > 0)
-            {
-                var skipResult = (pageNumber - 1) * pageSize;
-                courseVersions = courseVersions.Skip(skipResult).Take(pageSize).ToList();
-            }
 
             var courseVersionDto = _mapper.Map<List<GetCourseDTO>>(courseVersions);
 
