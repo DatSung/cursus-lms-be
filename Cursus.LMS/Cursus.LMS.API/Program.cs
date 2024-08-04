@@ -86,10 +86,6 @@ ApplyMigration();
 
 StripeConfiguration.ApiKey = builder.Configuration.GetSection("Stripe:SecretKey").Get<string>();
 
-<<<<<<< HEAD
-app.UseSwagger();
-app.UseSwaggerUI();
-=======
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
@@ -101,7 +97,6 @@ else
     app.UseSwagger();
     app.UseSwaggerUI();
 }
->>>>>>> 7ae0bae1daff32c2bbb8a5542928e1742e254e0d
 
 app.UseCors("AllowSpecificOrigin");
 
