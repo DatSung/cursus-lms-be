@@ -4,6 +4,7 @@ using Cursus.LMS.DataAccess.IRepository;
 using Cursus.LMS.Model.Domain;
 using Cursus.LMS.Model.DTO;
 using Cursus.LMS.Service.IService;
+using Cursus.LMS.Utility.Constants;
 
 namespace Cursus.LMS.Service.Service
 {
@@ -211,8 +212,8 @@ namespace Cursus.LMS.Service.Service
                     Rate = createCourseReviewDTO.Rate,
                     Message = createCourseReviewDTO.Message,
                     CreatedBy = createCourseReviewDTO.StudentId.ToString(), // Or fetch the actual student info
-                    CreatedTime = DateTime.UtcNow,
-                    Status = 1 // Active status
+                    CreatedTime = DateTime.Now,
+                    Status = StaticStatus.CourseReview.Activated // Active status
                 };
 
                 await _unitOfWork.CourseReviewRepository.AddAsync(courseReview);

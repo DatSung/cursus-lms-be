@@ -14,6 +14,7 @@ namespace Cursus.LMS.Model.DTO
         public int Rate { get; set; }
         public string Message { get; set; }
         public DateTime CreateTime { get; set; }
+        public bool IsMarked { get; set; }
         public int Status { get; set; }
     }
 }

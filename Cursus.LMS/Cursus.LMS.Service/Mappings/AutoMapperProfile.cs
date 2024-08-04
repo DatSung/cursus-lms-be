@@ -166,5 +166,7 @@ public class AutoMapperProfile : Profile
         CreateMap<OrderStatus, GetOrdersStatusDTO>().ReverseMap();
 
         CreateMap<CourseVersion, GetCourseDTO>().ReverseMap();
+
+        CreateMap<CourseReview, GetCourseReviewDTO>().ReverseMap();
     }
 }

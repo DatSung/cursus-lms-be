@@ -28,4 +28,10 @@ public static class StaticStatus
         public const int Completed = 3;
         public const int Canceled = 4;
     }
+    
+    public static class CourseReview
+    {
+        public const int Activated = 0;
+        public const int Deactivated = 1;
+    }
 }
