@@ -20,6 +20,7 @@ public class OrderService : IOrderService
     private readonly IStudentCourseService _studentCourseService;
     private readonly ITransactionService _transactionService;
     private readonly ICourseService _courseService;
+    private readonly IBalanceService _balanceService;
 
     public OrderService
     (
@@ -28,7 +29,10 @@ public class OrderService : IOrderService
         IOrderStatusService orderStatusService,
         IStripeService stripeService,
         IStudentCourseService studentCourseService,
-        ITransactionService transactionService, ICourseService courseService)
+        ITransactionService transactionService,
+        ICourseService courseService,
+        IBalanceService balanceService
+    )
     {
         _unitOfWork = unitOfWork;
         _mapper = mapper;
@@ -37,6 +41,7 @@ public class OrderService : IOrderService
         _studentCourseService = studentCourseService;
         _transactionService = transactionService;
         _courseService = courseService;
+        _balanceService = balanceService;
     }
 
     public async Task<ResponseDTO> CreateOrder
@@ -527,6 +532,7 @@ public class OrderService : IOrderService
                 );
             }
 
+
             await _unitOfWork.SaveAsync();
 
             return new ResponseDTO()
@@ -610,6 +616,8 @@ public class OrderService : IOrderService
                     }
                 );
             }
+
+            await _balanceService.UpdateAvailableBalanceByOrderId(orderHeaderId);
 
             return new ResponseDTO()
             {

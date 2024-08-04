@@ -13,12 +13,15 @@ public class BalanceService : IBalanceService
     private readonly IUnitOfWork _unitOfWork;
     private readonly IMapper _mapper;
     private readonly IStripeService _stripeService;
+    private readonly ITransactionService _transactionService;
 
-    public BalanceService(IUnitOfWork unitOfWork, IMapper mapper, IStripeService stripeService)
+    public BalanceService(IUnitOfWork unitOfWork, IMapper mapper, IStripeService stripeService,
+        ITransactionService transactionService)
     {
         _unitOfWork = unitOfWork;
         _mapper = mapper;
         _stripeService = stripeService;
+        _transactionService = transactionService;
     }
 
     public async Task<ResponseDTO> GetSystemBalance(ClaimsPrincipal User)
@@ -106,7 +109,7 @@ public class BalanceService : IBalanceService
                 {
                     Currency = "usd",
                     UserId = upsertBalanceDto.UserId,
-                    TotalBalance = upsertBalanceDto.TotalBalance,
+                    TotalBalance = 0,
                     AvailableBalance = upsertBalanceDto.AvailableBalance,
                     PayoutBalance = upsertBalanceDto.PayoutBalance,
                     UpdatedTime = DateTime.UtcNow
@@ -124,10 +127,10 @@ public class BalanceService : IBalanceService
                 };
             }
 
-            balance.TotalBalance += upsertBalanceDto.TotalBalance;
             balance.AvailableBalance += upsertBalanceDto.AvailableBalance;
             balance.PayoutBalance += upsertBalanceDto.PayoutBalance;
             balance.UpdatedTime = DateTime.UtcNow;
+            balance.TotalBalance = balance.AvailableBalance + balance.PayoutBalance;
 
             _unitOfWork.BalanceRepository.Update(balance);
             await _unitOfWork.SaveAsync();
@@ -148,6 +151,77 @@ public class BalanceService : IBalanceService
                 Message = e.Message,
                 Result = null,
                 StatusCode = 500
+            };
+        }
+    }
+
+    public async Task<ResponseDTO> UpdateAvailableBalanceByOrderId(Guid orderHeaderId)
+    {
+        try
+        {
+            var ordersDetails =
+                await _unitOfWork.OrderDetailsRepository.GetAllAsync(x => x.OrderHeaderId == orderHeaderId);
+
+            foreach (var orderDetails in ordersDetails)
+            {
+                var course = await _unitOfWork.CourseRepository.GetAsync
+                (
+                    x => x.Id == orderDetails.CourseId
+                );
+
+                var instructor = await _unitOfWork.InstructorRepository.GetAsync
+                (
+                    x => x.InstructorId == course!.InstructorId
+                );
+
+                await _stripeService.CreateTransfer
+                (
+                    new CreateStripeTransferDTO()
+                    {
+                        Currency = "usd",
+                        UserId = instructor!.UserId,
+                        Amount = (long)(orderDetails.CoursePrice),
+                        ConnectedAccountId = instructor.StripeAccountId
+                    }
+                );
+
+                await UpsertBalance(
+                    new UpsertBalanceDTO()
+                    {
+                        Currency = "usd",
+                        AvailableBalance = orderDetails.CoursePrice,
+                        PayoutBalance = 0,
+                        UserId = instructor.UserId
+                    }
+                );
+
+                await _transactionService.CreateTransaction
+                (
+                    new CreateTransactionDTO()
+                    {
+                        UserId = instructor.UserId,
+                        Amount = orderDetails.CoursePrice,
+                        Type = StaticEnum.TransactionType.Income,
+                    }
+                );
+            }
+
+            return new ResponseDTO()
+            {
+                Message = "Update balance successfully",
+                IsSuccess = true,
+                StatusCode = 200,
+                Result = null
+            };
+        }
+        catch (Exception e)
+        {
+            return new ResponseDTO()
+            {
+                Message = e.Message,
+                IsSuccess = false,
+                StatusCode = 500,
+                Result = null
             };
         }
     }

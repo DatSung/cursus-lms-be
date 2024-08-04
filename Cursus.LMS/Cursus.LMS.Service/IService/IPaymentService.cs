@@ -10,7 +10,7 @@ public interface IPaymentService
         ClaimsPrincipal User,
         CreateStripeConnectedAccountDTO createStripeConnectedAccountDto
     );
-
+    
     Task<ResponseDTO> CreateStripeTransfer(CreateStripeTransferDTO createStripeTransferDto);
     Task<ResponseDTO> AddStripeCard(AddStripeCardDTO addStripeCardDto);
     Task<ResponseDTO> CreateStripePayout(ClaimsPrincipal User, CreateStripePayoutDTO createStripePayoutDto);
