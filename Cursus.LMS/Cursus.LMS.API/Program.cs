@@ -23,7 +23,7 @@ builder.Services.AddHttpClient();
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
 {
     options.UseSqlServer(
-        builder.Configuration.GetConnectionString(StaticConnectionString.SQLDB_DefaultConnection));
+        builder.Configuration.GetConnectionString(StaticConnectionString.SQLDB_LocalDefaultConnection));
 });
 
 // Set time token
