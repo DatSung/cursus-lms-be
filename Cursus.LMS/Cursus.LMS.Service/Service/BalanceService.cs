@@ -180,7 +180,7 @@ public class BalanceService : IBalanceService
                     {
                         Currency = "usd",
                         UserId = instructor!.UserId,
-                        Amount = (long)(orderDetails.CoursePrice * 100),
+                        Amount = (long)(orderDetails.CoursePrice),
                         ConnectedAccountId = instructor.StripeAccountId
                     }
                 );
