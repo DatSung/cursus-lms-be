@@ -284,7 +284,7 @@ public class CourseService : ICourseService
                 courseVersions = courseVersions.Skip(skipResult).Take(pageSize).ToList();
             }
 
-            var courseVersionDto = _mapper.Map<List<GetCourseVersionDTO>>(courseVersions);
+            var courseVersionDto = _mapper.Map<List<GetCourseDTO>>(courseVersions);
 
             return new ResponseDTO()
             {
@@ -549,7 +549,12 @@ public class CourseService : ICourseService
                 };
             }
 
-            var courseVersion = await _unitOfWork.CourseVersionRepository.GetAsync(x => x.Id == course.CourseVersionId);
+            var courseVersion = await _unitOfWork.CourseVersionRepository
+                .GetAsync
+                (
+                    filter: x => x.Id == course.CourseVersionId,
+                    includeProperties: "Category,Level"
+                );
 
             if (courseVersion is null)
             {
@@ -562,7 +567,7 @@ public class CourseService : ICourseService
                 };
             }
 
-            var courseVersionDto = _mapper.Map<GetCourseVersionDTO>(courseVersion);
+            var courseVersionDto = _mapper.Map<GetCourseDTO>(courseVersion);
 
             return new ResponseDTO()
             {
