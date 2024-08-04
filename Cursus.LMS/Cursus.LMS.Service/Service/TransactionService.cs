@@ -167,6 +167,11 @@ public class TransactionService : ITransactionService
                 Type = createTransactionDto.Type
             };
 
+            if (transaction.Type == StaticEnum.TransactionType.Purchase)
+            {
+                transaction.Amount *= 1.1;
+            }
+
             await _unitOfWork.TransactionRepository.AddAsync(transaction);
             await _unitOfWork.SaveAsync();
 

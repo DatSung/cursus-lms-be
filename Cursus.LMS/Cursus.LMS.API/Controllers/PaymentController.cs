@@ -47,7 +47,7 @@ namespace Cursus.LMS.API.Controllers
 
         [HttpGet]
         [Route("transaction")]
-        [Authorize(Roles = StaticUserRoles.AdminInstructor)]
+        [Authorize]
         public async Task<ActionResult<ResponseDTO>> GetTransactionHistory
         (
             [FromQuery] string? userId,

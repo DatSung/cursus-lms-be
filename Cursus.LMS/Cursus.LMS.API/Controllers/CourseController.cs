@@ -552,5 +552,21 @@ namespace Cursus.LMS.API.Controllers
             var responseDto = await _courseService.GetTopRatedCourses();
             return StatusCode(responseDto.StatusCode, responseDto);
         }
+
+        [HttpGet]
+        [Route("courses/rate/avg")]
+        public async Task<ActionResult<ResponseDTO>> GetCourseRateAvg([FromQuery] Guid courseId)
+        {
+            var responseDto = await _courseService.GetCourseRateTotal(courseId);
+            return StatusCode(responseDto.StatusCode, responseDto);
+        }
+
+        [HttpGet]
+        [Route("courses/slot/total")]
+        public async Task<ActionResult<ResponseDTO>> GetCourseSlotTotal([FromQuery] Guid courseId)
+        {
+            var responseDto = await _courseService.GetCourseSlotTotal(courseId);
+            return StatusCode(responseDto.StatusCode, responseDto);
+        }
     }
 }

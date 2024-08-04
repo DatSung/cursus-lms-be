@@ -284,7 +284,7 @@ public class CourseService : ICourseService
                 courseVersions = courseVersions.Skip(skipResult).Take(pageSize).ToList();
             }
 
-            var courseVersionDto = _mapper.Map<List<GetCourseVersionDTO>>(courseVersions);
+            var courseVersionDto = _mapper.Map<List<GetCourseDTO>>(courseVersions);
 
             return new ResponseDTO()
             {
@@ -549,7 +549,12 @@ public class CourseService : ICourseService
                 };
             }
 
-            var courseVersion = await _unitOfWork.CourseVersionRepository.GetAsync(x => x.Id == course.CourseVersionId);
+            var courseVersion = await _unitOfWork.CourseVersionRepository
+                .GetAsync
+                (
+                    filter: x => x.Id == course.CourseVersionId,
+                    includeProperties: "Category,Level"
+                );
 
             if (courseVersion is null)
             {
@@ -562,7 +567,7 @@ public class CourseService : ICourseService
                 };
             }
 
-            var courseVersionDto = _mapper.Map<GetCourseVersionDTO>(courseVersion);
+            var courseVersionDto = _mapper.Map<GetCourseDTO>(courseVersion);
 
             return new ResponseDTO()
             {
@@ -725,6 +730,13 @@ public class CourseService : ICourseService
     {
         try
         {
+            var userId = User.Claims.FirstOrDefault(x => x.Type == ClaimTypes.NameIdentifier)!.Value;
+            var studentId = _unitOfWork.StudentRepository
+                .GetAsync(x => x.UserId == userId)
+                .GetAwaiter()
+                .GetResult()!
+                .StudentId;
+            enrollCourseDto.studentId = studentId;
             var studentCourse = await _unitOfWork.StudentCourseRepository.GetAsync
             (
                 x => x.StudentId == enrollCourseDto.studentId && x.CourseId == enrollCourseDto.courseId
@@ -753,11 +765,11 @@ public class CourseService : ICourseService
                 };
             }
 
-            if (studentCourse.Status != StaticStatus.StudentCourse.Pending)
+            if (studentCourse.Status != StaticStatus.StudentCourse.Confirmed)
             {
                 return new ResponseDTO()
                 {
-                    Message = "Student was not own this course",
+                    Message = "This course was not confirmed by admin",
                     IsSuccess = false,
                     StatusCode = 400,
                     Result = null
@@ -1268,6 +1280,92 @@ public class CourseService : ICourseService
             {
                 Result = topRatedCourses,
                 Message = "Get top rated courses successfully",
+                IsSuccess = true,
+                StatusCode = 200
+            };
+        }
+        catch (Exception ex)
+        {
+            return new ResponseDTO
+            {
+                Message = ex.Message,
+                IsSuccess = false,
+                StatusCode = 500,
+                Result = null
+            };
+        }
+    }
+
+    public async Task<ResponseDTO> GetCourseRateTotal(Guid courseId)
+    {
+        try
+        {
+            // Fetch all courses
+            var course = await _unitOfWork.CourseRepository.GetAsync(
+                filter: c => c.Id == courseId
+            );
+
+            if (course is null)
+            {
+                return new ResponseDTO()
+                {
+                    Message = "Course was not found",
+                    IsSuccess = false,
+                    StatusCode = 404,
+                    Result = null
+                };
+            }
+
+            return new ResponseDTO
+            {
+                Result = new
+                {
+                    Rate = course.TotalRate
+                },
+                Message = "Get course total rate successfully",
+                IsSuccess = true,
+                StatusCode = 200
+            };
+        }
+        catch (Exception ex)
+        {
+            return new ResponseDTO
+            {
+                Message = ex.Message,
+                IsSuccess = false,
+                StatusCode = 500,
+                Result = null
+            };
+        }
+    }
+
+    public async Task<ResponseDTO> GetCourseSlotTotal(Guid courseId)
+    {
+        try
+        {
+            // Fetch all courses
+            var course = await _unitOfWork.CourseRepository.GetAsync(
+                filter: c => c.Id == courseId
+            );
+
+            if (course is null)
+            {
+                return new ResponseDTO()
+                {
+                    Message = "Course was not found",
+                    IsSuccess = false,
+                    StatusCode = 404,
+                    Result = null
+                };
+            }
+
+            return new ResponseDTO
+            {
+                Result = new
+                {
+                    Slot = course.TotalStudent
+                },
+                Message = "Get course total slot successfully",
                 IsSuccess = true,
                 StatusCode = 200
             };

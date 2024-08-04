@@ -61,24 +61,6 @@ namespace Cursus.LMS.API.Controllers
             return StatusCode(responseDto.StatusCode, responseDto);
         }
 
-        [HttpGet]
-        [Route("money/earned/total/{instructorId:guid}")]
-        [Authorize(Roles = StaticUserRoles.AdminInstructor)]
-        public async Task<ActionResult<ResponseDTO>> GetTotalEarnedMoneyInstructorById([FromRoute] Guid instructorId)
-        {
-            var responseDto = await _instructorService.GetInstructorEarnedMoney(instructorId);
-            return StatusCode(responseDto.StatusCode, responseDto);
-        }
-
-        [HttpGet]
-        [Route("money/payout/total/{instructorId:guid}")]
-        [Authorize(Roles = StaticUserRoles.AdminInstructor)]
-        public async Task<ActionResult<ResponseDTO>> GetTotalPayoutMoneyInstructorById([FromRoute] Guid instructorId)
-        {
-            var responseDto = await _instructorService.GetInstructorPayoutMoney(instructorId);
-            return StatusCode(responseDto.StatusCode, responseDto);
-        }
-
         [HttpPut]
         [Authorize(Roles = StaticUserRoles.AdminInstructor)]
         public async Task<ActionResult<ResponseDTO>> UpdateInstructorById([FromBody] UpdateInstructorDTO instructorDto)

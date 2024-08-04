@@ -136,7 +136,7 @@ public class InstructorService : IInstructorService
 
             return new ResponseDTO()
             {
-                Message = "Get all category successfully",
+                Message = "Get all instructor successfully",
                 Result = instructorInfoLiteDto,
                 IsSuccess = true,
                 StatusCode = 200
@@ -434,7 +434,7 @@ public class InstructorService : IInstructorService
 
             return new ResponseDTO
             {
-                Message = "Get Total Rating Successfull",
+                Message = "Get total rating successfully",
                 IsSuccess = true,
                 StatusCode = 200,
                 Result = new InstructorAvgCount()
