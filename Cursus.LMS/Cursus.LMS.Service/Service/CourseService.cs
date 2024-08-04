@@ -730,6 +730,13 @@ public class CourseService : ICourseService
     {
         try
         {
+            var userId = User.Claims.FirstOrDefault(x => x.Type == ClaimTypes.NameIdentifier)!.Value;
+            var studentId = _unitOfWork.StudentRepository
+                .GetAsync(x => x.UserId == userId)
+                .GetAwaiter()
+                .GetResult()!
+                .StudentId;
+            enrollCourseDto.studentId = studentId;
             var studentCourse = await _unitOfWork.StudentCourseRepository.GetAsync
             (
                 x => x.StudentId == enrollCourseDto.studentId && x.CourseId == enrollCourseDto.courseId
@@ -762,7 +769,7 @@ public class CourseService : ICourseService
             {
                 return new ResponseDTO()
                 {
-                    Message = "Student was not own this course",
+                    Message = "This course was not confirmed by admin",
                     IsSuccess = false,
                     StatusCode = 400,
                     Result = null
