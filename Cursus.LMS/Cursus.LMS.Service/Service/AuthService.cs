@@ -220,7 +220,8 @@ public class AuthService : IAuthService
             }
 
             var isPhonenumerExit =
-                await _userManager.Users.AnyAsync(u => u.PhoneNumber == signUpInstructorDto.PhoneNumber);
+                await _userManagerRepository.CheckIfPhoneNumberExistsAsync(signUpInstructorDto.PhoneNumber);
+            
             if (isPhonenumerExit)
             {
                 return new ResponseDTO()
@@ -1030,7 +1031,7 @@ public class AuthService : IAuthService
         {
             return new()
             {
-                Message = confirmResult.Errors.ToString(),
+                Message = "Invalid token",
                 StatusCode = 400,
                 IsSuccess = false,
                 Result = null
@@ -1086,6 +1087,7 @@ public class AuthService : IAuthService
         try
         {
             var user = await _userManager.Users.FirstOrDefaultAsync(x => x.PhoneNumber == phoneNumber);
+
             return new()
             {
                 Result = user is not null,
@@ -1137,8 +1139,7 @@ public class AuthService : IAuthService
 
             // Check if phone number is user by another user but not the user to update
             var isPhonenumerExit =
-                await _userManager.Users.AnyAsync(
-                    u => u.PhoneNumber == studentProfileDto.PhoneNumber && u.Id != user.Id);
+                await _userManagerRepository.CheckIfPhoneNumberExistsAsync(studentProfileDto.PhoneNumber);
             if (isPhonenumerExit)
             {
                 return new ResponseDTO()
