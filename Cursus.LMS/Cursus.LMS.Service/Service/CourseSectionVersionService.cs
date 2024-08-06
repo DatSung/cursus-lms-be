@@ -259,7 +259,7 @@ public class CourseSectionVersionService : ICourseSectionVersionService
                 return new ResponseDTO()
                 {
                     Result = "",
-                    Message = "courseSection Version was not found",
+                    Message = "Course section version was not found",
                     IsSuccess = true,
                     StatusCode = 404
                 };
@@ -302,7 +302,7 @@ public class CourseSectionVersionService : ICourseSectionVersionService
             {
                 return new ResponseDTO()
                 {
-                    Message = "CourseVersionId Invalid",
+                    Message = "Course version was not found",
                     Result = null,
                     IsSuccess = false,
                     StatusCode = 400
