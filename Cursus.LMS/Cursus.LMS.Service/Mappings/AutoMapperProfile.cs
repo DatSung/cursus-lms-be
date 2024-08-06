@@ -107,6 +107,8 @@ public class AutoMapperProfile : Profile
             .ForMember(dest => dest.CategoryName, opt => opt.MapFrom(src => src.Category.Name))
             .ForMember(dest => dest.LevelName, opt => opt.MapFrom(src => src.Level.Name));
 
+        CreateMap<CourseSectionVersion, GetCourseSectionDTO>().ReverseMap();
+        
         CreateMap<CourseVersionStatus, GetCourseVersionStatusDTO>().ReverseMap();
 
         CreateMap<CourseVersionComment, GetCourseCommnetDTO>()
