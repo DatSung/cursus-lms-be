@@ -450,6 +450,17 @@ public class OrderService : IOrderService
                 };
             }
 
+            if (orderHeader.Status != StaticStatus.Order.Pending)
+            {
+                return new ResponseDTO()
+                {
+                    Message = "Order was validated",
+                    Result = null,
+                    IsSuccess = true,
+                    StatusCode = 200
+                };
+            }
+
             var student = await _unitOfWork.StudentRepository.GetAsync(x => x.StudentId == orderHeader.StudentId);
 
             if (student is null)
