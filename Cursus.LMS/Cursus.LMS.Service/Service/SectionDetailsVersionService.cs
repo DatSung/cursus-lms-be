@@ -550,6 +550,11 @@ public class SectionDetailsVersionService : ISectionDetailsVersionService
         {
             var user = await _userManager.FindByIdAsync(userId);
 
+            if (user is null)
+            {
+                throw new Exception("User was not found");
+            }
+            
             if (sectionDetailsVersionId.ToString().IsNullOrEmpty())
             {
                 throw new Exception("Section details was not found!");
@@ -659,6 +664,10 @@ public class SectionDetailsVersionService : ISectionDetailsVersionService
 
                     break;
                 }
+                default:
+                {
+                    throw new Exception("Content type was not correct");
+                };
             }
 
             if (stream is null)
