@@ -446,7 +446,7 @@ namespace Cursus.LMS.API.Controllers
 
             if (contentResponseDto.Stream is null)
             {
-                return NotFound("Content was not found");
+                return NotFound(contentResponseDto.Message);
             }
 
             if (contentResponseDto.ContentType is StaticFileExtensions.Mov or StaticFileExtensions.Mp4)
