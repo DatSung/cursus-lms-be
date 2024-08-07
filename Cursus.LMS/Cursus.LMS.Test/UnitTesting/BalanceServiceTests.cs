@@ -8,18 +8,26 @@ using Cursus.LMS.Model.DTO;
 using Cursus.LMS.Service.Service;
 using Cursus.LMS.Service.IService;
 using System.Linq.Expressions;
+using AutoMapper;
 
 namespace Cursus.LMS.Service.Tests
 {
     public class BalanceServiceTests
     {
         private readonly Mock<IUnitOfWork> _mockUnitOfWork;
+        private readonly Mock<IMapper> _mockMapper;
+        private readonly Mock<IStripeService> _mockStripeService;
+        private readonly Mock<ITransactionService> _mockTransactionService;
+
         private readonly BalanceService _balanceService;
 
         public BalanceServiceTests()
         {
             _mockUnitOfWork = new Mock<IUnitOfWork>();
-            _balanceService = new BalanceService(_mockUnitOfWork.Object);
+            _mockMapper = new Mock<IMapper>();
+            _mockStripeService = new Mock<IStripeService>();
+            _mockTransactionService = new Mock<ITransactionService>();
+            _balanceService = new BalanceService(_mockUnitOfWork.Object, _mockMapper.Object,_mockStripeService.Object,_mockTransactionService.Object);
         }
 
         [Fact]
@@ -29,7 +37,6 @@ namespace Cursus.LMS.Service.Tests
             var upsertBalanceDto = new UpsertBalanceDTO
             {
                 UserId = "upsertBalance ID",
-                TotalBalance = 100,
                 AvailableBalance = 50,
                 PayoutBalance = 30
             };
@@ -64,7 +71,6 @@ namespace Cursus.LMS.Service.Tests
             var upsertBalanceDto = new UpsertBalanceDTO
             {
                 UserId = "upsertBalance ID",
-                TotalBalance = 100,
                 AvailableBalance = 50,
                 PayoutBalance = 30
             };

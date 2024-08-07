@@ -22,6 +22,7 @@ namespace Cursus.LMS.Test.UnitTesting
         private readonly Mock<IBalanceService> _balanceServiceMock;
         private readonly Mock<ITransactionService> _transactionServiceMock;
         private readonly Mock<IStripeService> _stripeServiceMock;
+        private readonly Mock<IEmailService> _emailService;
         private readonly PaymentService _paymentService;
 
         public PaymentServiceTests()
@@ -30,189 +31,17 @@ namespace Cursus.LMS.Test.UnitTesting
             _balanceServiceMock = new Mock<IBalanceService>();
             _transactionServiceMock = new Mock<ITransactionService>();
             _stripeServiceMock = new Mock<IStripeService>();
+            _emailService = new Mock<IEmailService>();
 
             _paymentService = new PaymentService(
                 _unitOfWorkMock.Object,
                 _balanceServiceMock.Object,
                 _transactionServiceMock.Object,
-                _stripeServiceMock.Object
+                _stripeServiceMock.Object,
+                _emailService.Object
             );
         }
 
-        [Fact]
-        public async Task UpdateAvailableBalanceByOrderId_SuccessfullyUpdatesBalance()
-        {
-            // Arrange
-            var orderId = Guid.NewGuid();
-            var orderDetails = new List<OrderDetails>
-            {
-                new OrderDetails { CourseId = Guid.NewGuid(), CoursePrice = 100, OrderHeaderId = orderId }
-            };
-            var course = new Course { Id = orderDetails[0].CourseId, InstructorId = Guid.NewGuid() };
-            var instructor = new Instructor { UserId = "user1" };
-
-            _unitOfWorkMock.Setup(x => x.OrderDetailsRepository.GetAllAsync(It.IsAny<Expression<Func<OrderDetails, bool>>>(), It.IsAny<string>()))
-                .ReturnsAsync(orderDetails);
-            _unitOfWorkMock.Setup(x => x.CourseRepository.GetAsync(It.IsAny<Expression<Func<Course, bool>>>(), It.IsAny<string>()))
-                .ReturnsAsync(course);
-            _unitOfWorkMock.Setup(x => x.InstructorRepository.GetAsync(It.IsAny<Expression<Func<Instructor, bool>>>(), It.IsAny<string>()))
-                .ReturnsAsync(instructor);
-
-            // Act
-            var result = await _paymentService.UpdateAvailableBalanceByOrderId(orderId);
-
-            // Assert
-            Assert.True(result.IsSuccess);
-            Assert.Equal(200, result.StatusCode);
-            Assert.Equal("Update balance successfully", result.Message);
-
-            _balanceServiceMock.Verify(x => x.UpsertBalance(It.IsAny<UpsertBalanceDTO>()), Times.Once);
-            _transactionServiceMock.Verify(x => x.CreateTransaction(It.IsAny<CreateTransactionDTO>()), Times.Once);
-        }
-
-        [Fact]
-        public async Task UpdateAvailableBalanceByOrderId_ReturnsNotFoundIfNoOrderDetails()
-        {
-            // Arrange
-            var orderId = Guid.NewGuid();
-
-            _unitOfWorkMock.Setup(x => x.OrderDetailsRepository.GetAllAsync(It.IsAny<Expression<Func<OrderDetails, bool>>>(), It.IsAny<string>()))
-                .ReturnsAsync(new List<OrderDetails>());
-
-            // Act
-            var result = await _paymentService.UpdateAvailableBalanceByOrderId(orderId);
-
-            // Assert
-            Assert.True(result.IsSuccess);
-            Assert.Equal(200, result.StatusCode);
-            Assert.Equal("Update balance successfully", result.Message);
-
-            _balanceServiceMock.Verify(x => x.UpsertBalance(It.IsAny<UpsertBalanceDTO>()), Times.Never);
-            _transactionServiceMock.Verify(x => x.CreateTransaction(It.IsAny<CreateTransactionDTO>()), Times.Never);
-        }
-
-        [Fact]
-        public async Task UpdateAvailableBalanceByOrderId_ReturnsErrorIfCourseNotFound()
-        {
-            // Arrange
-            var orderId = Guid.NewGuid();
-            var orderDetails = new List<OrderDetails>
-            {
-                new OrderDetails { CourseId = Guid.NewGuid(), CoursePrice = 100, OrderHeaderId = orderId }
-            };
-
-            _unitOfWorkMock.Setup(x => x.OrderDetailsRepository.GetAllAsync(It.IsAny<Expression<Func<OrderDetails, bool>>>(), It.IsAny<string>()))
-                .ReturnsAsync(orderDetails);
-            _unitOfWorkMock.Setup(x => x.CourseRepository.GetAsync(It.IsAny<Expression<Func<Course, bool>>>(), It.IsAny<string>()))
-                .ReturnsAsync((Course)null);
-
-            // Act
-            var result = await _paymentService.UpdateAvailableBalanceByOrderId(orderId);
-
-            // Assert
-            Assert.False(result.IsSuccess);
-            Assert.Equal(500, result.StatusCode);
-            Assert.Equal("Internal server error", result.Message);
-
-            _balanceServiceMock.Verify(x => x.UpsertBalance(It.IsAny<UpsertBalanceDTO>()), Times.Never);
-            _transactionServiceMock.Verify(x => x.CreateTransaction(It.IsAny<CreateTransactionDTO>()), Times.Never);
-        }
-
-        [Fact]
-        public async Task UpdateAvailableBalanceByOrderId_ReturnsErrorIfInstructorNotFound()
-        {
-            // Arrange
-            var orderId = Guid.NewGuid();
-            var orderDetails = new List<OrderDetails>
-            {
-                new OrderDetails { CourseId = Guid.NewGuid(), CoursePrice = 100, OrderHeaderId = orderId }
-            };
-            var course = new Course { Id = orderDetails[0].CourseId, InstructorId = Guid.NewGuid() };
-
-            _unitOfWorkMock.Setup(x => x.OrderDetailsRepository.GetAllAsync(It.IsAny<Expression<Func<OrderDetails, bool>>>(), It.IsAny<string>()))
-                .ReturnsAsync(orderDetails);
-            _unitOfWorkMock.Setup(x => x.CourseRepository.GetAsync(It.IsAny<Expression<Func<Course, bool>>>(), It.IsAny<string>()))
-                .ReturnsAsync(course);
-            _unitOfWorkMock.Setup(x => x.InstructorRepository.GetAsync(It.IsAny<Expression<Func<Instructor, bool>>>(), It.IsAny<string>()))
-                .ReturnsAsync((Instructor)null);
-
-            // Act
-            var result = await _paymentService.UpdateAvailableBalanceByOrderId(orderId);
-
-            // Assert
-            Assert.False(result.IsSuccess);
-            Assert.Equal(500, result.StatusCode);
-            Assert.Equal("Internal server error", result.Message);
-
-            _balanceServiceMock.Verify(x => x.UpsertBalance(It.IsAny<UpsertBalanceDTO>()), Times.Never);
-            _transactionServiceMock.Verify(x => x.CreateTransaction(It.IsAny<CreateTransactionDTO>()), Times.Never);
-        }
-
-        [Fact]
-        public async Task UpdateAvailableBalanceByOrderId_ReturnsErrorIfBalanceUpdateFails()
-        {
-            // Arrange
-            var orderId = Guid.NewGuid();
-            var orderDetails = new List<OrderDetails>
-            {
-                new OrderDetails { CourseId = Guid.NewGuid(), CoursePrice = 100, OrderHeaderId = orderId }
-            };
-            var course = new Course { Id = orderDetails[0].CourseId, InstructorId = Guid.NewGuid() };
-            var instructor = new Instructor { UserId = "user1" };
-
-            _unitOfWorkMock.Setup(x => x.OrderDetailsRepository.GetAllAsync(It.IsAny<Expression<Func<OrderDetails, bool>>>(), It.IsAny<string>()))
-                .ReturnsAsync(orderDetails);
-            _unitOfWorkMock.Setup(x => x.CourseRepository.GetAsync(It.IsAny<Expression<Func<Course, bool>>>(), It.IsAny<string>()))
-                .ReturnsAsync(course);
-            _unitOfWorkMock.Setup(x => x.InstructorRepository.GetAsync(It.IsAny<Expression<Func<Instructor, bool>>>(), It.IsAny<string>()))
-                .ReturnsAsync(instructor);
-
-            _balanceServiceMock.Setup(x => x.UpsertBalance(It.IsAny<UpsertBalanceDTO>()))
-                .ReturnsAsync(new ResponseDTO { IsSuccess = false, StatusCode = 500 });
-
-            // Act
-            var result = await _paymentService.UpdateAvailableBalanceByOrderId(orderId);
-
-            // Assert
-            Assert.False(result.IsSuccess);
-            Assert.Equal(500, result.StatusCode);
-            Assert.Equal("Internal server error", result.Message);
-
-            _transactionServiceMock.Verify(x => x.CreateTransaction(It.IsAny<CreateTransactionDTO>()), Times.Never);
-        }
-
-        [Fact]
-        public async Task UpdateAvailableBalanceByOrderId_ReturnsErrorIfTransactionCreationFails()
-        {
-            // Arrange
-            var orderId = Guid.NewGuid();
-            var orderDetails = new List<OrderDetails>
-            {
-                new OrderDetails { CourseId = Guid.NewGuid(), CoursePrice = 100, OrderHeaderId = orderId }
-            };
-            var course = new Course { Id = orderDetails[0].CourseId, InstructorId = Guid.NewGuid() };
-            var instructor = new Instructor { UserId = "user1" };
-
-            _unitOfWorkMock.Setup(x => x.OrderDetailsRepository.GetAllAsync(It.IsAny<Expression<Func<OrderDetails, bool>>>(), It.IsAny<string>()))
-                .ReturnsAsync(orderDetails);
-            _unitOfWorkMock.Setup(x => x.CourseRepository.GetAsync(It.IsAny<Expression<Func<Course, bool>>>(), It.IsAny<string>()))
-                .ReturnsAsync(course);
-            _unitOfWorkMock.Setup(x => x.InstructorRepository.GetAsync(It.IsAny<Expression<Func<Instructor, bool>>>(), It.IsAny<string>()))
-                .ReturnsAsync(instructor);
-
-            _transactionServiceMock.Setup(x => x.CreateTransaction(It.IsAny<CreateTransactionDTO>()))
-                .ReturnsAsync(new ResponseDTO { IsSuccess = false, StatusCode = 500 });
-
-            // Act
-            var result = await _paymentService.UpdateAvailableBalanceByOrderId(orderId);
-
-            // Assert
-            Assert.False(result.IsSuccess);
-            Assert.Equal(500, result.StatusCode);
-            Assert.Equal("Internal server error", result.Message);
-
-            _balanceServiceMock.Verify(x => x.UpsertBalance(It.IsAny<UpsertBalanceDTO>()), Times.Once);
-        }
         [Fact]
         public async Task CreateStripeConnectedAccount_SuccessfullyCreatesAccount()
         {

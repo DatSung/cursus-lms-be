@@ -25,6 +25,7 @@ namespace Cursus.LMS.Test.UnitTesting
         private readonly Mock<IStudentCourseService> _studentCourseServiceMock;
         private readonly Mock<ITransactionService> _transactionServiceMock;
         private readonly Mock<ICourseService> _courseServiceMock;
+        private readonly Mock<IBalanceService> _balanceService;
         private readonly OrderService _service;
 
         public OrderServiceTests()
@@ -36,6 +37,7 @@ namespace Cursus.LMS.Test.UnitTesting
             _studentCourseServiceMock = new Mock<IStudentCourseService>();
             _transactionServiceMock = new Mock<ITransactionService>();
             _courseServiceMock = new Mock<ICourseService>();
+            _balanceService = new Mock<IBalanceService>();
 
             _service = new OrderService(
                 _unitOfWorkMock.Object,
@@ -44,7 +46,8 @@ namespace Cursus.LMS.Test.UnitTesting
                 _stripeServiceMock.Object,
                 _studentCourseServiceMock.Object,
                 _transactionServiceMock.Object,
-                _courseServiceMock.Object
+                _courseServiceMock.Object,
+                _balanceService.Object
             );
         }
 

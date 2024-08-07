@@ -186,7 +186,7 @@ namespace Cursus.LMS.Tests
                           .ReturnsAsync((Course)null);
 
             // Act
-            var result = await service.CreateCourseReview(createCourseReviewDTO);
+            var result = await service.CreateCourseReview(new ClaimsPrincipal(), createCourseReviewDTO);
 
             // Assert
             Assert.False(result.IsSuccess);
@@ -209,7 +209,7 @@ namespace Cursus.LMS.Tests
                           .ReturnsAsync((Student)null);
 
             // Act
-            var result = await service.CreateCourseReview(createCourseReviewDTO);
+            var result = await service.CreateCourseReview(new ClaimsPrincipal(), createCourseReviewDTO);
 
             // Assert
             Assert.False(result.IsSuccess);

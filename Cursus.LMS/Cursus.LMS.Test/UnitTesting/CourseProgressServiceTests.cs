@@ -2,10 +2,12 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
+using System.Security.Claims;
 using System.Threading.Tasks;
 using Cursus.LMS.DataAccess.IRepository;
 using Cursus.LMS.Model.Domain;
 using Cursus.LMS.Model.DTO;
+using Cursus.LMS.Service.IService;
 using Cursus.LMS.Service.Service;
 using Moq;
 using Xunit;
@@ -15,12 +17,16 @@ namespace Cursus.LMS.Test.UnitTesting
     public class CourseProgressServiceTests
     {
         private readonly Mock<IUnitOfWork> _mockUnitOfWork;
+        private readonly Mock<IStudentCourseService> _mockStudentCourseService;
+        private readonly Mock<IEmailService> _mockEmailService;
         private readonly CourseProgressService _courseProgressService;
 
         public CourseProgressServiceTests()
         {
             _mockUnitOfWork = new Mock<IUnitOfWork>();
-            _courseProgressService = new CourseProgressService(_mockUnitOfWork.Object);
+            _mockEmailService = new Mock<IEmailService>();
+            _mockStudentCourseService = new Mock<IStudentCourseService>();
+            _courseProgressService = new CourseProgressService(_mockUnitOfWork.Object,_mockStudentCourseService.Object,_mockEmailService.Object);
         }
 
         [Fact]
@@ -103,7 +109,7 @@ namespace Cursus.LMS.Test.UnitTesting
                 .ReturnsAsync(courseProgress);
 
             // Act
-            var result = await _courseProgressService.UpdateProgress(updateProgressDto);
+            var result = await _courseProgressService.UpdateProgress(new ClaimsPrincipal(), updateProgressDto);
 
             // Assert
             Assert.True(result.IsSuccess);
@@ -121,7 +127,7 @@ namespace Cursus.LMS.Test.UnitTesting
                 .ReturnsAsync((StudentCourse)null);
 
             // Act
-            var result = await _courseProgressService.UpdateProgress(updateProgressDto);
+            var result = await _courseProgressService.UpdateProgress(new ClaimsPrincipal(),updateProgressDto);
 
             // Assert
             Assert.False(result.IsSuccess);
@@ -142,7 +148,7 @@ namespace Cursus.LMS.Test.UnitTesting
                 .ReturnsAsync((CourseProgress)null);
 
             // Act
-            var result = await _courseProgressService.UpdateProgress(updateProgressDto);
+            var result = await _courseProgressService.UpdateProgress(new ClaimsPrincipal(),updateProgressDto);
 
             // Assert
             Assert.False(result.IsSuccess);
