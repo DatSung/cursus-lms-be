@@ -56,7 +56,7 @@ public class CourseService : ICourseService
                 return new ResponseDTO()
                 {
                     Message = "Permission to create course was not found",
-                    IsSuccess = true,
+                    IsSuccess = false,
                     StatusCode = 403,
                     Result = null
                 };
@@ -892,8 +892,6 @@ public class CourseService : ICourseService
             //Lấy danh sách các khóa học mà student đã mua
             var courses = await _unitOfWork.StudentCourseRepository.GetAllAsync
                 (c => c.StudentId == studentId && c.Status == 0 || c.Status == 1 || c.Status == 3);
-            var coursesEnroll = courses.Select(c => c.CourseId).Distinct().ToList();
-
             if (courses == null || !courses.Any())
             {
                 return new ResponseDTO()
@@ -904,6 +902,9 @@ public class CourseService : ICourseService
                     Result = null
                 };
             }
+            var coursesEnroll = courses.Select(c => c.CourseId).Distinct().ToList();
+
+            
 
             //tạo danh sách gợi ý khóa học
             var suggestCourse = new List<Course>();
@@ -955,7 +956,7 @@ public class CourseService : ICourseService
                 Message = e.Message,
                 StatusCode = 500,
                 Result = null,
-                IsSuccess = true
+                IsSuccess = false
             };
         }
     }
@@ -1224,11 +1225,15 @@ public class CourseService : ICourseService
                 filter: x => x.TotalStudent.HasValue
             );
 
-            // Get all course versions including their categories
-            var courseVersionIds = courses.Select(c => c.CourseVersionId).Distinct();
+            if (courses == null || !courses.Any()) 
+            { 
+                return new List<Category>();
+            }
+
+                // Get all course versions including their categories
+                var courseVersionIds = courses.Select(c => c.CourseVersionId).Distinct();
             var courseVersions = await _unitOfWork.CourseVersionRepository.GetAllAsync(
-                filter: cv => courseVersionIds.Contains(cv.Id),
-                includeProperties: "Category"
+                filter: cv => courseVersionIds.Contains(cv.Id)
             );
 
             // Aggregate total students per category
@@ -1245,6 +1250,12 @@ public class CourseService : ICourseService
                 .OrderByDescending(x => x.TotalStudents)
                 .Take(3)
                 .ToList();
+
+            if (!categoryStudentCounts.Any())
+            {
+                // No category student counts found, return an empty list
+                return new List<Category>();
+            }
 
             // Get the categories
             var categoryIds = categoryStudentCounts.Select(x => x.CategoryId).ToList();
