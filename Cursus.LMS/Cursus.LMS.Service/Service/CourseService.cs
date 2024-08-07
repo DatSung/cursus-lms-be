@@ -337,7 +337,7 @@ public class CourseService : ICourseService
             if (pageNumber > 0 && pageSize > 0)
             {
                 var skipResult = (pageNumber - 1) * pageSize;
-                courses = courses.Skip(skipResult).Take(pageSize).ToList();
+                courseVersions = courseVersions.Skip(skipResult).Take(pageSize).ToList();
             }
 
             var courseVersionDto = _mapper.Map<List<GetCourseDTO>>(courseVersions);
