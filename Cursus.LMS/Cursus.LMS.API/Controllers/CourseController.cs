@@ -141,8 +141,10 @@ namespace Cursus.LMS.API.Controllers
         [HttpPost]
         [Route("review")]
         [Authorize(Roles = StaticUserRoles.Student)]
-        public async Task<ActionResult<ResponseDTO>> CreateCourseReview(
-            [FromBody] CreateCourseReviewDTO createCourseReviewDto)
+        public async Task<ActionResult<ResponseDTO>> CreateCourseReview
+        (
+            [FromBody] CreateCourseReviewDTO createCourseReviewDto
+        )
         {
             if (!ModelState.IsValid)
             {
@@ -157,7 +159,7 @@ namespace Cursus.LMS.API.Controllers
 
             try
             {
-                var responseDto = await _courseReviewService.CreateCourseReview(createCourseReviewDto);
+                var responseDto = await _courseReviewService.CreateCourseReview(User, createCourseReviewDto);
                 return StatusCode(responseDto.StatusCode, responseDto);
             }
             catch (Exception ex)
@@ -501,7 +503,7 @@ namespace Cursus.LMS.API.Controllers
             [FromBody] UpdateProgressDTO updateProgressDto
         )
         {
-            var responseDto = await _courseProgressService.UpdateProgress(updateProgressDto);
+            var responseDto = await _courseProgressService.UpdateProgress(User, updateProgressDto);
             return StatusCode(responseDto.StatusCode, responseDto);
         }
 
@@ -550,6 +552,22 @@ namespace Cursus.LMS.API.Controllers
         public async Task<ActionResult<ResponseDTO>> GetTopRatedCourses()
         {
             var responseDto = await _courseService.GetTopRatedCourses();
+            return StatusCode(responseDto.StatusCode, responseDto);
+        }
+
+        [HttpGet]
+        [Route("courses/rate/avg")]
+        public async Task<ActionResult<ResponseDTO>> GetCourseRateAvg([FromQuery] Guid courseId)
+        {
+            var responseDto = await _courseService.GetCourseRateTotal(courseId);
+            return StatusCode(responseDto.StatusCode, responseDto);
+        }
+
+        [HttpGet]
+        [Route("courses/slot/total")]
+        public async Task<ActionResult<ResponseDTO>> GetCourseSlotTotal([FromQuery] Guid courseId)
+        {
+            var responseDto = await _courseService.GetCourseSlotTotal(courseId);
             return StatusCode(responseDto.StatusCode, responseDto);
         }
     }

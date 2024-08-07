@@ -12,4 +12,30 @@ public class GetTransactionDTO
     public double Amount { get; set; }
     public string Currency { get; set; }
     public DateTime CreatedTime { get; set; }
+
+    public string TypeDescription
+    {
+        get
+        {
+            switch (Type)
+            {
+                case StaticEnum.TransactionType.Purchase:
+                {
+                    return "Purchase";
+                }
+                case StaticEnum.TransactionType.Income:
+                {
+                    return "Income";
+                }
+                case StaticEnum.TransactionType.Payout:
+                {
+                    return "Payout";
+                }
+                default:
+                {
+                    return "";
+                }
+            }
+        }
+    }
 }

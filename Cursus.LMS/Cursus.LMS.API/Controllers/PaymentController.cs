@@ -14,16 +14,40 @@ namespace Cursus.LMS.API.Controllers
     {
         private readonly IPaymentService _paymentService;
         private readonly ITransactionService _transactionService;
+        private readonly IBalanceService _balanceService;
 
-        public PaymentController(IPaymentService paymentService, ITransactionService transactionService)
+        public PaymentController
+        (
+            IPaymentService paymentService,
+            ITransactionService transactionService,
+            IBalanceService balanceService)
         {
             _paymentService = paymentService;
             _transactionService = transactionService;
+            _balanceService = balanceService;
+        }
+
+        [HttpGet]
+        [Route("system/balance")]
+        [Authorize(Roles = StaticUserRoles.Admin)]
+        public async Task<ActionResult<ResponseDTO>> GetSystemBalance()
+        {
+            var responseDto = await _balanceService.GetSystemBalance(User);
+            return StatusCode(responseDto.StatusCode, responseDto);
+        }
+
+        [HttpGet]
+        [Route("instructor/balance")]
+        [Authorize(Roles = StaticUserRoles.AdminInstructor)]
+        public async Task<ActionResult<ResponseDTO>> GetInstructorBalance([FromQuery] string? userId)
+        {
+            var responseDto = await _balanceService.GetInstructorBalance(User, userId);
+            return StatusCode(responseDto.StatusCode, responseDto);
         }
 
         [HttpGet]
         [Route("transaction")]
-        [Authorize(Roles = StaticUserRoles.AdminInstructor)]
+        [Authorize]
         public async Task<ActionResult<ResponseDTO>> GetTransactionHistory
         (
             [FromQuery] string? userId,

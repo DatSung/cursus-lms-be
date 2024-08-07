@@ -5,6 +5,7 @@ using Cursus.LMS.DataAccess.IRepository;
 using Cursus.LMS.Model.Domain;
 using Cursus.LMS.Model.DTO;
 using Cursus.LMS.Service.IService;
+using Cursus.LMS.Utility.Constants;
 using Microsoft.IdentityModel.Tokens;
 
 namespace Cursus.LMS.Service.Service;
@@ -33,12 +34,35 @@ public class TransactionService : ITransactionService
     {
         try
         {
-            if (userId.IsNullOrEmpty())
+            var transactions = new List<Transaction>();
+            var role = User.Claims.FirstOrDefault(x => x.Type == ClaimTypes.Role)!.Value;
+
+            if (role.Contains(StaticUserRoles.Instructor) || role.Contains(StaticUserRoles.Student))
             {
                 userId = User.Claims.FirstOrDefault(x => x.Type == ClaimTypes.NameIdentifier)?.Value;
+                transactions = _unitOfWork.TransactionRepository.GetAllAsync(x => x.UserId == userId).GetAwaiter()
+                    .GetResult().ToList();
             }
 
-            var transactions = await _unitOfWork.TransactionRepository.GetAllAsync(x => x.UserId == userId);
+            if (role.Contains(StaticUserRoles.Admin))
+            {
+                if (userId.IsNullOrEmpty())
+                {
+                    transactions = _unitOfWork.TransactionRepository
+                        .GetAllAsync()
+                        .GetAwaiter()
+                        .GetResult()
+                        .ToList();
+                }
+                else
+                {
+                    transactions = _unitOfWork.TransactionRepository
+                        .GetAllAsync(x => x.UserId == userId)
+                        .GetAwaiter()
+                        .GetResult()
+                        .ToList();
+                }
+            }
 
             // Filter Query
             if (!string.IsNullOrEmpty(filterOn) && !string.IsNullOrEmpty(filterQuery))
@@ -48,8 +72,9 @@ public class TransactionService : ITransactionService
                     case "type":
                     {
                         transactions = transactions.Where
-                        (
-                            x => x.Type.ToString().Contains(filterQuery, StringComparison.CurrentCultureIgnoreCase));
+                            (
+                                x => x.Type.ToString().Contains(filterQuery, StringComparison.CurrentCultureIgnoreCase))
+                            .ToList();
                         break;
                     }
                     case "amount":
@@ -57,7 +82,7 @@ public class TransactionService : ITransactionService
                         transactions = transactions.Where
                         (
                             x => x.Amount.ToString(CultureInfo.InvariantCulture).Contains(filterQuery,
-                                StringComparison.CurrentCultureIgnoreCase));
+                                StringComparison.CurrentCultureIgnoreCase)).ToList();
                         break;
                     }
                     default:
@@ -141,6 +166,11 @@ public class TransactionService : ITransactionService
                 CreatedTime = DateTime.UtcNow,
                 Type = createTransactionDto.Type
             };
+
+            if (transaction.Type == StaticEnum.TransactionType.Purchase)
+            {
+                transaction.Amount *= 1.1;
+            }
 
             await _unitOfWork.TransactionRepository.AddAsync(transaction);
             await _unitOfWork.SaveAsync();

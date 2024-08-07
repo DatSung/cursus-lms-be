@@ -538,14 +538,14 @@ public class AuthService : IAuthService
 
 
     //Sign In bằng email và password trả về role tương ứng
-    public async Task<ResponseDTO> SignIn(SignDTO signDTO)
+    public async Task<ResponseDTO> SignIn(SignDTO signDto)
     {
         try
         {
-            var user = await _userManager.FindByEmailAsync(signDTO.Email);
+            var user = await _userManager.FindByEmailAsync(signDto.Email);
             if (user == null)
             {
-                new ResponseDTO()
+                return new ResponseDTO()
                 {
                     Message = "User does not exist!",
                     Result = null,
@@ -554,7 +554,7 @@ public class AuthService : IAuthService
                 };
             }
 
-            var isPasswordCorrect = await _userManager.CheckPasswordAsync(user, signDTO.Password);
+            var isPasswordCorrect = await _userManager.CheckPasswordAsync(user, signDto.Password);
 
             if (!isPasswordCorrect)
             {

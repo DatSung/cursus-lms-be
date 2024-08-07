@@ -73,7 +73,7 @@ kD:\FPT\Semester 6\Project_Cursus\Backend_Cursus\Cursus.LMS\Cursus.LMS.Model\DTO
 set! $
 ;$ %
 }& '
-} á
+} ¸
 ^D:\FPT\Semester 6\Project_Cursus\Backend_Cursus\Cursus.LMS\Cursus.LMS.Model\DTO\UserInfoDTO.cs
 	namespace 	
 Cursus
@@ -101,72 +101,74 @@ kD:\FPT\Semester 6\Project_Cursus\Backend_Cursus\Cursus.LMS\Cursus.LMS.Model\DTO
 set  #
 ;# $
 }% &
-public 
-string 
-UserName 
+public 
+Guid 
+? 
+	StudentId 
 {  
 get! $
 ;$ %
 set& )
 ;) *
 }+ ,
-public 
-string 
-FullName 
-{  
-get! $
-;$ %
-set& )
-;) *
-}+ ,
+public 
+Guid 
+? 
+InstructorId !
+{" #
+get$ '
+;' (
+set) ,
+;, -
+}. /
 public 
-string 
-Gender 
-{ 
-get "
-;" #
-set$ '
-;' (
-}) *
-public 
-DateTime 
-	Birthdate !
-{" #
-get$ '
-;' (
-set) ,
-;, -
-}. /
+string 
+UserName 
+{  
+get! $
+;$ %
+set& )
+;) *
+}+ ,
+public 
+string 
+FullName 
+{  
+get! $
+;$ %
+set& )
+;) *
+}+ ,
 public 
-string 
-Email 
-{ 
-get !
-;! "
-set# &
-;& '
-}( )
-public 
-string 
-Country 
-{ 
-get  #
-;# $
-set% (
-;( )
-}* +
+string 
+Gender 
+{ 
+get "
+;" #
+set$ '
+;' (
+}) *
+public 
+DateTime 
+	Birthdate !
+{" #
+get$ '
+;' (
+set) ,
+;, -
+}. /
 public 
-string 
-PhoneNumber !
-{" #
-get$ '
-;' (
-set) ,
-;, -
-}. /
+string 
+Email 
+{ 
+get !
+;! "
+set# &
+;& '
+}( )
 public 
 string 
-Address 
+Country 
 { 
 get  #
 ;# $
@@ -174,61 +176,79 @@ kD:\FPT\Semester 6\Project_Cursus\Backend_Cursus\Cursus.LMS\Cursus.LMS.Model\DTO
 ;( )
 }* +
 public 
-string 
-	AvatarUrl 
-{  !
-get" %
-;% &
-set' *
-;* +
-}, -
-public 
-DateTime 
+string 
+PhoneNumber !
+{" #
+get$ '
+;' (
+set) ,
+;, -
+}. /
+public 
+string 
+Address 
+{ 
+get  #
+;# $
+set% (
+;( )
+}* +
+public 
+string 
+	AvatarUrl 
+{  !
+get" %
+;% &
+set' *
+;* +
+}, -
+public 
+DateTime 
 
-UpdateTime "
-{# $
-get% (
-;( )
-set* -
-;- .
-}/ 0
-public 
-bool 
-isUploadDegree "
-{# $
-get% (
-;( )
-set* -
-;- .
-}/ 0
-public 
-bool 
-? 
+UpdateTime "
+{# $
+get% (
+;( )
+set* -
+;- .
+}/ 0
+public 
+bool 
+isUploadDegree "
+{# $
+get% (
+;( )
+set* -
+;- .
+}/ 0
+public 
+bool 
+? 
 
-isAccepted 
-{  !
-get" %
-;% &
-set' *
-;* +
-}, -
-=. /
-false0 5
-;5 6
-public 
-IEnumerable 
-< 
-string !
->! "
-Roles# (
-{) *
-get+ .
-;. /
-set0 3
-;3 4
-}5 6
-} 
-} Š	
+isAccepted 
+{  !
+get" %
+;% &
+set' *
+;* +
+}, -
+=. /
+false0 5
+;5 6
+public 
+IEnumerable 
+< 
+string !
+>! "
+Roles# (
+{) *
+get+ .
+;. /
+set0 3
+;3 4
+}5 6
+} 
+} Š	
 gD:\FPT\Semester 6\Project_Cursus\Backend_Cursus\Cursus.LMS\Cursus.LMS.Model\DTO\UpsertCourseTotalDTO.cs
 	namespace 	
 Cursus
@@ -507,7 +527,63 @@ sD:\FPT\Semester 6\Project_Cursus\Backend_Cursus\Cursus.LMS\Cursus.LMS.Model\DTO
 set! $
 ;$ %
 }& '
-} ¹
+} Â
+eD:\FPT\Semester 6\Project_Cursus\Backend_Cursus\Cursus.LMS\Cursus.LMS.Model\DTO\UpdateTermOfUseDTO.cs
+	namespace 	
+Cursus
+ 
+. 
+LMS 
+. 
+Model 
+. 
+DTO 
+; 
+public 
+class 
+UpdateTermOfUseDTO 
+{ 
+public 
+
+Guid 
+Id 
+{ 
+get 
+; 
+set 
+; 
+}  
+public 
+
+string 
+Title 
+{ 
+get 
+; 
+set "
+;" #
+}$ %
+public 
+
+string 
+Content 
+{ 
+get 
+;  
+set! $
+;$ %
+}& '
+public 
+
+bool 
+IsActive 
+{ 
+get 
+; 
+set  #
+;# $
+}% &
+}		 ¹
 jD:\FPT\Semester 6\Project_Cursus\Backend_Cursus\Cursus.LMS\Cursus.LMS.Model\DTO\UpdateStudentProfileDTO.cs
 	namespace 	
 Cursus
@@ -853,7 +929,119 @@ jD:\FPT\Semester 6\Project_Cursus\Backend_Cursus\Cursus.LMS\Cursus.LMS.Model\DTO
 ;( )
 }* +
 } 
-} ‰
+} É
+dD:\FPT\Semester 6\Project_Cursus\Backend_Cursus\Cursus.LMS\Cursus.LMS.Model\DTO\UpdateProgressDTO.cs
+	namespace 	
+Cursus
+ 
+. 
+LMS 
+. 
+Model 
+. 
+DTO 
+; 
+public 
+class 
+UpdateProgressDTO 
+{ 
+public 
+
+Guid 
+	StudentId 
+{ 
+get 
+;  
+set! $
+;$ %
+}& '
+public 
+
+Guid 
+CourseId 
+{ 
+get 
+; 
+set  #
+;# $
+}% &
+public 
+
+Guid 
+	SectionId 
+{ 
+get 
+;  
+set! $
+;$ %
+}& '
+public 
+
+Guid 
+	DetailsId 
+{ 
+get 
+;  
+set! $
+;$ %
+}& '
+}		 ¾
+cD:\FPT\Semester 6\Project_Cursus\Backend_Cursus\Cursus.LMS\Cursus.LMS.Model\DTO\UpdatePrivacyDTO.cs
+	namespace 	
+Cursus
+ 
+. 
+LMS 
+. 
+Model 
+. 
+DTO 
+; 
+public 
+class 
+UpdatePrivacyDTO 
+{ 
+public 
+
+Guid 
+Id 
+{ 
+get 
+; 
+set 
+; 
+}  
+public 
+
+string 
+Title 
+{ 
+get 
+; 
+set "
+;" #
+}$ %
+public 
+
+string 
+Content 
+{ 
+get 
+;  
+set! $
+;$ %
+}& '
+public 
+
+bool 
+IsActive 
+{ 
+get 
+; 
+set  #
+;# $
+}% &
+}		 ‰
 aD:\FPT\Semester 6\Project_Cursus\Backend_Cursus\Cursus.LMS\Cursus.LMS.Model\DTO\UpdateLevelDTO.cs
 	namespace 	
 Cursus
@@ -1568,7 +1756,172 @@ hD:\FPT\Semester 6\Project_Cursus\Backend_Cursus\Cursus.LMS\Cursus.LMS.Model\DTO
 ;( )
 }* +
 } 
-} ú
+} µ
+cD:\FPT\Semester 6\Project_Cursus\Backend_Cursus\Cursus.LMS\Cursus.LMS.Model\DTO\UpdateCompanyDTO.cs
+	namespace 	
+Cursus
+ 
+. 
+LMS 
+. 
+Model 
+. 
+DTO 
+; 
+public 
+class 
+UpdateCompanyDTO 
+{ 
+public 
+
+Guid 
+Id 
+{ 
+get 
+; 
+set 
+; 
+}  
+public 
+
+string 
+Name 
+{ 
+get 
+; 
+set !
+;! "
+}# $
+public 
+
+string 
+Address 
+{ 
+get 
+;  
+set! $
+;$ %
+}& '
+public 
+
+string 
+City 
+{ 
+get 
+; 
+set !
+;! "
+}# $
+public		 
+
+string		 
+State		 
+{		 
+get		 
+;		 
+set		 "
+;		" #
+}		$ %
+public
+
+ 
+
+string
+
+ 
+Country
+
+ 
+{
+
+ 
+get
+
+ 
+;
+
+  
+set
+
+! $
+;
+
+$ %
+}
+
+& '
+public 
+
+string 
+
+PostalCode 
+{ 
+get "
+;" #
+set$ '
+;' (
+}) *
+public 
+
+string 
+Phone 
+{ 
+get 
+; 
+set "
+;" #
+}$ %
+public 
+
+string 
+Email 
+{ 
+get 
+; 
+set "
+;" #
+}$ %
+public 
+
+string 
+Website 
+{ 
+get 
+;  
+set! $
+;$ %
+}& '
+public 
+
+DateTime 
+FoundedDate 
+{  !
+get" %
+;% &
+set' *
+;* +
+}, -
+public 
+
+string 
+LogoUrl 
+{ 
+get 
+;  
+set! $
+;$ %
+}& '
+public 
+
+string 
+Description 
+{ 
+get  #
+;# $
+set% (
+;( )
+}* +
+} ú
 dD:\FPT\Semester 6\Project_Cursus\Backend_Cursus\Cursus.LMS\Cursus.LMS.Model\DTO\UpdateCategoryDTO.cs
 	namespace 	
 Cursus
@@ -1826,7 +2179,7 @@ aD:\FPT\Semester 6\Project_Cursus\Backend_Cursus\Cursus.LMS\Cursus.LMS.Model\DTO
 ;- .
 }/ 0
 } 
-} Á
+} º
 eD:\FPT\Semester 6\Project_Cursus\Backend_Cursus\Cursus.LMS\Cursus.LMS.Model\DTO\StudentFullInfoDTO.cs
 	namespace 	
 Cursus
@@ -1954,40 +2307,9 @@ University !
 ;$ %
 set& )
 ;) *
-}+ ,
-public 
-string 
-? 
-
-CardNumber !
-{" #
-get$ '
-;' (
-set) ,
-;, -
-}. /
-public 
-string 
-? 
-CardName 
-{  !
-get" %
-;% &
-set' *
-;* +
-}, -
-public 
-string 
-? 
-CardProvider #
-{$ %
-get& )
-;) *
-set+ .
-;. /
-}0 1
-} 
-} ÷(
+}+ ,
+} 
+} $
 fD:\FPT\Semester 6\Project_Cursus\Backend_Cursus\Cursus.LMS\Cursus.LMS.Model\DTO\SignUpInstructorDTO.cs
 	namespace 	
 Cursus
@@ -2269,45 +2591,8 @@ fD:\FPT\Semester 6\Project_Cursus\Backend_Cursus\Cursus.LMS\Cursus.LMS.Model\DTO
 ;++, -
 set++. 1
 ;++1 2
-}++3 4
-[,, 
-Required,, 
-],, 
-public,, 
-string,, 
-
-CardNumber,, '
-{,,( )
-get,,* -
-;,,- .
-set,,/ 2
-;,,2 3
-},,4 5
-[-- 
-Required-- 
-]-- 
-public-- 
-string-- 
-CardName-- %
-{--& '
-get--( +
-;--+ ,
-set--- 0
-;--0 1
-}--2 3
-[.. 
-Required.. 
-].. 
-public.. 
-string.. 
-CardProvider.. )
-{..* +
-get.., /
-;../ 0
-set..1 4
-;..4 5
-}..6 7
-}// ª
+}++3 4
+},, ª
 bD:\FPT\Semester 6\Project_Cursus\Backend_Cursus\Cursus.LMS\Cursus.LMS.Model\DTO\SignResponseDTO.cs
 	namespace 	
 Cursus
@@ -2458,7 +2743,83 @@ eD:\FPT\Semester 6\Project_Cursus\Backend_Cursus\Cursus.LMS\Cursus.LMS.Model\DTO
 set "
 ;" #
 }$ %
-}		 ¬
+}		 Ñ
+kD:\FPT\Semester 6\Project_Cursus\Backend_Cursus\Cursus.LMS\Cursus.LMS.Model\DTO\ResponseStripeSessionDTO.cs
+	namespace 	
+Cursus
+ 
+. 
+LMS 
+. 
+Model 
+. 
+DTO 
+; 
+public 
+class $
+ResponseStripeSessionDTO %
+{ 
+public 
+
+string 
+? 
+StripeSessionId "
+{# $
+get% (
+;( )
+set* -
+;- .
+}/ 0
+public 
+
+string 
+? 
+StripeSessionUrl #
+{$ %
+get& )
+;) *
+set+ .
+;. /
+}0 1
+} Û
+tD:\FPT\Semester 6\Project_Cursus\Backend_Cursus\Cursus.LMS\Cursus.LMS.Model\DTO\ResponseStripeConnectedAccountDTO.cs
+	namespace 	
+Cursus
+ 
+. 
+LMS 
+. 
+Model 
+. 
+DTO 
+; 
+public 
+class -
+!ResponseStripeConnectedAccountDTO .
+{ 
+public 
+
+string 
+? 
+	AccountId 
+{ 
+get "
+;" #
+set$ '
+;' (
+}) *
+public 
+
+string 
+? 
+AccountLinkUrl !
+{" #
+get$ '
+;' (
+set) ,
+;, -
+}. /
+} ¬
 ^D:\FPT\Semester 6\Project_Cursus\Backend_Cursus\Cursus.LMS\Cursus.LMS.Model\DTO\ResponseDTO.cs
 	namespace 	
 Cursus
@@ -2730,7 +3091,7 @@ pD:\FPT\Semester 6\Project_Cursus\Backend_Cursus\Cursus.LMS\Cursus.LMS.Model\DTO
 set. 1
 ;1 2
 }3 4
-} ƒ,
+} ‚%
 eD:\FPT\Semester 6\Project_Cursus\Backend_Cursus\Cursus.LMS\Cursus.LMS.Model\DTO\RegisterStudentDTO.cs
 	namespace 	
 Cursus
@@ -3027,63 +3388,8 @@ University&& 
 ;//# $
 set//% (
 ;//( )
-}//* +
-[11 
-Required11 
-(11 
-ErrorMessage11 
-=11 
-$str11 =
-)11= >
-]11> ?
-public22 
-
-string22 
-
-CardNumber22 
-{22 
-get22 "
-;22" #
-set22$ '
-;22' (
-}22) *
-[33 
-Required33 
-(33 
-ErrorMessage33 
-=33 
-$str33 ;
-)33; <
-]33< =
-public44 
-
-string44 
-CardName44 
-{44 
-get44  
-;44  !
-set44" %
-;44% &
-}44' (
-[55 
-Required55 
-(55 
-ErrorMessage55 
-=55 
-$str55 ?
-)55? @
-]55@ A
-public66 
-
-string66 
-CardProvider66 
-{66  
-get66! $
-;66$ %
-set66& )
-;66) *
-}66+ ,
-}77 ê
+}//* +
+}00 ·
 cD:\FPT\Semester 6\Project_Cursus\Backend_Cursus\Cursus.LMS\Cursus.LMS.Model\DTO\PayWithStripeDTO.cs
 	namespace 	
 Cursus
@@ -3101,46 +3407,61 @@ cD:\FPT\Semester 6\Project_Cursus\Backend_Cursus\Cursus.LMS\Cursus.LMS.Model\DTO
 { 
 public 
 
-string 
-? 
-StripeSessionUrl #
-{$ %
-get& )
-;) *
-set+ .
-;. /
-}0 1
+string 
+ApprovedUrl 
+{ 
+get  #
+;# $
+set% (
+;( )
+}* +
 public 
 
-string 
-ApprovedUrl 
-{ 
-get  #
-;# $
-set% (
-;( )
-}* +
+string 
+	CancelUrl 
+{ 
+get !
+;! "
+set# &
+;& '
+}( )
 public 
-
-string 
-	CancelUrl 
-{ 
-get !
-;! "
-set# &
-;& '
-}( )
-public 
 
-Guid 
-OrderHeaderId 
-{ 
-get  #
-;# $
-set% (
-;( )
-}* +
-}		 ‘
+Guid 
+OrderHeaderId 
+{ 
+get  #
+;# $
+set% (
+;( )
+}* +
+} ì
+^D:\FPT\Semester 6\Project_Cursus\Backend_Cursus\Cursus.LMS\Cursus.LMS.Model\DTO\LockUserDTO.cs
+	namespace 	
+Cursus
+ 
+. 
+LMS 
+. 
+Model 
+. 
+DTO 
+; 
+public 
+class 
+LockUserDTO 
+{ 
+public 
+
+string 
+UserId 
+{ 
+get 
+; 
+set  #
+;# $
+}% &
+} ‘
 ^D:\FPT\Semester 6\Project_Cursus\Backend_Cursus\Cursus.LMS\Cursus.LMS.Model\DTO\JwtTokenDTO.cs
 	namespace 	
 Cursus
@@ -3454,7 +3775,7 @@ IsAccepted 
 set# &
 ;& '
 }( )
-} Þ
+} ×
 dD:\FPT\Semester 6\Project_Cursus\Backend_Cursus\Cursus.LMS\Cursus.LMS.Model\DTO\InstructorInfoDTO.cs
 	namespace 	
 Cursus
@@ -3644,52 +3965,18 @@ dD:\FPT\Semester 6\Project_Cursus\Backend_Cursus\Cursus.LMS\Cursus.LMS.Model\DTO
 ;' (
 }) *
 public 
-
-string 
-? 
-
-CardNumber 
-{ 
-get  #
-;# $
-set% (
-;( )
-}* +
-public 
-
-string 
-? 
-CardName 
-{ 
-get !
-;! "
-set# &
-;& '
-}( )
-public 
-
-string 
-? 
-CardProvider 
-{  !
-get" %
-;% &
-set' *
-;* +
-}, -
-public 
 
-bool 
-? 
+bool 
+? 
 
-IsAccepted 
-{ 
-get !
-;! "
-set# &
-;& '
-}( )
-} »
+IsAccepted 
+{ 
+get !
+;! "
+set# &
+;& '
+}( )
+} »
 eD:\FPT\Semester 6\Project_Cursus\Backend_Cursus\Cursus.LMS\Cursus.LMS.Model\DTO\InstructorAvgCount.cs
 	namespace 	
 Cursus
@@ -3940,7 +4227,82 @@ StaticEnum 
 set' *
 ;* +
 }, -
-} £
+}  
+
+lD:\FPT\Semester 6\Project_Cursus\Backend_Cursus\Cursus.LMS\Cursus.LMS.Model\DTO\GetTopPurchasedCoursesDTO.cs
+	namespace 	
+Cursus
+ 
+. 
+LMS 
+. 
+Model 
+. 
+DTO 
+{ 
+public		 
+
+class		 %
+GetTopPurchasedCoursesDTO		 *
+{
+
+ 
+public 
+Guid 
+Id 
+{ 
+get 
+; 
+set !
+;! "
+}# $
+public 
+string 
+Title 
+{ 
+get !
+;! "
+set# &
+;& '
+}( )
+public 
+string 
+Code 
+{ 
+get  
+;  !
+set" %
+;% &
+}' (
+public 
+string 
+Description !
+{" #
+get$ '
+;' (
+set) ,
+;, -
+}. /
+public 
+int 
+TotalStudent 
+{  !
+get" %
+;% &
+set' *
+;* +
+}, -
+public 
+string 
+CategoryName "
+{# $
+get% (
+;( )
+set* -
+;- .
+}/ 0
+} 
+} £
 fD:\FPT\Semester 6\Project_Cursus\Backend_Cursus\Cursus.LMS\Cursus.LMS.Model\DTO\GetSectionDetailDTO.cs
 	namespace 	
 Cursus
@@ -4030,7 +4392,99 @@ fD:\FPT\Semester 6\Project_Cursus\Backend_Cursus\Cursus.LMS\Cursus.LMS.Model\DTO
 ;, -
 }. /
 } 
-} â
+} Ã
+aD:\FPT\Semester 6\Project_Cursus\Backend_Cursus\Cursus.LMS\Cursus.LMS.Model\DTO\GetProgressDTO.cs
+	namespace 	
+Cursus
+ 
+. 
+LMS 
+. 
+Model 
+. 
+DTO 
+; 
+public 
+class 
+GetProgressDTO 
+{ 
+public 
+
+Guid 
+	StudentId 
+{ 
+get 
+;  
+set! $
+;$ %
+}& '
+public 
+
+Guid 
+CourseId 
+{ 
+get 
+; 
+set  #
+;# $
+}% &
+public 
+
+Guid 
+	SectionId 
+{ 
+get 
+;  
+set! $
+;$ %
+}& '
+public 
+
+Guid 
+	DetailsId 
+{ 
+get 
+;  
+set! $
+;$ %
+}& '
+}		 ‘
+cD:\FPT\Semester 6\Project_Cursus\Backend_Cursus\Cursus.LMS\Cursus.LMS.Model\DTO\GetPercentageDTO.cs
+	namespace 	
+Cursus
+ 
+. 
+LMS 
+. 
+Model 
+. 
+DTO 
+; 
+public 
+class 
+GetPercentageDTO 
+{ 
+public 
+
+Guid 
+	StudentId 
+{ 
+get 
+;  
+set! $
+;$ %
+}& '
+public 
+
+Guid 
+CourseId 
+{ 
+get 
+; 
+set  #
+;# $
+}% &
+} â
 dD:\FPT\Semester 6\Project_Cursus\Backend_Cursus\Cursus.LMS\Cursus.LMS.Model\DTO\GetOrderHeaderDTO.cs
 	namespace 	
 Cursus
@@ -5761,7 +6215,7 @@ oD:\FPT\Semester 6\Project_Cursus\Backend_Cursus\Cursus.LMS\Cursus.LMS.Model\DTO
 set "
 ;" #
 }$ %
-} 
+} ï
 gD:\FPT\Semester 6\Project_Cursus\Backend_Cursus\Cursus.LMS\Cursus.LMS.Model\DTO\EditCourseVersionDTO.cs
 	namespace 	
 Cursus
@@ -5789,27 +6243,25 @@ gD:\FPT\Semester 6\Project_Cursus\Backend_Cursus\Cursus.LMS\Cursus.LMS.Model\DTO
 }  
 public 
 
-Guid 
-? 
+Guid 
 
-CategoryId 
-{ 
-get !
-;! "
-set# &
-;& '
-}( )
+CategoryId 
+{ 
+get  
+;  !
+set" %
+;% &
+}' (
 public 
 
-Guid 
-? 
-LevelId 
-{ 
-get 
-; 
-set  #
-;# $
-}% &
+Guid 
+LevelId 
+{ 
+get 
+; 
+set "
+;" #
+}$ %
 public 
 
 string 
@@ -6200,7 +6652,53 @@ StaticEnum		 
 set  #
 ;# $
 }% &
-} Ø
+} ®
+eD:\FPT\Semester 6\Project_Cursus\Backend_Cursus\Cursus.LMS\Cursus.LMS.Model\DTO\CreateTermOfUseDTO.cs
+	namespace 	
+Cursus
+ 
+. 
+LMS 
+. 
+Model 
+. 
+DTO 
+; 
+public 
+class 
+CreateTermOfUseDTO 
+{ 
+public 
+
+string 
+Title 
+{ 
+get 
+; 
+set "
+;" #
+}$ %
+public 
+
+string 
+Content 
+{ 
+get 
+;  
+set! $
+;$ %
+}& '
+public 
+
+bool 
+IsActive 
+{ 
+get 
+; 
+set  #
+;# $
+}% &
+} Ø
 oD:\FPT\Semester 6\Project_Cursus\Backend_Cursus\Cursus.LMS\Cursus.LMS.Model\DTO\CreateStudentCourseStatusDTO.cs
 	namespace 	
 Cursus
@@ -6285,66 +6783,85 @@ jD:\FPT\Semester 6\Project_Cursus\Backend_Cursus\Cursus.LMS\Cursus.LMS.Model\DTO
 ;( )
 }* +
 } 
-} ü
+} £
 jD:\FPT\Semester 6\Project_Cursus\Backend_Cursus\Cursus.LMS\Cursus.LMS.Model\DTO\CreateStripeTransferDTO.cs
-	namespace 	
-Cursus
+	namespace 	
+Cursus
  
-. 
-LMS 
-. 
-Model 
-. 
-DTO 
-; 
-public 
-class #
-CreateStripeTransferDTO $
-{ 
-public 
-
-string 
-? 
-UserId 
-{ 
-get 
-;  
-set! $
-;$ %
-}& '
-public 
-
-string 
-? 
-ConnectedAccountId %
-{& '
-get( +
-;+ ,
-set- 0
-;0 1
-}2 3
+. 
+LMS 
+. 
+Model 
+. 
+DTO 
+; 
+public 
+class #
+CreateStripeTransferDTO $
+{ 
 public 
-
-long 
-Amount 
-{ 
-get 
-; 
-set !
-;! "
-}# $
-public 
 
-string 
-Currency 
-{ 
-get  
-;  !
-set" %
-;% &
-}' (
-}		 ”
+string 
+UserId 
+{ 
+get 
+; 
+set  #
+;# $
+}% &
+[ 
 
+JsonIgnore 
+] 
+public 
+string 
+? 
+ConnectedAccountId  2
+{3 4
+get5 8
+;8 9
+set: =
+;= >
+}? @
+public		 
+
+long		 
+Amount		 
+{		 
+get		 
+;		 
+set		 !
+;		! "
+}		# $
+public
+
+ 
+
+string
+
+ 
+Currency
+
+ 
+{
+
+ 
+get
+
+  
+;
+
+  !
+set
+
+" %
+;
+
+% &
+}
+
+' (
+} ¯
 iD:\FPT\Semester 6\Project_Cursus\Backend_Cursus\Cursus.LMS\Cursus.LMS.Model\DTO\CreateStripeSessionDTO.cs
 	namespace 	
 Cursus
@@ -6395,99 +6912,11 @@ iD:\FPT\Semester 6\Project_Cursus\Backend_Cursus\Cursus.LMS\Cursus.LMS.Model\DTO
 ;		" #
 set		$ '
 ;		' (
-}		) *
-public
+}		) *
+}
 
- 
-
-string
-
- 
-?
-
- 
-StripeSessionId
-
- "
-{
-
-# $
-get
-
-% (
-;
-
-( )
-set
-
-* -
-;
-
-- .
-}
-
-/ 0
-public 
-
-string 
-? 
-StripeSessionUrl #
-{$ %
-get& )
-;) *
-set+ .
-;. /
-}0 1
-} Ï
+ …
 hD:\FPT\Semester 6\Project_Cursus\Backend_Cursus\Cursus.LMS\Cursus.LMS.Model\DTO\CreateStripePayoutDTO.cs
-	namespace 	
-Cursus
- 
-. 
-LMS 
-. 
-Model 
-. 
-DTO 
-; 
-public 
-class !
-CreateStripePayoutDTO "
-{ 
-public 
-
-string 
-? 
-ConnectedAccountId %
-{& '
-get( +
-;+ ,
-set- 0
-;0 1
-}2 3
-public 
-
-long 
-Amount 
-{ 
-get 
-; 
-set !
-;! "
-}# $
-public 
-
-string 
-Currency 
-{ 
-get  
-;  !
-set" %
-;% &
-}' (
-} Æ
-
-rD:\FPT\Semester 6\Project_Cursus\Backend_Cursus\Cursus.LMS\Cursus.LMS.Model\DTO\CreateStripeConnectedAccountDTO.cs
 	namespace 	
 Cursus
  
@@ -6499,91 +6928,140 @@ rD:\FPT\Semester 6\Project_Cursus\Backend_Cursus\Cursus.LMS\Cursus.LMS.Model\DTO
 DTO 
 ; 
 public 
-class +
-CreateStripeConnectedAccountDTO ,
-{ 
-public 
-
-string 
+class !
+CreateStripePayoutDTO "
+{ 
+[ 
 
-RefreshUrl 
-{ 
-get "
-;" #
-set$ '
-;' (
-}) *
+JsonIgnore 
+] 
 public 
 
-string 
-	ReturnUrl 
-{ 
-get !
-;! "
-set# &
-;& '
-}( )
+string 
+? 
+ConnectedAccountId %
+{& '
+get( +
+;+ ,
+set- 0
+;0 1
+}2 3
 public		 
-
-string		 
-Email		 
-{		 
-get		 
-;		 
-set		 "
-;		" #
-}		$ %
+
+long		 
+Amount		 
+{		 
+get		 
+;		 
+set		 !
+;		! "
+}		# $
 public
 
  
 
 string
 
- 
-Country
+ 
+Currency
 
- 
+ 
 {
 
- 
+ 
 get
 
- 
+  
 ;
 
-  
+  !
 set
 
-! $
+" %
 ;
 
-$ %
+% &
 }
 
-& '
-public 
+' (
+} “
+rD:\FPT\Semester 6\Project_Cursus\Backend_Cursus\Cursus.LMS\Cursus.LMS.Model\DTO\CreateStripeConnectedAccountDTO.cs
+	namespace 	
+Cursus
+ 
+. 
+LMS 
+. 
+Model 
+. 
+DTO 
+; 
+public 
+class +
+CreateStripeConnectedAccountDTO ,
+{ 
+public 
 
-string 
-? 
-	AccountId 
-{ 
-get "
-;" #
-set$ '
-;' (
-}) *
-public 
+string 
+
+RefreshUrl 
+{ 
+get "
+;" #
+set$ '
+;' (
+}) *
+public		 
 
-string 
-? 
-AccountLinkUrl !
-{" #
-get$ '
-;' (
-set) ,
-;, -
-}. /
-} ¸
+string		 
+	ReturnUrl		 
+{		 
+get		 !
+;		! "
+set		# &
+;		& '
+}		( )
+[
+
+ 
+
+JsonIgnore
+
+ 
+]
+
+ 
+public
+
+ 
+string
+
+ 
+?
+
+ 
+Email
+
+  %
+{
+
+& '
+get
+
+( +
+;
+
++ ,
+set
+
+- 0
+;
+
+0 1
+}
+
+2 3
+} ¸
 qD:\FPT\Semester 6\Project_Cursus\Backend_Cursus\Cursus.LMS\Cursus.LMS.Model\DTO\CreateSectionDetailsVersionDTO.cs
 	namespace 	
 Cursus
@@ -6619,6 +7097,78 @@ qD:\FPT\Semester 6\Project_Cursus\Backend_Cursus\Cursus.LMS\Cursus.LMS.Model\DTO
 set !
 ;! "
 }# $
+} ÿ
+dD:\FPT\Semester 6\Project_Cursus\Backend_Cursus\Cursus.LMS\Cursus.LMS.Model\DTO\CreateProgressDTO.cs
+	namespace 	
+Cursus
+ 
+. 
+LMS 
+. 
+Model 
+. 
+DTO 
+; 
+public 
+class 
+CreateProgressDTO 
+{ 
+public 
+
+Guid 
+StudentCourseId 
+{  !
+get" %
+;% &
+set' *
+;* +
+}, -
+} ª
+cD:\FPT\Semester 6\Project_Cursus\Backend_Cursus\Cursus.LMS\Cursus.LMS.Model\DTO\CreatePrivacyDTO.cs
+	namespace 	
+Cursus
+ 
+. 
+LMS 
+. 
+Model 
+. 
+DTO 
+; 
+public 
+class 
+CreatePrivacyDTO 
+{ 
+public 
+
+string 
+Title 
+{ 
+get 
+; 
+set "
+;" #
+}$ %
+public 
+
+string 
+Content 
+{ 
+get 
+;  
+set! $
+;$ %
+}& '
+public 
+
+bool 
+IsActive 
+{ 
+get 
+; 
+set  #
+;# $
+}% &
 } š
 gD:\FPT\Semester 6\Project_Cursus\Backend_Cursus\Cursus.LMS\Cursus.LMS.Model\DTO\CreateOrderStatusDTO.cs
 	namespace 	
@@ -6655,7 +7205,7 @@ gD:\FPT\Semester 6\Project_Cursus\Backend_Cursus\Cursus.LMS\Cursus.LMS.Model\DTO
 set  
 ;  !
 }" #
-} ‰
+} ë
 oD:\FPT\Semester 6\Project_Cursus\Backend_Cursus\Cursus.LMS\Cursus.LMS.Model\DTO\CreateNewCourseAndVersionDTO.cs
 	namespace 	
 Cursus
@@ -6763,27 +7313,25 @@ oD:\FPT\Semester 6\Project_Cursus\Backend_Cursus\Cursus.LMS\Cursus.LMS.Model\DTO
 , -
 public 
 
-Guid 
-? 
+Guid 
 
-CategoryId 
-{ 
-get !
-;! "
-set# &
-;& '
-}( )
+CategoryId 
+{ 
+get  
+;  !
+set" %
+;% &
+}' (
 public 
 
-Guid 
-? 
-LevelId 
-{ 
-get 
-; 
-set  #
-;# $
-}% &
+Guid 
+LevelId 
+{ 
+get 
+; 
+set "
+;" #
+}$ %
 } ð
 aD:\FPT\Semester 6\Project_Cursus\Backend_Cursus\Cursus.LMS\Cursus.LMS.Model\DTO\CreateLevelDTO.cs
 	namespace 	
@@ -9259,7 +9807,75 @@ ForeignKey 
 setQ T
 ;T U
 }V W
-} À
+} ×
+_D:\FPT\Semester 6\Project_Cursus\Backend_Cursus\Cursus.LMS\Cursus.LMS.Model\Domain\TermOfUse.cs
+	namespace 	
+Cursus
+ 
+. 
+LMS 
+. 
+Model 
+. 
+Domain !
+;! "
+public 
+class 
+	TermOfUse 
+{ 
+public 
+
+Guid 
+Id 
+{ 
+get 
+; 
+set 
+; 
+}  
+public 
+
+string 
+Title 
+{ 
+get 
+; 
+set "
+;" #
+}$ %
+public 
+
+string 
+Content 
+{ 
+get 
+;  
+set! $
+;$ %
+}& '
+public 
+
+DateTime 
+LastUpdated 
+{  !
+get" %
+;% &
+set' *
+;* +
+}, -
+public		 
+
+bool		 
+IsActive		 
+{		 
+get		 
+;		 
+set		  #
+;		# $
+}		% &
+}
+
+ À
 iD:\FPT\Semester 6\Project_Cursus\Backend_Cursus\Cursus.LMS\Cursus.LMS.Model\Domain\StudentCourseStatus.cs
 	namespace 	
 Cursus
@@ -9487,15 +10103,14 @@ BaseEntity '
 }		% &
 public 
 
-Guid 
-? 
-	StudentId 
-{ 
-get  
-;  !
-set" %
-;% &
-}' (
+Guid 
+	StudentId 
+{ 
+get 
+;  
+set! $
+;$ %
+}& '
 [ 
 
 ForeignKey 
@@ -9505,25 +10120,25 @@ ForeignKey 
 ] 
 public $
 virtual% ,
-Student- 4
-Student5 <
-{= >
-get? B
-;B C
-setD G
-;G H
-}I J
+Student- 4
+?4 5
+Student6 =
+{> ?
+get@ C
+;C D
+setE H
+;H I
+}J K
 public 
 
-Guid 
-? 
-CourseId 
-{ 
-get 
-;  
-set! $
-;$ %
-}& '
+Guid 
+CourseId 
+{ 
+get 
+; 
+set  #
+;# $
+}% &
 [ 
 
 ForeignKey 
@@ -9533,14 +10148,15 @@ ForeignKey 
 ] 
 public #
 virtual$ +
-Course, 2
-Course3 9
-{: ;
-get< ?
-;? @
-setA D
-;D E
-}F G
+Course, 2
+?2 3
+Course4 :
+{; <
+get= @
+;@ A
+setB E
+;E F
+}G H
 public 
 
 string 
@@ -9922,7 +10538,7 @@ MergedTime 
 }%% 
 }&& 	
 }'' 
-}(( ë(
+}(( Ü(
 kD:\FPT\Semester 6\Project_Cursus\Backend_Cursus\Cursus.LMS\Cursus.LMS.Model\Domain\SectionDetailsVersion.cs
 	namespace 	
 Cursus
@@ -9956,31 +10572,28 @@ kD:\FPT\Semester 6\Project_Cursus\Backend_Cursus\Cursus.LMS\Cursus.LMS.Model\Dom
  
 Guid
 
- 
-?
-
- "
+ "
 CourseSectionVersionId
 
- +
+ *
 {
 
-, -
++ ,
 get
 
-. 1
+- 0
 ;
 
-1 2
+0 1
 set
 
-3 6
+2 5
 ;
 
-6 7
+5 6
 }
 
-8 9
+7 8
 [ 	
 
 ForeignKey	 
@@ -10243,103 +10856,75 @@ ForeignKey	 
 }MM 
 }NN 	
 }OO 
-}PP —
-
-aD:\FPT\Semester 6\Project_Cursus\Backend_Cursus\Cursus.LMS\Cursus.LMS.Model\Domain\PaymentCard.cs
-	namespace 	
-Cursus
+}PP Ó
+]D:\FPT\Semester 6\Project_Cursus\Backend_Cursus\Cursus.LMS\Cursus.LMS.Model\Domain\Privacy.cs
+	namespace 	
+Cursus
  
-. 
-LMS 
-. 
-Model 
-. 
-Domain !
-;! "
-public 
-class 
-PaymentCard 
-{ 
-[ 
-Key 
-] 	
-public
- 
-string 
-
-CardNumber "
-{# $
-get% (
-;( )
-set* -
-;- .
-}/ 0
+. 
+LMS 
+. 
+Model 
+. 
+Domain !
+;! "
+public 
+class 
+Privacy 
+{ 
+public 
+
+Guid 
+Id 
+{ 
+get 
+; 
+set 
+; 
+}  
+public 
+
+string 
+Title 
+{ 
+get 
+; 
+set "
+;" #
+}$ %
+public 
+
+string 
+Content 
+{ 
+get 
+;  
+set! $
+;$ %
+}& '
+public 
+
+DateTime 
+LastUpdated 
+{  !
+get" %
+;% &
+set' *
+;* +
+}, -
 public		 
-
-string		 
-CardName		 
-{		 
-get		  
-;		  !
-set		" %
-;		% &
-}		' (
-public
+
+bool		 
+IsActive		 
+{		 
+get		 
+;		 
+set		  #
+;		# $
+}		% &
+}
 
- 
-
-string
-
- 
-CardProvider
-
- 
-{
-
-  
-get
-
-! $
-;
-
-$ %
-set
-
-& )
-;
-
-) *
-}
-
-+ ,
-public 
-
-string 
-UserId 
-{ 
-get 
-; 
-set  #
-;# $
-}% &
-[ 
-
-ForeignKey 
-( 
-$str 
-) 
-] 
-public !
-virtual" )
-ApplicationUser* 9
-User: >
-{? @
-getA D
-;D E
-setF I
-;I J
-}K L
-}  
+  
 aD:\FPT\Semester 6\Project_Cursus\Backend_Cursus\Cursus.LMS\Cursus.LMS.Model\Domain\OrderStatus.cs
 	namespace 	
 Cursus
@@ -11713,7 +12298,7 @@ ForeignKey
 set! $
 ;$ %
 }& '
-} ›!
+} î 
 cD:\FPT\Semester 6\Project_Cursus\Backend_Cursus\Cursus.LMS\Cursus.LMS.Model\Domain\CourseVersion.cs
 	namespace 	
 Cursus
@@ -11744,15 +12329,14 @@ cD:\FPT\Semester 6\Project_Cursus\Backend_Cursus\Cursus.LMS\Cursus.LMS.Model\Dom
 }% &
 public		 
 
-Guid		 
-?		 
-CourseId		 
-{		 
-get		 
-;		  
-set		! $
-;		$ %
-}		& '
+Guid		 
+CourseId		 
+{		 
+get		 
+;		 
+set		  #
+;		# $
+}		% &
 [
 
  
@@ -11804,16 +12388,15 @@ ForeignKey
 ? @
 public 
 
-Guid 
-? 
+Guid 
 
-CategoryId 
-{ 
-get !
-;! "
-set# &
-;& '
-}( )
+CategoryId 
+{ 
+get  
+;  !
+set" %
+;% &
+}' (
 [ 
 
 ForeignKey 
@@ -11834,15 +12417,14 @@ ForeignKey 
 }M N
 public 
 
-Guid 
-? 
-LevelId 
-{ 
-get 
-; 
-set  #
-;# $
-}% &
+Guid 
+LevelId 
+{ 
+get 
+; 
+set "
+;" #
+}$ %
 [ 
 
 ForeignKey 
@@ -12364,7 +12946,7 @@ ForeignKey 
 set! $
 ;$ %
 }& '
-} Œ
+} þ
 dD:\FPT\Semester 6\Project_Cursus\Backend_Cursus\Cursus.LMS\Cursus.LMS.Model\Domain\CourseProgress.cs
 	namespace 	
 Cursus
@@ -12385,85 +12967,111 @@ dD:\FPT\Semester 6\Project_Cursus\Backend_Cursus\Cursus.LMS\Cursus.LMS.Model\Dom
 ] 	
 public
  
-Guid 
-StudentCourseId %
-{& '
-get( +
-;+ ,
-set- 0
-;0 1
-}2 3
-[		 
+Guid 
+Id 
+{ 
+get 
+; 
+set  #
+;# $
+}% &
+public
+
+ 
+
+Guid
+
+ 
+StudentCourseId
+
+ 
+{
+
+  !
+get
+
+" %
+;
+
+% &
+set
+
+' *
+;
+
+* +
+}
+
+, -
+[ 
 
-ForeignKey		 
-(		 
-$str		 !
-)		! "
-]		" #
-public		$ *
-StudentCourse		+ 8
-?		8 9
-StudentCourse		: G
-{		H I
-get		J M
-;		M N
-set		O R
-;		R S
-}		T U
-public 
-
-Guid 
-CourseId 
-{ 
-get 
-; 
-set  #
-;# $
-}% &
-public 
-
-Guid 
-	SectionId 
-{ 
-get 
-;  
-set! $
-;$ %
-}& '
+ForeignKey 
+( 
+$str !
+)! "
+]" #
+public$ *
+StudentCourse+ 8
+?8 9
+StudentCourse: G
+{H I
+getJ M
+;M N
+setO R
+;R S
+}T U
 public 
 
-Guid 
-	DetailsId 
-{ 
-get 
-;  
-set! $
-;$ %
-}& '
+Guid 
+CourseId 
+{ 
+get 
+; 
+set  #
+;# $
+}% &
 public 
 
-bool 
-IsCompleted 
-{ 
-get !
-;! "
-set# &
-;& '
-}( )
-=* +
-false, 1
-;1 2
+Guid 
+	SectionId 
+{ 
+get 
+;  
+set! $
+;$ %
+}& '
 public 
+
+Guid 
+	DetailsId 
+{ 
+get 
+;  
+set! $
+;$ %
+}& '
+public 
+
+bool 
+IsCompleted 
+{ 
+get !
+;! "
+set# &
+;& '
+}( )
+public 
 
-DateTime 
-CompletedTime !
-{" #
-get$ '
-;' (
-set) ,
-;, -
-}. /
-} ƒ
+DateTime 
+? 
+CompletedTime "
+{# $
+get% (
+;( )
+set* -
+;- .
+}/ 0
+} ƒ
 
 dD:\FPT\Semester 6\Project_Cursus\Backend_Cursus\Cursus.LMS\Cursus.LMS.Model\Domain\CourseBookmark.cs
 	namespace 	
@@ -12757,7 +13365,172 @@ Instructor
 set( +
 ;+ ,
 }- .
-} Å
+} ©
+]D:\FPT\Semester 6\Project_Cursus\Backend_Cursus\Cursus.LMS\Cursus.LMS.Model\Domain\Company.cs
+	namespace 	
+Cursus
+ 
+. 
+LMS 
+. 
+Model 
+. 
+Domain !
+;! "
+public 
+class 
+Company 
+{ 
+public 
+
+Guid 
+Id 
+{ 
+get 
+; 
+set 
+; 
+}  
+public 
+
+string 
+Name 
+{ 
+get 
+; 
+set !
+;! "
+}# $
+public 
+
+string 
+Address 
+{ 
+get 
+;  
+set! $
+;$ %
+}& '
+public 
+
+string 
+City 
+{ 
+get 
+; 
+set !
+;! "
+}# $
+public		 
+
+string		 
+State		 
+{		 
+get		 
+;		 
+set		 "
+;		" #
+}		$ %
+public
+
+ 
+
+string
+
+ 
+Country
+
+ 
+{
+
+ 
+get
+
+ 
+;
+
+  
+set
+
+! $
+;
+
+$ %
+}
+
+& '
+public 
+
+string 
+
+PostalCode 
+{ 
+get "
+;" #
+set$ '
+;' (
+}) *
+public 
+
+string 
+Phone 
+{ 
+get 
+; 
+set "
+;" #
+}$ %
+public 
+
+string 
+Email 
+{ 
+get 
+; 
+set "
+;" #
+}$ %
+public 
+
+string 
+Website 
+{ 
+get 
+;  
+set! $
+;$ %
+}& '
+public 
+
+DateTime 
+FoundedDate 
+{  !
+get" %
+;% &
+set' *
+;* +
+}, -
+public 
+
+string 
+LogoUrl 
+{ 
+get 
+;  
+set! $
+;$ %
+}& '
+public 
+
+string 
+Description 
+{ 
+get  #
+;# $
+set% (
+;( )
+}* +
+} Å
 ^D:\FPT\Semester 6\Project_Cursus\Backend_Cursus\Cursus.LMS\Cursus.LMS.Model\Domain\Category.cs
 	namespace 	
 Cursus
@@ -13293,7 +14066,7 @@ ForeignKey 
 setQ T
 ;T U
 }V W
-} ì
+} Ÿ
 eD:\FPT\Semester 6\Project_Cursus\Backend_Cursus\Cursus.LMS\Cursus.LMS.Model\Domain\ApplicationUser.cs
 	namespace 	
 Cursus
@@ -13436,5 +14209,32 @@ CreateTime 
 DateTime0 8
 .8 9
 UtcNow9 ?
-;? @
-} 
+;? @
+public 
+
+DateTime 
+? 
+LastLoginTime "
+{# $
+get% (
+;( )
+set* -
+;- .
+}/ 0
+=1 2
+null3 7
+;7 8
+public 
+
+bool 
+SendClearEmail 
+{  
+get! $
+;$ %
+set& )
+;) *
+}+ ,
+=- .
+false/ 4
+;4 5
+} 

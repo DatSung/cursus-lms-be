@@ -1,5 +1,4 @@
-﻿using System.Linq;
-using System.Security.Claims;
+﻿using System.Security.Claims;
 using AutoMapper;
 using Cursus.LMS.DataAccess.IRepository;
 using Cursus.LMS.Model.Domain;
@@ -7,7 +6,6 @@ using Cursus.LMS.Model.DTO;
 using Cursus.LMS.Service.IService;
 using Cursus.LMS.Utility.Constants;
 using Hangfire;
-using static Microsoft.ApplicationInsights.MetricDimensionNames.TelemetryContext;
 
 namespace Cursus.LMS.Service.Service;
 
@@ -125,10 +123,12 @@ public class CourseService : ICourseService
         try
         {
             var courses = new List<Course>();
+
             var userRole = User.Claims.FirstOrDefault(x => x.Type == ClaimTypes.Role)?.Value;
+
             if (string.IsNullOrEmpty(instructorId.ToString()))
             {
-                if (!userRole.Contains(StaticUserRoles.AdminInstructor))
+                if (userRole is null || userRole.Contains(StaticUserRoles.Student))
                 {
                     courses = _unitOfWork.CourseRepository
                         .GetAllAsync
@@ -139,7 +139,28 @@ public class CourseService : ICourseService
                         .GetResult()
                         .ToList();
                 }
-                else
+
+                if (userRole != null && userRole.Contains(StaticUserRoles.Instructor))
+                {
+                    var userId = User.Claims.FirstOrDefault(x => x.Type == ClaimTypes.NameIdentifier)?.Value;
+
+                    instructorId = _unitOfWork.InstructorRepository
+                        .GetAsync(x => x.UserId == userId)
+                        .GetAwaiter()
+                        .GetResult()!
+                        .InstructorId;
+
+                    courses = _unitOfWork.CourseRepository
+                        .GetAllAsync
+                        (
+                            filter: x => x.InstructorId == instructorId
+                        )
+                        .GetAwaiter()
+                        .GetResult()
+                        .ToList();
+                }
+
+                if (userRole != null && userRole.Contains(StaticUserRoles.Admin))
                 {
                     courses = _unitOfWork.CourseRepository
                         .GetAllAsync()
@@ -150,14 +171,49 @@ public class CourseService : ICourseService
             }
             else
             {
-                courses = _unitOfWork.CourseRepository
-                    .GetAllAsync
-                    (
-                        filter: x => x.InstructorId == instructorId
-                    )
-                    .GetAwaiter()
-                    .GetResult()
-                    .ToList();
+                if (userRole is null || userRole.Contains(StaticUserRoles.Student))
+                {
+                    courses = _unitOfWork.CourseRepository
+                        .GetAllAsync
+                        (
+                            filter: x => x.Status == 1 && x.InstructorId == instructorId
+                        )
+                        .GetAwaiter()
+                        .GetResult()
+                        .ToList();
+                }
+
+                if (userRole != null && userRole.Contains(StaticUserRoles.Instructor))
+                {
+                    var userId = User.Claims.FirstOrDefault(x => x.Type == ClaimTypes.NameIdentifier)?.Value;
+
+                    instructorId = _unitOfWork.InstructorRepository
+                        .GetAsync(x => x.UserId == userId)
+                        .GetAwaiter()
+                        .GetResult()!
+                        .InstructorId;
+
+                    courses = _unitOfWork.CourseRepository
+                        .GetAllAsync
+                        (
+                            filter: x => x.InstructorId == instructorId
+                        )
+                        .GetAwaiter()
+                        .GetResult()
+                        .ToList();
+                }
+
+                if (userRole != null && userRole.Contains(StaticUserRoles.Admin))
+                {
+                    courses = _unitOfWork.CourseRepository
+                        .GetAllAsync
+                        (
+                            filter: x => x.InstructorId == instructorId
+                        )
+                        .GetAwaiter()
+                        .GetResult()
+                        .ToList();
+                }
             }
 
             var courseVersions = new List<CourseVersion>();
@@ -284,7 +340,7 @@ public class CourseService : ICourseService
                 courseVersions = courseVersions.Skip(skipResult).Take(pageSize).ToList();
             }
 
-            var courseVersionDto = _mapper.Map<List<GetCourseVersionDTO>>(courseVersions);
+            var courseVersionDto = _mapper.Map<List<GetCourseDTO>>(courseVersions);
 
             return new ResponseDTO()
             {
@@ -307,14 +363,14 @@ public class CourseService : ICourseService
     }
 
     public async Task<ResponseDTO> GetTopPurchasedCourses(
-     int? year = null,
-     int? month = null,
-     int? quarter = null,
-     int top = 5,
-     int pageNumber = 1,
-     int pageSize = 5,
-     string? byCategoryName = null
- )
+        int? year = null,
+        int? month = null,
+        int? quarter = null,
+        int top = 5,
+        int pageNumber = 1,
+        int pageSize = 5,
+        string? byCategoryName = null
+    )
     {
         try
         {
@@ -419,16 +475,15 @@ public class CourseService : ICourseService
     }
 
 
-
     public async Task<ResponseDTO> GetLeastPurchasedCourses(
-    int? year = null,
-    int? month = null,
-    int? quarter = null,
-    int top = 5,
-    int pageNumber = 1,
-    int pageSize = 5,
-    string? byCategoryName = null
-)
+        int? year = null,
+        int? month = null,
+        int? quarter = null,
+        int top = 5,
+        int pageNumber = 1,
+        int pageSize = 5,
+        string? byCategoryName = null
+    )
     {
         try
         {
@@ -533,7 +588,6 @@ public class CourseService : ICourseService
     }
 
 
-
     public async Task<ResponseDTO> GetCourse(ClaimsPrincipal User, Guid courseId)
     {
         try
@@ -551,7 +605,12 @@ public class CourseService : ICourseService
                 };
             }
 
-            var courseVersion = await _unitOfWork.CourseVersionRepository.GetAsync(x => x.Id == course.CourseVersionId);
+            var courseVersion = await _unitOfWork.CourseVersionRepository
+                .GetAsync
+                (
+                    filter: x => x.Id == course.CourseVersionId,
+                    includeProperties: "Category,Level"
+                );
 
             if (courseVersion is null)
             {
@@ -564,7 +623,7 @@ public class CourseService : ICourseService
                 };
             }
 
-            var courseVersionDto = _mapper.Map<GetCourseVersionDTO>(courseVersion);
+            var courseVersionDto = _mapper.Map<GetCourseDTO>(courseVersion);
 
             return new ResponseDTO()
             {
@@ -642,6 +701,19 @@ public class CourseService : ICourseService
                 };
             }
 
+            var courseVersion = await _unitOfWork.CourseVersionRepository.GetAsync(x => x.Id == course.CourseVersionId);
+
+            if (!courseVersion!.CurrentStatus.Equals(StaticCourseVersionStatus.Merged))
+            {
+                return new ResponseDTO()
+                {
+                    IsSuccess = false,
+                    StatusCode = 400,
+                    Result = null,
+                    Message = "Course was not allow to sell"
+                };
+            }
+
             course.Status = StaticCourseStatus.Activated;
 
             _unitOfWork.CourseRepository.Update(course);
@@ -714,6 +786,13 @@ public class CourseService : ICourseService
     {
         try
         {
+            var userId = User.Claims.FirstOrDefault(x => x.Type == ClaimTypes.NameIdentifier)!.Value;
+            var studentId = _unitOfWork.StudentRepository
+                .GetAsync(x => x.UserId == userId)
+                .GetAwaiter()
+                .GetResult()!
+                .StudentId;
+            enrollCourseDto.studentId = studentId;
             var studentCourse = await _unitOfWork.StudentCourseRepository.GetAsync
             (
                 x => x.StudentId == enrollCourseDto.studentId && x.CourseId == enrollCourseDto.courseId
@@ -742,11 +821,11 @@ public class CourseService : ICourseService
                 };
             }
 
-            if (studentCourse.Status != StaticStatus.StudentCourse.Pending)
+            if (studentCourse.Status != StaticStatus.StudentCourse.Confirmed)
             {
                 return new ResponseDTO()
                 {
-                    Message = "Student was not own this course",
+                    Message = "This course was not confirmed by admin",
                     IsSuccess = false,
                     StatusCode = 400,
                     Result = null
@@ -1105,7 +1184,6 @@ public class CourseService : ICourseService
     }
 
 
-
     public async Task<ResponseDTO> GetBestCoursesSuggestion()
     {
         try
@@ -1165,7 +1243,8 @@ public class CourseService : ICourseService
                 {
                     CategoryId = g.Key,
                     TotalStudents = courses
-                        .Where(c => c.CourseVersionId.HasValue && g.Select(cv => cv.Id).Contains(c.CourseVersionId.Value))
+                        .Where(c => c.CourseVersionId.HasValue &&
+                                    g.Select(cv => cv.Id).Contains(c.CourseVersionId.Value))
                         .Sum(c => c.TotalStudent.GetValueOrDefault())
                 })
                 .OrderByDescending(x => x.TotalStudents)
@@ -1248,6 +1327,7 @@ public class CourseService : ICourseService
             };
         }
     }
+
     public async Task<ResponseDTO> GetTopRatedCourses()
     {
         try
@@ -1283,7 +1363,89 @@ public class CourseService : ICourseService
         }
     }
 
+    public async Task<ResponseDTO> GetCourseRateTotal(Guid courseId)
+    {
+        try
+        {
+            // Fetch all courses
+            var course = await _unitOfWork.CourseRepository.GetAsync(
+                filter: c => c.Id == courseId
+            );
 
+            if (course is null)
+            {
+                return new ResponseDTO()
+                {
+                    Message = "Course was not found",
+                    IsSuccess = false,
+                    StatusCode = 404,
+                    Result = null
+                };
+            }
 
+            return new ResponseDTO
+            {
+                Result = new
+                {
+                    Rate = course.TotalRate
+                },
+                Message = "Get course total rate successfully",
+                IsSuccess = true,
+                StatusCode = 200
+            };
+        }
+        catch (Exception ex)
+        {
+            return new ResponseDTO
+            {
+                Message = ex.Message,
+                IsSuccess = false,
+                StatusCode = 500,
+                Result = null
+            };
+        }
+    }
 
+    public async Task<ResponseDTO> GetCourseSlotTotal(Guid courseId)
+    {
+        try
+        {
+            // Fetch all courses
+            var course = await _unitOfWork.CourseRepository.GetAsync(
+                filter: c => c.Id == courseId
+            );
+
+            if (course is null)
+            {
+                return new ResponseDTO()
+                {
+                    Message = "Course was not found",
+                    IsSuccess = false,
+                    StatusCode = 404,
+                    Result = null
+                };
+            }
+
+            return new ResponseDTO
+            {
+                Result = new
+                {
+                    Slot = course.TotalStudent
+                },
+                Message = "Get course total slot successfully",
+                IsSuccess = true,
+                StatusCode = 200
+            };
+        }
+        catch (Exception ex)
+        {
+            return new ResponseDTO
+            {
+                Message = ex.Message,
+                IsSuccess = false,
+                StatusCode = 500,
+                Result = null
+            };
+        }
+    }
 }

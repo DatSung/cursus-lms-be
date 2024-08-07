@@ -4,6 +4,7 @@ using Cursus.LMS.DataAccess.IRepository;
 using Cursus.LMS.Model.Domain;
 using Cursus.LMS.Model.DTO;
 using Cursus.LMS.Service.IService;
+using Cursus.LMS.Utility.Constants;
 
 namespace Cursus.LMS.Service.Service
 {
@@ -172,10 +173,23 @@ namespace Cursus.LMS.Service.Service
             }
         }
 
-        public async Task<ResponseDTO> CreateCourseReview(CreateCourseReviewDTO createCourseReviewDTO)
+        public async Task<ResponseDTO> CreateCourseReview
+        (
+            ClaimsPrincipal User,
+            CreateCourseReviewDTO createCourseReviewDTO
+        )
         {
             try
             {
+                var userId = User.Claims.FirstOrDefault(x => x.Type == ClaimTypes.NameIdentifier)!.Value;
+                var studentId = _unitOfWork.StudentRepository
+                    .GetByUserId(userId)
+                    .GetAwaiter()
+                    .GetResult()!
+                    .StudentId;
+
+                createCourseReviewDTO.StudentId = studentId;
+
                 // Validate if the course exists
                 var course = await _unitOfWork.CourseRepository.GetById(createCourseReviewDTO.CourseId);
                 if (course == null)
@@ -202,6 +216,23 @@ namespace Cursus.LMS.Service.Service
                     };
                 }
 
+                var studentCourse = await _unitOfWork.StudentCourseRepository
+                    .GetAsync(
+                        x => x.CourseId == createCourseReviewDTO.CourseId
+                             && x.StudentId == createCourseReviewDTO.StudentId
+                    );
+
+                if (studentCourse is null)
+                {
+                    return new ResponseDTO()
+                    {
+                        Message = "Student did not own this course",
+                        IsSuccess = false,
+                        StatusCode = 400,
+                        Result = null
+                    };
+                }
+
                 // Create new CourseReview
                 var courseReview = new CourseReview
                 {
@@ -211,8 +242,8 @@ namespace Cursus.LMS.Service.Service
                     Rate = createCourseReviewDTO.Rate,
                     Message = createCourseReviewDTO.Message,
                     CreatedBy = createCourseReviewDTO.StudentId.ToString(), // Or fetch the actual student info
-                    CreatedTime = DateTime.UtcNow,
-                    Status = 1 // Active status
+                    CreatedTime = DateTime.Now,
+                    Status = StaticStatus.CourseReview.Activated // Active status
                 };
 
                 await _unitOfWork.CourseReviewRepository.AddAsync(courseReview);

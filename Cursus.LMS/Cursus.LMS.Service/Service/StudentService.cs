@@ -1,4 +1,4 @@
-﻿using AutoMapper;
+using AutoMapper;
 using Cursus.LMS.DataAccess.IRepository;
 using Cursus.LMS.Model.Domain;
 using Cursus.LMS.Model.DTO;
@@ -57,27 +57,27 @@ namespace Cursus.LMS.Service.Service
                     switch (filterOn.Trim().ToLower())
                     {
                         case "name":
-                            {
-                                students = _unitOfWork.StudentRepository.GetAllAsync(includeProperties: "ApplicationUser")
-                                    .GetAwaiter().GetResult().Where(x =>
-                                        x.ApplicationUser.FullName.Contains(filterQuery,
-                                            StringComparison.CurrentCultureIgnoreCase)).ToList();
-                                break;
-                            }
+                        {
+                            students = _unitOfWork.StudentRepository.GetAllAsync(includeProperties: "ApplicationUser")
+                                .GetAwaiter().GetResult().Where(x =>
+                                    x.ApplicationUser.FullName.Contains(filterQuery,
+                                        StringComparison.CurrentCultureIgnoreCase)).ToList();
+                            break;
+                        }
                         case "email":
-                            {
-                                students = _unitOfWork.StudentRepository.GetAllAsync(includeProperties: "ApplicationUser")
-                                    .GetAwaiter().GetResult().Where(x =>
-                                        x.ApplicationUser.Email.Contains(filterQuery,
-                                            StringComparison.CurrentCultureIgnoreCase)).ToList();
-                                break;
-                            }
+                        {
+                            students = _unitOfWork.StudentRepository.GetAllAsync(includeProperties: "ApplicationUser")
+                                .GetAwaiter().GetResult().Where(x =>
+                                    x.ApplicationUser.Email.Contains(filterQuery,
+                                        StringComparison.CurrentCultureIgnoreCase)).ToList();
+                            break;
+                        }
                         default:
-                            {
-                                students = _unitOfWork.StudentRepository.GetAllAsync(includeProperties: "ApplicationUser")
-                                    .GetAwaiter().GetResult().ToList();
-                                break;
-                            }
+                        {
+                            students = _unitOfWork.StudentRepository.GetAllAsync(includeProperties: "ApplicationUser")
+                                .GetAwaiter().GetResult().ToList();
+                            break;
+                        }
                     }
                 }
                 else
@@ -92,23 +92,23 @@ namespace Cursus.LMS.Service.Service
                     switch (sortBy.Trim().ToLower())
                     {
                         case "name":
-                            {
-                                students = isAscending == true
-                                    ? [.. students.OrderBy(x => x.ApplicationUser.FullName)]
-                                    : [.. students.OrderByDescending(x => x.ApplicationUser.FullName)];
-                                break;
-                            }
+                        {
+                            students = isAscending == true
+                                ? [.. students.OrderBy(x => x.ApplicationUser.FullName)]
+                                : [.. students.OrderByDescending(x => x.ApplicationUser.FullName)];
+                            break;
+                        }
                         case "email":
-                            {
-                                students = isAscending == true
-                                    ? [.. students.OrderBy(x => x.ApplicationUser.Email)]
-                                    : [.. students.OrderByDescending(x => x.ApplicationUser.Email)];
-                                break;
-                            }
+                        {
+                            students = isAscending == true
+                                ? [.. students.OrderBy(x => x.ApplicationUser.Email)]
+                                : [.. students.OrderByDescending(x => x.ApplicationUser.Email)];
+                            break;
+                        }
                         default:
-                            {
-                                break;
-                            }
+                        {
+                            break;
+                        }
                     }
                 }
 
@@ -409,88 +409,6 @@ namespace Cursus.LMS.Service.Service
             }
         }
 
-        //
-        /* public async Task<ResponseDTO> GetAllCourseStudentEnrolled(Guid studentId)
-         {
-             try
-             {
-                 // Kiểm tra studentId có tồn tại không
-                 var student = await _unitOfWork.StudentRepository.GetAsync(i => i.StudentId == studentId);
-                 if (student == null)
-                 {
-                     return new ResponseDTO()
-                     {
-                         Message = "StudentID Invalid",
-                         Result = null,
-                         IsSuccess = false,
-                         StatusCode = 400
-                     };
-                 }
-
-                 // Lấy danh sách CourseId mà học viên đã đăng ký và đang học
-                 var enrolledCourseIds = (await _unitOfWork.StudentCourseRepository
-                         .GetAllAsync
-                         (
-                                sc => sc.StudentId == studentId && sc.Status == StaticStatus.StudentCourse.Enrolled
-
-                         ))
-                         .Select(sc => sc.CourseId)
-                         .Distinct()
-                         .ToList();
-
-                 if (!enrolledCourseIds.Any())
-                 {
-                     return new ResponseDTO()
-                     {
-                         Message = "Student has not enrolled in any courses",
-                         IsSuccess = false,
-                         StatusCode = 404,
-                         Result = null
-                     };
-                 }
-
-                 // Lấy danh sách các CourseVersion dựa trên CourseId
-                 var courseVersions = _unitOfWork.CourseVersionRepository
-                         .GetAllAsync(cv => enrolledCourseIds.Contains(cv.CourseId),
-                         includeProperties: "Course,Category")
-                         .GetAwaiter()
-                         .GetResult()
-                         .ToList();
-
-                 // Chuyển đổi danh sách khóa học thành DTO
-                 var courseEnrolledDtos = courseVersions.Select(async cv => new CourseEnrolledDTO()
-                 {
-                     CourseName = cv.Title,
-                     CourseImage = cv.CourseImgUrl,
-                     CourseRate = (float)cv.Course.TotalRate,
-                     CourseSummary = cv.Description.Length > 200
-                         ? cv.Description.Substring(0, 200) + "..."
-                         : cv.Description,
-                     Category = cv.Category.Name,
-                     IntructorId = cv.InstructorId,
-                     Instructor = _unitOfWork.InstructorRepository.GetAsync(x =>x.InstructorId == cv.InstructorId, includeProperties:"ApplicationUser").GetAwaiter().GetResult(),
-                 }).ToList();
-
-                 return new ResponseDTO()
-                 {
-                     Message = "Get Student Course Enrolled Successfully",
-                     IsSuccess = true,
-                     StatusCode = 200,
-                     Result = courseEnrolledDtos
-                 };
-             }
-             catch (Exception e)
-             {
-                 return new ResponseDTO()
-                 {
-                     Message = e.Message,
-                     Result = null,
-                     IsSuccess = false,
-                     StatusCode = 500
-                 };
-             }
-         }*/
-
         public async Task<ResponseDTO> GetAllCourseStudentEnrolled(Guid studentId)
         {
             try
@@ -510,10 +428,11 @@ namespace Cursus.LMS.Service.Service
 
                 // Lấy danh sách CourseId mà học viên đã đăng ký và đang học
                 var enrolledCourseIds = (await _unitOfWork.StudentCourseRepository
-                        .GetAllAsync(sc => sc.StudentId == studentId && sc.Status == StaticStatus.StudentCourse.Enrolled))
-                        .Select(sc => sc.CourseId)
-                        .Distinct()
-                        .ToList();
+                        .GetAllAsync(
+                            sc => sc.StudentId == studentId && sc.Status == StaticStatus.StudentCourse.Enrolled))
+                    .Select(sc => sc.CourseId)
+                    .Distinct()
+                    .ToList();
 
                 if (!enrolledCourseIds.Any())
                 {
@@ -528,14 +447,15 @@ namespace Cursus.LMS.Service.Service
 
                 // Lấy danh sách các CourseVersion dựa trên CourseId
                 var courseVersions = await _unitOfWork.CourseVersionRepository
-                        .GetAllAsync(cv => enrolledCourseIds.Contains(cv.CourseId), includeProperties: "Course,Category");
+                    .GetAllAsync(cv => enrolledCourseIds.Contains(cv.CourseId), includeProperties: "Course,Category");
 
                 // Chuyển đổi danh sách khóa học thành DTO
                 var courseEnrolledDtos = new List<CourseEnrolledDTO>();
 
                 foreach (var cv in courseVersions)
                 {
-                    var instructor = await _unitOfWork.InstructorRepository.GetAsync(x => x.InstructorId == cv.InstructorId, includeProperties: "ApplicationUser");
+                    var instructor = await _unitOfWork.InstructorRepository.GetAsync(
+                        x => x.InstructorId == cv.InstructorId, includeProperties: "ApplicationUser");
                     var instructorName = instructor.ApplicationUser.FullName;
 
                     courseEnrolledDtos.Add(new CourseEnrolledDTO()
@@ -543,7 +463,9 @@ namespace Cursus.LMS.Service.Service
                         CourseName = cv.Title,
                         CourseImage = cv.CourseImgUrl,
                         CourseRate = (float)cv.Course.TotalRate,
-                        CourseSummary = cv.Description.Length > 200 ? cv.Description.Substring(0, 200) + "..." : cv.Description,
+                        CourseSummary = cv.Description.Length > 200
+                            ? cv.Description.Substring(0, 200) + "..."
+                            : cv.Description,
                         Category = cv.Category.Name,
                         InstructorName = instructorName
                     });
@@ -875,6 +797,7 @@ namespace Cursus.LMS.Service.Service
                         StatusCode = 400
                     };
                 }
+
                 // Lấy danh sách các OrderHeader của student đó
                 var orderHeaders = await _unitOfWork.OrderHeaderRepository.GetAllAsync(o => o.StudentId == studentId);
                 //kiểm tra xem student đã mua khóa học nào chưa
@@ -922,20 +845,37 @@ namespace Cursus.LMS.Service.Service
             }
         }
 
-        public async Task<ResponseDTO> GetAllCourseByStudentId(Guid studentId)
+        public async Task<ResponseDTO> GetAllCourseByStudentId(ClaimsPrincipal User,
+            CourseByStudentDTO courseByStudentDTO)
         {
             try
             {
-                var student = await _unitOfWork.StudentRepository.GetAsync(i => i.StudentId == studentId);
-                if (student == null)
+                Guid? studentId = null;
+                var role = User.Claims.FirstOrDefault(x => x.Type == ClaimTypes.Role)?.Value;
+
+                if (role != null && role.Contains(StaticUserRoles.Student))
                 {
-                    return new ResponseDTO()
+                    var userId = User.Claims.FirstOrDefault(x => x.Type == ClaimTypes.NameIdentifier)?.Value;
+                    var student = await _unitOfWork.StudentRepository.GetAsync(i => i.UserId == userId);
+
+                    if (student != null)
                     {
-                        Message = "StudentId Invalid",
-                        Result = null,
-                        IsSuccess = false,
-                        StatusCode = 400
-                    };
+                        studentId = student.StudentId;
+                    }
+                }
+
+                if (role != null && role.Contains(StaticUserRoles.Admin))
+                {
+                    if (studentId == null)
+                    {
+                        return new ResponseDTO()
+                        {
+                            Message = "Student was not found",
+                            IsSuccess = false,
+                            StatusCode = 404,
+                            Result = null
+                        };
+                    }
                 }
 
                 var courses = await _unitOfWork.StudentCourseRepository.GetAllAsync(
@@ -943,40 +883,28 @@ namespace Cursus.LMS.Service.Service
                     includeProperties: "Course.Instructor.ApplicationUser"
                 );
 
-                if (courses == null)
+                if (courses == null || !courses.Any())
                 {
                     return new ResponseDTO()
                     {
-                        Message = "courses Invalid",
+                        Message = "Student don't have any courses",
                         Result = null,
                         IsSuccess = false,
-                        StatusCode = 400
+                        StatusCode = 404
                     };
                 }
 
-                var listCourses = courses.Select(cs => new
+                var listCourses = courses.Select(cs => new CourseByStudentDTO
                 {
-                    cs.Id,
-                    cs.StudentId,
-                    cs.CourseId,
-                    cs.CertificateImgUrl,
-                    cs.CreatedTime,
-                    cs.UpdatedBy,
-                    cs.UpdatedTime,
-                    cs.Status,
+                    CourseId = cs.Id,
+                    StudentId = cs.StudentId,
+                    CourseVersionId = cs.CourseId,
+                    CertificateImgUrl = cs.CertificateImgUrl,
+                    CreatedTime = cs.CreatedTime,
+                    UpdatedTime = cs.UpdatedTime,
+                    Status = cs.Status,
                     InstructorName = cs.Course.Instructor.ApplicationUser.FullName
                 }).ToList();
-
-                if (!listCourses.Any())
-                {
-                    return new ResponseDTO()
-                    {
-                        Message = "Student has not enrolled in any courses",
-                        Result = null,
-                        IsSuccess = false,
-                        StatusCode = 400
-                    };
-                }
 
                 return new ResponseDTO()
                 {
@@ -997,6 +925,6 @@ namespace Cursus.LMS.Service.Service
                 };
             }
         }
-
     }
+
 }

@@ -1,20 +1,25 @@
-﻿using Cursus.LMS.DataAccess.IRepository;
+﻿using System.Security.Claims;
+using Cursus.LMS.DataAccess.IRepository;
 using Cursus.LMS.Model.Domain;
 using Cursus.LMS.Model.DTO;
 using Cursus.LMS.Service.IService;
+using Cursus.LMS.Utility.Constants;
 
 namespace Cursus.LMS.Service.Service;
 
 public class CourseProgressService : ICourseProgressService
 {
     private readonly IUnitOfWork _unitOfWork;
+    private readonly IStudentCourseService _studentCourseService;
+    private readonly IEmailService _emailService;
 
     public CourseProgressService
     (
-        IUnitOfWork unitOfWork
-    )
+        IUnitOfWork unitOfWork, IStudentCourseService studentCourseService, IEmailService emailService)
     {
         _unitOfWork = unitOfWork;
+        _studentCourseService = studentCourseService;
+        _emailService = emailService;
     }
 
     public async Task<ResponseDTO> CreateProgress(CreateProgressDTO createProgressDto)
@@ -100,12 +105,13 @@ public class CourseProgressService : ICourseProgressService
         }
     }
 
-    public async Task<ResponseDTO> UpdateProgress(UpdateProgressDTO updateProgressDto)
+    public async Task<ResponseDTO> UpdateProgress(ClaimsPrincipal User, UpdateProgressDTO updateProgressDto)
     {
         try
         {
             var studentCourse = await _unitOfWork.StudentCourseRepository
-                .GetAsync(
+                .GetAsync
+                (
                     x => x.CourseId == updateProgressDto.CourseId
                          && x.StudentId == updateProgressDto.StudentId
                 );
@@ -144,6 +150,8 @@ public class CourseProgressService : ICourseProgressService
             courseProgress.CompletedTime = DateTime.Now;
 
             await _unitOfWork.SaveAsync();
+
+            await CheckFinishCourse(User, studentCourse.StudentId, studentCourse.CourseId);
 
             return new ResponseDTO()
             {
@@ -263,6 +271,43 @@ public class CourseProgressService : ICourseProgressService
                 StatusCode = 500,
                 Result = null
             };
+        }
+    }
+
+    private async Task CheckFinishCourse(ClaimsPrincipal User, Guid studentId, Guid courseId)
+    {
+        try
+        {
+            var courseProgress = await _unitOfWork.CourseProgressRepository.GetAllAsync(x => x.CourseId == courseId);
+            var isCourseCompleted = courseProgress.Any(x => x.IsCompleted is false);
+
+            if (isCourseCompleted)
+            {
+                await _studentCourseService.UpdateStudentCourse
+                (
+                    User,
+                    new UpdateStudentCourseDTO()
+                    {
+                        CourseId = courseId,
+                        StudentId = studentId,
+                        Status = StaticStatus.StudentCourse.Completed
+                    }
+                );
+
+                var userId = _unitOfWork.StudentRepository.GetAsync(x => x.StudentId == studentId).GetAwaiter()
+                    .GetResult()!.UserId;
+                var userEmail = _unitOfWork.UserManagerRepository.FindByIdAsync(userId).GetAwaiter().GetResult().Email;
+
+                if (userEmail != null)
+                {
+                    await _emailService.SendEmailForStudentAboutCompleteCourse(userEmail);
+                }
+            }
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            throw;
         }
     }
 }

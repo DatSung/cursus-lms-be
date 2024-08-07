@@ -828,48 +828,7 @@ tD:\FPT\Semester 6\Project_Cursus\Backend_Cursus\Cursus.LMS\Cursus.LMS.Utility\C
 ;
 
   !
-} ¹
-qD:\FPT\Semester 6\Project_Cursus\Backend_Cursus\Cursus.LMS\Cursus.LMS.Utility\Constants\StaticConnectionString.cs
-	namespace 	
-Cursus
- 
-. 
-LMS 
-. 
-Utility 
-. 
-	Constants &
-;& '
-public 
-static 
-class "
-StaticConnectionString *
-{ 
-public 
-
-const 
-string #
-SQLDB_DefaultConnection /
-=0 1
-$str2 E
-;E F
-public 
-
-const 
-string !
-SQLDB_TrongConnection -
-=. /
-$str0 7
-;7 8
-public 
-
-const 
-string "
-REDIS_ConnectionString .
-=/ 0
-$str1 C
-;C D
-}		 í
+} í
 mD:\FPT\Semester 6\Project_Cursus\Backend_Cursus\Cursus.LMS\Cursus.LMS.Utility\Constants\StaticCourseStatus.cs
 	namespace 	
 Cursus
@@ -909,4 +868,45 @@ mD:\FPT\Semester 6\Project_Cursus\Backend_Cursus\Cursus.LMS\Cursus.LMS.Utility\C
 =! "
 $num# $
 ;$ %
-} 
+} ¹
+qD:\FPT\Semester 6\Project_Cursus\Backend_Cursus\Cursus.LMS\Cursus.LMS.Utility\Constants\StaticConnectionString.cs
+	namespace 	
+Cursus
+ 
+. 
+LMS 
+. 
+Utility 
+. 
+	Constants &
+;& '
+public 
+static 
+class "
+StaticConnectionString *
+{ 
+public 
+
+const 
+string #
+SQLDB_DefaultConnection /
+=0 1
+$str2 E
+;E F
+public 
+
+const 
+string !
+SQLDB_AzureConnection -
+=. /
+$str0 H
+;H I
+public 
+
+const 
+string "
+REDIS_ConnectionString .
+=/ 0
+$str1 C
+;C D
+}		 

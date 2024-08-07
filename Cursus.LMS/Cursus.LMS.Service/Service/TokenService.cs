@@ -47,7 +47,7 @@ public class TokenService : ITokenService
             issuer: _configuration["JWT:ValidIssuer"],
             audience: _configuration["JWT:ValidAudience"],
             notBefore: DateTime.Now,
-            expires: DateTime.Now.AddMinutes(15), //thời gian hết hạn là 15p
+            expires: DateTime.Now.AddMinutes(60), //thời gian hết hạn là 60p
             claims: authClaims, //danh sách thông tin của người dùng
             signingCredentials: signingCredentials
         );

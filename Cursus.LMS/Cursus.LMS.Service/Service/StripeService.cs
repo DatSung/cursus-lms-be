@@ -205,7 +205,7 @@ public class StripeService : IStripeService
             var options = new PayoutCreateOptions
             {
                 Amount = createStripePayoutDto.Amount * 100,
-                Currency = createStripePayoutDto.Currency,
+                Currency = createStripePayoutDto.Currency.Trim(),
             };
 
             var service = new PayoutService();
@@ -214,7 +214,7 @@ public class StripeService : IStripeService
             (
                 options, new RequestOptions
                 {
-                    StripeAccount = createStripePayoutDto.ConnectedAccountId
+                    StripeAccount = createStripePayoutDto.ConnectedAccountId?.Trim()
                 }
             );
 
@@ -224,6 +224,33 @@ public class StripeService : IStripeService
                 IsSuccess = true,
                 StatusCode = 200,
                 Message = "Create payout successfully"
+            };
+        }
+        catch (Exception e)
+        {
+            return new ResponseDTO()
+            {
+                Result = null,
+                IsSuccess = true,
+                StatusCode = 500,
+                Message = e.Message
+            };
+        }
+    }
+
+    public async Task<ResponseDTO> GetStripeBalance()
+    {
+        try
+        {
+            var balanceService = new Stripe.BalanceService();
+            var balance = await balanceService.GetAsync();
+
+            return new ResponseDTO()
+            {
+                Message = "Get stripe balance successfully",
+                IsSuccess = true,
+                StatusCode = 200,
+                Result = balance
             };
         }
         catch (Exception e)

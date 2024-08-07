@@ -107,6 +107,8 @@ public class AutoMapperProfile : Profile
             .ForMember(dest => dest.CategoryName, opt => opt.MapFrom(src => src.Category.Name))
             .ForMember(dest => dest.LevelName, opt => opt.MapFrom(src => src.Level.Name));
 
+        CreateMap<CourseSectionVersion, GetCourseSectionDTO>().ReverseMap();
+        
         CreateMap<CourseVersionStatus, GetCourseVersionStatusDTO>().ReverseMap();
 
         CreateMap<CourseVersionComment, GetCourseCommnetDTO>()
@@ -154,11 +156,19 @@ public class AutoMapperProfile : Profile
         CreateMap<Transaction, GetTransactionDTO>().ReverseMap();
 
         CreateMap<CourseBookmark, CreateCourseBookmarkDTO>().ReverseMap();
-        
+
         CreateMap<Company, UpdateCompanyDTO>().ReverseMap();
         CreateMap<Privacy, CreatePrivacyDTO>().ReverseMap();
         CreateMap<Privacy, UpdatePrivacyDTO>().ReverseMap();
         CreateMap<TermOfUse, CreateTermOfUseDTO>().ReverseMap();
         CreateMap<TermOfUse, UpdateTermOfUseDTO>().ReverseMap();
+
+        CreateMap<Balance, GetBalanceDTO>().ReverseMap();
+
+        CreateMap<OrderStatus, GetOrdersStatusDTO>().ReverseMap();
+
+        CreateMap<CourseVersion, GetCourseDTO>().ReverseMap();
+
+        CreateMap<CourseReview, GetCourseReviewDTO>().ReverseMap();
     }
 }

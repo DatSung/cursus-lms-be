@@ -1,4 +1,4 @@
-»‹
+Ω˙
 tD:\FPT\Semester 6\Project_Cursus\Backend_Cursus\Cursus.LMS\Cursus.LMS.DataAccess\Seeding\ApplicationDbContextSeed.cs
 	namespace 	
 Cursus
@@ -1317,174 +1317,174 @@ UpdateTime
 ,
 ËË 
 new
-ÈÈ 
+ÈÈ 
 {
-ÍÍ 
+ÍÍ 
 Id
-ÎÎ 
+ÎÎ 
 =
-ÎÎ 
+ÎÎ 
 Guid
-ÎÎ 
+ÎÎ 
 .
-ÎÎ 
+ÎÎ 
 NewGuid
-ÎÎ "
+ÎÎ !
 (
-ÎÎ" #
+ÎÎ! "
 )
-ÎÎ# $
+ÎÎ" #
 ,
-ÎÎ$ %
+ÎÎ# $
 TemplateName
-ÏÏ 
+ÏÏ 
 =
-ÏÏ 
+ÏÏ 
 $str
-ÏÏ  7
+ÏÏ 6
 ,
-ÏÏ7 8
+ÏÏ6 7
 
 SenderName
-ÌÌ 
+ÌÌ 
 =
-ÌÌ 
+ÌÌ 
 $str
-ÌÌ +
+ÌÌ *
 ,
-ÌÌ+ ,
+ÌÌ* +
 SenderEmail
-ÓÓ 
+ÓÓ 
 =
-ÓÓ 
+ÓÓ 
 $str
-ÓÓ ;
+ÓÓ :
 ,
-ÓÓ; <
+ÓÓ: ;
 Category
-ÔÔ 
+ÔÔ 
 =
-ÔÔ 
+ÔÔ 
 $str
-ÔÔ .
+ÔÔ -
 ,
-ÔÔ. /
+ÔÔ- .
 SubjectLine
- 
+ 
 =
- 
+ 
 $str
- J
+ I
 ,
-J K
+I J
 PreHeaderText
-ÒÒ 
+ÒÒ 
 =
-ÒÒ  
+ÒÒ 
 $str
-ÒÒ! )
+ÒÒ  (
 ,
-ÒÒ) *!
+ÒÒ( )!
 PersonalizationTags
-ÚÚ $
+ÚÚ #
 =
-ÚÚ% &
+ÚÚ$ %
 $str
-ÚÚ' @
+ÚÚ& ?
 ,
-ÚÚ@ A
+ÚÚ? @
 BodyContent
-ÛÛ 
+ÛÛ 
 =
-ÛÛ 
+ÛÛ 
 $str
 ÙÙ ]
 ,
 ÙÙ] ^
 FooterContent
-ıı 
+ıı 
 =
-ıı  
+ıı 
 $str
-ıı! R
+ıı  Q
 ,
-ııR S
+ııQ R
 CallToAction
-ˆˆ 
+ˆˆ 
 =
-ˆˆ 
+ˆˆ 
 $str
-ˆˆ  Z
+ˆˆ Y
 ,
-ˆˆZ [
+ˆˆY Z
 Language
-˜˜ 
+˜˜ 
 =
-˜˜ 
+˜˜ 
 $str
-˜˜ %
+˜˜ $
 ,
-˜˜% &
+˜˜$ %
 RecipientType
-¯¯ 
+¯¯ 
 =
-¯¯  
+¯¯ 
 $str
-¯¯! +
+¯¯  *
 ,
-¯¯+ ,
+¯¯* +
 CreateBy
-˘˘ 
+˘˘ 
 =
-˘˘ 
+˘˘ 
 $str
-˘˘ $
+˘˘ #
 ,
-˘˘$ %
+˘˘# $
 
 CreateTime
-˙˙ 
+˙˙ 
 =
-˙˙ 
+˙˙ 
 DateTime
-˙˙ &
+˙˙ %
 .
-˙˙& '
+˙˙% &
 Now
-˙˙' *
+˙˙& )
 ,
-˙˙* +
+˙˙) *
 UpdateBy
-˚˚ 
+˚˚ 
 =
-˚˚ 
+˚˚ 
 $str
-˚˚ #
+˚˚ "
 ,
-˚˚# $
+˚˚" #
 
 UpdateTime
-¸¸ 
+¸¸ 
 =
-¸¸ 
+¸¸ 
 DateTime
-¸¸ &
+¸¸ %
 .
-¸¸& '
+¸¸% &
 Now
-¸¸' *
+¸¸& )
 ,
-¸¸* +
+¸¸) *
 Status
-˝˝ 
+˝˝ 
 =
-˝˝ 
+˝˝ 
 $num
-˝˝ 
+˝˝ 
 }
-˛˛ 
+˛˛ 
 ,
-˛˛ 
+˛˛ 
 new
 ˇˇ 
 {
@@ -2493,8 +2493,407 @@ UpdateTime
 ÖÖ
  
 }
-ÜÜ 
-}áá ﬂ'
+ÜÜ 
+public
+àà 
+
+static
+àà 
+void
+àà 
+SeedCompany
+àà "
+(
+àà" #
+ModelBuilder
+àà# /
+modelBuilder
+àà0 <
+)
+àà< =
+{
+ââ 
+modelBuilder
+ää 
+.
+ää 
+Entity
+ää 
+<
+ää 
+Company
+ää #
+>
+ää# $
+(
+ää$ %
+)
+ää% &
+.
+ää& '
+HasData
+ää' .
+(
+ää. /
+new
+ãã 
+Company
+ãã 
+{
+åå 
+Id
+çç 
+=
+çç 
+Guid
+çç 
+.
+çç 
+NewGuid
+çç !
+(
+çç! "
+)
+çç" #
+,
+çç# $
+Name
+éé 
+=
+éé 
+$str
+éé !
+,
+éé! "
+Address
+èè 
+=
+èè 
+$str
+èè '
+,
+èè' (
+City
+êê 
+=
+êê 
+$str
+êê !
+,
+êê! "
+State
+ëë 
+=
+ëë 
+$str
+ëë 
+,
+ëë  
+Country
+íí 
+=
+íí 
+$str
+íí #
+,
+íí# $
+
+PostalCode
+ìì 
+=
+ìì 
+$str
+ìì $
+,
+ìì$ %
+Phone
+îî 
+=
+îî 
+$str
+îî &
+,
+îî& '
+Email
+ïï 
+=
+ïï 
+$str
+ïï -
+,
+ïï- .
+Website
+ññ 
+=
+ññ 
+$str
+ññ 2
+,
+ññ2 3
+FoundedDate
+óó 
+=
+óó 
+new
+óó !
+DateTime
+óó" *
+(
+óó* +
+$num
+óó+ /
+,
+óó/ 0
+$num
+óó1 2
+,
+óó2 3
+$num
+óó4 5
+)
+óó5 6
+,
+óó6 7
+LogoUrl
+òò 
+=
+òò 
+$str
+òò ;
+,
+òò; <
+Description
+ôô 
+=
+ôô 
+$str
+ôô N
+}
+öö 
+)
+õõ 	
+;
+õõ	 
+
+}
+úú 
+public
+ûû 
+
+static
+ûû 
+void
+ûû 
+SeedPrivacy
+ûû "
+(
+ûû" #
+ModelBuilder
+ûû# /
+modelBuilder
+ûû0 <
+)
+ûû< =
+{
+üü 
+modelBuilder
+†† 
+.
+†† 
+Entity
+†† 
+<
+†† 
+Privacy
+†† #
+>
+††# $
+(
+††$ %
+)
+††% &
+.
+††& '
+HasData
+††' .
+(
+††. /
+new
+°° 
+Privacy
+°° 
+(
+°° 
+)
+°° 
+{
+¢¢ 
+Id
+££ 
+=
+££ 
+Guid
+££ 
+.
+££ 
+NewGuid
+££ !
+(
+££! "
+)
+££" #
+,
+££# $
+Title
+§§ 
+=
+§§ 
+$str
+§§ !
+,
+§§! "
+Content
+•• 
+=
+•• 
+$str
+•• B
+,
+••B C
+LastUpdated
+¶¶ 
+=
+¶¶ 
+DateTime
+¶¶ &
+.
+¶¶& '
+UtcNow
+¶¶' -
+,
+¶¶- .
+IsActive
+ßß 
+=
+ßß 
+true
+ßß 
+}
+®® 
+)
+©© 	
+;
+©©	 
+
+}
+™™ 
+public
+¨¨ 
+
+static
+¨¨ 
+void
+¨¨ 
+SeedTermOfUse
+¨¨ $
+(
+¨¨$ %
+ModelBuilder
+¨¨% 1
+modelBuilder
+¨¨2 >
+)
+¨¨> ?
+{
+≠≠ 
+modelBuilder
+ÆÆ 
+.
+ÆÆ 
+Entity
+ÆÆ 
+<
+ÆÆ 
+	TermOfUse
+ÆÆ %
+>
+ÆÆ% &
+(
+ÆÆ& '
+)
+ÆÆ' (
+.
+ÆÆ( )
+HasData
+ÆÆ) 0
+(
+ÆÆ0 1
+new
+ØØ 
+	TermOfUse
+ØØ 
+{
+∞∞ 
+Id
+±± 
+=
+±± 
+Guid
+±± 
+.
+±± 
+NewGuid
+±± !
+(
+±±! "
+)
+±±" #
+,
+±±# $
+Title
+≤≤ 
+=
+≤≤ 
+$str
+≤≤ &
+,
+≤≤& '
+Content
+≥≥ 
+=
+≥≥ 
+$str
+≥≥ G
+,
+≥≥G H
+LastUpdated
+¥¥ 
+=
+¥¥ 
+DateTime
+¥¥ &
+.
+¥¥& '
+UtcNow
+¥¥' -
+,
+¥¥- .
+IsActive
+µµ 
+=
+µµ 
+true
+µµ 
+}
+∂∂ 
+)
+∑∑ 	
+;
+∑∑	 
+
+}
+∏∏ 
+}ππ ﬂ'
 tD:\FPT\Semester 6\Project_Cursus\Backend_Cursus\Cursus.LMS\Cursus.LMS.DataAccess\Repository\UserManagerRepository.cs
 	namespace 	
 Cursus
@@ -2760,7 +3159,7 @@ Repository  *
 ;??? @
 }@@ 	
 }AA 
-}BB ‹R
+}BB ÊY
 iD:\FPT\Semester 6\Project_Cursus\Backend_Cursus\Cursus.LMS\Cursus.LMS.DataAccess\Repository\UnitOfWork.cs
 	namespace		 	
 Cursus		
@@ -2835,430 +3234,473 @@ UnitOfWork 
 getJ M
 ;M N
 }O P
-public "
-IPaymentCardRepository %!
-PaymentCardRepository& ;
-{< =
-get> A
-;A B
-setC F
-;F G
-}H I
-public 
-ICourseRepository  
-CourseRepository! 1
-{2 3
-get4 7
-;7 8
-set9 <
-;< =
-}> ?
-public '
-IInstructorRatingRepository *&
-InstructorRatingRepository+ E
-{F G
-getH K
-;K L
-setM P
-;P Q
-}R S
-public $
-ICourseVersionRepository '#
-CourseVersionRepository( ?
-{@ A
-getB E
-;E F
-}G H
-public +
-ICourseSectionVersionRepository .*
-CourseSectionVersionRepository/ M
-{N O
-getP S
-;S T
-}U V
-public ,
- ISectionDetailsVersionRepository /+
-SectionDetailsVersionRepository0 O
-{P Q
-getR U
-;U V
-}W X
-public *
-ICourseVersionStatusRepository -)
-CourseVersionStatusRepository. K
-{L M
-getN Q
-;Q R
-}S T
-public +
-ICourseVersionCommentRepository .*
-CourseVersionCommentRepository/ M
-{N O
-getP S
-;S T
-}U V
-public $
-IStudentCourseRepository '#
-StudentCourseRepository( ?
-{@ A
-getB E
-;E F
-}G H
-public 
-ILevelRepository 
-LevelRepository  /
-{0 1
-get2 5
-;5 6
-}7 8
-public !
-ICartHeaderRepository $ 
-CartHeaderRepository% 9
-{: ;
-get< ?
-;? @
-}A B
-public "
-ICartDetailsRepository %!
-CartDetailsRepository& ;
-{< =
-get> A
-;A B
-}C D
+public 
+ICourseRepository  
+CourseRepository! 1
+{2 3
+get4 7
+;7 8
+set9 <
+;< =
+}> ?
+public '
+IInstructorRatingRepository *&
+InstructorRatingRepository+ E
+{F G
+getH K
+;K L
+setM P
+;P Q
+}R S
+public $
+ICourseVersionRepository '#
+CourseVersionRepository( ?
+{@ A
+getB E
+;E F
+}G H
+public +
+ICourseSectionVersionRepository .*
+CourseSectionVersionRepository/ M
+{N O
+getP S
+;S T
+}U V
+public ,
+ ISectionDetailsVersionRepository /+
+SectionDetailsVersionRepository0 O
+{P Q
+getR U
+;U V
+}W X
+public *
+ICourseVersionStatusRepository -)
+CourseVersionStatusRepository. K
+{L M
+getN Q
+;Q R
+}S T
+public +
+ICourseVersionCommentRepository .*
+CourseVersionCommentRepository/ M
+{N O
+getP S
+;S T
+}U V
+public $
+IStudentCourseRepository '#
+StudentCourseRepository( ?
+{@ A
+getB E
+;E F
+}G H
+public 
+ILevelRepository 
+LevelRepository  /
+{0 1
+get2 5
+;5 6
+}7 8
+public !
+ICartHeaderRepository $ 
+CartHeaderRepository% 9
+{: ;
+get< ?
+;? @
+}A B
+public "
+ICartDetailsRepository %!
+CartDetailsRepository& ;
+{< =
+get> A
+;A B
+}C D
+public #
+ICourseReviewRepository &"
+CourseReviewRepository' =
+{> ?
+get@ C
+;C D
+}E F
 public   #
-ICourseReviewRepository   &"
-CourseReviewRepository  ' =
+ICourseReportRepository   &"
+CourseReportRepository  ' =
 {  > ?
 get  @ C
 ;  C D
 }  E F
-public!! #
-ICourseReportRepository!! &"
-CourseReportRepository!!' =
-{!!> ?
-get!!@ C
-;!!C D
-}!!E F
-public"" "
-IOrderHeaderRepository"" %!
-OrderHeaderRepository""& ;
-{""< =
-get""> A
-;""A B
-}""C D
-public## #
-IOrderDetailsRepository## &"
-OrderDetailsRepository##' =
-{##> ?
-get##@ C
-;##C D
-}##E F
-public$$ "
-IOrderStatusRepository$$ %!
-OrderStatusRepository$$& ;
-{$$< =
-get$$> A
-;$$A B
-}$$C D
-public%% %
-IStudentCommentRepository%% ($
-StudentCommentRepository%%) A
-{%%B C
-get%%D G
-;%%G H
-}%%I J
-public&& *
-IStudentCourseStatusRepository&& -)
-StudentCourseStatusRepository&&. K
-{&&L M
-get&&N Q
-;&&Q R
-}&&S T
-public'' 
-IBalanceRepository'' !
-BalanceRepository''" 3
-{''4 5
-get''6 9
-;''9 :
-}''; <
-public(( "
-ITransactionRepository(( %!
-TransactionRepository((& ;
-{((< =
-get((> A
-;((A B
-}((C D
+public!! "
+IOrderHeaderRepository!! %!
+OrderHeaderRepository!!& ;
+{!!< =
+get!!> A
+;!!A B
+}!!C D
+public"" #
+IOrderDetailsRepository"" &"
+OrderDetailsRepository""' =
+{""> ?
+get""@ C
+;""C D
+}""E F
+public## "
+IOrderStatusRepository## %!
+OrderStatusRepository##& ;
+{##< =
+get##> A
+;##A B
+}##C D
+public$$ %
+IStudentCommentRepository$$ ($
+StudentCommentRepository$$) A
+{$$B C
+get$$D G
+;$$G H
+}$$I J
+public%% *
+IStudentCourseStatusRepository%% -)
+StudentCourseStatusRepository%%. K
+{%%L M
+get%%N Q
+;%%Q R
+}%%S T
+public&& 
+IBalanceRepository&& !
+BalanceRepository&&" 3
+{&&4 5
+get&&6 9
+;&&9 :
+}&&; <
+public'' "
+ITransactionRepository'' %!
+TransactionRepository''& ;
+{''< =
+get''> A
+;''A B
+}''C D
+public(( %
+ICourseBookmarkRepository(( ($
+CourseBookmarkRepository(() A
+{((B C
+get((D G
+;((G H
+}((I J
 public)) %
-ICourseBookmarkRepository)) ($
-CourseBookmarkRepository))) A
+ICourseProgressRepository)) ($
+CourseProgressRepository))) A
 {))B C
 get))D G
 ;))G H
 }))I J
-public++ 
+public**  
+ITermOfUseRepository** #
+TermOfUseRepository**$ 7
+{**8 9
+get**: =
+;**= >
+}**? @
+public++ 
+ICompanyRepository++ !
+CompanyRepository++" 3
+{++4 5
+get++6 9
+;++9 :
+}++; <
+public,, 
+IPrivacyRepository,, !
+PrivacyRepository,," 3
+{,,4 5
+get,,6 9
+;,,9 :
+},,; <
+public.. 
 
-UnitOfWork++ 
-(++  
-ApplicationDbContext++ .
-context++/ 6
-,++6 7
-UserManager++8 C
-<++C D
-ApplicationUser++D S
->++S T
-userManager++U `
-)++` a
-{,, 	
-_context-- 
-=-- 
-context-- 
-;-- 
-StudentRepository.. 
-=.. 
-new..  #
-StudentRepository..$ 5
-(..5 6
-_context..6 >
-)..> ?
-;..? @ 
-InstructorRepository//  
-=//! "
-new//# & 
-InstructorRepository//' ;
-(//; <
-_context//< D
-)//D E
-;//E F!
-PaymentCardRepository00 !
-=00" #
-new00$ '!
-PaymentCardRepository00( =
-(00= >
-_context00> F
-)00F G
-;00G H
-CategoryRepository11 
-=11  
-new11! $
-CategoryRepository11% 7
-(117 8
-_context118 @
-)11@ A
-;11A B#
-EmailTemplateRepository22 #
-=22$ %
-new22& )#
-EmailTemplateRepository22* A
-(22A B
-_context22B J
-)22J K
-;22K L!
-UserManagerRepository33 !
-=33" #
-new33$ '!
-UserManagerRepository33( =
-(33= >
-userManager33> I
-)33I J
-;33J K'
-InstructorCommentRepository44 '
-=44( )
-new44* -'
-InstructorCommentRepository44. I
-(44I J
-_context44J R
-)44R S
-;44S T&
-InstructorRatingRepository55 &
-=55' (
-new55) ,&
-InstructorRatingRepository55- G
-(55G H
-_context55H P
-)55P Q
-;55Q R
-CourseRepository66 
-=66 
-new66 "
-CourseRepository66# 3
-(663 4
-_context664 <
-)66< =
-;66= >#
-CourseVersionRepository77 #
-=77$ %
-new77& )#
-CourseVersionRepository77* A
-(77A B
-_context77B J
-)77J K
-;77K L*
-CourseSectionVersionRepository88 *
-=88+ ,
-new88- 0*
-CourseSectionVersionRepository881 O
-(88O P
-_context88P X
-)88X Y
-;88Y Z+
-SectionDetailsVersionRepository99 +
-=99, -
-new99. 1+
-SectionDetailsVersionRepository992 Q
-(99Q R
-_context99R Z
-)99Z [
-;99[ \)
-CourseVersionStatusRepository:: )
-=::* +
-new::, /)
-CourseVersionStatusRepository::0 M
-(::M N
-_context::N V
-)::V W
-;::W X*
-CourseVersionCommentRepository;; *
-=;;+ ,
-new;;- 0*
-CourseVersionCommentRepository;;1 O
-(;;O P
-_context;;P X
-);;X Y
-;;;Y Z#
-StudentCourseRepository<< #
-=<<$ %
-new<<& )#
-StudentCourseRepository<<* A
-(<<A B
-_context<<B J
-)<<J K
-;<<K L
-LevelRepository== 
-=== 
-new== !
-LevelRepository==" 1
-(==1 2
-_context==2 :
-)==: ;
-;==; < 
-CartHeaderRepository>>  
-=>>! "
-new>># & 
-CartHeaderRepository>>' ;
-(>>; <
-_context>>< D
-)>>D E
-;>>E F!
-CartDetailsRepository?? !
-=??" #
-new??$ '!
-CartDetailsRepository??( =
-(??= >
-_context??> F
-)??F G
-;??G H"
-CourseReviewRepository@@ "
-=@@# $
-new@@% ("
-CourseReviewRepository@@) ?
-(@@? @
-_context@@@ H
-)@@H I
-;@@I J"
-CourseReportRepositoryAA "
-=AA# $
-newAA% ("
-CourseReportRepositoryAA) ?
-(AA? @
-_contextAA@ H
-)AAH I
-;AAI J!
-OrderHeaderRepositoryBB !
-=BB" #
-newBB$ '!
-OrderHeaderRepositoryBB( =
-(BB= >
-_contextBB> F
-)BBF G
-;BBG H"
-OrderDetailsRepositoryCC "
+UnitOfWork.. 
+(..  
+ApplicationDbContext.. .
+context../ 6
+,..6 7
+UserManager..8 C
+<..C D
+ApplicationUser..D S
+>..S T
+userManager..U `
+)..` a
+{// 	
+_context00 
+=00 
+context00 
+;00 
+StudentRepository11 
+=11 
+new11  #
+StudentRepository11$ 5
+(115 6
+_context116 >
+)11> ?
+;11? @ 
+InstructorRepository22  
+=22! "
+new22# & 
+InstructorRepository22' ;
+(22; <
+_context22< D
+)22D E
+;22E F
+CategoryRepository33 
+=33  
+new33! $
+CategoryRepository33% 7
+(337 8
+_context338 @
+)33@ A
+;33A B#
+EmailTemplateRepository44 #
+=44$ %
+new44& )#
+EmailTemplateRepository44* A
+(44A B
+_context44B J
+)44J K
+;44K L!
+UserManagerRepository55 !
+=55" #
+new55$ '!
+UserManagerRepository55( =
+(55= >
+userManager55> I
+)55I J
+;55J K'
+InstructorCommentRepository66 '
+=66( )
+new66* -'
+InstructorCommentRepository66. I
+(66I J
+_context66J R
+)66R S
+;66S T&
+InstructorRatingRepository77 &
+=77' (
+new77) ,&
+InstructorRatingRepository77- G
+(77G H
+_context77H P
+)77P Q
+;77Q R
+CourseRepository88 
+=88 
+new88 "
+CourseRepository88# 3
+(883 4
+_context884 <
+)88< =
+;88= >#
+CourseVersionRepository99 #
+=99$ %
+new99& )#
+CourseVersionRepository99* A
+(99A B
+_context99B J
+)99J K
+;99K L*
+CourseSectionVersionRepository:: *
+=::+ ,
+new::- 0*
+CourseSectionVersionRepository::1 O
+(::O P
+_context::P X
+)::X Y
+;::Y Z+
+SectionDetailsVersionRepository;; +
+=;;, -
+new;;. 1+
+SectionDetailsVersionRepository;;2 Q
+(;;Q R
+_context;;R Z
+);;Z [
+;;;[ \)
+CourseVersionStatusRepository<< )
+=<<* +
+new<<, /)
+CourseVersionStatusRepository<<0 M
+(<<M N
+_context<<N V
+)<<V W
+;<<W X*
+CourseVersionCommentRepository== *
+===+ ,
+new==- 0*
+CourseVersionCommentRepository==1 O
+(==O P
+_context==P X
+)==X Y
+;==Y Z#
+StudentCourseRepository>> #
+=>>$ %
+new>>& )#
+StudentCourseRepository>>* A
+(>>A B
+_context>>B J
+)>>J K
+;>>K L
+LevelRepository?? 
+=?? 
+new?? !
+LevelRepository??" 1
+(??1 2
+_context??2 :
+)??: ;
+;??; < 
+CartHeaderRepository@@  
+=@@! "
+new@@# & 
+CartHeaderRepository@@' ;
+(@@; <
+_context@@< D
+)@@D E
+;@@E F!
+CartDetailsRepositoryAA !
+=AA" #
+newAA$ '!
+CartDetailsRepositoryAA( =
+(AA= >
+_contextAA> F
+)AAF G
+;AAG H"
+CourseReviewRepositoryBB "
+=BB# $
+newBB% ("
+CourseReviewRepositoryBB) ?
+(BB? @
+_contextBB@ H
+)BBH I
+;BBI J"
+CourseReportRepositoryCC "
 =CC# $
 newCC% ("
-OrderDetailsRepositoryCC) ?
+CourseReportRepositoryCC) ?
 (CC? @
 _contextCC@ H
 )CCH I
 ;CCI J!
-OrderStatusRepositoryDD !
+OrderHeaderRepositoryDD !
 =DD" #
 newDD$ '!
-OrderStatusRepositoryDD( =
+OrderHeaderRepositoryDD( =
 (DD= >
 _contextDD> F
 )DDF G
-;DDG H$
-StudentCommentRepositoryEE $
-=EE% &
-newEE' *$
-StudentCommentRepositoryEE+ C
-(EEC D
-_contextEED L
-)EEL M
-;EEM N)
-StudentCourseStatusRepositoryFF )
-=FF* +
-newFF, /)
-StudentCourseStatusRepositoryFF0 M
-(FFM N
-_contextFFN V
-)FFV W
-;FFW X
-BalanceRepositoryGG 
-=GG 
-newGG  #
-BalanceRepositoryGG$ 5
-(GG5 6
-_contextGG6 >
-)GG> ?
-;GG? @!
-TransactionRepositoryHH !
-=HH" #
-newHH$ '!
-TransactionRepositoryHH( =
-(HH= >
-_contextHH> F
-)HHF G
-;HHG H$
-CourseBookmarkRepositoryII $
-=II% &
-newII' *$
-CourseBookmarkRepositoryII+ C
-(IIC D
-_contextIID L
-)IIL M
-;IIM N
-}JJ 	
-publicLL 
-asyncLL 
-TaskLL 
-<LL 
-intLL 
->LL 
-	SaveAsyncLL (
-(LL( )
-)LL) *
-{MM 	
-returnNN 
-awaitNN 
-_contextNN !
-.NN! "
-SaveChangesAsyncNN" 2
-(NN2 3
-)NN3 4
-;NN4 5
-}OO 	
-}PP 
-}QQ ´
+;DDG H"
+OrderDetailsRepositoryEE "
+=EE# $
+newEE% ("
+OrderDetailsRepositoryEE) ?
+(EE? @
+_contextEE@ H
+)EEH I
+;EEI J!
+OrderStatusRepositoryFF !
+=FF" #
+newFF$ '!
+OrderStatusRepositoryFF( =
+(FF= >
+_contextFF> F
+)FFF G
+;FFG H$
+StudentCommentRepositoryGG $
+=GG% &
+newGG' *$
+StudentCommentRepositoryGG+ C
+(GGC D
+_contextGGD L
+)GGL M
+;GGM N)
+StudentCourseStatusRepositoryHH )
+=HH* +
+newHH, /)
+StudentCourseStatusRepositoryHH0 M
+(HHM N
+_contextHHN V
+)HHV W
+;HHW X
+BalanceRepositoryII 
+=II 
+newII  #
+BalanceRepositoryII$ 5
+(II5 6
+_contextII6 >
+)II> ?
+;II? @!
+TransactionRepositoryJJ !
+=JJ" #
+newJJ$ '!
+TransactionRepositoryJJ( =
+(JJ= >
+_contextJJ> F
+)JJF G
+;JJG H$
+CourseBookmarkRepositoryKK $
+=KK% &
+newKK' *$
+CourseBookmarkRepositoryKK+ C
+(KKC D
+_contextKKD L
+)KKL M
+;KKM N$
+CourseProgressRepositoryLL $
+=LL% &
+newLL' *$
+CourseProgressRepositoryLL+ C
+(LLC D
+_contextLLD L
+)LLL M
+;LLM N
+TermOfUseRepositoryMM 
+=MM  !
+newMM" %
+TermOfUseRepositoryMM& 9
+(MM9 :
+_contextMM: B
+)MMB C
+;MMC D
+CompanyRepositoryNN 
+=NN 
+newNN  #
+CompanyRepositoryNN$ 5
+(NN5 6
+_contextNN6 >
+)NN> ?
+;NN? @
+PrivacyRepositoryOO 
+=OO 
+newOO  #
+PrivacyRepositoryOO$ 5
+(OO5 6
+_contextOO6 >
+)OO> ?
+;OO? @
+}PP 	
+publicRR 
+asyncRR 
+TaskRR 
+<RR 
+intRR 
+>RR 
+	SaveAsyncRR (
+(RR( )
+)RR) *
+{SS 	
+returnTT 
+awaitTT 
+_contextTT !
+.TT! "
+SaveChangesAsyncTT" 2
+(TT2 3
+)TT3 4
+;TT4 5
+}UU 	
+}VV 
+}WW ´
 tD:\FPT\Semester 6\Project_Cursus\Backend_Cursus\Cursus.LMS\Cursus.LMS.DataAccess\Repository\TransactionRepository.cs
 	namespace 	
 Cursus
@@ -3347,6 +3789,100 @@ Repository% /
 transactions* 6
 )6 7
 ;7 8
+} 
+} ë
+rD:\FPT\Semester 6\Project_Cursus\Backend_Cursus\Cursus.LMS\Cursus.LMS.DataAccess\Repository\TermOfUseRepository.cs
+	namespace 	
+Cursus
+ 
+. 
+LMS 
+. 
+
+DataAccess 
+.  
+
+Repository  *
+;* +
+public 
+class 
+TermOfUseRepository  
+:! "
+
+Repository# -
+<- .
+	TermOfUse. 7
+>7 8
+,8 9 
+ITermOfUseRepository: N
+{ 
+private		 
+readonly		  
+ApplicationDbContext		 )
+_context		* 2
+;		2 3
+public 
+
+TermOfUseRepository 
+(  
+ApplicationDbContext 3
+context4 ;
+); <
+:= >
+base? C
+(C D
+contextD K
+)K L
+{ 
+_context 
+= 
+context 
+; 
+} 
+public 
+
+void 
+Update 
+( 
+	TermOfUse  
+	termOfUse! *
+)* +
+{ 
+_context 
+. 
+
+TermOfUses 
+. 
+Update "
+(" #
+	termOfUse# ,
+), -
+;- .
+} 
+public 
+
+void 
+UpdateRange 
+( 
+IEnumerable '
+<' (
+	TermOfUse( 1
+>1 2
+
+termOfUses3 =
+)= >
+{ 
+_context 
+. 
+
+TermOfUses 
+. 
+UpdateRange '
+(' (
+
+termOfUses( 2
+)2 3
+;3 4
 } 
 } ô
 pD:\FPT\Semester 6\Project_Cursus\Backend_Cursus\Cursus.LMS\Cursus.LMS.DataAccess\Repository\StudentRepository.cs
@@ -4415,212 +4951,97 @@ IQueryable@@ 
 )YY" #
 ;YY# $
 }ZZ 
-}[[ œ
-tD:\FPT\Semester 6\Project_Cursus\Backend_Cursus\Cursus.LMS\Cursus.LMS.DataAccess\Repository\PaymentCardRepository.cs
-	namespace 	
-Cursus
+}[[ ˚
+pD:\FPT\Semester 6\Project_Cursus\Backend_Cursus\Cursus.LMS\Cursus.LMS.DataAccess\Repository\PrivacyRepository.cs
+	namespace 	
+Cursus
  
-. 
-LMS 
-. 
+. 
+LMS 
+. 
 
-DataAccess 
-.  
+DataAccess 
+.  
 
-Repository  *
-{ 
-public		 
-
-class		 !
-PaymentCardRepository		 &
-:		' (
+Repository  *
+;* +
+public 
+class 
+PrivacyRepository 
+:  
 
-Repository		) 3
-<		3 4
-PaymentCard		4 ?
->		? @
-,		@ A"
-IPaymentCardRepository		B X
-{
-
- 
-private 
-readonly  
-ApplicationDbContext -
-_context. 6
-;6 7
-public !
-PaymentCardRepository $
-($ % 
-ApplicationDbContext% 9
-context: A
-)A B
-:C D
-baseE I
-(I J
-contextJ Q
-)Q R
-{ 	
-_context 
-= 
-context 
-; 
-} 	
-public 
-void 
-Update 
-( 
-PaymentCard &
-paymentCard' 2
-)2 3
-{ 	
-_context 
-. 
-PaymentCards !
-.! "
-Update" (
-(( )
-paymentCard) 4
-)4 5
-;5 6
-} 	
-public 
-void 
-UpdateRange 
-(  
-IEnumerable  +
-<+ ,
-PaymentCard, 7
->7 8
-paymentCards9 E
-)E F
-{ 	
-_context 
-. 
-PaymentCards !
-.! "
-UpdateRange" -
-(- .
-paymentCards. :
-): ;
-;; <
-} 	
-public 
-async 
-Task 
-< 
-PaymentCard %
-?% &
->& '!
-CardNumberExistsAsync( =
-(= >
-string> D
-
-cardNumberE O
-)O P
-{ 	
-return 
-await 
-_context "
-." #
-PaymentCards# /
-./ 0
-FirstOrDefaultAsync0 C
-(C D
-xD E
-=>F H
-xI J
-.J K
-
-CardNumberK U
-==V X
-
-cardNumberY c
-)c d
-;d e
-} 	
-public!! 
-async!! 
-Task!! 
-<!! 
-PaymentCard!! %
-?!!% &
->!!& '
-GetCardByUserId!!( 7
-(!!7 8
-string!!8 >
-id!!? A
-)!!A B
-{"" 	
-return## 
-await## 
-_context## !
-.##! "
-PaymentCards##" .
-.##. /
-FirstOrDefaultAsync##/ B
-(##B C
-x##C D
-=>##E G
-x##H I
-.##I J
-UserId##J P
-==##Q S
-id##T V
-)##V W
-;##W X
-}$$ 	
-public&& 
-async&& 
-Task&& 
-<&& 
-PaymentCard&& %
->&&% &
-AddAsync&&' /
-(&&/ 0
-PaymentCard&&0 ;
-paymentCard&&< G
-)&&G H
-{'' 	
-var(( 
-entityEntry(( 
-=(( 
-await(( #
-_context(($ ,
-.((, -
-PaymentCards((- 9
-.((9 :
-AddAsync((: B
-(((B C
-paymentCard((C N
-)((N O
-;((O P
-return)) 
-entityEntry)) 
-.)) 
-Entity)) %
-;))% &
-}** 	
-public++ 
-void++ 
-Delete++ 
-(++ 
-PaymentCard++ &
-paymentCard++' 2
-)++2 3
-{,, 	
-_context-- 
-.-- 
-PaymentCards-- !
-.--! "
-Remove--" (
-(--( )
-paymentCard--) 4
-)--4 5
-;--5 6
-}.. 	
-}00 
-}11 ´
+Repository! +
+<+ ,
+Privacy, 3
+>3 4
+,4 5
+IPrivacyRepository6 H
+{ 
+private		 
+readonly		  
+ApplicationDbContext		 )
+_context		* 2
+;		2 3
+public 
+
+PrivacyRepository 
+(  
+ApplicationDbContext 1
+context2 9
+)9 :
+:; <
+base= A
+(A B
+contextB I
+)I J
+{ 
+_context 
+= 
+context 
+; 
+} 
+public 
+
+void 
+Update 
+( 
+Privacy 
+privacy &
+)& '
+{ 
+_context 
+. 
+	Privacies 
+. 
+Update !
+(! "
+privacy" )
+)) *
+;* +
+} 
+public 
+
+void 
+UpdateRange 
+( 
+IEnumerable '
+<' (
+Privacy( /
+>/ 0
+	privacies1 :
+): ;
+{ 
+_context 
+. 
+	Privacies 
+. 
+UpdateRange &
+(& '
+	privacies' 0
+)0 1
+;1 2
+} 
+} ´
 tD:\FPT\Semester 6\Project_Cursus\Backend_Cursus\Cursus.LMS\Cursus.LMS.DataAccess\Repository\OrderStatusRepository.cs
 	namespace 	
 Cursus
@@ -6489,7 +6910,97 @@ Repository& 0
 )8 9
 ;9 :
 } 
-} “
+} ÷
+wD:\FPT\Semester 6\Project_Cursus\Backend_Cursus\Cursus.LMS\Cursus.LMS.DataAccess\Repository\CourseProgressRepository.cs
+	namespace 	
+Cursus
+ 
+. 
+LMS 
+. 
+
+DataAccess 
+.  
+
+Repository  *
+;* +
+public 
+class $
+CourseProgressRepository %
+:& '
+
+Repository( 2
+<2 3
+CourseProgress3 A
+>A B
+,B C%
+ICourseProgressRepositoryD ]
+{ 
+private		 
+readonly		  
+ApplicationDbContext		 )
+_context		* 2
+;		2 3
+public 
+$
+CourseProgressRepository #
+(# $ 
+ApplicationDbContext$ 8
+context9 @
+)@ A
+:B C
+baseD H
+(H I
+contextI P
+)P Q
+{ 
+_context 
+= 
+context 
+; 
+} 
+public 
+
+void 
+Update 
+( 
+CourseProgress %
+courseProgress& 4
+)4 5
+{ 
+_context 
+. 
+CourseProgresses !
+.! "
+Update" (
+(( )
+courseProgress) 7
+)7 8
+;8 9
+} 
+public 
+
+void 
+UpdateRange 
+( 
+IEnumerable '
+<' (
+CourseProgress( 6
+>6 7
+courseProgresses8 H
+)H I
+{ 
+_context 
+. 
+CourseProgresses !
+.! "
+UpdateRange" -
+(- .
+courseProgresses. >
+)> ?
+;? @
+} 
+} “
 wD:\FPT\Semester 6\Project_Cursus\Backend_Cursus\Cursus.LMS\Cursus.LMS.DataAccess\Repository\CourseBookmarkRepository.cs
 	namespace 	
 Cursus
@@ -6578,6 +7089,96 @@ Repository( 2
 courseBookmarks- <
 )< =
 ;= >
+} 
+} ˚
+pD:\FPT\Semester 6\Project_Cursus\Backend_Cursus\Cursus.LMS\Cursus.LMS.DataAccess\Repository\CompanyRepository.cs
+	namespace 	
+Cursus
+ 
+. 
+LMS 
+. 
+
+DataAccess 
+.  
+
+Repository  *
+;* +
+public 
+class 
+CompanyRepository 
+:  
+
+Repository! +
+<+ ,
+Company, 3
+>3 4
+,4 5
+ICompanyRepository6 H
+{ 
+private		 
+readonly		  
+ApplicationDbContext		 )
+_context		* 2
+;		2 3
+public 
+
+CompanyRepository 
+(  
+ApplicationDbContext 1
+context2 9
+)9 :
+:; <
+base= A
+(A B
+contextB I
+)I J
+{ 
+_context 
+= 
+context 
+; 
+} 
+public 
+
+void 
+Update 
+( 
+Company 
+company &
+)& '
+{ 
+_context 
+. 
+	Companies 
+. 
+Update !
+(! "
+company" )
+)) *
+;* +
+} 
+public 
+
+void 
+UpdateRange 
+( 
+IEnumerable '
+<' (
+Company( /
+>/ 0
+	companies1 :
+): ;
+{ 
+_context 
+. 
+	Companies 
+. 
+UpdateRange &
+(& '
+	companies' 0
+)0 1
+;1 2
 } 
 } £
 qD:\FPT\Semester 6\Project_Cursus\Backend_Cursus\Cursus.LMS\Cursus.LMS.DataAccess\Repository\CategoryRepository.cs
@@ -6980,7 +7581,29430 @@ Repository! +
 ). /
 ;/ 0
 } 
-} ‘¡
+} –À
+áD:\FPT\Semester 6\Project_Cursus\Backend_Cursus\Cursus.LMS\Cursus.LMS.DataAccess\Migrations\20240730053015_SeedDataForWebsiteContent.cs
+	namespace 	
+Cursus
+ 
+. 
+LMS 
+. 
+
+DataAccess 
+.  
+
+Migrations  *
+{		 
+public 
+
+partial 
+class %
+SeedDataForWebsiteContent 2
+:3 4
+	Migration5 >
+{ 
+	protected 
+override 
+void 
+Up  "
+(" #
+MigrationBuilder# 3
+migrationBuilder4 D
+)D E
+{ 	
+migrationBuilder 
+. 
+
+DeleteData '
+(' (
+table 
+: 
+$str '
+,' (
+	keyColumn 
+: 
+$str 
+,  
+keyValue 
+: 
+new 
+Guid "
+(" #
+$str# I
+)I J
+)J K
+;K L
+migrationBuilder 
+. 
+
+DeleteData '
+(' (
+table 
+: 
+$str '
+,' (
+	keyColumn 
+: 
+$str 
+,  
+keyValue 
+: 
+new 
+Guid "
+(" #
+$str# I
+)I J
+)J K
+;K L
+migrationBuilder 
+. 
+
+DeleteData '
+(' (
+table 
+: 
+$str '
+,' (
+	keyColumn 
+: 
+$str 
+,  
+keyValue 
+: 
+new 
+Guid "
+(" #
+$str# I
+)I J
+)J K
+;K L
+migrationBuilder 
+. 
+
+DeleteData '
+(' (
+table   
+:   
+$str   '
+,  ' (
+	keyColumn!! 
+:!! 
+$str!! 
+,!!  
+keyValue"" 
+:"" 
+new"" 
+Guid"" "
+(""" #
+$str""# I
+)""I J
+)""J K
+;""K L
+migrationBuilder$$ 
+.$$ 
+
+DeleteData$$ '
+($$' (
+table%% 
+:%% 
+$str%% '
+,%%' (
+	keyColumn&& 
+:&& 
+$str&& 
+,&&  
+keyValue'' 
+:'' 
+new'' 
+Guid'' "
+(''" #
+$str''# I
+)''I J
+)''J K
+;''K L
+migrationBuilder)) 
+.)) 
+
+DeleteData)) '
+())' (
+table** 
+:** 
+$str** '
+,**' (
+	keyColumn++ 
+:++ 
+$str++ 
+,++  
+keyValue,, 
+:,, 
+new,, 
+Guid,, "
+(,," #
+$str,,# I
+),,I J
+),,J K
+;,,K L
+migrationBuilder.. 
+... 
+
+DeleteData.. '
+(..' (
+table// 
+:// 
+$str// '
+,//' (
+	keyColumn00 
+:00 
+$str00 
+,00  
+keyValue11 
+:11 
+new11 
+Guid11 "
+(11" #
+$str11# I
+)11I J
+)11J K
+;11K L
+migrationBuilder33 
+.33 
+
+DeleteData33 '
+(33' (
+table44 
+:44 
+$str44 '
+,44' (
+	keyColumn55 
+:55 
+$str55 
+,55  
+keyValue66 
+:66 
+new66 
+Guid66 "
+(66" #
+$str66# I
+)66I J
+)66J K
+;66K L
+migrationBuilder88 
+.88 
+
+DeleteData88 '
+(88' (
+table99 
+:99 
+$str99 '
+,99' (
+	keyColumn:: 
+::: 
+$str:: 
+,::  
+keyValue;; 
+:;; 
+new;; 
+Guid;; "
+(;;" #
+$str;;# I
+);;I J
+);;J K
+;;;K L
+migrationBuilder== 
+.== 
+
+DeleteData== '
+(==' (
+table>> 
+:>> 
+$str>> '
+,>>' (
+	keyColumn?? 
+:?? 
+$str?? 
+,??  
+keyValue@@ 
+:@@ 
+new@@ 
+Guid@@ "
+(@@" #
+$str@@# I
+)@@I J
+)@@J K
+;@@K L
+migrationBuilderBB 
+.BB 
+
+DeleteDataBB '
+(BB' (
+tableCC 
+:CC 
+$strCC '
+,CC' (
+	keyColumnDD 
+:DD 
+$strDD 
+,DD  
+keyValueEE 
+:EE 
+newEE 
+GuidEE "
+(EE" #
+$strEE# I
+)EEI J
+)EEJ K
+;EEK L
+migrationBuilderGG 
+.GG 
+
+DeleteDataGG '
+(GG' (
+tableHH 
+:HH 
+$strHH '
+,HH' (
+	keyColumnII 
+:II 
+$strII 
+,II  
+keyValueJJ 
+:JJ 
+newJJ 
+GuidJJ "
+(JJ" #
+$strJJ# I
+)JJI J
+)JJJ K
+;JJK L
+migrationBuilderLL 
+.LL 
+
+DeleteDataLL '
+(LL' (
+tableMM 
+:MM 
+$strMM '
+,MM' (
+	keyColumnNN 
+:NN 
+$strNN 
+,NN  
+keyValueOO 
+:OO 
+newOO 
+GuidOO "
+(OO" #
+$strOO# I
+)OOI J
+)OOJ K
+;OOK L
+migrationBuilderQQ 
+.QQ 
+
+UpdateDataQQ '
+(QQ' (
+tableRR 
+:RR 
+$strRR $
+,RR$ %
+	keyColumnSS 
+:SS 
+$strSS 
+,SS  
+keyValueTT 
+:TT 
+$strTT +
+,TT+ ,
+columnsUU 
+:UU 
+newUU 
+[UU 
+]UU 
+{UU  
+$strUU! 3
+,UU3 4
+$strUU5 A
+,UUA B
+$strUUC Q
+,UUQ R
+$strUUS b
+}UUc d
+,UUd e
+valuesVV 
+:VV 
+newVV 
+objectVV "
+[VV" #
+]VV# $
+{VV% &
+$strVV' M
+,VVM N
+newVVO R
+DateTimeVVS [
+(VV[ \
+$numVV\ `
+,VV` a
+$numVVb c
+,VVc d
+$numVVe g
+,VVg h
+$numVVi j
+,VVj k
+$numVVl n
+,VVn o
+$numVVp r
+,VVr s
+$numVVt w
+,VVw x
+DateTimeKind	VVy Ö
+.
+VVÖ Ü
+Utc
+VVÜ â
+)
+VVâ ä
+.
+VVä ã
+AddTicks
+VVã ì
+(
+VVì î
+$num
+VVî ò
+)
+VVò ô
+,
+VVô ö
+$str
+VVõ Ò
+,
+VVÒ Ú
+$str
+VVÛ ô
+}
+VVö õ
+)
+VVõ ú
+;
+VVú ù
+migrationBuilderXX 
+.XX 
+
+InsertDataXX '
+(XX' (
+tableYY 
+:YY 
+$strYY "
+,YY" #
+columnsZZ 
+:ZZ 
+newZZ 
+[ZZ 
+]ZZ 
+{ZZ  
+$strZZ! %
+,ZZ% &
+$strZZ' 0
+,ZZ0 1
+$strZZ2 8
+,ZZ8 9
+$strZZ: C
+,ZZC D
+$strZZE R
+,ZZR S
+$strZZT [
+,ZZ[ \
+$strZZ] j
+,ZZj k
+$strZZl u
+,ZZu v
+$strZZw }
+,ZZ} ~
+$str	ZZ Ü
+,
+ZZÜ á
+$str
+ZZà î
+,
+ZZî ï
+$str
+ZZñ ù
+,
+ZZù û
+$str
+ZZü ®
+}
+ZZ© ™
+,
+ZZ™ ´
+values[[ 
+:[[ 
+new[[ 
+object[[ "
+[[[" #
+][[# $
+{[[% &
+new[[' *
+Guid[[+ /
+([[/ 0
+$str[[0 V
+)[[V W
+,[[W X
+$str[[Y f
+,[[f g
+$str[[h r
+,[[r s
+$str[[t }
+,[[} ~
+$str	[[ Ø
+,
+[[Ø ∞
+$str
+[[± ∆
+,
+[[∆ «
+new
+[[» À
+DateTime
+[[Ã ‘
+(
+[[‘ ’
+$num
+[[’ Ÿ
+,
+[[Ÿ ⁄
+$num
+[[€ ‹
+,
+[[‹ ›
+$num
+[[ﬁ ﬂ
+,
+[[ﬂ ‡
+$num
+[[· ‚
+,
+[[‚ „
+$num
+[[‰ Â
+,
+[[Â Ê
+$num
+[[Á Ë
+,
+[[Ë È
+$num
+[[Í Î
+,
+[[Î Ï
+DateTimeKind
+[[Ì ˘
+.
+[[˘ ˙
+Unspecified
+[[˙ Ö
+)
+[[Ö Ü
+,
+[[Ü á
+$str
+[[à ©
+,
+[[© ™
+$str
+[[´ µ
+,
+[[µ ∂
+$str
+[[∑ ≈
+,
+[[≈ ∆
+$str
+[[« Œ
+,
+[[Œ œ
+$str
+[[– ◊
+,
+[[◊ ÿ
+$str
+[[Ÿ Ò
+}
+[[Ú Û
+)
+[[Û Ù
+;
+[[Ù ı
+migrationBuilder]] 
+.]] 
+
+InsertData]] '
+(]]' (
+table^^ 
+:^^ 
+$str^^ '
+,^^' (
+columns__ 
+:__ 
+new__ 
+[__ 
+]__ 
+{__  
+$str__! %
+,__% &
+$str__' 4
+,__4 5
+$str__6 D
+,__D E
+$str__F P
+,__P Q
+$str__R ]
+,__] ^
+$str___ l
+,__l m
+$str__n }
+,__} ~
+$str	__ â
+,
+__â ä
+$str
+__ã †
+,
+__† °
+$str
+__¢ ±
+,
+__± ≤
+$str
+__≥ ¬
+,
+__¬ √
+$str
+__ƒ —
+,
+__— “
+$str
+__” ﬂ
+,
+__ﬂ ‡
+$str
+__· È
+,
+__È Í
+$str
+__Î ¯
+,
+__¯ ˘
+$str
+__˙ à
+,
+__à â
+$str
+__ä ï
+,
+__ï ñ
+$str
+__ó §
+}
+__• ¶
+,
+__¶ ß
+values`` 
+:`` 
+new`` 
+object`` "
+[``" #
+,``# $
+]``$ %
+{aa 
+{bb 
+newbb 
+Guidbb 
+(bb 
+$strbb E
+)bbE F
+,bbF G
+$str	bbH ”
+,
+bb” ‘
+$str
+bb’ è
+,
+bbè ê
+$str
+bbë ô
+,
+bbô ö
+null
+bbõ ü
+,
+bbü †
+null
+bb° •
+,
+bb• ¶
+$str
+bbß ÿ
+,
+bbÿ Ÿ
+$str
+bb⁄ „
+,
+bb„ ‰
+$str
+bbÂ °
+,
+bb° ¢
+$str
+bb£ ∑
+,
+bb∑ ∏
+$str
+bbπ √
+,
+bb√ ƒ
+$str
+bb≈ ·
+,
+bb· ‚
+$str
+bb„ 
+,
+bb Ò
+$num
+bbÚ Û
+,
+bbÛ Ù
+$str
+bbı ñ
+,
+bbñ ó
+$str
+bbò π
+,
+bbπ ∫
+null
+bbª ø
+,
+bbø ¿
+null
+bb¡ ≈
+}
+bb∆ «
+,
+bb« »
+{cc 
+newcc 
+Guidcc 
+(cc 
+$strcc E
+)ccE F
+,ccF G
+$str	ccH æ
+,
+ccæ ø
+$str
+cc¿ ù
+,
+ccù û
+$str
+ccü ©
+,
+cc© ™
+null
+cc´ Ø
+,
+ccØ ∞
+null
+cc± µ
+,
+ccµ ∂
+$str
+cc∑ ˚
+,
+cc˚ ¸
+$str
+cc˝ Ü
+,
+ccÜ á
+$str
+ccà ≠
+,
+cc≠ Æ
+$str
+ccØ ’
+,
+cc’ ÷
+$str
+cc◊ ·
+,
+cc· ‚
+$str
+cc„ ˇ
+,
+ccˇ Ä
+$str
+ccÅ é
+,
+ccé è
+$num
+ccê ë
+,
+ccë í
+$str
+ccì ®
+,
+cc® ©
+$str
+cc™ ø
+,
+ccø ¿
+null
+cc¡ ≈
+,
+cc≈ ∆
+null
+cc« À
+}
+ccÃ Õ
+,
+ccÕ Œ
+{dd 
+newdd 
+Guiddd 
+(dd 
+$strdd E
+)ddE F
+,ddF G
+$str	ddH è
+,
+ddè ê
+$str
+ddë À
+,
+ddÀ Ã
+$str
+ddÕ ‰
+,
+dd‰ Â
+null
+ddÊ Í
+,
+ddÍ Î
+null
+ddÏ 
+,
+dd Ò
+$str
+ddÚ £
+,
+dd£ §
+$str
+dd• Æ
+,
+ddÆ Ø
+$str
+dd∞ …
+,
+dd…  
+$str
+ddÀ Ò
+,
+ddÒ Ú
+$str
+ddÛ ¸
+,
+dd¸ ˝
+$str
+dd˛ ö
+,
+ddö õ
+$str
+ddú ©
+,
+dd© ™
+$num
+dd´ ¨
+,
+dd¨ ≠
+$str
+ddÆ Œ
+,
+ddŒ œ
+$str
+dd– Ë
+,
+ddË È
+null
+ddÍ Ó
+,
+ddÓ Ô
+null
+dd Ù
+}
+ddı ˆ
+,
+ddˆ ˜
+{ee 
+newee 
+Guidee 
+(ee 
+$stree E
+)eeE F
+,eeF G
+$str	eeH ë
+,
+eeë í
+$str
+eeì Õ
+,
+eeÕ Œ
+$str
+eeœ ·
+,
+ee· ‚
+null
+ee„ Á
+,
+eeÁ Ë
+null
+eeÈ Ì
+,
+eeÌ Ó
+$str
+eeÔ †
+,
+ee† °
+$str
+ee¢ ´
+,
+ee´ ¨
+$str
+ee≠ ∆
+,
+ee∆ «
+$str
+ee» –
+,
+ee– —
+$str
+ee“ ‹
+,
+ee‹ ›
+$str
+eeﬁ ˙
+,
+ee˙ ˚
+$str
+ee¸ â
+,
+eeâ ä
+$num
+eeã å
+,
+eeå ç
+$str
+eeé π
+,
+eeπ ∫
+$str
+eeª “
+,
+ee“ ”
+null
+ee‘ ÿ
+,
+eeÿ Ÿ
+null
+ee⁄ ﬁ
+}
+eeﬂ ‡
+,
+ee‡ ·
+{ff 
+newff 
+Guidff 
+(ff 
+$strff E
+)ffE F
+,ffF G
+$strffH s
+,ffs t
+$str	ffu ô
+,
+ffô ö
+$str
+ffõ •
+,
+ff• ¶
+null
+ffß ´
+,
+ff´ ¨
+null
+ff≠ ±
+,
+ff± ≤
+$str
+ff≥ ˘
+,
+ff˘ ˙
+$str
+ff˚ Ñ
+,
+ffÑ Ö
+$str
+ffÜ ü
+,
+ffü †
+$str
+ff° Œ
+,
+ffŒ œ
+$str
+ff– ‹
+,
+ff‹ ›
+$str
+ffﬁ ˙
+,
+ff˙ ˚
+$str
+ff¸ â
+,
+ffâ ä
+$num
+ffã å
+,
+ffå ç
+$str
+ffé ª
+,
+ffª º
+$str
+ffΩ ›
+,
+ff› ﬁ
+null
+ffﬂ „
+,
+ff„ ‰
+null
+ffÂ È
+}
+ffÍ Î
+,
+ffÎ Ï
+{gg 
+newgg 
+Guidgg 
+(gg 
+$strgg E
+)ggE F
+,ggF G
+$str	ggH Ã
+,
+ggÃ Õ
+$str
+ggŒ à
+,
+ggà â
+$str
+ggä ö
+,
+ggö õ
+null
+ggú †
+,
+gg† °
+null
+gg¢ ¶
+,
+gg¶ ß
+$str
+gg® Ÿ
+,
+ggŸ ⁄
+$str
+gg€ ‰
+,
+gg‰ Â
+$str
+ggÊ ˇ
+,
+ggˇ Ä
+$str
+ggÅ â
+,
+ggâ ä
+$str
+ggã ï
+,
+ggï ñ
+$str
+ggó ≥
+,
+gg≥ ¥
+$str
+ggµ ¬
+,
+gg¬ √
+$num
+ggƒ ≈
+,
+gg≈ ∆
+$str
+gg« ﬂ
+,
+ggﬂ ‡
+$str
+gg· ˆ
+,
+ggˆ ˜
+null
+gg¯ ¸
+,
+gg¸ ˝
+null
+gg˛ Ç
+}
+ggÉ Ñ
+,
+ggÑ Ö
+{hh 
+newhh 
+Guidhh 
+(hh 
+$strhh E
+)hhE F
+,hhF G
+$str	hhH ®
+,
+hh® ©
+$str
+hh™ ÿ
+,
+hhÿ Ÿ
+$str
+hh⁄ ‰
+,
+hh‰ Â
+null
+hhÊ Í
+,
+hhÍ Î
+null
+hhÏ 
+,
+hh Ò
+$str
+hhÚ £
+,
+hh£ §
+$str
+hh• Æ
+,
+hhÆ Ø
+$str
+hh∞  
+,
+hh  À
+$str
+hhÃ Û
+,
+hhÛ Ù
+$str
+hhı ˇ
+,
+hhˇ Ä
+$str
+hhÅ ù
+,
+hhù û
+$str
+hhü ¨
+,
+hh¨ ≠
+$num
+hhÆ Ø
+,
+hhØ ∞
+$str
+hh± ∆
+,
+hh∆ «
+$str
+hh» ÿ
+,
+hhÿ Ÿ
+null
+hh⁄ ﬁ
+,
+hhﬁ ﬂ
+null
+hh‡ ‰
+}
+hhÂ Ê
+,
+hhÊ Á
+{ii 
+newii 
+Guidii 
+(ii 
+$strii E
+)iiE F
+,iiF G
+$str	iiH ∞
+,
+ii∞ ±
+$str
+ii≤ Ï
+,
+iiÏ Ì
+$str
+iiÓ ˜
+,
+ii˜ ¯
+null
+ii˘ ˝
+,
+ii˝ ˛
+null
+iiˇ É
+,
+iiÉ Ñ
+$str
+iiÖ ∂
+,
+ii∂ ∑
+$str
+ii∏ ¡
+,
+ii¡ ¬
+$str
+ii√ ‹
+,
+ii‹ ›
+$str
+iiﬁ ˘
+,
+ii˘ ˙
+$str
+ii˚ Ö
+,
+iiÖ Ü
+$str
+iiá £
+,
+ii£ §
+$str
+ii• ≤
+,
+ii≤ ≥
+$num
+ii¥ µ
+,
+iiµ ∂
+$str
+ii∑ À
+,
+iiÀ Ã
+$str
+iiÕ €
+,
+ii€ ‹
+null
+ii› ·
+,
+ii· ‚
+null
+ii„ Á
+}
+iiË È
+,
+iiÈ Í
+{jj 
+newjj 
+Guidjj 
+(jj 
+$strjj E
+)jjE F
+,jjF G
+$str	jjH ë
+,
+jjë í
+$str
+jjì Õ
+,
+jjÕ Œ
+$str
+jjœ ·
+,
+jj· ‚
+null
+jj„ Á
+,
+jjÁ Ë
+null
+jjÈ Ì
+,
+jjÌ Ó
+$str
+jjÔ †
+,
+jj† °
+$str
+jj¢ ´
+,
+jj´ ¨
+$str
+jj≠ ∆
+,
+jj∆ «
+$str
+jj» Ê
+,
+jjÊ Á
+$str
+jjË Ô
+,
+jjÔ 
+$str
+jjÒ ç
+,
+jjç é
+$str
+jjè ú
+,
+jjú ù
+$num
+jjû ü
+,
+jjü †
+$str
+jj° ø
+,
+jjø ¿
+$str
+jj¡ Â
+,
+jjÂ Ê
+null
+jjÁ Î
+,
+jjÎ Ï
+null
+jjÌ Ò
+}
+jjÚ Û
+,
+jjÛ Ù
+{kk 
+newkk 
+Guidkk 
+(kk 
+$strkk E
+)kkE F
+,kkF G
+$str	kkH Ñ
+,
+kkÑ Ö
+$str
+kkÜ ¿
+,
+kk¿ ¡
+$str
+kk¬ “
+,
+kk“ ”
+null
+kk‘ ÿ
+,
+kkÿ Ÿ
+null
+kk⁄ ﬁ
+,
+kkﬁ ﬂ
+$str
+kk‡ ë
+,
+kkë í
+$str
+kkì ú
+,
+kkú ù
+$str
+kkû ∑
+,
+kk∑ ∏
+$str
+kkπ ¡
+,
+kk¡ ¬
+$str
+kk√ Õ
+,
+kkÕ Œ
+$str
+kkœ Î
+,
+kkÎ Ï
+$str
+kkÌ ˙
+,
+kk˙ ˚
+$num
+kk¸ ˝
+,
+kk˝ ˛
+$str
+kkˇ ê
+,
+kkê ë
+$str
+kkí °
+,
+kk° ¢
+null
+kk£ ß
+,
+kkß ®
+null
+kk© ≠
+}
+kkÆ Ø
+,
+kkØ ∞
+{ll 
+newll 
+Guidll 
+(ll 
+$strll E
+)llE F
+,llF G
+$str	llH è
+,
+llè ê
+$str
+llë ∫
+,
+ll∫ ª
+$str
+llº  
+,
+ll  À
+null
+llÃ –
+,
+ll– —
+null
+ll“ ÷
+,
+ll÷ ◊
+$str
+llÿ â
+,
+llâ ä
+$str
+llã î
+,
+llî ï
+$str
+llñ ¢
+,
+ll¢ £
+$str
+ll§ ¥
+,
+ll¥ µ
+$str
+ll∂ ¿
+,
+ll¿ ¡
+$str
+ll¬ ÿ
+,
+llÿ Ÿ
+$str
+ll⁄ Ê
+,
+llÊ Á
+$num
+llË È
+,
+llÈ Í
+$str
+llÎ ¸
+,
+ll¸ ˝
+$str
+ll˛ ì
+,
+llì î
+null
+llï ô
+,
+llô ö
+null
+llõ ü
+}
+ll† °
+,
+ll° ¢
+{mm 
+newmm 
+Guidmm 
+(mm 
+$strmm E
+)mmE F
+,mmF G
+$str	mmH è
+,
+mmè ê
+$str
+mmë À
+,
+mmÀ Ã
+$str
+mmÕ ‰
+,
+mm‰ Â
+null
+mmÊ Í
+,
+mmÍ Î
+null
+mmÏ 
+,
+mm Ò
+$str
+mmÚ £
+,
+mm£ §
+$str
+mm• Æ
+,
+mmÆ Ø
+$str
+mm∞ …
+,
+mm…  
+$str
+mmÀ Ì
+,
+mmÌ Ó
+$str
+mmÔ ˚
+,
+mm˚ ¸
+$str
+mm˝ ô
+,
+mmô ö
+$str
+mmõ ®
+,
+mm® ©
+$num
+mm™ ´
+,
+mm´ ¨
+$str
+mm≠ Õ
+,
+mmÕ Œ
+$str
+mmœ Ë
+,
+mmË È
+null
+mmÍ Ó
+,
+mmÓ Ô
+null
+mm Ù
+}
+mmı ˆ
+,
+mmˆ ˜
+{nn 
+newnn 
+Guidnn 
+(nn 
+$strnn E
+)nnE F
+,nnF G
+$str	nnH û
+,
+nnû ü
+$str
+nn† ≈
+,
+nn≈ ∆
+$str
+nn« œ
+,
+nnœ –
+null
+nn— ’
+,
+nn’ ÷
+null
+nn◊ €
+,
+nn€ ‹
+$str
+nn› é
+,
+nné è
+$str
+nnê ô
+,
+nnô ö
+$str
+nnõ µ
+,
+nnµ ∂
+$str
+nn∑ œ
+,
+nnœ –
+$str
+nn— €
+,
+nn€ ‹
+$str
+nn› ˘
+,
+nn˘ ˙
+$str
+nn˚ à
+,
+nnà â
+$num
+nnä ã
+,
+nnã å
+$str
+nnç ¢
+,
+nn¢ £
+$str
+nn§ µ
+,
+nnµ ∂
+null
+nn∑ ª
+,
+nnª º
+null
+nnΩ ¡
+}
+nn¬ √
+}oo 
+)oo 
+;oo 
+migrationBuilderqq 
+.qq 
+
+InsertDataqq '
+(qq' (
+tablerr 
+:rr 
+$strrr "
+,rr" #
+columnsss 
+:ss 
+newss 
+[ss 
+]ss 
+{ss  
+$strss! %
+,ss% &
+$strss' 0
+,ss0 1
+$strss2 <
+,ss< =
+$strss> K
+,ssK L
+$strssM T
+}ssU V
+,ssV W
+valuestt 
+:tt 
+newtt 
+objecttt "
+[tt" #
+]tt# $
+{tt% &
+newtt' *
+Guidtt+ /
+(tt/ 0
+$strtt0 V
+)ttV W
+,ttW X
+$str	ttY Å
+,
+ttÅ Ç
+true
+ttÉ á
+,
+ttá à
+new
+ttâ å
+DateTime
+ttç ï
+(
+ttï ñ
+$num
+ttñ ö
+,
+ttö õ
+$num
+ttú ù
+,
+ttù û
+$num
+ttü °
+,
+tt° ¢
+$num
+tt£ §
+,
+tt§ •
+$num
+tt¶ ®
+,
+tt® ©
+$num
+tt™ ¨
+,
+tt¨ ≠
+$num
+ttÆ ±
+,
+tt± ≤
+DateTimeKind
+tt≥ ø
+.
+ttø ¿
+Utc
+tt¿ √
+)
+tt√ ƒ
+.
+ttƒ ≈
+AddTicks
+tt≈ Õ
+(
+ttÕ Œ
+$num
+ttŒ “
+)
+tt“ ”
+,
+tt” ‘
+$str
+tt’ ﬁ
+}
+ttﬂ ‡
+)
+tt‡ ·
+;
+tt· ‚
+migrationBuildervv 
+.vv 
+
+InsertDatavv '
+(vv' (
+tableww 
+:ww 
+$strww #
+,ww# $
+columnsxx 
+:xx 
+newxx 
+[xx 
+]xx 
+{xx  
+$strxx! %
+,xx% &
+$strxx' 0
+,xx0 1
+$strxx2 <
+,xx< =
+$strxx> K
+,xxK L
+$strxxM T
+}xxU V
+,xxV W
+valuesyy 
+:yy 
+newyy 
+objectyy "
+[yy" #
+]yy# $
+{yy% &
+newyy' *
+Guidyy+ /
+(yy/ 0
+$stryy0 V
+)yyV W
+,yyW X
+$str	yyY Ü
+,
+yyÜ á
+true
+yyà å
+,
+yyå ç
+new
+yyé ë
+DateTime
+yyí ö
+(
+yyö õ
+$num
+yyõ ü
+,
+yyü †
+$num
+yy° ¢
+,
+yy¢ £
+$num
+yy§ ¶
+,
+yy¶ ß
+$num
+yy® ©
+,
+yy© ™
+$num
+yy´ ≠
+,
+yy≠ Æ
+$num
+yyØ ±
+,
+yy± ≤
+$num
+yy≥ ∂
+,
+yy∂ ∑
+DateTimeKind
+yy∏ ƒ
+.
+yyƒ ≈
+Utc
+yy≈ »
+)
+yy» …
+.
+yy…  
+AddTicks
+yy  “
+(
+yy“ ”
+$num
+yy” ◊
+)
+yy◊ ÿ
+,
+yyÿ Ÿ
+$str
+yy⁄ Ë
+}
+yyÈ Í
+)
+yyÍ Î
+;
+yyÎ Ï
+}zz 	
+	protected}} 
+override}} 
+void}} 
+Down}}  $
+(}}$ %
+MigrationBuilder}}% 5
+migrationBuilder}}6 F
+)}}F G
+{~~ 	
+migrationBuilder 
+. 
+
+DeleteData '
+(' (
+table
+ÄÄ 
+:
+ÄÄ 
+$str
+ÄÄ "
+,
+ÄÄ" #
+	keyColumn
+ÅÅ 
+:
+ÅÅ 
+$str
+ÅÅ 
+,
+ÅÅ  
+keyValue
+ÇÇ 
+:
+ÇÇ 
+new
+ÇÇ 
+Guid
+ÇÇ "
+(
+ÇÇ" #
+$str
+ÇÇ# I
+)
+ÇÇI J
+)
+ÇÇJ K
+;
+ÇÇK L
+migrationBuilder
+ÑÑ 
+.
+ÑÑ 
+
+DeleteData
+ÑÑ '
+(
+ÑÑ' (
+table
+ÖÖ 
+:
+ÖÖ 
+$str
+ÖÖ '
+,
+ÖÖ' (
+	keyColumn
+ÜÜ 
+:
+ÜÜ 
+$str
+ÜÜ 
+,
+ÜÜ  
+keyValue
+áá 
+:
+áá 
+new
+áá 
+Guid
+áá "
+(
+áá" #
+$str
+áá# I
+)
+ááI J
+)
+ááJ K
+;
+ááK L
+migrationBuilder
+ââ 
+.
+ââ 
+
+DeleteData
+ââ '
+(
+ââ' (
+table
+ää 
+:
+ää 
+$str
+ää '
+,
+ää' (
+	keyColumn
+ãã 
+:
+ãã 
+$str
+ãã 
+,
+ãã  
+keyValue
+åå 
+:
+åå 
+new
+åå 
+Guid
+åå "
+(
+åå" #
+$str
+åå# I
+)
+ååI J
+)
+ååJ K
+;
+ååK L
+migrationBuilder
+éé 
+.
+éé 
+
+DeleteData
+éé '
+(
+éé' (
+table
+èè 
+:
+èè 
+$str
+èè '
+,
+èè' (
+	keyColumn
+êê 
+:
+êê 
+$str
+êê 
+,
+êê  
+keyValue
+ëë 
+:
+ëë 
+new
+ëë 
+Guid
+ëë "
+(
+ëë" #
+$str
+ëë# I
+)
+ëëI J
+)
+ëëJ K
+;
+ëëK L
+migrationBuilder
+ìì 
+.
+ìì 
+
+DeleteData
+ìì '
+(
+ìì' (
+table
+îî 
+:
+îî 
+$str
+îî '
+,
+îî' (
+	keyColumn
+ïï 
+:
+ïï 
+$str
+ïï 
+,
+ïï  
+keyValue
+ññ 
+:
+ññ 
+new
+ññ 
+Guid
+ññ "
+(
+ññ" #
+$str
+ññ# I
+)
+ññI J
+)
+ññJ K
+;
+ññK L
+migrationBuilder
+òò 
+.
+òò 
+
+DeleteData
+òò '
+(
+òò' (
+table
+ôô 
+:
+ôô 
+$str
+ôô '
+,
+ôô' (
+	keyColumn
+öö 
+:
+öö 
+$str
+öö 
+,
+öö  
+keyValue
+õõ 
+:
+õõ 
+new
+õõ 
+Guid
+õõ "
+(
+õõ" #
+$str
+õõ# I
+)
+õõI J
+)
+õõJ K
+;
+õõK L
+migrationBuilder
+ùù 
+.
+ùù 
+
+DeleteData
+ùù '
+(
+ùù' (
+table
+ûû 
+:
+ûû 
+$str
+ûû '
+,
+ûû' (
+	keyColumn
+üü 
+:
+üü 
+$str
+üü 
+,
+üü  
+keyValue
+†† 
+:
+†† 
+new
+†† 
+Guid
+†† "
+(
+††" #
+$str
+††# I
+)
+††I J
+)
+††J K
+;
+††K L
+migrationBuilder
+¢¢ 
+.
+¢¢ 
+
+DeleteData
+¢¢ '
+(
+¢¢' (
+table
+££ 
+:
+££ 
+$str
+££ '
+,
+££' (
+	keyColumn
+§§ 
+:
+§§ 
+$str
+§§ 
+,
+§§  
+keyValue
+•• 
+:
+•• 
+new
+•• 
+Guid
+•• "
+(
+••" #
+$str
+••# I
+)
+••I J
+)
+••J K
+;
+••K L
+migrationBuilder
+ßß 
+.
+ßß 
+
+DeleteData
+ßß '
+(
+ßß' (
+table
+®® 
+:
+®® 
+$str
+®® '
+,
+®®' (
+	keyColumn
+©© 
+:
+©© 
+$str
+©© 
+,
+©©  
+keyValue
+™™ 
+:
+™™ 
+new
+™™ 
+Guid
+™™ "
+(
+™™" #
+$str
+™™# I
+)
+™™I J
+)
+™™J K
+;
+™™K L
+migrationBuilder
+¨¨ 
+.
+¨¨ 
+
+DeleteData
+¨¨ '
+(
+¨¨' (
+table
+≠≠ 
+:
+≠≠ 
+$str
+≠≠ '
+,
+≠≠' (
+	keyColumn
+ÆÆ 
+:
+ÆÆ 
+$str
+ÆÆ 
+,
+ÆÆ  
+keyValue
+ØØ 
+:
+ØØ 
+new
+ØØ 
+Guid
+ØØ "
+(
+ØØ" #
+$str
+ØØ# I
+)
+ØØI J
+)
+ØØJ K
+;
+ØØK L
+migrationBuilder
+±± 
+.
+±± 
+
+DeleteData
+±± '
+(
+±±' (
+table
+≤≤ 
+:
+≤≤ 
+$str
+≤≤ '
+,
+≤≤' (
+	keyColumn
+≥≥ 
+:
+≥≥ 
+$str
+≥≥ 
+,
+≥≥  
+keyValue
+¥¥ 
+:
+¥¥ 
+new
+¥¥ 
+Guid
+¥¥ "
+(
+¥¥" #
+$str
+¥¥# I
+)
+¥¥I J
+)
+¥¥J K
+;
+¥¥K L
+migrationBuilder
+∂∂ 
+.
+∂∂ 
+
+DeleteData
+∂∂ '
+(
+∂∂' (
+table
+∑∑ 
+:
+∑∑ 
+$str
+∑∑ '
+,
+∑∑' (
+	keyColumn
+∏∏ 
+:
+∏∏ 
+$str
+∏∏ 
+,
+∏∏  
+keyValue
+ππ 
+:
+ππ 
+new
+ππ 
+Guid
+ππ "
+(
+ππ" #
+$str
+ππ# I
+)
+ππI J
+)
+ππJ K
+;
+ππK L
+migrationBuilder
+ªª 
+.
+ªª 
+
+DeleteData
+ªª '
+(
+ªª' (
+table
+ºº 
+:
+ºº 
+$str
+ºº '
+,
+ºº' (
+	keyColumn
+ΩΩ 
+:
+ΩΩ 
+$str
+ΩΩ 
+,
+ΩΩ  
+keyValue
+ææ 
+:
+ææ 
+new
+ææ 
+Guid
+ææ "
+(
+ææ" #
+$str
+ææ# I
+)
+ææI J
+)
+ææJ K
+;
+ææK L
+migrationBuilder
+¿¿ 
+.
+¿¿ 
+
+DeleteData
+¿¿ '
+(
+¿¿' (
+table
+¡¡ 
+:
+¡¡ 
+$str
+¡¡ '
+,
+¡¡' (
+	keyColumn
+¬¬ 
+:
+¬¬ 
+$str
+¬¬ 
+,
+¬¬  
+keyValue
+√√ 
+:
+√√ 
+new
+√√ 
+Guid
+√√ "
+(
+√√" #
+$str
+√√# I
+)
+√√I J
+)
+√√J K
+;
+√√K L
+migrationBuilder
+≈≈ 
+.
+≈≈ 
+
+DeleteData
+≈≈ '
+(
+≈≈' (
+table
+∆∆ 
+:
+∆∆ 
+$str
+∆∆ "
+,
+∆∆" #
+	keyColumn
+«« 
+:
+«« 
+$str
+«« 
+,
+««  
+keyValue
+»» 
+:
+»» 
+new
+»» 
+Guid
+»» "
+(
+»»" #
+$str
+»»# I
+)
+»»I J
+)
+»»J K
+;
+»»K L
+migrationBuilder
+   
+.
+   
+
+DeleteData
+   '
+(
+  ' (
+table
+ÀÀ 
+:
+ÀÀ 
+$str
+ÀÀ #
+,
+ÀÀ# $
+	keyColumn
+ÃÃ 
+:
+ÃÃ 
+$str
+ÃÃ 
+,
+ÃÃ  
+keyValue
+ÕÕ 
+:
+ÕÕ 
+new
+ÕÕ 
+Guid
+ÕÕ "
+(
+ÕÕ" #
+$str
+ÕÕ# I
+)
+ÕÕI J
+)
+ÕÕJ K
+;
+ÕÕK L
+migrationBuilder
+œœ 
+.
+œœ 
+
+UpdateData
+œœ '
+(
+œœ' (
+table
+–– 
+:
+–– 
+$str
+–– $
+,
+––$ %
+	keyColumn
+—— 
+:
+—— 
+$str
+—— 
+,
+——  
+keyValue
+““ 
+:
+““ 
+$str
+““ +
+,
+““+ ,
+columns
+”” 
+:
+”” 
+new
+”” 
+[
+”” 
+]
+”” 
+{
+””  
+$str
+””! 3
+,
+””3 4
+$str
+””5 A
+,
+””A B
+$str
+””C Q
+,
+””Q R
+$str
+””S b
+}
+””c d
+,
+””d e
+values
+‘‘ 
+:
+‘‘ 
+new
+‘‘ 
+object
+‘‘ "
+[
+‘‘" #
+]
+‘‘# $
+{
+‘‘% &
+$str
+‘‘' M
+,
+‘‘M N
+new
+‘‘O R
+DateTime
+‘‘S [
+(
+‘‘[ \
+$num
+‘‘\ `
+,
+‘‘` a
+$num
+‘‘b c
+,
+‘‘c d
+$num
+‘‘e g
+,
+‘‘g h
+$num
+‘‘i j
+,
+‘‘j k
+$num
+‘‘l n
+,
+‘‘n o
+$num
+‘‘p q
+,
+‘‘q r
+$num
+‘‘s t
+,
+‘‘t u
+DateTimeKind‘‘v Ç
+.‘‘Ç É
+Utc‘‘É Ü
+)‘‘Ü á
+.‘‘á à
+AddTicks‘‘à ê
+(‘‘ê ë
+$num‘‘ë ï
+)‘‘ï ñ
+,‘‘ñ ó
+$str‘‘ò Ó
+,‘‘Ó Ô
+$str‘‘ ñ
+}‘‘ó ò
+)‘‘ò ô
+;‘‘ô ö
+migrationBuilder
+÷÷ 
+.
+÷÷ 
+
+InsertData
+÷÷ '
+(
+÷÷' (
+table
+◊◊ 
+:
+◊◊ 
+$str
+◊◊ '
+,
+◊◊' (
+columns
+ÿÿ 
+:
+ÿÿ 
+new
+ÿÿ 
+[
+ÿÿ 
+]
+ÿÿ 
+{
+ÿÿ  
+$str
+ÿÿ! %
+,
+ÿÿ% &
+$str
+ÿÿ' 4
+,
+ÿÿ4 5
+$str
+ÿÿ6 D
+,
+ÿÿD E
+$str
+ÿÿF P
+,
+ÿÿP Q
+$str
+ÿÿR ]
+,
+ÿÿ] ^
+$str
+ÿÿ_ l
+,
+ÿÿl m
+$str
+ÿÿn }
+,
+ÿÿ} ~
+$strÿÿ â
+,ÿÿâ ä
+$strÿÿã †
+,ÿÿ† °
+$strÿÿ¢ ±
+,ÿÿ± ≤
+$strÿÿ≥ ¬
+,ÿÿ¬ √
+$strÿÿƒ —
+,ÿÿ— “
+$strÿÿ” ﬂ
+,ÿÿﬂ ‡
+$strÿÿ· È
+,ÿÿÈ Í
+$strÿÿÎ ¯
+,ÿÿ¯ ˘
+$strÿÿ˙ à
+,ÿÿà â
+$strÿÿä ï
+,ÿÿï ñ
+$strÿÿó §
+}ÿÿ• ¶
+,ÿÿ¶ ß
+values
+ŸŸ 
+:
+ŸŸ 
+new
+ŸŸ 
+object
+ŸŸ "
+[
+ŸŸ" #
+,
+ŸŸ# $
+]
+ŸŸ$ %
+{
+⁄⁄ 
+{
+€€ 
+new
+€€ 
+Guid
+€€ 
+(
+€€ 
+$str
+€€ E
+)
+€€E F
+,
+€€F G
+$str€€H Ã
+,€€Ã Õ
+$str€€Œ à
+,€€à â
+$str€€ä ö
+,€€ö õ
+null€€ú †
+,€€† °
+null€€¢ ¶
+,€€¶ ß
+$str€€® Ÿ
+,€€Ÿ ⁄
+$str€€€ ‰
+,€€‰ Â
+$str€€Ê ˇ
+,€€ˇ Ä
+$str€€Å â
+,€€â ä
+$str€€ã ï
+,€€ï ñ
+$str€€ó ≥
+,€€≥ ¥
+$str€€µ ¬
+,€€¬ √
+$num€€ƒ ≈
+,€€≈ ∆
+$str€€« ﬂ
+,€€ﬂ ‡
+$str€€· ˆ
+,€€ˆ ˜
+null€€¯ ¸
+,€€¸ ˝
+null€€˛ Ç
+}€€É Ñ
+,€€Ñ Ö
+{
+‹‹ 
+new
+‹‹ 
+Guid
+‹‹ 
+(
+‹‹ 
+$str
+‹‹ E
+)
+‹‹E F
+,
+‹‹F G
+$str‹‹H ë
+,‹‹ë í
+$str‹‹ì Õ
+,‹‹Õ Œ
+$str‹‹œ ·
+,‹‹· ‚
+null‹‹„ Á
+,‹‹Á Ë
+null‹‹È Ì
+,‹‹Ì Ó
+$str‹‹Ô †
+,‹‹† °
+$str‹‹¢ ´
+,‹‹´ ¨
+$str‹‹≠ ∆
+,‹‹∆ «
+$str‹‹» –
+,‹‹– —
+$str‹‹“ ‹
+,‹‹‹ ›
+$str‹‹ﬁ ˙
+,‹‹˙ ˚
+$str‹‹¸ â
+,‹‹â ä
+$num‹‹ã å
+,‹‹å ç
+$str‹‹é π
+,‹‹π ∫
+$str‹‹ª “
+,‹‹“ ”
+null‹‹‘ ÿ
+,‹‹ÿ Ÿ
+null‹‹⁄ ﬁ
+}‹‹ﬂ ‡
+,‹‹‡ ·
+{
+›› 
+new
+›› 
+Guid
+›› 
+(
+›› 
+$str
+›› E
+)
+››E F
+,
+››F G
+$str››H ”
+,››” ‘
+$str››’ è
+,››è ê
+$str››ë ô
+,››ô ö
+null››õ ü
+,››ü †
+null››° •
+,››• ¶
+$str››ß ÿ
+,››ÿ Ÿ
+$str››⁄ „
+,››„ ‰
+$str››Â °
+,››° ¢
+$str››£ ∑
+,››∑ ∏
+$str››π √
+,››√ ƒ
+$str››≈ ·
+,››· ‚
+$str››„ 
+,›› Ò
+$num››Ú Û
+,››Û Ù
+$str››ı ñ
+,››ñ ó
+$str››ò π
+,››π ∫
+null››ª ø
+,››ø ¿
+null››¡ ≈
+}››∆ «
+,››« »
+{
+ﬁﬁ 
+new
+ﬁﬁ 
+Guid
+ﬁﬁ 
+(
+ﬁﬁ 
+$str
+ﬁﬁ E
+)
+ﬁﬁE F
+,
+ﬁﬁF G
+$strﬁﬁH è
+,ﬁﬁè ê
+$strﬁﬁë À
+,ﬁﬁÀ Ã
+$strﬁﬁÕ ‰
+,ﬁﬁ‰ Â
+nullﬁﬁÊ Í
+,ﬁﬁÍ Î
+nullﬁﬁÏ 
+,ﬁﬁ Ò
+$strﬁﬁÚ £
+,ﬁﬁ£ §
+$strﬁﬁ• Æ
+,ﬁﬁÆ Ø
+$strﬁﬁ∞ …
+,ﬁﬁ…  
+$strﬁﬁÀ Ò
+,ﬁﬁÒ Ú
+$strﬁﬁÛ ¸
+,ﬁﬁ¸ ˝
+$strﬁﬁ˛ ö
+,ﬁﬁö õ
+$strﬁﬁú ©
+,ﬁﬁ© ™
+$numﬁﬁ´ ¨
+,ﬁﬁ¨ ≠
+$strﬁﬁÆ Œ
+,ﬁﬁŒ œ
+$strﬁﬁ– Ë
+,ﬁﬁË È
+nullﬁﬁÍ Ó
+,ﬁﬁÓ Ô
+nullﬁﬁ Ù
+}ﬁﬁı ˆ
+,ﬁﬁˆ ˜
+{
+ﬂﬂ 
+new
+ﬂﬂ 
+Guid
+ﬂﬂ 
+(
+ﬂﬂ 
+$str
+ﬂﬂ E
+)
+ﬂﬂE F
+,
+ﬂﬂF G
+$strﬂﬂH ë
+,ﬂﬂë í
+$strﬂﬂì Õ
+,ﬂﬂÕ Œ
+$strﬂﬂœ ·
+,ﬂﬂ· ‚
+nullﬂﬂ„ Á
+,ﬂﬂÁ Ë
+nullﬂﬂÈ Ì
+,ﬂﬂÌ Ó
+$strﬂﬂÔ †
+,ﬂﬂ† °
+$strﬂﬂ¢ ´
+,ﬂﬂ´ ¨
+$strﬂﬂ≠ ∆
+,ﬂﬂ∆ «
+$strﬂﬂ» Ê
+,ﬂﬂÊ Á
+$strﬂﬂË Ô
+,ﬂﬂÔ 
+$strﬂﬂÒ ç
+,ﬂﬂç é
+$strﬂﬂè ú
+,ﬂﬂú ù
+$numﬂﬂû ü
+,ﬂﬂü †
+$strﬂﬂ° ø
+,ﬂﬂø ¿
+$strﬂﬂ¡ Â
+,ﬂﬂÂ Ê
+nullﬂﬂÁ Î
+,ﬂﬂÎ Ï
+nullﬂﬂÌ Ò
+}ﬂﬂÚ Û
+,ﬂﬂÛ Ù
+{
+‡‡ 
+new
+‡‡ 
+Guid
+‡‡ 
+(
+‡‡ 
+$str
+‡‡ E
+)
+‡‡E F
+,
+‡‡F G
+$str‡‡H æ
+,‡‡æ ø
+$str‡‡¿ ù
+,‡‡ù û
+$str‡‡ü ©
+,‡‡© ™
+null‡‡´ Ø
+,‡‡Ø ∞
+null‡‡± µ
+,‡‡µ ∂
+$str‡‡∑ ˚
+,‡‡˚ ¸
+$str‡‡˝ Ü
+,‡‡Ü á
+$str‡‡à ≠
+,‡‡≠ Æ
+$str‡‡Ø ’
+,‡‡’ ÷
+$str‡‡◊ ·
+,‡‡· ‚
+$str‡‡„ ˇ
+,‡‡ˇ Ä
+$str‡‡Å é
+,‡‡é è
+$num‡‡ê ë
+,‡‡ë í
+$str‡‡ì ®
+,‡‡® ©
+$str‡‡™ ø
+,‡‡ø ¿
+null‡‡¡ ≈
+,‡‡≈ ∆
+null‡‡« À
+}‡‡Ã Õ
+,‡‡Õ Œ
+{
+·· 
+new
+·· 
+Guid
+·· 
+(
+·· 
+$str
+·· E
+)
+··E F
+,
+··F G
+$str··H è
+,··è ê
+$str··ë ∫
+,··∫ ª
+$str··º  
+,··  À
+null··Ã –
+,··– —
+null··“ ÷
+,··÷ ◊
+$str··ÿ â
+,··â ä
+$str··ã î
+,··î ï
+$str··ñ ¢
+,··¢ £
+$str··§ ¥
+,··¥ µ
+$str··∂ ¿
+,··¿ ¡
+$str··¬ ÿ
+,··ÿ Ÿ
+$str··⁄ Ê
+,··Ê Á
+$num··Ë È
+,··È Í
+$str··Î ¸
+,··¸ ˝
+$str··˛ ì
+,··ì î
+null··ï ô
+,··ô ö
+null··õ ü
+}··† °
+,··° ¢
+{
+‚‚ 
+new
+‚‚ 
+Guid
+‚‚ 
+(
+‚‚ 
+$str
+‚‚ E
+)
+‚‚E F
+,
+‚‚F G
+$str‚‚H Ñ
+,‚‚Ñ Ö
+$str‚‚Ü ¿
+,‚‚¿ ¡
+$str‚‚¬ “
+,‚‚“ ”
+null‚‚‘ ÿ
+,‚‚ÿ Ÿ
+null‚‚⁄ ﬁ
+,‚‚ﬁ ﬂ
+$str‚‚‡ ë
+,‚‚ë í
+$str‚‚ì ú
+,‚‚ú ù
+$str‚‚û ∑
+,‚‚∑ ∏
+$str‚‚π ¡
+,‚‚¡ ¬
+$str‚‚√ Õ
+,‚‚Õ Œ
+$str‚‚œ Î
+,‚‚Î Ï
+$str‚‚Ì ˙
+,‚‚˙ ˚
+$num‚‚¸ ˝
+,‚‚˝ ˛
+$str‚‚ˇ ê
+,‚‚ê ë
+$str‚‚í °
+,‚‚° ¢
+null‚‚£ ß
+,‚‚ß ®
+null‚‚© ≠
+}‚‚Æ Ø
+,‚‚Ø ∞
+{
+„„ 
+new
+„„ 
+Guid
+„„ 
+(
+„„ 
+$str
+„„ E
+)
+„„E F
+,
+„„F G
+$str„„H ®
+,„„® ©
+$str„„™ ÿ
+,„„ÿ Ÿ
+$str„„⁄ ‰
+,„„‰ Â
+null„„Ê Í
+,„„Í Î
+null„„Ï 
+,„„ Ò
+$str„„Ú £
+,„„£ §
+$str„„• Æ
+,„„Æ Ø
+$str„„∞  
+,„„  À
+$str„„Ã Û
+,„„Û Ù
+$str„„ı ˇ
+,„„ˇ Ä
+$str„„Å ù
+,„„ù û
+$str„„ü ¨
+,„„¨ ≠
+$num„„Æ Ø
+,„„Ø ∞
+$str„„± ∆
+,„„∆ «
+$str„„» ÿ
+,„„ÿ Ÿ
+null„„⁄ ﬁ
+,„„ﬁ ﬂ
+null„„‡ ‰
+}„„Â Ê
+,„„Ê Á
+{
+‰‰ 
+new
+‰‰ 
+Guid
+‰‰ 
+(
+‰‰ 
+$str
+‰‰ E
+)
+‰‰E F
+,
+‰‰F G
+$str
+‰‰H s
+,
+‰‰s t
+$str‰‰u ô
+,‰‰ô ö
+$str‰‰õ •
+,‰‰• ¶
+null‰‰ß ´
+,‰‰´ ¨
+null‰‰≠ ±
+,‰‰± ≤
+$str‰‰≥ ˘
+,‰‰˘ ˙
+$str‰‰˚ Ñ
+,‰‰Ñ Ö
+$str‰‰Ü ü
+,‰‰ü †
+$str‰‰° Œ
+,‰‰Œ œ
+$str‰‰– ‹
+,‰‰‹ ›
+$str‰‰ﬁ ˙
+,‰‰˙ ˚
+$str‰‰¸ â
+,‰‰â ä
+$num‰‰ã å
+,‰‰å ç
+$str‰‰é ª
+,‰‰ª º
+$str‰‰Ω ›
+,‰‰› ﬁ
+null‰‰ﬂ „
+,‰‰„ ‰
+null‰‰Â È
+}‰‰Í Î
+,‰‰Î Ï
+{
+ÂÂ 
+new
+ÂÂ 
+Guid
+ÂÂ 
+(
+ÂÂ 
+$str
+ÂÂ E
+)
+ÂÂE F
+,
+ÂÂF G
+$strÂÂH è
+,ÂÂè ê
+$strÂÂë À
+,ÂÂÀ Ã
+$strÂÂÕ ‰
+,ÂÂ‰ Â
+nullÂÂÊ Í
+,ÂÂÍ Î
+nullÂÂÏ 
+,ÂÂ Ò
+$strÂÂÚ £
+,ÂÂ£ §
+$strÂÂ• Æ
+,ÂÂÆ Ø
+$strÂÂ∞ …
+,ÂÂ…  
+$strÂÂÀ Ì
+,ÂÂÌ Ó
+$strÂÂÔ ˚
+,ÂÂ˚ ¸
+$strÂÂ˝ ô
+,ÂÂô ö
+$strÂÂõ ®
+,ÂÂ® ©
+$numÂÂ™ ´
+,ÂÂ´ ¨
+$strÂÂ≠ Õ
+,ÂÂÕ Œ
+$strÂÂœ Ë
+,ÂÂË È
+nullÂÂÍ Ó
+,ÂÂÓ Ô
+nullÂÂ Ù
+}ÂÂı ˆ
+,ÂÂˆ ˜
+{
+ÊÊ 
+new
+ÊÊ 
+Guid
+ÊÊ 
+(
+ÊÊ 
+$str
+ÊÊ E
+)
+ÊÊE F
+,
+ÊÊF G
+$strÊÊH ∞
+,ÊÊ∞ ±
+$strÊÊ≤ Ï
+,ÊÊÏ Ì
+$strÊÊÓ ˜
+,ÊÊ˜ ¯
+nullÊÊ˘ ˝
+,ÊÊ˝ ˛
+nullÊÊˇ É
+,ÊÊÉ Ñ
+$strÊÊÖ ∂
+,ÊÊ∂ ∑
+$strÊÊ∏ ¡
+,ÊÊ¡ ¬
+$strÊÊ√ ‹
+,ÊÊ‹ ›
+$strÊÊﬁ ˘
+,ÊÊ˘ ˙
+$strÊÊ˚ Ö
+,ÊÊÖ Ü
+$strÊÊá £
+,ÊÊ£ §
+$strÊÊ• ≤
+,ÊÊ≤ ≥
+$numÊÊ¥ µ
+,ÊÊµ ∂
+$strÊÊ∑ À
+,ÊÊÀ Ã
+$strÊÊÕ €
+,ÊÊ€ ‹
+nullÊÊ› ·
+,ÊÊ· ‚
+nullÊÊ„ Á
+}ÊÊË È
+,ÊÊÈ Í
+{
+ÁÁ 
+new
+ÁÁ 
+Guid
+ÁÁ 
+(
+ÁÁ 
+$str
+ÁÁ E
+)
+ÁÁE F
+,
+ÁÁF G
+$strÁÁH û
+,ÁÁû ü
+$strÁÁ† ≈
+,ÁÁ≈ ∆
+$strÁÁ« œ
+,ÁÁœ –
+nullÁÁ— ’
+,ÁÁ’ ÷
+nullÁÁ◊ €
+,ÁÁ€ ‹
+$strÁÁ› é
+,ÁÁé è
+$strÁÁê ô
+,ÁÁô ö
+$strÁÁõ µ
+,ÁÁµ ∂
+$strÁÁ∑ œ
+,ÁÁœ –
+$strÁÁ— €
+,ÁÁ€ ‹
+$strÁÁ› ˘
+,ÁÁ˘ ˙
+$strÁÁ˚ à
+,ÁÁà â
+$numÁÁä ã
+,ÁÁã å
+$strÁÁç ¢
+,ÁÁ¢ £
+$strÁÁ§ µ
+,ÁÁµ ∂
+nullÁÁ∑ ª
+,ÁÁª º
+nullÁÁΩ ¡
+}ÁÁ¬ √
+}
+ËË 
+)
+ËË 
+;
+ËË 
+}
+ÈÈ 	
+}
+ÍÍ 
+}ÎÎ √Ù
+|D:\FPT\Semester 6\Project_Cursus\Backend_Cursus\Cursus.LMS\Cursus.LMS.DataAccess\Migrations\20240730043206_AddWebsitTable.cs
+	namespace 	
+Cursus
+ 
+. 
+LMS 
+. 
+
+DataAccess 
+.  
+
+Migrations  *
+{		 
+public 
+
+partial 
+class 
+AddWebsitTable '
+:( )
+	Migration* 3
+{ 
+	protected 
+override 
+void 
+Up  "
+(" #
+MigrationBuilder# 3
+migrationBuilder4 D
+)D E
+{ 	
+migrationBuilder 
+. 
+
+DeleteData '
+(' (
+table 
+: 
+$str '
+,' (
+	keyColumn 
+: 
+$str 
+,  
+keyValue 
+: 
+new 
+Guid "
+(" #
+$str# I
+)I J
+)J K
+;K L
+migrationBuilder 
+. 
+
+DeleteData '
+(' (
+table 
+: 
+$str '
+,' (
+	keyColumn 
+: 
+$str 
+,  
+keyValue 
+: 
+new 
+Guid "
+(" #
+$str# I
+)I J
+)J K
+;K L
+migrationBuilder 
+. 
+
+DeleteData '
+(' (
+table 
+: 
+$str '
+,' (
+	keyColumn 
+: 
+$str 
+,  
+keyValue 
+: 
+new 
+Guid "
+(" #
+$str# I
+)I J
+)J K
+;K L
+migrationBuilder 
+. 
+
+DeleteData '
+(' (
+table   
+:   
+$str   '
+,  ' (
+	keyColumn!! 
+:!! 
+$str!! 
+,!!  
+keyValue"" 
+:"" 
+new"" 
+Guid"" "
+(""" #
+$str""# I
+)""I J
+)""J K
+;""K L
+migrationBuilder$$ 
+.$$ 
+
+DeleteData$$ '
+($$' (
+table%% 
+:%% 
+$str%% '
+,%%' (
+	keyColumn&& 
+:&& 
+$str&& 
+,&&  
+keyValue'' 
+:'' 
+new'' 
+Guid'' "
+(''" #
+$str''# I
+)''I J
+)''J K
+;''K L
+migrationBuilder)) 
+.)) 
+
+DeleteData)) '
+())' (
+table** 
+:** 
+$str** '
+,**' (
+	keyColumn++ 
+:++ 
+$str++ 
+,++  
+keyValue,, 
+:,, 
+new,, 
+Guid,, "
+(,," #
+$str,,# I
+),,I J
+),,J K
+;,,K L
+migrationBuilder.. 
+... 
+
+DeleteData.. '
+(..' (
+table// 
+:// 
+$str// '
+,//' (
+	keyColumn00 
+:00 
+$str00 
+,00  
+keyValue11 
+:11 
+new11 
+Guid11 "
+(11" #
+$str11# I
+)11I J
+)11J K
+;11K L
+migrationBuilder33 
+.33 
+
+DeleteData33 '
+(33' (
+table44 
+:44 
+$str44 '
+,44' (
+	keyColumn55 
+:55 
+$str55 
+,55  
+keyValue66 
+:66 
+new66 
+Guid66 "
+(66" #
+$str66# I
+)66I J
+)66J K
+;66K L
+migrationBuilder88 
+.88 
+
+DeleteData88 '
+(88' (
+table99 
+:99 
+$str99 '
+,99' (
+	keyColumn:: 
+::: 
+$str:: 
+,::  
+keyValue;; 
+:;; 
+new;; 
+Guid;; "
+(;;" #
+$str;;# I
+);;I J
+);;J K
+;;;K L
+migrationBuilder== 
+.== 
+
+DeleteData== '
+(==' (
+table>> 
+:>> 
+$str>> '
+,>>' (
+	keyColumn?? 
+:?? 
+$str?? 
+,??  
+keyValue@@ 
+:@@ 
+new@@ 
+Guid@@ "
+(@@" #
+$str@@# I
+)@@I J
+)@@J K
+;@@K L
+migrationBuilderBB 
+.BB 
+
+DeleteDataBB '
+(BB' (
+tableCC 
+:CC 
+$strCC '
+,CC' (
+	keyColumnDD 
+:DD 
+$strDD 
+,DD  
+keyValueEE 
+:EE 
+newEE 
+GuidEE "
+(EE" #
+$strEE# I
+)EEI J
+)EEJ K
+;EEK L
+migrationBuilderGG 
+.GG 
+
+DeleteDataGG '
+(GG' (
+tableHH 
+:HH 
+$strHH '
+,HH' (
+	keyColumnII 
+:II 
+$strII 
+,II  
+keyValueJJ 
+:JJ 
+newJJ 
+GuidJJ "
+(JJ" #
+$strJJ# I
+)JJI J
+)JJJ K
+;JJK L
+migrationBuilderLL 
+.LL 
+
+DeleteDataLL '
+(LL' (
+tableMM 
+:MM 
+$strMM '
+,MM' (
+	keyColumnNN 
+:NN 
+$strNN 
+,NN  
+keyValueOO 
+:OO 
+newOO 
+GuidOO "
+(OO" #
+$strOO# I
+)OOI J
+)OOJ K
+;OOK L
+migrationBuilderQQ 
+.QQ 
+CreateTableQQ (
+(QQ( )
+nameRR 
+:RR 
+$strRR !
+,RR! "
+columnsSS 
+:SS 
+tableSS 
+=>SS !
+newSS" %
+{TT 
+IdUU 
+=UU 
+tableUU 
+.UU 
+ColumnUU %
+<UU% &
+GuidUU& *
+>UU* +
+(UU+ ,
+typeUU, 0
+:UU0 1
+$strUU2 D
+,UUD E
+nullableUUF N
+:UUN O
+falseUUP U
+)UUU V
+,UUV W
+NameVV 
+=VV 
+tableVV  
+.VV  !
+ColumnVV! '
+<VV' (
+stringVV( .
+>VV. /
+(VV/ 0
+typeVV0 4
+:VV4 5
+$strVV6 E
+,VVE F
+nullableVVG O
+:VVO P
+falseVVQ V
+)VVV W
+,VVW X
+AddressWW 
+=WW 
+tableWW #
+.WW# $
+ColumnWW$ *
+<WW* +
+stringWW+ 1
+>WW1 2
+(WW2 3
+typeWW3 7
+:WW7 8
+$strWW9 H
+,WWH I
+nullableWWJ R
+:WWR S
+falseWWT Y
+)WWY Z
+,WWZ [
+CityXX 
+=XX 
+tableXX  
+.XX  !
+ColumnXX! '
+<XX' (
+stringXX( .
+>XX. /
+(XX/ 0
+typeXX0 4
+:XX4 5
+$strXX6 E
+,XXE F
+nullableXXG O
+:XXO P
+falseXXQ V
+)XXV W
+,XXW X
+StateYY 
+=YY 
+tableYY !
+.YY! "
+ColumnYY" (
+<YY( )
+stringYY) /
+>YY/ 0
+(YY0 1
+typeYY1 5
+:YY5 6
+$strYY7 F
+,YYF G
+nullableYYH P
+:YYP Q
+falseYYR W
+)YYW X
+,YYX Y
+CountryZZ 
+=ZZ 
+tableZZ #
+.ZZ# $
+ColumnZZ$ *
+<ZZ* +
+stringZZ+ 1
+>ZZ1 2
+(ZZ2 3
+typeZZ3 7
+:ZZ7 8
+$strZZ9 H
+,ZZH I
+nullableZZJ R
+:ZZR S
+falseZZT Y
+)ZZY Z
+,ZZZ [
+
+PostalCode[[ 
+=[[  
+table[[! &
+.[[& '
+Column[[' -
+<[[- .
+string[[. 4
+>[[4 5
+([[5 6
+type[[6 :
+:[[: ;
+$str[[< K
+,[[K L
+nullable[[M U
+:[[U V
+false[[W \
+)[[\ ]
+,[[] ^
+Phone\\ 
+=\\ 
+table\\ !
+.\\! "
+Column\\" (
+<\\( )
+string\\) /
+>\\/ 0
+(\\0 1
+type\\1 5
+:\\5 6
+$str\\7 F
+,\\F G
+nullable\\H P
+:\\P Q
+false\\R W
+)\\W X
+,\\X Y
+Email]] 
+=]] 
+table]] !
+.]]! "
+Column]]" (
+<]]( )
+string]]) /
+>]]/ 0
+(]]0 1
+type]]1 5
+:]]5 6
+$str]]7 F
+,]]F G
+nullable]]H P
+:]]P Q
+false]]R W
+)]]W X
+,]]X Y
+Website^^ 
+=^^ 
+table^^ #
+.^^# $
+Column^^$ *
+<^^* +
+string^^+ 1
+>^^1 2
+(^^2 3
+type^^3 7
+:^^7 8
+$str^^9 H
+,^^H I
+nullable^^J R
+:^^R S
+false^^T Y
+)^^Y Z
+,^^Z [
+FoundedDate__ 
+=__  !
+table__" '
+.__' (
+Column__( .
+<__. /
+DateTime__/ 7
+>__7 8
+(__8 9
+type__9 =
+:__= >
+$str__? J
+,__J K
+nullable__L T
+:__T U
+false__V [
+)__[ \
+,__\ ]
+LogoUrl`` 
+=`` 
+table`` #
+.``# $
+Column``$ *
+<``* +
+string``+ 1
+>``1 2
+(``2 3
+type``3 7
+:``7 8
+$str``9 H
+,``H I
+nullable``J R
+:``R S
+false``T Y
+)``Y Z
+,``Z [
+Descriptionaa 
+=aa  !
+tableaa" '
+.aa' (
+Columnaa( .
+<aa. /
+stringaa/ 5
+>aa5 6
+(aa6 7
+typeaa7 ;
+:aa; <
+$straa= L
+,aaL M
+nullableaaN V
+:aaV W
+falseaaX ]
+)aa] ^
+}bb 
+,bb 
+constraintscc 
+:cc 
+tablecc "
+=>cc# %
+{dd 
+tableee 
+.ee 
+
+PrimaryKeyee $
+(ee$ %
+$stree% 3
+,ee3 4
+xee5 6
+=>ee7 9
+xee: ;
+.ee; <
+Idee< >
+)ee> ?
+;ee? @
+}ff 
+)ff 
+;ff 
+migrationBuilderhh 
+.hh 
+CreateTablehh (
+(hh( )
+nameii 
+:ii 
+$strii !
+,ii! "
+columnsjj 
+:jj 
+tablejj 
+=>jj !
+newjj" %
+{kk 
+Idll 
+=ll 
+tablell 
+.ll 
+Columnll %
+<ll% &
+Guidll& *
+>ll* +
+(ll+ ,
+typell, 0
+:ll0 1
+$strll2 D
+,llD E
+nullablellF N
+:llN O
+falsellP U
+)llU V
+,llV W
+Titlemm 
+=mm 
+tablemm !
+.mm! "
+Columnmm" (
+<mm( )
+stringmm) /
+>mm/ 0
+(mm0 1
+typemm1 5
+:mm5 6
+$strmm7 F
+,mmF G
+nullablemmH P
+:mmP Q
+falsemmR W
+)mmW X
+,mmX Y
+Contentnn 
+=nn 
+tablenn #
+.nn# $
+Columnnn$ *
+<nn* +
+stringnn+ 1
+>nn1 2
+(nn2 3
+typenn3 7
+:nn7 8
+$strnn9 H
+,nnH I
+nullablennJ R
+:nnR S
+falsennT Y
+)nnY Z
+,nnZ [
+LastUpdatedoo 
+=oo  !
+tableoo" '
+.oo' (
+Columnoo( .
+<oo. /
+DateTimeoo/ 7
+>oo7 8
+(oo8 9
+typeoo9 =
+:oo= >
+$stroo? J
+,ooJ K
+nullableooL T
+:ooT U
+falseooV [
+)oo[ \
+,oo\ ]
+IsActivepp 
+=pp 
+tablepp $
+.pp$ %
+Columnpp% +
+<pp+ ,
+boolpp, 0
+>pp0 1
+(pp1 2
+typepp2 6
+:pp6 7
+$strpp8 =
+,pp= >
+nullablepp? G
+:ppG H
+falseppI N
+)ppN O
+}qq 
+,qq 
+constraintsrr 
+:rr 
+tablerr "
+=>rr# %
+{ss 
+tablett 
+.tt 
+
+PrimaryKeytt $
+(tt$ %
+$strtt% 3
+,tt3 4
+xtt5 6
+=>tt7 9
+xtt: ;
+.tt; <
+Idtt< >
+)tt> ?
+;tt? @
+}uu 
+)uu 
+;uu 
+migrationBuilderww 
+.ww 
+CreateTableww (
+(ww( )
+namexx 
+:xx 
+$strxx "
+,xx" #
+columnsyy 
+:yy 
+tableyy 
+=>yy !
+newyy" %
+{zz 
+Id{{ 
+={{ 
+table{{ 
+.{{ 
+Column{{ %
+<{{% &
+Guid{{& *
+>{{* +
+({{+ ,
+type{{, 0
+:{{0 1
+$str{{2 D
+,{{D E
+nullable{{F N
+:{{N O
+false{{P U
+){{U V
+,{{V W
+Title|| 
+=|| 
+table|| !
+.||! "
+Column||" (
+<||( )
+string||) /
+>||/ 0
+(||0 1
+type||1 5
+:||5 6
+$str||7 F
+,||F G
+nullable||H P
+:||P Q
+false||R W
+)||W X
+,||X Y
+Content}} 
+=}} 
+table}} #
+.}}# $
+Column}}$ *
+<}}* +
+string}}+ 1
+>}}1 2
+(}}2 3
+type}}3 7
+:}}7 8
+$str}}9 H
+,}}H I
+nullable}}J R
+:}}R S
+false}}T Y
+)}}Y Z
+,}}Z [
+LastUpdated~~ 
+=~~  !
+table~~" '
+.~~' (
+Column~~( .
+<~~. /
+DateTime~~/ 7
+>~~7 8
+(~~8 9
+type~~9 =
+:~~= >
+$str~~? J
+,~~J K
+nullable~~L T
+:~~T U
+false~~V [
+)~~[ \
+,~~\ ]
+IsActive 
+= 
+table $
+.$ %
+Column% +
+<+ ,
+bool, 0
+>0 1
+(1 2
+type2 6
+:6 7
+$str8 =
+,= >
+nullable? G
+:G H
+falseI N
+)N O
+}
+ÄÄ 
+,
+ÄÄ 
+constraints
+ÅÅ 
+:
+ÅÅ 
+table
+ÅÅ "
+=>
+ÅÅ# %
+{
+ÇÇ 
+table
+ÉÉ 
+.
+ÉÉ 
+
+PrimaryKey
+ÉÉ $
+(
+ÉÉ$ %
+$str
+ÉÉ% 4
+,
+ÉÉ4 5
+x
+ÉÉ6 7
+=>
+ÉÉ8 :
+x
+ÉÉ; <
+.
+ÉÉ< =
+Id
+ÉÉ= ?
+)
+ÉÉ? @
+;
+ÉÉ@ A
+}
+ÑÑ 
+)
+ÑÑ 
+;
+ÑÑ 
+migrationBuilder
+ÜÜ 
+.
+ÜÜ 
+
+UpdateData
+ÜÜ '
+(
+ÜÜ' (
+table
+áá 
+:
+áá 
+$str
+áá $
+,
+áá$ %
+	keyColumn
+àà 
+:
+àà 
+$str
+àà 
+,
+àà  
+keyValue
+ââ 
+:
+ââ 
+$str
+ââ +
+,
+ââ+ ,
+columns
+ää 
+:
+ää 
+new
+ää 
+[
+ää 
+]
+ää 
+{
+ää  
+$str
+ää! 3
+,
+ää3 4
+$str
+ää5 A
+,
+ääA B
+$str
+ääC Q
+,
+ääQ R
+$str
+ääS b
+}
+ääc d
+,
+ääd e
+values
+ãã 
+:
+ãã 
+new
+ãã 
+object
+ãã "
+[
+ãã" #
+]
+ãã# $
+{
+ãã% &
+$str
+ãã' M
+,
+ããM N
+new
+ããO R
+DateTime
+ããS [
+(
+ãã[ \
+$num
+ãã\ `
+,
+ãã` a
+$num
+ããb c
+,
+ããc d
+$num
+ããe g
+,
+ããg h
+$num
+ããi j
+,
+ããj k
+$num
+ããl n
+,
+ããn o
+$num
+ããp q
+,
+ããq r
+$num
+ããs t
+,
+ããt u
+DateTimeKindããv Ç
+.ããÇ É
+UtcããÉ Ü
+)ããÜ á
+.ããá à
+AddTicksããà ê
+(ããê ë
+$numããë ï
+)ããï ñ
+,ããñ ó
+$strããò Ó
+,ããÓ Ô
+$strãã ñ
+}ããó ò
+)ããò ô
+;ããô ö
+migrationBuilder
+çç 
+.
+çç 
+
+InsertData
+çç '
+(
+çç' (
+table
+éé 
+:
+éé 
+$str
+éé '
+,
+éé' (
+columns
+èè 
+:
+èè 
+new
+èè 
+[
+èè 
+]
+èè 
+{
+èè  
+$str
+èè! %
+,
+èè% &
+$str
+èè' 4
+,
+èè4 5
+$str
+èè6 D
+,
+èèD E
+$str
+èèF P
+,
+èèP Q
+$str
+èèR ]
+,
+èè] ^
+$str
+èè_ l
+,
+èèl m
+$str
+èèn }
+,
+èè} ~
+$strèè â
+,èèâ ä
+$strèèã †
+,èè† °
+$strèè¢ ±
+,èè± ≤
+$strèè≥ ¬
+,èè¬ √
+$strèèƒ —
+,èè— “
+$strèè” ﬂ
+,èèﬂ ‡
+$strèè· È
+,èèÈ Í
+$strèèÎ ¯
+,èè¯ ˘
+$strèè˙ à
+,èèà â
+$strèèä ï
+,èèï ñ
+$strèèó §
+}èè• ¶
+,èè¶ ß
+values
+êê 
+:
+êê 
+new
+êê 
+object
+êê "
+[
+êê" #
+,
+êê# $
+]
+êê$ %
+{
+ëë 
+{
+íí 
+new
+íí 
+Guid
+íí 
+(
+íí 
+$str
+íí E
+)
+ííE F
+,
+ííF G
+$strííH Ã
+,ííÃ Õ
+$strííŒ à
+,ííà â
+$strííä ö
+,ííö õ
+nullííú †
+,íí† °
+nullíí¢ ¶
+,íí¶ ß
+$stríí® Ÿ
+,ííŸ ⁄
+$stríí€ ‰
+,íí‰ Â
+$strííÊ ˇ
+,ííˇ Ä
+$strííÅ â
+,ííâ ä
+$strííã ï
+,ííï ñ
+$strííó ≥
+,íí≥ ¥
+$strííµ ¬
+,íí¬ √
+$numííƒ ≈
+,íí≈ ∆
+$stríí« ﬂ
+,ííﬂ ‡
+$stríí· ˆ
+,ííˆ ˜
+nullíí¯ ¸
+,íí¸ ˝
+nullíí˛ Ç
+}ííÉ Ñ
+,ííÑ Ö
+{
+ìì 
+new
+ìì 
+Guid
+ìì 
+(
+ìì 
+$str
+ìì E
+)
+ììE F
+,
+ììF G
+$strììH ë
+,ììë í
+$strììì Õ
+,ììÕ Œ
+$strììœ ·
+,ìì· ‚
+nullìì„ Á
+,ììÁ Ë
+nullììÈ Ì
+,ììÌ Ó
+$strììÔ †
+,ìì† °
+$strìì¢ ´
+,ìì´ ¨
+$strìì≠ ∆
+,ìì∆ «
+$strìì» –
+,ìì– —
+$strìì“ ‹
+,ìì‹ ›
+$strììﬁ ˙
+,ìì˙ ˚
+$strìì¸ â
+,ììâ ä
+$numììã å
+,ììå ç
+$strììé π
+,ììπ ∫
+$strììª “
+,ìì“ ”
+nullìì‘ ÿ
+,ììÿ Ÿ
+nullìì⁄ ﬁ
+}ììﬂ ‡
+,ìì‡ ·
+{
+îî 
+new
+îî 
+Guid
+îî 
+(
+îî 
+$str
+îî E
+)
+îîE F
+,
+îîF G
+$strîîH ”
+,îî” ‘
+$strîî’ è
+,îîè ê
+$strîîë ô
+,îîô ö
+nullîîõ ü
+,îîü †
+nullîî° •
+,îî• ¶
+$strîîß ÿ
+,îîÿ Ÿ
+$strîî⁄ „
+,îî„ ‰
+$strîîÂ °
+,îî° ¢
+$strîî£ ∑
+,îî∑ ∏
+$strîîπ √
+,îî√ ƒ
+$strîî≈ ·
+,îî· ‚
+$strîî„ 
+,îî Ò
+$numîîÚ Û
+,îîÛ Ù
+$strîîı ñ
+,îîñ ó
+$strîîò π
+,îîπ ∫
+nullîîª ø
+,îîø ¿
+nullîî¡ ≈
+}îî∆ «
+,îî« »
+{
+ïï 
+new
+ïï 
+Guid
+ïï 
+(
+ïï 
+$str
+ïï E
+)
+ïïE F
+,
+ïïF G
+$strïïH è
+,ïïè ê
+$strïïë À
+,ïïÀ Ã
+$strïïÕ ‰
+,ïï‰ Â
+nullïïÊ Í
+,ïïÍ Î
+nullïïÏ 
+,ïï Ò
+$strïïÚ £
+,ïï£ §
+$strïï• Æ
+,ïïÆ Ø
+$strïï∞ …
+,ïï…  
+$strïïÀ Ò
+,ïïÒ Ú
+$strïïÛ ¸
+,ïï¸ ˝
+$strïï˛ ö
+,ïïö õ
+$strïïú ©
+,ïï© ™
+$numïï´ ¨
+,ïï¨ ≠
+$strïïÆ Œ
+,ïïŒ œ
+$strïï– Ë
+,ïïË È
+nullïïÍ Ó
+,ïïÓ Ô
+nullïï Ù
+}ïïı ˆ
+,ïïˆ ˜
+{
+ññ 
+new
+ññ 
+Guid
+ññ 
+(
+ññ 
+$str
+ññ E
+)
+ññE F
+,
+ññF G
+$strññH ë
+,ññë í
+$strññì Õ
+,ññÕ Œ
+$strññœ ·
+,ññ· ‚
+nullññ„ Á
+,ññÁ Ë
+nullññÈ Ì
+,ññÌ Ó
+$strññÔ †
+,ññ† °
+$strññ¢ ´
+,ññ´ ¨
+$strññ≠ ∆
+,ññ∆ «
+$strññ» Ê
+,ññÊ Á
+$strññË Ô
+,ññÔ 
+$strññÒ ç
+,ññç é
+$strññè ú
+,ññú ù
+$numññû ü
+,ññü †
+$strññ° ø
+,ññø ¿
+$strññ¡ Â
+,ññÂ Ê
+nullññÁ Î
+,ññÎ Ï
+nullññÌ Ò
+}ññÚ Û
+,ññÛ Ù
+{
+óó 
+new
+óó 
+Guid
+óó 
+(
+óó 
+$str
+óó E
+)
+óóE F
+,
+óóF G
+$stróóH æ
+,óóæ ø
+$stróó¿ ù
+,óóù û
+$stróóü ©
+,óó© ™
+nullóó´ Ø
+,óóØ ∞
+nullóó± µ
+,óóµ ∂
+$stróó∑ ˚
+,óó˚ ¸
+$stróó˝ Ü
+,óóÜ á
+$stróóà ≠
+,óó≠ Æ
+$stróóØ ’
+,óó’ ÷
+$stróó◊ ·
+,óó· ‚
+$stróó„ ˇ
+,óóˇ Ä
+$stróóÅ é
+,óóé è
+$numóóê ë
+,óóë í
+$stróóì ®
+,óó® ©
+$stróó™ ø
+,óóø ¿
+nullóó¡ ≈
+,óó≈ ∆
+nullóó« À
+}óóÃ Õ
+,óóÕ Œ
+{
+òò 
+new
+òò 
+Guid
+òò 
+(
+òò 
+$str
+òò E
+)
+òòE F
+,
+òòF G
+$stròòH è
+,òòè ê
+$stròòë ∫
+,òò∫ ª
+$stròòº  
+,òò  À
+nullòòÃ –
+,òò– —
+nullòò“ ÷
+,òò÷ ◊
+$stròòÿ â
+,òòâ ä
+$stròòã î
+,òòî ï
+$stròòñ ¢
+,òò¢ £
+$stròò§ ¥
+,òò¥ µ
+$stròò∂ ¿
+,òò¿ ¡
+$stròò¬ ÿ
+,òòÿ Ÿ
+$stròò⁄ Ê
+,òòÊ Á
+$numòòË È
+,òòÈ Í
+$stròòÎ ¸
+,òò¸ ˝
+$stròò˛ ì
+,òòì î
+nullòòï ô
+,òòô ö
+nullòòõ ü
+}òò† °
+,òò° ¢
+{
+ôô 
+new
+ôô 
+Guid
+ôô 
+(
+ôô 
+$str
+ôô E
+)
+ôôE F
+,
+ôôF G
+$strôôH Ñ
+,ôôÑ Ö
+$strôôÜ ¿
+,ôô¿ ¡
+$strôô¬ “
+,ôô“ ”
+nullôô‘ ÿ
+,ôôÿ Ÿ
+nullôô⁄ ﬁ
+,ôôﬁ ﬂ
+$strôô‡ ë
+,ôôë í
+$strôôì ú
+,ôôú ù
+$strôôû ∑
+,ôô∑ ∏
+$strôôπ ¡
+,ôô¡ ¬
+$strôô√ Õ
+,ôôÕ Œ
+$strôôœ Î
+,ôôÎ Ï
+$strôôÌ ˙
+,ôô˙ ˚
+$numôô¸ ˝
+,ôô˝ ˛
+$strôôˇ ê
+,ôôê ë
+$strôôí °
+,ôô° ¢
+nullôô£ ß
+,ôôß ®
+nullôô© ≠
+}ôôÆ Ø
+,ôôØ ∞
+{
+öö 
+new
+öö 
+Guid
+öö 
+(
+öö 
+$str
+öö E
+)
+ööE F
+,
+ööF G
+$strööH ®
+,öö® ©
+$ströö™ ÿ
+,ööÿ Ÿ
+$ströö⁄ ‰
+,öö‰ Â
+nullööÊ Í
+,ööÍ Î
+nullööÏ 
+,öö Ò
+$strööÚ £
+,öö£ §
+$ströö• Æ
+,ööÆ Ø
+$ströö∞  
+,öö  À
+$strööÃ Û
+,ööÛ Ù
+$strööı ˇ
+,ööˇ Ä
+$strööÅ ù
+,ööù û
+$strööü ¨
+,öö¨ ≠
+$numööÆ Ø
+,ööØ ∞
+$ströö± ∆
+,öö∆ «
+$ströö» ÿ
+,ööÿ Ÿ
+nullöö⁄ ﬁ
+,ööﬁ ﬂ
+nullöö‡ ‰
+}ööÂ Ê
+,ööÊ Á
+{
+õõ 
+new
+õõ 
+Guid
+õõ 
+(
+õõ 
+$str
+õõ E
+)
+õõE F
+,
+õõF G
+$str
+õõH s
+,
+õõs t
+$strõõu ô
+,õõô ö
+$strõõõ •
+,õõ• ¶
+nullõõß ´
+,õõ´ ¨
+nullõõ≠ ±
+,õõ± ≤
+$strõõ≥ ˘
+,õõ˘ ˙
+$strõõ˚ Ñ
+,õõÑ Ö
+$strõõÜ ü
+,õõü †
+$strõõ° Œ
+,õõŒ œ
+$strõõ– ‹
+,õõ‹ ›
+$strõõﬁ ˙
+,õõ˙ ˚
+$strõõ¸ â
+,õõâ ä
+$numõõã å
+,õõå ç
+$strõõé ª
+,õõª º
+$strõõΩ ›
+,õõ› ﬁ
+nullõõﬂ „
+,õõ„ ‰
+nullõõÂ È
+}õõÍ Î
+,õõÎ Ï
+{
+úú 
+new
+úú 
+Guid
+úú 
+(
+úú 
+$str
+úú E
+)
+úúE F
+,
+úúF G
+$strúúH è
+,úúè ê
+$strúúë À
+,úúÀ Ã
+$strúúÕ ‰
+,úú‰ Â
+nullúúÊ Í
+,úúÍ Î
+nullúúÏ 
+,úú Ò
+$strúúÚ £
+,úú£ §
+$strúú• Æ
+,úúÆ Ø
+$strúú∞ …
+,úú…  
+$strúúÀ Ì
+,úúÌ Ó
+$strúúÔ ˚
+,úú˚ ¸
+$strúú˝ ô
+,úúô ö
+$strúúõ ®
+,úú® ©
+$numúú™ ´
+,úú´ ¨
+$strúú≠ Õ
+,úúÕ Œ
+$strúúœ Ë
+,úúË È
+nullúúÍ Ó
+,úúÓ Ô
+nullúú Ù
+}úúı ˆ
+,úúˆ ˜
+{
+ùù 
+new
+ùù 
+Guid
+ùù 
+(
+ùù 
+$str
+ùù E
+)
+ùùE F
+,
+ùùF G
+$strùùH ∞
+,ùù∞ ±
+$strùù≤ Ï
+,ùùÏ Ì
+$strùùÓ ˜
+,ùù˜ ¯
+nullùù˘ ˝
+,ùù˝ ˛
+nullùùˇ É
+,ùùÉ Ñ
+$strùùÖ ∂
+,ùù∂ ∑
+$strùù∏ ¡
+,ùù¡ ¬
+$strùù√ ‹
+,ùù‹ ›
+$strùùﬁ ˘
+,ùù˘ ˙
+$strùù˚ Ö
+,ùùÖ Ü
+$strùùá £
+,ùù£ §
+$strùù• ≤
+,ùù≤ ≥
+$numùù¥ µ
+,ùùµ ∂
+$strùù∑ À
+,ùùÀ Ã
+$strùùÕ €
+,ùù€ ‹
+nullùù› ·
+,ùù· ‚
+nullùù„ Á
+}ùùË È
+,ùùÈ Í
+{
+ûû 
+new
+ûû 
+Guid
+ûû 
+(
+ûû 
+$str
+ûû E
+)
+ûûE F
+,
+ûûF G
+$strûûH û
+,ûûû ü
+$strûû† ≈
+,ûû≈ ∆
+$strûû« œ
+,ûûœ –
+nullûû— ’
+,ûû’ ÷
+nullûû◊ €
+,ûû€ ‹
+$strûû› é
+,ûûé è
+$strûûê ô
+,ûûô ö
+$strûûõ µ
+,ûûµ ∂
+$strûû∑ œ
+,ûûœ –
+$strûû— €
+,ûû€ ‹
+$strûû› ˘
+,ûû˘ ˙
+$strûû˚ à
+,ûûà â
+$numûûä ã
+,ûûã å
+$strûûç ¢
+,ûû¢ £
+$strûû§ µ
+,ûûµ ∂
+nullûû∑ ª
+,ûûª º
+nullûûΩ ¡
+}ûû¬ √
+}
+üü 
+)
+üü 
+;
+üü 
+}
+†† 	
+	protected
+££ 
+override
+££ 
+void
+££ 
+Down
+££  $
+(
+££$ %
+MigrationBuilder
+££% 5
+migrationBuilder
+££6 F
+)
+££F G
+{
+§§ 	
+migrationBuilder
+•• 
+.
+•• 
+	DropTable
+•• &
+(
+••& '
+name
+¶¶ 
+:
+¶¶ 
+$str
+¶¶ !
+)
+¶¶! "
+;
+¶¶" #
+migrationBuilder
+®® 
+.
+®® 
+	DropTable
+®® &
+(
+®®& '
+name
+©© 
+:
+©© 
+$str
+©© !
+)
+©©! "
+;
+©©" #
+migrationBuilder
+´´ 
+.
+´´ 
+	DropTable
+´´ &
+(
+´´& '
+name
+¨¨ 
+:
+¨¨ 
+$str
+¨¨ "
+)
+¨¨" #
+;
+¨¨# $
+migrationBuilder
+ÆÆ 
+.
+ÆÆ 
+
+DeleteData
+ÆÆ '
+(
+ÆÆ' (
+table
+ØØ 
+:
+ØØ 
+$str
+ØØ '
+,
+ØØ' (
+	keyColumn
+∞∞ 
+:
+∞∞ 
+$str
+∞∞ 
+,
+∞∞  
+keyValue
+±± 
+:
+±± 
+new
+±± 
+Guid
+±± "
+(
+±±" #
+$str
+±±# I
+)
+±±I J
+)
+±±J K
+;
+±±K L
+migrationBuilder
+≥≥ 
+.
+≥≥ 
+
+DeleteData
+≥≥ '
+(
+≥≥' (
+table
+¥¥ 
+:
+¥¥ 
+$str
+¥¥ '
+,
+¥¥' (
+	keyColumn
+µµ 
+:
+µµ 
+$str
+µµ 
+,
+µµ  
+keyValue
+∂∂ 
+:
+∂∂ 
+new
+∂∂ 
+Guid
+∂∂ "
+(
+∂∂" #
+$str
+∂∂# I
+)
+∂∂I J
+)
+∂∂J K
+;
+∂∂K L
+migrationBuilder
+∏∏ 
+.
+∏∏ 
+
+DeleteData
+∏∏ '
+(
+∏∏' (
+table
+ππ 
+:
+ππ 
+$str
+ππ '
+,
+ππ' (
+	keyColumn
+∫∫ 
+:
+∫∫ 
+$str
+∫∫ 
+,
+∫∫  
+keyValue
+ªª 
+:
+ªª 
+new
+ªª 
+Guid
+ªª "
+(
+ªª" #
+$str
+ªª# I
+)
+ªªI J
+)
+ªªJ K
+;
+ªªK L
+migrationBuilder
+ΩΩ 
+.
+ΩΩ 
+
+DeleteData
+ΩΩ '
+(
+ΩΩ' (
+table
+ææ 
+:
+ææ 
+$str
+ææ '
+,
+ææ' (
+	keyColumn
+øø 
+:
+øø 
+$str
+øø 
+,
+øø  
+keyValue
+¿¿ 
+:
+¿¿ 
+new
+¿¿ 
+Guid
+¿¿ "
+(
+¿¿" #
+$str
+¿¿# I
+)
+¿¿I J
+)
+¿¿J K
+;
+¿¿K L
+migrationBuilder
+¬¬ 
+.
+¬¬ 
+
+DeleteData
+¬¬ '
+(
+¬¬' (
+table
+√√ 
+:
+√√ 
+$str
+√√ '
+,
+√√' (
+	keyColumn
+ƒƒ 
+:
+ƒƒ 
+$str
+ƒƒ 
+,
+ƒƒ  
+keyValue
+≈≈ 
+:
+≈≈ 
+new
+≈≈ 
+Guid
+≈≈ "
+(
+≈≈" #
+$str
+≈≈# I
+)
+≈≈I J
+)
+≈≈J K
+;
+≈≈K L
+migrationBuilder
+«« 
+.
+«« 
+
+DeleteData
+«« '
+(
+««' (
+table
+»» 
+:
+»» 
+$str
+»» '
+,
+»»' (
+	keyColumn
+…… 
+:
+…… 
+$str
+…… 
+,
+……  
+keyValue
+   
+:
+   
+new
+   
+Guid
+   "
+(
+  " #
+$str
+  # I
+)
+  I J
+)
+  J K
+;
+  K L
+migrationBuilder
+ÃÃ 
+.
+ÃÃ 
+
+DeleteData
+ÃÃ '
+(
+ÃÃ' (
+table
+ÕÕ 
+:
+ÕÕ 
+$str
+ÕÕ '
+,
+ÕÕ' (
+	keyColumn
+ŒŒ 
+:
+ŒŒ 
+$str
+ŒŒ 
+,
+ŒŒ  
+keyValue
+œœ 
+:
+œœ 
+new
+œœ 
+Guid
+œœ "
+(
+œœ" #
+$str
+œœ# I
+)
+œœI J
+)
+œœJ K
+;
+œœK L
+migrationBuilder
+—— 
+.
+—— 
+
+DeleteData
+—— '
+(
+——' (
+table
+““ 
+:
+““ 
+$str
+““ '
+,
+““' (
+	keyColumn
+”” 
+:
+”” 
+$str
+”” 
+,
+””  
+keyValue
+‘‘ 
+:
+‘‘ 
+new
+‘‘ 
+Guid
+‘‘ "
+(
+‘‘" #
+$str
+‘‘# I
+)
+‘‘I J
+)
+‘‘J K
+;
+‘‘K L
+migrationBuilder
+÷÷ 
+.
+÷÷ 
+
+DeleteData
+÷÷ '
+(
+÷÷' (
+table
+◊◊ 
+:
+◊◊ 
+$str
+◊◊ '
+,
+◊◊' (
+	keyColumn
+ÿÿ 
+:
+ÿÿ 
+$str
+ÿÿ 
+,
+ÿÿ  
+keyValue
+ŸŸ 
+:
+ŸŸ 
+new
+ŸŸ 
+Guid
+ŸŸ "
+(
+ŸŸ" #
+$str
+ŸŸ# I
+)
+ŸŸI J
+)
+ŸŸJ K
+;
+ŸŸK L
+migrationBuilder
+€€ 
+.
+€€ 
+
+DeleteData
+€€ '
+(
+€€' (
+table
+‹‹ 
+:
+‹‹ 
+$str
+‹‹ '
+,
+‹‹' (
+	keyColumn
+›› 
+:
+›› 
+$str
+›› 
+,
+››  
+keyValue
+ﬁﬁ 
+:
+ﬁﬁ 
+new
+ﬁﬁ 
+Guid
+ﬁﬁ "
+(
+ﬁﬁ" #
+$str
+ﬁﬁ# I
+)
+ﬁﬁI J
+)
+ﬁﬁJ K
+;
+ﬁﬁK L
+migrationBuilder
+‡‡ 
+.
+‡‡ 
+
+DeleteData
+‡‡ '
+(
+‡‡' (
+table
+·· 
+:
+·· 
+$str
+·· '
+,
+··' (
+	keyColumn
+‚‚ 
+:
+‚‚ 
+$str
+‚‚ 
+,
+‚‚  
+keyValue
+„„ 
+:
+„„ 
+new
+„„ 
+Guid
+„„ "
+(
+„„" #
+$str
+„„# I
+)
+„„I J
+)
+„„J K
+;
+„„K L
+migrationBuilder
+ÂÂ 
+.
+ÂÂ 
+
+DeleteData
+ÂÂ '
+(
+ÂÂ' (
+table
+ÊÊ 
+:
+ÊÊ 
+$str
+ÊÊ '
+,
+ÊÊ' (
+	keyColumn
+ÁÁ 
+:
+ÁÁ 
+$str
+ÁÁ 
+,
+ÁÁ  
+keyValue
+ËË 
+:
+ËË 
+new
+ËË 
+Guid
+ËË "
+(
+ËË" #
+$str
+ËË# I
+)
+ËËI J
+)
+ËËJ K
+;
+ËËK L
+migrationBuilder
+ÍÍ 
+.
+ÍÍ 
+
+DeleteData
+ÍÍ '
+(
+ÍÍ' (
+table
+ÎÎ 
+:
+ÎÎ 
+$str
+ÎÎ '
+,
+ÎÎ' (
+	keyColumn
+ÏÏ 
+:
+ÏÏ 
+$str
+ÏÏ 
+,
+ÏÏ  
+keyValue
+ÌÌ 
+:
+ÌÌ 
+new
+ÌÌ 
+Guid
+ÌÌ "
+(
+ÌÌ" #
+$str
+ÌÌ# I
+)
+ÌÌI J
+)
+ÌÌJ K
+;
+ÌÌK L
+migrationBuilder
+ÔÔ 
+.
+ÔÔ 
+
+UpdateData
+ÔÔ '
+(
+ÔÔ' (
+table
+ 
+:
+ 
+$str
+ $
+,
+$ %
+	keyColumn
+ÒÒ 
+:
+ÒÒ 
+$str
+ÒÒ 
+,
+ÒÒ  
+keyValue
+ÚÚ 
+:
+ÚÚ 
+$str
+ÚÚ +
+,
+ÚÚ+ ,
+columns
+ÛÛ 
+:
+ÛÛ 
+new
+ÛÛ 
+[
+ÛÛ 
+]
+ÛÛ 
+{
+ÛÛ  
+$str
+ÛÛ! 3
+,
+ÛÛ3 4
+$str
+ÛÛ5 A
+,
+ÛÛA B
+$str
+ÛÛC Q
+,
+ÛÛQ R
+$str
+ÛÛS b
+}
+ÛÛc d
+,
+ÛÛd e
+values
+ÙÙ 
+:
+ÙÙ 
+new
+ÙÙ 
+object
+ÙÙ "
+[
+ÙÙ" #
+]
+ÙÙ# $
+{
+ÙÙ% &
+$str
+ÙÙ' M
+,
+ÙÙM N
+new
+ÙÙO R
+DateTime
+ÙÙS [
+(
+ÙÙ[ \
+$num
+ÙÙ\ `
+,
+ÙÙ` a
+$num
+ÙÙb c
+,
+ÙÙc d
+$num
+ÙÙe g
+,
+ÙÙg h
+$num
+ÙÙi j
+,
+ÙÙj k
+$num
+ÙÙl n
+,
+ÙÙn o
+$num
+ÙÙp q
+,
+ÙÙq r
+$num
+ÙÙs v
+,
+ÙÙv w
+DateTimeKindÙÙx Ñ
+.ÙÙÑ Ö
+UtcÙÙÖ à
+)ÙÙà â
+.ÙÙâ ä
+AddTicksÙÙä í
+(ÙÙí ì
+$numÙÙì ó
+)ÙÙó ò
+,ÙÙò ô
+$strÙÙö 
+,ÙÙ Ò
+$strÙÙÚ ò
+}ÙÙô ö
+)ÙÙö õ
+;ÙÙõ ú
+migrationBuilder
+ˆˆ 
+.
+ˆˆ 
+
+InsertData
+ˆˆ '
+(
+ˆˆ' (
+table
+˜˜ 
+:
+˜˜ 
+$str
+˜˜ '
+,
+˜˜' (
+columns
+¯¯ 
+:
+¯¯ 
+new
+¯¯ 
+[
+¯¯ 
+]
+¯¯ 
+{
+¯¯  
+$str
+¯¯! %
+,
+¯¯% &
+$str
+¯¯' 4
+,
+¯¯4 5
+$str
+¯¯6 D
+,
+¯¯D E
+$str
+¯¯F P
+,
+¯¯P Q
+$str
+¯¯R ]
+,
+¯¯] ^
+$str
+¯¯_ l
+,
+¯¯l m
+$str
+¯¯n }
+,
+¯¯} ~
+$str¯¯ â
+,¯¯â ä
+$str¯¯ã †
+,¯¯† °
+$str¯¯¢ ±
+,¯¯± ≤
+$str¯¯≥ ¬
+,¯¯¬ √
+$str¯¯ƒ —
+,¯¯— “
+$str¯¯” ﬂ
+,¯¯ﬂ ‡
+$str¯¯· È
+,¯¯È Í
+$str¯¯Î ¯
+,¯¯¯ ˘
+$str¯¯˙ à
+,¯¯à â
+$str¯¯ä ï
+,¯¯ï ñ
+$str¯¯ó §
+}¯¯• ¶
+,¯¯¶ ß
+values
+˘˘ 
+:
+˘˘ 
+new
+˘˘ 
+object
+˘˘ "
+[
+˘˘" #
+,
+˘˘# $
+]
+˘˘$ %
+{
+˙˙ 
+{
+˚˚ 
+new
+˚˚ 
+Guid
+˚˚ 
+(
+˚˚ 
+$str
+˚˚ E
+)
+˚˚E F
+,
+˚˚F G
+$str˚˚H Ñ
+,˚˚Ñ Ö
+$str˚˚Ü ¿
+,˚˚¿ ¡
+$str˚˚¬ “
+,˚˚“ ”
+null˚˚‘ ÿ
+,˚˚ÿ Ÿ
+null˚˚⁄ ﬁ
+,˚˚ﬁ ﬂ
+$str˚˚‡ ë
+,˚˚ë í
+$str˚˚ì ú
+,˚˚ú ù
+$str˚˚û ∑
+,˚˚∑ ∏
+$str˚˚π ¡
+,˚˚¡ ¬
+$str˚˚√ Õ
+,˚˚Õ Œ
+$str˚˚œ Î
+,˚˚Î Ï
+$str˚˚Ì ˙
+,˚˚˙ ˚
+$num˚˚¸ ˝
+,˚˚˝ ˛
+$str˚˚ˇ ê
+,˚˚ê ë
+$str˚˚í °
+,˚˚° ¢
+null˚˚£ ß
+,˚˚ß ®
+null˚˚© ≠
+}˚˚Æ Ø
+,˚˚Ø ∞
+{
+¸¸ 
+new
+¸¸ 
+Guid
+¸¸ 
+(
+¸¸ 
+$str
+¸¸ E
+)
+¸¸E F
+,
+¸¸F G
+$str¸¸H ®
+,¸¸® ©
+$str¸¸™ ÿ
+,¸¸ÿ Ÿ
+$str¸¸⁄ ‰
+,¸¸‰ Â
+null¸¸Ê Í
+,¸¸Í Î
+null¸¸Ï 
+,¸¸ Ò
+$str¸¸Ú £
+,¸¸£ §
+$str¸¸• Æ
+,¸¸Æ Ø
+$str¸¸∞  
+,¸¸  À
+$str¸¸Ã Û
+,¸¸Û Ù
+$str¸¸ı ˇ
+,¸¸ˇ Ä
+$str¸¸Å ù
+,¸¸ù û
+$str¸¸ü ¨
+,¸¸¨ ≠
+$num¸¸Æ Ø
+,¸¸Ø ∞
+$str¸¸± ∆
+,¸¸∆ «
+$str¸¸» ÿ
+,¸¸ÿ Ÿ
+null¸¸⁄ ﬁ
+,¸¸ﬁ ﬂ
+null¸¸‡ ‰
+}¸¸Â Ê
+,¸¸Ê Á
+{
+˝˝ 
+new
+˝˝ 
+Guid
+˝˝ 
+(
+˝˝ 
+$str
+˝˝ E
+)
+˝˝E F
+,
+˝˝F G
+$str˝˝H è
+,˝˝è ê
+$str˝˝ë À
+,˝˝À Ã
+$str˝˝Õ ‰
+,˝˝‰ Â
+null˝˝Ê Í
+,˝˝Í Î
+null˝˝Ï 
+,˝˝ Ò
+$str˝˝Ú £
+,˝˝£ §
+$str˝˝• Æ
+,˝˝Æ Ø
+$str˝˝∞ …
+,˝˝…  
+$str˝˝À Ì
+,˝˝Ì Ó
+$str˝˝Ô ˚
+,˝˝˚ ¸
+$str˝˝˝ ô
+,˝˝ô ö
+$str˝˝õ ®
+,˝˝® ©
+$num˝˝™ ´
+,˝˝´ ¨
+$str˝˝≠ Õ
+,˝˝Õ Œ
+$str˝˝œ Ë
+,˝˝Ë È
+null˝˝Í Ó
+,˝˝Ó Ô
+null˝˝ Ù
+}˝˝ı ˆ
+,˝˝ˆ ˜
+{
+˛˛ 
+new
+˛˛ 
+Guid
+˛˛ 
+(
+˛˛ 
+$str
+˛˛ E
+)
+˛˛E F
+,
+˛˛F G
+$str˛˛H æ
+,˛˛æ ø
+$str˛˛¿ ù
+,˛˛ù û
+$str˛˛ü ©
+,˛˛© ™
+null˛˛´ Ø
+,˛˛Ø ∞
+null˛˛± µ
+,˛˛µ ∂
+$str˛˛∑ ˚
+,˛˛˚ ¸
+$str˛˛˝ Ü
+,˛˛Ü á
+$str˛˛à ≠
+,˛˛≠ Æ
+$str˛˛Ø ’
+,˛˛’ ÷
+$str˛˛◊ ·
+,˛˛· ‚
+$str˛˛„ ˇ
+,˛˛ˇ Ä
+$str˛˛Å é
+,˛˛é è
+$num˛˛ê ë
+,˛˛ë í
+$str˛˛ì ®
+,˛˛® ©
+$str˛˛™ ø
+,˛˛ø ¿
+null˛˛¡ ≈
+,˛˛≈ ∆
+null˛˛« À
+}˛˛Ã Õ
+,˛˛Õ Œ
+{
+ˇˇ 
+new
+ˇˇ 
+Guid
+ˇˇ 
+(
+ˇˇ 
+$str
+ˇˇ E
+)
+ˇˇE F
+,
+ˇˇF G
+$strˇˇH Ã
+,ˇˇÃ Õ
+$strˇˇŒ à
+,ˇˇà â
+$strˇˇä ö
+,ˇˇö õ
+nullˇˇú †
+,ˇˇ† °
+nullˇˇ¢ ¶
+,ˇˇ¶ ß
+$strˇˇ® Ÿ
+,ˇˇŸ ⁄
+$strˇˇ€ ‰
+,ˇˇ‰ Â
+$strˇˇÊ ˇ
+,ˇˇˇ Ä
+$strˇˇÅ â
+,ˇˇâ ä
+$strˇˇã ï
+,ˇˇï ñ
+$strˇˇó ≥
+,ˇˇ≥ ¥
+$strˇˇµ ¬
+,ˇˇ¬ √
+$numˇˇƒ ≈
+,ˇˇ≈ ∆
+$strˇˇ« ﬂ
+,ˇˇﬂ ‡
+$strˇˇ· ˆ
+,ˇˇˆ ˜
+nullˇˇ¯ ¸
+,ˇˇ¸ ˝
+nullˇˇ˛ Ç
+}ˇˇÉ Ñ
+,ˇˇÑ Ö
+{
+ÄÄ 
+new
+ÄÄ 
+Guid
+ÄÄ 
+(
+ÄÄ 
+$str
+ÄÄ E
+)
+ÄÄE F
+,
+ÄÄF G
+$strÄÄH ∞
+,ÄÄ∞ ±
+$strÄÄ≤ Ï
+,ÄÄÏ Ì
+$strÄÄÓ ˜
+,ÄÄ˜ ¯
+nullÄÄ˘ ˝
+,ÄÄ˝ ˛
+nullÄÄˇ É
+,ÄÄÉ Ñ
+$strÄÄÖ ∂
+,ÄÄ∂ ∑
+$strÄÄ∏ ¡
+,ÄÄ¡ ¬
+$strÄÄ√ ‹
+,ÄÄ‹ ›
+$strÄÄﬁ ˘
+,ÄÄ˘ ˙
+$strÄÄ˚ Ö
+,ÄÄÖ Ü
+$strÄÄá £
+,ÄÄ£ §
+$strÄÄ• ≤
+,ÄÄ≤ ≥
+$numÄÄ¥ µ
+,ÄÄµ ∂
+$strÄÄ∑ À
+,ÄÄÀ Ã
+$strÄÄÕ €
+,ÄÄ€ ‹
+nullÄÄ› ·
+,ÄÄ· ‚
+nullÄÄ„ Á
+}ÄÄË È
+,ÄÄÈ Í
+{
+ÅÅ 
+new
+ÅÅ 
+Guid
+ÅÅ 
+(
+ÅÅ 
+$str
+ÅÅ E
+)
+ÅÅE F
+,
+ÅÅF G
+$strÅÅH ë
+,ÅÅë í
+$strÅÅì Õ
+,ÅÅÕ Œ
+$strÅÅœ ·
+,ÅÅ· ‚
+nullÅÅ„ Á
+,ÅÅÁ Ë
+nullÅÅÈ Ì
+,ÅÅÌ Ó
+$strÅÅÔ †
+,ÅÅ† °
+$strÅÅ¢ ´
+,ÅÅ´ ¨
+$strÅÅ≠ ∆
+,ÅÅ∆ «
+$strÅÅ» Ê
+,ÅÅÊ Á
+$strÅÅË Ô
+,ÅÅÔ 
+$strÅÅÒ ç
+,ÅÅç é
+$strÅÅè ú
+,ÅÅú ù
+$numÅÅû ü
+,ÅÅü †
+$strÅÅ° ø
+,ÅÅø ¿
+$strÅÅ¡ Â
+,ÅÅÂ Ê
+nullÅÅÁ Î
+,ÅÅÎ Ï
+nullÅÅÌ Ò
+}ÅÅÚ Û
+,ÅÅÛ Ù
+{
+ÇÇ 
+new
+ÇÇ 
+Guid
+ÇÇ 
+(
+ÇÇ 
+$str
+ÇÇ E
+)
+ÇÇE F
+,
+ÇÇF G
+$str
+ÇÇH s
+,
+ÇÇs t
+$strÇÇu ô
+,ÇÇô ö
+$strÇÇõ •
+,ÇÇ• ¶
+nullÇÇß ´
+,ÇÇ´ ¨
+nullÇÇ≠ ±
+,ÇÇ± ≤
+$strÇÇ≥ ˘
+,ÇÇ˘ ˙
+$strÇÇ˚ Ñ
+,ÇÇÑ Ö
+$strÇÇÜ ü
+,ÇÇü †
+$strÇÇ° Œ
+,ÇÇŒ œ
+$strÇÇ– ‹
+,ÇÇ‹ ›
+$strÇÇﬁ ˙
+,ÇÇ˙ ˚
+$strÇÇ¸ â
+,ÇÇâ ä
+$numÇÇã å
+,ÇÇå ç
+$strÇÇé ª
+,ÇÇª º
+$strÇÇΩ ›
+,ÇÇ› ﬁ
+nullÇÇﬂ „
+,ÇÇ„ ‰
+nullÇÇÂ È
+}ÇÇÍ Î
+,ÇÇÎ Ï
+{
+ÉÉ 
+new
+ÉÉ 
+Guid
+ÉÉ 
+(
+ÉÉ 
+$str
+ÉÉ E
+)
+ÉÉE F
+,
+ÉÉF G
+$strÉÉH û
+,ÉÉû ü
+$strÉÉ† ≈
+,ÉÉ≈ ∆
+$strÉÉ« œ
+,ÉÉœ –
+nullÉÉ— ’
+,ÉÉ’ ÷
+nullÉÉ◊ €
+,ÉÉ€ ‹
+$strÉÉ› é
+,ÉÉé è
+$strÉÉê ô
+,ÉÉô ö
+$strÉÉõ µ
+,ÉÉµ ∂
+$strÉÉ∑ œ
+,ÉÉœ –
+$strÉÉ— €
+,ÉÉ€ ‹
+$strÉÉ› ˘
+,ÉÉ˘ ˙
+$strÉÉ˚ à
+,ÉÉà â
+$numÉÉä ã
+,ÉÉã å
+$strÉÉç ¢
+,ÉÉ¢ £
+$strÉÉ§ µ
+,ÉÉµ ∂
+nullÉÉ∑ ª
+,ÉÉª º
+nullÉÉΩ ¡
+}ÉÉ¬ √
+,ÉÉ√ ƒ
+{
+ÑÑ 
+new
+ÑÑ 
+Guid
+ÑÑ 
+(
+ÑÑ 
+$str
+ÑÑ E
+)
+ÑÑE F
+,
+ÑÑF G
+$strÑÑH è
+,ÑÑè ê
+$strÑÑë À
+,ÑÑÀ Ã
+$strÑÑÕ ‰
+,ÑÑ‰ Â
+nullÑÑÊ Í
+,ÑÑÍ Î
+nullÑÑÏ 
+,ÑÑ Ò
+$strÑÑÚ £
+,ÑÑ£ §
+$strÑÑ• Æ
+,ÑÑÆ Ø
+$strÑÑ∞ …
+,ÑÑ…  
+$strÑÑÀ Ò
+,ÑÑÒ Ú
+$strÑÑÛ ¸
+,ÑÑ¸ ˝
+$strÑÑ˛ ö
+,ÑÑö õ
+$strÑÑú ©
+,ÑÑ© ™
+$numÑÑ´ ¨
+,ÑÑ¨ ≠
+$strÑÑÆ Œ
+,ÑÑŒ œ
+$strÑÑ– Ë
+,ÑÑË È
+nullÑÑÍ Ó
+,ÑÑÓ Ô
+nullÑÑ Ù
+}ÑÑı ˆ
+,ÑÑˆ ˜
+{
+ÖÖ 
+new
+ÖÖ 
+Guid
+ÖÖ 
+(
+ÖÖ 
+$str
+ÖÖ E
+)
+ÖÖE F
+,
+ÖÖF G
+$strÖÖH ë
+,ÖÖë í
+$strÖÖì Õ
+,ÖÖÕ Œ
+$strÖÖœ ·
+,ÖÖ· ‚
+nullÖÖ„ Á
+,ÖÖÁ Ë
+nullÖÖÈ Ì
+,ÖÖÌ Ó
+$strÖÖÔ †
+,ÖÖ† °
+$strÖÖ¢ ´
+,ÖÖ´ ¨
+$strÖÖ≠ ∆
+,ÖÖ∆ «
+$strÖÖ» –
+,ÖÖ– —
+$strÖÖ“ ‹
+,ÖÖ‹ ›
+$strÖÖﬁ ˙
+,ÖÖ˙ ˚
+$strÖÖ¸ â
+,ÖÖâ ä
+$numÖÖã å
+,ÖÖå ç
+$strÖÖé π
+,ÖÖπ ∫
+$strÖÖª “
+,ÖÖ“ ”
+nullÖÖ‘ ÿ
+,ÖÖÿ Ÿ
+nullÖÖ⁄ ﬁ
+}ÖÖﬂ ‡
+,ÖÖ‡ ·
+{
+ÜÜ 
+new
+ÜÜ 
+Guid
+ÜÜ 
+(
+ÜÜ 
+$str
+ÜÜ E
+)
+ÜÜE F
+,
+ÜÜF G
+$strÜÜH è
+,ÜÜè ê
+$strÜÜë ∫
+,ÜÜ∫ ª
+$strÜÜº  
+,ÜÜ  À
+nullÜÜÃ –
+,ÜÜ– —
+nullÜÜ“ ÷
+,ÜÜ÷ ◊
+$strÜÜÿ â
+,ÜÜâ ä
+$strÜÜã î
+,ÜÜî ï
+$strÜÜñ ¢
+,ÜÜ¢ £
+$strÜÜ§ ¥
+,ÜÜ¥ µ
+$strÜÜ∂ ¿
+,ÜÜ¿ ¡
+$strÜÜ¬ ÿ
+,ÜÜÿ Ÿ
+$strÜÜ⁄ Ê
+,ÜÜÊ Á
+$numÜÜË È
+,ÜÜÈ Í
+$strÜÜÎ ¸
+,ÜÜ¸ ˝
+$strÜÜ˛ ì
+,ÜÜì î
+nullÜÜï ô
+,ÜÜô ö
+nullÜÜõ ü
+}ÜÜ† °
+,ÜÜ° ¢
+{
+áá 
+new
+áá 
+Guid
+áá 
+(
+áá 
+$str
+áá E
+)
+ááE F
+,
+ááF G
+$strááH ”
+,áá” ‘
+$stráá’ è
+,ááè ê
+$strááë ô
+,ááô ö
+nullááõ ü
+,ááü †
+nulláá° •
+,áá• ¶
+$strááß ÿ
+,ááÿ Ÿ
+$stráá⁄ „
+,áá„ ‰
+$strááÂ °
+,áá° ¢
+$stráá£ ∑
+,áá∑ ∏
+$strááπ √
+,áá√ ƒ
+$stráá≈ ·
+,áá· ‚
+$stráá„ 
+,áá Ò
+$numááÚ Û
+,ááÛ Ù
+$strááı ñ
+,ááñ ó
+$strááò π
+,ááπ ∫
+nullááª ø
+,ááø ¿
+nulláá¡ ≈
+}áá∆ «
+}
+àà 
+)
+àà 
+;
+àà 
+}
+ââ 	
+}
+ää 
+}ãã ¿•
+ÖD:\FPT\Semester 6\Project_Cursus\Backend_Cursus\Cursus.LMS\Cursus.LMS.DataAccess\Migrations\20240730035005_AddColumnSendClearEmail.cs
+	namespace 	
+Cursus
+ 
+. 
+LMS 
+. 
+
+DataAccess 
+.  
+
+Migrations  *
+{		 
+public 
+
+partial 
+class #
+AddColumnSendClearEmail 0
+:1 2
+	Migration3 <
+{ 
+	protected 
+override 
+void 
+Up  "
+(" #
+MigrationBuilder# 3
+migrationBuilder4 D
+)D E
+{ 	
+migrationBuilder 
+. 
+
+DeleteData '
+(' (
+table 
+: 
+$str '
+,' (
+	keyColumn 
+: 
+$str 
+,  
+keyValue 
+: 
+new 
+Guid "
+(" #
+$str# I
+)I J
+)J K
+;K L
+migrationBuilder 
+. 
+
+DeleteData '
+(' (
+table 
+: 
+$str '
+,' (
+	keyColumn 
+: 
+$str 
+,  
+keyValue 
+: 
+new 
+Guid "
+(" #
+$str# I
+)I J
+)J K
+;K L
+migrationBuilder 
+. 
+
+DeleteData '
+(' (
+table 
+: 
+$str '
+,' (
+	keyColumn 
+: 
+$str 
+,  
+keyValue 
+: 
+new 
+Guid "
+(" #
+$str# I
+)I J
+)J K
+;K L
+migrationBuilder 
+. 
+
+DeleteData '
+(' (
+table   
+:   
+$str   '
+,  ' (
+	keyColumn!! 
+:!! 
+$str!! 
+,!!  
+keyValue"" 
+:"" 
+new"" 
+Guid"" "
+(""" #
+$str""# I
+)""I J
+)""J K
+;""K L
+migrationBuilder$$ 
+.$$ 
+
+DeleteData$$ '
+($$' (
+table%% 
+:%% 
+$str%% '
+,%%' (
+	keyColumn&& 
+:&& 
+$str&& 
+,&&  
+keyValue'' 
+:'' 
+new'' 
+Guid'' "
+(''" #
+$str''# I
+)''I J
+)''J K
+;''K L
+migrationBuilder)) 
+.)) 
+
+DeleteData)) '
+())' (
+table** 
+:** 
+$str** '
+,**' (
+	keyColumn++ 
+:++ 
+$str++ 
+,++  
+keyValue,, 
+:,, 
+new,, 
+Guid,, "
+(,," #
+$str,,# I
+),,I J
+),,J K
+;,,K L
+migrationBuilder.. 
+... 
+
+DeleteData.. '
+(..' (
+table// 
+:// 
+$str// '
+,//' (
+	keyColumn00 
+:00 
+$str00 
+,00  
+keyValue11 
+:11 
+new11 
+Guid11 "
+(11" #
+$str11# I
+)11I J
+)11J K
+;11K L
+migrationBuilder33 
+.33 
+
+DeleteData33 '
+(33' (
+table44 
+:44 
+$str44 '
+,44' (
+	keyColumn55 
+:55 
+$str55 
+,55  
+keyValue66 
+:66 
+new66 
+Guid66 "
+(66" #
+$str66# I
+)66I J
+)66J K
+;66K L
+migrationBuilder88 
+.88 
+
+DeleteData88 '
+(88' (
+table99 
+:99 
+$str99 '
+,99' (
+	keyColumn:: 
+::: 
+$str:: 
+,::  
+keyValue;; 
+:;; 
+new;; 
+Guid;; "
+(;;" #
+$str;;# I
+);;I J
+);;J K
+;;;K L
+migrationBuilder== 
+.== 
+
+DeleteData== '
+(==' (
+table>> 
+:>> 
+$str>> '
+,>>' (
+	keyColumn?? 
+:?? 
+$str?? 
+,??  
+keyValue@@ 
+:@@ 
+new@@ 
+Guid@@ "
+(@@" #
+$str@@# I
+)@@I J
+)@@J K
+;@@K L
+migrationBuilderBB 
+.BB 
+
+DeleteDataBB '
+(BB' (
+tableCC 
+:CC 
+$strCC '
+,CC' (
+	keyColumnDD 
+:DD 
+$strDD 
+,DD  
+keyValueEE 
+:EE 
+newEE 
+GuidEE "
+(EE" #
+$strEE# I
+)EEI J
+)EEJ K
+;EEK L
+migrationBuilderGG 
+.GG 
+
+DeleteDataGG '
+(GG' (
+tableHH 
+:HH 
+$strHH '
+,HH' (
+	keyColumnII 
+:II 
+$strII 
+,II  
+keyValueJJ 
+:JJ 
+newJJ 
+GuidJJ "
+(JJ" #
+$strJJ# I
+)JJI J
+)JJJ K
+;JJK L
+migrationBuilderLL 
+.LL 
+
+DeleteDataLL '
+(LL' (
+tableMM 
+:MM 
+$strMM '
+,MM' (
+	keyColumnNN 
+:NN 
+$strNN 
+,NN  
+keyValueOO 
+:OO 
+newOO 
+GuidOO "
+(OO" #
+$strOO# I
+)OOI J
+)OOJ K
+;OOK L
+migrationBuilderQQ 
+.QQ 
+	AddColumnQQ &
+<QQ& '
+boolQQ' +
+>QQ+ ,
+(QQ, -
+nameRR 
+:RR 
+$strRR &
+,RR& '
+tableSS 
+:SS 
+$strSS $
+,SS$ %
+typeTT 
+:TT 
+$strTT 
+,TT 
+nullableUU 
+:UU 
+falseUU 
+,UU  
+defaultValueVV 
+:VV 
+falseVV #
+)VV# $
+;VV$ %
+migrationBuilderXX 
+.XX 
+
+UpdateDataXX '
+(XX' (
+tableYY 
+:YY 
+$strYY $
+,YY$ %
+	keyColumnZZ 
+:ZZ 
+$strZZ 
+,ZZ  
+keyValue[[ 
+:[[ 
+$str[[ +
+,[[+ ,
+columns\\ 
+:\\ 
+new\\ 
+[\\ 
+]\\ 
+{\\  
+$str\\! 3
+,\\3 4
+$str\\5 A
+,\\A B
+$str\\C Q
+,\\Q R
+$str\\S b
+,\\b c
+$str\\d t
+}\\u v
+,\\v w
+values]] 
+:]] 
+new]] 
+object]] "
+[]]" #
+]]]# $
+{]]% &
+$str]]' M
+,]]M N
+new]]O R
+DateTime]]S [
+(]][ \
+$num]]\ `
+,]]` a
+$num]]b c
+,]]c d
+$num]]e g
+,]]g h
+$num]]i j
+,]]j k
+$num]]l n
+,]]n o
+$num]]p q
+,]]q r
+$num]]s v
+,]]v w
+DateTimeKind	]]x Ñ
+.
+]]Ñ Ö
+Utc
+]]Ö à
+)
+]]à â
+.
+]]â ä
+AddTicks
+]]ä í
+(
+]]í ì
+$num
+]]ì ó
+)
+]]ó ò
+,
+]]ò ô
+$str
+]]ö 
+,
+]] Ò
+$str
+]]Ú ò
+,
+]]ò ô
+false
+]]ö ü
+}
+]]† °
+)
+]]° ¢
+;
+]]¢ £
+migrationBuilder__ 
+.__ 
+
+InsertData__ '
+(__' (
+table`` 
+:`` 
+$str`` '
+,``' (
+columnsaa 
+:aa 
+newaa 
+[aa 
+]aa 
+{aa  
+$straa! %
+,aa% &
+$straa' 4
+,aa4 5
+$straa6 D
+,aaD E
+$straaF P
+,aaP Q
+$straaR ]
+,aa] ^
+$straa_ l
+,aal m
+$straan }
+,aa} ~
+$str	aa â
+,
+aaâ ä
+$str
+aaã †
+,
+aa† °
+$str
+aa¢ ±
+,
+aa± ≤
+$str
+aa≥ ¬
+,
+aa¬ √
+$str
+aaƒ —
+,
+aa— “
+$str
+aa” ﬂ
+,
+aaﬂ ‡
+$str
+aa· È
+,
+aaÈ Í
+$str
+aaÎ ¯
+,
+aa¯ ˘
+$str
+aa˙ à
+,
+aaà â
+$str
+aaä ï
+,
+aaï ñ
+$str
+aaó §
+}
+aa• ¶
+,
+aa¶ ß
+valuesbb 
+:bb 
+newbb 
+objectbb "
+[bb" #
+,bb# $
+]bb$ %
+{cc 
+{dd 
+newdd 
+Guiddd 
+(dd 
+$strdd E
+)ddE F
+,ddF G
+$str	ddH Ñ
+,
+ddÑ Ö
+$str
+ddÜ ¿
+,
+dd¿ ¡
+$str
+dd¬ “
+,
+dd“ ”
+null
+dd‘ ÿ
+,
+ddÿ Ÿ
+null
+dd⁄ ﬁ
+,
+ddﬁ ﬂ
+$str
+dd‡ ë
+,
+ddë í
+$str
+ddì ú
+,
+ddú ù
+$str
+ddû ∑
+,
+dd∑ ∏
+$str
+ddπ ¡
+,
+dd¡ ¬
+$str
+dd√ Õ
+,
+ddÕ Œ
+$str
+ddœ Î
+,
+ddÎ Ï
+$str
+ddÌ ˙
+,
+dd˙ ˚
+$num
+dd¸ ˝
+,
+dd˝ ˛
+$str
+ddˇ ê
+,
+ddê ë
+$str
+ddí °
+,
+dd° ¢
+null
+dd£ ß
+,
+ddß ®
+null
+dd© ≠
+}
+ddÆ Ø
+,
+ddØ ∞
+{ee 
+newee 
+Guidee 
+(ee 
+$stree E
+)eeE F
+,eeF G
+$str	eeH ®
+,
+ee® ©
+$str
+ee™ ÿ
+,
+eeÿ Ÿ
+$str
+ee⁄ ‰
+,
+ee‰ Â
+null
+eeÊ Í
+,
+eeÍ Î
+null
+eeÏ 
+,
+ee Ò
+$str
+eeÚ £
+,
+ee£ §
+$str
+ee• Æ
+,
+eeÆ Ø
+$str
+ee∞  
+,
+ee  À
+$str
+eeÃ Û
+,
+eeÛ Ù
+$str
+eeı ˇ
+,
+eeˇ Ä
+$str
+eeÅ ù
+,
+eeù û
+$str
+eeü ¨
+,
+ee¨ ≠
+$num
+eeÆ Ø
+,
+eeØ ∞
+$str
+ee± ∆
+,
+ee∆ «
+$str
+ee» ÿ
+,
+eeÿ Ÿ
+null
+ee⁄ ﬁ
+,
+eeﬁ ﬂ
+null
+ee‡ ‰
+}
+eeÂ Ê
+,
+eeÊ Á
+{ff 
+newff 
+Guidff 
+(ff 
+$strff E
+)ffE F
+,ffF G
+$str	ffH è
+,
+ffè ê
+$str
+ffë À
+,
+ffÀ Ã
+$str
+ffÕ ‰
+,
+ff‰ Â
+null
+ffÊ Í
+,
+ffÍ Î
+null
+ffÏ 
+,
+ff Ò
+$str
+ffÚ £
+,
+ff£ §
+$str
+ff• Æ
+,
+ffÆ Ø
+$str
+ff∞ …
+,
+ff…  
+$str
+ffÀ Ì
+,
+ffÌ Ó
+$str
+ffÔ ˚
+,
+ff˚ ¸
+$str
+ff˝ ô
+,
+ffô ö
+$str
+ffõ ®
+,
+ff® ©
+$num
+ff™ ´
+,
+ff´ ¨
+$str
+ff≠ Õ
+,
+ffÕ Œ
+$str
+ffœ Ë
+,
+ffË È
+null
+ffÍ Ó
+,
+ffÓ Ô
+null
+ff Ù
+}
+ffı ˆ
+,
+ffˆ ˜
+{gg 
+newgg 
+Guidgg 
+(gg 
+$strgg E
+)ggE F
+,ggF G
+$str	ggH æ
+,
+ggæ ø
+$str
+gg¿ ù
+,
+ggù û
+$str
+ggü ©
+,
+gg© ™
+null
+gg´ Ø
+,
+ggØ ∞
+null
+gg± µ
+,
+ggµ ∂
+$str
+gg∑ ˚
+,
+gg˚ ¸
+$str
+gg˝ Ü
+,
+ggÜ á
+$str
+ggà ≠
+,
+gg≠ Æ
+$str
+ggØ ’
+,
+gg’ ÷
+$str
+gg◊ ·
+,
+gg· ‚
+$str
+gg„ ˇ
+,
+ggˇ Ä
+$str
+ggÅ é
+,
+ggé è
+$num
+ggê ë
+,
+ggë í
+$str
+ggì ®
+,
+gg® ©
+$str
+gg™ ø
+,
+ggø ¿
+null
+gg¡ ≈
+,
+gg≈ ∆
+null
+gg« À
+}
+ggÃ Õ
+,
+ggÕ Œ
+{hh 
+newhh 
+Guidhh 
+(hh 
+$strhh E
+)hhE F
+,hhF G
+$str	hhH Ã
+,
+hhÃ Õ
+$str
+hhŒ à
+,
+hhà â
+$str
+hhä ö
+,
+hhö õ
+null
+hhú †
+,
+hh† °
+null
+hh¢ ¶
+,
+hh¶ ß
+$str
+hh® Ÿ
+,
+hhŸ ⁄
+$str
+hh€ ‰
+,
+hh‰ Â
+$str
+hhÊ ˇ
+,
+hhˇ Ä
+$str
+hhÅ â
+,
+hhâ ä
+$str
+hhã ï
+,
+hhï ñ
+$str
+hhó ≥
+,
+hh≥ ¥
+$str
+hhµ ¬
+,
+hh¬ √
+$num
+hhƒ ≈
+,
+hh≈ ∆
+$str
+hh« ﬂ
+,
+hhﬂ ‡
+$str
+hh· ˆ
+,
+hhˆ ˜
+null
+hh¯ ¸
+,
+hh¸ ˝
+null
+hh˛ Ç
+}
+hhÉ Ñ
+,
+hhÑ Ö
+{ii 
+newii 
+Guidii 
+(ii 
+$strii E
+)iiE F
+,iiF G
+$str	iiH ∞
+,
+ii∞ ±
+$str
+ii≤ Ï
+,
+iiÏ Ì
+$str
+iiÓ ˜
+,
+ii˜ ¯
+null
+ii˘ ˝
+,
+ii˝ ˛
+null
+iiˇ É
+,
+iiÉ Ñ
+$str
+iiÖ ∂
+,
+ii∂ ∑
+$str
+ii∏ ¡
+,
+ii¡ ¬
+$str
+ii√ ‹
+,
+ii‹ ›
+$str
+iiﬁ ˘
+,
+ii˘ ˙
+$str
+ii˚ Ö
+,
+iiÖ Ü
+$str
+iiá £
+,
+ii£ §
+$str
+ii• ≤
+,
+ii≤ ≥
+$num
+ii¥ µ
+,
+iiµ ∂
+$str
+ii∑ À
+,
+iiÀ Ã
+$str
+iiÕ €
+,
+ii€ ‹
+null
+ii› ·
+,
+ii· ‚
+null
+ii„ Á
+}
+iiË È
+,
+iiÈ Í
+{jj 
+newjj 
+Guidjj 
+(jj 
+$strjj E
+)jjE F
+,jjF G
+$str	jjH ë
+,
+jjë í
+$str
+jjì Õ
+,
+jjÕ Œ
+$str
+jjœ ·
+,
+jj· ‚
+null
+jj„ Á
+,
+jjÁ Ë
+null
+jjÈ Ì
+,
+jjÌ Ó
+$str
+jjÔ †
+,
+jj† °
+$str
+jj¢ ´
+,
+jj´ ¨
+$str
+jj≠ ∆
+,
+jj∆ «
+$str
+jj» Ê
+,
+jjÊ Á
+$str
+jjË Ô
+,
+jjÔ 
+$str
+jjÒ ç
+,
+jjç é
+$str
+jjè ú
+,
+jjú ù
+$num
+jjû ü
+,
+jjü †
+$str
+jj° ø
+,
+jjø ¿
+$str
+jj¡ Â
+,
+jjÂ Ê
+null
+jjÁ Î
+,
+jjÎ Ï
+null
+jjÌ Ò
+}
+jjÚ Û
+,
+jjÛ Ù
+{kk 
+newkk 
+Guidkk 
+(kk 
+$strkk E
+)kkE F
+,kkF G
+$strkkH s
+,kks t
+$str	kku ô
+,
+kkô ö
+$str
+kkõ •
+,
+kk• ¶
+null
+kkß ´
+,
+kk´ ¨
+null
+kk≠ ±
+,
+kk± ≤
+$str
+kk≥ ˘
+,
+kk˘ ˙
+$str
+kk˚ Ñ
+,
+kkÑ Ö
+$str
+kkÜ ü
+,
+kkü †
+$str
+kk° Œ
+,
+kkŒ œ
+$str
+kk– ‹
+,
+kk‹ ›
+$str
+kkﬁ ˙
+,
+kk˙ ˚
+$str
+kk¸ â
+,
+kkâ ä
+$num
+kkã å
+,
+kkå ç
+$str
+kké ª
+,
+kkª º
+$str
+kkΩ ›
+,
+kk› ﬁ
+null
+kkﬂ „
+,
+kk„ ‰
+null
+kkÂ È
+}
+kkÍ Î
+,
+kkÎ Ï
+{ll 
+newll 
+Guidll 
+(ll 
+$strll E
+)llE F
+,llF G
+$str	llH û
+,
+llû ü
+$str
+ll† ≈
+,
+ll≈ ∆
+$str
+ll« œ
+,
+llœ –
+null
+ll— ’
+,
+ll’ ÷
+null
+ll◊ €
+,
+ll€ ‹
+$str
+ll› é
+,
+llé è
+$str
+llê ô
+,
+llô ö
+$str
+llõ µ
+,
+llµ ∂
+$str
+ll∑ œ
+,
+llœ –
+$str
+ll— €
+,
+ll€ ‹
+$str
+ll› ˘
+,
+ll˘ ˙
+$str
+ll˚ à
+,
+llà â
+$num
+llä ã
+,
+llã å
+$str
+llç ¢
+,
+ll¢ £
+$str
+ll§ µ
+,
+llµ ∂
+null
+ll∑ ª
+,
+llª º
+null
+llΩ ¡
+}
+ll¬ √
+,
+ll√ ƒ
+{mm 
+newmm 
+Guidmm 
+(mm 
+$strmm E
+)mmE F
+,mmF G
+$str	mmH è
+,
+mmè ê
+$str
+mmë À
+,
+mmÀ Ã
+$str
+mmÕ ‰
+,
+mm‰ Â
+null
+mmÊ Í
+,
+mmÍ Î
+null
+mmÏ 
+,
+mm Ò
+$str
+mmÚ £
+,
+mm£ §
+$str
+mm• Æ
+,
+mmÆ Ø
+$str
+mm∞ …
+,
+mm…  
+$str
+mmÀ Ò
+,
+mmÒ Ú
+$str
+mmÛ ¸
+,
+mm¸ ˝
+$str
+mm˛ ö
+,
+mmö õ
+$str
+mmú ©
+,
+mm© ™
+$num
+mm´ ¨
+,
+mm¨ ≠
+$str
+mmÆ Œ
+,
+mmŒ œ
+$str
+mm– Ë
+,
+mmË È
+null
+mmÍ Ó
+,
+mmÓ Ô
+null
+mm Ù
+}
+mmı ˆ
+,
+mmˆ ˜
+{nn 
+newnn 
+Guidnn 
+(nn 
+$strnn E
+)nnE F
+,nnF G
+$str	nnH ë
+,
+nnë í
+$str
+nnì Õ
+,
+nnÕ Œ
+$str
+nnœ ·
+,
+nn· ‚
+null
+nn„ Á
+,
+nnÁ Ë
+null
+nnÈ Ì
+,
+nnÌ Ó
+$str
+nnÔ †
+,
+nn† °
+$str
+nn¢ ´
+,
+nn´ ¨
+$str
+nn≠ ∆
+,
+nn∆ «
+$str
+nn» –
+,
+nn– —
+$str
+nn“ ‹
+,
+nn‹ ›
+$str
+nnﬁ ˙
+,
+nn˙ ˚
+$str
+nn¸ â
+,
+nnâ ä
+$num
+nnã å
+,
+nnå ç
+$str
+nné π
+,
+nnπ ∫
+$str
+nnª “
+,
+nn“ ”
+null
+nn‘ ÿ
+,
+nnÿ Ÿ
+null
+nn⁄ ﬁ
+}
+nnﬂ ‡
+,
+nn‡ ·
+{oo 
+newoo 
+Guidoo 
+(oo 
+$stroo E
+)ooE F
+,ooF G
+$str	ooH è
+,
+ooè ê
+$str
+ooë ∫
+,
+oo∫ ª
+$str
+ooº  
+,
+oo  À
+null
+ooÃ –
+,
+oo– —
+null
+oo“ ÷
+,
+oo÷ ◊
+$str
+ooÿ â
+,
+ooâ ä
+$str
+ooã î
+,
+ooî ï
+$str
+ooñ ¢
+,
+oo¢ £
+$str
+oo§ ¥
+,
+oo¥ µ
+$str
+oo∂ ¿
+,
+oo¿ ¡
+$str
+oo¬ ÿ
+,
+ooÿ Ÿ
+$str
+oo⁄ Ê
+,
+ooÊ Á
+$num
+ooË È
+,
+ooÈ Í
+$str
+ooÎ ¸
+,
+oo¸ ˝
+$str
+oo˛ ì
+,
+ooì î
+null
+ooï ô
+,
+ooô ö
+null
+ooõ ü
+}
+oo† °
+,
+oo° ¢
+{pp 
+newpp 
+Guidpp 
+(pp 
+$strpp E
+)ppE F
+,ppF G
+$str	ppH ”
+,
+pp” ‘
+$str
+pp’ è
+,
+ppè ê
+$str
+ppë ô
+,
+ppô ö
+null
+ppõ ü
+,
+ppü †
+null
+pp° •
+,
+pp• ¶
+$str
+ppß ÿ
+,
+ppÿ Ÿ
+$str
+pp⁄ „
+,
+pp„ ‰
+$str
+ppÂ °
+,
+pp° ¢
+$str
+pp£ ∑
+,
+pp∑ ∏
+$str
+ppπ √
+,
+pp√ ƒ
+$str
+pp≈ ·
+,
+pp· ‚
+$str
+pp„ 
+,
+pp Ò
+$num
+ppÚ Û
+,
+ppÛ Ù
+$str
+ppı ñ
+,
+ppñ ó
+$str
+ppò π
+,
+ppπ ∫
+null
+ppª ø
+,
+ppø ¿
+null
+pp¡ ≈
+}
+pp∆ «
+}qq 
+)qq 
+;qq 
+}rr 	
+	protecteduu 
+overrideuu 
+voiduu 
+Downuu  $
+(uu$ %
+MigrationBuilderuu% 5
+migrationBuilderuu6 F
+)uuF G
+{vv 	
+migrationBuilderww 
+.ww 
+
+DeleteDataww '
+(ww' (
+tablexx 
+:xx 
+$strxx '
+,xx' (
+	keyColumnyy 
+:yy 
+$stryy 
+,yy  
+keyValuezz 
+:zz 
+newzz 
+Guidzz "
+(zz" #
+$strzz# I
+)zzI J
+)zzJ K
+;zzK L
+migrationBuilder|| 
+.|| 
+
+DeleteData|| '
+(||' (
+table}} 
+:}} 
+$str}} '
+,}}' (
+	keyColumn~~ 
+:~~ 
+$str~~ 
+,~~  
+keyValue 
+: 
+new 
+Guid "
+(" #
+$str# I
+)I J
+)J K
+;K L
+migrationBuilder
+ÅÅ 
+.
+ÅÅ 
+
+DeleteData
+ÅÅ '
+(
+ÅÅ' (
+table
+ÇÇ 
+:
+ÇÇ 
+$str
+ÇÇ '
+,
+ÇÇ' (
+	keyColumn
+ÉÉ 
+:
+ÉÉ 
+$str
+ÉÉ 
+,
+ÉÉ  
+keyValue
+ÑÑ 
+:
+ÑÑ 
+new
+ÑÑ 
+Guid
+ÑÑ "
+(
+ÑÑ" #
+$str
+ÑÑ# I
+)
+ÑÑI J
+)
+ÑÑJ K
+;
+ÑÑK L
+migrationBuilder
+ÜÜ 
+.
+ÜÜ 
+
+DeleteData
+ÜÜ '
+(
+ÜÜ' (
+table
+áá 
+:
+áá 
+$str
+áá '
+,
+áá' (
+	keyColumn
+àà 
+:
+àà 
+$str
+àà 
+,
+àà  
+keyValue
+ââ 
+:
+ââ 
+new
+ââ 
+Guid
+ââ "
+(
+ââ" #
+$str
+ââ# I
+)
+ââI J
+)
+ââJ K
+;
+ââK L
+migrationBuilder
+ãã 
+.
+ãã 
+
+DeleteData
+ãã '
+(
+ãã' (
+table
+åå 
+:
+åå 
+$str
+åå '
+,
+åå' (
+	keyColumn
+çç 
+:
+çç 
+$str
+çç 
+,
+çç  
+keyValue
+éé 
+:
+éé 
+new
+éé 
+Guid
+éé "
+(
+éé" #
+$str
+éé# I
+)
+ééI J
+)
+ééJ K
+;
+ééK L
+migrationBuilder
+êê 
+.
+êê 
+
+DeleteData
+êê '
+(
+êê' (
+table
+ëë 
+:
+ëë 
+$str
+ëë '
+,
+ëë' (
+	keyColumn
+íí 
+:
+íí 
+$str
+íí 
+,
+íí  
+keyValue
+ìì 
+:
+ìì 
+new
+ìì 
+Guid
+ìì "
+(
+ìì" #
+$str
+ìì# I
+)
+ììI J
+)
+ììJ K
+;
+ììK L
+migrationBuilder
+ïï 
+.
+ïï 
+
+DeleteData
+ïï '
+(
+ïï' (
+table
+ññ 
+:
+ññ 
+$str
+ññ '
+,
+ññ' (
+	keyColumn
+óó 
+:
+óó 
+$str
+óó 
+,
+óó  
+keyValue
+òò 
+:
+òò 
+new
+òò 
+Guid
+òò "
+(
+òò" #
+$str
+òò# I
+)
+òòI J
+)
+òòJ K
+;
+òòK L
+migrationBuilder
+öö 
+.
+öö 
+
+DeleteData
+öö '
+(
+öö' (
+table
+õõ 
+:
+õõ 
+$str
+õõ '
+,
+õõ' (
+	keyColumn
+úú 
+:
+úú 
+$str
+úú 
+,
+úú  
+keyValue
+ùù 
+:
+ùù 
+new
+ùù 
+Guid
+ùù "
+(
+ùù" #
+$str
+ùù# I
+)
+ùùI J
+)
+ùùJ K
+;
+ùùK L
+migrationBuilder
+üü 
+.
+üü 
+
+DeleteData
+üü '
+(
+üü' (
+table
+†† 
+:
+†† 
+$str
+†† '
+,
+††' (
+	keyColumn
+°° 
+:
+°° 
+$str
+°° 
+,
+°°  
+keyValue
+¢¢ 
+:
+¢¢ 
+new
+¢¢ 
+Guid
+¢¢ "
+(
+¢¢" #
+$str
+¢¢# I
+)
+¢¢I J
+)
+¢¢J K
+;
+¢¢K L
+migrationBuilder
+§§ 
+.
+§§ 
+
+DeleteData
+§§ '
+(
+§§' (
+table
+•• 
+:
+•• 
+$str
+•• '
+,
+••' (
+	keyColumn
+¶¶ 
+:
+¶¶ 
+$str
+¶¶ 
+,
+¶¶  
+keyValue
+ßß 
+:
+ßß 
+new
+ßß 
+Guid
+ßß "
+(
+ßß" #
+$str
+ßß# I
+)
+ßßI J
+)
+ßßJ K
+;
+ßßK L
+migrationBuilder
+©© 
+.
+©© 
+
+DeleteData
+©© '
+(
+©©' (
+table
+™™ 
+:
+™™ 
+$str
+™™ '
+,
+™™' (
+	keyColumn
+´´ 
+:
+´´ 
+$str
+´´ 
+,
+´´  
+keyValue
+¨¨ 
+:
+¨¨ 
+new
+¨¨ 
+Guid
+¨¨ "
+(
+¨¨" #
+$str
+¨¨# I
+)
+¨¨I J
+)
+¨¨J K
+;
+¨¨K L
+migrationBuilder
+ÆÆ 
+.
+ÆÆ 
+
+DeleteData
+ÆÆ '
+(
+ÆÆ' (
+table
+ØØ 
+:
+ØØ 
+$str
+ØØ '
+,
+ØØ' (
+	keyColumn
+∞∞ 
+:
+∞∞ 
+$str
+∞∞ 
+,
+∞∞  
+keyValue
+±± 
+:
+±± 
+new
+±± 
+Guid
+±± "
+(
+±±" #
+$str
+±±# I
+)
+±±I J
+)
+±±J K
+;
+±±K L
+migrationBuilder
+≥≥ 
+.
+≥≥ 
+
+DeleteData
+≥≥ '
+(
+≥≥' (
+table
+¥¥ 
+:
+¥¥ 
+$str
+¥¥ '
+,
+¥¥' (
+	keyColumn
+µµ 
+:
+µµ 
+$str
+µµ 
+,
+µµ  
+keyValue
+∂∂ 
+:
+∂∂ 
+new
+∂∂ 
+Guid
+∂∂ "
+(
+∂∂" #
+$str
+∂∂# I
+)
+∂∂I J
+)
+∂∂J K
+;
+∂∂K L
+migrationBuilder
+∏∏ 
+.
+∏∏ 
+
+DropColumn
+∏∏ '
+(
+∏∏' (
+name
+ππ 
+:
+ππ 
+$str
+ππ &
+,
+ππ& '
+table
+∫∫ 
+:
+∫∫ 
+$str
+∫∫ $
+)
+∫∫$ %
+;
+∫∫% &
+migrationBuilder
+ºº 
+.
+ºº 
+
+UpdateData
+ºº '
+(
+ºº' (
+table
+ΩΩ 
+:
+ΩΩ 
+$str
+ΩΩ $
+,
+ΩΩ$ %
+	keyColumn
+ææ 
+:
+ææ 
+$str
+ææ 
+,
+ææ  
+keyValue
+øø 
+:
+øø 
+$str
+øø +
+,
+øø+ ,
+columns
+¿¿ 
+:
+¿¿ 
+new
+¿¿ 
+[
+¿¿ 
+]
+¿¿ 
+{
+¿¿  
+$str
+¿¿! 3
+,
+¿¿3 4
+$str
+¿¿5 A
+,
+¿¿A B
+$str
+¿¿C Q
+,
+¿¿Q R
+$str
+¿¿S b
+}
+¿¿c d
+,
+¿¿d e
+values
+¡¡ 
+:
+¡¡ 
+new
+¡¡ 
+object
+¡¡ "
+[
+¡¡" #
+]
+¡¡# $
+{
+¡¡% &
+$str
+¡¡' M
+,
+¡¡M N
+new
+¡¡O R
+DateTime
+¡¡S [
+(
+¡¡[ \
+$num
+¡¡\ `
+,
+¡¡` a
+$num
+¡¡b c
+,
+¡¡c d
+$num
+¡¡e g
+,
+¡¡g h
+$num
+¡¡i k
+,
+¡¡k l
+$num
+¡¡m n
+,
+¡¡n o
+$num
+¡¡p r
+,
+¡¡r s
+$num
+¡¡t w
+,
+¡¡w x
+DateTimeKind¡¡y Ö
+.¡¡Ö Ü
+Utc¡¡Ü â
+)¡¡â ä
+.¡¡ä ã
+AddTicks¡¡ã ì
+(¡¡ì î
+$num¡¡î ò
+)¡¡ò ô
+,¡¡ô ö
+$str¡¡õ Ò
+,¡¡Ò Ú
+$str¡¡Û ô
+}¡¡ö õ
+)¡¡õ ú
+;¡¡ú ù
+migrationBuilder
+√√ 
+.
+√√ 
+
+InsertData
+√√ '
+(
+√√' (
+table
+ƒƒ 
+:
+ƒƒ 
+$str
+ƒƒ '
+,
+ƒƒ' (
+columns
+≈≈ 
+:
+≈≈ 
+new
+≈≈ 
+[
+≈≈ 
+]
+≈≈ 
+{
+≈≈  
+$str
+≈≈! %
+,
+≈≈% &
+$str
+≈≈' 4
+,
+≈≈4 5
+$str
+≈≈6 D
+,
+≈≈D E
+$str
+≈≈F P
+,
+≈≈P Q
+$str
+≈≈R ]
+,
+≈≈] ^
+$str
+≈≈_ l
+,
+≈≈l m
+$str
+≈≈n }
+,
+≈≈} ~
+$str≈≈ â
+,≈≈â ä
+$str≈≈ã †
+,≈≈† °
+$str≈≈¢ ±
+,≈≈± ≤
+$str≈≈≥ ¬
+,≈≈¬ √
+$str≈≈ƒ —
+,≈≈— “
+$str≈≈” ﬂ
+,≈≈ﬂ ‡
+$str≈≈· È
+,≈≈È Í
+$str≈≈Î ¯
+,≈≈¯ ˘
+$str≈≈˙ à
+,≈≈à â
+$str≈≈ä ï
+,≈≈ï ñ
+$str≈≈ó §
+}≈≈• ¶
+,≈≈¶ ß
+values
+∆∆ 
+:
+∆∆ 
+new
+∆∆ 
+object
+∆∆ "
+[
+∆∆" #
+,
+∆∆# $
+]
+∆∆$ %
+{
+«« 
+{
+»» 
+new
+»» 
+Guid
+»» 
+(
+»» 
+$str
+»» E
+)
+»»E F
+,
+»»F G
+$str»»H è
+,»»è ê
+$str»»ë ∫
+,»»∫ ª
+$str»»º  
+,»»  À
+null»»Ã –
+,»»– —
+null»»“ ÷
+,»»÷ ◊
+$str»»ÿ â
+,»»â ä
+$str»»ã î
+,»»î ï
+$str»»ñ ¢
+,»»¢ £
+$str»»§ ¥
+,»»¥ µ
+$str»»∂ ¿
+,»»¿ ¡
+$str»»¬ ÿ
+,»»ÿ Ÿ
+$str»»⁄ Ê
+,»»Ê Á
+$num»»Ë È
+,»»È Í
+$str»»Î ¸
+,»»¸ ˝
+$str»»˛ ì
+,»»ì î
+null»»ï ô
+,»»ô ö
+null»»õ ü
+}»»† °
+,»»° ¢
+{
+…… 
+new
+…… 
+Guid
+…… 
+(
+…… 
+$str
+…… E
+)
+……E F
+,
+……F G
+$str……H ∞
+,……∞ ±
+$str……≤ Ï
+,……Ï Ì
+$str……Ó ˜
+,……˜ ¯
+null……˘ ˝
+,……˝ ˛
+null……ˇ É
+,……É Ñ
+$str……Ö ∂
+,……∂ ∑
+$str……∏ ¡
+,……¡ ¬
+$str……√ ‹
+,……‹ ›
+$str……ﬁ ˘
+,……˘ ˙
+$str……˚ Ö
+,……Ö Ü
+$str……á £
+,……£ §
+$str……• ≤
+,……≤ ≥
+$num……¥ µ
+,……µ ∂
+$str……∑ À
+,……À Ã
+$str……Õ €
+,……€ ‹
+null……› ·
+,……· ‚
+null……„ Á
+}……Ë È
+,……È Í
+{
+   
+new
+   
+Guid
+   
+(
+   
+$str
+   E
+)
+  E F
+,
+  F G
+$str  H æ
+,  æ ø
+$str  ¿ ù
+,  ù û
+$str  ü ©
+,  © ™
+null  ´ Ø
+,  Ø ∞
+null  ± µ
+,  µ ∂
+$str  ∑ ˚
+,  ˚ ¸
+$str  ˝ Ü
+,  Ü á
+$str  à ≠
+,  ≠ Æ
+$str  Ø ’
+,  ’ ÷
+$str  ◊ ·
+,  · ‚
+$str  „ ˇ
+,  ˇ Ä
+$str  Å é
+,  é è
+$num  ê ë
+,  ë í
+$str  ì ®
+,  ® ©
+$str  ™ ø
+,  ø ¿
+null  ¡ ≈
+,  ≈ ∆
+null  « À
+}  Ã Õ
+,  Õ Œ
+{
+ÀÀ 
+new
+ÀÀ 
+Guid
+ÀÀ 
+(
+ÀÀ 
+$str
+ÀÀ E
+)
+ÀÀE F
+,
+ÀÀF G
+$strÀÀH ë
+,ÀÀë í
+$strÀÀì Õ
+,ÀÀÕ Œ
+$strÀÀœ ·
+,ÀÀ· ‚
+nullÀÀ„ Á
+,ÀÀÁ Ë
+nullÀÀÈ Ì
+,ÀÀÌ Ó
+$strÀÀÔ †
+,ÀÀ† °
+$strÀÀ¢ ´
+,ÀÀ´ ¨
+$strÀÀ≠ ∆
+,ÀÀ∆ «
+$strÀÀ» –
+,ÀÀ– —
+$strÀÀ“ ‹
+,ÀÀ‹ ›
+$strÀÀﬁ ˙
+,ÀÀ˙ ˚
+$strÀÀ¸ â
+,ÀÀâ ä
+$numÀÀã å
+,ÀÀå ç
+$strÀÀé π
+,ÀÀπ ∫
+$strÀÀª “
+,ÀÀ“ ”
+nullÀÀ‘ ÿ
+,ÀÀÿ Ÿ
+nullÀÀ⁄ ﬁ
+}ÀÀﬂ ‡
+,ÀÀ‡ ·
+{
+ÃÃ 
+new
+ÃÃ 
+Guid
+ÃÃ 
+(
+ÃÃ 
+$str
+ÃÃ E
+)
+ÃÃE F
+,
+ÃÃF G
+$strÃÃH ”
+,ÃÃ” ‘
+$strÃÃ’ è
+,ÃÃè ê
+$strÃÃë ô
+,ÃÃô ö
+nullÃÃõ ü
+,ÃÃü †
+nullÃÃ° •
+,ÃÃ• ¶
+$strÃÃß ÿ
+,ÃÃÿ Ÿ
+$strÃÃ⁄ „
+,ÃÃ„ ‰
+$strÃÃÂ °
+,ÃÃ° ¢
+$strÃÃ£ ∑
+,ÃÃ∑ ∏
+$strÃÃπ √
+,ÃÃ√ ƒ
+$strÃÃ≈ ·
+,ÃÃ· ‚
+$strÃÃ„ 
+,ÃÃ Ò
+$numÃÃÚ Û
+,ÃÃÛ Ù
+$strÃÃı ñ
+,ÃÃñ ó
+$strÃÃò π
+,ÃÃπ ∫
+nullÃÃª ø
+,ÃÃø ¿
+nullÃÃ¡ ≈
+}ÃÃ∆ «
+,ÃÃ« »
+{
+ÕÕ 
+new
+ÕÕ 
+Guid
+ÕÕ 
+(
+ÕÕ 
+$str
+ÕÕ E
+)
+ÕÕE F
+,
+ÕÕF G
+$strÕÕH ë
+,ÕÕë í
+$strÕÕì Õ
+,ÕÕÕ Œ
+$strÕÕœ ·
+,ÕÕ· ‚
+nullÕÕ„ Á
+,ÕÕÁ Ë
+nullÕÕÈ Ì
+,ÕÕÌ Ó
+$strÕÕÔ †
+,ÕÕ† °
+$strÕÕ¢ ´
+,ÕÕ´ ¨
+$strÕÕ≠ ∆
+,ÕÕ∆ «
+$strÕÕ» Ê
+,ÕÕÊ Á
+$strÕÕË Ô
+,ÕÕÔ 
+$strÕÕÒ ç
+,ÕÕç é
+$strÕÕè ú
+,ÕÕú ù
+$numÕÕû ü
+,ÕÕü †
+$strÕÕ° ø
+,ÕÕø ¿
+$strÕÕ¡ Â
+,ÕÕÂ Ê
+nullÕÕÁ Î
+,ÕÕÎ Ï
+nullÕÕÌ Ò
+}ÕÕÚ Û
+,ÕÕÛ Ù
+{
+ŒŒ 
+new
+ŒŒ 
+Guid
+ŒŒ 
+(
+ŒŒ 
+$str
+ŒŒ E
+)
+ŒŒE F
+,
+ŒŒF G
+$str
+ŒŒH s
+,
+ŒŒs t
+$strŒŒu ô
+,ŒŒô ö
+$strŒŒõ •
+,ŒŒ• ¶
+nullŒŒß ´
+,ŒŒ´ ¨
+nullŒŒ≠ ±
+,ŒŒ± ≤
+$strŒŒ≥ ˘
+,ŒŒ˘ ˙
+$strŒŒ˚ Ñ
+,ŒŒÑ Ö
+$strŒŒÜ ü
+,ŒŒü †
+$strŒŒ° Œ
+,ŒŒŒ œ
+$strŒŒ– ‹
+,ŒŒ‹ ›
+$strŒŒﬁ ˙
+,ŒŒ˙ ˚
+$strŒŒ¸ â
+,ŒŒâ ä
+$numŒŒã å
+,ŒŒå ç
+$strŒŒé ª
+,ŒŒª º
+$strŒŒΩ ›
+,ŒŒ› ﬁ
+nullŒŒﬂ „
+,ŒŒ„ ‰
+nullŒŒÂ È
+}ŒŒÍ Î
+,ŒŒÎ Ï
+{
+œœ 
+new
+œœ 
+Guid
+œœ 
+(
+œœ 
+$str
+œœ E
+)
+œœE F
+,
+œœF G
+$strœœH è
+,œœè ê
+$strœœë À
+,œœÀ Ã
+$strœœÕ ‰
+,œœ‰ Â
+nullœœÊ Í
+,œœÍ Î
+nullœœÏ 
+,œœ Ò
+$strœœÚ £
+,œœ£ §
+$strœœ• Æ
+,œœÆ Ø
+$strœœ∞ …
+,œœ…  
+$strœœÀ Ì
+,œœÌ Ó
+$strœœÔ ˚
+,œœ˚ ¸
+$strœœ˝ ô
+,œœô ö
+$strœœõ ®
+,œœ® ©
+$numœœ™ ´
+,œœ´ ¨
+$strœœ≠ Õ
+,œœÕ Œ
+$strœœœ Ë
+,œœË È
+nullœœÍ Ó
+,œœÓ Ô
+nullœœ Ù
+}œœı ˆ
+,œœˆ ˜
+{
+–– 
+new
+–– 
+Guid
+–– 
+(
+–– 
+$str
+–– E
+)
+––E F
+,
+––F G
+$str––H è
+,––è ê
+$str––ë À
+,––À Ã
+$str––Õ ‰
+,––‰ Â
+null––Ê Í
+,––Í Î
+null––Ï 
+,–– Ò
+$str––Ú £
+,––£ §
+$str––• Æ
+,––Æ Ø
+$str––∞ …
+,––…  
+$str––À Ò
+,––Ò Ú
+$str––Û ¸
+,––¸ ˝
+$str––˛ ö
+,––ö õ
+$str––ú ©
+,––© ™
+$num––´ ¨
+,––¨ ≠
+$str––Æ Œ
+,––Œ œ
+$str––– Ë
+,––Ë È
+null––Í Ó
+,––Ó Ô
+null–– Ù
+}––ı ˆ
+,––ˆ ˜
+{
+—— 
+new
+—— 
+Guid
+—— 
+(
+—— 
+$str
+—— E
+)
+——E F
+,
+——F G
+$str——H Ã
+,——Ã Õ
+$str——Œ à
+,——à â
+$str——ä ö
+,——ö õ
+null——ú †
+,——† °
+null——¢ ¶
+,——¶ ß
+$str——® Ÿ
+,——Ÿ ⁄
+$str——€ ‰
+,——‰ Â
+$str——Ê ˇ
+,——ˇ Ä
+$str——Å â
+,——â ä
+$str——ã ï
+,——ï ñ
+$str——ó ≥
+,——≥ ¥
+$str——µ ¬
+,——¬ √
+$num——ƒ ≈
+,——≈ ∆
+$str——« ﬂ
+,——ﬂ ‡
+$str——· ˆ
+,——ˆ ˜
+null——¯ ¸
+,——¸ ˝
+null——˛ Ç
+}——É Ñ
+,——Ñ Ö
+{
+““ 
+new
+““ 
+Guid
+““ 
+(
+““ 
+$str
+““ E
+)
+““E F
+,
+““F G
+$str““H û
+,““û ü
+$str““† ≈
+,““≈ ∆
+$str““« œ
+,““œ –
+null““— ’
+,““’ ÷
+null““◊ €
+,““€ ‹
+$str““› é
+,““é è
+$str““ê ô
+,““ô ö
+$str““õ µ
+,““µ ∂
+$str““∑ œ
+,““œ –
+$str““— €
+,““€ ‹
+$str““› ˘
+,““˘ ˙
+$str““˚ à
+,““à â
+$num““ä ã
+,““ã å
+$str““ç ¢
+,““¢ £
+$str““§ µ
+,““µ ∂
+null““∑ ª
+,““ª º
+null““Ω ¡
+}““¬ √
+,““√ ƒ
+{
+”” 
+new
+”” 
+Guid
+”” 
+(
+”” 
+$str
+”” E
+)
+””E F
+,
+””F G
+$str””H ®
+,””® ©
+$str””™ ÿ
+,””ÿ Ÿ
+$str””⁄ ‰
+,””‰ Â
+null””Ê Í
+,””Í Î
+null””Ï 
+,”” Ò
+$str””Ú £
+,””£ §
+$str””• Æ
+,””Æ Ø
+$str””∞  
+,””  À
+$str””Ã Û
+,””Û Ù
+$str””ı ˇ
+,””ˇ Ä
+$str””Å ù
+,””ù û
+$str””ü ¨
+,””¨ ≠
+$num””Æ Ø
+,””Ø ∞
+$str””± ∆
+,””∆ «
+$str””» ÿ
+,””ÿ Ÿ
+null””⁄ ﬁ
+,””ﬁ ﬂ
+null””‡ ‰
+}””Â Ê
+,””Ê Á
+{
+‘‘ 
+new
+‘‘ 
+Guid
+‘‘ 
+(
+‘‘ 
+$str
+‘‘ E
+)
+‘‘E F
+,
+‘‘F G
+$str‘‘H Ñ
+,‘‘Ñ Ö
+$str‘‘Ü ¿
+,‘‘¿ ¡
+$str‘‘¬ “
+,‘‘“ ”
+null‘‘‘ ÿ
+,‘‘ÿ Ÿ
+null‘‘⁄ ﬁ
+,‘‘ﬁ ﬂ
+$str‘‘‡ ë
+,‘‘ë í
+$str‘‘ì ú
+,‘‘ú ù
+$str‘‘û ∑
+,‘‘∑ ∏
+$str‘‘π ¡
+,‘‘¡ ¬
+$str‘‘√ Õ
+,‘‘Õ Œ
+$str‘‘œ Î
+,‘‘Î Ï
+$str‘‘Ì ˙
+,‘‘˙ ˚
+$num‘‘¸ ˝
+,‘‘˝ ˛
+$str‘‘ˇ ê
+,‘‘ê ë
+$str‘‘í °
+,‘‘° ¢
+null‘‘£ ß
+,‘‘ß ®
+null‘‘© ≠
+}‘‘Æ Ø
+}
+’’ 
+)
+’’ 
+;
+’’ 
+}
+÷÷ 	
+}
+◊◊ 
+}ÿÿ É•
+ãD:\FPT\Semester 6\Project_Cursus\Backend_Cursus\Cursus.LMS\Cursus.LMS.DataAccess\Migrations\20240729110102_AddLastLoginTimeIntoTableUser.cs
+	namespace 	
+Cursus
+ 
+. 
+LMS 
+. 
+
+DataAccess 
+.  
+
+Migrations  *
+{		 
+public 
+
+partial 
+class )
+AddLastLoginTimeIntoTableUser 6
+:7 8
+	Migration9 B
+{ 
+	protected 
+override 
+void 
+Up  "
+(" #
+MigrationBuilder# 3
+migrationBuilder4 D
+)D E
+{ 	
+migrationBuilder 
+. 
+
+DeleteData '
+(' (
+table 
+: 
+$str '
+,' (
+	keyColumn 
+: 
+$str 
+,  
+keyValue 
+: 
+new 
+Guid "
+(" #
+$str# I
+)I J
+)J K
+;K L
+migrationBuilder 
+. 
+
+DeleteData '
+(' (
+table 
+: 
+$str '
+,' (
+	keyColumn 
+: 
+$str 
+,  
+keyValue 
+: 
+new 
+Guid "
+(" #
+$str# I
+)I J
+)J K
+;K L
+migrationBuilder 
+. 
+
+DeleteData '
+(' (
+table 
+: 
+$str '
+,' (
+	keyColumn 
+: 
+$str 
+,  
+keyValue 
+: 
+new 
+Guid "
+(" #
+$str# I
+)I J
+)J K
+;K L
+migrationBuilder 
+. 
+
+DeleteData '
+(' (
+table   
+:   
+$str   '
+,  ' (
+	keyColumn!! 
+:!! 
+$str!! 
+,!!  
+keyValue"" 
+:"" 
+new"" 
+Guid"" "
+(""" #
+$str""# I
+)""I J
+)""J K
+;""K L
+migrationBuilder$$ 
+.$$ 
+
+DeleteData$$ '
+($$' (
+table%% 
+:%% 
+$str%% '
+,%%' (
+	keyColumn&& 
+:&& 
+$str&& 
+,&&  
+keyValue'' 
+:'' 
+new'' 
+Guid'' "
+(''" #
+$str''# I
+)''I J
+)''J K
+;''K L
+migrationBuilder)) 
+.)) 
+
+DeleteData)) '
+())' (
+table** 
+:** 
+$str** '
+,**' (
+	keyColumn++ 
+:++ 
+$str++ 
+,++  
+keyValue,, 
+:,, 
+new,, 
+Guid,, "
+(,," #
+$str,,# I
+),,I J
+),,J K
+;,,K L
+migrationBuilder.. 
+... 
+
+DeleteData.. '
+(..' (
+table// 
+:// 
+$str// '
+,//' (
+	keyColumn00 
+:00 
+$str00 
+,00  
+keyValue11 
+:11 
+new11 
+Guid11 "
+(11" #
+$str11# I
+)11I J
+)11J K
+;11K L
+migrationBuilder33 
+.33 
+
+DeleteData33 '
+(33' (
+table44 
+:44 
+$str44 '
+,44' (
+	keyColumn55 
+:55 
+$str55 
+,55  
+keyValue66 
+:66 
+new66 
+Guid66 "
+(66" #
+$str66# I
+)66I J
+)66J K
+;66K L
+migrationBuilder88 
+.88 
+
+DeleteData88 '
+(88' (
+table99 
+:99 
+$str99 '
+,99' (
+	keyColumn:: 
+::: 
+$str:: 
+,::  
+keyValue;; 
+:;; 
+new;; 
+Guid;; "
+(;;" #
+$str;;# I
+);;I J
+);;J K
+;;;K L
+migrationBuilder== 
+.== 
+
+DeleteData== '
+(==' (
+table>> 
+:>> 
+$str>> '
+,>>' (
+	keyColumn?? 
+:?? 
+$str?? 
+,??  
+keyValue@@ 
+:@@ 
+new@@ 
+Guid@@ "
+(@@" #
+$str@@# I
+)@@I J
+)@@J K
+;@@K L
+migrationBuilderBB 
+.BB 
+
+DeleteDataBB '
+(BB' (
+tableCC 
+:CC 
+$strCC '
+,CC' (
+	keyColumnDD 
+:DD 
+$strDD 
+,DD  
+keyValueEE 
+:EE 
+newEE 
+GuidEE "
+(EE" #
+$strEE# I
+)EEI J
+)EEJ K
+;EEK L
+migrationBuilderGG 
+.GG 
+
+DeleteDataGG '
+(GG' (
+tableHH 
+:HH 
+$strHH '
+,HH' (
+	keyColumnII 
+:II 
+$strII 
+,II  
+keyValueJJ 
+:JJ 
+newJJ 
+GuidJJ "
+(JJ" #
+$strJJ# I
+)JJI J
+)JJJ K
+;JJK L
+migrationBuilderLL 
+.LL 
+
+DeleteDataLL '
+(LL' (
+tableMM 
+:MM 
+$strMM '
+,MM' (
+	keyColumnNN 
+:NN 
+$strNN 
+,NN  
+keyValueOO 
+:OO 
+newOO 
+GuidOO "
+(OO" #
+$strOO# I
+)OOI J
+)OOJ K
+;OOK L
+migrationBuilderQQ 
+.QQ 
+	AddColumnQQ &
+<QQ& '
+DateTimeQQ' /
+>QQ/ 0
+(QQ0 1
+nameRR 
+:RR 
+$strRR %
+,RR% &
+tableSS 
+:SS 
+$strSS $
+,SS$ %
+typeTT 
+:TT 
+$strTT !
+,TT! "
+nullableUU 
+:UU 
+trueUU 
+)UU 
+;UU  
+migrationBuilderWW 
+.WW 
+
+UpdateDataWW '
+(WW' (
+tableXX 
+:XX 
+$strXX $
+,XX$ %
+	keyColumnYY 
+:YY 
+$strYY 
+,YY  
+keyValueZZ 
+:ZZ 
+$strZZ +
+,ZZ+ ,
+columns[[ 
+:[[ 
+new[[ 
+[[[ 
+][[ 
+{[[  
+$str[[! 3
+,[[3 4
+$str[[5 A
+,[[A B
+$str[[C R
+,[[R S
+$str[[T b
+,[[b c
+$str[[d s
+}[[t u
+,[[u v
+values\\ 
+:\\ 
+new\\ 
+object\\ "
+[\\" #
+]\\# $
+{\\% &
+$str\\' M
+,\\M N
+new\\O R
+DateTime\\S [
+(\\[ \
+$num\\\ `
+,\\` a
+$num\\b c
+,\\c d
+$num\\e g
+,\\g h
+$num\\i k
+,\\k l
+$num\\m n
+,\\n o
+$num\\p r
+,\\r s
+$num\\t w
+,\\w x
+DateTimeKind	\\y Ö
+.
+\\Ö Ü
+Utc
+\\Ü â
+)
+\\â ä
+.
+\\ä ã
+AddTicks
+\\ã ì
+(
+\\ì î
+$num
+\\î ò
+)
+\\ò ô
+,
+\\ô ö
+null
+\\õ ü
+,
+\\ü †
+$str
+\\° ˜
+,
+\\˜ ¯
+$str
+\\˘ ü
+}
+\\† °
+)
+\\° ¢
+;
+\\¢ £
+migrationBuilder^^ 
+.^^ 
+
+InsertData^^ '
+(^^' (
+table__ 
+:__ 
+$str__ '
+,__' (
+columns`` 
+:`` 
+new`` 
+[`` 
+]`` 
+{``  
+$str``! %
+,``% &
+$str``' 4
+,``4 5
+$str``6 D
+,``D E
+$str``F P
+,``P Q
+$str``R ]
+,``] ^
+$str``_ l
+,``l m
+$str``n }
+,``} ~
+$str	`` â
+,
+``â ä
+$str
+``ã †
+,
+``† °
+$str
+``¢ ±
+,
+``± ≤
+$str
+``≥ ¬
+,
+``¬ √
+$str
+``ƒ —
+,
+``— “
+$str
+``” ﬂ
+,
+``ﬂ ‡
+$str
+``· È
+,
+``È Í
+$str
+``Î ¯
+,
+``¯ ˘
+$str
+``˙ à
+,
+``à â
+$str
+``ä ï
+,
+``ï ñ
+$str
+``ó §
+}
+``• ¶
+,
+``¶ ß
+valuesaa 
+:aa 
+newaa 
+objectaa "
+[aa" #
+,aa# $
+]aa$ %
+{bb 
+{cc 
+newcc 
+Guidcc 
+(cc 
+$strcc E
+)ccE F
+,ccF G
+$str	ccH è
+,
+ccè ê
+$str
+ccë ∫
+,
+cc∫ ª
+$str
+ccº  
+,
+cc  À
+null
+ccÃ –
+,
+cc– —
+null
+cc“ ÷
+,
+cc÷ ◊
+$str
+ccÿ â
+,
+ccâ ä
+$str
+ccã î
+,
+ccî ï
+$str
+ccñ ¢
+,
+cc¢ £
+$str
+cc§ ¥
+,
+cc¥ µ
+$str
+cc∂ ¿
+,
+cc¿ ¡
+$str
+cc¬ ÿ
+,
+ccÿ Ÿ
+$str
+cc⁄ Ê
+,
+ccÊ Á
+$num
+ccË È
+,
+ccÈ Í
+$str
+ccÎ ¸
+,
+cc¸ ˝
+$str
+cc˛ ì
+,
+ccì î
+null
+ccï ô
+,
+ccô ö
+null
+ccõ ü
+}
+cc† °
+,
+cc° ¢
+{dd 
+newdd 
+Guiddd 
+(dd 
+$strdd E
+)ddE F
+,ddF G
+$str	ddH ∞
+,
+dd∞ ±
+$str
+dd≤ Ï
+,
+ddÏ Ì
+$str
+ddÓ ˜
+,
+dd˜ ¯
+null
+dd˘ ˝
+,
+dd˝ ˛
+null
+ddˇ É
+,
+ddÉ Ñ
+$str
+ddÖ ∂
+,
+dd∂ ∑
+$str
+dd∏ ¡
+,
+dd¡ ¬
+$str
+dd√ ‹
+,
+dd‹ ›
+$str
+ddﬁ ˘
+,
+dd˘ ˙
+$str
+dd˚ Ö
+,
+ddÖ Ü
+$str
+ddá £
+,
+dd£ §
+$str
+dd• ≤
+,
+dd≤ ≥
+$num
+dd¥ µ
+,
+ddµ ∂
+$str
+dd∑ À
+,
+ddÀ Ã
+$str
+ddÕ €
+,
+dd€ ‹
+null
+dd› ·
+,
+dd· ‚
+null
+dd„ Á
+}
+ddË È
+,
+ddÈ Í
+{ee 
+newee 
+Guidee 
+(ee 
+$stree E
+)eeE F
+,eeF G
+$str	eeH æ
+,
+eeæ ø
+$str
+ee¿ ù
+,
+eeù û
+$str
+eeü ©
+,
+ee© ™
+null
+ee´ Ø
+,
+eeØ ∞
+null
+ee± µ
+,
+eeµ ∂
+$str
+ee∑ ˚
+,
+ee˚ ¸
+$str
+ee˝ Ü
+,
+eeÜ á
+$str
+eeà ≠
+,
+ee≠ Æ
+$str
+eeØ ’
+,
+ee’ ÷
+$str
+ee◊ ·
+,
+ee· ‚
+$str
+ee„ ˇ
+,
+eeˇ Ä
+$str
+eeÅ é
+,
+eeé è
+$num
+eeê ë
+,
+eeë í
+$str
+eeì ®
+,
+ee® ©
+$str
+ee™ ø
+,
+eeø ¿
+null
+ee¡ ≈
+,
+ee≈ ∆
+null
+ee« À
+}
+eeÃ Õ
+,
+eeÕ Œ
+{ff 
+newff 
+Guidff 
+(ff 
+$strff E
+)ffE F
+,ffF G
+$str	ffH ë
+,
+ffë í
+$str
+ffì Õ
+,
+ffÕ Œ
+$str
+ffœ ·
+,
+ff· ‚
+null
+ff„ Á
+,
+ffÁ Ë
+null
+ffÈ Ì
+,
+ffÌ Ó
+$str
+ffÔ †
+,
+ff† °
+$str
+ff¢ ´
+,
+ff´ ¨
+$str
+ff≠ ∆
+,
+ff∆ «
+$str
+ff» –
+,
+ff– —
+$str
+ff“ ‹
+,
+ff‹ ›
+$str
+ffﬁ ˙
+,
+ff˙ ˚
+$str
+ff¸ â
+,
+ffâ ä
+$num
+ffã å
+,
+ffå ç
+$str
+ffé π
+,
+ffπ ∫
+$str
+ffª “
+,
+ff“ ”
+null
+ff‘ ÿ
+,
+ffÿ Ÿ
+null
+ff⁄ ﬁ
+}
+ffﬂ ‡
+,
+ff‡ ·
+{gg 
+newgg 
+Guidgg 
+(gg 
+$strgg E
+)ggE F
+,ggF G
+$str	ggH ”
+,
+gg” ‘
+$str
+gg’ è
+,
+ggè ê
+$str
+ggë ô
+,
+ggô ö
+null
+ggõ ü
+,
+ggü †
+null
+gg° •
+,
+gg• ¶
+$str
+ggß ÿ
+,
+ggÿ Ÿ
+$str
+gg⁄ „
+,
+gg„ ‰
+$str
+ggÂ °
+,
+gg° ¢
+$str
+gg£ ∑
+,
+gg∑ ∏
+$str
+ggπ √
+,
+gg√ ƒ
+$str
+gg≈ ·
+,
+gg· ‚
+$str
+gg„ 
+,
+gg Ò
+$num
+ggÚ Û
+,
+ggÛ Ù
+$str
+ggı ñ
+,
+ggñ ó
+$str
+ggò π
+,
+ggπ ∫
+null
+ggª ø
+,
+ggø ¿
+null
+gg¡ ≈
+}
+gg∆ «
+,
+gg« »
+{hh 
+newhh 
+Guidhh 
+(hh 
+$strhh E
+)hhE F
+,hhF G
+$str	hhH ë
+,
+hhë í
+$str
+hhì Õ
+,
+hhÕ Œ
+$str
+hhœ ·
+,
+hh· ‚
+null
+hh„ Á
+,
+hhÁ Ë
+null
+hhÈ Ì
+,
+hhÌ Ó
+$str
+hhÔ †
+,
+hh† °
+$str
+hh¢ ´
+,
+hh´ ¨
+$str
+hh≠ ∆
+,
+hh∆ «
+$str
+hh» Ê
+,
+hhÊ Á
+$str
+hhË Ô
+,
+hhÔ 
+$str
+hhÒ ç
+,
+hhç é
+$str
+hhè ú
+,
+hhú ù
+$num
+hhû ü
+,
+hhü †
+$str
+hh° ø
+,
+hhø ¿
+$str
+hh¡ Â
+,
+hhÂ Ê
+null
+hhÁ Î
+,
+hhÎ Ï
+null
+hhÌ Ò
+}
+hhÚ Û
+,
+hhÛ Ù
+{ii 
+newii 
+Guidii 
+(ii 
+$strii E
+)iiE F
+,iiF G
+$striiH s
+,iis t
+$str	iiu ô
+,
+iiô ö
+$str
+iiõ •
+,
+ii• ¶
+null
+iiß ´
+,
+ii´ ¨
+null
+ii≠ ±
+,
+ii± ≤
+$str
+ii≥ ˘
+,
+ii˘ ˙
+$str
+ii˚ Ñ
+,
+iiÑ Ö
+$str
+iiÜ ü
+,
+iiü †
+$str
+ii° Œ
+,
+iiŒ œ
+$str
+ii– ‹
+,
+ii‹ ›
+$str
+iiﬁ ˙
+,
+ii˙ ˚
+$str
+ii¸ â
+,
+iiâ ä
+$num
+iiã å
+,
+iiå ç
+$str
+iié ª
+,
+iiª º
+$str
+iiΩ ›
+,
+ii› ﬁ
+null
+iiﬂ „
+,
+ii„ ‰
+null
+iiÂ È
+}
+iiÍ Î
+,
+iiÎ Ï
+{jj 
+newjj 
+Guidjj 
+(jj 
+$strjj E
+)jjE F
+,jjF G
+$str	jjH è
+,
+jjè ê
+$str
+jjë À
+,
+jjÀ Ã
+$str
+jjÕ ‰
+,
+jj‰ Â
+null
+jjÊ Í
+,
+jjÍ Î
+null
+jjÏ 
+,
+jj Ò
+$str
+jjÚ £
+,
+jj£ §
+$str
+jj• Æ
+,
+jjÆ Ø
+$str
+jj∞ …
+,
+jj…  
+$str
+jjÀ Ì
+,
+jjÌ Ó
+$str
+jjÔ ˚
+,
+jj˚ ¸
+$str
+jj˝ ô
+,
+jjô ö
+$str
+jjõ ®
+,
+jj® ©
+$num
+jj™ ´
+,
+jj´ ¨
+$str
+jj≠ Õ
+,
+jjÕ Œ
+$str
+jjœ Ë
+,
+jjË È
+null
+jjÍ Ó
+,
+jjÓ Ô
+null
+jj Ù
+}
+jjı ˆ
+,
+jjˆ ˜
+{kk 
+newkk 
+Guidkk 
+(kk 
+$strkk E
+)kkE F
+,kkF G
+$str	kkH è
+,
+kkè ê
+$str
+kkë À
+,
+kkÀ Ã
+$str
+kkÕ ‰
+,
+kk‰ Â
+null
+kkÊ Í
+,
+kkÍ Î
+null
+kkÏ 
+,
+kk Ò
+$str
+kkÚ £
+,
+kk£ §
+$str
+kk• Æ
+,
+kkÆ Ø
+$str
+kk∞ …
+,
+kk…  
+$str
+kkÀ Ò
+,
+kkÒ Ú
+$str
+kkÛ ¸
+,
+kk¸ ˝
+$str
+kk˛ ö
+,
+kkö õ
+$str
+kkú ©
+,
+kk© ™
+$num
+kk´ ¨
+,
+kk¨ ≠
+$str
+kkÆ Œ
+,
+kkŒ œ
+$str
+kk– Ë
+,
+kkË È
+null
+kkÍ Ó
+,
+kkÓ Ô
+null
+kk Ù
+}
+kkı ˆ
+,
+kkˆ ˜
+{ll 
+newll 
+Guidll 
+(ll 
+$strll E
+)llE F
+,llF G
+$str	llH Ã
+,
+llÃ Õ
+$str
+llŒ à
+,
+llà â
+$str
+llä ö
+,
+llö õ
+null
+llú †
+,
+ll† °
+null
+ll¢ ¶
+,
+ll¶ ß
+$str
+ll® Ÿ
+,
+llŸ ⁄
+$str
+ll€ ‰
+,
+ll‰ Â
+$str
+llÊ ˇ
+,
+llˇ Ä
+$str
+llÅ â
+,
+llâ ä
+$str
+llã ï
+,
+llï ñ
+$str
+lló ≥
+,
+ll≥ ¥
+$str
+llµ ¬
+,
+ll¬ √
+$num
+llƒ ≈
+,
+ll≈ ∆
+$str
+ll« ﬂ
+,
+llﬂ ‡
+$str
+ll· ˆ
+,
+llˆ ˜
+null
+ll¯ ¸
+,
+ll¸ ˝
+null
+ll˛ Ç
+}
+llÉ Ñ
+,
+llÑ Ö
+{mm 
+newmm 
+Guidmm 
+(mm 
+$strmm E
+)mmE F
+,mmF G
+$str	mmH û
+,
+mmû ü
+$str
+mm† ≈
+,
+mm≈ ∆
+$str
+mm« œ
+,
+mmœ –
+null
+mm— ’
+,
+mm’ ÷
+null
+mm◊ €
+,
+mm€ ‹
+$str
+mm› é
+,
+mmé è
+$str
+mmê ô
+,
+mmô ö
+$str
+mmõ µ
+,
+mmµ ∂
+$str
+mm∑ œ
+,
+mmœ –
+$str
+mm— €
+,
+mm€ ‹
+$str
+mm› ˘
+,
+mm˘ ˙
+$str
+mm˚ à
+,
+mmà â
+$num
+mmä ã
+,
+mmã å
+$str
+mmç ¢
+,
+mm¢ £
+$str
+mm§ µ
+,
+mmµ ∂
+null
+mm∑ ª
+,
+mmª º
+null
+mmΩ ¡
+}
+mm¬ √
+,
+mm√ ƒ
+{nn 
+newnn 
+Guidnn 
+(nn 
+$strnn E
+)nnE F
+,nnF G
+$str	nnH ®
+,
+nn® ©
+$str
+nn™ ÿ
+,
+nnÿ Ÿ
+$str
+nn⁄ ‰
+,
+nn‰ Â
+null
+nnÊ Í
+,
+nnÍ Î
+null
+nnÏ 
+,
+nn Ò
+$str
+nnÚ £
+,
+nn£ §
+$str
+nn• Æ
+,
+nnÆ Ø
+$str
+nn∞  
+,
+nn  À
+$str
+nnÃ Û
+,
+nnÛ Ù
+$str
+nnı ˇ
+,
+nnˇ Ä
+$str
+nnÅ ù
+,
+nnù û
+$str
+nnü ¨
+,
+nn¨ ≠
+$num
+nnÆ Ø
+,
+nnØ ∞
+$str
+nn± ∆
+,
+nn∆ «
+$str
+nn» ÿ
+,
+nnÿ Ÿ
+null
+nn⁄ ﬁ
+,
+nnﬁ ﬂ
+null
+nn‡ ‰
+}
+nnÂ Ê
+,
+nnÊ Á
+{oo 
+newoo 
+Guidoo 
+(oo 
+$stroo E
+)ooE F
+,ooF G
+$str	ooH Ñ
+,
+ooÑ Ö
+$str
+ooÜ ¿
+,
+oo¿ ¡
+$str
+oo¬ “
+,
+oo“ ”
+null
+oo‘ ÿ
+,
+ooÿ Ÿ
+null
+oo⁄ ﬁ
+,
+ooﬁ ﬂ
+$str
+oo‡ ë
+,
+ooë í
+$str
+ooì ú
+,
+ooú ù
+$str
+ooû ∑
+,
+oo∑ ∏
+$str
+ooπ ¡
+,
+oo¡ ¬
+$str
+oo√ Õ
+,
+ooÕ Œ
+$str
+ooœ Î
+,
+ooÎ Ï
+$str
+ooÌ ˙
+,
+oo˙ ˚
+$num
+oo¸ ˝
+,
+oo˝ ˛
+$str
+ooˇ ê
+,
+ooê ë
+$str
+ooí °
+,
+oo° ¢
+null
+oo£ ß
+,
+ooß ®
+null
+oo© ≠
+}
+ooÆ Ø
+}pp 
+)pp 
+;pp 
+}qq 	
+	protectedtt 
+overridett 
+voidtt 
+Downtt  $
+(tt$ %
+MigrationBuildertt% 5
+migrationBuildertt6 F
+)ttF G
+{uu 	
+migrationBuildervv 
+.vv 
+
+DeleteDatavv '
+(vv' (
+tableww 
+:ww 
+$strww '
+,ww' (
+	keyColumnxx 
+:xx 
+$strxx 
+,xx  
+keyValueyy 
+:yy 
+newyy 
+Guidyy "
+(yy" #
+$stryy# I
+)yyI J
+)yyJ K
+;yyK L
+migrationBuilder{{ 
+.{{ 
+
+DeleteData{{ '
+({{' (
+table|| 
+:|| 
+$str|| '
+,||' (
+	keyColumn}} 
+:}} 
+$str}} 
+,}}  
+keyValue~~ 
+:~~ 
+new~~ 
+Guid~~ "
+(~~" #
+$str~~# I
+)~~I J
+)~~J K
+;~~K L
+migrationBuilder
+ÄÄ 
+.
+ÄÄ 
+
+DeleteData
+ÄÄ '
+(
+ÄÄ' (
+table
+ÅÅ 
+:
+ÅÅ 
+$str
+ÅÅ '
+,
+ÅÅ' (
+	keyColumn
+ÇÇ 
+:
+ÇÇ 
+$str
+ÇÇ 
+,
+ÇÇ  
+keyValue
+ÉÉ 
+:
+ÉÉ 
+new
+ÉÉ 
+Guid
+ÉÉ "
+(
+ÉÉ" #
+$str
+ÉÉ# I
+)
+ÉÉI J
+)
+ÉÉJ K
+;
+ÉÉK L
+migrationBuilder
+ÖÖ 
+.
+ÖÖ 
+
+DeleteData
+ÖÖ '
+(
+ÖÖ' (
+table
+ÜÜ 
+:
+ÜÜ 
+$str
+ÜÜ '
+,
+ÜÜ' (
+	keyColumn
+áá 
+:
+áá 
+$str
+áá 
+,
+áá  
+keyValue
+àà 
+:
+àà 
+new
+àà 
+Guid
+àà "
+(
+àà" #
+$str
+àà# I
+)
+ààI J
+)
+ààJ K
+;
+ààK L
+migrationBuilder
+ää 
+.
+ää 
+
+DeleteData
+ää '
+(
+ää' (
+table
+ãã 
+:
+ãã 
+$str
+ãã '
+,
+ãã' (
+	keyColumn
+åå 
+:
+åå 
+$str
+åå 
+,
+åå  
+keyValue
+çç 
+:
+çç 
+new
+çç 
+Guid
+çç "
+(
+çç" #
+$str
+çç# I
+)
+ççI J
+)
+ççJ K
+;
+ççK L
+migrationBuilder
+èè 
+.
+èè 
+
+DeleteData
+èè '
+(
+èè' (
+table
+êê 
+:
+êê 
+$str
+êê '
+,
+êê' (
+	keyColumn
+ëë 
+:
+ëë 
+$str
+ëë 
+,
+ëë  
+keyValue
+íí 
+:
+íí 
+new
+íí 
+Guid
+íí "
+(
+íí" #
+$str
+íí# I
+)
+ííI J
+)
+ííJ K
+;
+ííK L
+migrationBuilder
+îî 
+.
+îî 
+
+DeleteData
+îî '
+(
+îî' (
+table
+ïï 
+:
+ïï 
+$str
+ïï '
+,
+ïï' (
+	keyColumn
+ññ 
+:
+ññ 
+$str
+ññ 
+,
+ññ  
+keyValue
+óó 
+:
+óó 
+new
+óó 
+Guid
+óó "
+(
+óó" #
+$str
+óó# I
+)
+óóI J
+)
+óóJ K
+;
+óóK L
+migrationBuilder
+ôô 
+.
+ôô 
+
+DeleteData
+ôô '
+(
+ôô' (
+table
+öö 
+:
+öö 
+$str
+öö '
+,
+öö' (
+	keyColumn
+õõ 
+:
+õõ 
+$str
+õõ 
+,
+õõ  
+keyValue
+úú 
+:
+úú 
+new
+úú 
+Guid
+úú "
+(
+úú" #
+$str
+úú# I
+)
+úúI J
+)
+úúJ K
+;
+úúK L
+migrationBuilder
+ûû 
+.
+ûû 
+
+DeleteData
+ûû '
+(
+ûû' (
+table
+üü 
+:
+üü 
+$str
+üü '
+,
+üü' (
+	keyColumn
+†† 
+:
+†† 
+$str
+†† 
+,
+††  
+keyValue
+°° 
+:
+°° 
+new
+°° 
+Guid
+°° "
+(
+°°" #
+$str
+°°# I
+)
+°°I J
+)
+°°J K
+;
+°°K L
+migrationBuilder
+££ 
+.
+££ 
+
+DeleteData
+££ '
+(
+££' (
+table
+§§ 
+:
+§§ 
+$str
+§§ '
+,
+§§' (
+	keyColumn
+•• 
+:
+•• 
+$str
+•• 
+,
+••  
+keyValue
+¶¶ 
+:
+¶¶ 
+new
+¶¶ 
+Guid
+¶¶ "
+(
+¶¶" #
+$str
+¶¶# I
+)
+¶¶I J
+)
+¶¶J K
+;
+¶¶K L
+migrationBuilder
+®® 
+.
+®® 
+
+DeleteData
+®® '
+(
+®®' (
+table
+©© 
+:
+©© 
+$str
+©© '
+,
+©©' (
+	keyColumn
+™™ 
+:
+™™ 
+$str
+™™ 
+,
+™™  
+keyValue
+´´ 
+:
+´´ 
+new
+´´ 
+Guid
+´´ "
+(
+´´" #
+$str
+´´# I
+)
+´´I J
+)
+´´J K
+;
+´´K L
+migrationBuilder
+≠≠ 
+.
+≠≠ 
+
+DeleteData
+≠≠ '
+(
+≠≠' (
+table
+ÆÆ 
+:
+ÆÆ 
+$str
+ÆÆ '
+,
+ÆÆ' (
+	keyColumn
+ØØ 
+:
+ØØ 
+$str
+ØØ 
+,
+ØØ  
+keyValue
+∞∞ 
+:
+∞∞ 
+new
+∞∞ 
+Guid
+∞∞ "
+(
+∞∞" #
+$str
+∞∞# I
+)
+∞∞I J
+)
+∞∞J K
+;
+∞∞K L
+migrationBuilder
+≤≤ 
+.
+≤≤ 
+
+DeleteData
+≤≤ '
+(
+≤≤' (
+table
+≥≥ 
+:
+≥≥ 
+$str
+≥≥ '
+,
+≥≥' (
+	keyColumn
+¥¥ 
+:
+¥¥ 
+$str
+¥¥ 
+,
+¥¥  
+keyValue
+µµ 
+:
+µµ 
+new
+µµ 
+Guid
+µµ "
+(
+µµ" #
+$str
+µµ# I
+)
+µµI J
+)
+µµJ K
+;
+µµK L
+migrationBuilder
+∑∑ 
+.
+∑∑ 
+
+DropColumn
+∑∑ '
+(
+∑∑' (
+name
+∏∏ 
+:
+∏∏ 
+$str
+∏∏ %
+,
+∏∏% &
+table
+ππ 
+:
+ππ 
+$str
+ππ $
+)
+ππ$ %
+;
+ππ% &
+migrationBuilder
+ªª 
+.
+ªª 
+
+UpdateData
+ªª '
+(
+ªª' (
+table
+ºº 
+:
+ºº 
+$str
+ºº $
+,
+ºº$ %
+	keyColumn
+ΩΩ 
+:
+ΩΩ 
+$str
+ΩΩ 
+,
+ΩΩ  
+keyValue
+ææ 
+:
+ææ 
+$str
+ææ +
+,
+ææ+ ,
+columns
+øø 
+:
+øø 
+new
+øø 
+[
+øø 
+]
+øø 
+{
+øø  
+$str
+øø! 3
+,
+øø3 4
+$str
+øø5 A
+,
+øøA B
+$str
+øøC Q
+,
+øøQ R
+$str
+øøS b
+}
+øøc d
+,
+øød e
+values
+¿¿ 
+:
+¿¿ 
+new
+¿¿ 
+object
+¿¿ "
+[
+¿¿" #
+]
+¿¿# $
+{
+¿¿% &
+$str
+¿¿' M
+,
+¿¿M N
+new
+¿¿O R
+DateTime
+¿¿S [
+(
+¿¿[ \
+$num
+¿¿\ `
+,
+¿¿` a
+$num
+¿¿b c
+,
+¿¿c d
+$num
+¿¿e g
+,
+¿¿g h
+$num
+¿¿i j
+,
+¿¿j k
+$num
+¿¿l n
+,
+¿¿n o
+$num
+¿¿p r
+,
+¿¿r s
+$num
+¿¿t w
+,
+¿¿w x
+DateTimeKind¿¿y Ö
+.¿¿Ö Ü
+Utc¿¿Ü â
+)¿¿â ä
+.¿¿ä ã
+AddTicks¿¿ã ì
+(¿¿ì î
+$num¿¿î ò
+)¿¿ò ô
+,¿¿ô ö
+$str¿¿õ Ò
+,¿¿Ò Ú
+$str¿¿Û ô
+}¿¿ö õ
+)¿¿õ ú
+;¿¿ú ù
+migrationBuilder
+¬¬ 
+.
+¬¬ 
+
+InsertData
+¬¬ '
+(
+¬¬' (
+table
+√√ 
+:
+√√ 
+$str
+√√ '
+,
+√√' (
+columns
+ƒƒ 
+:
+ƒƒ 
+new
+ƒƒ 
+[
+ƒƒ 
+]
+ƒƒ 
+{
+ƒƒ  
+$str
+ƒƒ! %
+,
+ƒƒ% &
+$str
+ƒƒ' 4
+,
+ƒƒ4 5
+$str
+ƒƒ6 D
+,
+ƒƒD E
+$str
+ƒƒF P
+,
+ƒƒP Q
+$str
+ƒƒR ]
+,
+ƒƒ] ^
+$str
+ƒƒ_ l
+,
+ƒƒl m
+$str
+ƒƒn }
+,
+ƒƒ} ~
+$strƒƒ â
+,ƒƒâ ä
+$strƒƒã †
+,ƒƒ† °
+$strƒƒ¢ ±
+,ƒƒ± ≤
+$strƒƒ≥ ¬
+,ƒƒ¬ √
+$strƒƒƒ —
+,ƒƒ— “
+$strƒƒ” ﬂ
+,ƒƒﬂ ‡
+$strƒƒ· È
+,ƒƒÈ Í
+$strƒƒÎ ¯
+,ƒƒ¯ ˘
+$strƒƒ˙ à
+,ƒƒà â
+$strƒƒä ï
+,ƒƒï ñ
+$strƒƒó §
+}ƒƒ• ¶
+,ƒƒ¶ ß
+values
+≈≈ 
+:
+≈≈ 
+new
+≈≈ 
+object
+≈≈ "
+[
+≈≈" #
+,
+≈≈# $
+]
+≈≈$ %
+{
+∆∆ 
+{
+«« 
+new
+«« 
+Guid
+«« 
+(
+«« 
+$str
+«« E
+)
+««E F
+,
+««F G
+$str««H ”
+,««” ‘
+$str««’ è
+,««è ê
+$str««ë ô
+,««ô ö
+null««õ ü
+,««ü †
+null««° •
+,««• ¶
+$str««ß ÿ
+,««ÿ Ÿ
+$str««⁄ „
+,««„ ‰
+$str««Â °
+,««° ¢
+$str««£ ∑
+,««∑ ∏
+$str««π √
+,««√ ƒ
+$str««≈ ·
+,««· ‚
+$str««„ 
+,«« Ò
+$num««Ú Û
+,««Û Ù
+$str««ı ñ
+,««ñ ó
+$str««ò π
+,««π ∫
+null««ª ø
+,««ø ¿
+null««¡ ≈
+}««∆ «
+,««« »
+{
+»» 
+new
+»» 
+Guid
+»» 
+(
+»» 
+$str
+»» E
+)
+»»E F
+,
+»»F G
+$str»»H ∞
+,»»∞ ±
+$str»»≤ Ï
+,»»Ï Ì
+$str»»Ó ˜
+,»»˜ ¯
+null»»˘ ˝
+,»»˝ ˛
+null»»ˇ É
+,»»É Ñ
+$str»»Ö ∂
+,»»∂ ∑
+$str»»∏ ¡
+,»»¡ ¬
+$str»»√ ‹
+,»»‹ ›
+$str»»ﬁ ˘
+,»»˘ ˙
+$str»»˚ Ö
+,»»Ö Ü
+$str»»á £
+,»»£ §
+$str»»• ≤
+,»»≤ ≥
+$num»»¥ µ
+,»»µ ∂
+$str»»∑ À
+,»»À Ã
+$str»»Õ €
+,»»€ ‹
+null»»› ·
+,»»· ‚
+null»»„ Á
+}»»Ë È
+,»»È Í
+{
+…… 
+new
+…… 
+Guid
+…… 
+(
+…… 
+$str
+…… E
+)
+……E F
+,
+……F G
+$str……H ë
+,……ë í
+$str……ì Õ
+,……Õ Œ
+$str……œ ·
+,……· ‚
+null……„ Á
+,……Á Ë
+null……È Ì
+,……Ì Ó
+$str……Ô †
+,……† °
+$str……¢ ´
+,……´ ¨
+$str……≠ ∆
+,……∆ «
+$str……» –
+,……– —
+$str……“ ‹
+,……‹ ›
+$str……ﬁ ˙
+,……˙ ˚
+$str……¸ â
+,……â ä
+$num……ã å
+,……å ç
+$str……é π
+,……π ∫
+$str……ª “
+,……“ ”
+null……‘ ÿ
+,……ÿ Ÿ
+null……⁄ ﬁ
+}……ﬂ ‡
+,……‡ ·
+{
+   
+new
+   
+Guid
+   
+(
+   
+$str
+   E
+)
+  E F
+,
+  F G
+$str  H ®
+,  ® ©
+$str  ™ ÿ
+,  ÿ Ÿ
+$str  ⁄ ‰
+,  ‰ Â
+null  Ê Í
+,  Í Î
+null  Ï 
+,   Ò
+$str  Ú £
+,  £ §
+$str  • Æ
+,  Æ Ø
+$str  ∞  
+,    À
+$str  Ã Û
+,  Û Ù
+$str  ı ˇ
+,  ˇ Ä
+$str  Å ù
+,  ù û
+$str  ü ¨
+,  ¨ ≠
+$num  Æ Ø
+,  Ø ∞
+$str  ± ∆
+,  ∆ «
+$str  » ÿ
+,  ÿ Ÿ
+null  ⁄ ﬁ
+,  ﬁ ﬂ
+null  ‡ ‰
+}  Â Ê
+,  Ê Á
+{
+ÀÀ 
+new
+ÀÀ 
+Guid
+ÀÀ 
+(
+ÀÀ 
+$str
+ÀÀ E
+)
+ÀÀE F
+,
+ÀÀF G
+$strÀÀH æ
+,ÀÀæ ø
+$strÀÀ¿ ù
+,ÀÀù û
+$strÀÀü ©
+,ÀÀ© ™
+nullÀÀ´ Ø
+,ÀÀØ ∞
+nullÀÀ± µ
+,ÀÀµ ∂
+$strÀÀ∑ ˚
+,ÀÀ˚ ¸
+$strÀÀ˝ Ü
+,ÀÀÜ á
+$strÀÀà ≠
+,ÀÀ≠ Æ
+$strÀÀØ ’
+,ÀÀ’ ÷
+$strÀÀ◊ ·
+,ÀÀ· ‚
+$strÀÀ„ ˇ
+,ÀÀˇ Ä
+$strÀÀÅ é
+,ÀÀé è
+$numÀÀê ë
+,ÀÀë í
+$strÀÀì ®
+,ÀÀ® ©
+$strÀÀ™ ø
+,ÀÀø ¿
+nullÀÀ¡ ≈
+,ÀÀ≈ ∆
+nullÀÀ« À
+}ÀÀÃ Õ
+,ÀÀÕ Œ
+{
+ÃÃ 
+new
+ÃÃ 
+Guid
+ÃÃ 
+(
+ÃÃ 
+$str
+ÃÃ E
+)
+ÃÃE F
+,
+ÃÃF G
+$strÃÃH è
+,ÃÃè ê
+$strÃÃë ∫
+,ÃÃ∫ ª
+$strÃÃº  
+,ÃÃ  À
+nullÃÃÃ –
+,ÃÃ– —
+nullÃÃ“ ÷
+,ÃÃ÷ ◊
+$strÃÃÿ â
+,ÃÃâ ä
+$strÃÃã î
+,ÃÃî ï
+$strÃÃñ ¢
+,ÃÃ¢ £
+$strÃÃ§ ¥
+,ÃÃ¥ µ
+$strÃÃ∂ ¿
+,ÃÃ¿ ¡
+$strÃÃ¬ ÿ
+,ÃÃÿ Ÿ
+$strÃÃ⁄ Ê
+,ÃÃÊ Á
+$numÃÃË È
+,ÃÃÈ Í
+$strÃÃÎ ¸
+,ÃÃ¸ ˝
+$strÃÃ˛ ì
+,ÃÃì î
+nullÃÃï ô
+,ÃÃô ö
+nullÃÃõ ü
+}ÃÃ† °
+,ÃÃ° ¢
+{
+ÕÕ 
+new
+ÕÕ 
+Guid
+ÕÕ 
+(
+ÕÕ 
+$str
+ÕÕ E
+)
+ÕÕE F
+,
+ÕÕF G
+$strÕÕH è
+,ÕÕè ê
+$strÕÕë À
+,ÕÕÀ Ã
+$strÕÕÕ ‰
+,ÕÕ‰ Â
+nullÕÕÊ Í
+,ÕÕÍ Î
+nullÕÕÏ 
+,ÕÕ Ò
+$strÕÕÚ £
+,ÕÕ£ §
+$strÕÕ• Æ
+,ÕÕÆ Ø
+$strÕÕ∞ …
+,ÕÕ…  
+$strÕÕÀ Ò
+,ÕÕÒ Ú
+$strÕÕÛ ¸
+,ÕÕ¸ ˝
+$strÕÕ˛ ö
+,ÕÕö õ
+$strÕÕú ©
+,ÕÕ© ™
+$numÕÕ´ ¨
+,ÕÕ¨ ≠
+$strÕÕÆ Œ
+,ÕÕŒ œ
+$strÕÕ– Ë
+,ÕÕË È
+nullÕÕÍ Ó
+,ÕÕÓ Ô
+nullÕÕ Ù
+}ÕÕı ˆ
+,ÕÕˆ ˜
+{
+ŒŒ 
+new
+ŒŒ 
+Guid
+ŒŒ 
+(
+ŒŒ 
+$str
+ŒŒ E
+)
+ŒŒE F
+,
+ŒŒF G
+$str
+ŒŒH s
+,
+ŒŒs t
+$strŒŒu ô
+,ŒŒô ö
+$strŒŒõ •
+,ŒŒ• ¶
+nullŒŒß ´
+,ŒŒ´ ¨
+nullŒŒ≠ ±
+,ŒŒ± ≤
+$strŒŒ≥ ˘
+,ŒŒ˘ ˙
+$strŒŒ˚ Ñ
+,ŒŒÑ Ö
+$strŒŒÜ ü
+,ŒŒü †
+$strŒŒ° Œ
+,ŒŒŒ œ
+$strŒŒ– ‹
+,ŒŒ‹ ›
+$strŒŒﬁ ˙
+,ŒŒ˙ ˚
+$strŒŒ¸ â
+,ŒŒâ ä
+$numŒŒã å
+,ŒŒå ç
+$strŒŒé ª
+,ŒŒª º
+$strŒŒΩ ›
+,ŒŒ› ﬁ
+nullŒŒﬂ „
+,ŒŒ„ ‰
+nullŒŒÂ È
+}ŒŒÍ Î
+,ŒŒÎ Ï
+{
+œœ 
+new
+œœ 
+Guid
+œœ 
+(
+œœ 
+$str
+œœ E
+)
+œœE F
+,
+œœF G
+$strœœH Ñ
+,œœÑ Ö
+$strœœÜ ¿
+,œœ¿ ¡
+$strœœ¬ “
+,œœ“ ”
+nullœœ‘ ÿ
+,œœÿ Ÿ
+nullœœ⁄ ﬁ
+,œœﬁ ﬂ
+$strœœ‡ ë
+,œœë í
+$strœœì ú
+,œœú ù
+$strœœû ∑
+,œœ∑ ∏
+$strœœπ ¡
+,œœ¡ ¬
+$strœœ√ Õ
+,œœÕ Œ
+$strœœœ Î
+,œœÎ Ï
+$strœœÌ ˙
+,œœ˙ ˚
+$numœœ¸ ˝
+,œœ˝ ˛
+$strœœˇ ê
+,œœê ë
+$strœœí °
+,œœ° ¢
+nullœœ£ ß
+,œœß ®
+nullœœ© ≠
+}œœÆ Ø
+,œœØ ∞
+{
+–– 
+new
+–– 
+Guid
+–– 
+(
+–– 
+$str
+–– E
+)
+––E F
+,
+––F G
+$str––H è
+,––è ê
+$str––ë À
+,––À Ã
+$str––Õ ‰
+,––‰ Â
+null––Ê Í
+,––Í Î
+null––Ï 
+,–– Ò
+$str––Ú £
+,––£ §
+$str––• Æ
+,––Æ Ø
+$str––∞ …
+,––…  
+$str––À Ì
+,––Ì Ó
+$str––Ô ˚
+,––˚ ¸
+$str––˝ ô
+,––ô ö
+$str––õ ®
+,––® ©
+$num––™ ´
+,––´ ¨
+$str––≠ Õ
+,––Õ Œ
+$str––œ Ë
+,––Ë È
+null––Í Ó
+,––Ó Ô
+null–– Ù
+}––ı ˆ
+,––ˆ ˜
+{
+—— 
+new
+—— 
+Guid
+—— 
+(
+—— 
+$str
+—— E
+)
+——E F
+,
+——F G
+$str——H ë
+,——ë í
+$str——ì Õ
+,——Õ Œ
+$str——œ ·
+,——· ‚
+null——„ Á
+,——Á Ë
+null——È Ì
+,——Ì Ó
+$str——Ô †
+,——† °
+$str——¢ ´
+,——´ ¨
+$str——≠ ∆
+,——∆ «
+$str——» Ê
+,——Ê Á
+$str——Ë Ô
+,——Ô 
+$str——Ò ç
+,——ç é
+$str——è ú
+,——ú ù
+$num——û ü
+,——ü †
+$str——° ø
+,——ø ¿
+$str——¡ Â
+,——Â Ê
+null——Á Î
+,——Î Ï
+null——Ì Ò
+}——Ú Û
+,——Û Ù
+{
+““ 
+new
+““ 
+Guid
+““ 
+(
+““ 
+$str
+““ E
+)
+““E F
+,
+““F G
+$str““H û
+,““û ü
+$str““† ≈
+,““≈ ∆
+$str““« œ
+,““œ –
+null““— ’
+,““’ ÷
+null““◊ €
+,““€ ‹
+$str““› é
+,““é è
+$str““ê ô
+,““ô ö
+$str““õ µ
+,““µ ∂
+$str““∑ œ
+,““œ –
+$str““— €
+,““€ ‹
+$str““› ˘
+,““˘ ˙
+$str““˚ à
+,““à â
+$num““ä ã
+,““ã å
+$str““ç ¢
+,““¢ £
+$str““§ µ
+,““µ ∂
+null““∑ ª
+,““ª º
+null““Ω ¡
+}““¬ √
+,““√ ƒ
+{
+”” 
+new
+”” 
+Guid
+”” 
+(
+”” 
+$str
+”” E
+)
+””E F
+,
+””F G
+$str””H Ã
+,””Ã Õ
+$str””Œ à
+,””à â
+$str””ä ö
+,””ö õ
+null””ú †
+,””† °
+null””¢ ¶
+,””¶ ß
+$str””® Ÿ
+,””Ÿ ⁄
+$str””€ ‰
+,””‰ Â
+$str””Ê ˇ
+,””ˇ Ä
+$str””Å â
+,””â ä
+$str””ã ï
+,””ï ñ
+$str””ó ≥
+,””≥ ¥
+$str””µ ¬
+,””¬ √
+$num””ƒ ≈
+,””≈ ∆
+$str””« ﬂ
+,””ﬂ ‡
+$str””· ˆ
+,””ˆ ˜
+null””¯ ¸
+,””¸ ˝
+null””˛ Ç
+}””É Ñ
+}
+‘‘ 
+)
+‘‘ 
+;
+‘‘ 
+}
+’’ 	
+}
+÷÷ 
+}◊◊ Ì∑
+ÑD:\FPT\Semester 6\Project_Cursus\Backend_Cursus\Cursus.LMS\Cursus.LMS.DataAccess\Migrations\20240729054128_RemoveTablePaymentCard.cs
+	namespace 	
+Cursus
+ 
+. 
+LMS 
+. 
+
+DataAccess 
+.  
+
+Migrations  *
+{		 
+public 
+
+partial 
+class "
+RemoveTablePaymentCard /
+:0 1
+	Migration2 ;
+{ 
+	protected 
+override 
+void 
+Up  "
+(" #
+MigrationBuilder# 3
+migrationBuilder4 D
+)D E
+{ 	
+migrationBuilder 
+. 
+	DropTable &
+(& '
+name 
+: 
+$str $
+)$ %
+;% &
+migrationBuilder 
+. 
+
+DeleteData '
+(' (
+table 
+: 
+$str '
+,' (
+	keyColumn 
+: 
+$str 
+,  
+keyValue 
+: 
+new 
+Guid "
+(" #
+$str# I
+)I J
+)J K
+;K L
+migrationBuilder 
+. 
+
+DeleteData '
+(' (
+table 
+: 
+$str '
+,' (
+	keyColumn 
+: 
+$str 
+,  
+keyValue 
+: 
+new 
+Guid "
+(" #
+$str# I
+)I J
+)J K
+;K L
+migrationBuilder 
+. 
+
+DeleteData '
+(' (
+table 
+: 
+$str '
+,' (
+	keyColumn 
+: 
+$str 
+,  
+keyValue   
+:   
+new   
+Guid   "
+(  " #
+$str  # I
+)  I J
+)  J K
+;  K L
+migrationBuilder"" 
+."" 
+
+DeleteData"" '
+(""' (
+table## 
+:## 
+$str## '
+,##' (
+	keyColumn$$ 
+:$$ 
+$str$$ 
+,$$  
+keyValue%% 
+:%% 
+new%% 
+Guid%% "
+(%%" #
+$str%%# I
+)%%I J
+)%%J K
+;%%K L
+migrationBuilder'' 
+.'' 
+
+DeleteData'' '
+(''' (
+table(( 
+:(( 
+$str(( '
+,((' (
+	keyColumn)) 
+:)) 
+$str)) 
+,))  
+keyValue** 
+:** 
+new** 
+Guid** "
+(**" #
+$str**# I
+)**I J
+)**J K
+;**K L
+migrationBuilder,, 
+.,, 
+
+DeleteData,, '
+(,,' (
+table-- 
+:-- 
+$str-- '
+,--' (
+	keyColumn.. 
+:.. 
+$str.. 
+,..  
+keyValue// 
+:// 
+new// 
+Guid// "
+(//" #
+$str//# I
+)//I J
+)//J K
+;//K L
+migrationBuilder11 
+.11 
+
+DeleteData11 '
+(11' (
+table22 
+:22 
+$str22 '
+,22' (
+	keyColumn33 
+:33 
+$str33 
+,33  
+keyValue44 
+:44 
+new44 
+Guid44 "
+(44" #
+$str44# I
+)44I J
+)44J K
+;44K L
+migrationBuilder66 
+.66 
+
+DeleteData66 '
+(66' (
+table77 
+:77 
+$str77 '
+,77' (
+	keyColumn88 
+:88 
+$str88 
+,88  
+keyValue99 
+:99 
+new99 
+Guid99 "
+(99" #
+$str99# I
+)99I J
+)99J K
+;99K L
+migrationBuilder;; 
+.;; 
+
+DeleteData;; '
+(;;' (
+table<< 
+:<< 
+$str<< '
+,<<' (
+	keyColumn== 
+:== 
+$str== 
+,==  
+keyValue>> 
+:>> 
+new>> 
+Guid>> "
+(>>" #
+$str>># I
+)>>I J
+)>>J K
+;>>K L
+migrationBuilder@@ 
+.@@ 
+
+DeleteData@@ '
+(@@' (
+tableAA 
+:AA 
+$strAA '
+,AA' (
+	keyColumnBB 
+:BB 
+$strBB 
+,BB  
+keyValueCC 
+:CC 
+newCC 
+GuidCC "
+(CC" #
+$strCC# I
+)CCI J
+)CCJ K
+;CCK L
+migrationBuilderEE 
+.EE 
+
+DeleteDataEE '
+(EE' (
+tableFF 
+:FF 
+$strFF '
+,FF' (
+	keyColumnGG 
+:GG 
+$strGG 
+,GG  
+keyValueHH 
+:HH 
+newHH 
+GuidHH "
+(HH" #
+$strHH# I
+)HHI J
+)HHJ K
+;HHK L
+migrationBuilderJJ 
+.JJ 
+
+DeleteDataJJ '
+(JJ' (
+tableKK 
+:KK 
+$strKK '
+,KK' (
+	keyColumnLL 
+:LL 
+$strLL 
+,LL  
+keyValueMM 
+:MM 
+newMM 
+GuidMM "
+(MM" #
+$strMM# I
+)MMI J
+)MMJ K
+;MMK L
+migrationBuilderOO 
+.OO 
+
+DeleteDataOO '
+(OO' (
+tablePP 
+:PP 
+$strPP '
+,PP' (
+	keyColumnQQ 
+:QQ 
+$strQQ 
+,QQ  
+keyValueRR 
+:RR 
+newRR 
+GuidRR "
+(RR" #
+$strRR# I
+)RRI J
+)RRJ K
+;RRK L
+migrationBuilderTT 
+.TT 
+
+UpdateDataTT '
+(TT' (
+tableUU 
+:UU 
+$strUU $
+,UU$ %
+	keyColumnVV 
+:VV 
+$strVV 
+,VV  
+keyValueWW 
+:WW 
+$strWW +
+,WW+ ,
+columnsXX 
+:XX 
+newXX 
+[XX 
+]XX 
+{XX  
+$strXX! 3
+,XX3 4
+$strXX5 A
+,XXA B
+$strXXC Q
+,XXQ R
+$strXXS b
+}XXc d
+,XXd e
+valuesYY 
+:YY 
+newYY 
+objectYY "
+[YY" #
+]YY# $
+{YY% &
+$strYY' M
+,YYM N
+newYYO R
+DateTimeYYS [
+(YY[ \
+$numYY\ `
+,YY` a
+$numYYb c
+,YYc d
+$numYYe g
+,YYg h
+$numYYi j
+,YYj k
+$numYYl n
+,YYn o
+$numYYp r
+,YYr s
+$numYYt w
+,YYw x
+DateTimeKind	YYy Ö
+.
+YYÖ Ü
+Utc
+YYÜ â
+)
+YYâ ä
+.
+YYä ã
+AddTicks
+YYã ì
+(
+YYì î
+$num
+YYî ò
+)
+YYò ô
+,
+YYô ö
+$str
+YYõ Ò
+,
+YYÒ Ú
+$str
+YYÛ ô
+}
+YYö õ
+)
+YYõ ú
+;
+YYú ù
+migrationBuilder[[ 
+.[[ 
+
+InsertData[[ '
+([[' (
+table\\ 
+:\\ 
+$str\\ '
+,\\' (
+columns]] 
+:]] 
+new]] 
+[]] 
+]]] 
+{]]  
+$str]]! %
+,]]% &
+$str]]' 4
+,]]4 5
+$str]]6 D
+,]]D E
+$str]]F P
+,]]P Q
+$str]]R ]
+,]]] ^
+$str]]_ l
+,]]l m
+$str]]n }
+,]]} ~
+$str	]] â
+,
+]]â ä
+$str
+]]ã †
+,
+]]† °
+$str
+]]¢ ±
+,
+]]± ≤
+$str
+]]≥ ¬
+,
+]]¬ √
+$str
+]]ƒ —
+,
+]]— “
+$str
+]]” ﬂ
+,
+]]ﬂ ‡
+$str
+]]· È
+,
+]]È Í
+$str
+]]Î ¯
+,
+]]¯ ˘
+$str
+]]˙ à
+,
+]]à â
+$str
+]]ä ï
+,
+]]ï ñ
+$str
+]]ó §
+}
+]]• ¶
+,
+]]¶ ß
+values^^ 
+:^^ 
+new^^ 
+object^^ "
+[^^" #
+,^^# $
+]^^$ %
+{__ 
+{`` 
+new`` 
+Guid`` 
+(`` 
+$str`` E
+)``E F
+,``F G
+$str	``H ”
+,
+``” ‘
+$str
+``’ è
+,
+``è ê
+$str
+``ë ô
+,
+``ô ö
+null
+``õ ü
+,
+``ü †
+null
+``° •
+,
+``• ¶
+$str
+``ß ÿ
+,
+``ÿ Ÿ
+$str
+``⁄ „
+,
+``„ ‰
+$str
+``Â °
+,
+``° ¢
+$str
+``£ ∑
+,
+``∑ ∏
+$str
+``π √
+,
+``√ ƒ
+$str
+``≈ ·
+,
+``· ‚
+$str
+``„ 
+,
+`` Ò
+$num
+``Ú Û
+,
+``Û Ù
+$str
+``ı ñ
+,
+``ñ ó
+$str
+``ò π
+,
+``π ∫
+null
+``ª ø
+,
+``ø ¿
+null
+``¡ ≈
+}
+``∆ «
+,
+``« »
+{aa 
+newaa 
+Guidaa 
+(aa 
+$straa E
+)aaE F
+,aaF G
+$str	aaH ∞
+,
+aa∞ ±
+$str
+aa≤ Ï
+,
+aaÏ Ì
+$str
+aaÓ ˜
+,
+aa˜ ¯
+null
+aa˘ ˝
+,
+aa˝ ˛
+null
+aaˇ É
+,
+aaÉ Ñ
+$str
+aaÖ ∂
+,
+aa∂ ∑
+$str
+aa∏ ¡
+,
+aa¡ ¬
+$str
+aa√ ‹
+,
+aa‹ ›
+$str
+aaﬁ ˘
+,
+aa˘ ˙
+$str
+aa˚ Ö
+,
+aaÖ Ü
+$str
+aaá £
+,
+aa£ §
+$str
+aa• ≤
+,
+aa≤ ≥
+$num
+aa¥ µ
+,
+aaµ ∂
+$str
+aa∑ À
+,
+aaÀ Ã
+$str
+aaÕ €
+,
+aa€ ‹
+null
+aa› ·
+,
+aa· ‚
+null
+aa„ Á
+}
+aaË È
+,
+aaÈ Í
+{bb 
+newbb 
+Guidbb 
+(bb 
+$strbb E
+)bbE F
+,bbF G
+$str	bbH ë
+,
+bbë í
+$str
+bbì Õ
+,
+bbÕ Œ
+$str
+bbœ ·
+,
+bb· ‚
+null
+bb„ Á
+,
+bbÁ Ë
+null
+bbÈ Ì
+,
+bbÌ Ó
+$str
+bbÔ †
+,
+bb† °
+$str
+bb¢ ´
+,
+bb´ ¨
+$str
+bb≠ ∆
+,
+bb∆ «
+$str
+bb» –
+,
+bb– —
+$str
+bb“ ‹
+,
+bb‹ ›
+$str
+bbﬁ ˙
+,
+bb˙ ˚
+$str
+bb¸ â
+,
+bbâ ä
+$num
+bbã å
+,
+bbå ç
+$str
+bbé π
+,
+bbπ ∫
+$str
+bbª “
+,
+bb“ ”
+null
+bb‘ ÿ
+,
+bbÿ Ÿ
+null
+bb⁄ ﬁ
+}
+bbﬂ ‡
+,
+bb‡ ·
+{cc 
+newcc 
+Guidcc 
+(cc 
+$strcc E
+)ccE F
+,ccF G
+$str	ccH ®
+,
+cc® ©
+$str
+cc™ ÿ
+,
+ccÿ Ÿ
+$str
+cc⁄ ‰
+,
+cc‰ Â
+null
+ccÊ Í
+,
+ccÍ Î
+null
+ccÏ 
+,
+cc Ò
+$str
+ccÚ £
+,
+cc£ §
+$str
+cc• Æ
+,
+ccÆ Ø
+$str
+cc∞  
+,
+cc  À
+$str
+ccÃ Û
+,
+ccÛ Ù
+$str
+ccı ˇ
+,
+ccˇ Ä
+$str
+ccÅ ù
+,
+ccù û
+$str
+ccü ¨
+,
+cc¨ ≠
+$num
+ccÆ Ø
+,
+ccØ ∞
+$str
+cc± ∆
+,
+cc∆ «
+$str
+cc» ÿ
+,
+ccÿ Ÿ
+null
+cc⁄ ﬁ
+,
+ccﬁ ﬂ
+null
+cc‡ ‰
+}
+ccÂ Ê
+,
+ccÊ Á
+{dd 
+newdd 
+Guiddd 
+(dd 
+$strdd E
+)ddE F
+,ddF G
+$str	ddH æ
+,
+ddæ ø
+$str
+dd¿ ù
+,
+ddù û
+$str
+ddü ©
+,
+dd© ™
+null
+dd´ Ø
+,
+ddØ ∞
+null
+dd± µ
+,
+ddµ ∂
+$str
+dd∑ ˚
+,
+dd˚ ¸
+$str
+dd˝ Ü
+,
+ddÜ á
+$str
+ddà ≠
+,
+dd≠ Æ
+$str
+ddØ ’
+,
+dd’ ÷
+$str
+dd◊ ·
+,
+dd· ‚
+$str
+dd„ ˇ
+,
+ddˇ Ä
+$str
+ddÅ é
+,
+ddé è
+$num
+ddê ë
+,
+ddë í
+$str
+ddì ®
+,
+dd® ©
+$str
+dd™ ø
+,
+ddø ¿
+null
+dd¡ ≈
+,
+dd≈ ∆
+null
+dd« À
+}
+ddÃ Õ
+,
+ddÕ Œ
+{ee 
+newee 
+Guidee 
+(ee 
+$stree E
+)eeE F
+,eeF G
+$str	eeH è
+,
+eeè ê
+$str
+eeë ∫
+,
+ee∫ ª
+$str
+eeº  
+,
+ee  À
+null
+eeÃ –
+,
+ee– —
+null
+ee“ ÷
+,
+ee÷ ◊
+$str
+eeÿ â
+,
+eeâ ä
+$str
+eeã î
+,
+eeî ï
+$str
+eeñ ¢
+,
+ee¢ £
+$str
+ee§ ¥
+,
+ee¥ µ
+$str
+ee∂ ¿
+,
+ee¿ ¡
+$str
+ee¬ ÿ
+,
+eeÿ Ÿ
+$str
+ee⁄ Ê
+,
+eeÊ Á
+$num
+eeË È
+,
+eeÈ Í
+$str
+eeÎ ¸
+,
+ee¸ ˝
+$str
+ee˛ ì
+,
+eeì î
+null
+eeï ô
+,
+eeô ö
+null
+eeõ ü
+}
+ee† °
+,
+ee° ¢
+{ff 
+newff 
+Guidff 
+(ff 
+$strff E
+)ffE F
+,ffF G
+$str	ffH è
+,
+ffè ê
+$str
+ffë À
+,
+ffÀ Ã
+$str
+ffÕ ‰
+,
+ff‰ Â
+null
+ffÊ Í
+,
+ffÍ Î
+null
+ffÏ 
+,
+ff Ò
+$str
+ffÚ £
+,
+ff£ §
+$str
+ff• Æ
+,
+ffÆ Ø
+$str
+ff∞ …
+,
+ff…  
+$str
+ffÀ Ò
+,
+ffÒ Ú
+$str
+ffÛ ¸
+,
+ff¸ ˝
+$str
+ff˛ ö
+,
+ffö õ
+$str
+ffú ©
+,
+ff© ™
+$num
+ff´ ¨
+,
+ff¨ ≠
+$str
+ffÆ Œ
+,
+ffŒ œ
+$str
+ff– Ë
+,
+ffË È
+null
+ffÍ Ó
+,
+ffÓ Ô
+null
+ff Ù
+}
+ffı ˆ
+,
+ffˆ ˜
+{gg 
+newgg 
+Guidgg 
+(gg 
+$strgg E
+)ggE F
+,ggF G
+$strggH s
+,ggs t
+$str	ggu ô
+,
+ggô ö
+$str
+ggõ •
+,
+gg• ¶
+null
+ggß ´
+,
+gg´ ¨
+null
+gg≠ ±
+,
+gg± ≤
+$str
+gg≥ ˘
+,
+gg˘ ˙
+$str
+gg˚ Ñ
+,
+ggÑ Ö
+$str
+ggÜ ü
+,
+ggü †
+$str
+gg° Œ
+,
+ggŒ œ
+$str
+gg– ‹
+,
+gg‹ ›
+$str
+ggﬁ ˙
+,
+gg˙ ˚
+$str
+gg¸ â
+,
+ggâ ä
+$num
+ggã å
+,
+ggå ç
+$str
+ggé ª
+,
+ggª º
+$str
+ggΩ ›
+,
+gg› ﬁ
+null
+ggﬂ „
+,
+gg„ ‰
+null
+ggÂ È
+}
+ggÍ Î
+,
+ggÎ Ï
+{hh 
+newhh 
+Guidhh 
+(hh 
+$strhh E
+)hhE F
+,hhF G
+$str	hhH Ñ
+,
+hhÑ Ö
+$str
+hhÜ ¿
+,
+hh¿ ¡
+$str
+hh¬ “
+,
+hh“ ”
+null
+hh‘ ÿ
+,
+hhÿ Ÿ
+null
+hh⁄ ﬁ
+,
+hhﬁ ﬂ
+$str
+hh‡ ë
+,
+hhë í
+$str
+hhì ú
+,
+hhú ù
+$str
+hhû ∑
+,
+hh∑ ∏
+$str
+hhπ ¡
+,
+hh¡ ¬
+$str
+hh√ Õ
+,
+hhÕ Œ
+$str
+hhœ Î
+,
+hhÎ Ï
+$str
+hhÌ ˙
+,
+hh˙ ˚
+$num
+hh¸ ˝
+,
+hh˝ ˛
+$str
+hhˇ ê
+,
+hhê ë
+$str
+hhí °
+,
+hh° ¢
+null
+hh£ ß
+,
+hhß ®
+null
+hh© ≠
+}
+hhÆ Ø
+,
+hhØ ∞
+{ii 
+newii 
+Guidii 
+(ii 
+$strii E
+)iiE F
+,iiF G
+$str	iiH è
+,
+iiè ê
+$str
+iië À
+,
+iiÀ Ã
+$str
+iiÕ ‰
+,
+ii‰ Â
+null
+iiÊ Í
+,
+iiÍ Î
+null
+iiÏ 
+,
+ii Ò
+$str
+iiÚ £
+,
+ii£ §
+$str
+ii• Æ
+,
+iiÆ Ø
+$str
+ii∞ …
+,
+ii…  
+$str
+iiÀ Ì
+,
+iiÌ Ó
+$str
+iiÔ ˚
+,
+ii˚ ¸
+$str
+ii˝ ô
+,
+iiô ö
+$str
+iiõ ®
+,
+ii® ©
+$num
+ii™ ´
+,
+ii´ ¨
+$str
+ii≠ Õ
+,
+iiÕ Œ
+$str
+iiœ Ë
+,
+iiË È
+null
+iiÍ Ó
+,
+iiÓ Ô
+null
+ii Ù
+}
+iiı ˆ
+,
+iiˆ ˜
+{jj 
+newjj 
+Guidjj 
+(jj 
+$strjj E
+)jjE F
+,jjF G
+$str	jjH ë
+,
+jjë í
+$str
+jjì Õ
+,
+jjÕ Œ
+$str
+jjœ ·
+,
+jj· ‚
+null
+jj„ Á
+,
+jjÁ Ë
+null
+jjÈ Ì
+,
+jjÌ Ó
+$str
+jjÔ †
+,
+jj† °
+$str
+jj¢ ´
+,
+jj´ ¨
+$str
+jj≠ ∆
+,
+jj∆ «
+$str
+jj» Ê
+,
+jjÊ Á
+$str
+jjË Ô
+,
+jjÔ 
+$str
+jjÒ ç
+,
+jjç é
+$str
+jjè ú
+,
+jjú ù
+$num
+jjû ü
+,
+jjü †
+$str
+jj° ø
+,
+jjø ¿
+$str
+jj¡ Â
+,
+jjÂ Ê
+null
+jjÁ Î
+,
+jjÎ Ï
+null
+jjÌ Ò
+}
+jjÚ Û
+,
+jjÛ Ù
+{kk 
+newkk 
+Guidkk 
+(kk 
+$strkk E
+)kkE F
+,kkF G
+$str	kkH û
+,
+kkû ü
+$str
+kk† ≈
+,
+kk≈ ∆
+$str
+kk« œ
+,
+kkœ –
+null
+kk— ’
+,
+kk’ ÷
+null
+kk◊ €
+,
+kk€ ‹
+$str
+kk› é
+,
+kké è
+$str
+kkê ô
+,
+kkô ö
+$str
+kkõ µ
+,
+kkµ ∂
+$str
+kk∑ œ
+,
+kkœ –
+$str
+kk— €
+,
+kk€ ‹
+$str
+kk› ˘
+,
+kk˘ ˙
+$str
+kk˚ à
+,
+kkà â
+$num
+kkä ã
+,
+kkã å
+$str
+kkç ¢
+,
+kk¢ £
+$str
+kk§ µ
+,
+kkµ ∂
+null
+kk∑ ª
+,
+kkª º
+null
+kkΩ ¡
+}
+kk¬ √
+,
+kk√ ƒ
+{ll 
+newll 
+Guidll 
+(ll 
+$strll E
+)llE F
+,llF G
+$str	llH Ã
+,
+llÃ Õ
+$str
+llŒ à
+,
+llà â
+$str
+llä ö
+,
+llö õ
+null
+llú †
+,
+ll† °
+null
+ll¢ ¶
+,
+ll¶ ß
+$str
+ll® Ÿ
+,
+llŸ ⁄
+$str
+ll€ ‰
+,
+ll‰ Â
+$str
+llÊ ˇ
+,
+llˇ Ä
+$str
+llÅ â
+,
+llâ ä
+$str
+llã ï
+,
+llï ñ
+$str
+lló ≥
+,
+ll≥ ¥
+$str
+llµ ¬
+,
+ll¬ √
+$num
+llƒ ≈
+,
+ll≈ ∆
+$str
+ll« ﬂ
+,
+llﬂ ‡
+$str
+ll· ˆ
+,
+llˆ ˜
+null
+ll¯ ¸
+,
+ll¸ ˝
+null
+ll˛ Ç
+}
+llÉ Ñ
+}mm 
+)mm 
+;mm 
+}nn 	
+	protectedqq 
+overrideqq 
+voidqq 
+Downqq  $
+(qq$ %
+MigrationBuilderqq% 5
+migrationBuilderqq6 F
+)qqF G
+{rr 	
+migrationBuilderss 
+.ss 
+
+DeleteDatass '
+(ss' (
+tablett 
+:tt 
+$strtt '
+,tt' (
+	keyColumnuu 
+:uu 
+$struu 
+,uu  
+keyValuevv 
+:vv 
+newvv 
+Guidvv "
+(vv" #
+$strvv# I
+)vvI J
+)vvJ K
+;vvK L
+migrationBuilderxx 
+.xx 
+
+DeleteDataxx '
+(xx' (
+tableyy 
+:yy 
+$stryy '
+,yy' (
+	keyColumnzz 
+:zz 
+$strzz 
+,zz  
+keyValue{{ 
+:{{ 
+new{{ 
+Guid{{ "
+({{" #
+$str{{# I
+){{I J
+){{J K
+;{{K L
+migrationBuilder}} 
+.}} 
+
+DeleteData}} '
+(}}' (
+table~~ 
+:~~ 
+$str~~ '
+,~~' (
+	keyColumn 
+: 
+$str 
+,  
+keyValue
+ÄÄ 
+:
+ÄÄ 
+new
+ÄÄ 
+Guid
+ÄÄ "
+(
+ÄÄ" #
+$str
+ÄÄ# I
+)
+ÄÄI J
+)
+ÄÄJ K
+;
+ÄÄK L
+migrationBuilder
+ÇÇ 
+.
+ÇÇ 
+
+DeleteData
+ÇÇ '
+(
+ÇÇ' (
+table
+ÉÉ 
+:
+ÉÉ 
+$str
+ÉÉ '
+,
+ÉÉ' (
+	keyColumn
+ÑÑ 
+:
+ÑÑ 
+$str
+ÑÑ 
+,
+ÑÑ  
+keyValue
+ÖÖ 
+:
+ÖÖ 
+new
+ÖÖ 
+Guid
+ÖÖ "
+(
+ÖÖ" #
+$str
+ÖÖ# I
+)
+ÖÖI J
+)
+ÖÖJ K
+;
+ÖÖK L
+migrationBuilder
+áá 
+.
+áá 
+
+DeleteData
+áá '
+(
+áá' (
+table
+àà 
+:
+àà 
+$str
+àà '
+,
+àà' (
+	keyColumn
+ââ 
+:
+ââ 
+$str
+ââ 
+,
+ââ  
+keyValue
+ää 
+:
+ää 
+new
+ää 
+Guid
+ää "
+(
+ää" #
+$str
+ää# I
+)
+ääI J
+)
+ääJ K
+;
+ääK L
+migrationBuilder
+åå 
+.
+åå 
+
+DeleteData
+åå '
+(
+åå' (
+table
+çç 
+:
+çç 
+$str
+çç '
+,
+çç' (
+	keyColumn
+éé 
+:
+éé 
+$str
+éé 
+,
+éé  
+keyValue
+èè 
+:
+èè 
+new
+èè 
+Guid
+èè "
+(
+èè" #
+$str
+èè# I
+)
+èèI J
+)
+èèJ K
+;
+èèK L
+migrationBuilder
+ëë 
+.
+ëë 
+
+DeleteData
+ëë '
+(
+ëë' (
+table
+íí 
+:
+íí 
+$str
+íí '
+,
+íí' (
+	keyColumn
+ìì 
+:
+ìì 
+$str
+ìì 
+,
+ìì  
+keyValue
+îî 
+:
+îî 
+new
+îî 
+Guid
+îî "
+(
+îî" #
+$str
+îî# I
+)
+îîI J
+)
+îîJ K
+;
+îîK L
+migrationBuilder
+ññ 
+.
+ññ 
+
+DeleteData
+ññ '
+(
+ññ' (
+table
+óó 
+:
+óó 
+$str
+óó '
+,
+óó' (
+	keyColumn
+òò 
+:
+òò 
+$str
+òò 
+,
+òò  
+keyValue
+ôô 
+:
+ôô 
+new
+ôô 
+Guid
+ôô "
+(
+ôô" #
+$str
+ôô# I
+)
+ôôI J
+)
+ôôJ K
+;
+ôôK L
+migrationBuilder
+õõ 
+.
+õõ 
+
+DeleteData
+õõ '
+(
+õõ' (
+table
+úú 
+:
+úú 
+$str
+úú '
+,
+úú' (
+	keyColumn
+ùù 
+:
+ùù 
+$str
+ùù 
+,
+ùù  
+keyValue
+ûû 
+:
+ûû 
+new
+ûû 
+Guid
+ûû "
+(
+ûû" #
+$str
+ûû# I
+)
+ûûI J
+)
+ûûJ K
+;
+ûûK L
+migrationBuilder
+†† 
+.
+†† 
+
+DeleteData
+†† '
+(
+††' (
+table
+°° 
+:
+°° 
+$str
+°° '
+,
+°°' (
+	keyColumn
+¢¢ 
+:
+¢¢ 
+$str
+¢¢ 
+,
+¢¢  
+keyValue
+££ 
+:
+££ 
+new
+££ 
+Guid
+££ "
+(
+££" #
+$str
+££# I
+)
+££I J
+)
+££J K
+;
+££K L
+migrationBuilder
+•• 
+.
+•• 
+
+DeleteData
+•• '
+(
+••' (
+table
+¶¶ 
+:
+¶¶ 
+$str
+¶¶ '
+,
+¶¶' (
+	keyColumn
+ßß 
+:
+ßß 
+$str
+ßß 
+,
+ßß  
+keyValue
+®® 
+:
+®® 
+new
+®® 
+Guid
+®® "
+(
+®®" #
+$str
+®®# I
+)
+®®I J
+)
+®®J K
+;
+®®K L
+migrationBuilder
+™™ 
+.
+™™ 
+
+DeleteData
+™™ '
+(
+™™' (
+table
+´´ 
+:
+´´ 
+$str
+´´ '
+,
+´´' (
+	keyColumn
+¨¨ 
+:
+¨¨ 
+$str
+¨¨ 
+,
+¨¨  
+keyValue
+≠≠ 
+:
+≠≠ 
+new
+≠≠ 
+Guid
+≠≠ "
+(
+≠≠" #
+$str
+≠≠# I
+)
+≠≠I J
+)
+≠≠J K
+;
+≠≠K L
+migrationBuilder
+ØØ 
+.
+ØØ 
+
+DeleteData
+ØØ '
+(
+ØØ' (
+table
+∞∞ 
+:
+∞∞ 
+$str
+∞∞ '
+,
+∞∞' (
+	keyColumn
+±± 
+:
+±± 
+$str
+±± 
+,
+±±  
+keyValue
+≤≤ 
+:
+≤≤ 
+new
+≤≤ 
+Guid
+≤≤ "
+(
+≤≤" #
+$str
+≤≤# I
+)
+≤≤I J
+)
+≤≤J K
+;
+≤≤K L
+migrationBuilder
+¥¥ 
+.
+¥¥ 
+CreateTable
+¥¥ (
+(
+¥¥( )
+name
+µµ 
+:
+µµ 
+$str
+µµ $
+,
+µµ$ %
+columns
+∂∂ 
+:
+∂∂ 
+table
+∂∂ 
+=>
+∂∂ !
+new
+∂∂" %
+{
+∑∑ 
+
+CardNumber
+∏∏ 
+=
+∏∏  
+table
+∏∏! &
+.
+∏∏& '
+Column
+∏∏' -
+<
+∏∏- .
+string
+∏∏. 4
+>
+∏∏4 5
+(
+∏∏5 6
+type
+∏∏6 :
+:
+∏∏: ;
+$str
+∏∏< K
+,
+∏∏K L
+nullable
+∏∏M U
+:
+∏∏U V
+false
+∏∏W \
+)
+∏∏\ ]
+,
+∏∏] ^
+UserId
+ππ 
+=
+ππ 
+table
+ππ "
+.
+ππ" #
+Column
+ππ# )
+<
+ππ) *
+string
+ππ* 0
+>
+ππ0 1
+(
+ππ1 2
+type
+ππ2 6
+:
+ππ6 7
+$str
+ππ8 G
+,
+ππG H
+nullable
+ππI Q
+:
+ππQ R
+false
+ππS X
+)
+ππX Y
+,
+ππY Z
+CardName
+∫∫ 
+=
+∫∫ 
+table
+∫∫ $
+.
+∫∫$ %
+Column
+∫∫% +
+<
+∫∫+ ,
+string
+∫∫, 2
+>
+∫∫2 3
+(
+∫∫3 4
+type
+∫∫4 8
+:
+∫∫8 9
+$str
+∫∫: I
+,
+∫∫I J
+nullable
+∫∫K S
+:
+∫∫S T
+false
+∫∫U Z
+)
+∫∫Z [
+,
+∫∫[ \
+CardProvider
+ªª  
+=
+ªª! "
+table
+ªª# (
+.
+ªª( )
+Column
+ªª) /
+<
+ªª/ 0
+string
+ªª0 6
+>
+ªª6 7
+(
+ªª7 8
+type
+ªª8 <
+:
+ªª< =
+$str
+ªª> M
+,
+ªªM N
+nullable
+ªªO W
+:
+ªªW X
+false
+ªªY ^
+)
+ªª^ _
+}
+ºº 
+,
+ºº 
+constraints
+ΩΩ 
+:
+ΩΩ 
+table
+ΩΩ "
+=>
+ΩΩ# %
+{
+ææ 
+table
+øø 
+.
+øø 
+
+PrimaryKey
+øø $
+(
+øø$ %
+$str
+øø% 6
+,
+øø6 7
+x
+øø8 9
+=>
+øø: <
+x
+øø= >
+.
+øø> ?
+
+CardNumber
+øø? I
+)
+øøI J
+;
+øøJ K
+table
+¿¿ 
+.
+¿¿ 
+
+ForeignKey
+¿¿ $
+(
+¿¿$ %
+name
+¡¡ 
+:
+¡¡ 
+$str
+¡¡ B
+,
+¡¡B C
+column
+¬¬ 
+:
+¬¬ 
+x
+¬¬  !
+=>
+¬¬" $
+x
+¬¬% &
+.
+¬¬& '
+UserId
+¬¬' -
+,
+¬¬- .
+principalTable
+√√ &
+:
+√√& '
+$str
+√√( 5
+,
+√√5 6
+principalColumn
+ƒƒ '
+:
+ƒƒ' (
+$str
+ƒƒ) -
+,
+ƒƒ- .
+onDelete
+≈≈  
+:
+≈≈  !
+ReferentialAction
+≈≈" 3
+.
+≈≈3 4
+Cascade
+≈≈4 ;
+)
+≈≈; <
+;
+≈≈< =
+}
+∆∆ 
+)
+∆∆ 
+;
+∆∆ 
+migrationBuilder
+»» 
+.
+»» 
+
+UpdateData
+»» '
+(
+»»' (
+table
+…… 
+:
+…… 
+$str
+…… $
+,
+……$ %
+	keyColumn
+   
+:
+   
+$str
+   
+,
+    
+keyValue
+ÀÀ 
+:
+ÀÀ 
+$str
+ÀÀ +
+,
+ÀÀ+ ,
+columns
+ÃÃ 
+:
+ÃÃ 
+new
+ÃÃ 
+[
+ÃÃ 
+]
+ÃÃ 
+{
+ÃÃ  
+$str
+ÃÃ! 3
+,
+ÃÃ3 4
+$str
+ÃÃ5 A
+,
+ÃÃA B
+$str
+ÃÃC Q
+,
+ÃÃQ R
+$str
+ÃÃS b
+}
+ÃÃc d
+,
+ÃÃd e
+values
+ÕÕ 
+:
+ÕÕ 
+new
+ÕÕ 
+object
+ÕÕ "
+[
+ÕÕ" #
+]
+ÕÕ# $
+{
+ÕÕ% &
+$str
+ÕÕ' M
+,
+ÕÕM N
+new
+ÕÕO R
+DateTime
+ÕÕS [
+(
+ÕÕ[ \
+$num
+ÕÕ\ `
+,
+ÕÕ` a
+$num
+ÕÕb c
+,
+ÕÕc d
+$num
+ÕÕe g
+,
+ÕÕg h
+$num
+ÕÕi j
+,
+ÕÕj k
+$num
+ÕÕl n
+,
+ÕÕn o
+$num
+ÕÕp r
+,
+ÕÕr s
+$num
+ÕÕt w
+,
+ÕÕw x
+DateTimeKindÕÕy Ö
+.ÕÕÖ Ü
+UtcÕÕÜ â
+)ÕÕâ ä
+.ÕÕä ã
+AddTicksÕÕã ì
+(ÕÕì î
+$numÕÕî ò
+)ÕÕò ô
+,ÕÕô ö
+$strÕÕõ Ò
+,ÕÕÒ Ú
+$strÕÕÛ ô
+}ÕÕö õ
+)ÕÕõ ú
+;ÕÕú ù
+migrationBuilder
+œœ 
+.
+œœ 
+
+InsertData
+œœ '
+(
+œœ' (
+table
+–– 
+:
+–– 
+$str
+–– '
+,
+––' (
+columns
+—— 
+:
+—— 
+new
+—— 
+[
+—— 
+]
+—— 
+{
+——  
+$str
+——! %
+,
+——% &
+$str
+——' 4
+,
+——4 5
+$str
+——6 D
+,
+——D E
+$str
+——F P
+,
+——P Q
+$str
+——R ]
+,
+——] ^
+$str
+——_ l
+,
+——l m
+$str
+——n }
+,
+——} ~
+$str—— â
+,——â ä
+$str——ã †
+,——† °
+$str——¢ ±
+,——± ≤
+$str——≥ ¬
+,——¬ √
+$str——ƒ —
+,——— “
+$str——” ﬂ
+,——ﬂ ‡
+$str——· È
+,——È Í
+$str——Î ¯
+,——¯ ˘
+$str——˙ à
+,——à â
+$str——ä ï
+,——ï ñ
+$str——ó §
+}——• ¶
+,——¶ ß
+values
+““ 
+:
+““ 
+new
+““ 
+object
+““ "
+[
+““" #
+,
+““# $
+]
+““$ %
+{
+”” 
+{
+‘‘ 
+new
+‘‘ 
+Guid
+‘‘ 
+(
+‘‘ 
+$str
+‘‘ E
+)
+‘‘E F
+,
+‘‘F G
+$str‘‘H Ñ
+,‘‘Ñ Ö
+$str‘‘Ü ¿
+,‘‘¿ ¡
+$str‘‘¬ “
+,‘‘“ ”
+null‘‘‘ ÿ
+,‘‘ÿ Ÿ
+null‘‘⁄ ﬁ
+,‘‘ﬁ ﬂ
+$str‘‘‡ ë
+,‘‘ë í
+$str‘‘ì ú
+,‘‘ú ù
+$str‘‘û ∑
+,‘‘∑ ∏
+$str‘‘π ¡
+,‘‘¡ ¬
+$str‘‘√ Õ
+,‘‘Õ Œ
+$str‘‘œ Î
+,‘‘Î Ï
+$str‘‘Ì ˙
+,‘‘˙ ˚
+$num‘‘¸ ˝
+,‘‘˝ ˛
+$str‘‘ˇ ê
+,‘‘ê ë
+$str‘‘í °
+,‘‘° ¢
+null‘‘£ ß
+,‘‘ß ®
+null‘‘© ≠
+}‘‘Æ Ø
+,‘‘Ø ∞
+{
+’’ 
+new
+’’ 
+Guid
+’’ 
+(
+’’ 
+$str
+’’ E
+)
+’’E F
+,
+’’F G
+$str’’H ®
+,’’® ©
+$str’’™ ÿ
+,’’ÿ Ÿ
+$str’’⁄ ‰
+,’’‰ Â
+null’’Ê Í
+,’’Í Î
+null’’Ï 
+,’’ Ò
+$str’’Ú £
+,’’£ §
+$str’’• Æ
+,’’Æ Ø
+$str’’∞  
+,’’  À
+$str’’Ã Û
+,’’Û Ù
+$str’’ı ˇ
+,’’ˇ Ä
+$str’’Å ù
+,’’ù û
+$str’’ü ¨
+,’’¨ ≠
+$num’’Æ Ø
+,’’Ø ∞
+$str’’± ∆
+,’’∆ «
+$str’’» ÿ
+,’’ÿ Ÿ
+null’’⁄ ﬁ
+,’’ﬁ ﬂ
+null’’‡ ‰
+}’’Â Ê
+,’’Ê Á
+{
+÷÷ 
+new
+÷÷ 
+Guid
+÷÷ 
+(
+÷÷ 
+$str
+÷÷ E
+)
+÷÷E F
+,
+÷÷F G
+$str÷÷H û
+,÷÷û ü
+$str÷÷† ≈
+,÷÷≈ ∆
+$str÷÷« œ
+,÷÷œ –
+null÷÷— ’
+,÷÷’ ÷
+null÷÷◊ €
+,÷÷€ ‹
+$str÷÷› é
+,÷÷é è
+$str÷÷ê ô
+,÷÷ô ö
+$str÷÷õ µ
+,÷÷µ ∂
+$str÷÷∑ œ
+,÷÷œ –
+$str÷÷— €
+,÷÷€ ‹
+$str÷÷› ˘
+,÷÷˘ ˙
+$str÷÷˚ à
+,÷÷à â
+$num÷÷ä ã
+,÷÷ã å
+$str÷÷ç ¢
+,÷÷¢ £
+$str÷÷§ µ
+,÷÷µ ∂
+null÷÷∑ ª
+,÷÷ª º
+null÷÷Ω ¡
+}÷÷¬ √
+,÷÷√ ƒ
+{
+◊◊ 
+new
+◊◊ 
+Guid
+◊◊ 
+(
+◊◊ 
+$str
+◊◊ E
+)
+◊◊E F
+,
+◊◊F G
+$str◊◊H ë
+,◊◊ë í
+$str◊◊ì Õ
+,◊◊Õ Œ
+$str◊◊œ ·
+,◊◊· ‚
+null◊◊„ Á
+,◊◊Á Ë
+null◊◊È Ì
+,◊◊Ì Ó
+$str◊◊Ô †
+,◊◊† °
+$str◊◊¢ ´
+,◊◊´ ¨
+$str◊◊≠ ∆
+,◊◊∆ «
+$str◊◊» –
+,◊◊– —
+$str◊◊“ ‹
+,◊◊‹ ›
+$str◊◊ﬁ ˙
+,◊◊˙ ˚
+$str◊◊¸ â
+,◊◊â ä
+$num◊◊ã å
+,◊◊å ç
+$str◊◊é π
+,◊◊π ∫
+$str◊◊ª “
+,◊◊“ ”
+null◊◊‘ ÿ
+,◊◊ÿ Ÿ
+null◊◊⁄ ﬁ
+}◊◊ﬂ ‡
+,◊◊‡ ·
+{
+ÿÿ 
+new
+ÿÿ 
+Guid
+ÿÿ 
+(
+ÿÿ 
+$str
+ÿÿ E
+)
+ÿÿE F
+,
+ÿÿF G
+$str
+ÿÿH s
+,
+ÿÿs t
+$strÿÿu ô
+,ÿÿô ö
+$strÿÿõ •
+,ÿÿ• ¶
+nullÿÿß ´
+,ÿÿ´ ¨
+nullÿÿ≠ ±
+,ÿÿ± ≤
+$strÿÿ≥ ˘
+,ÿÿ˘ ˙
+$strÿÿ˚ Ñ
+,ÿÿÑ Ö
+$strÿÿÜ ü
+,ÿÿü †
+$strÿÿ° Œ
+,ÿÿŒ œ
+$strÿÿ– ‹
+,ÿÿ‹ ›
+$strÿÿﬁ ˙
+,ÿÿ˙ ˚
+$strÿÿ¸ â
+,ÿÿâ ä
+$numÿÿã å
+,ÿÿå ç
+$strÿÿé ª
+,ÿÿª º
+$strÿÿΩ ›
+,ÿÿ› ﬁ
+nullÿÿﬂ „
+,ÿÿ„ ‰
+nullÿÿÂ È
+}ÿÿÍ Î
+,ÿÿÎ Ï
+{
+ŸŸ 
+new
+ŸŸ 
+Guid
+ŸŸ 
+(
+ŸŸ 
+$str
+ŸŸ E
+)
+ŸŸE F
+,
+ŸŸF G
+$strŸŸH Ã
+,ŸŸÃ Õ
+$strŸŸŒ à
+,ŸŸà â
+$strŸŸä ö
+,ŸŸö õ
+nullŸŸú †
+,ŸŸ† °
+nullŸŸ¢ ¶
+,ŸŸ¶ ß
+$strŸŸ® Ÿ
+,ŸŸŸ ⁄
+$strŸŸ€ ‰
+,ŸŸ‰ Â
+$strŸŸÊ ˇ
+,ŸŸˇ Ä
+$strŸŸÅ â
+,ŸŸâ ä
+$strŸŸã ï
+,ŸŸï ñ
+$strŸŸó ≥
+,ŸŸ≥ ¥
+$strŸŸµ ¬
+,ŸŸ¬ √
+$numŸŸƒ ≈
+,ŸŸ≈ ∆
+$strŸŸ« ﬂ
+,ŸŸﬂ ‡
+$strŸŸ· ˆ
+,ŸŸˆ ˜
+nullŸŸ¯ ¸
+,ŸŸ¸ ˝
+nullŸŸ˛ Ç
+}ŸŸÉ Ñ
+,ŸŸÑ Ö
+{
+⁄⁄ 
+new
+⁄⁄ 
+Guid
+⁄⁄ 
+(
+⁄⁄ 
+$str
+⁄⁄ E
+)
+⁄⁄E F
+,
+⁄⁄F G
+$str⁄⁄H ∞
+,⁄⁄∞ ±
+$str⁄⁄≤ Ï
+,⁄⁄Ï Ì
+$str⁄⁄Ó ˜
+,⁄⁄˜ ¯
+null⁄⁄˘ ˝
+,⁄⁄˝ ˛
+null⁄⁄ˇ É
+,⁄⁄É Ñ
+$str⁄⁄Ö ∂
+,⁄⁄∂ ∑
+$str⁄⁄∏ ¡
+,⁄⁄¡ ¬
+$str⁄⁄√ ‹
+,⁄⁄‹ ›
+$str⁄⁄ﬁ ˘
+,⁄⁄˘ ˙
+$str⁄⁄˚ Ö
+,⁄⁄Ö Ü
+$str⁄⁄á £
+,⁄⁄£ §
+$str⁄⁄• ≤
+,⁄⁄≤ ≥
+$num⁄⁄¥ µ
+,⁄⁄µ ∂
+$str⁄⁄∑ À
+,⁄⁄À Ã
+$str⁄⁄Õ €
+,⁄⁄€ ‹
+null⁄⁄› ·
+,⁄⁄· ‚
+null⁄⁄„ Á
+}⁄⁄Ë È
+,⁄⁄È Í
+{
+€€ 
+new
+€€ 
+Guid
+€€ 
+(
+€€ 
+$str
+€€ E
+)
+€€E F
+,
+€€F G
+$str€€H æ
+,€€æ ø
+$str€€¿ ù
+,€€ù û
+$str€€ü ©
+,€€© ™
+null€€´ Ø
+,€€Ø ∞
+null€€± µ
+,€€µ ∂
+$str€€∑ ˚
+,€€˚ ¸
+$str€€˝ Ü
+,€€Ü á
+$str€€à ≠
+,€€≠ Æ
+$str€€Ø ’
+,€€’ ÷
+$str€€◊ ·
+,€€· ‚
+$str€€„ ˇ
+,€€ˇ Ä
+$str€€Å é
+,€€é è
+$num€€ê ë
+,€€ë í
+$str€€ì ®
+,€€® ©
+$str€€™ ø
+,€€ø ¿
+null€€¡ ≈
+,€€≈ ∆
+null€€« À
+}€€Ã Õ
+,€€Õ Œ
+{
+‹‹ 
+new
+‹‹ 
+Guid
+‹‹ 
+(
+‹‹ 
+$str
+‹‹ E
+)
+‹‹E F
+,
+‹‹F G
+$str‹‹H è
+,‹‹è ê
+$str‹‹ë À
+,‹‹À Ã
+$str‹‹Õ ‰
+,‹‹‰ Â
+null‹‹Ê Í
+,‹‹Í Î
+null‹‹Ï 
+,‹‹ Ò
+$str‹‹Ú £
+,‹‹£ §
+$str‹‹• Æ
+,‹‹Æ Ø
+$str‹‹∞ …
+,‹‹…  
+$str‹‹À Ò
+,‹‹Ò Ú
+$str‹‹Û ¸
+,‹‹¸ ˝
+$str‹‹˛ ö
+,‹‹ö õ
+$str‹‹ú ©
+,‹‹© ™
+$num‹‹´ ¨
+,‹‹¨ ≠
+$str‹‹Æ Œ
+,‹‹Œ œ
+$str‹‹– Ë
+,‹‹Ë È
+null‹‹Í Ó
+,‹‹Ó Ô
+null‹‹ Ù
+}‹‹ı ˆ
+,‹‹ˆ ˜
+{
+›› 
+new
+›› 
+Guid
+›› 
+(
+›› 
+$str
+›› E
+)
+››E F
+,
+››F G
+$str››H è
+,››è ê
+$str››ë À
+,››À Ã
+$str››Õ ‰
+,››‰ Â
+null››Ê Í
+,››Í Î
+null››Ï 
+,›› Ò
+$str››Ú £
+,››£ §
+$str››• Æ
+,››Æ Ø
+$str››∞ …
+,››…  
+$str››À Ì
+,››Ì Ó
+$str››Ô ˚
+,››˚ ¸
+$str››˝ ô
+,››ô ö
+$str››õ ®
+,››® ©
+$num››™ ´
+,››´ ¨
+$str››≠ Õ
+,››Õ Œ
+$str››œ Ë
+,››Ë È
+null››Í Ó
+,››Ó Ô
+null›› Ù
+}››ı ˆ
+,››ˆ ˜
+{
+ﬁﬁ 
+new
+ﬁﬁ 
+Guid
+ﬁﬁ 
+(
+ﬁﬁ 
+$str
+ﬁﬁ E
+)
+ﬁﬁE F
+,
+ﬁﬁF G
+$strﬁﬁH ë
+,ﬁﬁë í
+$strﬁﬁì Õ
+,ﬁﬁÕ Œ
+$strﬁﬁœ ·
+,ﬁﬁ· ‚
+nullﬁﬁ„ Á
+,ﬁﬁÁ Ë
+nullﬁﬁÈ Ì
+,ﬁﬁÌ Ó
+$strﬁﬁÔ †
+,ﬁﬁ† °
+$strﬁﬁ¢ ´
+,ﬁﬁ´ ¨
+$strﬁﬁ≠ ∆
+,ﬁﬁ∆ «
+$strﬁﬁ» Ê
+,ﬁﬁÊ Á
+$strﬁﬁË Ô
+,ﬁﬁÔ 
+$strﬁﬁÒ ç
+,ﬁﬁç é
+$strﬁﬁè ú
+,ﬁﬁú ù
+$numﬁﬁû ü
+,ﬁﬁü †
+$strﬁﬁ° ø
+,ﬁﬁø ¿
+$strﬁﬁ¡ Â
+,ﬁﬁÂ Ê
+nullﬁﬁÁ Î
+,ﬁﬁÎ Ï
+nullﬁﬁÌ Ò
+}ﬁﬁÚ Û
+,ﬁﬁÛ Ù
+{
+ﬂﬂ 
+new
+ﬂﬂ 
+Guid
+ﬂﬂ 
+(
+ﬂﬂ 
+$str
+ﬂﬂ E
+)
+ﬂﬂE F
+,
+ﬂﬂF G
+$strﬂﬂH è
+,ﬂﬂè ê
+$strﬂﬂë ∫
+,ﬂﬂ∫ ª
+$strﬂﬂº  
+,ﬂﬂ  À
+nullﬂﬂÃ –
+,ﬂﬂ– —
+nullﬂﬂ“ ÷
+,ﬂﬂ÷ ◊
+$strﬂﬂÿ â
+,ﬂﬂâ ä
+$strﬂﬂã î
+,ﬂﬂî ï
+$strﬂﬂñ ¢
+,ﬂﬂ¢ £
+$strﬂﬂ§ ¥
+,ﬂﬂ¥ µ
+$strﬂﬂ∂ ¿
+,ﬂﬂ¿ ¡
+$strﬂﬂ¬ ÿ
+,ﬂﬂÿ Ÿ
+$strﬂﬂ⁄ Ê
+,ﬂﬂÊ Á
+$numﬂﬂË È
+,ﬂﬂÈ Í
+$strﬂﬂÎ ¸
+,ﬂﬂ¸ ˝
+$strﬂﬂ˛ ì
+,ﬂﬂì î
+nullﬂﬂï ô
+,ﬂﬂô ö
+nullﬂﬂõ ü
+}ﬂﬂ† °
+,ﬂﬂ° ¢
+{
+‡‡ 
+new
+‡‡ 
+Guid
+‡‡ 
+(
+‡‡ 
+$str
+‡‡ E
+)
+‡‡E F
+,
+‡‡F G
+$str‡‡H ”
+,‡‡” ‘
+$str‡‡’ è
+,‡‡è ê
+$str‡‡ë ô
+,‡‡ô ö
+null‡‡õ ü
+,‡‡ü †
+null‡‡° •
+,‡‡• ¶
+$str‡‡ß ÿ
+,‡‡ÿ Ÿ
+$str‡‡⁄ „
+,‡‡„ ‰
+$str‡‡Â °
+,‡‡° ¢
+$str‡‡£ ∑
+,‡‡∑ ∏
+$str‡‡π √
+,‡‡√ ƒ
+$str‡‡≈ ·
+,‡‡· ‚
+$str‡‡„ 
+,‡‡ Ò
+$num‡‡Ú Û
+,‡‡Û Ù
+$str‡‡ı ñ
+,‡‡ñ ó
+$str‡‡ò π
+,‡‡π ∫
+null‡‡ª ø
+,‡‡ø ¿
+null‡‡¡ ≈
+}‡‡∆ «
+}
+·· 
+)
+·· 
+;
+·· 
+migrationBuilder
+„„ 
+.
+„„ 
+CreateIndex
+„„ (
+(
+„„( )
+name
+‰‰ 
+:
+‰‰ 
+$str
+‰‰ .
+,
+‰‰. /
+table
+ÂÂ 
+:
+ÂÂ 
+$str
+ÂÂ %
+,
+ÂÂ% &
+column
+ÊÊ 
+:
+ÊÊ 
+$str
+ÊÊ  
+)
+ÊÊ  !
+;
+ÊÊ! "
+}
+ÁÁ 	
+}
+ËË 
+}ÈÈ Üß
+ïD:\FPT\Semester 6\Project_Cursus\Backend_Cursus\Cursus.LMS\Cursus.LMS.DataAccess\Migrations\20240724031629_AllowNullForAttributeTableCourseVersion.cs
+	namespace 	
+Cursus
+ 
+. 
+LMS 
+. 
+
+DataAccess 
+.  
+
+Migrations  *
+{		 
+public 
+
+partial 
+class 3
+'AllowNullForAttributeTableCourseVersion @
+:A B
+	MigrationC L
+{ 
+	protected 
+override 
+void 
+Up  "
+(" #
+MigrationBuilder# 3
+migrationBuilder4 D
+)D E
+{ 	
+migrationBuilder 
+. 
+DropForeignKey +
+(+ ,
+name 
+: 
+$str ?
+,? @
+table 
+: 
+$str '
+)' (
+;( )
+migrationBuilder 
+. 
+DropForeignKey +
+(+ ,
+name 
+: 
+$str :
+,: ;
+table 
+: 
+$str '
+)' (
+;( )
+migrationBuilder 
+. 
+DropForeignKey +
+(+ ,
+name 
+: 
+$str 8
+,8 9
+table 
+: 
+$str '
+)' (
+;( )
+migrationBuilder 
+. 
+DropForeignKey +
+(+ ,
+name 
+: 
+$str :
+,: ;
+table 
+: 
+$str '
+)' (
+;( )
+migrationBuilder   
+.   
+DropForeignKey   +
+(  + ,
+name!! 
+:!! 
+$str!! <
+,!!< =
+table"" 
+:"" 
+$str"" '
+)""' (
+;""( )
+migrationBuilder$$ 
+.$$ 
+
+DeleteData$$ '
+($$' (
+table%% 
+:%% 
+$str%% '
+,%%' (
+	keyColumn&& 
+:&& 
+$str&& 
+,&&  
+keyValue'' 
+:'' 
+new'' 
+Guid'' "
+(''" #
+$str''# I
+)''I J
+)''J K
+;''K L
+migrationBuilder)) 
+.)) 
+
+DeleteData)) '
+())' (
+table** 
+:** 
+$str** '
+,**' (
+	keyColumn++ 
+:++ 
+$str++ 
+,++  
+keyValue,, 
+:,, 
+new,, 
+Guid,, "
+(,," #
+$str,,# I
+),,I J
+),,J K
+;,,K L
+migrationBuilder.. 
+... 
+
+DeleteData.. '
+(..' (
+table// 
+:// 
+$str// '
+,//' (
+	keyColumn00 
+:00 
+$str00 
+,00  
+keyValue11 
+:11 
+new11 
+Guid11 "
+(11" #
+$str11# I
+)11I J
+)11J K
+;11K L
+migrationBuilder33 
+.33 
+
+DeleteData33 '
+(33' (
+table44 
+:44 
+$str44 '
+,44' (
+	keyColumn55 
+:55 
+$str55 
+,55  
+keyValue66 
+:66 
+new66 
+Guid66 "
+(66" #
+$str66# I
+)66I J
+)66J K
+;66K L
+migrationBuilder88 
+.88 
+
+DeleteData88 '
+(88' (
+table99 
+:99 
+$str99 '
+,99' (
+	keyColumn:: 
+::: 
+$str:: 
+,::  
+keyValue;; 
+:;; 
+new;; 
+Guid;; "
+(;;" #
+$str;;# I
+);;I J
+);;J K
+;;;K L
+migrationBuilder== 
+.== 
+
+DeleteData== '
+(==' (
+table>> 
+:>> 
+$str>> '
+,>>' (
+	keyColumn?? 
+:?? 
+$str?? 
+,??  
+keyValue@@ 
+:@@ 
+new@@ 
+Guid@@ "
+(@@" #
+$str@@# I
+)@@I J
+)@@J K
+;@@K L
+migrationBuilderBB 
+.BB 
+
+DeleteDataBB '
+(BB' (
+tableCC 
+:CC 
+$strCC '
+,CC' (
+	keyColumnDD 
+:DD 
+$strDD 
+,DD  
+keyValueEE 
+:EE 
+newEE 
+GuidEE "
+(EE" #
+$strEE# I
+)EEI J
+)EEJ K
+;EEK L
+migrationBuilderGG 
+.GG 
+
+DeleteDataGG '
+(GG' (
+tableHH 
+:HH 
+$strHH '
+,HH' (
+	keyColumnII 
+:II 
+$strII 
+,II  
+keyValueJJ 
+:JJ 
+newJJ 
+GuidJJ "
+(JJ" #
+$strJJ# I
+)JJI J
+)JJJ K
+;JJK L
+migrationBuilderLL 
+.LL 
+
+DeleteDataLL '
+(LL' (
+tableMM 
+:MM 
+$strMM '
+,MM' (
+	keyColumnNN 
+:NN 
+$strNN 
+,NN  
+keyValueOO 
+:OO 
+newOO 
+GuidOO "
+(OO" #
+$strOO# I
+)OOI J
+)OOJ K
+;OOK L
+migrationBuilderQQ 
+.QQ 
+
+DeleteDataQQ '
+(QQ' (
+tableRR 
+:RR 
+$strRR '
+,RR' (
+	keyColumnSS 
+:SS 
+$strSS 
+,SS  
+keyValueTT 
+:TT 
+newTT 
+GuidTT "
+(TT" #
+$strTT# I
+)TTI J
+)TTJ K
+;TTK L
+migrationBuilderVV 
+.VV 
+
+DeleteDataVV '
+(VV' (
+tableWW 
+:WW 
+$strWW '
+,WW' (
+	keyColumnXX 
+:XX 
+$strXX 
+,XX  
+keyValueYY 
+:YY 
+newYY 
+GuidYY "
+(YY" #
+$strYY# I
+)YYI J
+)YYJ K
+;YYK L
+migrationBuilder[[ 
+.[[ 
+
+DeleteData[[ '
+([[' (
+table\\ 
+:\\ 
+$str\\ '
+,\\' (
+	keyColumn]] 
+:]] 
+$str]] 
+,]]  
+keyValue^^ 
+:^^ 
+new^^ 
+Guid^^ "
+(^^" #
+$str^^# I
+)^^I J
+)^^J K
+;^^K L
+migrationBuilder`` 
+.`` 
+
+DeleteData`` '
+(``' (
+tableaa 
+:aa 
+$straa '
+,aa' (
+	keyColumnbb 
+:bb 
+$strbb 
+,bb  
+keyValuecc 
+:cc 
+newcc 
+Guidcc "
+(cc" #
+$strcc# I
+)ccI J
+)ccJ K
+;ccK L
+migrationBuilderee 
+.ee 
+AlterColumnee (
+<ee( )
+Guidee) -
+>ee- .
+(ee. /
+nameff 
+:ff 
+$strff !
+,ff! "
+tablegg 
+:gg 
+$strgg '
+,gg' (
+typehh 
+:hh 
+$strhh (
+,hh( )
+nullableii 
+:ii 
+falseii 
+,ii  
+defaultValuejj 
+:jj 
+newjj !
+Guidjj" &
+(jj& '
+$strjj' M
+)jjM N
+,jjN O
+
+oldClrTypekk 
+:kk 
+typeofkk "
+(kk" #
+Guidkk# '
+)kk' (
+,kk( )
+oldTypell 
+:ll 
+$strll +
+,ll+ ,
+oldNullablemm 
+:mm 
+truemm !
+)mm! "
+;mm" #
+migrationBuilderoo 
+.oo 
+AlterColumnoo (
+<oo( )
+Guidoo) -
+>oo- .
+(oo. /
+namepp 
+:pp 
+$strpp  
+,pp  !
+tableqq 
+:qq 
+$strqq '
+,qq' (
+typerr 
+:rr 
+$strrr (
+,rr( )
+nullabless 
+:ss 
+falsess 
+,ss  
+defaultValuett 
+:tt 
+newtt !
+Guidtt" &
+(tt& '
+$strtt' M
+)ttM N
+,ttN O
+
+oldClrTypeuu 
+:uu 
+typeofuu "
+(uu" #
+Guiduu# '
+)uu' (
+,uu( )
+oldTypevv 
+:vv 
+$strvv +
+,vv+ ,
+oldNullableww 
+:ww 
+trueww !
+)ww! "
+;ww" #
+migrationBuilderyy 
+.yy 
+AlterColumnyy (
+<yy( )
+Guidyy) -
+>yy- .
+(yy. /
+namezz 
+:zz 
+$strzz 
+,zz  
+table{{ 
+:{{ 
+$str{{ '
+,{{' (
+type|| 
+:|| 
+$str|| (
+,||( )
+nullable}} 
+:}} 
+false}} 
+,}}  
+defaultValue~~ 
+:~~ 
+new~~ !
+Guid~~" &
+(~~& '
+$str~~' M
+)~~M N
+,~~N O
+
+oldClrType 
+: 
+typeof "
+(" #
+Guid# '
+)' (
+,( )
+oldType
+ÄÄ 
+:
+ÄÄ 
+$str
+ÄÄ +
+,
+ÄÄ+ ,
+oldNullable
+ÅÅ 
+:
+ÅÅ 
+true
+ÅÅ !
+)
+ÅÅ! "
+;
+ÅÅ" #
+migrationBuilder
+ÉÉ 
+.
+ÉÉ 
+AlterColumn
+ÉÉ (
+<
+ÉÉ( )
+Guid
+ÉÉ) -
+>
+ÉÉ- .
+(
+ÉÉ. /
+name
+ÑÑ 
+:
+ÑÑ 
+$str
+ÑÑ  
+,
+ÑÑ  !
+table
+ÖÖ 
+:
+ÖÖ 
+$str
+ÖÖ '
+,
+ÖÖ' (
+type
+ÜÜ 
+:
+ÜÜ 
+$str
+ÜÜ (
+,
+ÜÜ( )
+nullable
+áá 
+:
+áá 
+false
+áá 
+,
+áá  
+defaultValue
+àà 
+:
+àà 
+new
+àà !
+Guid
+àà" &
+(
+àà& '
+$str
+àà' M
+)
+ààM N
+,
+ààN O
+
+oldClrType
+ââ 
+:
+ââ 
+typeof
+ââ "
+(
+ââ" #
+Guid
+ââ# '
+)
+ââ' (
+,
+ââ( )
+oldType
+ää 
+:
+ää 
+$str
+ää +
+,
+ää+ ,
+oldNullable
+ãã 
+:
+ãã 
+true
+ãã !
+)
+ãã! "
+;
+ãã" #
+migrationBuilder
+çç 
+.
+çç 
+AlterColumn
+çç (
+<
+çç( )
+Guid
+çç) -
+>
+çç- .
+(
+çç. /
+name
+éé 
+:
+éé 
+$str
+éé "
+,
+éé" #
+table
+èè 
+:
+èè 
+$str
+èè '
+,
+èè' (
+type
+êê 
+:
+êê 
+$str
+êê (
+,
+êê( )
+nullable
+ëë 
+:
+ëë 
+false
+ëë 
+,
+ëë  
+defaultValue
+íí 
+:
+íí 
+new
+íí !
+Guid
+íí" &
+(
+íí& '
+$str
+íí' M
+)
+ííM N
+,
+ííN O
+
+oldClrType
+ìì 
+:
+ìì 
+typeof
+ìì "
+(
+ìì" #
+Guid
+ìì# '
+)
+ìì' (
+,
+ìì( )
+oldType
+îî 
+:
+îî 
+$str
+îî +
+,
+îî+ ,
+oldNullable
+ïï 
+:
+ïï 
+true
+ïï !
+)
+ïï! "
+;
+ïï" #
+migrationBuilder
+óó 
+.
+óó 
+
+UpdateData
+óó '
+(
+óó' (
+table
+òò 
+:
+òò 
+$str
+òò $
+,
+òò$ %
+	keyColumn
+ôô 
+:
+ôô 
+$str
+ôô 
+,
+ôô  
+keyValue
+öö 
+:
+öö 
+$str
+öö +
+,
+öö+ ,
+columns
+õõ 
+:
+õõ 
+new
+õõ 
+[
+õõ 
+]
+õõ 
+{
+õõ  
+$str
+õõ! 3
+,
+õõ3 4
+$str
+õõ5 A
+,
+õõA B
+$str
+õõC Q
+,
+õõQ R
+$str
+õõS b
+}
+õõc d
+,
+õõd e
+values
+úú 
+:
+úú 
+new
+úú 
+object
+úú "
+[
+úú" #
+]
+úú# $
+{
+úú% &
+$str
+úú' M
+,
+úúM N
+new
+úúO R
+DateTime
+úúS [
+(
+úú[ \
+$num
+úú\ `
+,
+úú` a
+$num
+úúb c
+,
+úúc d
+$num
+úúe g
+,
+úúg h
+$num
+úúi j
+,
+úúj k
+$num
+úúl n
+,
+úún o
+$num
+úúp r
+,
+úúr s
+$num
+úút w
+,
+úúw x
+DateTimeKindúúy Ö
+.úúÖ Ü
+UtcúúÜ â
+)úúâ ä
+.úúä ã
+AddTicksúúã ì
+(úúì î
+$numúúî ò
+)úúò ô
+,úúô ö
+$strúúõ Ò
+,úúÒ Ú
+$strúúÛ ô
+}úúö õ
+)úúõ ú
+;úúú ù
+migrationBuilder
+ûû 
+.
+ûû 
+
+InsertData
+ûû '
+(
+ûû' (
+table
+üü 
+:
+üü 
+$str
+üü '
+,
+üü' (
+columns
+†† 
+:
+†† 
+new
+†† 
+[
+†† 
+]
+†† 
+{
+††  
+$str
+††! %
+,
+††% &
+$str
+††' 4
+,
+††4 5
+$str
+††6 D
+,
+††D E
+$str
+††F P
+,
+††P Q
+$str
+††R ]
+,
+††] ^
+$str
+††_ l
+,
+††l m
+$str
+††n }
+,
+††} ~
+$str†† â
+,††â ä
+$str††ã †
+,††† °
+$str††¢ ±
+,††± ≤
+$str††≥ ¬
+,††¬ √
+$str††ƒ —
+,††— “
+$str††” ﬂ
+,††ﬂ ‡
+$str††· È
+,††È Í
+$str††Î ¯
+,††¯ ˘
+$str††˙ à
+,††à â
+$str††ä ï
+,††ï ñ
+$str††ó §
+}††• ¶
+,††¶ ß
+values
+°° 
+:
+°° 
+new
+°° 
+object
+°° "
+[
+°°" #
+,
+°°# $
+]
+°°$ %
+{
+¢¢ 
+{
+££ 
+new
+££ 
+Guid
+££ 
+(
+££ 
+$str
+££ E
+)
+££E F
+,
+££F G
+$str££H Ñ
+,££Ñ Ö
+$str££Ü ¿
+,££¿ ¡
+$str££¬ “
+,££“ ”
+null££‘ ÿ
+,££ÿ Ÿ
+null££⁄ ﬁ
+,££ﬁ ﬂ
+$str££‡ ë
+,££ë í
+$str££ì ú
+,££ú ù
+$str££û ∑
+,££∑ ∏
+$str££π ¡
+,££¡ ¬
+$str££√ Õ
+,££Õ Œ
+$str££œ Î
+,££Î Ï
+$str££Ì ˙
+,££˙ ˚
+$num££¸ ˝
+,££˝ ˛
+$str££ˇ ê
+,££ê ë
+$str££í °
+,££° ¢
+null£££ ß
+,££ß ®
+null££© ≠
+}££Æ Ø
+,££Ø ∞
+{
+§§ 
+new
+§§ 
+Guid
+§§ 
+(
+§§ 
+$str
+§§ E
+)
+§§E F
+,
+§§F G
+$str§§H ®
+,§§® ©
+$str§§™ ÿ
+,§§ÿ Ÿ
+$str§§⁄ ‰
+,§§‰ Â
+null§§Ê Í
+,§§Í Î
+null§§Ï 
+,§§ Ò
+$str§§Ú £
+,§§£ §
+$str§§• Æ
+,§§Æ Ø
+$str§§∞  
+,§§  À
+$str§§Ã Û
+,§§Û Ù
+$str§§ı ˇ
+,§§ˇ Ä
+$str§§Å ù
+,§§ù û
+$str§§ü ¨
+,§§¨ ≠
+$num§§Æ Ø
+,§§Ø ∞
+$str§§± ∆
+,§§∆ «
+$str§§» ÿ
+,§§ÿ Ÿ
+null§§⁄ ﬁ
+,§§ﬁ ﬂ
+null§§‡ ‰
+}§§Â Ê
+,§§Ê Á
+{
+•• 
+new
+•• 
+Guid
+•• 
+(
+•• 
+$str
+•• E
+)
+••E F
+,
+••F G
+$str••H û
+,••û ü
+$str••† ≈
+,••≈ ∆
+$str••« œ
+,••œ –
+null••— ’
+,••’ ÷
+null••◊ €
+,••€ ‹
+$str••› é
+,••é è
+$str••ê ô
+,••ô ö
+$str••õ µ
+,••µ ∂
+$str••∑ œ
+,••œ –
+$str••— €
+,••€ ‹
+$str••› ˘
+,••˘ ˙
+$str••˚ à
+,••à â
+$num••ä ã
+,••ã å
+$str••ç ¢
+,••¢ £
+$str••§ µ
+,••µ ∂
+null••∑ ª
+,••ª º
+null••Ω ¡
+}••¬ √
+,••√ ƒ
+{
+¶¶ 
+new
+¶¶ 
+Guid
+¶¶ 
+(
+¶¶ 
+$str
+¶¶ E
+)
+¶¶E F
+,
+¶¶F G
+$str¶¶H ë
+,¶¶ë í
+$str¶¶ì Õ
+,¶¶Õ Œ
+$str¶¶œ ·
+,¶¶· ‚
+null¶¶„ Á
+,¶¶Á Ë
+null¶¶È Ì
+,¶¶Ì Ó
+$str¶¶Ô †
+,¶¶† °
+$str¶¶¢ ´
+,¶¶´ ¨
+$str¶¶≠ ∆
+,¶¶∆ «
+$str¶¶» –
+,¶¶– —
+$str¶¶“ ‹
+,¶¶‹ ›
+$str¶¶ﬁ ˙
+,¶¶˙ ˚
+$str¶¶¸ â
+,¶¶â ä
+$num¶¶ã å
+,¶¶å ç
+$str¶¶é π
+,¶¶π ∫
+$str¶¶ª “
+,¶¶“ ”
+null¶¶‘ ÿ
+,¶¶ÿ Ÿ
+null¶¶⁄ ﬁ
+}¶¶ﬂ ‡
+,¶¶‡ ·
+{
+ßß 
+new
+ßß 
+Guid
+ßß 
+(
+ßß 
+$str
+ßß E
+)
+ßßE F
+,
+ßßF G
+$str
+ßßH s
+,
+ßßs t
+$strßßu ô
+,ßßô ö
+$strßßõ •
+,ßß• ¶
+nullßßß ´
+,ßß´ ¨
+nullßß≠ ±
+,ßß± ≤
+$strßß≥ ˘
+,ßß˘ ˙
+$strßß˚ Ñ
+,ßßÑ Ö
+$strßßÜ ü
+,ßßü †
+$strßß° Œ
+,ßßŒ œ
+$strßß– ‹
+,ßß‹ ›
+$strßßﬁ ˙
+,ßß˙ ˚
+$strßß¸ â
+,ßßâ ä
+$numßßã å
+,ßßå ç
+$strßßé ª
+,ßßª º
+$strßßΩ ›
+,ßß› ﬁ
+nullßßﬂ „
+,ßß„ ‰
+nullßßÂ È
+}ßßÍ Î
+,ßßÎ Ï
+{
+®® 
+new
+®® 
+Guid
+®® 
+(
+®® 
+$str
+®® E
+)
+®®E F
+,
+®®F G
+$str®®H Ã
+,®®Ã Õ
+$str®®Œ à
+,®®à â
+$str®®ä ö
+,®®ö õ
+null®®ú †
+,®®† °
+null®®¢ ¶
+,®®¶ ß
+$str®®® Ÿ
+,®®Ÿ ⁄
+$str®®€ ‰
+,®®‰ Â
+$str®®Ê ˇ
+,®®ˇ Ä
+$str®®Å â
+,®®â ä
+$str®®ã ï
+,®®ï ñ
+$str®®ó ≥
+,®®≥ ¥
+$str®®µ ¬
+,®®¬ √
+$num®®ƒ ≈
+,®®≈ ∆
+$str®®« ﬂ
+,®®ﬂ ‡
+$str®®· ˆ
+,®®ˆ ˜
+null®®¯ ¸
+,®®¸ ˝
+null®®˛ Ç
+}®®É Ñ
+,®®Ñ Ö
+{
+©© 
+new
+©© 
+Guid
+©© 
+(
+©© 
+$str
+©© E
+)
+©©E F
+,
+©©F G
+$str©©H ∞
+,©©∞ ±
+$str©©≤ Ï
+,©©Ï Ì
+$str©©Ó ˜
+,©©˜ ¯
+null©©˘ ˝
+,©©˝ ˛
+null©©ˇ É
+,©©É Ñ
+$str©©Ö ∂
+,©©∂ ∑
+$str©©∏ ¡
+,©©¡ ¬
+$str©©√ ‹
+,©©‹ ›
+$str©©ﬁ ˘
+,©©˘ ˙
+$str©©˚ Ö
+,©©Ö Ü
+$str©©á £
+,©©£ §
+$str©©• ≤
+,©©≤ ≥
+$num©©¥ µ
+,©©µ ∂
+$str©©∑ À
+,©©À Ã
+$str©©Õ €
+,©©€ ‹
+null©©› ·
+,©©· ‚
+null©©„ Á
+}©©Ë È
+,©©È Í
+{
+™™ 
+new
+™™ 
+Guid
+™™ 
+(
+™™ 
+$str
+™™ E
+)
+™™E F
+,
+™™F G
+$str™™H æ
+,™™æ ø
+$str™™¿ ù
+,™™ù û
+$str™™ü ©
+,™™© ™
+null™™´ Ø
+,™™Ø ∞
+null™™± µ
+,™™µ ∂
+$str™™∑ ˚
+,™™˚ ¸
+$str™™˝ Ü
+,™™Ü á
+$str™™à ≠
+,™™≠ Æ
+$str™™Ø ’
+,™™’ ÷
+$str™™◊ ·
+,™™· ‚
+$str™™„ ˇ
+,™™ˇ Ä
+$str™™Å é
+,™™é è
+$num™™ê ë
+,™™ë í
+$str™™ì ®
+,™™® ©
+$str™™™ ø
+,™™ø ¿
+null™™¡ ≈
+,™™≈ ∆
+null™™« À
+}™™Ã Õ
+,™™Õ Œ
+{
+´´ 
+new
+´´ 
+Guid
+´´ 
+(
+´´ 
+$str
+´´ E
+)
+´´E F
+,
+´´F G
+$str´´H è
+,´´è ê
+$str´´ë À
+,´´À Ã
+$str´´Õ ‰
+,´´‰ Â
+null´´Ê Í
+,´´Í Î
+null´´Ï 
+,´´ Ò
+$str´´Ú £
+,´´£ §
+$str´´• Æ
+,´´Æ Ø
+$str´´∞ …
+,´´…  
+$str´´À Ò
+,´´Ò Ú
+$str´´Û ¸
+,´´¸ ˝
+$str´´˛ ö
+,´´ö õ
+$str´´ú ©
+,´´© ™
+$num´´´ ¨
+,´´¨ ≠
+$str´´Æ Œ
+,´´Œ œ
+$str´´– Ë
+,´´Ë È
+null´´Í Ó
+,´´Ó Ô
+null´´ Ù
+}´´ı ˆ
+,´´ˆ ˜
+{
+¨¨ 
+new
+¨¨ 
+Guid
+¨¨ 
+(
+¨¨ 
+$str
+¨¨ E
+)
+¨¨E F
+,
+¨¨F G
+$str¨¨H è
+,¨¨è ê
+$str¨¨ë À
+,¨¨À Ã
+$str¨¨Õ ‰
+,¨¨‰ Â
+null¨¨Ê Í
+,¨¨Í Î
+null¨¨Ï 
+,¨¨ Ò
+$str¨¨Ú £
+,¨¨£ §
+$str¨¨• Æ
+,¨¨Æ Ø
+$str¨¨∞ …
+,¨¨…  
+$str¨¨À Ì
+,¨¨Ì Ó
+$str¨¨Ô ˚
+,¨¨˚ ¸
+$str¨¨˝ ô
+,¨¨ô ö
+$str¨¨õ ®
+,¨¨® ©
+$num¨¨™ ´
+,¨¨´ ¨
+$str¨¨≠ Õ
+,¨¨Õ Œ
+$str¨¨œ Ë
+,¨¨Ë È
+null¨¨Í Ó
+,¨¨Ó Ô
+null¨¨ Ù
+}¨¨ı ˆ
+,¨¨ˆ ˜
+{
+≠≠ 
+new
+≠≠ 
+Guid
+≠≠ 
+(
+≠≠ 
+$str
+≠≠ E
+)
+≠≠E F
+,
+≠≠F G
+$str≠≠H ë
+,≠≠ë í
+$str≠≠ì Õ
+,≠≠Õ Œ
+$str≠≠œ ·
+,≠≠· ‚
+null≠≠„ Á
+,≠≠Á Ë
+null≠≠È Ì
+,≠≠Ì Ó
+$str≠≠Ô †
+,≠≠† °
+$str≠≠¢ ´
+,≠≠´ ¨
+$str≠≠≠ ∆
+,≠≠∆ «
+$str≠≠» Ê
+,≠≠Ê Á
+$str≠≠Ë Ô
+,≠≠Ô 
+$str≠≠Ò ç
+,≠≠ç é
+$str≠≠è ú
+,≠≠ú ù
+$num≠≠û ü
+,≠≠ü †
+$str≠≠° ø
+,≠≠ø ¿
+$str≠≠¡ Â
+,≠≠Â Ê
+null≠≠Á Î
+,≠≠Î Ï
+null≠≠Ì Ò
+}≠≠Ú Û
+,≠≠Û Ù
+{
+ÆÆ 
+new
+ÆÆ 
+Guid
+ÆÆ 
+(
+ÆÆ 
+$str
+ÆÆ E
+)
+ÆÆE F
+,
+ÆÆF G
+$strÆÆH è
+,ÆÆè ê
+$strÆÆë ∫
+,ÆÆ∫ ª
+$strÆÆº  
+,ÆÆ  À
+nullÆÆÃ –
+,ÆÆ– —
+nullÆÆ“ ÷
+,ÆÆ÷ ◊
+$strÆÆÿ â
+,ÆÆâ ä
+$strÆÆã î
+,ÆÆî ï
+$strÆÆñ ¢
+,ÆÆ¢ £
+$strÆÆ§ ¥
+,ÆÆ¥ µ
+$strÆÆ∂ ¿
+,ÆÆ¿ ¡
+$strÆÆ¬ ÿ
+,ÆÆÿ Ÿ
+$strÆÆ⁄ Ê
+,ÆÆÊ Á
+$numÆÆË È
+,ÆÆÈ Í
+$strÆÆÎ ¸
+,ÆÆ¸ ˝
+$strÆÆ˛ ì
+,ÆÆì î
+nullÆÆï ô
+,ÆÆô ö
+nullÆÆõ ü
+}ÆÆ† °
+,ÆÆ° ¢
+{
+ØØ 
+new
+ØØ 
+Guid
+ØØ 
+(
+ØØ 
+$str
+ØØ E
+)
+ØØE F
+,
+ØØF G
+$strØØH ”
+,ØØ” ‘
+$strØØ’ è
+,ØØè ê
+$strØØë ô
+,ØØô ö
+nullØØõ ü
+,ØØü †
+nullØØ° •
+,ØØ• ¶
+$strØØß ÿ
+,ØØÿ Ÿ
+$strØØ⁄ „
+,ØØ„ ‰
+$strØØÂ °
+,ØØ° ¢
+$strØØ£ ∑
+,ØØ∑ ∏
+$strØØπ √
+,ØØ√ ƒ
+$strØØ≈ ·
+,ØØ· ‚
+$strØØ„ 
+,ØØ Ò
+$numØØÚ Û
+,ØØÛ Ù
+$strØØı ñ
+,ØØñ ó
+$strØØò π
+,ØØπ ∫
+nullØØª ø
+,ØØø ¿
+nullØØ¡ ≈
+}ØØ∆ «
+}
+∞∞ 
+)
+∞∞ 
+;
+∞∞ 
+migrationBuilder
+≤≤ 
+.
+≤≤ 
+AddForeignKey
+≤≤ *
+(
+≤≤* +
+name
+≥≥ 
+:
+≥≥ 
+$str
+≥≥ ?
+,
+≥≥? @
+table
+¥¥ 
+:
+¥¥ 
+$str
+¥¥ '
+,
+¥¥' (
+column
+µµ 
+:
+µµ 
+$str
+µµ $
+,
+µµ$ %
+principalTable
+∂∂ 
+:
+∂∂ 
+$str
+∂∂  ,
+,
+∂∂, -
+principalColumn
+∑∑ 
+:
+∑∑  
+$str
+∑∑! %
+,
+∑∑% &
+onDelete
+∏∏ 
+:
+∏∏ 
+ReferentialAction
+∏∏ +
+.
+∏∏+ ,
+Cascade
+∏∏, 3
+)
+∏∏3 4
+;
+∏∏4 5
+migrationBuilder
+∫∫ 
+.
+∫∫ 
+AddForeignKey
+∫∫ *
+(
+∫∫* +
+name
+ªª 
+:
+ªª 
+$str
+ªª :
+,
+ªª: ;
+table
+ºº 
+:
+ºº 
+$str
+ºº '
+,
+ºº' (
+column
+ΩΩ 
+:
+ΩΩ 
+$str
+ΩΩ "
+,
+ΩΩ" #
+principalTable
+ææ 
+:
+ææ 
+$str
+ææ  )
+,
+ææ) *
+principalColumn
+øø 
+:
+øø  
+$str
+øø! %
+,
+øø% &
+onDelete
+¿¿ 
+:
+¿¿ 
+ReferentialAction
+¿¿ +
+.
+¿¿+ ,
+Cascade
+¿¿, 3
+)
+¿¿3 4
+;
+¿¿4 5
+migrationBuilder
+¬¬ 
+.
+¬¬ 
+AddForeignKey
+¬¬ *
+(
+¬¬* +
+name
+√√ 
+:
+√√ 
+$str
+√√ 8
+,
+√√8 9
+table
+ƒƒ 
+:
+ƒƒ 
+$str
+ƒƒ '
+,
+ƒƒ' (
+column
+≈≈ 
+:
+≈≈ 
+$str
+≈≈ !
+,
+≈≈! "
+principalTable
+∆∆ 
+:
+∆∆ 
+$str
+∆∆  (
+,
+∆∆( )
+principalColumn
+«« 
+:
+««  
+$str
+««! %
+,
+««% &
+onDelete
+»» 
+:
+»» 
+ReferentialAction
+»» +
+.
+»»+ ,
+Cascade
+»», 3
+)
+»»3 4
+;
+»»4 5
+migrationBuilder
+   
+.
+   
+AddForeignKey
+   *
+(
+  * +
+name
+ÀÀ 
+:
+ÀÀ 
+$str
+ÀÀ :
+,
+ÀÀ: ;
+table
+ÃÃ 
+:
+ÃÃ 
+$str
+ÃÃ '
+,
+ÃÃ' (
+column
+ÕÕ 
+:
+ÕÕ 
+$str
+ÕÕ "
+,
+ÕÕ" #
+principalTable
+ŒŒ 
+:
+ŒŒ 
+$str
+ŒŒ  )
+,
+ŒŒ) *
+principalColumn
+œœ 
+:
+œœ  
+$str
+œœ! %
+,
+œœ% &
+onDelete
+–– 
+:
+–– 
+ReferentialAction
+–– +
+.
+––+ ,
+Cascade
+––, 3
+)
+––3 4
+;
+––4 5
+migrationBuilder
+““ 
+.
+““ 
+AddForeignKey
+““ *
+(
+““* +
+name
+”” 
+:
+”” 
+$str
+”” <
+,
+””< =
+table
+‘‘ 
+:
+‘‘ 
+$str
+‘‘ '
+,
+‘‘' (
+column
+’’ 
+:
+’’ 
+$str
+’’ #
+,
+’’# $
+principalTable
+÷÷ 
+:
+÷÷ 
+$str
+÷÷  *
+,
+÷÷* +
+principalColumn
+◊◊ 
+:
+◊◊  
+$str
+◊◊! ,
+,
+◊◊, -
+onDelete
+ÿÿ 
+:
+ÿÿ 
+ReferentialAction
+ÿÿ +
+.
+ÿÿ+ ,
+Cascade
+ÿÿ, 3
+)
+ÿÿ3 4
+;
+ÿÿ4 5
+}
+ŸŸ 	
+	protected
+‹‹ 
+override
+‹‹ 
+void
+‹‹ 
+Down
+‹‹  $
+(
+‹‹$ %
+MigrationBuilder
+‹‹% 5
+migrationBuilder
+‹‹6 F
+)
+‹‹F G
+{
+›› 	
+migrationBuilder
+ﬁﬁ 
+.
+ﬁﬁ 
+DropForeignKey
+ﬁﬁ +
+(
+ﬁﬁ+ ,
+name
+ﬂﬂ 
+:
+ﬂﬂ 
+$str
+ﬂﬂ ?
+,
+ﬂﬂ? @
+table
+‡‡ 
+:
+‡‡ 
+$str
+‡‡ '
+)
+‡‡' (
+;
+‡‡( )
+migrationBuilder
+‚‚ 
+.
+‚‚ 
+DropForeignKey
+‚‚ +
+(
+‚‚+ ,
+name
+„„ 
+:
+„„ 
+$str
+„„ :
+,
+„„: ;
+table
+‰‰ 
+:
+‰‰ 
+$str
+‰‰ '
+)
+‰‰' (
+;
+‰‰( )
+migrationBuilder
+ÊÊ 
+.
+ÊÊ 
+DropForeignKey
+ÊÊ +
+(
+ÊÊ+ ,
+name
+ÁÁ 
+:
+ÁÁ 
+$str
+ÁÁ 8
+,
+ÁÁ8 9
+table
+ËË 
+:
+ËË 
+$str
+ËË '
+)
+ËË' (
+;
+ËË( )
+migrationBuilder
+ÍÍ 
+.
+ÍÍ 
+DropForeignKey
+ÍÍ +
+(
+ÍÍ+ ,
+name
+ÎÎ 
+:
+ÎÎ 
+$str
+ÎÎ :
+,
+ÎÎ: ;
+table
+ÏÏ 
+:
+ÏÏ 
+$str
+ÏÏ '
+)
+ÏÏ' (
+;
+ÏÏ( )
+migrationBuilder
+ÓÓ 
+.
+ÓÓ 
+DropForeignKey
+ÓÓ +
+(
+ÓÓ+ ,
+name
+ÔÔ 
+:
+ÔÔ 
+$str
+ÔÔ <
+,
+ÔÔ< =
+table
+ 
+:
+ 
+$str
+ '
+)
+' (
+;
+( )
+migrationBuilder
+ÚÚ 
+.
+ÚÚ 
+
+DeleteData
+ÚÚ '
+(
+ÚÚ' (
+table
+ÛÛ 
+:
+ÛÛ 
+$str
+ÛÛ '
+,
+ÛÛ' (
+	keyColumn
+ÙÙ 
+:
+ÙÙ 
+$str
+ÙÙ 
+,
+ÙÙ  
+keyValue
+ıı 
+:
+ıı 
+new
+ıı 
+Guid
+ıı "
+(
+ıı" #
+$str
+ıı# I
+)
+ııI J
+)
+ııJ K
+;
+ııK L
+migrationBuilder
+˜˜ 
+.
+˜˜ 
+
+DeleteData
+˜˜ '
+(
+˜˜' (
+table
+¯¯ 
+:
+¯¯ 
+$str
+¯¯ '
+,
+¯¯' (
+	keyColumn
+˘˘ 
+:
+˘˘ 
+$str
+˘˘ 
+,
+˘˘  
+keyValue
+˙˙ 
+:
+˙˙ 
+new
+˙˙ 
+Guid
+˙˙ "
+(
+˙˙" #
+$str
+˙˙# I
+)
+˙˙I J
+)
+˙˙J K
+;
+˙˙K L
+migrationBuilder
+¸¸ 
+.
+¸¸ 
+
+DeleteData
+¸¸ '
+(
+¸¸' (
+table
+˝˝ 
+:
+˝˝ 
+$str
+˝˝ '
+,
+˝˝' (
+	keyColumn
+˛˛ 
+:
+˛˛ 
+$str
+˛˛ 
+,
+˛˛  
+keyValue
+ˇˇ 
+:
+ˇˇ 
+new
+ˇˇ 
+Guid
+ˇˇ "
+(
+ˇˇ" #
+$str
+ˇˇ# I
+)
+ˇˇI J
+)
+ˇˇJ K
+;
+ˇˇK L
+migrationBuilder
+ÅÅ 
+.
+ÅÅ 
+
+DeleteData
+ÅÅ '
+(
+ÅÅ' (
+table
+ÇÇ 
+:
+ÇÇ 
+$str
+ÇÇ '
+,
+ÇÇ' (
+	keyColumn
+ÉÉ 
+:
+ÉÉ 
+$str
+ÉÉ 
+,
+ÉÉ  
+keyValue
+ÑÑ 
+:
+ÑÑ 
+new
+ÑÑ 
+Guid
+ÑÑ "
+(
+ÑÑ" #
+$str
+ÑÑ# I
+)
+ÑÑI J
+)
+ÑÑJ K
+;
+ÑÑK L
+migrationBuilder
+ÜÜ 
+.
+ÜÜ 
+
+DeleteData
+ÜÜ '
+(
+ÜÜ' (
+table
+áá 
+:
+áá 
+$str
+áá '
+,
+áá' (
+	keyColumn
+àà 
+:
+àà 
+$str
+àà 
+,
+àà  
+keyValue
+ââ 
+:
+ââ 
+new
+ââ 
+Guid
+ââ "
+(
+ââ" #
+$str
+ââ# I
+)
+ââI J
+)
+ââJ K
+;
+ââK L
+migrationBuilder
+ãã 
+.
+ãã 
+
+DeleteData
+ãã '
+(
+ãã' (
+table
+åå 
+:
+åå 
+$str
+åå '
+,
+åå' (
+	keyColumn
+çç 
+:
+çç 
+$str
+çç 
+,
+çç  
+keyValue
+éé 
+:
+éé 
+new
+éé 
+Guid
+éé "
+(
+éé" #
+$str
+éé# I
+)
+ééI J
+)
+ééJ K
+;
+ééK L
+migrationBuilder
+êê 
+.
+êê 
+
+DeleteData
+êê '
+(
+êê' (
+table
+ëë 
+:
+ëë 
+$str
+ëë '
+,
+ëë' (
+	keyColumn
+íí 
+:
+íí 
+$str
+íí 
+,
+íí  
+keyValue
+ìì 
+:
+ìì 
+new
+ìì 
+Guid
+ìì "
+(
+ìì" #
+$str
+ìì# I
+)
+ììI J
+)
+ììJ K
+;
+ììK L
+migrationBuilder
+ïï 
+.
+ïï 
+
+DeleteData
+ïï '
+(
+ïï' (
+table
+ññ 
+:
+ññ 
+$str
+ññ '
+,
+ññ' (
+	keyColumn
+óó 
+:
+óó 
+$str
+óó 
+,
+óó  
+keyValue
+òò 
+:
+òò 
+new
+òò 
+Guid
+òò "
+(
+òò" #
+$str
+òò# I
+)
+òòI J
+)
+òòJ K
+;
+òòK L
+migrationBuilder
+öö 
+.
+öö 
+
+DeleteData
+öö '
+(
+öö' (
+table
+õõ 
+:
+õõ 
+$str
+õõ '
+,
+õõ' (
+	keyColumn
+úú 
+:
+úú 
+$str
+úú 
+,
+úú  
+keyValue
+ùù 
+:
+ùù 
+new
+ùù 
+Guid
+ùù "
+(
+ùù" #
+$str
+ùù# I
+)
+ùùI J
+)
+ùùJ K
+;
+ùùK L
+migrationBuilder
+üü 
+.
+üü 
+
+DeleteData
+üü '
+(
+üü' (
+table
+†† 
+:
+†† 
+$str
+†† '
+,
+††' (
+	keyColumn
+°° 
+:
+°° 
+$str
+°° 
+,
+°°  
+keyValue
+¢¢ 
+:
+¢¢ 
+new
+¢¢ 
+Guid
+¢¢ "
+(
+¢¢" #
+$str
+¢¢# I
+)
+¢¢I J
+)
+¢¢J K
+;
+¢¢K L
+migrationBuilder
+§§ 
+.
+§§ 
+
+DeleteData
+§§ '
+(
+§§' (
+table
+•• 
+:
+•• 
+$str
+•• '
+,
+••' (
+	keyColumn
+¶¶ 
+:
+¶¶ 
+$str
+¶¶ 
+,
+¶¶  
+keyValue
+ßß 
+:
+ßß 
+new
+ßß 
+Guid
+ßß "
+(
+ßß" #
+$str
+ßß# I
+)
+ßßI J
+)
+ßßJ K
+;
+ßßK L
+migrationBuilder
+©© 
+.
+©© 
+
+DeleteData
+©© '
+(
+©©' (
+table
+™™ 
+:
+™™ 
+$str
+™™ '
+,
+™™' (
+	keyColumn
+´´ 
+:
+´´ 
+$str
+´´ 
+,
+´´  
+keyValue
+¨¨ 
+:
+¨¨ 
+new
+¨¨ 
+Guid
+¨¨ "
+(
+¨¨" #
+$str
+¨¨# I
+)
+¨¨I J
+)
+¨¨J K
+;
+¨¨K L
+migrationBuilder
+ÆÆ 
+.
+ÆÆ 
+
+DeleteData
+ÆÆ '
+(
+ÆÆ' (
+table
+ØØ 
+:
+ØØ 
+$str
+ØØ '
+,
+ØØ' (
+	keyColumn
+∞∞ 
+:
+∞∞ 
+$str
+∞∞ 
+,
+∞∞  
+keyValue
+±± 
+:
+±± 
+new
+±± 
+Guid
+±± "
+(
+±±" #
+$str
+±±# I
+)
+±±I J
+)
+±±J K
+;
+±±K L
+migrationBuilder
+≥≥ 
+.
+≥≥ 
+AlterColumn
+≥≥ (
+<
+≥≥( )
+Guid
+≥≥) -
+>
+≥≥- .
+(
+≥≥. /
+name
+¥¥ 
+:
+¥¥ 
+$str
+¥¥ !
+,
+¥¥! "
+table
+µµ 
+:
+µµ 
+$str
+µµ '
+,
+µµ' (
+type
+∂∂ 
+:
+∂∂ 
+$str
+∂∂ (
+,
+∂∂( )
+nullable
+∑∑ 
+:
+∑∑ 
+true
+∑∑ 
+,
+∑∑ 
+
+oldClrType
+∏∏ 
+:
+∏∏ 
+typeof
+∏∏ "
+(
+∏∏" #
+Guid
+∏∏# '
+)
+∏∏' (
+,
+∏∏( )
+oldType
+ππ 
+:
+ππ 
+$str
+ππ +
+)
+ππ+ ,
+;
+ππ, -
+migrationBuilder
+ªª 
+.
+ªª 
+AlterColumn
+ªª (
+<
+ªª( )
+Guid
+ªª) -
+>
+ªª- .
+(
+ªª. /
+name
+ºº 
+:
+ºº 
+$str
+ºº  
+,
+ºº  !
+table
+ΩΩ 
+:
+ΩΩ 
+$str
+ΩΩ '
+,
+ΩΩ' (
+type
+ææ 
+:
+ææ 
+$str
+ææ (
+,
+ææ( )
+nullable
+øø 
+:
+øø 
+true
+øø 
+,
+øø 
+
+oldClrType
+¿¿ 
+:
+¿¿ 
+typeof
+¿¿ "
+(
+¿¿" #
+Guid
+¿¿# '
+)
+¿¿' (
+,
+¿¿( )
+oldType
+¡¡ 
+:
+¡¡ 
+$str
+¡¡ +
+)
+¡¡+ ,
+;
+¡¡, -
+migrationBuilder
+√√ 
+.
+√√ 
+AlterColumn
+√√ (
+<
+√√( )
+Guid
+√√) -
+>
+√√- .
+(
+√√. /
+name
+ƒƒ 
+:
+ƒƒ 
+$str
+ƒƒ 
+,
+ƒƒ  
+table
+≈≈ 
+:
+≈≈ 
+$str
+≈≈ '
+,
+≈≈' (
+type
+∆∆ 
+:
+∆∆ 
+$str
+∆∆ (
+,
+∆∆( )
+nullable
+«« 
+:
+«« 
+true
+«« 
+,
+«« 
+
+oldClrType
+»» 
+:
+»» 
+typeof
+»» "
+(
+»»" #
+Guid
+»»# '
+)
+»»' (
+,
+»»( )
+oldType
+…… 
+:
+…… 
+$str
+…… +
+)
+……+ ,
+;
+……, -
+migrationBuilder
+ÀÀ 
+.
+ÀÀ 
+AlterColumn
+ÀÀ (
+<
+ÀÀ( )
+Guid
+ÀÀ) -
+>
+ÀÀ- .
+(
+ÀÀ. /
+name
+ÃÃ 
+:
+ÃÃ 
+$str
+ÃÃ  
+,
+ÃÃ  !
+table
+ÕÕ 
+:
+ÕÕ 
+$str
+ÕÕ '
+,
+ÕÕ' (
+type
+ŒŒ 
+:
+ŒŒ 
+$str
+ŒŒ (
+,
+ŒŒ( )
+nullable
+œœ 
+:
+œœ 
+true
+œœ 
+,
+œœ 
+
+oldClrType
+–– 
+:
+–– 
+typeof
+–– "
+(
+––" #
+Guid
+––# '
+)
+––' (
+,
+––( )
+oldType
+—— 
+:
+—— 
+$str
+—— +
+)
+——+ ,
+;
+——, -
+migrationBuilder
+”” 
+.
+”” 
+AlterColumn
+”” (
+<
+””( )
+Guid
+””) -
+>
+””- .
+(
+””. /
+name
+‘‘ 
+:
+‘‘ 
+$str
+‘‘ "
+,
+‘‘" #
+table
+’’ 
+:
+’’ 
+$str
+’’ '
+,
+’’' (
+type
+÷÷ 
+:
+÷÷ 
+$str
+÷÷ (
+,
+÷÷( )
+nullable
+◊◊ 
+:
+◊◊ 
+true
+◊◊ 
+,
+◊◊ 
+
+oldClrType
+ÿÿ 
+:
+ÿÿ 
+typeof
+ÿÿ "
+(
+ÿÿ" #
+Guid
+ÿÿ# '
+)
+ÿÿ' (
+,
+ÿÿ( )
+oldType
+ŸŸ 
+:
+ŸŸ 
+$str
+ŸŸ +
+)
+ŸŸ+ ,
+;
+ŸŸ, -
+migrationBuilder
+€€ 
+.
+€€ 
+
+UpdateData
+€€ '
+(
+€€' (
+table
+‹‹ 
+:
+‹‹ 
+$str
+‹‹ $
+,
+‹‹$ %
+	keyColumn
+›› 
+:
+›› 
+$str
+›› 
+,
+››  
+keyValue
+ﬁﬁ 
+:
+ﬁﬁ 
+$str
+ﬁﬁ +
+,
+ﬁﬁ+ ,
+columns
+ﬂﬂ 
+:
+ﬂﬂ 
+new
+ﬂﬂ 
+[
+ﬂﬂ 
+]
+ﬂﬂ 
+{
+ﬂﬂ  
+$str
+ﬂﬂ! 3
+,
+ﬂﬂ3 4
+$str
+ﬂﬂ5 A
+,
+ﬂﬂA B
+$str
+ﬂﬂC Q
+,
+ﬂﬂQ R
+$str
+ﬂﬂS b
+}
+ﬂﬂc d
+,
+ﬂﬂd e
+values
+‡‡ 
+:
+‡‡ 
+new
+‡‡ 
+object
+‡‡ "
+[
+‡‡" #
+]
+‡‡# $
+{
+‡‡% &
+$str
+‡‡' M
+,
+‡‡M N
+new
+‡‡O R
+DateTime
+‡‡S [
+(
+‡‡[ \
+$num
+‡‡\ `
+,
+‡‡` a
+$num
+‡‡b c
+,
+‡‡c d
+$num
+‡‡e g
+,
+‡‡g h
+$num
+‡‡i j
+,
+‡‡j k
+$num
+‡‡l m
+,
+‡‡m n
+$num
+‡‡o q
+,
+‡‡q r
+$num
+‡‡s v
+,
+‡‡v w
+DateTimeKind‡‡x Ñ
+.‡‡Ñ Ö
+Utc‡‡Ö à
+)‡‡à â
+.‡‡â ä
+AddTicks‡‡ä í
+(‡‡í ì
+$num‡‡ì ó
+)‡‡ó ò
+,‡‡ò ô
+$str‡‡ö 
+,‡‡ Ò
+$str‡‡Ú ò
+}‡‡ô ö
+)‡‡ö õ
+;‡‡õ ú
+migrationBuilder
+‚‚ 
+.
+‚‚ 
+
+InsertData
+‚‚ '
+(
+‚‚' (
+table
+„„ 
+:
+„„ 
+$str
+„„ '
+,
+„„' (
+columns
+‰‰ 
+:
+‰‰ 
+new
+‰‰ 
+[
+‰‰ 
+]
+‰‰ 
+{
+‰‰  
+$str
+‰‰! %
+,
+‰‰% &
+$str
+‰‰' 4
+,
+‰‰4 5
+$str
+‰‰6 D
+,
+‰‰D E
+$str
+‰‰F P
+,
+‰‰P Q
+$str
+‰‰R ]
+,
+‰‰] ^
+$str
+‰‰_ l
+,
+‰‰l m
+$str
+‰‰n }
+,
+‰‰} ~
+$str‰‰ â
+,‰‰â ä
+$str‰‰ã †
+,‰‰† °
+$str‰‰¢ ±
+,‰‰± ≤
+$str‰‰≥ ¬
+,‰‰¬ √
+$str‰‰ƒ —
+,‰‰— “
+$str‰‰” ﬂ
+,‰‰ﬂ ‡
+$str‰‰· È
+,‰‰È Í
+$str‰‰Î ¯
+,‰‰¯ ˘
+$str‰‰˙ à
+,‰‰à â
+$str‰‰ä ï
+,‰‰ï ñ
+$str‰‰ó §
+}‰‰• ¶
+,‰‰¶ ß
+values
+ÂÂ 
+:
+ÂÂ 
+new
+ÂÂ 
+object
+ÂÂ "
+[
+ÂÂ" #
+,
+ÂÂ# $
+]
+ÂÂ$ %
+{
+ÊÊ 
+{
+ÁÁ 
+new
+ÁÁ 
+Guid
+ÁÁ 
+(
+ÁÁ 
+$str
+ÁÁ E
+)
+ÁÁE F
+,
+ÁÁF G
+$strÁÁH ®
+,ÁÁ® ©
+$strÁÁ™ ÿ
+,ÁÁÿ Ÿ
+$strÁÁ⁄ ‰
+,ÁÁ‰ Â
+nullÁÁÊ Í
+,ÁÁÍ Î
+nullÁÁÏ 
+,ÁÁ Ò
+$strÁÁÚ £
+,ÁÁ£ §
+$strÁÁ• Æ
+,ÁÁÆ Ø
+$strÁÁ∞  
+,ÁÁ  À
+$strÁÁÃ Û
+,ÁÁÛ Ù
+$strÁÁı ˇ
+,ÁÁˇ Ä
+$strÁÁÅ ù
+,ÁÁù û
+$strÁÁü ¨
+,ÁÁ¨ ≠
+$numÁÁÆ Ø
+,ÁÁØ ∞
+$strÁÁ± ∆
+,ÁÁ∆ «
+$strÁÁ» ÿ
+,ÁÁÿ Ÿ
+nullÁÁ⁄ ﬁ
+,ÁÁﬁ ﬂ
+nullÁÁ‡ ‰
+}ÁÁÂ Ê
+,ÁÁÊ Á
+{
+ËË 
+new
+ËË 
+Guid
+ËË 
+(
+ËË 
+$str
+ËË E
+)
+ËËE F
+,
+ËËF G
+$strËËH ë
+,ËËë í
+$strËËì Õ
+,ËËÕ Œ
+$strËËœ ·
+,ËË· ‚
+nullËË„ Á
+,ËËÁ Ë
+nullËËÈ Ì
+,ËËÌ Ó
+$strËËÔ †
+,ËË† °
+$strËË¢ ´
+,ËË´ ¨
+$strËË≠ ∆
+,ËË∆ «
+$strËË» –
+,ËË– —
+$strËË“ ‹
+,ËË‹ ›
+$strËËﬁ ˙
+,ËË˙ ˚
+$strËË¸ â
+,ËËâ ä
+$numËËã å
+,ËËå ç
+$strËËé π
+,ËËπ ∫
+$strËËª “
+,ËË“ ”
+nullËË‘ ÿ
+,ËËÿ Ÿ
+nullËË⁄ ﬁ
+}ËËﬂ ‡
+,ËË‡ ·
+{
+ÈÈ 
+new
+ÈÈ 
+Guid
+ÈÈ 
+(
+ÈÈ 
+$str
+ÈÈ E
+)
+ÈÈE F
+,
+ÈÈF G
+$strÈÈH Ñ
+,ÈÈÑ Ö
+$strÈÈÜ ¿
+,ÈÈ¿ ¡
+$strÈÈ¬ “
+,ÈÈ“ ”
+nullÈÈ‘ ÿ
+,ÈÈÿ Ÿ
+nullÈÈ⁄ ﬁ
+,ÈÈﬁ ﬂ
+$strÈÈ‡ ë
+,ÈÈë í
+$strÈÈì ú
+,ÈÈú ù
+$strÈÈû ∑
+,ÈÈ∑ ∏
+$strÈÈπ ¡
+,ÈÈ¡ ¬
+$strÈÈ√ Õ
+,ÈÈÕ Œ
+$strÈÈœ Î
+,ÈÈÎ Ï
+$strÈÈÌ ˙
+,ÈÈ˙ ˚
+$numÈÈ¸ ˝
+,ÈÈ˝ ˛
+$strÈÈˇ ê
+,ÈÈê ë
+$strÈÈí °
+,ÈÈ° ¢
+nullÈÈ£ ß
+,ÈÈß ®
+nullÈÈ© ≠
+}ÈÈÆ Ø
+,ÈÈØ ∞
+{
+ÍÍ 
+new
+ÍÍ 
+Guid
+ÍÍ 
+(
+ÍÍ 
+$str
+ÍÍ E
+)
+ÍÍE F
+,
+ÍÍF G
+$strÍÍH û
+,ÍÍû ü
+$strÍÍ† ≈
+,ÍÍ≈ ∆
+$strÍÍ« œ
+,ÍÍœ –
+nullÍÍ— ’
+,ÍÍ’ ÷
+nullÍÍ◊ €
+,ÍÍ€ ‹
+$strÍÍ› é
+,ÍÍé è
+$strÍÍê ô
+,ÍÍô ö
+$strÍÍõ µ
+,ÍÍµ ∂
+$strÍÍ∑ œ
+,ÍÍœ –
+$strÍÍ— €
+,ÍÍ€ ‹
+$strÍÍ› ˘
+,ÍÍ˘ ˙
+$strÍÍ˚ à
+,ÍÍà â
+$numÍÍä ã
+,ÍÍã å
+$strÍÍç ¢
+,ÍÍ¢ £
+$strÍÍ§ µ
+,ÍÍµ ∂
+nullÍÍ∑ ª
+,ÍÍª º
+nullÍÍΩ ¡
+}ÍÍ¬ √
+,ÍÍ√ ƒ
+{
+ÎÎ 
+new
+ÎÎ 
+Guid
+ÎÎ 
+(
+ÎÎ 
+$str
+ÎÎ E
+)
+ÎÎE F
+,
+ÎÎF G
+$strÎÎH è
+,ÎÎè ê
+$strÎÎë ∫
+,ÎÎ∫ ª
+$strÎÎº  
+,ÎÎ  À
+nullÎÎÃ –
+,ÎÎ– —
+nullÎÎ“ ÷
+,ÎÎ÷ ◊
+$strÎÎÿ â
+,ÎÎâ ä
+$strÎÎã î
+,ÎÎî ï
+$strÎÎñ ¢
+,ÎÎ¢ £
+$strÎÎ§ ¥
+,ÎÎ¥ µ
+$strÎÎ∂ ¿
+,ÎÎ¿ ¡
+$strÎÎ¬ ÿ
+,ÎÎÿ Ÿ
+$strÎÎ⁄ Ê
+,ÎÎÊ Á
+$numÎÎË È
+,ÎÎÈ Í
+$strÎÎÎ ¸
+,ÎÎ¸ ˝
+$strÎÎ˛ ì
+,ÎÎì î
+nullÎÎï ô
+,ÎÎô ö
+nullÎÎõ ü
+}ÎÎ† °
+,ÎÎ° ¢
+{
+ÏÏ 
+new
+ÏÏ 
+Guid
+ÏÏ 
+(
+ÏÏ 
+$str
+ÏÏ E
+)
+ÏÏE F
+,
+ÏÏF G
+$strÏÏH ë
+,ÏÏë í
+$strÏÏì Õ
+,ÏÏÕ Œ
+$strÏÏœ ·
+,ÏÏ· ‚
+nullÏÏ„ Á
+,ÏÏÁ Ë
+nullÏÏÈ Ì
+,ÏÏÌ Ó
+$strÏÏÔ †
+,ÏÏ† °
+$strÏÏ¢ ´
+,ÏÏ´ ¨
+$strÏÏ≠ ∆
+,ÏÏ∆ «
+$strÏÏ» Ê
+,ÏÏÊ Á
+$strÏÏË Ô
+,ÏÏÔ 
+$strÏÏÒ ç
+,ÏÏç é
+$strÏÏè ú
+,ÏÏú ù
+$numÏÏû ü
+,ÏÏü †
+$strÏÏ° ø
+,ÏÏø ¿
+$strÏÏ¡ Â
+,ÏÏÂ Ê
+nullÏÏÁ Î
+,ÏÏÎ Ï
+nullÏÏÌ Ò
+}ÏÏÚ Û
+,ÏÏÛ Ù
+{
+ÌÌ 
+new
+ÌÌ 
+Guid
+ÌÌ 
+(
+ÌÌ 
+$str
+ÌÌ E
+)
+ÌÌE F
+,
+ÌÌF G
+$strÌÌH Ã
+,ÌÌÃ Õ
+$strÌÌŒ à
+,ÌÌà â
+$strÌÌä ö
+,ÌÌö õ
+nullÌÌú †
+,ÌÌ† °
+nullÌÌ¢ ¶
+,ÌÌ¶ ß
+$strÌÌ® Ÿ
+,ÌÌŸ ⁄
+$strÌÌ€ ‰
+,ÌÌ‰ Â
+$strÌÌÊ ˇ
+,ÌÌˇ Ä
+$strÌÌÅ â
+,ÌÌâ ä
+$strÌÌã ï
+,ÌÌï ñ
+$strÌÌó ≥
+,ÌÌ≥ ¥
+$strÌÌµ ¬
+,ÌÌ¬ √
+$numÌÌƒ ≈
+,ÌÌ≈ ∆
+$strÌÌ« ﬂ
+,ÌÌﬂ ‡
+$strÌÌ· ˆ
+,ÌÌˆ ˜
+nullÌÌ¯ ¸
+,ÌÌ¸ ˝
+nullÌÌ˛ Ç
+}ÌÌÉ Ñ
+,ÌÌÑ Ö
+{
+ÓÓ 
+new
+ÓÓ 
+Guid
+ÓÓ 
+(
+ÓÓ 
+$str
+ÓÓ E
+)
+ÓÓE F
+,
+ÓÓF G
+$strÓÓH è
+,ÓÓè ê
+$strÓÓë À
+,ÓÓÀ Ã
+$strÓÓÕ ‰
+,ÓÓ‰ Â
+nullÓÓÊ Í
+,ÓÓÍ Î
+nullÓÓÏ 
+,ÓÓ Ò
+$strÓÓÚ £
+,ÓÓ£ §
+$strÓÓ• Æ
+,ÓÓÆ Ø
+$strÓÓ∞ …
+,ÓÓ…  
+$strÓÓÀ Ò
+,ÓÓÒ Ú
+$strÓÓÛ ¸
+,ÓÓ¸ ˝
+$strÓÓ˛ ö
+,ÓÓö õ
+$strÓÓú ©
+,ÓÓ© ™
+$numÓÓ´ ¨
+,ÓÓ¨ ≠
+$strÓÓÆ Œ
+,ÓÓŒ œ
+$strÓÓ– Ë
+,ÓÓË È
+nullÓÓÍ Ó
+,ÓÓÓ Ô
+nullÓÓ Ù
+}ÓÓı ˆ
+,ÓÓˆ ˜
+{
+ÔÔ 
+new
+ÔÔ 
+Guid
+ÔÔ 
+(
+ÔÔ 
+$str
+ÔÔ E
+)
+ÔÔE F
+,
+ÔÔF G
+$strÔÔH è
+,ÔÔè ê
+$strÔÔë À
+,ÔÔÀ Ã
+$strÔÔÕ ‰
+,ÔÔ‰ Â
+nullÔÔÊ Í
+,ÔÔÍ Î
+nullÔÔÏ 
+,ÔÔ Ò
+$strÔÔÚ £
+,ÔÔ£ §
+$strÔÔ• Æ
+,ÔÔÆ Ø
+$strÔÔ∞ …
+,ÔÔ…  
+$strÔÔÀ Ì
+,ÔÔÌ Ó
+$strÔÔÔ ˚
+,ÔÔ˚ ¸
+$strÔÔ˝ ô
+,ÔÔô ö
+$strÔÔõ ®
+,ÔÔ® ©
+$numÔÔ™ ´
+,ÔÔ´ ¨
+$strÔÔ≠ Õ
+,ÔÔÕ Œ
+$strÔÔœ Ë
+,ÔÔË È
+nullÔÔÍ Ó
+,ÔÔÓ Ô
+nullÔÔ Ù
+}ÔÔı ˆ
+,ÔÔˆ ˜
+{
+ 
+new
+ 
+Guid
+ 
+(
+ 
+$str
+ E
+)
+E F
+,
+F G
+$strH ”
+,” ‘
+$str’ è
+,è ê
+$strë ô
+,ô ö
+nullõ ü
+,ü †
+null° •
+,• ¶
+$strß ÿ
+,ÿ Ÿ
+$str⁄ „
+,„ ‰
+$strÂ °
+,° ¢
+$str£ ∑
+,∑ ∏
+$strπ √
+,√ ƒ
+$str≈ ·
+,· ‚
+$str„ 
+, Ò
+$numÚ Û
+,Û Ù
+$strı ñ
+,ñ ó
+$strò π
+,π ∫
+nullª ø
+,ø ¿
+null¡ ≈
+}∆ «
+,« »
+{
+ÒÒ 
+new
+ÒÒ 
+Guid
+ÒÒ 
+(
+ÒÒ 
+$str
+ÒÒ E
+)
+ÒÒE F
+,
+ÒÒF G
+$str
+ÒÒH s
+,
+ÒÒs t
+$strÒÒu ô
+,ÒÒô ö
+$strÒÒõ •
+,ÒÒ• ¶
+nullÒÒß ´
+,ÒÒ´ ¨
+nullÒÒ≠ ±
+,ÒÒ± ≤
+$strÒÒ≥ ˘
+,ÒÒ˘ ˙
+$strÒÒ˚ Ñ
+,ÒÒÑ Ö
+$strÒÒÜ ü
+,ÒÒü †
+$strÒÒ° Œ
+,ÒÒŒ œ
+$strÒÒ– ‹
+,ÒÒ‹ ›
+$strÒÒﬁ ˙
+,ÒÒ˙ ˚
+$strÒÒ¸ â
+,ÒÒâ ä
+$numÒÒã å
+,ÒÒå ç
+$strÒÒé ª
+,ÒÒª º
+$strÒÒΩ ›
+,ÒÒ› ﬁ
+nullÒÒﬂ „
+,ÒÒ„ ‰
+nullÒÒÂ È
+}ÒÒÍ Î
+,ÒÒÎ Ï
+{
+ÚÚ 
+new
+ÚÚ 
+Guid
+ÚÚ 
+(
+ÚÚ 
+$str
+ÚÚ E
+)
+ÚÚE F
+,
+ÚÚF G
+$strÚÚH ∞
+,ÚÚ∞ ±
+$strÚÚ≤ Ï
+,ÚÚÏ Ì
+$strÚÚÓ ˜
+,ÚÚ˜ ¯
+nullÚÚ˘ ˝
+,ÚÚ˝ ˛
+nullÚÚˇ É
+,ÚÚÉ Ñ
+$strÚÚÖ ∂
+,ÚÚ∂ ∑
+$strÚÚ∏ ¡
+,ÚÚ¡ ¬
+$strÚÚ√ ‹
+,ÚÚ‹ ›
+$strÚÚﬁ ˘
+,ÚÚ˘ ˙
+$strÚÚ˚ Ö
+,ÚÚÖ Ü
+$strÚÚá £
+,ÚÚ£ §
+$strÚÚ• ≤
+,ÚÚ≤ ≥
+$numÚÚ¥ µ
+,ÚÚµ ∂
+$strÚÚ∑ À
+,ÚÚÀ Ã
+$strÚÚÕ €
+,ÚÚ€ ‹
+nullÚÚ› ·
+,ÚÚ· ‚
+nullÚÚ„ Á
+}ÚÚË È
+,ÚÚÈ Í
+{
+ÛÛ 
+new
+ÛÛ 
+Guid
+ÛÛ 
+(
+ÛÛ 
+$str
+ÛÛ E
+)
+ÛÛE F
+,
+ÛÛF G
+$strÛÛH æ
+,ÛÛæ ø
+$strÛÛ¿ ù
+,ÛÛù û
+$strÛÛü ©
+,ÛÛ© ™
+nullÛÛ´ Ø
+,ÛÛØ ∞
+nullÛÛ± µ
+,ÛÛµ ∂
+$strÛÛ∑ ˚
+,ÛÛ˚ ¸
+$strÛÛ˝ Ü
+,ÛÛÜ á
+$strÛÛà ≠
+,ÛÛ≠ Æ
+$strÛÛØ ’
+,ÛÛ’ ÷
+$strÛÛ◊ ·
+,ÛÛ· ‚
+$strÛÛ„ ˇ
+,ÛÛˇ Ä
+$strÛÛÅ é
+,ÛÛé è
+$numÛÛê ë
+,ÛÛë í
+$strÛÛì ®
+,ÛÛ® ©
+$strÛÛ™ ø
+,ÛÛø ¿
+nullÛÛ¡ ≈
+,ÛÛ≈ ∆
+nullÛÛ« À
+}ÛÛÃ Õ
+}
+ÙÙ 
+)
+ÙÙ 
+;
+ÙÙ 
+migrationBuilder
+ˆˆ 
+.
+ˆˆ 
+AddForeignKey
+ˆˆ *
+(
+ˆˆ* +
+name
+˜˜ 
+:
+˜˜ 
+$str
+˜˜ ?
+,
+˜˜? @
+table
+¯¯ 
+:
+¯¯ 
+$str
+¯¯ '
+,
+¯¯' (
+column
+˘˘ 
+:
+˘˘ 
+$str
+˘˘ $
+,
+˘˘$ %
+principalTable
+˙˙ 
+:
+˙˙ 
+$str
+˙˙  ,
+,
+˙˙, -
+principalColumn
+˚˚ 
+:
+˚˚  
+$str
+˚˚! %
+)
+˚˚% &
+;
+˚˚& '
+migrationBuilder
+˝˝ 
+.
+˝˝ 
+AddForeignKey
+˝˝ *
+(
+˝˝* +
+name
+˛˛ 
+:
+˛˛ 
+$str
+˛˛ :
+,
+˛˛: ;
+table
+ˇˇ 
+:
+ˇˇ 
+$str
+ˇˇ '
+,
+ˇˇ' (
+column
+ÄÄ 
+:
+ÄÄ 
+$str
+ÄÄ "
+,
+ÄÄ" #
+principalTable
+ÅÅ 
+:
+ÅÅ 
+$str
+ÅÅ  )
+,
+ÅÅ) *
+principalColumn
+ÇÇ 
+:
+ÇÇ  
+$str
+ÇÇ! %
+)
+ÇÇ% &
+;
+ÇÇ& '
+migrationBuilder
+ÑÑ 
+.
+ÑÑ 
+AddForeignKey
+ÑÑ *
+(
+ÑÑ* +
+name
+ÖÖ 
+:
+ÖÖ 
+$str
+ÖÖ 8
+,
+ÖÖ8 9
+table
+ÜÜ 
+:
+ÜÜ 
+$str
+ÜÜ '
+,
+ÜÜ' (
+column
+áá 
+:
+áá 
+$str
+áá !
+,
+áá! "
+principalTable
+àà 
+:
+àà 
+$str
+àà  (
+,
+àà( )
+principalColumn
+ââ 
+:
+ââ  
+$str
+ââ! %
+)
+ââ% &
+;
+ââ& '
+migrationBuilder
+ãã 
+.
+ãã 
+AddForeignKey
+ãã *
+(
+ãã* +
+name
+åå 
+:
+åå 
+$str
+åå :
+,
+åå: ;
+table
+çç 
+:
+çç 
+$str
+çç '
+,
+çç' (
+column
+éé 
+:
+éé 
+$str
+éé "
+,
+éé" #
+principalTable
+èè 
+:
+èè 
+$str
+èè  )
+,
+èè) *
+principalColumn
+êê 
+:
+êê  
+$str
+êê! %
+)
+êê% &
+;
+êê& '
+migrationBuilder
+íí 
+.
+íí 
+AddForeignKey
+íí *
+(
+íí* +
+name
+ìì 
+:
+ìì 
+$str
+ìì <
+,
+ìì< =
+table
+îî 
+:
+îî 
+$str
+îî '
+,
+îî' (
+column
+ïï 
+:
+ïï 
+$str
+ïï #
+,
+ïï# $
+principalTable
+ññ 
+:
+ññ 
+$str
+ññ  *
+,
+ññ* +
+principalColumn
+óó 
+:
+óó  
+$str
+óó! ,
+)
+óó, -
+;
+óó- .
+}
+òò 	
+}
+ôô 
+}öö ¯∆
+ÉD:\FPT\Semester 6\Project_Cursus\Backend_Cursus\Cursus.LMS\Cursus.LMS.DataAccess\Migrations\20240724030139_ModifiedNullAttribute.cs
+	namespace 	
+Cursus
+ 
+. 
+LMS 
+. 
+
+DataAccess 
+.  
+
+Migrations  *
+{		 
+public 
+
+partial 
+class !
+ModifiedNullAttribute .
+:/ 0
+	Migration1 :
+{ 
+	protected 
+override 
+void 
+Up  "
+(" #
+MigrationBuilder# 3
+migrationBuilder4 D
+)D E
+{ 	
+migrationBuilder 
+. 
+DropForeignKey +
+(+ ,
+name 
+: 
+$str ^
+,^ _
+table 
+: 
+$str /
+)/ 0
+;0 1
+migrationBuilder 
+. 
+
+DeleteData '
+(' (
+table 
+: 
+$str '
+,' (
+	keyColumn 
+: 
+$str 
+,  
+keyValue 
+: 
+new 
+Guid "
+(" #
+$str# I
+)I J
+)J K
+;K L
+migrationBuilder 
+. 
+
+DeleteData '
+(' (
+table 
+: 
+$str '
+,' (
+	keyColumn 
+: 
+$str 
+,  
+keyValue 
+: 
+new 
+Guid "
+(" #
+$str# I
+)I J
+)J K
+;K L
+migrationBuilder 
+. 
+
+DeleteData '
+(' (
+table 
+: 
+$str '
+,' (
+	keyColumn   
+:   
+$str   
+,    
+keyValue!! 
+:!! 
+new!! 
+Guid!! "
+(!!" #
+$str!!# I
+)!!I J
+)!!J K
+;!!K L
+migrationBuilder## 
+.## 
+
+DeleteData## '
+(##' (
+table$$ 
+:$$ 
+$str$$ '
+,$$' (
+	keyColumn%% 
+:%% 
+$str%% 
+,%%  
+keyValue&& 
+:&& 
+new&& 
+Guid&& "
+(&&" #
+$str&&# I
+)&&I J
+)&&J K
+;&&K L
+migrationBuilder(( 
+.(( 
+
+DeleteData(( '
+(((' (
+table)) 
+:)) 
+$str)) '
+,))' (
+	keyColumn** 
+:** 
+$str** 
+,**  
+keyValue++ 
+:++ 
+new++ 
+Guid++ "
+(++" #
+$str++# I
+)++I J
+)++J K
+;++K L
+migrationBuilder-- 
+.-- 
+
+DeleteData-- '
+(--' (
+table.. 
+:.. 
+$str.. '
+,..' (
+	keyColumn// 
+:// 
+$str// 
+,//  
+keyValue00 
+:00 
+new00 
+Guid00 "
+(00" #
+$str00# I
+)00I J
+)00J K
+;00K L
+migrationBuilder22 
+.22 
+
+DeleteData22 '
+(22' (
+table33 
+:33 
+$str33 '
+,33' (
+	keyColumn44 
+:44 
+$str44 
+,44  
+keyValue55 
+:55 
+new55 
+Guid55 "
+(55" #
+$str55# I
+)55I J
+)55J K
+;55K L
+migrationBuilder77 
+.77 
+
+DeleteData77 '
+(77' (
+table88 
+:88 
+$str88 '
+,88' (
+	keyColumn99 
+:99 
+$str99 
+,99  
+keyValue:: 
+::: 
+new:: 
+Guid:: "
+(::" #
+$str::# I
+)::I J
+)::J K
+;::K L
+migrationBuilder<< 
+.<< 
+
+DeleteData<< '
+(<<' (
+table== 
+:== 
+$str== '
+,==' (
+	keyColumn>> 
+:>> 
+$str>> 
+,>>  
+keyValue?? 
+:?? 
+new?? 
+Guid?? "
+(??" #
+$str??# I
+)??I J
+)??J K
+;??K L
+migrationBuilderAA 
+.AA 
+
+DeleteDataAA '
+(AA' (
+tableBB 
+:BB 
+$strBB '
+,BB' (
+	keyColumnCC 
+:CC 
+$strCC 
+,CC  
+keyValueDD 
+:DD 
+newDD 
+GuidDD "
+(DD" #
+$strDD# I
+)DDI J
+)DDJ K
+;DDK L
+migrationBuilderFF 
+.FF 
+
+DeleteDataFF '
+(FF' (
+tableGG 
+:GG 
+$strGG '
+,GG' (
+	keyColumnHH 
+:HH 
+$strHH 
+,HH  
+keyValueII 
+:II 
+newII 
+GuidII "
+(II" #
+$strII# I
+)III J
+)IIJ K
+;IIK L
+migrationBuilderKK 
+.KK 
+
+DeleteDataKK '
+(KK' (
+tableLL 
+:LL 
+$strLL '
+,LL' (
+	keyColumnMM 
+:MM 
+$strMM 
+,MM  
+keyValueNN 
+:NN 
+newNN 
+GuidNN "
+(NN" #
+$strNN# I
+)NNI J
+)NNJ K
+;NNK L
+migrationBuilderPP 
+.PP 
+
+DeleteDataPP '
+(PP' (
+tableQQ 
+:QQ 
+$strQQ '
+,QQ' (
+	keyColumnRR 
+:RR 
+$strRR 
+,RR  
+keyValueSS 
+:SS 
+newSS 
+GuidSS "
+(SS" #
+$strSS# I
+)SSI J
+)SSJ K
+;SSK L
+migrationBuilderUU 
+.UU 
+AlterColumnUU (
+<UU( )
+GuidUU) -
+>UU- .
+(UU. /
+nameVV 
+:VV 
+$strVV .
+,VV. /
+tableWW 
+:WW 
+$strWW /
+,WW/ 0
+typeXX 
+:XX 
+$strXX (
+,XX( )
+nullableYY 
+:YY 
+falseYY 
+,YY  
+defaultValueZZ 
+:ZZ 
+newZZ !
+GuidZZ" &
+(ZZ& '
+$strZZ' M
+)ZZM N
+,ZZN O
+
+oldClrType[[ 
+:[[ 
+typeof[[ "
+([[" #
+Guid[[# '
+)[[' (
+,[[( )
+oldType\\ 
+:\\ 
+$str\\ +
+,\\+ ,
+oldNullable]] 
+:]] 
+true]] !
+)]]! "
+;]]" #
+migrationBuilder__ 
+.__ 
+AlterColumn__ (
+<__( )
+DateTime__) 1
+>__1 2
+(__2 3
+name`` 
+:`` 
+$str`` %
+,``% &
+tableaa 
+:aa 
+$straa )
+,aa) *
+typebb 
+:bb 
+$strbb !
+,bb! "
+nullablecc 
+:cc 
+truecc 
+,cc 
+
+oldClrTypedd 
+:dd 
+typeofdd "
+(dd" #
+DateTimedd# +
+)dd+ ,
+,dd, -
+oldTypeee 
+:ee 
+$stree $
+)ee$ %
+;ee% &
+migrationBuildergg 
+.gg 
+
+UpdateDatagg '
+(gg' (
+tablehh 
+:hh 
+$strhh $
+,hh$ %
+	keyColumnii 
+:ii 
+$strii 
+,ii  
+keyValuejj 
+:jj 
+$strjj +
+,jj+ ,
+columnskk 
+:kk 
+newkk 
+[kk 
+]kk 
+{kk  
+$strkk! 3
+,kk3 4
+$strkk5 A
+,kkA B
+$strkkC Q
+,kkQ R
+$strkkS b
+}kkc d
+,kkd e
+valuesll 
+:ll 
+newll 
+objectll "
+[ll" #
+]ll# $
+{ll% &
+$strll' M
+,llM N
+newllO R
+DateTimellS [
+(ll[ \
+$numll\ `
+,ll` a
+$numllb c
+,llc d
+$numlle g
+,llg h
+$numlli j
+,llj k
+$numlll m
+,llm n
+$numllo q
+,llq r
+$numlls v
+,llv w
+DateTimeKind	llx Ñ
+.
+llÑ Ö
+Utc
+llÖ à
+)
+llà â
+.
+llâ ä
+AddTicks
+llä í
+(
+llí ì
+$num
+llì ó
+)
+lló ò
+,
+llò ô
+$str
+llö 
+,
+ll Ò
+$str
+llÚ ò
+}
+llô ö
+)
+llö õ
+;
+llõ ú
+migrationBuildernn 
+.nn 
+
+InsertDatann '
+(nn' (
+tableoo 
+:oo 
+$stroo '
+,oo' (
+columnspp 
+:pp 
+newpp 
+[pp 
+]pp 
+{pp  
+$strpp! %
+,pp% &
+$strpp' 4
+,pp4 5
+$strpp6 D
+,ppD E
+$strppF P
+,ppP Q
+$strppR ]
+,pp] ^
+$strpp_ l
+,ppl m
+$strppn }
+,pp} ~
+$str	pp â
+,
+ppâ ä
+$str
+ppã †
+,
+pp† °
+$str
+pp¢ ±
+,
+pp± ≤
+$str
+pp≥ ¬
+,
+pp¬ √
+$str
+ppƒ —
+,
+pp— “
+$str
+pp” ﬂ
+,
+ppﬂ ‡
+$str
+pp· È
+,
+ppÈ Í
+$str
+ppÎ ¯
+,
+pp¯ ˘
+$str
+pp˙ à
+,
+ppà â
+$str
+ppä ï
+,
+ppï ñ
+$str
+ppó §
+}
+pp• ¶
+,
+pp¶ ß
+valuesqq 
+:qq 
+newqq 
+objectqq "
+[qq" #
+,qq# $
+]qq$ %
+{rr 
+{ss 
+newss 
+Guidss 
+(ss 
+$strss E
+)ssE F
+,ssF G
+$str	ssH ®
+,
+ss® ©
+$str
+ss™ ÿ
+,
+ssÿ Ÿ
+$str
+ss⁄ ‰
+,
+ss‰ Â
+null
+ssÊ Í
+,
+ssÍ Î
+null
+ssÏ 
+,
+ss Ò
+$str
+ssÚ £
+,
+ss£ §
+$str
+ss• Æ
+,
+ssÆ Ø
+$str
+ss∞  
+,
+ss  À
+$str
+ssÃ Û
+,
+ssÛ Ù
+$str
+ssı ˇ
+,
+ssˇ Ä
+$str
+ssÅ ù
+,
+ssù û
+$str
+ssü ¨
+,
+ss¨ ≠
+$num
+ssÆ Ø
+,
+ssØ ∞
+$str
+ss± ∆
+,
+ss∆ «
+$str
+ss» ÿ
+,
+ssÿ Ÿ
+null
+ss⁄ ﬁ
+,
+ssﬁ ﬂ
+null
+ss‡ ‰
+}
+ssÂ Ê
+,
+ssÊ Á
+{tt 
+newtt 
+Guidtt 
+(tt 
+$strtt E
+)ttE F
+,ttF G
+$str	ttH ë
+,
+ttë í
+$str
+ttì Õ
+,
+ttÕ Œ
+$str
+ttœ ·
+,
+tt· ‚
+null
+tt„ Á
+,
+ttÁ Ë
+null
+ttÈ Ì
+,
+ttÌ Ó
+$str
+ttÔ †
+,
+tt† °
+$str
+tt¢ ´
+,
+tt´ ¨
+$str
+tt≠ ∆
+,
+tt∆ «
+$str
+tt» –
+,
+tt– —
+$str
+tt“ ‹
+,
+tt‹ ›
+$str
+ttﬁ ˙
+,
+tt˙ ˚
+$str
+tt¸ â
+,
+ttâ ä
+$num
+ttã å
+,
+ttå ç
+$str
+tté π
+,
+ttπ ∫
+$str
+ttª “
+,
+tt“ ”
+null
+tt‘ ÿ
+,
+ttÿ Ÿ
+null
+tt⁄ ﬁ
+}
+ttﬂ ‡
+,
+tt‡ ·
+{uu 
+newuu 
+Guiduu 
+(uu 
+$struu E
+)uuE F
+,uuF G
+$str	uuH Ñ
+,
+uuÑ Ö
+$str
+uuÜ ¿
+,
+uu¿ ¡
+$str
+uu¬ “
+,
+uu“ ”
+null
+uu‘ ÿ
+,
+uuÿ Ÿ
+null
+uu⁄ ﬁ
+,
+uuﬁ ﬂ
+$str
+uu‡ ë
+,
+uuë í
+$str
+uuì ú
+,
+uuú ù
+$str
+uuû ∑
+,
+uu∑ ∏
+$str
+uuπ ¡
+,
+uu¡ ¬
+$str
+uu√ Õ
+,
+uuÕ Œ
+$str
+uuœ Î
+,
+uuÎ Ï
+$str
+uuÌ ˙
+,
+uu˙ ˚
+$num
+uu¸ ˝
+,
+uu˝ ˛
+$str
+uuˇ ê
+,
+uuê ë
+$str
+uuí °
+,
+uu° ¢
+null
+uu£ ß
+,
+uuß ®
+null
+uu© ≠
+}
+uuÆ Ø
+,
+uuØ ∞
+{vv 
+newvv 
+Guidvv 
+(vv 
+$strvv E
+)vvE F
+,vvF G
+$str	vvH û
+,
+vvû ü
+$str
+vv† ≈
+,
+vv≈ ∆
+$str
+vv« œ
+,
+vvœ –
+null
+vv— ’
+,
+vv’ ÷
+null
+vv◊ €
+,
+vv€ ‹
+$str
+vv› é
+,
+vvé è
+$str
+vvê ô
+,
+vvô ö
+$str
+vvõ µ
+,
+vvµ ∂
+$str
+vv∑ œ
+,
+vvœ –
+$str
+vv— €
+,
+vv€ ‹
+$str
+vv› ˘
+,
+vv˘ ˙
+$str
+vv˚ à
+,
+vvà â
+$num
+vvä ã
+,
+vvã å
+$str
+vvç ¢
+,
+vv¢ £
+$str
+vv§ µ
+,
+vvµ ∂
+null
+vv∑ ª
+,
+vvª º
+null
+vvΩ ¡
+}
+vv¬ √
+,
+vv√ ƒ
+{ww 
+newww 
+Guidww 
+(ww 
+$strww E
+)wwE F
+,wwF G
+$str	wwH è
+,
+wwè ê
+$str
+wwë ∫
+,
+ww∫ ª
+$str
+wwº  
+,
+ww  À
+null
+wwÃ –
+,
+ww– —
+null
+ww“ ÷
+,
+ww÷ ◊
+$str
+wwÿ â
+,
+wwâ ä
+$str
+wwã î
+,
+wwî ï
+$str
+wwñ ¢
+,
+ww¢ £
+$str
+ww§ ¥
+,
+ww¥ µ
+$str
+ww∂ ¿
+,
+ww¿ ¡
+$str
+ww¬ ÿ
+,
+wwÿ Ÿ
+$str
+ww⁄ Ê
+,
+wwÊ Á
+$num
+wwË È
+,
+wwÈ Í
+$str
+wwÎ ¸
+,
+ww¸ ˝
+$str
+ww˛ ì
+,
+wwì î
+null
+wwï ô
+,
+wwô ö
+null
+wwõ ü
+}
+ww† °
+,
+ww° ¢
+{xx 
+newxx 
+Guidxx 
+(xx 
+$strxx E
+)xxE F
+,xxF G
+$str	xxH ë
+,
+xxë í
+$str
+xxì Õ
+,
+xxÕ Œ
+$str
+xxœ ·
+,
+xx· ‚
+null
+xx„ Á
+,
+xxÁ Ë
+null
+xxÈ Ì
+,
+xxÌ Ó
+$str
+xxÔ †
+,
+xx† °
+$str
+xx¢ ´
+,
+xx´ ¨
+$str
+xx≠ ∆
+,
+xx∆ «
+$str
+xx» Ê
+,
+xxÊ Á
+$str
+xxË Ô
+,
+xxÔ 
+$str
+xxÒ ç
+,
+xxç é
+$str
+xxè ú
+,
+xxú ù
+$num
+xxû ü
+,
+xxü †
+$str
+xx° ø
+,
+xxø ¿
+$str
+xx¡ Â
+,
+xxÂ Ê
+null
+xxÁ Î
+,
+xxÎ Ï
+null
+xxÌ Ò
+}
+xxÚ Û
+,
+xxÛ Ù
+{yy 
+newyy 
+Guidyy 
+(yy 
+$stryy E
+)yyE F
+,yyF G
+$str	yyH Ã
+,
+yyÃ Õ
+$str
+yyŒ à
+,
+yyà â
+$str
+yyä ö
+,
+yyö õ
+null
+yyú †
+,
+yy† °
+null
+yy¢ ¶
+,
+yy¶ ß
+$str
+yy® Ÿ
+,
+yyŸ ⁄
+$str
+yy€ ‰
+,
+yy‰ Â
+$str
+yyÊ ˇ
+,
+yyˇ Ä
+$str
+yyÅ â
+,
+yyâ ä
+$str
+yyã ï
+,
+yyï ñ
+$str
+yyó ≥
+,
+yy≥ ¥
+$str
+yyµ ¬
+,
+yy¬ √
+$num
+yyƒ ≈
+,
+yy≈ ∆
+$str
+yy« ﬂ
+,
+yyﬂ ‡
+$str
+yy· ˆ
+,
+yyˆ ˜
+null
+yy¯ ¸
+,
+yy¸ ˝
+null
+yy˛ Ç
+}
+yyÉ Ñ
+,
+yyÑ Ö
+{zz 
+newzz 
+Guidzz 
+(zz 
+$strzz E
+)zzE F
+,zzF G
+$str	zzH è
+,
+zzè ê
+$str
+zzë À
+,
+zzÀ Ã
+$str
+zzÕ ‰
+,
+zz‰ Â
+null
+zzÊ Í
+,
+zzÍ Î
+null
+zzÏ 
+,
+zz Ò
+$str
+zzÚ £
+,
+zz£ §
+$str
+zz• Æ
+,
+zzÆ Ø
+$str
+zz∞ …
+,
+zz…  
+$str
+zzÀ Ò
+,
+zzÒ Ú
+$str
+zzÛ ¸
+,
+zz¸ ˝
+$str
+zz˛ ö
+,
+zzö õ
+$str
+zzú ©
+,
+zz© ™
+$num
+zz´ ¨
+,
+zz¨ ≠
+$str
+zzÆ Œ
+,
+zzŒ œ
+$str
+zz– Ë
+,
+zzË È
+null
+zzÍ Ó
+,
+zzÓ Ô
+null
+zz Ù
+}
+zzı ˆ
+,
+zzˆ ˜
+{{{ 
+new{{ 
+Guid{{ 
+({{ 
+$str{{ E
+){{E F
+,{{F G
+$str	{{H è
+,
+{{è ê
+$str
+{{ë À
+,
+{{À Ã
+$str
+{{Õ ‰
+,
+{{‰ Â
+null
+{{Ê Í
+,
+{{Í Î
+null
+{{Ï 
+,
+{{ Ò
+$str
+{{Ú £
+,
+{{£ §
+$str
+{{• Æ
+,
+{{Æ Ø
+$str
+{{∞ …
+,
+{{…  
+$str
+{{À Ì
+,
+{{Ì Ó
+$str
+{{Ô ˚
+,
+{{˚ ¸
+$str
+{{˝ ô
+,
+{{ô ö
+$str
+{{õ ®
+,
+{{® ©
+$num
+{{™ ´
+,
+{{´ ¨
+$str
+{{≠ Õ
+,
+{{Õ Œ
+$str
+{{œ Ë
+,
+{{Ë È
+null
+{{Í Ó
+,
+{{Ó Ô
+null
+{{ Ù
+}
+{{ı ˆ
+,
+{{ˆ ˜
+{|| 
+new|| 
+Guid|| 
+(|| 
+$str|| E
+)||E F
+,||F G
+$str	||H ”
+,
+||” ‘
+$str
+||’ è
+,
+||è ê
+$str
+||ë ô
+,
+||ô ö
+null
+||õ ü
+,
+||ü †
+null
+||° •
+,
+||• ¶
+$str
+||ß ÿ
+,
+||ÿ Ÿ
+$str
+||⁄ „
+,
+||„ ‰
+$str
+||Â °
+,
+||° ¢
+$str
+||£ ∑
+,
+||∑ ∏
+$str
+||π √
+,
+||√ ƒ
+$str
+||≈ ·
+,
+||· ‚
+$str
+||„ 
+,
+|| Ò
+$num
+||Ú Û
+,
+||Û Ù
+$str
+||ı ñ
+,
+||ñ ó
+$str
+||ò π
+,
+||π ∫
+null
+||ª ø
+,
+||ø ¿
+null
+||¡ ≈
+}
+||∆ «
+,
+||« »
+{}} 
+new}} 
+Guid}} 
+(}} 
+$str}} E
+)}}E F
+,}}F G
+$str}}H s
+,}}s t
+$str	}}u ô
+,
+}}ô ö
+$str
+}}õ •
+,
+}}• ¶
+null
+}}ß ´
+,
+}}´ ¨
+null
+}}≠ ±
+,
+}}± ≤
+$str
+}}≥ ˘
+,
+}}˘ ˙
+$str
+}}˚ Ñ
+,
+}}Ñ Ö
+$str
+}}Ü ü
+,
+}}ü †
+$str
+}}° Œ
+,
+}}Œ œ
+$str
+}}– ‹
+,
+}}‹ ›
+$str
+}}ﬁ ˙
+,
+}}˙ ˚
+$str
+}}¸ â
+,
+}}â ä
+$num
+}}ã å
+,
+}}å ç
+$str
+}}é ª
+,
+}}ª º
+$str
+}}Ω ›
+,
+}}› ﬁ
+null
+}}ﬂ „
+,
+}}„ ‰
+null
+}}Â È
+}
+}}Í Î
+,
+}}Î Ï
+{~~ 
+new~~ 
+Guid~~ 
+(~~ 
+$str~~ E
+)~~E F
+,~~F G
+$str	~~H ∞
+,
+~~∞ ±
+$str
+~~≤ Ï
+,
+~~Ï Ì
+$str
+~~Ó ˜
+,
+~~˜ ¯
+null
+~~˘ ˝
+,
+~~˝ ˛
+null
+~~ˇ É
+,
+~~É Ñ
+$str
+~~Ö ∂
+,
+~~∂ ∑
+$str
+~~∏ ¡
+,
+~~¡ ¬
+$str
+~~√ ‹
+,
+~~‹ ›
+$str
+~~ﬁ ˘
+,
+~~˘ ˙
+$str
+~~˚ Ö
+,
+~~Ö Ü
+$str
+~~á £
+,
+~~£ §
+$str
+~~• ≤
+,
+~~≤ ≥
+$num
+~~¥ µ
+,
+~~µ ∂
+$str
+~~∑ À
+,
+~~À Ã
+$str
+~~Õ €
+,
+~~€ ‹
+null
+~~› ·
+,
+~~· ‚
+null
+~~„ Á
+}
+~~Ë È
+,
+~~È Í
+{ 
+new 
+Guid 
+( 
+$str E
+)E F
+,F G
+$str	H æ
+,
+æ ø
+$str
+¿ ù
+,
+ù û
+$str
+ü ©
+,
+© ™
+null
+´ Ø
+,
+Ø ∞
+null
+± µ
+,
+µ ∂
+$str
+∑ ˚
+,
+˚ ¸
+$str
+˝ Ü
+,
+Ü á
+$str
+à ≠
+,
+≠ Æ
+$str
+Ø ’
+,
+’ ÷
+$str
+◊ ·
+,
+· ‚
+$str
+„ ˇ
+,
+ˇ Ä
+$str
+Å é
+,
+é è
+$num
+ê ë
+,
+ë í
+$str
+ì ®
+,
+® ©
+$str
+™ ø
+,
+ø ¿
+null
+¡ ≈
+,
+≈ ∆
+null
+« À
+}
+Ã Õ
+}
+ÄÄ 
+)
+ÄÄ 
+;
+ÄÄ 
+migrationBuilder
+ÇÇ 
+.
+ÇÇ 
+AddForeignKey
+ÇÇ *
+(
+ÇÇ* +
+name
+ÉÉ 
+:
+ÉÉ 
+$str
+ÉÉ ^
+,
+ÉÉ^ _
+table
+ÑÑ 
+:
+ÑÑ 
+$str
+ÑÑ /
+,
+ÑÑ/ 0
+column
+ÖÖ 
+:
+ÖÖ 
+$str
+ÖÖ 0
+,
+ÖÖ0 1
+principalTable
+ÜÜ 
+:
+ÜÜ 
+$str
+ÜÜ  7
+,
+ÜÜ7 8
+principalColumn
+áá 
+:
+áá  
+$str
+áá! %
+,
+áá% &
+onDelete
+àà 
+:
+àà 
+ReferentialAction
+àà +
+.
+àà+ ,
+Cascade
+àà, 3
+)
+àà3 4
+;
+àà4 5
+}
+ââ 	
+	protected
+åå 
+override
+åå 
+void
+åå 
+Down
+åå  $
+(
+åå$ %
+MigrationBuilder
+åå% 5
+migrationBuilder
+åå6 F
+)
+ååF G
+{
+çç 	
+migrationBuilder
+éé 
+.
+éé 
+DropForeignKey
+éé +
+(
+éé+ ,
+name
+èè 
+:
+èè 
+$str
+èè ^
+,
+èè^ _
+table
+êê 
+:
+êê 
+$str
+êê /
+)
+êê/ 0
+;
+êê0 1
+migrationBuilder
+íí 
+.
+íí 
+
+DeleteData
+íí '
+(
+íí' (
+table
+ìì 
+:
+ìì 
+$str
+ìì '
+,
+ìì' (
+	keyColumn
+îî 
+:
+îî 
+$str
+îî 
+,
+îî  
+keyValue
+ïï 
+:
+ïï 
+new
+ïï 
+Guid
+ïï "
+(
+ïï" #
+$str
+ïï# I
+)
+ïïI J
+)
+ïïJ K
+;
+ïïK L
+migrationBuilder
+óó 
+.
+óó 
+
+DeleteData
+óó '
+(
+óó' (
+table
+òò 
+:
+òò 
+$str
+òò '
+,
+òò' (
+	keyColumn
+ôô 
+:
+ôô 
+$str
+ôô 
+,
+ôô  
+keyValue
+öö 
+:
+öö 
+new
+öö 
+Guid
+öö "
+(
+öö" #
+$str
+öö# I
+)
+ööI J
+)
+ööJ K
+;
+ööK L
+migrationBuilder
+úú 
+.
+úú 
+
+DeleteData
+úú '
+(
+úú' (
+table
+ùù 
+:
+ùù 
+$str
+ùù '
+,
+ùù' (
+	keyColumn
+ûû 
+:
+ûû 
+$str
+ûû 
+,
+ûû  
+keyValue
+üü 
+:
+üü 
+new
+üü 
+Guid
+üü "
+(
+üü" #
+$str
+üü# I
+)
+üüI J
+)
+üüJ K
+;
+üüK L
+migrationBuilder
+°° 
+.
+°° 
+
+DeleteData
+°° '
+(
+°°' (
+table
+¢¢ 
+:
+¢¢ 
+$str
+¢¢ '
+,
+¢¢' (
+	keyColumn
+££ 
+:
+££ 
+$str
+££ 
+,
+££  
+keyValue
+§§ 
+:
+§§ 
+new
+§§ 
+Guid
+§§ "
+(
+§§" #
+$str
+§§# I
+)
+§§I J
+)
+§§J K
+;
+§§K L
+migrationBuilder
+¶¶ 
+.
+¶¶ 
+
+DeleteData
+¶¶ '
+(
+¶¶' (
+table
+ßß 
+:
+ßß 
+$str
+ßß '
+,
+ßß' (
+	keyColumn
+®® 
+:
+®® 
+$str
+®® 
+,
+®®  
+keyValue
+©© 
+:
+©© 
+new
+©© 
+Guid
+©© "
+(
+©©" #
+$str
+©©# I
+)
+©©I J
+)
+©©J K
+;
+©©K L
+migrationBuilder
+´´ 
+.
+´´ 
+
+DeleteData
+´´ '
+(
+´´' (
+table
+¨¨ 
+:
+¨¨ 
+$str
+¨¨ '
+,
+¨¨' (
+	keyColumn
+≠≠ 
+:
+≠≠ 
+$str
+≠≠ 
+,
+≠≠  
+keyValue
+ÆÆ 
+:
+ÆÆ 
+new
+ÆÆ 
+Guid
+ÆÆ "
+(
+ÆÆ" #
+$str
+ÆÆ# I
+)
+ÆÆI J
+)
+ÆÆJ K
+;
+ÆÆK L
+migrationBuilder
+∞∞ 
+.
+∞∞ 
+
+DeleteData
+∞∞ '
+(
+∞∞' (
+table
+±± 
+:
+±± 
+$str
+±± '
+,
+±±' (
+	keyColumn
+≤≤ 
+:
+≤≤ 
+$str
+≤≤ 
+,
+≤≤  
+keyValue
+≥≥ 
+:
+≥≥ 
+new
+≥≥ 
+Guid
+≥≥ "
+(
+≥≥" #
+$str
+≥≥# I
+)
+≥≥I J
+)
+≥≥J K
+;
+≥≥K L
+migrationBuilder
+µµ 
+.
+µµ 
+
+DeleteData
+µµ '
+(
+µµ' (
+table
+∂∂ 
+:
+∂∂ 
+$str
+∂∂ '
+,
+∂∂' (
+	keyColumn
+∑∑ 
+:
+∑∑ 
+$str
+∑∑ 
+,
+∑∑  
+keyValue
+∏∏ 
+:
+∏∏ 
+new
+∏∏ 
+Guid
+∏∏ "
+(
+∏∏" #
+$str
+∏∏# I
+)
+∏∏I J
+)
+∏∏J K
+;
+∏∏K L
+migrationBuilder
+∫∫ 
+.
+∫∫ 
+
+DeleteData
+∫∫ '
+(
+∫∫' (
+table
+ªª 
+:
+ªª 
+$str
+ªª '
+,
+ªª' (
+	keyColumn
+ºº 
+:
+ºº 
+$str
+ºº 
+,
+ºº  
+keyValue
+ΩΩ 
+:
+ΩΩ 
+new
+ΩΩ 
+Guid
+ΩΩ "
+(
+ΩΩ" #
+$str
+ΩΩ# I
+)
+ΩΩI J
+)
+ΩΩJ K
+;
+ΩΩK L
+migrationBuilder
+øø 
+.
+øø 
+
+DeleteData
+øø '
+(
+øø' (
+table
+¿¿ 
+:
+¿¿ 
+$str
+¿¿ '
+,
+¿¿' (
+	keyColumn
+¡¡ 
+:
+¡¡ 
+$str
+¡¡ 
+,
+¡¡  
+keyValue
+¬¬ 
+:
+¬¬ 
+new
+¬¬ 
+Guid
+¬¬ "
+(
+¬¬" #
+$str
+¬¬# I
+)
+¬¬I J
+)
+¬¬J K
+;
+¬¬K L
+migrationBuilder
+ƒƒ 
+.
+ƒƒ 
+
+DeleteData
+ƒƒ '
+(
+ƒƒ' (
+table
+≈≈ 
+:
+≈≈ 
+$str
+≈≈ '
+,
+≈≈' (
+	keyColumn
+∆∆ 
+:
+∆∆ 
+$str
+∆∆ 
+,
+∆∆  
+keyValue
+«« 
+:
+«« 
+new
+«« 
+Guid
+«« "
+(
+««" #
+$str
+««# I
+)
+««I J
+)
+««J K
+;
+««K L
+migrationBuilder
+…… 
+.
+…… 
+
+DeleteData
+…… '
+(
+……' (
+table
+   
+:
+   
+$str
+   '
+,
+  ' (
+	keyColumn
+ÀÀ 
+:
+ÀÀ 
+$str
+ÀÀ 
+,
+ÀÀ  
+keyValue
+ÃÃ 
+:
+ÃÃ 
+new
+ÃÃ 
+Guid
+ÃÃ "
+(
+ÃÃ" #
+$str
+ÃÃ# I
+)
+ÃÃI J
+)
+ÃÃJ K
+;
+ÃÃK L
+migrationBuilder
+ŒŒ 
+.
+ŒŒ 
+
+DeleteData
+ŒŒ '
+(
+ŒŒ' (
+table
+œœ 
+:
+œœ 
+$str
+œœ '
+,
+œœ' (
+	keyColumn
+–– 
+:
+–– 
+$str
+–– 
+,
+––  
+keyValue
+—— 
+:
+—— 
+new
+—— 
+Guid
+—— "
+(
+——" #
+$str
+——# I
+)
+——I J
+)
+——J K
+;
+——K L
+migrationBuilder
+”” 
+.
+”” 
+AlterColumn
+”” (
+<
+””( )
+Guid
+””) -
+>
+””- .
+(
+””. /
+name
+‘‘ 
+:
+‘‘ 
+$str
+‘‘ .
+,
+‘‘. /
+table
+’’ 
+:
+’’ 
+$str
+’’ /
+,
+’’/ 0
+type
+÷÷ 
+:
+÷÷ 
+$str
+÷÷ (
+,
+÷÷( )
+nullable
+◊◊ 
+:
+◊◊ 
+true
+◊◊ 
+,
+◊◊ 
+
+oldClrType
+ÿÿ 
+:
+ÿÿ 
+typeof
+ÿÿ "
+(
+ÿÿ" #
+Guid
+ÿÿ# '
+)
+ÿÿ' (
+,
+ÿÿ( )
+oldType
+ŸŸ 
+:
+ŸŸ 
+$str
+ŸŸ +
+)
+ŸŸ+ ,
+;
+ŸŸ, -
+migrationBuilder
+€€ 
+.
+€€ 
+AlterColumn
+€€ (
+<
+€€( )
+DateTime
+€€) 1
+>
+€€1 2
+(
+€€2 3
+name
+‹‹ 
+:
+‹‹ 
+$str
+‹‹ %
+,
+‹‹% &
+table
+›› 
+:
+›› 
+$str
+›› )
+,
+››) *
+type
+ﬁﬁ 
+:
+ﬁﬁ 
+$str
+ﬁﬁ !
+,
+ﬁﬁ! "
+nullable
+ﬂﬂ 
+:
+ﬂﬂ 
+false
+ﬂﬂ 
+,
+ﬂﬂ  
+defaultValue
+‡‡ 
+:
+‡‡ 
+new
+‡‡ !
+DateTime
+‡‡" *
+(
+‡‡* +
+$num
+‡‡+ ,
+,
+‡‡, -
+$num
+‡‡. /
+,
+‡‡/ 0
+$num
+‡‡1 2
+,
+‡‡2 3
+$num
+‡‡4 5
+,
+‡‡5 6
+$num
+‡‡7 8
+,
+‡‡8 9
+$num
+‡‡: ;
+,
+‡‡; <
+$num
+‡‡= >
+,
+‡‡> ?
+DateTimeKind
+‡‡@ L
+.
+‡‡L M
+Unspecified
+‡‡M X
+)
+‡‡X Y
+,
+‡‡Y Z
+
+oldClrType
+·· 
+:
+·· 
+typeof
+·· "
+(
+··" #
+DateTime
+··# +
+)
+··+ ,
+,
+··, -
+oldType
+‚‚ 
+:
+‚‚ 
+$str
+‚‚ $
+,
+‚‚$ %
+oldNullable
+„„ 
+:
+„„ 
+true
+„„ !
+)
+„„! "
+;
+„„" #
+migrationBuilder
+ÂÂ 
+.
+ÂÂ 
+
+UpdateData
+ÂÂ '
+(
+ÂÂ' (
+table
+ÊÊ 
+:
+ÊÊ 
+$str
+ÊÊ $
+,
+ÊÊ$ %
+	keyColumn
+ÁÁ 
+:
+ÁÁ 
+$str
+ÁÁ 
+,
+ÁÁ  
+keyValue
+ËË 
+:
+ËË 
+$str
+ËË +
+,
+ËË+ ,
+columns
+ÈÈ 
+:
+ÈÈ 
+new
+ÈÈ 
+[
+ÈÈ 
+]
+ÈÈ 
+{
+ÈÈ  
+$str
+ÈÈ! 3
+,
+ÈÈ3 4
+$str
+ÈÈ5 A
+,
+ÈÈA B
+$str
+ÈÈC Q
+,
+ÈÈQ R
+$str
+ÈÈS b
+}
+ÈÈc d
+,
+ÈÈd e
+values
+ÍÍ 
+:
+ÍÍ 
+new
+ÍÍ 
+object
+ÍÍ "
+[
+ÍÍ" #
+]
+ÍÍ# $
+{
+ÍÍ% &
+$str
+ÍÍ' M
+,
+ÍÍM N
+new
+ÍÍO R
+DateTime
+ÍÍS [
+(
+ÍÍ[ \
+$num
+ÍÍ\ `
+,
+ÍÍ` a
+$num
+ÍÍb c
+,
+ÍÍc d
+$num
+ÍÍe g
+,
+ÍÍg h
+$num
+ÍÍi k
+,
+ÍÍk l
+$num
+ÍÍm o
+,
+ÍÍo p
+$num
+ÍÍq s
+,
+ÍÍs t
+$num
+ÍÍu x
+,
+ÍÍx y
+DateTimeKindÍÍz Ü
+.ÍÍÜ á
+UtcÍÍá ä
+)ÍÍä ã
+.ÍÍã å
+AddTicksÍÍå î
+(ÍÍî ï
+$numÍÍï ô
+)ÍÍô ö
+,ÍÍö õ
+$strÍÍú Ú
+,ÍÍÚ Û
+$strÍÍÙ ö
+}ÍÍõ ú
+)ÍÍú ù
+;ÍÍù û
+migrationBuilder
+ÏÏ 
+.
+ÏÏ 
+
+InsertData
+ÏÏ '
+(
+ÏÏ' (
+table
+ÌÌ 
+:
+ÌÌ 
+$str
+ÌÌ '
+,
+ÌÌ' (
+columns
+ÓÓ 
+:
+ÓÓ 
+new
+ÓÓ 
+[
+ÓÓ 
+]
+ÓÓ 
+{
+ÓÓ  
+$str
+ÓÓ! %
+,
+ÓÓ% &
+$str
+ÓÓ' 4
+,
+ÓÓ4 5
+$str
+ÓÓ6 D
+,
+ÓÓD E
+$str
+ÓÓF P
+,
+ÓÓP Q
+$str
+ÓÓR ]
+,
+ÓÓ] ^
+$str
+ÓÓ_ l
+,
+ÓÓl m
+$str
+ÓÓn }
+,
+ÓÓ} ~
+$strÓÓ â
+,ÓÓâ ä
+$strÓÓã †
+,ÓÓ† °
+$strÓÓ¢ ±
+,ÓÓ± ≤
+$strÓÓ≥ ¬
+,ÓÓ¬ √
+$strÓÓƒ —
+,ÓÓ— “
+$strÓÓ” ﬂ
+,ÓÓﬂ ‡
+$strÓÓ· È
+,ÓÓÈ Í
+$strÓÓÎ ¯
+,ÓÓ¯ ˘
+$strÓÓ˙ à
+,ÓÓà â
+$strÓÓä ï
+,ÓÓï ñ
+$strÓÓó §
+}ÓÓ• ¶
+,ÓÓ¶ ß
+values
+ÔÔ 
+:
+ÔÔ 
+new
+ÔÔ 
+object
+ÔÔ "
+[
+ÔÔ" #
+,
+ÔÔ# $
+]
+ÔÔ$ %
+{
+ 
+{
+ÒÒ 
+new
+ÒÒ 
+Guid
+ÒÒ 
+(
+ÒÒ 
+$str
+ÒÒ E
+)
+ÒÒE F
+,
+ÒÒF G
+$strÒÒH ®
+,ÒÒ® ©
+$strÒÒ™ ÿ
+,ÒÒÿ Ÿ
+$strÒÒ⁄ ‰
+,ÒÒ‰ Â
+nullÒÒÊ Í
+,ÒÒÍ Î
+nullÒÒÏ 
+,ÒÒ Ò
+$strÒÒÚ £
+,ÒÒ£ §
+$strÒÒ• Æ
+,ÒÒÆ Ø
+$strÒÒ∞  
+,ÒÒ  À
+$strÒÒÃ Û
+,ÒÒÛ Ù
+$strÒÒı ˇ
+,ÒÒˇ Ä
+$strÒÒÅ ù
+,ÒÒù û
+$strÒÒü ¨
+,ÒÒ¨ ≠
+$numÒÒÆ Ø
+,ÒÒØ ∞
+$strÒÒ± ∆
+,ÒÒ∆ «
+$strÒÒ» ÿ
+,ÒÒÿ Ÿ
+nullÒÒ⁄ ﬁ
+,ÒÒﬁ ﬂ
+nullÒÒ‡ ‰
+}ÒÒÂ Ê
+,ÒÒÊ Á
+{
+ÚÚ 
+new
+ÚÚ 
+Guid
+ÚÚ 
+(
+ÚÚ 
+$str
+ÚÚ E
+)
+ÚÚE F
+,
+ÚÚF G
+$strÚÚH Ñ
+,ÚÚÑ Ö
+$strÚÚÜ ¿
+,ÚÚ¿ ¡
+$strÚÚ¬ “
+,ÚÚ“ ”
+nullÚÚ‘ ÿ
+,ÚÚÿ Ÿ
+nullÚÚ⁄ ﬁ
+,ÚÚﬁ ﬂ
+$strÚÚ‡ ë
+,ÚÚë í
+$strÚÚì ú
+,ÚÚú ù
+$strÚÚû ∑
+,ÚÚ∑ ∏
+$strÚÚπ ¡
+,ÚÚ¡ ¬
+$strÚÚ√ Õ
+,ÚÚÕ Œ
+$strÚÚœ Î
+,ÚÚÎ Ï
+$strÚÚÌ ˙
+,ÚÚ˙ ˚
+$numÚÚ¸ ˝
+,ÚÚ˝ ˛
+$strÚÚˇ ê
+,ÚÚê ë
+$strÚÚí °
+,ÚÚ° ¢
+nullÚÚ£ ß
+,ÚÚß ®
+nullÚÚ© ≠
+}ÚÚÆ Ø
+,ÚÚØ ∞
+{
+ÛÛ 
+new
+ÛÛ 
+Guid
+ÛÛ 
+(
+ÛÛ 
+$str
+ÛÛ E
+)
+ÛÛE F
+,
+ÛÛF G
+$strÛÛH è
+,ÛÛè ê
+$strÛÛë À
+,ÛÛÀ Ã
+$strÛÛÕ ‰
+,ÛÛ‰ Â
+nullÛÛÊ Í
+,ÛÛÍ Î
+nullÛÛÏ 
+,ÛÛ Ò
+$strÛÛÚ £
+,ÛÛ£ §
+$strÛÛ• Æ
+,ÛÛÆ Ø
+$strÛÛ∞ …
+,ÛÛ…  
+$strÛÛÀ Ò
+,ÛÛÒ Ú
+$strÛÛÛ ¸
+,ÛÛ¸ ˝
+$strÛÛ˛ ö
+,ÛÛö õ
+$strÛÛú ©
+,ÛÛ© ™
+$numÛÛ´ ¨
+,ÛÛ¨ ≠
+$strÛÛÆ Œ
+,ÛÛŒ œ
+$strÛÛ– Ë
+,ÛÛË È
+nullÛÛÍ Ó
+,ÛÛÓ Ô
+nullÛÛ Ù
+}ÛÛı ˆ
+,ÛÛˆ ˜
+{
+ÙÙ 
+new
+ÙÙ 
+Guid
+ÙÙ 
+(
+ÙÙ 
+$str
+ÙÙ E
+)
+ÙÙE F
+,
+ÙÙF G
+$strÙÙH û
+,ÙÙû ü
+$strÙÙ† ≈
+,ÙÙ≈ ∆
+$strÙÙ« œ
+,ÙÙœ –
+nullÙÙ— ’
+,ÙÙ’ ÷
+nullÙÙ◊ €
+,ÙÙ€ ‹
+$strÙÙ› é
+,ÙÙé è
+$strÙÙê ô
+,ÙÙô ö
+$strÙÙõ µ
+,ÙÙµ ∂
+$strÙÙ∑ œ
+,ÙÙœ –
+$strÙÙ— €
+,ÙÙ€ ‹
+$strÙÙ› ˘
+,ÙÙ˘ ˙
+$strÙÙ˚ à
+,ÙÙà â
+$numÙÙä ã
+,ÙÙã å
+$strÙÙç ¢
+,ÙÙ¢ £
+$strÙÙ§ µ
+,ÙÙµ ∂
+nullÙÙ∑ ª
+,ÙÙª º
+nullÙÙΩ ¡
+}ÙÙ¬ √
+,ÙÙ√ ƒ
+{
+ıı 
+new
+ıı 
+Guid
+ıı 
+(
+ıı 
+$str
+ıı E
+)
+ııE F
+,
+ııF G
+$strııH ë
+,ııë í
+$strııì Õ
+,ııÕ Œ
+$strııœ ·
+,ıı· ‚
+nullıı„ Á
+,ııÁ Ë
+nullııÈ Ì
+,ııÌ Ó
+$strııÔ †
+,ıı† °
+$strıı¢ ´
+,ıı´ ¨
+$strıı≠ ∆
+,ıı∆ «
+$strıı» –
+,ıı– —
+$strıı“ ‹
+,ıı‹ ›
+$strııﬁ ˙
+,ıı˙ ˚
+$strıı¸ â
+,ııâ ä
+$numııã å
+,ııå ç
+$strııé π
+,ııπ ∫
+$strııª “
+,ıı“ ”
+nullıı‘ ÿ
+,ııÿ Ÿ
+nullıı⁄ ﬁ
+}ııﬂ ‡
+,ıı‡ ·
+{
+ˆˆ 
+new
+ˆˆ 
+Guid
+ˆˆ 
+(
+ˆˆ 
+$str
+ˆˆ E
+)
+ˆˆE F
+,
+ˆˆF G
+$strˆˆH Ã
+,ˆˆÃ Õ
+$strˆˆŒ à
+,ˆˆà â
+$strˆˆä ö
+,ˆˆö õ
+nullˆˆú †
+,ˆˆ† °
+nullˆˆ¢ ¶
+,ˆˆ¶ ß
+$strˆˆ® Ÿ
+,ˆˆŸ ⁄
+$strˆˆ€ ‰
+,ˆˆ‰ Â
+$strˆˆÊ ˇ
+,ˆˆˇ Ä
+$strˆˆÅ â
+,ˆˆâ ä
+$strˆˆã ï
+,ˆˆï ñ
+$strˆˆó ≥
+,ˆˆ≥ ¥
+$strˆˆµ ¬
+,ˆˆ¬ √
+$numˆˆƒ ≈
+,ˆˆ≈ ∆
+$strˆˆ« ﬂ
+,ˆˆﬂ ‡
+$strˆˆ· ˆ
+,ˆˆˆ ˜
+nullˆˆ¯ ¸
+,ˆˆ¸ ˝
+nullˆˆ˛ Ç
+}ˆˆÉ Ñ
+,ˆˆÑ Ö
+{
+˜˜ 
+new
+˜˜ 
+Guid
+˜˜ 
+(
+˜˜ 
+$str
+˜˜ E
+)
+˜˜E F
+,
+˜˜F G
+$str˜˜H è
+,˜˜è ê
+$str˜˜ë À
+,˜˜À Ã
+$str˜˜Õ ‰
+,˜˜‰ Â
+null˜˜Ê Í
+,˜˜Í Î
+null˜˜Ï 
+,˜˜ Ò
+$str˜˜Ú £
+,˜˜£ §
+$str˜˜• Æ
+,˜˜Æ Ø
+$str˜˜∞ …
+,˜˜…  
+$str˜˜À Ì
+,˜˜Ì Ó
+$str˜˜Ô ˚
+,˜˜˚ ¸
+$str˜˜˝ ô
+,˜˜ô ö
+$str˜˜õ ®
+,˜˜® ©
+$num˜˜™ ´
+,˜˜´ ¨
+$str˜˜≠ Õ
+,˜˜Õ Œ
+$str˜˜œ Ë
+,˜˜Ë È
+null˜˜Í Ó
+,˜˜Ó Ô
+null˜˜ Ù
+}˜˜ı ˆ
+,˜˜ˆ ˜
+{
+¯¯ 
+new
+¯¯ 
+Guid
+¯¯ 
+(
+¯¯ 
+$str
+¯¯ E
+)
+¯¯E F
+,
+¯¯F G
+$str¯¯H ∞
+,¯¯∞ ±
+$str¯¯≤ Ï
+,¯¯Ï Ì
+$str¯¯Ó ˜
+,¯¯˜ ¯
+null¯¯˘ ˝
+,¯¯˝ ˛
+null¯¯ˇ É
+,¯¯É Ñ
+$str¯¯Ö ∂
+,¯¯∂ ∑
+$str¯¯∏ ¡
+,¯¯¡ ¬
+$str¯¯√ ‹
+,¯¯‹ ›
+$str¯¯ﬁ ˘
+,¯¯˘ ˙
+$str¯¯˚ Ö
+,¯¯Ö Ü
+$str¯¯á £
+,¯¯£ §
+$str¯¯• ≤
+,¯¯≤ ≥
+$num¯¯¥ µ
+,¯¯µ ∂
+$str¯¯∑ À
+,¯¯À Ã
+$str¯¯Õ €
+,¯¯€ ‹
+null¯¯› ·
+,¯¯· ‚
+null¯¯„ Á
+}¯¯Ë È
+,¯¯È Í
+{
+˘˘ 
+new
+˘˘ 
+Guid
+˘˘ 
+(
+˘˘ 
+$str
+˘˘ E
+)
+˘˘E F
+,
+˘˘F G
+$str˘˘H è
+,˘˘è ê
+$str˘˘ë ∫
+,˘˘∫ ª
+$str˘˘º  
+,˘˘  À
+null˘˘Ã –
+,˘˘– —
+null˘˘“ ÷
+,˘˘÷ ◊
+$str˘˘ÿ â
+,˘˘â ä
+$str˘˘ã î
+,˘˘î ï
+$str˘˘ñ ¢
+,˘˘¢ £
+$str˘˘§ ¥
+,˘˘¥ µ
+$str˘˘∂ ¿
+,˘˘¿ ¡
+$str˘˘¬ ÿ
+,˘˘ÿ Ÿ
+$str˘˘⁄ Ê
+,˘˘Ê Á
+$num˘˘Ë È
+,˘˘È Í
+$str˘˘Î ¸
+,˘˘¸ ˝
+$str˘˘˛ ì
+,˘˘ì î
+null˘˘ï ô
+,˘˘ô ö
+null˘˘õ ü
+}˘˘† °
+,˘˘° ¢
+{
+˙˙ 
+new
+˙˙ 
+Guid
+˙˙ 
+(
+˙˙ 
+$str
+˙˙ E
+)
+˙˙E F
+,
+˙˙F G
+$str
+˙˙H s
+,
+˙˙s t
+$str˙˙u ô
+,˙˙ô ö
+$str˙˙õ •
+,˙˙• ¶
+null˙˙ß ´
+,˙˙´ ¨
+null˙˙≠ ±
+,˙˙± ≤
+$str˙˙≥ ˘
+,˙˙˘ ˙
+$str˙˙˚ Ñ
+,˙˙Ñ Ö
+$str˙˙Ü ü
+,˙˙ü †
+$str˙˙° Œ
+,˙˙Œ œ
+$str˙˙– ‹
+,˙˙‹ ›
+$str˙˙ﬁ ˙
+,˙˙˙ ˚
+$str˙˙¸ â
+,˙˙â ä
+$num˙˙ã å
+,˙˙å ç
+$str˙˙é ª
+,˙˙ª º
+$str˙˙Ω ›
+,˙˙› ﬁ
+null˙˙ﬂ „
+,˙˙„ ‰
+null˙˙Â È
+}˙˙Í Î
+,˙˙Î Ï
+{
+˚˚ 
+new
+˚˚ 
+Guid
+˚˚ 
+(
+˚˚ 
+$str
+˚˚ E
+)
+˚˚E F
+,
+˚˚F G
+$str˚˚H ë
+,˚˚ë í
+$str˚˚ì Õ
+,˚˚Õ Œ
+$str˚˚œ ·
+,˚˚· ‚
+null˚˚„ Á
+,˚˚Á Ë
+null˚˚È Ì
+,˚˚Ì Ó
+$str˚˚Ô †
+,˚˚† °
+$str˚˚¢ ´
+,˚˚´ ¨
+$str˚˚≠ ∆
+,˚˚∆ «
+$str˚˚» Ê
+,˚˚Ê Á
+$str˚˚Ë Ô
+,˚˚Ô 
+$str˚˚Ò ç
+,˚˚ç é
+$str˚˚è ú
+,˚˚ú ù
+$num˚˚û ü
+,˚˚ü †
+$str˚˚° ø
+,˚˚ø ¿
+$str˚˚¡ Â
+,˚˚Â Ê
+null˚˚Á Î
+,˚˚Î Ï
+null˚˚Ì Ò
+}˚˚Ú Û
+,˚˚Û Ù
+{
+¸¸ 
+new
+¸¸ 
+Guid
+¸¸ 
+(
+¸¸ 
+$str
+¸¸ E
+)
+¸¸E F
+,
+¸¸F G
+$str¸¸H ”
+,¸¸” ‘
+$str¸¸’ è
+,¸¸è ê
+$str¸¸ë ô
+,¸¸ô ö
+null¸¸õ ü
+,¸¸ü †
+null¸¸° •
+,¸¸• ¶
+$str¸¸ß ÿ
+,¸¸ÿ Ÿ
+$str¸¸⁄ „
+,¸¸„ ‰
+$str¸¸Â °
+,¸¸° ¢
+$str¸¸£ ∑
+,¸¸∑ ∏
+$str¸¸π √
+,¸¸√ ƒ
+$str¸¸≈ ·
+,¸¸· ‚
+$str¸¸„ 
+,¸¸ Ò
+$num¸¸Ú Û
+,¸¸Û Ù
+$str¸¸ı ñ
+,¸¸ñ ó
+$str¸¸ò π
+,¸¸π ∫
+null¸¸ª ø
+,¸¸ø ¿
+null¸¸¡ ≈
+}¸¸∆ «
+,¸¸« »
+{
+˝˝ 
+new
+˝˝ 
+Guid
+˝˝ 
+(
+˝˝ 
+$str
+˝˝ E
+)
+˝˝E F
+,
+˝˝F G
+$str˝˝H æ
+,˝˝æ ø
+$str˝˝¿ ù
+,˝˝ù û
+$str˝˝ü ©
+,˝˝© ™
+null˝˝´ Ø
+,˝˝Ø ∞
+null˝˝± µ
+,˝˝µ ∂
+$str˝˝∑ ˚
+,˝˝˚ ¸
+$str˝˝˝ Ü
+,˝˝Ü á
+$str˝˝à ≠
+,˝˝≠ Æ
+$str˝˝Ø ’
+,˝˝’ ÷
+$str˝˝◊ ·
+,˝˝· ‚
+$str˝˝„ ˇ
+,˝˝ˇ Ä
+$str˝˝Å é
+,˝˝é è
+$num˝˝ê ë
+,˝˝ë í
+$str˝˝ì ®
+,˝˝® ©
+$str˝˝™ ø
+,˝˝ø ¿
+null˝˝¡ ≈
+,˝˝≈ ∆
+null˝˝« À
+}˝˝Ã Õ
+}
+˛˛ 
+)
+˛˛ 
+;
+˛˛ 
+migrationBuilder
+ÄÄ 
+.
+ÄÄ 
+AddForeignKey
+ÄÄ *
+(
+ÄÄ* +
+name
+ÅÅ 
+:
+ÅÅ 
+$str
+ÅÅ ^
+,
+ÅÅ^ _
+table
+ÇÇ 
+:
+ÇÇ 
+$str
+ÇÇ /
+,
+ÇÇ/ 0
+column
+ÉÉ 
+:
+ÉÉ 
+$str
+ÉÉ 0
+,
+ÉÉ0 1
+principalTable
+ÑÑ 
+:
+ÑÑ 
+$str
+ÑÑ  7
+,
+ÑÑ7 8
+principalColumn
+ÖÖ 
+:
+ÖÖ  
+$str
+ÖÖ! %
+)
+ÖÖ% &
+;
+ÖÖ& '
+}
+ÜÜ 	
+}
+áá 
+}àà ﬂ≥
+îD:\FPT\Semester 6\Project_Cursus\Backend_Cursus\Cursus.LMS\Cursus.LMS.DataAccess\Migrations\20240723173023_ModifiedKeyAndForeignKeyCourseProgress.cs
+	namespace 	
+Cursus
+ 
+. 
+LMS 
+. 
+
+DataAccess 
+.  
+
+Migrations  *
+{		 
+public 
+
+partial 
+class 2
+&ModifiedKeyAndForeignKeyCourseProgress ?
+:@ A
+	MigrationB K
+{ 
+	protected 
+override 
+void 
+Up  "
+(" #
+MigrationBuilder# 3
+migrationBuilder4 D
+)D E
+{ 	
+migrationBuilder 
+. 
+DropPrimaryKey +
+(+ ,
+name 
+: 
+$str +
+,+ ,
+table 
+: 
+$str )
+)) *
+;* +
+migrationBuilder 
+. 
+
+DeleteData '
+(' (
+table 
+: 
+$str '
+,' (
+	keyColumn 
+: 
+$str 
+,  
+keyValue 
+: 
+new 
+Guid "
+(" #
+$str# I
+)I J
+)J K
+;K L
+migrationBuilder 
+. 
+
+DeleteData '
+(' (
+table 
+: 
+$str '
+,' (
+	keyColumn 
+: 
+$str 
+,  
+keyValue 
+: 
+new 
+Guid "
+(" #
+$str# I
+)I J
+)J K
+;K L
+migrationBuilder 
+. 
+
+DeleteData '
+(' (
+table 
+: 
+$str '
+,' (
+	keyColumn   
+:   
+$str   
+,    
+keyValue!! 
+:!! 
+new!! 
+Guid!! "
+(!!" #
+$str!!# I
+)!!I J
+)!!J K
+;!!K L
+migrationBuilder## 
+.## 
+
+DeleteData## '
+(##' (
+table$$ 
+:$$ 
+$str$$ '
+,$$' (
+	keyColumn%% 
+:%% 
+$str%% 
+,%%  
+keyValue&& 
+:&& 
+new&& 
+Guid&& "
+(&&" #
+$str&&# I
+)&&I J
+)&&J K
+;&&K L
+migrationBuilder(( 
+.(( 
+
+DeleteData(( '
+(((' (
+table)) 
+:)) 
+$str)) '
+,))' (
+	keyColumn** 
+:** 
+$str** 
+,**  
+keyValue++ 
+:++ 
+new++ 
+Guid++ "
+(++" #
+$str++# I
+)++I J
+)++J K
+;++K L
+migrationBuilder-- 
+.-- 
+
+DeleteData-- '
+(--' (
+table.. 
+:.. 
+$str.. '
+,..' (
+	keyColumn// 
+:// 
+$str// 
+,//  
+keyValue00 
+:00 
+new00 
+Guid00 "
+(00" #
+$str00# I
+)00I J
+)00J K
+;00K L
+migrationBuilder22 
+.22 
+
+DeleteData22 '
+(22' (
+table33 
+:33 
+$str33 '
+,33' (
+	keyColumn44 
+:44 
+$str44 
+,44  
+keyValue55 
+:55 
+new55 
+Guid55 "
+(55" #
+$str55# I
+)55I J
+)55J K
+;55K L
+migrationBuilder77 
+.77 
+
+DeleteData77 '
+(77' (
+table88 
+:88 
+$str88 '
+,88' (
+	keyColumn99 
+:99 
+$str99 
+,99  
+keyValue:: 
+::: 
+new:: 
+Guid:: "
+(::" #
+$str::# I
+)::I J
+)::J K
+;::K L
+migrationBuilder<< 
+.<< 
+
+DeleteData<< '
+(<<' (
+table== 
+:== 
+$str== '
+,==' (
+	keyColumn>> 
+:>> 
+$str>> 
+,>>  
+keyValue?? 
+:?? 
+new?? 
+Guid?? "
+(??" #
+$str??# I
+)??I J
+)??J K
+;??K L
+migrationBuilderAA 
+.AA 
+
+DeleteDataAA '
+(AA' (
+tableBB 
+:BB 
+$strBB '
+,BB' (
+	keyColumnCC 
+:CC 
+$strCC 
+,CC  
+keyValueDD 
+:DD 
+newDD 
+GuidDD "
+(DD" #
+$strDD# I
+)DDI J
+)DDJ K
+;DDK L
+migrationBuilderFF 
+.FF 
+
+DeleteDataFF '
+(FF' (
+tableGG 
+:GG 
+$strGG '
+,GG' (
+	keyColumnHH 
+:HH 
+$strHH 
+,HH  
+keyValueII 
+:II 
+newII 
+GuidII "
+(II" #
+$strII# I
+)III J
+)IIJ K
+;IIK L
+migrationBuilderKK 
+.KK 
+
+DeleteDataKK '
+(KK' (
+tableLL 
+:LL 
+$strLL '
+,LL' (
+	keyColumnMM 
+:MM 
+$strMM 
+,MM  
+keyValueNN 
+:NN 
+newNN 
+GuidNN "
+(NN" #
+$strNN# I
+)NNI J
+)NNJ K
+;NNK L
+migrationBuilderPP 
+.PP 
+
+DeleteDataPP '
+(PP' (
+tableQQ 
+:QQ 
+$strQQ '
+,QQ' (
+	keyColumnRR 
+:RR 
+$strRR 
+,RR  
+keyValueSS 
+:SS 
+newSS 
+GuidSS "
+(SS" #
+$strSS# I
+)SSI J
+)SSJ K
+;SSK L
+migrationBuilderUU 
+.UU 
+	AddColumnUU &
+<UU& '
+GuidUU' +
+>UU+ ,
+(UU, -
+nameVV 
+:VV 
+$strVV 
+,VV 
+tableWW 
+:WW 
+$strWW )
+,WW) *
+typeXX 
+:XX 
+$strXX (
+,XX( )
+nullableYY 
+:YY 
+falseYY 
+,YY  
+defaultValueZZ 
+:ZZ 
+newZZ !
+GuidZZ" &
+(ZZ& '
+$strZZ' M
+)ZZM N
+)ZZN O
+;ZZO P
+migrationBuilder\\ 
+.\\ 
+AddPrimaryKey\\ *
+(\\* +
+name]] 
+:]] 
+$str]] +
+,]]+ ,
+table^^ 
+:^^ 
+$str^^ )
+,^^) *
+column__ 
+:__ 
+$str__ 
+)__ 
+;__ 
+migrationBuilderaa 
+.aa 
+
+UpdateDataaa '
+(aa' (
+tablebb 
+:bb 
+$strbb $
+,bb$ %
+	keyColumncc 
+:cc 
+$strcc 
+,cc  
+keyValuedd 
+:dd 
+$strdd +
+,dd+ ,
+columnsee 
+:ee 
+newee 
+[ee 
+]ee 
+{ee  
+$stree! 3
+,ee3 4
+$stree5 A
+,eeA B
+$streeC Q
+,eeQ R
+$streeS b
+}eec d
+,eed e
+valuesff 
+:ff 
+newff 
+objectff "
+[ff" #
+]ff# $
+{ff% &
+$strff' M
+,ffM N
+newffO R
+DateTimeffS [
+(ff[ \
+$numff\ `
+,ff` a
+$numffb c
+,ffc d
+$numffe g
+,ffg h
+$numffi k
+,ffk l
+$numffm o
+,ffo p
+$numffq s
+,ffs t
+$numffu x
+,ffx y
+DateTimeKind	ffz Ü
+.
+ffÜ á
+Utc
+ffá ä
+)
+ffä ã
+.
+ffã å
+AddTicks
+ffå î
+(
+ffî ï
+$num
+ffï ô
+)
+ffô ö
+,
+ffö õ
+$str
+ffú Ú
+,
+ffÚ Û
+$str
+ffÙ ö
+}
+ffõ ú
+)
+ffú ù
+;
+ffù û
+migrationBuilderhh 
+.hh 
+
+InsertDatahh '
+(hh' (
+tableii 
+:ii 
+$strii '
+,ii' (
+columnsjj 
+:jj 
+newjj 
+[jj 
+]jj 
+{jj  
+$strjj! %
+,jj% &
+$strjj' 4
+,jj4 5
+$strjj6 D
+,jjD E
+$strjjF P
+,jjP Q
+$strjjR ]
+,jj] ^
+$strjj_ l
+,jjl m
+$strjjn }
+,jj} ~
+$str	jj â
+,
+jjâ ä
+$str
+jjã †
+,
+jj† °
+$str
+jj¢ ±
+,
+jj± ≤
+$str
+jj≥ ¬
+,
+jj¬ √
+$str
+jjƒ —
+,
+jj— “
+$str
+jj” ﬂ
+,
+jjﬂ ‡
+$str
+jj· È
+,
+jjÈ Í
+$str
+jjÎ ¯
+,
+jj¯ ˘
+$str
+jj˙ à
+,
+jjà â
+$str
+jjä ï
+,
+jjï ñ
+$str
+jjó §
+}
+jj• ¶
+,
+jj¶ ß
+valueskk 
+:kk 
+newkk 
+objectkk "
+[kk" #
+,kk# $
+]kk$ %
+{ll 
+{mm 
+newmm 
+Guidmm 
+(mm 
+$strmm E
+)mmE F
+,mmF G
+$str	mmH ®
+,
+mm® ©
+$str
+mm™ ÿ
+,
+mmÿ Ÿ
+$str
+mm⁄ ‰
+,
+mm‰ Â
+null
+mmÊ Í
+,
+mmÍ Î
+null
+mmÏ 
+,
+mm Ò
+$str
+mmÚ £
+,
+mm£ §
+$str
+mm• Æ
+,
+mmÆ Ø
+$str
+mm∞  
+,
+mm  À
+$str
+mmÃ Û
+,
+mmÛ Ù
+$str
+mmı ˇ
+,
+mmˇ Ä
+$str
+mmÅ ù
+,
+mmù û
+$str
+mmü ¨
+,
+mm¨ ≠
+$num
+mmÆ Ø
+,
+mmØ ∞
+$str
+mm± ∆
+,
+mm∆ «
+$str
+mm» ÿ
+,
+mmÿ Ÿ
+null
+mm⁄ ﬁ
+,
+mmﬁ ﬂ
+null
+mm‡ ‰
+}
+mmÂ Ê
+,
+mmÊ Á
+{nn 
+newnn 
+Guidnn 
+(nn 
+$strnn E
+)nnE F
+,nnF G
+$str	nnH Ñ
+,
+nnÑ Ö
+$str
+nnÜ ¿
+,
+nn¿ ¡
+$str
+nn¬ “
+,
+nn“ ”
+null
+nn‘ ÿ
+,
+nnÿ Ÿ
+null
+nn⁄ ﬁ
+,
+nnﬁ ﬂ
+$str
+nn‡ ë
+,
+nnë í
+$str
+nnì ú
+,
+nnú ù
+$str
+nnû ∑
+,
+nn∑ ∏
+$str
+nnπ ¡
+,
+nn¡ ¬
+$str
+nn√ Õ
+,
+nnÕ Œ
+$str
+nnœ Î
+,
+nnÎ Ï
+$str
+nnÌ ˙
+,
+nn˙ ˚
+$num
+nn¸ ˝
+,
+nn˝ ˛
+$str
+nnˇ ê
+,
+nnê ë
+$str
+nní °
+,
+nn° ¢
+null
+nn£ ß
+,
+nnß ®
+null
+nn© ≠
+}
+nnÆ Ø
+,
+nnØ ∞
+{oo 
+newoo 
+Guidoo 
+(oo 
+$stroo E
+)ooE F
+,ooF G
+$str	ooH è
+,
+ooè ê
+$str
+ooë À
+,
+ooÀ Ã
+$str
+ooÕ ‰
+,
+oo‰ Â
+null
+ooÊ Í
+,
+ooÍ Î
+null
+ooÏ 
+,
+oo Ò
+$str
+ooÚ £
+,
+oo£ §
+$str
+oo• Æ
+,
+ooÆ Ø
+$str
+oo∞ …
+,
+oo…  
+$str
+ooÀ Ò
+,
+ooÒ Ú
+$str
+ooÛ ¸
+,
+oo¸ ˝
+$str
+oo˛ ö
+,
+ooö õ
+$str
+ooú ©
+,
+oo© ™
+$num
+oo´ ¨
+,
+oo¨ ≠
+$str
+ooÆ Œ
+,
+ooŒ œ
+$str
+oo– Ë
+,
+ooË È
+null
+ooÍ Ó
+,
+ooÓ Ô
+null
+oo Ù
+}
+ooı ˆ
+,
+ooˆ ˜
+{pp 
+newpp 
+Guidpp 
+(pp 
+$strpp E
+)ppE F
+,ppF G
+$str	ppH û
+,
+ppû ü
+$str
+pp† ≈
+,
+pp≈ ∆
+$str
+pp« œ
+,
+ppœ –
+null
+pp— ’
+,
+pp’ ÷
+null
+pp◊ €
+,
+pp€ ‹
+$str
+pp› é
+,
+ppé è
+$str
+ppê ô
+,
+ppô ö
+$str
+ppõ µ
+,
+ppµ ∂
+$str
+pp∑ œ
+,
+ppœ –
+$str
+pp— €
+,
+pp€ ‹
+$str
+pp› ˘
+,
+pp˘ ˙
+$str
+pp˚ à
+,
+ppà â
+$num
+ppä ã
+,
+ppã å
+$str
+ppç ¢
+,
+pp¢ £
+$str
+pp§ µ
+,
+ppµ ∂
+null
+pp∑ ª
+,
+ppª º
+null
+ppΩ ¡
+}
+pp¬ √
+,
+pp√ ƒ
+{qq 
+newqq 
+Guidqq 
+(qq 
+$strqq E
+)qqE F
+,qqF G
+$str	qqH ë
+,
+qqë í
+$str
+qqì Õ
+,
+qqÕ Œ
+$str
+qqœ ·
+,
+qq· ‚
+null
+qq„ Á
+,
+qqÁ Ë
+null
+qqÈ Ì
+,
+qqÌ Ó
+$str
+qqÔ †
+,
+qq† °
+$str
+qq¢ ´
+,
+qq´ ¨
+$str
+qq≠ ∆
+,
+qq∆ «
+$str
+qq» –
+,
+qq– —
+$str
+qq“ ‹
+,
+qq‹ ›
+$str
+qqﬁ ˙
+,
+qq˙ ˚
+$str
+qq¸ â
+,
+qqâ ä
+$num
+qqã å
+,
+qqå ç
+$str
+qqé π
+,
+qqπ ∫
+$str
+qqª “
+,
+qq“ ”
+null
+qq‘ ÿ
+,
+qqÿ Ÿ
+null
+qq⁄ ﬁ
+}
+qqﬂ ‡
+,
+qq‡ ·
+{rr 
+newrr 
+Guidrr 
+(rr 
+$strrr E
+)rrE F
+,rrF G
+$str	rrH Ã
+,
+rrÃ Õ
+$str
+rrŒ à
+,
+rrà â
+$str
+rrä ö
+,
+rrö õ
+null
+rrú †
+,
+rr† °
+null
+rr¢ ¶
+,
+rr¶ ß
+$str
+rr® Ÿ
+,
+rrŸ ⁄
+$str
+rr€ ‰
+,
+rr‰ Â
+$str
+rrÊ ˇ
+,
+rrˇ Ä
+$str
+rrÅ â
+,
+rrâ ä
+$str
+rrã ï
+,
+rrï ñ
+$str
+rró ≥
+,
+rr≥ ¥
+$str
+rrµ ¬
+,
+rr¬ √
+$num
+rrƒ ≈
+,
+rr≈ ∆
+$str
+rr« ﬂ
+,
+rrﬂ ‡
+$str
+rr· ˆ
+,
+rrˆ ˜
+null
+rr¯ ¸
+,
+rr¸ ˝
+null
+rr˛ Ç
+}
+rrÉ Ñ
+,
+rrÑ Ö
+{ss 
+newss 
+Guidss 
+(ss 
+$strss E
+)ssE F
+,ssF G
+$str	ssH è
+,
+ssè ê
+$str
+ssë À
+,
+ssÀ Ã
+$str
+ssÕ ‰
+,
+ss‰ Â
+null
+ssÊ Í
+,
+ssÍ Î
+null
+ssÏ 
+,
+ss Ò
+$str
+ssÚ £
+,
+ss£ §
+$str
+ss• Æ
+,
+ssÆ Ø
+$str
+ss∞ …
+,
+ss…  
+$str
+ssÀ Ì
+,
+ssÌ Ó
+$str
+ssÔ ˚
+,
+ss˚ ¸
+$str
+ss˝ ô
+,
+ssô ö
+$str
+ssõ ®
+,
+ss® ©
+$num
+ss™ ´
+,
+ss´ ¨
+$str
+ss≠ Õ
+,
+ssÕ Œ
+$str
+ssœ Ë
+,
+ssË È
+null
+ssÍ Ó
+,
+ssÓ Ô
+null
+ss Ù
+}
+ssı ˆ
+,
+ssˆ ˜
+{tt 
+newtt 
+Guidtt 
+(tt 
+$strtt E
+)ttE F
+,ttF G
+$str	ttH ∞
+,
+tt∞ ±
+$str
+tt≤ Ï
+,
+ttÏ Ì
+$str
+ttÓ ˜
+,
+tt˜ ¯
+null
+tt˘ ˝
+,
+tt˝ ˛
+null
+ttˇ É
+,
+ttÉ Ñ
+$str
+ttÖ ∂
+,
+tt∂ ∑
+$str
+tt∏ ¡
+,
+tt¡ ¬
+$str
+tt√ ‹
+,
+tt‹ ›
+$str
+ttﬁ ˘
+,
+tt˘ ˙
+$str
+tt˚ Ö
+,
+ttÖ Ü
+$str
+ttá £
+,
+tt£ §
+$str
+tt• ≤
+,
+tt≤ ≥
+$num
+tt¥ µ
+,
+ttµ ∂
+$str
+tt∑ À
+,
+ttÀ Ã
+$str
+ttÕ €
+,
+tt€ ‹
+null
+tt› ·
+,
+tt· ‚
+null
+tt„ Á
+}
+ttË È
+,
+ttÈ Í
+{uu 
+newuu 
+Guiduu 
+(uu 
+$struu E
+)uuE F
+,uuF G
+$str	uuH è
+,
+uuè ê
+$str
+uuë ∫
+,
+uu∫ ª
+$str
+uuº  
+,
+uu  À
+null
+uuÃ –
+,
+uu– —
+null
+uu“ ÷
+,
+uu÷ ◊
+$str
+uuÿ â
+,
+uuâ ä
+$str
+uuã î
+,
+uuî ï
+$str
+uuñ ¢
+,
+uu¢ £
+$str
+uu§ ¥
+,
+uu¥ µ
+$str
+uu∂ ¿
+,
+uu¿ ¡
+$str
+uu¬ ÿ
+,
+uuÿ Ÿ
+$str
+uu⁄ Ê
+,
+uuÊ Á
+$num
+uuË È
+,
+uuÈ Í
+$str
+uuÎ ¸
+,
+uu¸ ˝
+$str
+uu˛ ì
+,
+uuì î
+null
+uuï ô
+,
+uuô ö
+null
+uuõ ü
+}
+uu† °
+,
+uu° ¢
+{vv 
+newvv 
+Guidvv 
+(vv 
+$strvv E
+)vvE F
+,vvF G
+$strvvH s
+,vvs t
+$str	vvu ô
+,
+vvô ö
+$str
+vvõ •
+,
+vv• ¶
+null
+vvß ´
+,
+vv´ ¨
+null
+vv≠ ±
+,
+vv± ≤
+$str
+vv≥ ˘
+,
+vv˘ ˙
+$str
+vv˚ Ñ
+,
+vvÑ Ö
+$str
+vvÜ ü
+,
+vvü †
+$str
+vv° Œ
+,
+vvŒ œ
+$str
+vv– ‹
+,
+vv‹ ›
+$str
+vvﬁ ˙
+,
+vv˙ ˚
+$str
+vv¸ â
+,
+vvâ ä
+$num
+vvã å
+,
+vvå ç
+$str
+vvé ª
+,
+vvª º
+$str
+vvΩ ›
+,
+vv› ﬁ
+null
+vvﬂ „
+,
+vv„ ‰
+null
+vvÂ È
+}
+vvÍ Î
+,
+vvÎ Ï
+{ww 
+newww 
+Guidww 
+(ww 
+$strww E
+)wwE F
+,wwF G
+$str	wwH ë
+,
+wwë í
+$str
+wwì Õ
+,
+wwÕ Œ
+$str
+wwœ ·
+,
+ww· ‚
+null
+ww„ Á
+,
+wwÁ Ë
+null
+wwÈ Ì
+,
+wwÌ Ó
+$str
+wwÔ †
+,
+ww† °
+$str
+ww¢ ´
+,
+ww´ ¨
+$str
+ww≠ ∆
+,
+ww∆ «
+$str
+ww» Ê
+,
+wwÊ Á
+$str
+wwË Ô
+,
+wwÔ 
+$str
+wwÒ ç
+,
+wwç é
+$str
+wwè ú
+,
+wwú ù
+$num
+wwû ü
+,
+wwü †
+$str
+ww° ø
+,
+wwø ¿
+$str
+ww¡ Â
+,
+wwÂ Ê
+null
+wwÁ Î
+,
+wwÎ Ï
+null
+wwÌ Ò
+}
+wwÚ Û
+,
+wwÛ Ù
+{xx 
+newxx 
+Guidxx 
+(xx 
+$strxx E
+)xxE F
+,xxF G
+$str	xxH ”
+,
+xx” ‘
+$str
+xx’ è
+,
+xxè ê
+$str
+xxë ô
+,
+xxô ö
+null
+xxõ ü
+,
+xxü †
+null
+xx° •
+,
+xx• ¶
+$str
+xxß ÿ
+,
+xxÿ Ÿ
+$str
+xx⁄ „
+,
+xx„ ‰
+$str
+xxÂ °
+,
+xx° ¢
+$str
+xx£ ∑
+,
+xx∑ ∏
+$str
+xxπ √
+,
+xx√ ƒ
+$str
+xx≈ ·
+,
+xx· ‚
+$str
+xx„ 
+,
+xx Ò
+$num
+xxÚ Û
+,
+xxÛ Ù
+$str
+xxı ñ
+,
+xxñ ó
+$str
+xxò π
+,
+xxπ ∫
+null
+xxª ø
+,
+xxø ¿
+null
+xx¡ ≈
+}
+xx∆ «
+,
+xx« »
+{yy 
+newyy 
+Guidyy 
+(yy 
+$stryy E
+)yyE F
+,yyF G
+$str	yyH æ
+,
+yyæ ø
+$str
+yy¿ ù
+,
+yyù û
+$str
+yyü ©
+,
+yy© ™
+null
+yy´ Ø
+,
+yyØ ∞
+null
+yy± µ
+,
+yyµ ∂
+$str
+yy∑ ˚
+,
+yy˚ ¸
+$str
+yy˝ Ü
+,
+yyÜ á
+$str
+yyà ≠
+,
+yy≠ Æ
+$str
+yyØ ’
+,
+yy’ ÷
+$str
+yy◊ ·
+,
+yy· ‚
+$str
+yy„ ˇ
+,
+yyˇ Ä
+$str
+yyÅ é
+,
+yyé è
+$num
+yyê ë
+,
+yyë í
+$str
+yyì ®
+,
+yy® ©
+$str
+yy™ ø
+,
+yyø ¿
+null
+yy¡ ≈
+,
+yy≈ ∆
+null
+yy« À
+}
+yyÃ Õ
+}zz 
+)zz 
+;zz 
+migrationBuilder|| 
+.|| 
+CreateIndex|| (
+(||( )
+name}} 
+:}} 
+$str}} ;
+,}}; <
+table~~ 
+:~~ 
+$str~~ )
+,~~) *
+column 
+: 
+$str )
+)) *
+;* +
+}
+ÄÄ 	
+	protected
+ÉÉ 
+override
+ÉÉ 
+void
+ÉÉ 
+Down
+ÉÉ  $
+(
+ÉÉ$ %
+MigrationBuilder
+ÉÉ% 5
+migrationBuilder
+ÉÉ6 F
+)
+ÉÉF G
+{
+ÑÑ 	
+migrationBuilder
+ÖÖ 
+.
+ÖÖ 
+DropPrimaryKey
+ÖÖ +
+(
+ÖÖ+ ,
+name
+ÜÜ 
+:
+ÜÜ 
+$str
+ÜÜ +
+,
+ÜÜ+ ,
+table
+áá 
+:
+áá 
+$str
+áá )
+)
+áá) *
+;
+áá* +
+migrationBuilder
+ââ 
+.
+ââ 
+	DropIndex
+ââ &
+(
+ââ& '
+name
+ää 
+:
+ää 
+$str
+ää ;
+,
+ää; <
+table
+ãã 
+:
+ãã 
+$str
+ãã )
+)
+ãã) *
+;
+ãã* +
+migrationBuilder
+çç 
+.
+çç 
+
+DeleteData
+çç '
+(
+çç' (
+table
+éé 
+:
+éé 
+$str
+éé '
+,
+éé' (
+	keyColumn
+èè 
+:
+èè 
+$str
+èè 
+,
+èè  
+keyValue
+êê 
+:
+êê 
+new
+êê 
+Guid
+êê "
+(
+êê" #
+$str
+êê# I
+)
+êêI J
+)
+êêJ K
+;
+êêK L
+migrationBuilder
+íí 
+.
+íí 
+
+DeleteData
+íí '
+(
+íí' (
+table
+ìì 
+:
+ìì 
+$str
+ìì '
+,
+ìì' (
+	keyColumn
+îî 
+:
+îî 
+$str
+îî 
+,
+îî  
+keyValue
+ïï 
+:
+ïï 
+new
+ïï 
+Guid
+ïï "
+(
+ïï" #
+$str
+ïï# I
+)
+ïïI J
+)
+ïïJ K
+;
+ïïK L
+migrationBuilder
+óó 
+.
+óó 
+
+DeleteData
+óó '
+(
+óó' (
+table
+òò 
+:
+òò 
+$str
+òò '
+,
+òò' (
+	keyColumn
+ôô 
+:
+ôô 
+$str
+ôô 
+,
+ôô  
+keyValue
+öö 
+:
+öö 
+new
+öö 
+Guid
+öö "
+(
+öö" #
+$str
+öö# I
+)
+ööI J
+)
+ööJ K
+;
+ööK L
+migrationBuilder
+úú 
+.
+úú 
+
+DeleteData
+úú '
+(
+úú' (
+table
+ùù 
+:
+ùù 
+$str
+ùù '
+,
+ùù' (
+	keyColumn
+ûû 
+:
+ûû 
+$str
+ûû 
+,
+ûû  
+keyValue
+üü 
+:
+üü 
+new
+üü 
+Guid
+üü "
+(
+üü" #
+$str
+üü# I
+)
+üüI J
+)
+üüJ K
+;
+üüK L
+migrationBuilder
+°° 
+.
+°° 
+
+DeleteData
+°° '
+(
+°°' (
+table
+¢¢ 
+:
+¢¢ 
+$str
+¢¢ '
+,
+¢¢' (
+	keyColumn
+££ 
+:
+££ 
+$str
+££ 
+,
+££  
+keyValue
+§§ 
+:
+§§ 
+new
+§§ 
+Guid
+§§ "
+(
+§§" #
+$str
+§§# I
+)
+§§I J
+)
+§§J K
+;
+§§K L
+migrationBuilder
+¶¶ 
+.
+¶¶ 
+
+DeleteData
+¶¶ '
+(
+¶¶' (
+table
+ßß 
+:
+ßß 
+$str
+ßß '
+,
+ßß' (
+	keyColumn
+®® 
+:
+®® 
+$str
+®® 
+,
+®®  
+keyValue
+©© 
+:
+©© 
+new
+©© 
+Guid
+©© "
+(
+©©" #
+$str
+©©# I
+)
+©©I J
+)
+©©J K
+;
+©©K L
+migrationBuilder
+´´ 
+.
+´´ 
+
+DeleteData
+´´ '
+(
+´´' (
+table
+¨¨ 
+:
+¨¨ 
+$str
+¨¨ '
+,
+¨¨' (
+	keyColumn
+≠≠ 
+:
+≠≠ 
+$str
+≠≠ 
+,
+≠≠  
+keyValue
+ÆÆ 
+:
+ÆÆ 
+new
+ÆÆ 
+Guid
+ÆÆ "
+(
+ÆÆ" #
+$str
+ÆÆ# I
+)
+ÆÆI J
+)
+ÆÆJ K
+;
+ÆÆK L
+migrationBuilder
+∞∞ 
+.
+∞∞ 
+
+DeleteData
+∞∞ '
+(
+∞∞' (
+table
+±± 
+:
+±± 
+$str
+±± '
+,
+±±' (
+	keyColumn
+≤≤ 
+:
+≤≤ 
+$str
+≤≤ 
+,
+≤≤  
+keyValue
+≥≥ 
+:
+≥≥ 
+new
+≥≥ 
+Guid
+≥≥ "
+(
+≥≥" #
+$str
+≥≥# I
+)
+≥≥I J
+)
+≥≥J K
+;
+≥≥K L
+migrationBuilder
+µµ 
+.
+µµ 
+
+DeleteData
+µµ '
+(
+µµ' (
+table
+∂∂ 
+:
+∂∂ 
+$str
+∂∂ '
+,
+∂∂' (
+	keyColumn
+∑∑ 
+:
+∑∑ 
+$str
+∑∑ 
+,
+∑∑  
+keyValue
+∏∏ 
+:
+∏∏ 
+new
+∏∏ 
+Guid
+∏∏ "
+(
+∏∏" #
+$str
+∏∏# I
+)
+∏∏I J
+)
+∏∏J K
+;
+∏∏K L
+migrationBuilder
+∫∫ 
+.
+∫∫ 
+
+DeleteData
+∫∫ '
+(
+∫∫' (
+table
+ªª 
+:
+ªª 
+$str
+ªª '
+,
+ªª' (
+	keyColumn
+ºº 
+:
+ºº 
+$str
+ºº 
+,
+ºº  
+keyValue
+ΩΩ 
+:
+ΩΩ 
+new
+ΩΩ 
+Guid
+ΩΩ "
+(
+ΩΩ" #
+$str
+ΩΩ# I
+)
+ΩΩI J
+)
+ΩΩJ K
+;
+ΩΩK L
+migrationBuilder
+øø 
+.
+øø 
+
+DeleteData
+øø '
+(
+øø' (
+table
+¿¿ 
+:
+¿¿ 
+$str
+¿¿ '
+,
+¿¿' (
+	keyColumn
+¡¡ 
+:
+¡¡ 
+$str
+¡¡ 
+,
+¡¡  
+keyValue
+¬¬ 
+:
+¬¬ 
+new
+¬¬ 
+Guid
+¬¬ "
+(
+¬¬" #
+$str
+¬¬# I
+)
+¬¬I J
+)
+¬¬J K
+;
+¬¬K L
+migrationBuilder
+ƒƒ 
+.
+ƒƒ 
+
+DeleteData
+ƒƒ '
+(
+ƒƒ' (
+table
+≈≈ 
+:
+≈≈ 
+$str
+≈≈ '
+,
+≈≈' (
+	keyColumn
+∆∆ 
+:
+∆∆ 
+$str
+∆∆ 
+,
+∆∆  
+keyValue
+«« 
+:
+«« 
+new
+«« 
+Guid
+«« "
+(
+««" #
+$str
+««# I
+)
+««I J
+)
+««J K
+;
+««K L
+migrationBuilder
+…… 
+.
+…… 
+
+DeleteData
+…… '
+(
+……' (
+table
+   
+:
+   
+$str
+   '
+,
+  ' (
+	keyColumn
+ÀÀ 
+:
+ÀÀ 
+$str
+ÀÀ 
+,
+ÀÀ  
+keyValue
+ÃÃ 
+:
+ÃÃ 
+new
+ÃÃ 
+Guid
+ÃÃ "
+(
+ÃÃ" #
+$str
+ÃÃ# I
+)
+ÃÃI J
+)
+ÃÃJ K
+;
+ÃÃK L
+migrationBuilder
+ŒŒ 
+.
+ŒŒ 
+
+DropColumn
+ŒŒ '
+(
+ŒŒ' (
+name
+œœ 
+:
+œœ 
+$str
+œœ 
+,
+œœ 
+table
+–– 
+:
+–– 
+$str
+–– )
+)
+––) *
+;
+––* +
+migrationBuilder
+““ 
+.
+““ 
+AddPrimaryKey
+““ *
+(
+““* +
+name
+”” 
+:
+”” 
+$str
+”” +
+,
+””+ ,
+table
+‘‘ 
+:
+‘‘ 
+$str
+‘‘ )
+,
+‘‘) *
+column
+’’ 
+:
+’’ 
+$str
+’’ )
+)
+’’) *
+;
+’’* +
+migrationBuilder
+◊◊ 
+.
+◊◊ 
+
+UpdateData
+◊◊ '
+(
+◊◊' (
+table
+ÿÿ 
+:
+ÿÿ 
+$str
+ÿÿ $
+,
+ÿÿ$ %
+	keyColumn
+ŸŸ 
+:
+ŸŸ 
+$str
+ŸŸ 
+,
+ŸŸ  
+keyValue
+⁄⁄ 
+:
+⁄⁄ 
+$str
+⁄⁄ +
+,
+⁄⁄+ ,
+columns
+€€ 
+:
+€€ 
+new
+€€ 
+[
+€€ 
+]
+€€ 
+{
+€€  
+$str
+€€! 3
+,
+€€3 4
+$str
+€€5 A
+,
+€€A B
+$str
+€€C Q
+,
+€€Q R
+$str
+€€S b
+}
+€€c d
+,
+€€d e
+values
+‹‹ 
+:
+‹‹ 
+new
+‹‹ 
+object
+‹‹ "
+[
+‹‹" #
+]
+‹‹# $
+{
+‹‹% &
+$str
+‹‹' M
+,
+‹‹M N
+new
+‹‹O R
+DateTime
+‹‹S [
+(
+‹‹[ \
+$num
+‹‹\ `
+,
+‹‹` a
+$num
+‹‹b c
+,
+‹‹c d
+$num
+‹‹e g
+,
+‹‹g h
+$num
+‹‹i j
+,
+‹‹j k
+$num
+‹‹l n
+,
+‹‹n o
+$num
+‹‹p r
+,
+‹‹r s
+$num
+‹‹t w
+,
+‹‹w x
+DateTimeKind‹‹y Ö
+.‹‹Ö Ü
+Utc‹‹Ü â
+)‹‹â ä
+.‹‹ä ã
+AddTicks‹‹ã ì
+(‹‹ì î
+$num‹‹î ò
+)‹‹ò ô
+,‹‹ô ö
+$str‹‹õ Ò
+,‹‹Ò Ú
+$str‹‹Û ô
+}‹‹ö õ
+)‹‹õ ú
+;‹‹ú ù
+migrationBuilder
+ﬁﬁ 
+.
+ﬁﬁ 
+
+InsertData
+ﬁﬁ '
+(
+ﬁﬁ' (
+table
+ﬂﬂ 
+:
+ﬂﬂ 
+$str
+ﬂﬂ '
+,
+ﬂﬂ' (
+columns
+‡‡ 
+:
+‡‡ 
+new
+‡‡ 
+[
+‡‡ 
+]
+‡‡ 
+{
+‡‡  
+$str
+‡‡! %
+,
+‡‡% &
+$str
+‡‡' 4
+,
+‡‡4 5
+$str
+‡‡6 D
+,
+‡‡D E
+$str
+‡‡F P
+,
+‡‡P Q
+$str
+‡‡R ]
+,
+‡‡] ^
+$str
+‡‡_ l
+,
+‡‡l m
+$str
+‡‡n }
+,
+‡‡} ~
+$str‡‡ â
+,‡‡â ä
+$str‡‡ã †
+,‡‡† °
+$str‡‡¢ ±
+,‡‡± ≤
+$str‡‡≥ ¬
+,‡‡¬ √
+$str‡‡ƒ —
+,‡‡— “
+$str‡‡” ﬂ
+,‡‡ﬂ ‡
+$str‡‡· È
+,‡‡È Í
+$str‡‡Î ¯
+,‡‡¯ ˘
+$str‡‡˙ à
+,‡‡à â
+$str‡‡ä ï
+,‡‡ï ñ
+$str‡‡ó §
+}‡‡• ¶
+,‡‡¶ ß
+values
+·· 
+:
+·· 
+new
+·· 
+object
+·· "
+[
+··" #
+,
+··# $
+]
+··$ %
+{
+‚‚ 
+{
+„„ 
+new
+„„ 
+Guid
+„„ 
+(
+„„ 
+$str
+„„ E
+)
+„„E F
+,
+„„F G
+$str„„H Ã
+,„„Ã Õ
+$str„„Œ à
+,„„à â
+$str„„ä ö
+,„„ö õ
+null„„ú †
+,„„† °
+null„„¢ ¶
+,„„¶ ß
+$str„„® Ÿ
+,„„Ÿ ⁄
+$str„„€ ‰
+,„„‰ Â
+$str„„Ê ˇ
+,„„ˇ Ä
+$str„„Å â
+,„„â ä
+$str„„ã ï
+,„„ï ñ
+$str„„ó ≥
+,„„≥ ¥
+$str„„µ ¬
+,„„¬ √
+$num„„ƒ ≈
+,„„≈ ∆
+$str„„« ﬂ
+,„„ﬂ ‡
+$str„„· ˆ
+,„„ˆ ˜
+null„„¯ ¸
+,„„¸ ˝
+null„„˛ Ç
+}„„É Ñ
+,„„Ñ Ö
+{
+‰‰ 
+new
+‰‰ 
+Guid
+‰‰ 
+(
+‰‰ 
+$str
+‰‰ E
+)
+‰‰E F
+,
+‰‰F G
+$str‰‰H ∞
+,‰‰∞ ±
+$str‰‰≤ Ï
+,‰‰Ï Ì
+$str‰‰Ó ˜
+,‰‰˜ ¯
+null‰‰˘ ˝
+,‰‰˝ ˛
+null‰‰ˇ É
+,‰‰É Ñ
+$str‰‰Ö ∂
+,‰‰∂ ∑
+$str‰‰∏ ¡
+,‰‰¡ ¬
+$str‰‰√ ‹
+,‰‰‹ ›
+$str‰‰ﬁ ˘
+,‰‰˘ ˙
+$str‰‰˚ Ö
+,‰‰Ö Ü
+$str‰‰á £
+,‰‰£ §
+$str‰‰• ≤
+,‰‰≤ ≥
+$num‰‰¥ µ
+,‰‰µ ∂
+$str‰‰∑ À
+,‰‰À Ã
+$str‰‰Õ €
+,‰‰€ ‹
+null‰‰› ·
+,‰‰· ‚
+null‰‰„ Á
+}‰‰Ë È
+,‰‰È Í
+{
+ÂÂ 
+new
+ÂÂ 
+Guid
+ÂÂ 
+(
+ÂÂ 
+$str
+ÂÂ E
+)
+ÂÂE F
+,
+ÂÂF G
+$strÂÂH è
+,ÂÂè ê
+$strÂÂë À
+,ÂÂÀ Ã
+$strÂÂÕ ‰
+,ÂÂ‰ Â
+nullÂÂÊ Í
+,ÂÂÍ Î
+nullÂÂÏ 
+,ÂÂ Ò
+$strÂÂÚ £
+,ÂÂ£ §
+$strÂÂ• Æ
+,ÂÂÆ Ø
+$strÂÂ∞ …
+,ÂÂ…  
+$strÂÂÀ Ì
+,ÂÂÌ Ó
+$strÂÂÔ ˚
+,ÂÂ˚ ¸
+$strÂÂ˝ ô
+,ÂÂô ö
+$strÂÂõ ®
+,ÂÂ® ©
+$numÂÂ™ ´
+,ÂÂ´ ¨
+$strÂÂ≠ Õ
+,ÂÂÕ Œ
+$strÂÂœ Ë
+,ÂÂË È
+nullÂÂÍ Ó
+,ÂÂÓ Ô
+nullÂÂ Ù
+}ÂÂı ˆ
+,ÂÂˆ ˜
+{
+ÊÊ 
+new
+ÊÊ 
+Guid
+ÊÊ 
+(
+ÊÊ 
+$str
+ÊÊ E
+)
+ÊÊE F
+,
+ÊÊF G
+$strÊÊH ë
+,ÊÊë í
+$strÊÊì Õ
+,ÊÊÕ Œ
+$strÊÊœ ·
+,ÊÊ· ‚
+nullÊÊ„ Á
+,ÊÊÁ Ë
+nullÊÊÈ Ì
+,ÊÊÌ Ó
+$strÊÊÔ †
+,ÊÊ† °
+$strÊÊ¢ ´
+,ÊÊ´ ¨
+$strÊÊ≠ ∆
+,ÊÊ∆ «
+$strÊÊ» Ê
+,ÊÊÊ Á
+$strÊÊË Ô
+,ÊÊÔ 
+$strÊÊÒ ç
+,ÊÊç é
+$strÊÊè ú
+,ÊÊú ù
+$numÊÊû ü
+,ÊÊü †
+$strÊÊ° ø
+,ÊÊø ¿
+$strÊÊ¡ Â
+,ÊÊÂ Ê
+nullÊÊÁ Î
+,ÊÊÎ Ï
+nullÊÊÌ Ò
+}ÊÊÚ Û
+,ÊÊÛ Ù
+{
+ÁÁ 
+new
+ÁÁ 
+Guid
+ÁÁ 
+(
+ÁÁ 
+$str
+ÁÁ E
+)
+ÁÁE F
+,
+ÁÁF G
+$str
+ÁÁH s
+,
+ÁÁs t
+$strÁÁu ô
+,ÁÁô ö
+$strÁÁõ •
+,ÁÁ• ¶
+nullÁÁß ´
+,ÁÁ´ ¨
+nullÁÁ≠ ±
+,ÁÁ± ≤
+$strÁÁ≥ ˘
+,ÁÁ˘ ˙
+$strÁÁ˚ Ñ
+,ÁÁÑ Ö
+$strÁÁÜ ü
+,ÁÁü †
+$strÁÁ° Œ
+,ÁÁŒ œ
+$strÁÁ– ‹
+,ÁÁ‹ ›
+$strÁÁﬁ ˙
+,ÁÁ˙ ˚
+$strÁÁ¸ â
+,ÁÁâ ä
+$numÁÁã å
+,ÁÁå ç
+$strÁÁé ª
+,ÁÁª º
+$strÁÁΩ ›
+,ÁÁ› ﬁ
+nullÁÁﬂ „
+,ÁÁ„ ‰
+nullÁÁÂ È
+}ÁÁÍ Î
+,ÁÁÎ Ï
+{
+ËË 
+new
+ËË 
+Guid
+ËË 
+(
+ËË 
+$str
+ËË E
+)
+ËËE F
+,
+ËËF G
+$strËËH è
+,ËËè ê
+$strËËë À
+,ËËÀ Ã
+$strËËÕ ‰
+,ËË‰ Â
+nullËËÊ Í
+,ËËÍ Î
+nullËËÏ 
+,ËË Ò
+$strËËÚ £
+,ËË£ §
+$strËË• Æ
+,ËËÆ Ø
+$strËË∞ …
+,ËË…  
+$strËËÀ Ò
+,ËËÒ Ú
+$strËËÛ ¸
+,ËË¸ ˝
+$strËË˛ ö
+,ËËö õ
+$strËËú ©
+,ËË© ™
+$numËË´ ¨
+,ËË¨ ≠
+$strËËÆ Œ
+,ËËŒ œ
+$strËË– Ë
+,ËËË È
+nullËËÍ Ó
+,ËËÓ Ô
+nullËË Ù
+}ËËı ˆ
+,ËËˆ ˜
+{
+ÈÈ 
+new
+ÈÈ 
+Guid
+ÈÈ 
+(
+ÈÈ 
+$str
+ÈÈ E
+)
+ÈÈE F
+,
+ÈÈF G
+$strÈÈH ”
+,ÈÈ” ‘
+$strÈÈ’ è
+,ÈÈè ê
+$strÈÈë ô
+,ÈÈô ö
+nullÈÈõ ü
+,ÈÈü †
+nullÈÈ° •
+,ÈÈ• ¶
+$strÈÈß ÿ
+,ÈÈÿ Ÿ
+$strÈÈ⁄ „
+,ÈÈ„ ‰
+$strÈÈÂ °
+,ÈÈ° ¢
+$strÈÈ£ ∑
+,ÈÈ∑ ∏
+$strÈÈπ √
+,ÈÈ√ ƒ
+$strÈÈ≈ ·
+,ÈÈ· ‚
+$strÈÈ„ 
+,ÈÈ Ò
+$numÈÈÚ Û
+,ÈÈÛ Ù
+$strÈÈı ñ
+,ÈÈñ ó
+$strÈÈò π
+,ÈÈπ ∫
+nullÈÈª ø
+,ÈÈø ¿
+nullÈÈ¡ ≈
+}ÈÈ∆ «
+,ÈÈ« »
+{
+ÍÍ 
+new
+ÍÍ 
+Guid
+ÍÍ 
+(
+ÍÍ 
+$str
+ÍÍ E
+)
+ÍÍE F
+,
+ÍÍF G
+$strÍÍH æ
+,ÍÍæ ø
+$strÍÍ¿ ù
+,ÍÍù û
+$strÍÍü ©
+,ÍÍ© ™
+nullÍÍ´ Ø
+,ÍÍØ ∞
+nullÍÍ± µ
+,ÍÍµ ∂
+$strÍÍ∑ ˚
+,ÍÍ˚ ¸
+$strÍÍ˝ Ü
+,ÍÍÜ á
+$strÍÍà ≠
+,ÍÍ≠ Æ
+$strÍÍØ ’
+,ÍÍ’ ÷
+$strÍÍ◊ ·
+,ÍÍ· ‚
+$strÍÍ„ ˇ
+,ÍÍˇ Ä
+$strÍÍÅ é
+,ÍÍé è
+$numÍÍê ë
+,ÍÍë í
+$strÍÍì ®
+,ÍÍ® ©
+$strÍÍ™ ø
+,ÍÍø ¿
+nullÍÍ¡ ≈
+,ÍÍ≈ ∆
+nullÍÍ« À
+}ÍÍÃ Õ
+,ÍÍÕ Œ
+{
+ÎÎ 
+new
+ÎÎ 
+Guid
+ÎÎ 
+(
+ÎÎ 
+$str
+ÎÎ E
+)
+ÎÎE F
+,
+ÎÎF G
+$strÎÎH è
+,ÎÎè ê
+$strÎÎë ∫
+,ÎÎ∫ ª
+$strÎÎº  
+,ÎÎ  À
+nullÎÎÃ –
+,ÎÎ– —
+nullÎÎ“ ÷
+,ÎÎ÷ ◊
+$strÎÎÿ â
+,ÎÎâ ä
+$strÎÎã î
+,ÎÎî ï
+$strÎÎñ ¢
+,ÎÎ¢ £
+$strÎÎ§ ¥
+,ÎÎ¥ µ
+$strÎÎ∂ ¿
+,ÎÎ¿ ¡
+$strÎÎ¬ ÿ
+,ÎÎÿ Ÿ
+$strÎÎ⁄ Ê
+,ÎÎÊ Á
+$numÎÎË È
+,ÎÎÈ Í
+$strÎÎÎ ¸
+,ÎÎ¸ ˝
+$strÎÎ˛ ì
+,ÎÎì î
+nullÎÎï ô
+,ÎÎô ö
+nullÎÎõ ü
+}ÎÎ† °
+,ÎÎ° ¢
+{
+ÏÏ 
+new
+ÏÏ 
+Guid
+ÏÏ 
+(
+ÏÏ 
+$str
+ÏÏ E
+)
+ÏÏE F
+,
+ÏÏF G
+$strÏÏH ®
+,ÏÏ® ©
+$strÏÏ™ ÿ
+,ÏÏÿ Ÿ
+$strÏÏ⁄ ‰
+,ÏÏ‰ Â
+nullÏÏÊ Í
+,ÏÏÍ Î
+nullÏÏÏ 
+,ÏÏ Ò
+$strÏÏÚ £
+,ÏÏ£ §
+$strÏÏ• Æ
+,ÏÏÆ Ø
+$strÏÏ∞  
+,ÏÏ  À
+$strÏÏÃ Û
+,ÏÏÛ Ù
+$strÏÏı ˇ
+,ÏÏˇ Ä
+$strÏÏÅ ù
+,ÏÏù û
+$strÏÏü ¨
+,ÏÏ¨ ≠
+$numÏÏÆ Ø
+,ÏÏØ ∞
+$strÏÏ± ∆
+,ÏÏ∆ «
+$strÏÏ» ÿ
+,ÏÏÿ Ÿ
+nullÏÏ⁄ ﬁ
+,ÏÏﬁ ﬂ
+nullÏÏ‡ ‰
+}ÏÏÂ Ê
+,ÏÏÊ Á
+{
+ÌÌ 
+new
+ÌÌ 
+Guid
+ÌÌ 
+(
+ÌÌ 
+$str
+ÌÌ E
+)
+ÌÌE F
+,
+ÌÌF G
+$strÌÌH û
+,ÌÌû ü
+$strÌÌ† ≈
+,ÌÌ≈ ∆
+$strÌÌ« œ
+,ÌÌœ –
+nullÌÌ— ’
+,ÌÌ’ ÷
+nullÌÌ◊ €
+,ÌÌ€ ‹
+$strÌÌ› é
+,ÌÌé è
+$strÌÌê ô
+,ÌÌô ö
+$strÌÌõ µ
+,ÌÌµ ∂
+$strÌÌ∑ œ
+,ÌÌœ –
+$strÌÌ— €
+,ÌÌ€ ‹
+$strÌÌ› ˘
+,ÌÌ˘ ˙
+$strÌÌ˚ à
+,ÌÌà â
+$numÌÌä ã
+,ÌÌã å
+$strÌÌç ¢
+,ÌÌ¢ £
+$strÌÌ§ µ
+,ÌÌµ ∂
+nullÌÌ∑ ª
+,ÌÌª º
+nullÌÌΩ ¡
+}ÌÌ¬ √
+,ÌÌ√ ƒ
+{
+ÓÓ 
+new
+ÓÓ 
+Guid
+ÓÓ 
+(
+ÓÓ 
+$str
+ÓÓ E
+)
+ÓÓE F
+,
+ÓÓF G
+$strÓÓH ë
+,ÓÓë í
+$strÓÓì Õ
+,ÓÓÕ Œ
+$strÓÓœ ·
+,ÓÓ· ‚
+nullÓÓ„ Á
+,ÓÓÁ Ë
+nullÓÓÈ Ì
+,ÓÓÌ Ó
+$strÓÓÔ †
+,ÓÓ† °
+$strÓÓ¢ ´
+,ÓÓ´ ¨
+$strÓÓ≠ ∆
+,ÓÓ∆ «
+$strÓÓ» –
+,ÓÓ– —
+$strÓÓ“ ‹
+,ÓÓ‹ ›
+$strÓÓﬁ ˙
+,ÓÓ˙ ˚
+$strÓÓ¸ â
+,ÓÓâ ä
+$numÓÓã å
+,ÓÓå ç
+$strÓÓé π
+,ÓÓπ ∫
+$strÓÓª “
+,ÓÓ“ ”
+nullÓÓ‘ ÿ
+,ÓÓÿ Ÿ
+nullÓÓ⁄ ﬁ
+}ÓÓﬂ ‡
+,ÓÓ‡ ·
+{
+ÔÔ 
+new
+ÔÔ 
+Guid
+ÔÔ 
+(
+ÔÔ 
+$str
+ÔÔ E
+)
+ÔÔE F
+,
+ÔÔF G
+$strÔÔH Ñ
+,ÔÔÑ Ö
+$strÔÔÜ ¿
+,ÔÔ¿ ¡
+$strÔÔ¬ “
+,ÔÔ“ ”
+nullÔÔ‘ ÿ
+,ÔÔÿ Ÿ
+nullÔÔ⁄ ﬁ
+,ÔÔﬁ ﬂ
+$strÔÔ‡ ë
+,ÔÔë í
+$strÔÔì ú
+,ÔÔú ù
+$strÔÔû ∑
+,ÔÔ∑ ∏
+$strÔÔπ ¡
+,ÔÔ¡ ¬
+$strÔÔ√ Õ
+,ÔÔÕ Œ
+$strÔÔœ Î
+,ÔÔÎ Ï
+$strÔÔÌ ˙
+,ÔÔ˙ ˚
+$numÔÔ¸ ˝
+,ÔÔ˝ ˛
+$strÔÔˇ ê
+,ÔÔê ë
+$strÔÔí °
+,ÔÔ° ¢
+nullÔÔ£ ß
+,ÔÔß ®
+nullÔÔ© ≠
+}ÔÔÆ Ø
+}
+ 
+)
+ 
+;
+ 
+}
+ÒÒ 	
+}
+ÚÚ 
+}ÛÛ õπ
+ÑD:\FPT\Semester 6\Project_Cursus\Backend_Cursus\Cursus.LMS\Cursus.LMS.DataAccess\Migrations\20240723084739_AddTableCourseProgress.cs
+	namespace 	
+Cursus
+ 
+. 
+LMS 
+. 
+
+DataAccess 
+.  
+
+Migrations  *
+{		 
+public 
+
+partial 
+class "
+AddTableCourseProgress /
+:0 1
+	Migration2 ;
+{ 
+	protected 
+override 
+void 
+Up  "
+(" #
+MigrationBuilder# 3
+migrationBuilder4 D
+)D E
+{ 	
+migrationBuilder 
+. 
+
+DeleteData '
+(' (
+table 
+: 
+$str '
+,' (
+	keyColumn 
+: 
+$str 
+,  
+keyValue 
+: 
+new 
+Guid "
+(" #
+$str# I
+)I J
+)J K
+;K L
+migrationBuilder 
+. 
+
+DeleteData '
+(' (
+table 
+: 
+$str '
+,' (
+	keyColumn 
+: 
+$str 
+,  
+keyValue 
+: 
+new 
+Guid "
+(" #
+$str# I
+)I J
+)J K
+;K L
+migrationBuilder 
+. 
+
+DeleteData '
+(' (
+table 
+: 
+$str '
+,' (
+	keyColumn 
+: 
+$str 
+,  
+keyValue 
+: 
+new 
+Guid "
+(" #
+$str# I
+)I J
+)J K
+;K L
+migrationBuilder 
+. 
+
+DeleteData '
+(' (
+table   
+:   
+$str   '
+,  ' (
+	keyColumn!! 
+:!! 
+$str!! 
+,!!  
+keyValue"" 
+:"" 
+new"" 
+Guid"" "
+(""" #
+$str""# I
+)""I J
+)""J K
+;""K L
+migrationBuilder$$ 
+.$$ 
+
+DeleteData$$ '
+($$' (
+table%% 
+:%% 
+$str%% '
+,%%' (
+	keyColumn&& 
+:&& 
+$str&& 
+,&&  
+keyValue'' 
+:'' 
+new'' 
+Guid'' "
+(''" #
+$str''# I
+)''I J
+)''J K
+;''K L
+migrationBuilder)) 
+.)) 
+
+DeleteData)) '
+())' (
+table** 
+:** 
+$str** '
+,**' (
+	keyColumn++ 
+:++ 
+$str++ 
+,++  
+keyValue,, 
+:,, 
+new,, 
+Guid,, "
+(,," #
+$str,,# I
+),,I J
+),,J K
+;,,K L
+migrationBuilder.. 
+... 
+
+DeleteData.. '
+(..' (
+table// 
+:// 
+$str// '
+,//' (
+	keyColumn00 
+:00 
+$str00 
+,00  
+keyValue11 
+:11 
+new11 
+Guid11 "
+(11" #
+$str11# I
+)11I J
+)11J K
+;11K L
+migrationBuilder33 
+.33 
+
+DeleteData33 '
+(33' (
+table44 
+:44 
+$str44 '
+,44' (
+	keyColumn55 
+:55 
+$str55 
+,55  
+keyValue66 
+:66 
+new66 
+Guid66 "
+(66" #
+$str66# I
+)66I J
+)66J K
+;66K L
+migrationBuilder88 
+.88 
+
+DeleteData88 '
+(88' (
+table99 
+:99 
+$str99 '
+,99' (
+	keyColumn:: 
+::: 
+$str:: 
+,::  
+keyValue;; 
+:;; 
+new;; 
+Guid;; "
+(;;" #
+$str;;# I
+);;I J
+);;J K
+;;;K L
+migrationBuilder== 
+.== 
+
+DeleteData== '
+(==' (
+table>> 
+:>> 
+$str>> '
+,>>' (
+	keyColumn?? 
+:?? 
+$str?? 
+,??  
+keyValue@@ 
+:@@ 
+new@@ 
+Guid@@ "
+(@@" #
+$str@@# I
+)@@I J
+)@@J K
+;@@K L
+migrationBuilderBB 
+.BB 
+
+DeleteDataBB '
+(BB' (
+tableCC 
+:CC 
+$strCC '
+,CC' (
+	keyColumnDD 
+:DD 
+$strDD 
+,DD  
+keyValueEE 
+:EE 
+newEE 
+GuidEE "
+(EE" #
+$strEE# I
+)EEI J
+)EEJ K
+;EEK L
+migrationBuilderGG 
+.GG 
+
+DeleteDataGG '
+(GG' (
+tableHH 
+:HH 
+$strHH '
+,HH' (
+	keyColumnII 
+:II 
+$strII 
+,II  
+keyValueJJ 
+:JJ 
+newJJ 
+GuidJJ "
+(JJ" #
+$strJJ# I
+)JJI J
+)JJJ K
+;JJK L
+migrationBuilderLL 
+.LL 
+
+DeleteDataLL '
+(LL' (
+tableMM 
+:MM 
+$strMM '
+,MM' (
+	keyColumnNN 
+:NN 
+$strNN 
+,NN  
+keyValueOO 
+:OO 
+newOO 
+GuidOO "
+(OO" #
+$strOO# I
+)OOI J
+)OOJ K
+;OOK L
+migrationBuilderQQ 
+.QQ 
+CreateTableQQ (
+(QQ( )
+nameRR 
+:RR 
+$strRR (
+,RR( )
+columnsSS 
+:SS 
+tableSS 
+=>SS !
+newSS" %
+{TT 
+StudentCourseIdUU #
+=UU$ %
+tableUU& +
+.UU+ ,
+ColumnUU, 2
+<UU2 3
+GuidUU3 7
+>UU7 8
+(UU8 9
+typeUU9 =
+:UU= >
+$strUU? Q
+,UUQ R
+nullableUUS [
+:UU[ \
+falseUU] b
+)UUb c
+,UUc d
+CourseIdVV 
+=VV 
+tableVV $
+.VV$ %
+ColumnVV% +
+<VV+ ,
+GuidVV, 0
+>VV0 1
+(VV1 2
+typeVV2 6
+:VV6 7
+$strVV8 J
+,VVJ K
+nullableVVL T
+:VVT U
+falseVVV [
+)VV[ \
+,VV\ ]
+	SectionIdWW 
+=WW 
+tableWW  %
+.WW% &
+ColumnWW& ,
+<WW, -
+GuidWW- 1
+>WW1 2
+(WW2 3
+typeWW3 7
+:WW7 8
+$strWW9 K
+,WWK L
+nullableWWM U
+:WWU V
+falseWWW \
+)WW\ ]
+,WW] ^
+	DetailsIdXX 
+=XX 
+tableXX  %
+.XX% &
+ColumnXX& ,
+<XX, -
+GuidXX- 1
+>XX1 2
+(XX2 3
+typeXX3 7
+:XX7 8
+$strXX9 K
+,XXK L
+nullableXXM U
+:XXU V
+falseXXW \
+)XX\ ]
+,XX] ^
+IsCompletedYY 
+=YY  !
+tableYY" '
+.YY' (
+ColumnYY( .
+<YY. /
+boolYY/ 3
+>YY3 4
+(YY4 5
+typeYY5 9
+:YY9 :
+$strYY; @
+,YY@ A
+nullableYYB J
+:YYJ K
+falseYYL Q
+)YYQ R
+,YYR S
+CompletedTimeZZ !
+=ZZ" #
+tableZZ$ )
+.ZZ) *
+ColumnZZ* 0
+<ZZ0 1
+DateTimeZZ1 9
+>ZZ9 :
+(ZZ: ;
+typeZZ; ?
+:ZZ? @
+$strZZA L
+,ZZL M
+nullableZZN V
+:ZZV W
+falseZZX ]
+)ZZ] ^
+}[[ 
+,[[ 
+constraints\\ 
+:\\ 
+table\\ "
+=>\\# %
+{]] 
+table^^ 
+.^^ 
+
+PrimaryKey^^ $
+(^^$ %
+$str^^% :
+,^^: ;
+x^^< =
+=>^^> @
+x^^A B
+.^^B C
+StudentCourseId^^C R
+)^^R S
+;^^S T
+table__ 
+.__ 
+
+ForeignKey__ $
+(__$ %
+name`` 
+:`` 
+$str`` R
+,``R S
+columnaa 
+:aa 
+xaa  !
+=>aa" $
+xaa% &
+.aa& '
+StudentCourseIdaa' 6
+,aa6 7
+principalTablebb &
+:bb& '
+$strbb( 8
+,bb8 9
+principalColumncc '
+:cc' (
+$strcc) -
+,cc- .
+onDeletedd  
+:dd  !
+ReferentialActiondd" 3
+.dd3 4
+Cascadedd4 ;
+)dd; <
+;dd< =
+}ee 
+)ee 
+;ee 
+migrationBuildergg 
+.gg 
+
+UpdateDatagg '
+(gg' (
+tablehh 
+:hh 
+$strhh $
+,hh$ %
+	keyColumnii 
+:ii 
+$strii 
+,ii  
+keyValuejj 
+:jj 
+$strjj +
+,jj+ ,
+columnskk 
+:kk 
+newkk 
+[kk 
+]kk 
+{kk  
+$strkk! 3
+,kk3 4
+$strkk5 A
+,kkA B
+$strkkC Q
+,kkQ R
+$strkkS b
+}kkc d
+,kkd e
+valuesll 
+:ll 
+newll 
+objectll "
+[ll" #
+]ll# $
+{ll% &
+$strll' M
+,llM N
+newllO R
+DateTimellS [
+(ll[ \
+$numll\ `
+,ll` a
+$numllb c
+,llc d
+$numlle g
+,llg h
+$numlli j
+,llj k
+$numlll n
+,lln o
+$numllp r
+,llr s
+$numllt w
+,llw x
+DateTimeKind	lly Ö
+.
+llÖ Ü
+Utc
+llÜ â
+)
+llâ ä
+.
+llä ã
+AddTicks
+llã ì
+(
+llì î
+$num
+llî ò
+)
+llò ô
+,
+llô ö
+$str
+llõ Ò
+,
+llÒ Ú
+$str
+llÛ ô
+}
+llö õ
+)
+llõ ú
+;
+llú ù
+migrationBuildernn 
+.nn 
+
+InsertDatann '
+(nn' (
+tableoo 
+:oo 
+$stroo '
+,oo' (
+columnspp 
+:pp 
+newpp 
+[pp 
+]pp 
+{pp  
+$strpp! %
+,pp% &
+$strpp' 4
+,pp4 5
+$strpp6 D
+,ppD E
+$strppF P
+,ppP Q
+$strppR ]
+,pp] ^
+$strpp_ l
+,ppl m
+$strppn }
+,pp} ~
+$str	pp â
+,
+ppâ ä
+$str
+ppã †
+,
+pp† °
+$str
+pp¢ ±
+,
+pp± ≤
+$str
+pp≥ ¬
+,
+pp¬ √
+$str
+ppƒ —
+,
+pp— “
+$str
+pp” ﬂ
+,
+ppﬂ ‡
+$str
+pp· È
+,
+ppÈ Í
+$str
+ppÎ ¯
+,
+pp¯ ˘
+$str
+pp˙ à
+,
+ppà â
+$str
+ppä ï
+,
+ppï ñ
+$str
+ppó §
+}
+pp• ¶
+,
+pp¶ ß
+valuesqq 
+:qq 
+newqq 
+objectqq "
+[qq" #
+,qq# $
+]qq$ %
+{rr 
+{ss 
+newss 
+Guidss 
+(ss 
+$strss E
+)ssE F
+,ssF G
+$str	ssH Ã
+,
+ssÃ Õ
+$str
+ssŒ à
+,
+ssà â
+$str
+ssä ö
+,
+ssö õ
+null
+ssú †
+,
+ss† °
+null
+ss¢ ¶
+,
+ss¶ ß
+$str
+ss® Ÿ
+,
+ssŸ ⁄
+$str
+ss€ ‰
+,
+ss‰ Â
+$str
+ssÊ ˇ
+,
+ssˇ Ä
+$str
+ssÅ â
+,
+ssâ ä
+$str
+ssã ï
+,
+ssï ñ
+$str
+ssó ≥
+,
+ss≥ ¥
+$str
+ssµ ¬
+,
+ss¬ √
+$num
+ssƒ ≈
+,
+ss≈ ∆
+$str
+ss« ﬂ
+,
+ssﬂ ‡
+$str
+ss· ˆ
+,
+ssˆ ˜
+null
+ss¯ ¸
+,
+ss¸ ˝
+null
+ss˛ Ç
+}
+ssÉ Ñ
+,
+ssÑ Ö
+{tt 
+newtt 
+Guidtt 
+(tt 
+$strtt E
+)ttE F
+,ttF G
+$str	ttH ∞
+,
+tt∞ ±
+$str
+tt≤ Ï
+,
+ttÏ Ì
+$str
+ttÓ ˜
+,
+tt˜ ¯
+null
+tt˘ ˝
+,
+tt˝ ˛
+null
+ttˇ É
+,
+ttÉ Ñ
+$str
+ttÖ ∂
+,
+tt∂ ∑
+$str
+tt∏ ¡
+,
+tt¡ ¬
+$str
+tt√ ‹
+,
+tt‹ ›
+$str
+ttﬁ ˘
+,
+tt˘ ˙
+$str
+tt˚ Ö
+,
+ttÖ Ü
+$str
+ttá £
+,
+tt£ §
+$str
+tt• ≤
+,
+tt≤ ≥
+$num
+tt¥ µ
+,
+ttµ ∂
+$str
+tt∑ À
+,
+ttÀ Ã
+$str
+ttÕ €
+,
+tt€ ‹
+null
+tt› ·
+,
+tt· ‚
+null
+tt„ Á
+}
+ttË È
+,
+ttÈ Í
+{uu 
+newuu 
+Guiduu 
+(uu 
+$struu E
+)uuE F
+,uuF G
+$str	uuH è
+,
+uuè ê
+$str
+uuë À
+,
+uuÀ Ã
+$str
+uuÕ ‰
+,
+uu‰ Â
+null
+uuÊ Í
+,
+uuÍ Î
+null
+uuÏ 
+,
+uu Ò
+$str
+uuÚ £
+,
+uu£ §
+$str
+uu• Æ
+,
+uuÆ Ø
+$str
+uu∞ …
+,
+uu…  
+$str
+uuÀ Ì
+,
+uuÌ Ó
+$str
+uuÔ ˚
+,
+uu˚ ¸
+$str
+uu˝ ô
+,
+uuô ö
+$str
+uuõ ®
+,
+uu® ©
+$num
+uu™ ´
+,
+uu´ ¨
+$str
+uu≠ Õ
+,
+uuÕ Œ
+$str
+uuœ Ë
+,
+uuË È
+null
+uuÍ Ó
+,
+uuÓ Ô
+null
+uu Ù
+}
+uuı ˆ
+,
+uuˆ ˜
+{vv 
+newvv 
+Guidvv 
+(vv 
+$strvv E
+)vvE F
+,vvF G
+$str	vvH ë
+,
+vvë í
+$str
+vvì Õ
+,
+vvÕ Œ
+$str
+vvœ ·
+,
+vv· ‚
+null
+vv„ Á
+,
+vvÁ Ë
+null
+vvÈ Ì
+,
+vvÌ Ó
+$str
+vvÔ †
+,
+vv† °
+$str
+vv¢ ´
+,
+vv´ ¨
+$str
+vv≠ ∆
+,
+vv∆ «
+$str
+vv» Ê
+,
+vvÊ Á
+$str
+vvË Ô
+,
+vvÔ 
+$str
+vvÒ ç
+,
+vvç é
+$str
+vvè ú
+,
+vvú ù
+$num
+vvû ü
+,
+vvü †
+$str
+vv° ø
+,
+vvø ¿
+$str
+vv¡ Â
+,
+vvÂ Ê
+null
+vvÁ Î
+,
+vvÎ Ï
+null
+vvÌ Ò
+}
+vvÚ Û
+,
+vvÛ Ù
+{ww 
+newww 
+Guidww 
+(ww 
+$strww E
+)wwE F
+,wwF G
+$strwwH s
+,wws t
+$str	wwu ô
+,
+wwô ö
+$str
+wwõ •
+,
+ww• ¶
+null
+wwß ´
+,
+ww´ ¨
+null
+ww≠ ±
+,
+ww± ≤
+$str
+ww≥ ˘
+,
+ww˘ ˙
+$str
+ww˚ Ñ
+,
+wwÑ Ö
+$str
+wwÜ ü
+,
+wwü †
+$str
+ww° Œ
+,
+wwŒ œ
+$str
+ww– ‹
+,
+ww‹ ›
+$str
+wwﬁ ˙
+,
+ww˙ ˚
+$str
+ww¸ â
+,
+wwâ ä
+$num
+wwã å
+,
+wwå ç
+$str
+wwé ª
+,
+wwª º
+$str
+wwΩ ›
+,
+ww› ﬁ
+null
+wwﬂ „
+,
+ww„ ‰
+null
+wwÂ È
+}
+wwÍ Î
+,
+wwÎ Ï
+{xx 
+newxx 
+Guidxx 
+(xx 
+$strxx E
+)xxE F
+,xxF G
+$str	xxH è
+,
+xxè ê
+$str
+xxë À
+,
+xxÀ Ã
+$str
+xxÕ ‰
+,
+xx‰ Â
+null
+xxÊ Í
+,
+xxÍ Î
+null
+xxÏ 
+,
+xx Ò
+$str
+xxÚ £
+,
+xx£ §
+$str
+xx• Æ
+,
+xxÆ Ø
+$str
+xx∞ …
+,
+xx…  
+$str
+xxÀ Ò
+,
+xxÒ Ú
+$str
+xxÛ ¸
+,
+xx¸ ˝
+$str
+xx˛ ö
+,
+xxö õ
+$str
+xxú ©
+,
+xx© ™
+$num
+xx´ ¨
+,
+xx¨ ≠
+$str
+xxÆ Œ
+,
+xxŒ œ
+$str
+xx– Ë
+,
+xxË È
+null
+xxÍ Ó
+,
+xxÓ Ô
+null
+xx Ù
+}
+xxı ˆ
+,
+xxˆ ˜
+{yy 
+newyy 
+Guidyy 
+(yy 
+$stryy E
+)yyE F
+,yyF G
+$str	yyH ”
+,
+yy” ‘
+$str
+yy’ è
+,
+yyè ê
+$str
+yyë ô
+,
+yyô ö
+null
+yyõ ü
+,
+yyü †
+null
+yy° •
+,
+yy• ¶
+$str
+yyß ÿ
+,
+yyÿ Ÿ
+$str
+yy⁄ „
+,
+yy„ ‰
+$str
+yyÂ °
+,
+yy° ¢
+$str
+yy£ ∑
+,
+yy∑ ∏
+$str
+yyπ √
+,
+yy√ ƒ
+$str
+yy≈ ·
+,
+yy· ‚
+$str
+yy„ 
+,
+yy Ò
+$num
+yyÚ Û
+,
+yyÛ Ù
+$str
+yyı ñ
+,
+yyñ ó
+$str
+yyò π
+,
+yyπ ∫
+null
+yyª ø
+,
+yyø ¿
+null
+yy¡ ≈
+}
+yy∆ «
+,
+yy« »
+{zz 
+newzz 
+Guidzz 
+(zz 
+$strzz E
+)zzE F
+,zzF G
+$str	zzH æ
+,
+zzæ ø
+$str
+zz¿ ù
+,
+zzù û
+$str
+zzü ©
+,
+zz© ™
+null
+zz´ Ø
+,
+zzØ ∞
+null
+zz± µ
+,
+zzµ ∂
+$str
+zz∑ ˚
+,
+zz˚ ¸
+$str
+zz˝ Ü
+,
+zzÜ á
+$str
+zzà ≠
+,
+zz≠ Æ
+$str
+zzØ ’
+,
+zz’ ÷
+$str
+zz◊ ·
+,
+zz· ‚
+$str
+zz„ ˇ
+,
+zzˇ Ä
+$str
+zzÅ é
+,
+zzé è
+$num
+zzê ë
+,
+zzë í
+$str
+zzì ®
+,
+zz® ©
+$str
+zz™ ø
+,
+zzø ¿
+null
+zz¡ ≈
+,
+zz≈ ∆
+null
+zz« À
+}
+zzÃ Õ
+,
+zzÕ Œ
+{{{ 
+new{{ 
+Guid{{ 
+({{ 
+$str{{ E
+){{E F
+,{{F G
+$str	{{H è
+,
+{{è ê
+$str
+{{ë ∫
+,
+{{∫ ª
+$str
+{{º  
+,
+{{  À
+null
+{{Ã –
+,
+{{– —
+null
+{{“ ÷
+,
+{{÷ ◊
+$str
+{{ÿ â
+,
+{{â ä
+$str
+{{ã î
+,
+{{î ï
+$str
+{{ñ ¢
+,
+{{¢ £
+$str
+{{§ ¥
+,
+{{¥ µ
+$str
+{{∂ ¿
+,
+{{¿ ¡
+$str
+{{¬ ÿ
+,
+{{ÿ Ÿ
+$str
+{{⁄ Ê
+,
+{{Ê Á
+$num
+{{Ë È
+,
+{{È Í
+$str
+{{Î ¸
+,
+{{¸ ˝
+$str
+{{˛ ì
+,
+{{ì î
+null
+{{ï ô
+,
+{{ô ö
+null
+{{õ ü
+}
+{{† °
+,
+{{° ¢
+{|| 
+new|| 
+Guid|| 
+(|| 
+$str|| E
+)||E F
+,||F G
+$str	||H ®
+,
+||® ©
+$str
+||™ ÿ
+,
+||ÿ Ÿ
+$str
+||⁄ ‰
+,
+||‰ Â
+null
+||Ê Í
+,
+||Í Î
+null
+||Ï 
+,
+|| Ò
+$str
+||Ú £
+,
+||£ §
+$str
+||• Æ
+,
+||Æ Ø
+$str
+||∞  
+,
+||  À
+$str
+||Ã Û
+,
+||Û Ù
+$str
+||ı ˇ
+,
+||ˇ Ä
+$str
+||Å ù
+,
+||ù û
+$str
+||ü ¨
+,
+||¨ ≠
+$num
+||Æ Ø
+,
+||Ø ∞
+$str
+||± ∆
+,
+||∆ «
+$str
+||» ÿ
+,
+||ÿ Ÿ
+null
+||⁄ ﬁ
+,
+||ﬁ ﬂ
+null
+||‡ ‰
+}
+||Â Ê
+,
+||Ê Á
+{}} 
+new}} 
+Guid}} 
+(}} 
+$str}} E
+)}}E F
+,}}F G
+$str	}}H û
+,
+}}û ü
+$str
+}}† ≈
+,
+}}≈ ∆
+$str
+}}« œ
+,
+}}œ –
+null
+}}— ’
+,
+}}’ ÷
+null
+}}◊ €
+,
+}}€ ‹
+$str
+}}› é
+,
+}}é è
+$str
+}}ê ô
+,
+}}ô ö
+$str
+}}õ µ
+,
+}}µ ∂
+$str
+}}∑ œ
+,
+}}œ –
+$str
+}}— €
+,
+}}€ ‹
+$str
+}}› ˘
+,
+}}˘ ˙
+$str
+}}˚ à
+,
+}}à â
+$num
+}}ä ã
+,
+}}ã å
+$str
+}}ç ¢
+,
+}}¢ £
+$str
+}}§ µ
+,
+}}µ ∂
+null
+}}∑ ª
+,
+}}ª º
+null
+}}Ω ¡
+}
+}}¬ √
+,
+}}√ ƒ
+{~~ 
+new~~ 
+Guid~~ 
+(~~ 
+$str~~ E
+)~~E F
+,~~F G
+$str	~~H ë
+,
+~~ë í
+$str
+~~ì Õ
+,
+~~Õ Œ
+$str
+~~œ ·
+,
+~~· ‚
+null
+~~„ Á
+,
+~~Á Ë
+null
+~~È Ì
+,
+~~Ì Ó
+$str
+~~Ô †
+,
+~~† °
+$str
+~~¢ ´
+,
+~~´ ¨
+$str
+~~≠ ∆
+,
+~~∆ «
+$str
+~~» –
+,
+~~– —
+$str
+~~“ ‹
+,
+~~‹ ›
+$str
+~~ﬁ ˙
+,
+~~˙ ˚
+$str
+~~¸ â
+,
+~~â ä
+$num
+~~ã å
+,
+~~å ç
+$str
+~~é π
+,
+~~π ∫
+$str
+~~ª “
+,
+~~“ ”
+null
+~~‘ ÿ
+,
+~~ÿ Ÿ
+null
+~~⁄ ﬁ
+}
+~~ﬂ ‡
+,
+~~‡ ·
+{ 
+new 
+Guid 
+( 
+$str E
+)E F
+,F G
+$str	H Ñ
+,
+Ñ Ö
+$str
+Ü ¿
+,
+¿ ¡
+$str
+¬ “
+,
+“ ”
+null
+‘ ÿ
+,
+ÿ Ÿ
+null
+⁄ ﬁ
+,
+ﬁ ﬂ
+$str
+‡ ë
+,
+ë í
+$str
+ì ú
+,
+ú ù
+$str
+û ∑
+,
+∑ ∏
+$str
+π ¡
+,
+¡ ¬
+$str
+√ Õ
+,
+Õ Œ
+$str
+œ Î
+,
+Î Ï
+$str
+Ì ˙
+,
+˙ ˚
+$num
+¸ ˝
+,
+˝ ˛
+$str
+ˇ ê
+,
+ê ë
+$str
+í °
+,
+° ¢
+null
+£ ß
+,
+ß ®
+null
+© ≠
+}
+Æ Ø
+}
+ÄÄ 
+)
+ÄÄ 
+;
+ÄÄ 
+}
+ÅÅ 	
+	protected
+ÑÑ 
+override
+ÑÑ 
+void
+ÑÑ 
+Down
+ÑÑ  $
+(
+ÑÑ$ %
+MigrationBuilder
+ÑÑ% 5
+migrationBuilder
+ÑÑ6 F
+)
+ÑÑF G
+{
+ÖÖ 	
+migrationBuilder
+ÜÜ 
+.
+ÜÜ 
+	DropTable
+ÜÜ &
+(
+ÜÜ& '
+name
+áá 
+:
+áá 
+$str
+áá (
+)
+áá( )
+;
+áá) *
+migrationBuilder
+ââ 
+.
+ââ 
+
+DeleteData
+ââ '
+(
+ââ' (
+table
+ää 
+:
+ää 
+$str
+ää '
+,
+ää' (
+	keyColumn
+ãã 
+:
+ãã 
+$str
+ãã 
+,
+ãã  
+keyValue
+åå 
+:
+åå 
+new
+åå 
+Guid
+åå "
+(
+åå" #
+$str
+åå# I
+)
+ååI J
+)
+ååJ K
+;
+ååK L
+migrationBuilder
+éé 
+.
+éé 
+
+DeleteData
+éé '
+(
+éé' (
+table
+èè 
+:
+èè 
+$str
+èè '
+,
+èè' (
+	keyColumn
+êê 
+:
+êê 
+$str
+êê 
+,
+êê  
+keyValue
+ëë 
+:
+ëë 
+new
+ëë 
+Guid
+ëë "
+(
+ëë" #
+$str
+ëë# I
+)
+ëëI J
+)
+ëëJ K
+;
+ëëK L
+migrationBuilder
+ìì 
+.
+ìì 
+
+DeleteData
+ìì '
+(
+ìì' (
+table
+îî 
+:
+îî 
+$str
+îî '
+,
+îî' (
+	keyColumn
+ïï 
+:
+ïï 
+$str
+ïï 
+,
+ïï  
+keyValue
+ññ 
+:
+ññ 
+new
+ññ 
+Guid
+ññ "
+(
+ññ" #
+$str
+ññ# I
+)
+ññI J
+)
+ññJ K
+;
+ññK L
+migrationBuilder
+òò 
+.
+òò 
+
+DeleteData
+òò '
+(
+òò' (
+table
+ôô 
+:
+ôô 
+$str
+ôô '
+,
+ôô' (
+	keyColumn
+öö 
+:
+öö 
+$str
+öö 
+,
+öö  
+keyValue
+õõ 
+:
+õõ 
+new
+õõ 
+Guid
+õõ "
+(
+õõ" #
+$str
+õõ# I
+)
+õõI J
+)
+õõJ K
+;
+õõK L
+migrationBuilder
+ùù 
+.
+ùù 
+
+DeleteData
+ùù '
+(
+ùù' (
+table
+ûû 
+:
+ûû 
+$str
+ûû '
+,
+ûû' (
+	keyColumn
+üü 
+:
+üü 
+$str
+üü 
+,
+üü  
+keyValue
+†† 
+:
+†† 
+new
+†† 
+Guid
+†† "
+(
+††" #
+$str
+††# I
+)
+††I J
+)
+††J K
+;
+††K L
+migrationBuilder
+¢¢ 
+.
+¢¢ 
+
+DeleteData
+¢¢ '
+(
+¢¢' (
+table
+££ 
+:
+££ 
+$str
+££ '
+,
+££' (
+	keyColumn
+§§ 
+:
+§§ 
+$str
+§§ 
+,
+§§  
+keyValue
+•• 
+:
+•• 
+new
+•• 
+Guid
+•• "
+(
+••" #
+$str
+••# I
+)
+••I J
+)
+••J K
+;
+••K L
+migrationBuilder
+ßß 
+.
+ßß 
+
+DeleteData
+ßß '
+(
+ßß' (
+table
+®® 
+:
+®® 
+$str
+®® '
+,
+®®' (
+	keyColumn
+©© 
+:
+©© 
+$str
+©© 
+,
+©©  
+keyValue
+™™ 
+:
+™™ 
+new
+™™ 
+Guid
+™™ "
+(
+™™" #
+$str
+™™# I
+)
+™™I J
+)
+™™J K
+;
+™™K L
+migrationBuilder
+¨¨ 
+.
+¨¨ 
+
+DeleteData
+¨¨ '
+(
+¨¨' (
+table
+≠≠ 
+:
+≠≠ 
+$str
+≠≠ '
+,
+≠≠' (
+	keyColumn
+ÆÆ 
+:
+ÆÆ 
+$str
+ÆÆ 
+,
+ÆÆ  
+keyValue
+ØØ 
+:
+ØØ 
+new
+ØØ 
+Guid
+ØØ "
+(
+ØØ" #
+$str
+ØØ# I
+)
+ØØI J
+)
+ØØJ K
+;
+ØØK L
+migrationBuilder
+±± 
+.
+±± 
+
+DeleteData
+±± '
+(
+±±' (
+table
+≤≤ 
+:
+≤≤ 
+$str
+≤≤ '
+,
+≤≤' (
+	keyColumn
+≥≥ 
+:
+≥≥ 
+$str
+≥≥ 
+,
+≥≥  
+keyValue
+¥¥ 
+:
+¥¥ 
+new
+¥¥ 
+Guid
+¥¥ "
+(
+¥¥" #
+$str
+¥¥# I
+)
+¥¥I J
+)
+¥¥J K
+;
+¥¥K L
+migrationBuilder
+∂∂ 
+.
+∂∂ 
+
+DeleteData
+∂∂ '
+(
+∂∂' (
+table
+∑∑ 
+:
+∑∑ 
+$str
+∑∑ '
+,
+∑∑' (
+	keyColumn
+∏∏ 
+:
+∏∏ 
+$str
+∏∏ 
+,
+∏∏  
+keyValue
+ππ 
+:
+ππ 
+new
+ππ 
+Guid
+ππ "
+(
+ππ" #
+$str
+ππ# I
+)
+ππI J
+)
+ππJ K
+;
+ππK L
+migrationBuilder
+ªª 
+.
+ªª 
+
+DeleteData
+ªª '
+(
+ªª' (
+table
+ºº 
+:
+ºº 
+$str
+ºº '
+,
+ºº' (
+	keyColumn
+ΩΩ 
+:
+ΩΩ 
+$str
+ΩΩ 
+,
+ΩΩ  
+keyValue
+ææ 
+:
+ææ 
+new
+ææ 
+Guid
+ææ "
+(
+ææ" #
+$str
+ææ# I
+)
+ææI J
+)
+ææJ K
+;
+ææK L
+migrationBuilder
+¿¿ 
+.
+¿¿ 
+
+DeleteData
+¿¿ '
+(
+¿¿' (
+table
+¡¡ 
+:
+¡¡ 
+$str
+¡¡ '
+,
+¡¡' (
+	keyColumn
+¬¬ 
+:
+¬¬ 
+$str
+¬¬ 
+,
+¬¬  
+keyValue
+√√ 
+:
+√√ 
+new
+√√ 
+Guid
+√√ "
+(
+√√" #
+$str
+√√# I
+)
+√√I J
+)
+√√J K
+;
+√√K L
+migrationBuilder
+≈≈ 
+.
+≈≈ 
+
+DeleteData
+≈≈ '
+(
+≈≈' (
+table
+∆∆ 
+:
+∆∆ 
+$str
+∆∆ '
+,
+∆∆' (
+	keyColumn
+«« 
+:
+«« 
+$str
+«« 
+,
+««  
+keyValue
+»» 
+:
+»» 
+new
+»» 
+Guid
+»» "
+(
+»»" #
+$str
+»»# I
+)
+»»I J
+)
+»»J K
+;
+»»K L
+migrationBuilder
+   
+.
+   
+
+UpdateData
+   '
+(
+  ' (
+table
+ÀÀ 
+:
+ÀÀ 
+$str
+ÀÀ $
+,
+ÀÀ$ %
+	keyColumn
+ÃÃ 
+:
+ÃÃ 
+$str
+ÃÃ 
+,
+ÃÃ  
+keyValue
+ÕÕ 
+:
+ÕÕ 
+$str
+ÕÕ +
+,
+ÕÕ+ ,
+columns
+ŒŒ 
+:
+ŒŒ 
+new
+ŒŒ 
+[
+ŒŒ 
+]
+ŒŒ 
+{
+ŒŒ  
+$str
+ŒŒ! 3
+,
+ŒŒ3 4
+$str
+ŒŒ5 A
+,
+ŒŒA B
+$str
+ŒŒC Q
+,
+ŒŒQ R
+$str
+ŒŒS b
+}
+ŒŒc d
+,
+ŒŒd e
+values
+œœ 
+:
+œœ 
+new
+œœ 
+object
+œœ "
+[
+œœ" #
+]
+œœ# $
+{
+œœ% &
+$str
+œœ' M
+,
+œœM N
+new
+œœO R
+DateTime
+œœS [
+(
+œœ[ \
+$num
+œœ\ `
+,
+œœ` a
+$num
+œœb c
+,
+œœc d
+$num
+œœe g
+,
+œœg h
+$num
+œœi k
+,
+œœk l
+$num
+œœm o
+,
+œœo p
+$num
+œœq s
+,
+œœs t
+$num
+œœu x
+,
+œœx y
+DateTimeKindœœz Ü
+.œœÜ á
+Utcœœá ä
+)œœä ã
+.œœã å
+AddTicksœœå î
+(œœî ï
+$numœœï ô
+)œœô ö
+,œœö õ
+$strœœú Ú
+,œœÚ Û
+$strœœÙ ö
+}œœõ ú
+)œœú ù
+;œœù û
+migrationBuilder
+—— 
+.
+—— 
+
+InsertData
+—— '
+(
+——' (
+table
+““ 
+:
+““ 
+$str
+““ '
+,
+““' (
+columns
+”” 
+:
+”” 
+new
+”” 
+[
+”” 
+]
+”” 
+{
+””  
+$str
+””! %
+,
+””% &
+$str
+””' 4
+,
+””4 5
+$str
+””6 D
+,
+””D E
+$str
+””F P
+,
+””P Q
+$str
+””R ]
+,
+””] ^
+$str
+””_ l
+,
+””l m
+$str
+””n }
+,
+””} ~
+$str”” â
+,””â ä
+$str””ã †
+,””† °
+$str””¢ ±
+,””± ≤
+$str””≥ ¬
+,””¬ √
+$str””ƒ —
+,””— “
+$str””” ﬂ
+,””ﬂ ‡
+$str””· È
+,””È Í
+$str””Î ¯
+,””¯ ˘
+$str””˙ à
+,””à â
+$str””ä ï
+,””ï ñ
+$str””ó §
+}””• ¶
+,””¶ ß
+values
+‘‘ 
+:
+‘‘ 
+new
+‘‘ 
+object
+‘‘ "
+[
+‘‘" #
+,
+‘‘# $
+]
+‘‘$ %
+{
+’’ 
+{
+÷÷ 
+new
+÷÷ 
+Guid
+÷÷ 
+(
+÷÷ 
+$str
+÷÷ E
+)
+÷÷E F
+,
+÷÷F G
+$str÷÷H ë
+,÷÷ë í
+$str÷÷ì Õ
+,÷÷Õ Œ
+$str÷÷œ ·
+,÷÷· ‚
+null÷÷„ Á
+,÷÷Á Ë
+null÷÷È Ì
+,÷÷Ì Ó
+$str÷÷Ô †
+,÷÷† °
+$str÷÷¢ ´
+,÷÷´ ¨
+$str÷÷≠ ∆
+,÷÷∆ «
+$str÷÷» –
+,÷÷– —
+$str÷÷“ ‹
+,÷÷‹ ›
+$str÷÷ﬁ ˙
+,÷÷˙ ˚
+$str÷÷¸ â
+,÷÷â ä
+$num÷÷ã å
+,÷÷å ç
+$str÷÷é π
+,÷÷π ∫
+$str÷÷ª “
+,÷÷“ ”
+null÷÷‘ ÿ
+,÷÷ÿ Ÿ
+null÷÷⁄ ﬁ
+}÷÷ﬂ ‡
+,÷÷‡ ·
+{
+◊◊ 
+new
+◊◊ 
+Guid
+◊◊ 
+(
+◊◊ 
+$str
+◊◊ E
+)
+◊◊E F
+,
+◊◊F G
+$str◊◊H è
+,◊◊è ê
+$str◊◊ë À
+,◊◊À Ã
+$str◊◊Õ ‰
+,◊◊‰ Â
+null◊◊Ê Í
+,◊◊Í Î
+null◊◊Ï 
+,◊◊ Ò
+$str◊◊Ú £
+,◊◊£ §
+$str◊◊• Æ
+,◊◊Æ Ø
+$str◊◊∞ …
+,◊◊…  
+$str◊◊À Ò
+,◊◊Ò Ú
+$str◊◊Û ¸
+,◊◊¸ ˝
+$str◊◊˛ ö
+,◊◊ö õ
+$str◊◊ú ©
+,◊◊© ™
+$num◊◊´ ¨
+,◊◊¨ ≠
+$str◊◊Æ Œ
+,◊◊Œ œ
+$str◊◊– Ë
+,◊◊Ë È
+null◊◊Í Ó
+,◊◊Ó Ô
+null◊◊ Ù
+}◊◊ı ˆ
+,◊◊ˆ ˜
+{
+ÿÿ 
+new
+ÿÿ 
+Guid
+ÿÿ 
+(
+ÿÿ 
+$str
+ÿÿ E
+)
+ÿÿE F
+,
+ÿÿF G
+$strÿÿH æ
+,ÿÿæ ø
+$strÿÿ¿ ù
+,ÿÿù û
+$strÿÿü ©
+,ÿÿ© ™
+nullÿÿ´ Ø
+,ÿÿØ ∞
+nullÿÿ± µ
+,ÿÿµ ∂
+$strÿÿ∑ ˚
+,ÿÿ˚ ¸
+$strÿÿ˝ Ü
+,ÿÿÜ á
+$strÿÿà ≠
+,ÿÿ≠ Æ
+$strÿÿØ ’
+,ÿÿ’ ÷
+$strÿÿ◊ ·
+,ÿÿ· ‚
+$strÿÿ„ ˇ
+,ÿÿˇ Ä
+$strÿÿÅ é
+,ÿÿé è
+$numÿÿê ë
+,ÿÿë í
+$strÿÿì ®
+,ÿÿ® ©
+$strÿÿ™ ø
+,ÿÿø ¿
+nullÿÿ¡ ≈
+,ÿÿ≈ ∆
+nullÿÿ« À
+}ÿÿÃ Õ
+,ÿÿÕ Œ
+{
+ŸŸ 
+new
+ŸŸ 
+Guid
+ŸŸ 
+(
+ŸŸ 
+$str
+ŸŸ E
+)
+ŸŸE F
+,
+ŸŸF G
+$strŸŸH ë
+,ŸŸë í
+$strŸŸì Õ
+,ŸŸÕ Œ
+$strŸŸœ ·
+,ŸŸ· ‚
+nullŸŸ„ Á
+,ŸŸÁ Ë
+nullŸŸÈ Ì
+,ŸŸÌ Ó
+$strŸŸÔ †
+,ŸŸ† °
+$strŸŸ¢ ´
+,ŸŸ´ ¨
+$strŸŸ≠ ∆
+,ŸŸ∆ «
+$strŸŸ» Ê
+,ŸŸÊ Á
+$strŸŸË Ô
+,ŸŸÔ 
+$strŸŸÒ ç
+,ŸŸç é
+$strŸŸè ú
+,ŸŸú ù
+$numŸŸû ü
+,ŸŸü †
+$strŸŸ° ø
+,ŸŸø ¿
+$strŸŸ¡ Â
+,ŸŸÂ Ê
+nullŸŸÁ Î
+,ŸŸÎ Ï
+nullŸŸÌ Ò
+}ŸŸÚ Û
+,ŸŸÛ Ù
+{
+⁄⁄ 
+new
+⁄⁄ 
+Guid
+⁄⁄ 
+(
+⁄⁄ 
+$str
+⁄⁄ E
+)
+⁄⁄E F
+,
+⁄⁄F G
+$str⁄⁄H è
+,⁄⁄è ê
+$str⁄⁄ë À
+,⁄⁄À Ã
+$str⁄⁄Õ ‰
+,⁄⁄‰ Â
+null⁄⁄Ê Í
+,⁄⁄Í Î
+null⁄⁄Ï 
+,⁄⁄ Ò
+$str⁄⁄Ú £
+,⁄⁄£ §
+$str⁄⁄• Æ
+,⁄⁄Æ Ø
+$str⁄⁄∞ …
+,⁄⁄…  
+$str⁄⁄À Ì
+,⁄⁄Ì Ó
+$str⁄⁄Ô ˚
+,⁄⁄˚ ¸
+$str⁄⁄˝ ô
+,⁄⁄ô ö
+$str⁄⁄õ ®
+,⁄⁄® ©
+$num⁄⁄™ ´
+,⁄⁄´ ¨
+$str⁄⁄≠ Õ
+,⁄⁄Õ Œ
+$str⁄⁄œ Ë
+,⁄⁄Ë È
+null⁄⁄Í Ó
+,⁄⁄Ó Ô
+null⁄⁄ Ù
+}⁄⁄ı ˆ
+,⁄⁄ˆ ˜
+{
+€€ 
+new
+€€ 
+Guid
+€€ 
+(
+€€ 
+$str
+€€ E
+)
+€€E F
+,
+€€F G
+$str€€H Ã
+,€€Ã Õ
+$str€€Œ à
+,€€à â
+$str€€ä ö
+,€€ö õ
+null€€ú †
+,€€† °
+null€€¢ ¶
+,€€¶ ß
+$str€€® Ÿ
+,€€Ÿ ⁄
+$str€€€ ‰
+,€€‰ Â
+$str€€Ê ˇ
+,€€ˇ Ä
+$str€€Å â
+,€€â ä
+$str€€ã ï
+,€€ï ñ
+$str€€ó ≥
+,€€≥ ¥
+$str€€µ ¬
+,€€¬ √
+$num€€ƒ ≈
+,€€≈ ∆
+$str€€« ﬂ
+,€€ﬂ ‡
+$str€€· ˆ
+,€€ˆ ˜
+null€€¯ ¸
+,€€¸ ˝
+null€€˛ Ç
+}€€É Ñ
+,€€Ñ Ö
+{
+‹‹ 
+new
+‹‹ 
+Guid
+‹‹ 
+(
+‹‹ 
+$str
+‹‹ E
+)
+‹‹E F
+,
+‹‹F G
+$str‹‹H ®
+,‹‹® ©
+$str‹‹™ ÿ
+,‹‹ÿ Ÿ
+$str‹‹⁄ ‰
+,‹‹‰ Â
+null‹‹Ê Í
+,‹‹Í Î
+null‹‹Ï 
+,‹‹ Ò
+$str‹‹Ú £
+,‹‹£ §
+$str‹‹• Æ
+,‹‹Æ Ø
+$str‹‹∞  
+,‹‹  À
+$str‹‹Ã Û
+,‹‹Û Ù
+$str‹‹ı ˇ
+,‹‹ˇ Ä
+$str‹‹Å ù
+,‹‹ù û
+$str‹‹ü ¨
+,‹‹¨ ≠
+$num‹‹Æ Ø
+,‹‹Ø ∞
+$str‹‹± ∆
+,‹‹∆ «
+$str‹‹» ÿ
+,‹‹ÿ Ÿ
+null‹‹⁄ ﬁ
+,‹‹ﬁ ﬂ
+null‹‹‡ ‰
+}‹‹Â Ê
+,‹‹Ê Á
+{
+›› 
+new
+›› 
+Guid
+›› 
+(
+›› 
+$str
+›› E
+)
+››E F
+,
+››F G
+$str
+››H s
+,
+››s t
+$str››u ô
+,››ô ö
+$str››õ •
+,››• ¶
+null››ß ´
+,››´ ¨
+null››≠ ±
+,››± ≤
+$str››≥ ˘
+,››˘ ˙
+$str››˚ Ñ
+,››Ñ Ö
+$str››Ü ü
+,››ü †
+$str››° Œ
+,››Œ œ
+$str››– ‹
+,››‹ ›
+$str››ﬁ ˙
+,››˙ ˚
+$str››¸ â
+,››â ä
+$num››ã å
+,››å ç
+$str››é ª
+,››ª º
+$str››Ω ›
+,››› ﬁ
+null››ﬂ „
+,››„ ‰
+null››Â È
+}››Í Î
+,››Î Ï
+{
+ﬁﬁ 
+new
+ﬁﬁ 
+Guid
+ﬁﬁ 
+(
+ﬁﬁ 
+$str
+ﬁﬁ E
+)
+ﬁﬁE F
+,
+ﬁﬁF G
+$strﬁﬁH ∞
+,ﬁﬁ∞ ±
+$strﬁﬁ≤ Ï
+,ﬁﬁÏ Ì
+$strﬁﬁÓ ˜
+,ﬁﬁ˜ ¯
+nullﬁﬁ˘ ˝
+,ﬁﬁ˝ ˛
+nullﬁﬁˇ É
+,ﬁﬁÉ Ñ
+$strﬁﬁÖ ∂
+,ﬁﬁ∂ ∑
+$strﬁﬁ∏ ¡
+,ﬁﬁ¡ ¬
+$strﬁﬁ√ ‹
+,ﬁﬁ‹ ›
+$strﬁﬁﬁ ˘
+,ﬁﬁ˘ ˙
+$strﬁﬁ˚ Ö
+,ﬁﬁÖ Ü
+$strﬁﬁá £
+,ﬁﬁ£ §
+$strﬁﬁ• ≤
+,ﬁﬁ≤ ≥
+$numﬁﬁ¥ µ
+,ﬁﬁµ ∂
+$strﬁﬁ∑ À
+,ﬁﬁÀ Ã
+$strﬁﬁÕ €
+,ﬁﬁ€ ‹
+nullﬁﬁ› ·
+,ﬁﬁ· ‚
+nullﬁﬁ„ Á
+}ﬁﬁË È
+,ﬁﬁÈ Í
+{
+ﬂﬂ 
+new
+ﬂﬂ 
+Guid
+ﬂﬂ 
+(
+ﬂﬂ 
+$str
+ﬂﬂ E
+)
+ﬂﬂE F
+,
+ﬂﬂF G
+$strﬂﬂH Ñ
+,ﬂﬂÑ Ö
+$strﬂﬂÜ ¿
+,ﬂﬂ¿ ¡
+$strﬂﬂ¬ “
+,ﬂﬂ“ ”
+nullﬂﬂ‘ ÿ
+,ﬂﬂÿ Ÿ
+nullﬂﬂ⁄ ﬁ
+,ﬂﬂﬁ ﬂ
+$strﬂﬂ‡ ë
+,ﬂﬂë í
+$strﬂﬂì ú
+,ﬂﬂú ù
+$strﬂﬂû ∑
+,ﬂﬂ∑ ∏
+$strﬂﬂπ ¡
+,ﬂﬂ¡ ¬
+$strﬂﬂ√ Õ
+,ﬂﬂÕ Œ
+$strﬂﬂœ Î
+,ﬂﬂÎ Ï
+$strﬂﬂÌ ˙
+,ﬂﬂ˙ ˚
+$numﬂﬂ¸ ˝
+,ﬂﬂ˝ ˛
+$strﬂﬂˇ ê
+,ﬂﬂê ë
+$strﬂﬂí °
+,ﬂﬂ° ¢
+nullﬂﬂ£ ß
+,ﬂﬂß ®
+nullﬂﬂ© ≠
+}ﬂﬂÆ Ø
+,ﬂﬂØ ∞
+{
+‡‡ 
+new
+‡‡ 
+Guid
+‡‡ 
+(
+‡‡ 
+$str
+‡‡ E
+)
+‡‡E F
+,
+‡‡F G
+$str‡‡H ”
+,‡‡” ‘
+$str‡‡’ è
+,‡‡è ê
+$str‡‡ë ô
+,‡‡ô ö
+null‡‡õ ü
+,‡‡ü †
+null‡‡° •
+,‡‡• ¶
+$str‡‡ß ÿ
+,‡‡ÿ Ÿ
+$str‡‡⁄ „
+,‡‡„ ‰
+$str‡‡Â °
+,‡‡° ¢
+$str‡‡£ ∑
+,‡‡∑ ∏
+$str‡‡π √
+,‡‡√ ƒ
+$str‡‡≈ ·
+,‡‡· ‚
+$str‡‡„ 
+,‡‡ Ò
+$num‡‡Ú Û
+,‡‡Û Ù
+$str‡‡ı ñ
+,‡‡ñ ó
+$str‡‡ò π
+,‡‡π ∫
+null‡‡ª ø
+,‡‡ø ¿
+null‡‡¡ ≈
+}‡‡∆ «
+,‡‡« »
+{
+·· 
+new
+·· 
+Guid
+·· 
+(
+·· 
+$str
+·· E
+)
+··E F
+,
+··F G
+$str··H û
+,··û ü
+$str··† ≈
+,··≈ ∆
+$str··« œ
+,··œ –
+null··— ’
+,··’ ÷
+null··◊ €
+,··€ ‹
+$str··› é
+,··é è
+$str··ê ô
+,··ô ö
+$str··õ µ
+,··µ ∂
+$str··∑ œ
+,··œ –
+$str··— €
+,··€ ‹
+$str··› ˘
+,··˘ ˙
+$str··˚ à
+,··à â
+$num··ä ã
+,··ã å
+$str··ç ¢
+,··¢ £
+$str··§ µ
+,··µ ∂
+null··∑ ª
+,··ª º
+null··Ω ¡
+}··¬ √
+,··√ ƒ
+{
+‚‚ 
+new
+‚‚ 
+Guid
+‚‚ 
+(
+‚‚ 
+$str
+‚‚ E
+)
+‚‚E F
+,
+‚‚F G
+$str‚‚H è
+,‚‚è ê
+$str‚‚ë ∫
+,‚‚∫ ª
+$str‚‚º  
+,‚‚  À
+null‚‚Ã –
+,‚‚– —
+null‚‚“ ÷
+,‚‚÷ ◊
+$str‚‚ÿ â
+,‚‚â ä
+$str‚‚ã î
+,‚‚î ï
+$str‚‚ñ ¢
+,‚‚¢ £
+$str‚‚§ ¥
+,‚‚¥ µ
+$str‚‚∂ ¿
+,‚‚¿ ¡
+$str‚‚¬ ÿ
+,‚‚ÿ Ÿ
+$str‚‚⁄ Ê
+,‚‚Ê Á
+$num‚‚Ë È
+,‚‚È Í
+$str‚‚Î ¸
+,‚‚¸ ˝
+$str‚‚˛ ì
+,‚‚ì î
+null‚‚ï ô
+,‚‚ô ö
+null‚‚õ ü
+}‚‚† °
+}
+„„ 
+)
+„„ 
+;
+„„ 
+}
+‰‰ 	
+}
+ÂÂ 
+}ÊÊ ‘¡
 ÑD:\FPT\Semester 6\Project_Cursus\Backend_Cursus\Cursus.LMS\Cursus.LMS.DataAccess\Migrations\20240720105818_AddTableCourseBookmark.cs
 	namespace 	
 Cursus
@@ -40774,7 +70798,7 @@ DataAccess		 
 )J K
 ;K L
 } 
-} ›!
+} ﬁ$
 kD:\FPT\Semester 6\Project_Cursus\Backend_Cursus\Cursus.LMS\Cursus.LMS.DataAccess\IRepository\IUnitOfWork.cs
 	namespace 	
 Cursus
@@ -40844,142 +70868,160 @@ DataAccess 
 {' (
 get) ,
 ;, -
-}. /"
-IPaymentCardRepository !
-PaymentCardRepository 0
-{1 2
-get3 6
-;6 7
-}8 9'
-IInstructorRatingRepository &
-InstructorRatingRepository  :
-{; <
-get= @
-;@ A
-}B C$
-ICourseVersionRepository #
-CourseVersionRepository 4
-{5 6
-get7 :
-;: ;
-}< =+
-ICourseSectionVersionRepository #*
-CourseSectionVersionRepository$ B
-{C D
-getE H
-;H I
-}J K,
- ISectionDetailsVersionRepository $+
-SectionDetailsVersionRepository% D
-{E F
-getG J
-;J K
-}L M*
-ICourseVersionStatusRepository ")
-CourseVersionStatusRepository# @
-{A B
-getC F
-;F G
-}H I+
-ICourseVersionCommentRepository #*
-CourseVersionCommentRepository$ B
-{C D
-getE H
-;H I
-}J K$
-IStudentCourseRepository #
-StudentCourseRepository 4
-{5 6
-get7 :
-;: ;
-}< =
-ILevelRepository 
-LevelRepository $
-{% &
-get' *
-;* +
-}, -!
-ICartHeaderRepository  
-CartHeaderRepository .
-{/ 0
-get1 4
-;4 5
-}6 7"
-ICartDetailsRepository !
-CartDetailsRepository 0
-{1 2
-get3 6
-;6 7
-}8 9#
-ICourseReviewRepository "
-CourseReviewRepository 2
+}. /'
+IInstructorRatingRepository &
+InstructorRatingRepository  :
+{; <
+get= @
+;@ A
+}B C$
+ICourseVersionRepository #
+CourseVersionRepository 4
+{5 6
+get7 :
+;: ;
+}< =+
+ICourseSectionVersionRepository #*
+CourseSectionVersionRepository$ B
+{C D
+getE H
+;H I
+}J K,
+ ISectionDetailsVersionRepository $+
+SectionDetailsVersionRepository% D
+{E F
+getG J
+;J K
+}L M*
+ICourseVersionStatusRepository ")
+CourseVersionStatusRepository# @
+{A B
+getC F
+;F G
+}H I+
+ICourseVersionCommentRepository #*
+CourseVersionCommentRepository$ B
+{C D
+getE H
+;H I
+}J K$
+IStudentCourseRepository #
+StudentCourseRepository 4
+{5 6
+get7 :
+;: ;
+}< =
+ILevelRepository 
+LevelRepository $
+{% &
+get' *
+;* +
+}, -!
+ICartHeaderRepository  
+CartHeaderRepository .
+{/ 0
+get1 4
+;4 5
+}6 7"
+ICartDetailsRepository !
+CartDetailsRepository 0
+{1 2
+get3 6
+;6 7
+}8 9#
+ICourseReviewRepository "
+CourseReviewRepository 2
+{3 4
+get5 8
+;8 9
+}: ;#
+ICourseReportRepository "
+CourseReportRepository 2
 {3 4
 get5 8
 ;8 9
-}: ;#
-ICourseReportRepository "
-CourseReportRepository 2
-{3 4
-get5 8
-;8 9
-}: ;"
-IOrderHeaderRepository !
-OrderHeaderRepository 0
-{1 2
-get3 6
-;6 7
-}8 9#
-IOrderDetailsRepository "
-OrderDetailsRepository 2
-{3 4
-get5 8
-;8 9
-}: ;"
-IOrderStatusRepository !
-OrderStatusRepository 0
-{1 2
-get3 6
-;6 7
-}8 9%
-IStudentCommentRepository $
-StudentCommentRepository 6
-{7 8
-get9 <
-;< =
-}> ?*
-IStudentCourseStatusRepository ")
-StudentCourseStatusRepository# @
-{A B
-getC F
-;F G
-}H I
-IBalanceRepository   
-BalanceRepository   (
-{  ) *
-get  + .
-;  . /
-}  0 1"
-ITransactionRepository!! !
-TransactionRepository!! 0
-{!!1 2
-get!!3 6
-;!!6 7
-}!!8 9%
-ICourseBookmarkRepository"" $
-CourseBookmarkRepository"" 6
+}: ;"
+IOrderHeaderRepository !
+OrderHeaderRepository 0
+{1 2
+get3 6
+;6 7
+}8 9#
+IOrderDetailsRepository "
+OrderDetailsRepository 2
+{3 4
+get5 8
+;8 9
+}: ;"
+IOrderStatusRepository !
+OrderStatusRepository 0
+{1 2
+get3 6
+;6 7
+}8 9%
+IStudentCommentRepository $
+StudentCommentRepository 6
+{7 8
+get9 <
+;< =
+}> ?*
+IStudentCourseStatusRepository ")
+StudentCourseStatusRepository# @
+{A B
+getC F
+;F G
+}H I
+IBalanceRepository 
+BalanceRepository (
+{) *
+get+ .
+;. /
+}0 1"
+ITransactionRepository   !
+TransactionRepository   0
+{  1 2
+get  3 6
+;  6 7
+}  8 9%
+ICourseBookmarkRepository!! $
+CourseBookmarkRepository!! 6
+{!!7 8
+get!!9 <
+;!!< =
+}!!> ?%
+ICourseProgressRepository"" $
+CourseProgressRepository"" 6
 {""7 8
 get""9 <
 ;""< =
-}""> ?
-Task$$ 
-<$$ 	
-int$$	 
->$$ 
-	SaveAsync$$ 
-($$ 
-)$$ 
-;$$ 
-}%% ¨
+}""> ? 
+ITermOfUseRepository## 
+TermOfUseRepository## ,
+{##- .
+get##/ 2
+;##2 3
+}##4 5
+ICompanyRepository$$ 
+CompanyRepository$$ (
+{$$) *
+get$$+ .
+;$$. /
+}$$0 1
+IPrivacyRepository%% 
+PrivacyRepository%% (
+{%%) *
+get%%+ .
+;%%. /
+}%%0 1
+Task'' 
+<'' 	
+int''	 
+>'' 
+	SaveAsync'' 
+('' 
+)'' 
+;'' 
+}(( ¨
 vD:\FPT\Semester 6\Project_Cursus\Backend_Cursus\Cursus.LMS\Cursus.LMS.DataAccess\IRepository\ITransactionRepository.cs
 	namespace 	
 Cursus
@@ -41018,6 +71060,46 @@ DataAccess 
 transactions. :
 ): ;
 ;; <
+}		 û
+tD:\FPT\Semester 6\Project_Cursus\Backend_Cursus\Cursus.LMS\Cursus.LMS.DataAccess\IRepository\ITermOfUseRepository.cs
+	namespace 	
+Cursus
+ 
+. 
+LMS 
+. 
+
+DataAccess 
+.  
+IRepository  +
+;+ ,
+public 
+	interface  
+ITermOfUseRepository %
+:& '
+IRepository( 3
+<3 4
+	TermOfUse4 =
+>= >
+{ 
+void 
+Update	 
+( 
+	TermOfUse 
+	termOfUse #
+)# $
+;$ %
+void 
+UpdateRange	 
+( 
+IEnumerable  
+<  !
+	TermOfUse! *
+>* +
+
+termOfUses, 6
+)6 7
+;7 8
 }		 ∏
 
 rD:\FPT\Semester 6\Project_Cursus\Backend_Cursus\Cursus.LMS\Cursus.LMS.DataAccess\IRepository\IStudentRepository.cs
@@ -41450,8 +71532,8 @@ Expression  
 entities$ ,
 ), -
 ;- .
-} â
-vD:\FPT\Semester 6\Project_Cursus\Backend_Cursus\Cursus.LMS\Cursus.LMS.DataAccess\IRepository\IPaymentCardRepository.cs
+} ë
+rD:\FPT\Semester 6\Project_Cursus\Backend_Cursus\Cursus.LMS\Cursus.LMS.DataAccess\IRepository\IPrivacyRepository.cs
 	namespace 	
 Cursus
  
@@ -41464,94 +71546,32 @@ DataAccess 
 IRepository  +
 ;+ ,
 public 
-	interface "
-IPaymentCardRepository '
-:( )
-IRepository* 5
-<5 6
-PaymentCard6 A
->A B
+	interface 
+IPrivacyRepository #
+:$ %
+IRepository& 1
+<1 2
+Privacy2 9
+>9 :
 { 
 void 
 Update	 
-( 
-PaymentCard 
-paymentCard '
-)' (
-;( )
+( 
+Privacy 
+privacy 
+)  
+;  !
 void 
 UpdateRange	 
 ( 
 IEnumerable  
-<  !
-PaymentCard! ,
->, -
-paymentCards. :
-): ;
-;; <
-void		 
-Delete			 
-(		 
-PaymentCard		 
-paymentCard		 '
-)		' (
-;		( )
-Task
-
- 
-<
-
- 	
-PaymentCard
-
-	 
-?
-
- 
->
-
- !
-CardNumberExistsAsync
-
- ,
-(
-
-, -
-string
-
-- 3
-
-cardNumber
-
-4 >
-)
-
-> ?
-;
-
-? @
-Task 
-< 	
-PaymentCard	 
-? 
-> 
-GetCardByUserId &
-(& '
-string' -
-id. 0
-)0 1
-;1 2
-Task 
-< 	
-PaymentCard	 
-> 
-AddAsync 
-( 
-PaymentCard *
-paymentCard+ 6
-)6 7
-;7 8
-} ¨
+<  !
+Privacy! (
+>( )
+	privacies* 3
+)3 4
+;4 5
+}		 ¨
 vD:\FPT\Semester 6\Project_Cursus\Backend_Cursus\Cursus.LMS\Cursus.LMS.DataAccess\IRepository\IOrderStatusRepository.cs
 	namespace 	
 Cursus
@@ -42283,46 +72303,7 @@ DataAccess 
 )+ ,
 ;, -
 } 
-} ¡
-yD:\FPT\Semester 6\Project_Cursus\Backend_Cursus\Cursus.LMS\Cursus.LMS.DataAccess\IRepository\ICourseBookmarkRepository.cs
-	namespace 	
-Cursus
- 
-. 
-LMS 
-. 
-
-DataAccess 
-.  
-IRepository  +
-;+ ,
-public 
-	interface %
-ICourseBookmarkRepository *
-:+ ,
-IRepository- 8
-<8 9
-CourseBookmark9 G
->G H
-{ 
-void 
-Update	 
-( 
-CourseBookmark 
-courseBookmark -
-)- .
-;. /
-void 
-UpdateRange	 
-( 
-IEnumerable  
-<  !
-CourseBookmark! /
->/ 0
-courseBookmarks1 @
-)@ A
-;A B
-}		 ·
+} ·
 wD:\FPT\Semester 6\Project_Cursus\Backend_Cursus\Cursus.LMS\Cursus.LMS.DataAccess\IRepository\ICourseReportRepository.cs
 	namespace 	
 Cursus
@@ -42373,7 +72354,124 @@ DataAccess 
 ;		' (
 }
 
- œ
+ ¬
+yD:\FPT\Semester 6\Project_Cursus\Backend_Cursus\Cursus.LMS\Cursus.LMS.DataAccess\IRepository\ICourseProgressRepository.cs
+	namespace 	
+Cursus
+ 
+. 
+LMS 
+. 
+
+DataAccess 
+.  
+IRepository  +
+;+ ,
+public 
+	interface %
+ICourseProgressRepository *
+:+ ,
+IRepository- 8
+<8 9
+CourseProgress9 G
+>G H
+{ 
+void 
+Update	 
+( 
+CourseProgress 
+courseProgress -
+)- .
+;. /
+void 
+UpdateRange	 
+( 
+IEnumerable  
+<  !
+CourseProgress! /
+>/ 0
+courseProgresses1 A
+)A B
+;B C
+}		 ¡
+yD:\FPT\Semester 6\Project_Cursus\Backend_Cursus\Cursus.LMS\Cursus.LMS.DataAccess\IRepository\ICourseBookmarkRepository.cs
+	namespace 	
+Cursus
+ 
+. 
+LMS 
+. 
+
+DataAccess 
+.  
+IRepository  +
+;+ ,
+public 
+	interface %
+ICourseBookmarkRepository *
+:+ ,
+IRepository- 8
+<8 9
+CourseBookmark9 G
+>G H
+{ 
+void 
+Update	 
+( 
+CourseBookmark 
+courseBookmark -
+)- .
+;. /
+void 
+UpdateRange	 
+( 
+IEnumerable  
+<  !
+CourseBookmark! /
+>/ 0
+courseBookmarks1 @
+)@ A
+;A B
+}		 ë
+rD:\FPT\Semester 6\Project_Cursus\Backend_Cursus\Cursus.LMS\Cursus.LMS.DataAccess\IRepository\ICompanyRepository.cs
+	namespace 	
+Cursus
+ 
+. 
+LMS 
+. 
+
+DataAccess 
+.  
+IRepository  +
+;+ ,
+public 
+	interface 
+ICompanyRepository #
+:$ %
+IRepository& 1
+<1 2
+Company2 9
+>9 :
+{ 
+void 
+Update	 
+( 
+Company 
+company 
+)  
+;  !
+void 
+UpdateRange	 
+( 
+IEnumerable  
+<  !
+Company! (
+>( )
+	companies* 3
+)3 4
+;4 5
+}		 œ
 sD:\FPT\Semester 6\Project_Cursus\Backend_Cursus\Cursus.LMS\Cursus.LMS.DataAccess\IRepository\ICategoryRepository.cs
 	namespace 	
 Cursus
@@ -42546,7 +72644,7 @@ DataAccess 
 balances* 2
 )2 3
 ;3 4
-}		 Ë:
+}		 †C
 pD:\FPT\Semester 6\Project_Cursus\Backend_Cursus\Cursus.LMS\Cursus.LMS.DataAccess\Context\ApplicationDbContext.cs
 	namespace		 	
 Cursus		
@@ -42614,187 +72712,169 @@ DataAccess		 
 (2 3
 modelBuilder3 ?
 )? @
-;@ A
-} 
-public 
-
-DbSet 
-< 
-ApplicationUser  
->  !
-ApplicationUsers" 2
-{3 4
-get5 8
-;8 9
-set: =
-;= >
-}? @
-public 
-
-DbSet 
-< 
-CartDetails 
-> 
-CartDetails )
-{* +
-get, /
-;/ 0
-set1 4
-;4 5
-}6 7
-public 
-
-DbSet 
-< 
-
-CartHeader 
-> 
-CartHeaders (
-{) *
-get+ .
-;. /
-set0 3
-;3 4
-}5 6
+;@ A$
+ApplicationDbContextSeed  
+.  !
+SeedCompany! ,
+(, -
+modelBuilder- 9
+)9 :
+;: ;$
+ApplicationDbContextSeed  
+.  !
+SeedPrivacy! ,
+(, -
+modelBuilder- 9
+)9 :
+;: ;$
+ApplicationDbContextSeed  
+.  !
+SeedTermOfUse! .
+(. /
+modelBuilder/ ;
+); <
+;< =
+} 
 public 
 
 DbSet 
-< 
-Category 
-> 
-
-Categories %
-{& '
-get( +
-;+ ,
-set- 0
-;0 1
-}2 3
+< 
+ApplicationUser  
+>  !
+ApplicationUsers" 2
+{3 4
+get5 8
+;8 9
+set: =
+;= >
+}? @
 public 
 
 DbSet 
-< 
-Course 
-> 
-Courses  
-{! "
-get# &
-;& '
-set( +
-;+ ,
-}- .
+< 
+CartDetails 
+> 
+CartDetails )
+{* +
+get, /
+;/ 0
+set1 4
+;4 5
+}6 7
 public 
 
 DbSet 
-< 
-CourseReport 
-> 
-CourseReports ,
-{- .
-get/ 2
-;2 3
-set4 7
-;7 8
-}9 :
+< 
+
+CartHeader 
+> 
+CartHeaders (
+{) *
+get+ .
+;. /
+set0 3
+;3 4
+}5 6
 public 
 
 DbSet 
-< 
-CourseReview 
-> 
-CourseReviews ,
-{- .
-get/ 2
-;2 3
-set4 7
-;7 8
-}9 :
+< 
+Category 
+> 
+
+Categories %
+{& '
+get( +
+;+ ,
+set- 0
+;0 1
+}2 3
 public   
 
 DbSet   
-<   
-
-Instructor   
->   
-Instructors   (
-{  ) *
-get  + .
-;  . /
-set  0 3
-;  3 4
-}  5 6
+<   
+Course   
+>   
+Courses    
+{  ! "
+get  # &
+;  & '
+set  ( +
+;  + ,
+}  - .
 public!! 
 
 DbSet!! 
-<!! 
-Level!! 
->!! 
-Levels!! 
-{!!  
-get!!! $
-;!!$ %
-set!!& )
-;!!) *
-}!!+ ,
+<!! 
+CourseReport!! 
+>!! 
+CourseReports!! ,
+{!!- .
+get!!/ 2
+;!!2 3
+set!!4 7
+;!!7 8
+}!!9 :
 public"" 
 
 DbSet"" 
 <"" 
-OrderDetails"" 
->"" 
-OrderDetails"" +
-{"", -
-get"". 1
-;""1 2
-set""3 6
-;""6 7
-}""8 9
+CourseReview"" 
+>"" 
+CourseReviews"" ,
+{""- .
+get""/ 2
+;""2 3
+set""4 7
+;""7 8
+}""9 :
 public## 
 
 DbSet## 
-<## 
-OrderHeader## 
->## 
-OrderHeaders## *
-{##+ ,
-get##- 0
-;##0 1
-set##2 5
-;##5 6
-}##7 8
+<## 
+
+Instructor## 
+>## 
+Instructors## (
+{##) *
+get##+ .
+;##. /
+set##0 3
+;##3 4
+}##5 6
 public$$ 
 
 DbSet$$ 
-<$$ 
-Student$$ 
->$$ 
-Students$$ "
-{$$# $
-get$$% (
-;$$( )
-set$$* -
-;$$- .
-}$$/ 0
+<$$ 
+Level$$ 
+>$$ 
+Levels$$ 
+{$$  
+get$$! $
+;$$$ %
+set$$& )
+;$$) *
+}$$+ ,
 public%% 
 
 DbSet%% 
-<%% 
-StudentCourse%% 
->%% 
-StudentCourses%%  .
-{%%/ 0
-get%%1 4
-;%%4 5
-set%%6 9
-;%%9 :
-}%%; <
+<%% 
+OrderDetails%% 
+>%% 
+OrderDetails%% +
+{%%, -
+get%%. 1
+;%%1 2
+set%%3 6
+;%%6 7
+}%%8 9
 public&& 
 
 DbSet&& 
 <&& 
-PaymentCard&& 
+OrderHeader&& 
 >&& 
-PaymentCards&& *
+OrderHeaders&& *
 {&&+ ,
 get&&- 0
 ;&&0 1
@@ -42804,183 +72884,262 @@ Instructor   
 public'' 
 
 DbSet'' 
-<'' 
-InstructorComment'' "
->''" #
-InstructorComments''$ 6
-{''7 8
-get''9 <
-;''< =
-set''> A
-;''A B
-}''C D
+<'' 
+Student'' 
+>'' 
+Students'' "
+{''# $
+get''% (
+;''( )
+set''* -
+;''- .
+}''/ 0
 public(( 
 
 DbSet(( 
-<(( 
-InstructorRating(( !
->((! "
-InstructorRatings((# 4
-{((5 6
-get((7 :
-;((: ;
-set((< ?
-;((? @
-}((A B
+<(( 
+StudentCourse(( 
+>(( 
+StudentCourses((  .
+{((/ 0
+get((1 4
+;((4 5
+set((6 9
+;((9 :
+}((; <
 public)) 
 
 DbSet)) 
-<)) 
-EmailTemplate)) 
->)) 
-EmailTemplates))  .
-{))/ 0
-get))1 4
-;))4 5
-set))6 9
-;))9 :
-})); <
+<)) 
+InstructorComment)) "
+>))" #
+InstructorComments))$ 6
+{))7 8
+get))9 <
+;))< =
+set))> A
+;))A B
+}))C D
 public** 
 
 DbSet** 
-<** 
-CourseVersion** 
->** 
-CourseVersions**  .
-{**/ 0
-get**1 4
-;**4 5
-set**6 9
-;**9 :
-}**; <
+<** 
+InstructorRating** !
+>**! "
+InstructorRatings**# 4
+{**5 6
+get**7 :
+;**: ;
+set**< ?
+;**? @
+}**A B
 public++ 
 
 DbSet++ 
-<++  
-CourseSectionVersion++ %
->++% &!
-CourseSectionVersions++' <
-{++= >
-get++? B
-;++B C
-set++D G
-;++G H
-}++I J
+<++ 
+EmailTemplate++ 
+>++ 
+EmailTemplates++  .
+{++/ 0
+get++1 4
+;++4 5
+set++6 9
+;++9 :
+}++; <
 public,, 
 
 DbSet,, 
-<,, !
-SectionDetailsVersion,, &
->,,& '"
-SectionDetailsVersions,,( >
-{,,? @
-get,,A D
-;,,D E
-set,,F I
-;,,I J
-},,K L
+<,, 
+CourseVersion,, 
+>,, 
+CourseVersions,,  .
+{,,/ 0
+get,,1 4
+;,,4 5
+set,,6 9
+;,,9 :
+},,; <
 public-- 
 
 DbSet-- 
-<-- 
-CourseVersionStatus-- $
->--$ %
-CourseVersionStatus--& 9
-{--: ;
-get--< ?
-;--? @
-set--A D
-;--D E
-}--F G
+<--  
+CourseSectionVersion-- %
+>--% &!
+CourseSectionVersions--' <
+{--= >
+get--? B
+;--B C
+set--D G
+;--G H
+}--I J
 public.. 
 
 DbSet.. 
-<..  
-CourseVersionComment.. %
->..% &!
-CourseVersionComments..' <
-{..= >
-get..? B
-;..B C
-set..D G
-;..G H
-}..I J
+<.. !
+SectionDetailsVersion.. &
+>..& '"
+SectionDetailsVersions..( >
+{..? @
+get..A D
+;..D E
+set..F I
+;..I J
+}..K L
 public// 
 
 DbSet// 
-<// 
-StudentComment// 
->//  
-StudentComments//! 0
-{//1 2
-get//3 6
-;//6 7
-set//8 ;
-;//; <
-}//= >
+<// 
+CourseVersionStatus// $
+>//$ %
+CourseVersionStatus//& 9
+{//: ;
+get//< ?
+;//? @
+set//A D
+;//D E
+}//F G
 public00 
 
 DbSet00 
-<00 
-OrderStatus00 
->00 
-OrdersStatus00 *
-{00+ ,
-get00- 0
-;000 1
-set002 5
-;005 6
-}007 8
+<00  
+CourseVersionComment00 %
+>00% &!
+CourseVersionComments00' <
+{00= >
+get00? B
+;00B C
+set00D G
+;00G H
+}00I J
 public11 
 
 DbSet11 
-<11 
-StudentCourseStatus11 $
->11$ % 
-StudentCoursesStatus11& :
-{11; <
-get11= @
-;11@ A
-set11B E
-;11E F
-}11G H
+<11 
+StudentComment11 
+>11  
+StudentComments11! 0
+{111 2
+get113 6
+;116 7
+set118 ;
+;11; <
+}11= >
 public22 
 
 DbSet22 
-<22 
-Balance22 
->22 
-Balances22 "
-{22# $
-get22% (
-;22( )
-set22* -
-;22- .
-}22/ 0
+<22 
+OrderStatus22 
+>22 
+OrdersStatus22 *
+{22+ ,
+get22- 0
+;220 1
+set222 5
+;225 6
+}227 8
 public33 
 
 DbSet33 
-<33 
-Transaction33 
->33 
-Transactions33 *
-{33+ ,
-get33- 0
-;330 1
-set332 5
-;335 6
-}337 8
+<33 
+StudentCourseStatus33 $
+>33$ % 
+StudentCoursesStatus33& :
+{33; <
+get33= @
+;33@ A
+set33B E
+;33E F
+}33G H
 public44 
 
 DbSet44 
-<44 
-CourseBookmark44 
->44  
-CourseBookmarks44! 0
-{441 2
-get443 6
-;446 7
-set448 ;
-;44; <
-}44= >
-}55 
+<44 
+Balance44 
+>44 
+Balances44 "
+{44# $
+get44% (
+;44( )
+set44* -
+;44- .
+}44/ 0
+public55 
+
+DbSet55 
+<55 
+Transaction55 
+>55 
+Transactions55 *
+{55+ ,
+get55- 0
+;550 1
+set552 5
+;555 6
+}557 8
+public66 
+
+DbSet66 
+<66 
+CourseBookmark66 
+>66  
+CourseBookmarks66! 0
+{661 2
+get663 6
+;666 7
+set668 ;
+;66; <
+}66= >
+public77 
+
+DbSet77 
+<77 
+CourseProgress77 
+>77  
+CourseProgresses77! 1
+{772 3
+get774 7
+;777 8
+set779 <
+;77< =
+}77> ?
+public88 
+
+DbSet88 
+<88 
+Company88 
+>88 
+	Companies88 #
+{88$ %
+get88& )
+;88) *
+set88+ .
+;88. /
+}880 1
+public99 
+
+DbSet99 
+<99 
+Privacy99 
+>99 
+	Privacies99 #
+{99$ %
+get99& )
+;99) *
+set99+ .
+;99. /
+}990 1
+public:: 
+
+DbSet:: 
+<:: 
+	TermOfUse:: 
+>:: 
+
+TermOfUses:: &
+{::' (
+get::) ,
+;::, -
+set::. 1
+;::1 2
+}::3 4
+};; 
