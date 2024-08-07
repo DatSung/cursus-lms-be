@@ -205,7 +205,7 @@ public class StripeService : IStripeService
             var options = new PayoutCreateOptions
             {
                 Amount = createStripePayoutDto.Amount * 100,
-                Currency = createStripePayoutDto.Currency,
+                Currency = createStripePayoutDto.Currency.Trim(),
             };
 
             var service = new PayoutService();
@@ -214,7 +214,7 @@ public class StripeService : IStripeService
             (
                 options, new RequestOptions
                 {
-                    StripeAccount = createStripePayoutDto.ConnectedAccountId
+                    StripeAccount = createStripePayoutDto.ConnectedAccountId?.Trim()
                 }
             );
 

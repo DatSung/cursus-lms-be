@@ -122,11 +122,13 @@ public class CourseService : ICourseService
     {
         try
         {
-            List<Course> courses;
+            var courses = new List<Course>();
+
             var userRole = User.Claims.FirstOrDefault(x => x.Type == ClaimTypes.Role)?.Value;
+
             if (string.IsNullOrEmpty(instructorId.ToString()))
             {
-                if (userRole != null && !userRole.Contains(StaticUserRoles.AdminInstructor))
+                if (userRole is null || userRole.Contains(StaticUserRoles.Student))
                 {
                     courses = _unitOfWork.CourseRepository
                         .GetAllAsync
@@ -137,7 +139,28 @@ public class CourseService : ICourseService
                         .GetResult()
                         .ToList();
                 }
-                else
+
+                if (userRole != null && userRole.Contains(StaticUserRoles.Instructor))
+                {
+                    var userId = User.Claims.FirstOrDefault(x => x.Type == ClaimTypes.NameIdentifier)?.Value;
+
+                    instructorId = _unitOfWork.InstructorRepository
+                        .GetAsync(x => x.UserId == userId)
+                        .GetAwaiter()
+                        .GetResult()!
+                        .InstructorId;
+
+                    courses = _unitOfWork.CourseRepository
+                        .GetAllAsync
+                        (
+                            filter: x => x.InstructorId == instructorId
+                        )
+                        .GetAwaiter()
+                        .GetResult()
+                        .ToList();
+                }
+
+                if (userRole != null && userRole.Contains(StaticUserRoles.Admin))
                 {
                     courses = _unitOfWork.CourseRepository
                         .GetAllAsync()
@@ -148,7 +171,7 @@ public class CourseService : ICourseService
             }
             else
             {
-                if (userRole != null && !userRole.Contains(StaticUserRoles.AdminInstructor))
+                if (userRole is null || userRole.Contains(StaticUserRoles.Student))
                 {
                     courses = _unitOfWork.CourseRepository
                         .GetAllAsync
@@ -159,7 +182,28 @@ public class CourseService : ICourseService
                         .GetResult()
                         .ToList();
                 }
-                else
+
+                if (userRole != null && userRole.Contains(StaticUserRoles.Instructor))
+                {
+                    var userId = User.Claims.FirstOrDefault(x => x.Type == ClaimTypes.NameIdentifier)?.Value;
+
+                    instructorId = _unitOfWork.InstructorRepository
+                        .GetAsync(x => x.UserId == userId)
+                        .GetAwaiter()
+                        .GetResult()!
+                        .InstructorId;
+
+                    courses = _unitOfWork.CourseRepository
+                        .GetAllAsync
+                        (
+                            filter: x => x.InstructorId == instructorId
+                        )
+                        .GetAwaiter()
+                        .GetResult()
+                        .ToList();
+                }
+
+                if (userRole != null && userRole.Contains(StaticUserRoles.Admin))
                 {
                     courses = _unitOfWork.CourseRepository
                         .GetAllAsync
@@ -170,13 +214,6 @@ public class CourseService : ICourseService
                         .GetResult()
                         .ToList();
                 }
-            }
-
-            // Pagination
-            if (pageNumber > 0 && pageSize > 0)
-            {
-                var skipResult = (pageNumber - 1) * pageSize;
-                courses = courses.Skip(skipResult).Take(pageSize).ToList();
             }
 
             var courseVersions = new List<CourseVersion>();
@@ -296,6 +333,12 @@ public class CourseService : ICourseService
             // Sort by highest rank (TotalStudent) after all other sorting and filtering
             courseVersions = courseVersions.OrderByDescending(cv => cv.Course.TotalStudent).ToList();
 
+            // Pagination
+            if (pageNumber > 0 && pageSize > 0)
+            {
+                var skipResult = (pageNumber - 1) * pageSize;
+                courseVersions = courseVersions.Skip(skipResult).Take(pageSize).ToList();
+            }
 
             var courseVersionDto = _mapper.Map<List<GetCourseDTO>>(courseVersions);
 
